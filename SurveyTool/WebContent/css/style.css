@@ -1,0 +1,195 @@
+
+/*----------------------------------------------*\
+		$SURVEY_TOOL_&_USER_PANEL
+\*----------------------------------------------*/
+/**
+* GENERAL
+* HEADER_PAGE
+* BODY_CONTENT
+* FOOTER
+* USER_PANEL_SURVEY
+* 
+* 
+*/
+
+/*----------------------------------------------*\
+		$GENERAL
+\*----------------------------------------------*/
+
+.center {text-align: center;}
+.left {text-align: left !important;}
+.right {text-align: right !important;}
+.margin-bottom-10 {margin-bottom: 10px;}
+.icon-small i {font-size: 1.4em;}
+.nav-tabs-right {padding-right: 20px;
+	margin-top: -40px;
+	border-bottom: none !important;}
+.nav-tabs-right li {float: right !important;
+	margin-bottom: -2px !important;}
+.nav-tabs-right li a {border-width: 2px !important;}
+.content-box-tabs {border: 2px solid #ddd;
+	height: 600px;}
+h2 {width: auto;
+	max-width: 70%;
+	display: inline-block;}
+
+
+
+/*----------------------------------------------*\
+		$HEADER_PAGE
+\*----------------------------------------------*/
+
+.page-header {
+    padding-left: 20px;
+    margin: 0px 0 20px;
+    border-bottom: 3px solid #ccc !important;
+   /* height: 135px;*/
+}
+h1 {float: left;
+	/*width: 50%;*/
+	display:flex;
+	margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;}
+h1 img {width: 125px;
+	margin-right: 20px;}
+h1 span{font-size: 0.6em;
+    position: absolute;
+    top: 73px;
+    left: 169px;}
+.logo {float:left;}
+.title-header {margin-top: 28px;}
+.title-header p {font-size: 0.6em;}
+.header-buttons {float:right;
+	margin-top: 33px;
+	margin-right: 50px;}
+.header-buttons a {margin-left: 35px;}
+
+/*----------------------------------------------*\
+		$BODY_CONTENT
+\*----------------------------------------------*/
+
+.body-content {margin:10px 10px;}
+.title-content {border-bottom: 1px solid #eee;
+	padding-bottom: 20px;}
+.content {margin: 10px 30px 0px 30px;}
+.row-menu {width: 70%;
+	left: 15%;
+	position: relative;}
+.main-container ul li {list-style: none;}
+.user-panel-menu {min-height: 388px;
+	padding-top: 7%;}
+.user-panel-menu i {margin-bottom: 10px;
+	font-size: 8em;}
+.user-panel-menu ul li {margin-bottom: 40px;}
+
+/*----------------------------------------------*\
+		$FOOTER
+\*----------------------------------------------*/
+
+footer {margin-top: 10px;}
+.row-footer {width: 70%;
+	left: 15%;
+	position: relative;
+	margin:10px 10px;}
+.footer-logos {color:#555;
+	text-align: center;
+	padding-bottom: 5px;
+	border-top: 1px solid #eee;
+	padding-top:5px;}
+
+/*----------------------------------------------*\
+		$USER_PANEL_SURVEY
+\*----------------------------------------------*/
+
+.user-panel-surveys {min-height: 388px;
+	/*padding-top: 7%;*/}
+.surveys-create-button {text-align: right;
+	padding: 10px;}
+.surveys-table {/*text-align: center;*/}
+.btn-pag a {height: 35px;}
+.btn-arrow {padding-top: 9px !important;}
+.percent-bar {margin: 0 !important;
+	border: 1px solid #555;}
+.surveys-table ul {margin: 0;
+	padding: 0 !important;}
+.surveys-table ul li{padding: 0 !important;}
+.surveys-table td {vertical-align: middle !important;}
+
+/*new survey*/
+{margin: 20% auto;}
+.survey-win-dialog {margin: 14% auto !important;
+	width: 60% !important;}
+.survey-frame {border: 1px solid #555;
+	margin: 10px 0px;
+	padding: 20px 10px;
+    border-radius: 5px;}
+.survey-frame h3 {font-size: 1em;
+    margin-left: 10px;
+    margin-top: -28px;
+    background-color: #fff;
+    padding: 0px 5px;
+    display: inline-block;}
+.survey-frame label, 
+.survey-frame input[type="text"],
+.survey-frame select {padding-left: 0px !important;
+	padding-right: 0px !important;}
+.survey-frame input[type="submit"] {margin-top: 4px;
+    width: 90px;
+    height: 45px;}
+.survey-frame textarea {margin-left: 30px;}
+.btn-search {padding: 9px !important;}
+.survey-or {padding-top: 10px;}
+.scroll-frame {height: 250px;
+	overflow-y: auto;
+	padding: 0px 5px;}
+.survey-search-table {margin: 0px 0px;
+	padding: 0px 5px;
+    border-radius: 5px;}
+.survey-search-table ul {margin-bottom: 0px !important;
+	padding: 0px !important;}
+.survey-search-table ul li {padding: 0px 7px;}
+.survey-search-table table tbody td {vertical-align: middle !important;
+	padding: 2px 10px !important;}
+.circle-info {border-radius: 11px;
+    padding: 4px;
+    margin-left: 5px;
+    font-size: 0.8em;}
+.circle-blue {background-color: #2566C2;
+    color: #fff;
+    border: 1px solid #2566C2;}
+.circle-grey {background-color: #585858;
+    color: #fff;
+    border: 1px solid #585858;}
+.circle-red {background-color: #B60000;
+    color: #fff;
+    border: 1px solid #B60000;}
+.close-table {text-align: right;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #ccc;}
+.btn-close-table {color:#B60000}
+
+/*----------------------------------------------*\
+		$USER_PANEL_EDIT_SURVEY
+\*----------------------------------------------*/
+
+.edit-content {border-color: #007A00;
+    border-radius: 10px;
+	padding: 10px;}
+.nav-tab-edit {border-color: #007A00 !important;}
+.nav-tab-edit .active a {border-left-color: #007A00 !important;
+	border-right-color: #007A00 !important;
+	border-top-color: #007A00 !important;}
+.edit-tab a {color: #007A00 !important;}
+.share-tab a {color: #B60000 !important;}
+.statistic-tab a {color: #000 !important;}
+.survey-info {width: 70%;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;}
+.survey-info-title {font-size: 1.5em;
+    border: none;
+    margin: 0 auto;
+    width: 45%;
+    text-align: center;}
