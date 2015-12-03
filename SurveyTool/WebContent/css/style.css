@@ -32,6 +32,14 @@
 h2 {width: auto;
 	max-width: 70%;
 	display: inline-block;}
+.close-table {text-align: right;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #ccc;}
+.btn-close-aspa {color:#B60000}
+.close-frame {text-align: right;
+    margin-top: -18px;
+    margin-right: -7px;}
+.red {color: #B60000}	
 
 
 
@@ -137,7 +145,7 @@ footer {margin-top: 10px;}
 .survey-frame input[type="submit"] {margin-top: 4px;
     width: 90px;
     height: 45px;}
-.survey-frame textarea {margin-left: 30px;}
+/*.survey-frame textarea {margin-left: 30px;}*/
 .btn-search {padding: 9px !important;}
 .survey-or {padding-top: 10px;}
 .scroll-frame {height: 250px;
@@ -164,32 +172,120 @@ footer {margin-top: 10px;}
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
-.close-table {text-align: right;
-	margin-bottom: 5px;
-	border-bottom: 1px solid #ccc;}
-.btn-close-table {color:#B60000}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
 \*----------------------------------------------*/
 
-.edit-content {border-color: #007A00;
+.edit-content {border-color: #337ab7;
     border-radius: 10px;
 	padding: 10px;}
 .nav-tab-edit {border-color: #007A00 !important;}
-.nav-tab-edit .active a {border-left-color: #007A00 !important;
-	border-right-color: #007A00 !important;
-	border-top-color: #007A00 !important;}
-.edit-tab a {color: #007A00 !important;}
+.nav-tab-edit .active a {border-left-color: #337ab7 !important;
+	border-right-color: #337ab7 !important;
+	border-top-color: #337ab7 !important;}
+.edit-tab a {color: #337ab7 !important;}
 .share-tab a {color: #B60000 !important;}
 .statistic-tab a {color: #000 !important;}
-.survey-info {width: 70%;
+.edit-survey-frame {width: 70%;
     margin: 10px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 10px;}
+    padding: 10px;
+    text-align: center;}
 .survey-info-title {font-size: 1.5em;
     border: none;
     margin: 0 auto;
     width: 45%;
     text-align: center;}
+    
+.survey-info-project {float:right;
+	width: 50%;
+    display: none;}
+.survey-info-project label {margin-top: 7px;}
+.survey-info-description {width: 70%;
+    margin-top: 15px;
+    display: none;}
+.survey-info-description label {margin-top: 15px;}
+.sect-arrow {float:left;
+    margin-left: 20px;
+    padding-top: 0px !important;}
+    
+
+.add-frame {width: 70%;
+	margin: 20px auto;
+	text-align: center;}
+.add-menu-frame {width: 55%;
+	margin: 20px auto;
+	text-align: center;
+    display: inline-block;}
+.btn-add-menu {padding: 2.5px 10px !important;
+    background-color: #fff;
+    border: 1px solid #337ab7 !important;
+    color: #337ab7;}
+.btn-add-menu:hover, .btn-add-menu:focus {color:#fff !important;
+	background-color: #337ab7;}
+.add-menu {display: none;}
+.btn-add {
+	color: #337ab7;}
+.panel-section {width: 70%;
+	margin: 20px auto;
+	text-align: center;
+	background-color: #fff;
+    border: 1px solid #337ab7;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
+.panel-section > .panel-heading {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    border-radius: 7px;
+    width: 100%;
+    display: inline-block;}
+/*.panel-section > .panel-heading h3:hover, .panel-section > .panel-heading h3:focus {
+	background-color: #004D00;
+}*/
+.panel-heading h3 {margin: 4px 0px;}
+.survey-section-title-unselected {border:none;
+	background-color: transparent;
+	color: #fff;
+	text-align:center;
+	width: 100%;}
+.survey-section-title-selected, 
+.survey-section-title-unselected:hover, 
+.survey-section-title-unselected:focus {border:none;
+	background-color: #fff;
+	color: #007A00;
+	text-align:center;
+	width: 100%;
+	padding: 5px;}
+.panel-section-delete {float: right;}
+.panel-heading a {color: #fff;}
+.panel-heading a:hover, .panel-heading a:focus {color: #70FFFF;}
+
+.qtype-icon-text{color: #000;
+	font-size: 0.9em;}
+.form-control-small {padding: 5px 12px;
+    font-size: 0.9em;
+    line-height: 1.428571;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;}
+.basic-settings-right-options {margin-top: 23px;
+    padding-left: 30px !important;}
+.basic-settings-right-options div label i {margin-right: 5px;
+    margin-top: 2px;
+    min-width: 24px;
+    text-align: right;}
+.basic-settings-right-options div label {display: flex;}    
+.basic-settings-right-options div label span {padding-top: 5px;}
+.basic-settings-right-options div {margin-bottom: 9px;}
+.btn-qtype {display: inline-table;}

@@ -33,7 +33,7 @@
 				    				</div>
 				    				<div class="survey-search-table">
 					    				<div class="close-table">
-					    					<a class="btn-close-table" href="#" title="Close table"><i class="fa fa-times-circle fa-2x"></i></a>
+					    					<a class="btn-close-aspa" href="#" title="Close table"><i class="fa fa-times-circle fa-2x"></i></a>
 					    				</div>
 					    				<div class="scroll-frame">
 						    				<table class="table table-bordered" sumary="List of surveys where ...">

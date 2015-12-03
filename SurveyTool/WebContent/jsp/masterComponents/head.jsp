@@ -24,3 +24,4 @@
 		     plugins que utilices) -->
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
+		<script src="js/stinterface.js"></script>

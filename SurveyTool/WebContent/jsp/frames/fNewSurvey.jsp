@@ -58,9 +58,9 @@
 										
 										<div class="row">
 											<div class="col-sm-9 margin-bottom-10">
-												<label for="surveyTitle" class="col-sm-1 control-label left">Short description</label>
+												<label for="surveyDescription" class="col-sm-1 control-label left">Short description</label>
 										   		<div class="col-sm-11">
-										     			<textarea class="form-control" rows="2" placeholder="Type here_"></textarea>
+										     			<textarea class="form-control" id="surveyDescription" rows="2" placeholder="Type here_"></textarea>
 										   		</div>
 											</div>
 											<div class="col-sm-3 center">
