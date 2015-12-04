@@ -44,15 +44,40 @@
 		  					
 		  					<div class="panel-section" id="panel-section1">
 								<div class="panel-heading">	
-									<div class="col-sm-1 left"><a href="#" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
-									<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-section-title" value="Section 1:" /></h3>
+									<div class="col-sm-1 left"><a id="display-section-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
+									<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected center" id="survey-section-title" value="Section 1:" /></h3>
 									<div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div>
 								</div>
 								
 								<div class="panel-body">									
 				  					<div class="add-menu-frame" id="add-menu-frame1">
-			  							<div class="col-sm-12"><a class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a></div>
-			  							<div class="col-sm-11 add-menu">
+				  						<div class="col-sm-5 add-vacio"></div>
+			  							<a class="btn-add col-sm-2" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
+			  							<div class="col-sm-5 add-menu">
+			  								<div class="col-sm-1">...</div>
+			  								<div class="btn-group col-sm-11" role="group" aria-label="...">
+												<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal">Question</button>
+												<button type="button" class="btn btn-add-menu" id="btn-body-content">Body content</button>
+											</div>
+			  							</div>  							
+			  						</div>
+			  						
+			  						<div class="panel-question" id="panel-question1">
+										<div class="panel-heading">	
+											<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
+											<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="What is your favourite film?" /></h3>
+											<div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div>
+										</div>
+										
+										<div class="panel-body">									
+						  					<div class="panel-question-basic-setting"></div>			  					
+										</div>																							
+									</div>	
+									
+									<div class="add-menu-frame" id="add-menu-frame2">
+										<div class="col-sm-5 add-vacio"></div>
+			  							<a class="btn-add col-sm-12" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
+			  							<div class="col-sm-5 add-menu">
 			  								<div class="col-sm-1">...</div>
 			  								<div class="btn-group col-sm-11" role="group" aria-label="...">
 												<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal">Question</button>
@@ -60,7 +85,7 @@
 											  	<button type="button" class="btn btn-add-menu" id="btn-page-break">page-break</button>
 											</div>
 			  							</div>  							
-			  						</div>		  					
+			  						</div>	  					
 								</div>																							
 							</div>			
 													

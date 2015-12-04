@@ -72,42 +72,41 @@
 				    						<div class="col-md-7">
 				    							<label for="qstatement" >Question statement</label>
 										     	<textarea class="form-control" id="qstatement" rows="5" placeholder="Type here_"></textarea>
+										     	<div class="center">
+										     		<a class="btn btn-add-media"><i class="fa fa-picture-o fa-2x"></i><span>Add media</span></a>
+										     	</div>
 											</div>
 											<div class="col-md-5 basic-settings-right-options">
 												<div class="row">
 													<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Main version</span></label>
 													<select class="form-control-small col-md-6" id="sel1">
 													  	<option value="" disabled selected>Browser languages</option>
-													    <option>English</option>
-													    <option>Spanish</option>
-													    <option>French</option>
-													    <option>Greek</option>
+													    <option value="en">English</option>
+													    <option value="es">Spanish</option>
+													    <option value="fr">French</option>
+													    <option value="el">Greek</option>
 													  </select>
 												</div>
 												<div class="row">
 													<label for="main-version" class="col-md-5" ><i class="fa fa-asterisk red"></i><span>Mandatory</span></label>
 													<select class="form-control-small col-md-6" id="sel1">
-													  	<option value="" disabled selected>Browser languages</option>
-													    <option>English</option>
-													    <option>Spanish</option>
-													    <option>French</option>
-													    <option>Greek</option>
+													  	<option value="no" selected>No</option>
+													    <option>Sí</option>
 													  </select>
 												</div>
 												<div class="row">
 													<label for="main-version" class="col-md-5" ><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></label>
 													<select class="form-control-small col-md-6" id="sel1">
-													  	<option value="" disabled selected>Browser languages</option>
-													    <option>English</option>
-													    <option>Spanish</option>
-													    <option>French</option>
-													    <option>Greek</option>
+													  	<option value="no" selected>No</option>
+													    <option>Sí</option>
 													  </select>
+												</div>
+												<div class="center">
+													<a class="btn btn-primary">Create</a>
 												</div>
 											</div>
 				    					</form>
-				    				</div>
-				    				
+				    				</div>				    				
 				    			</div>				    			
 				    		</div> 
 				    	</div>

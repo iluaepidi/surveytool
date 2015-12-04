@@ -215,7 +215,7 @@ footer {margin-top: 10px;}
 .add-frame {width: 70%;
 	margin: 20px auto;
 	text-align: center;}
-.add-menu-frame {width: 55%;
+.add-menu-frame {width: 100%;
 	margin: 20px auto;
 	text-align: center;
     display: inline-block;}
@@ -225,8 +225,11 @@ footer {margin-top: 10px;}
     color: #337ab7;}
 .btn-add-menu:hover, .btn-add-menu:focus {color:#fff !important;
 	background-color: #337ab7;}
-.add-menu {display: none;}
-.btn-add {
+.add-menu {display: none;
+	width: 46% !important;
+	padding-left: 0px !important;}
+.add-vacio {width: 46% !important;}
+.btn-add { width: 8% !important;
 	color: #337ab7;}
 .panel-section {width: 70%;
 	margin: 20px auto;
@@ -249,20 +252,20 @@ footer {margin-top: 10px;}
 .panel-heading h3 {margin: 4px 0px;}
 .survey-section-title-unselected {border:none;
 	background-color: transparent;
-	color: #fff;
-	text-align:center;
+	/*color: #fff;*/
+	/*text-align:center;*/
 	width: 100%;}
 .survey-section-title-selected, 
 .survey-section-title-unselected:hover, 
 .survey-section-title-unselected:focus {border:none;
 	background-color: #fff;
-	color: #007A00;
-	text-align:center;
+	color: #000;
+	/*text-align:center;*/
 	width: 100%;
 	padding: 5px;}
 .panel-section-delete {float: right;}
-.panel-heading a {color: #fff;}
-.panel-heading a:hover, .panel-heading a:focus {color: #70FFFF;}
+.panel-section .panel-heading a {color: #fff;}
+.panel-section .panel-heading a:hover, .panel-section .panel-heading a:focus {color: #70FFFF;}
 
 .qtype-icon-text{color: #000;
 	font-size: 0.9em;}
@@ -289,3 +292,28 @@ footer {margin-top: 10px;}
 .basic-settings-right-options div label span {padding-top: 5px;}
 .basic-settings-right-options div {margin-bottom: 9px;}
 .btn-qtype {display: inline-table;}
+.btn-add-media {margin-top: 10px;
+    display: inline-flex;}
+.btn-add-media span {margin-left: 12px;
+    margin-top: 4px;}
+    
+.panel-question {width: 95%;
+	margin: 20px auto;
+	text-align: center;
+	background-color: #fff;
+    border: 1px solid #9FC5F8;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
+.panel-question > .panel-heading {
+    color: #000;
+    background-color: #9FC5F8;
+    border-color: #9FC5F8;
+    border-radius: 7px;
+    width: 100%;
+    display: inline-block;}
+.panel-question .panel-heading a {color: #000;}
+.panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
+.panel-question-basic-setting {background-color: #ccc;
+	color: #000;
+    margin: -15px;}
