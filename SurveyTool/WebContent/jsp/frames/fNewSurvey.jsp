@@ -31,6 +31,140 @@
 											</div>
 										</div>
 				    				</div>
+				    				<div class="survey-search-table">
+					    				<div class="close-table">
+					    					<a class="btn-close-aspa" href="#" title="Close table"><i class="fa fa-times-circle fa-2x"></i></a>
+					    				</div>
+					    				<div class="scroll-frame">
+						    				<table class="table table-bordered" sumary="List of surveys where ...">
+					  							<caption>Surveys list</caption>
+												<tr class="info">
+													<th class="tab-colum-title center">Survey title</th>
+													<th class="tab-colum-project center">Project</th>
+													<th class="tab-colum-date center">Last response</th>
+													<th class="tab-colum-admin center">Admin</th>
+													<th class="tab-colum-stats center">Stats</th>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="active">
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="active">
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="active">
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="active">
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center">
+														<ul>
+															<li class="center fleft"><a href="#" title="clone survey"><i class="fa fa-list-ol fleft"></i><div class="circle-info circle-blue fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="statistics"><i class="fa fa-users fleft"></i><div class="circle-info circle-grey fleft">40</div></a></li>
+										  					<li class="center fleft"><a href="#" title="settings"><i class="fa fa-clock-o fleft"></i><div class="circle-info circle-red fleft">40</div></a></li>
+														</ul>
+													</td>
+												</tr>
+					  						</table>
+					  					</div>
+					    			</div>
 				    			</div>
 				    			<div class="center">- OR -</div>
 				    			<div class="survey-frame">
@@ -58,13 +192,11 @@
 										
 										<div class="row">
 											<div class="col-sm-9 margin-bottom-10">
-												<label for="surveyDescription" class="col-sm-1 control-label left">Short description</label>
-										   		<div class="col-sm-11">
-										     			<textarea class="form-control" id="surveyDescription" rows="2" placeholder="Type here_"></textarea>
-										   		</div>
+												<label for="surveyDescription" class="control-label left">Short description</label>
+										   		<textarea class="form-control" id="surveyDescription" rows="2" placeholder="Type here_"></textarea>
 											</div>
 											<div class="col-sm-3 center">
-												<input type="submit" class="btn btn-primary" value="Create" />
+												<input type="submit" class="btn btn-primary btn-create-survey" value="Create" />
 											</div>
 										</div>
 									</form>

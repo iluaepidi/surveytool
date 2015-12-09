@@ -28,7 +28,7 @@
 	margin-bottom: -2px !important;}
 .nav-tabs-right li a {border-width: 2px !important;}
 .content-box-tabs {border: 2px solid #ddd;
-	height: 600px;}
+	min-height: 600px;}
 h2 {width: auto;
 	max-width: 70%;
 	display: inline-block;}
@@ -39,8 +39,18 @@ h2 {width: auto;
 .close-frame {text-align: right;
     margin-top: -18px;
     margin-right: -7px;}
-.red {color: #B60000}	
-
+.red {color: #B60000}
+.btn-transparent {background: transparent;
+    border: none !important;
+    padding: 0px !important;}	
+.fleft {float:left;}
+	
+/*tablas*/
+.tab-colum-title {width: 25%;}
+.tab-colum-project {width: 11%;}
+.tab-colum-date {width: 10%;}
+.tab-colum-admin {width: 4%;}
+.tab-colum-stats {width: 20%;}
 
 
 /*----------------------------------------------*\
@@ -142,9 +152,11 @@ footer {margin-top: 10px;}
 .survey-frame input[type="text"],
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
-.survey-frame input[type="submit"] {margin-top: 4px;
-    width: 90px;
-    height: 45px;}
+.survey-frame a {
+    margin-top: 2px;
+    display: inline-block;
+    /*width: 90px;
+    height: 45px;*/}
 /*.survey-frame textarea {margin-left: 30px;}*/
 .btn-search {padding: 9px !important;}
 .survey-or {padding-top: 10px;}
@@ -155,14 +167,19 @@ footer {margin-top: 10px;}
 	padding: 0px 5px;
     border-radius: 5px;}
 .survey-search-table ul {margin-bottom: 0px !important;
-	padding: 0px !important;}
-.survey-search-table ul li {padding: 0px 7px;}
+	padding: 0px !important;
+    display: inline-block;
+    width: 100%;}
+.survey-search-table ul li {padding: 3px 7px 0px 0px;
+	width: 33%;}
 .survey-search-table table tbody td {vertical-align: middle !important;
 	padding: 2px 10px !important;}
 .circle-info {border-radius: 11px;
     padding: 4px;
     margin-left: 5px;
-    font-size: 0.8em;}
+    font-size: 0.8em;
+    width: 24px;
+    text-align: center;}
 .circle-blue {background-color: #2566C2;
     color: #fff;
     border: 1px solid #2566C2;}
@@ -172,6 +189,8 @@ footer {margin-top: 10px;}
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
+.btn-create-survey {margin-top: 30px;
+	height: 45px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
@@ -301,14 +320,14 @@ footer {margin-top: 10px;}
 	margin: 20px auto;
 	text-align: center;
 	background-color: #fff;
-    border: 1px solid #9FC5F8;
-    border-radius: 10px;
+    border: 1px solid #255885;
+    border-radius: 8px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
 .panel-question > .panel-heading {
     color: #000;
-    background-color: #9FC5F8;
-    border-color: #9FC5F8;
+    background-color: #B7D4FA;
+    border-color: #255885;
     border-radius: 7px;
     width: 100%;
     display: inline-block;}
@@ -316,4 +335,65 @@ footer {margin-top: 10px;}
 .panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
 .panel-question-basic-setting {background-color: #ccc;
 	color: #000;
-    margin: -15px;}
+    margin: -20px -15px 0px -15px;
+    padding-top: 9px;}
+.panel-question-basic-setting .alt-question {/*padding-top: 4px;*/}
+.panel-question-basic-setting .mandatory-question i {background-color: #ccc;}
+.panel-question-basic-setting div label,
+.panel-question-basic-setting div button {display: inline-flex;
+    padding: 0px 10px;
+    min-height: 30px;}
+.panel-question-basic-setting div label span,
+.panel-question-basic-setting div button span {margin-top: 4px;}
+.panel-question-basic-setting div label i, 
+.panel-question-basic-setting div button i {margin-right: 5px;}
+.panel-question-basic-setting div button[selected="false"]{border: 1px solid #3C3C3C; 
+	background-color: transparent;}
+.panel-question-basic-setting div button[selected="true"],
+.panel-question-basic-setting div button[selected="false"]:focus,
+.panel-question-basic-setting div button[selected="false"]:hover {border: 1px solid #3C3C3C; 
+	background-color: #B7D4FA;}
+	
+.question-frame {border: 1px solid #555;
+	margin: 15px 0px;
+	padding: 10px 20px;
+    border-radius: 5px;
+    text-align: left;}
+.question-frame h4 {font-size: 1em;
+    margin-left: -5px;
+    margin-top: -19px;
+    background-color: #fff;
+    padding: 0px 5px;
+    display: inline-block;}
+.question-frame label, 
+.question-frame input[type="text"],
+.question-frame select {padding-left: 0px !important;
+	padding-right: 0px !important;}
+.question-frame input[type="submit"] {margin-top: 4px;
+    width: 90px;
+    height: 45px;}
+.question-frame p {margin: 0px;}
+
+.likert-options {display: inline-flex;
+    width: 100%;
+    text-align: center;}
+.likert-options-frame {border: 1px solid #000;
+    min-width: 50px;
+    margin: 0 auto;}
+.likert-options-frame div {float:left;
+	margin:	5px 15px;}
+.likert-options-frame div input[type="radio"] {width: 100%;}
+.likert-legend {width: 95%;
+    margin-top: 5px;
+    display: inline-block;}
+.likert-legend div {float:left;
+	width: 33.3%;}
+	
+.option-list {width: 70%;
+	margin: 0 auto;}
+.option-item {margin:10px 0px;}
+.option-item .circle-info {}
+.option-title {width: 70% !important;
+    margin: 0px 5px;
+    height: 28px !important;}
+.option-icons a {margin: 0px 3px;}

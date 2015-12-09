@@ -1,6 +1,6 @@
 				<div class="container-fluid">
 	  				<h1>
-	  					<div class="logo"><a href="#"><img src="img/p4aicon.jpeg" alt="logo de prosperity4all"/></a></div>
+	  					<div class="logo"><a href="http://localhost:8080/SurveyTool/inicio.jsp"><img src="img/p4aicon.jpeg" alt="logo de prosperity4all"/></a></div>
 	  					<div class="title-header">Survey Tool & User Panel
 	  						<p>Participate in surveys you are interested in</p>
 	  					</div>

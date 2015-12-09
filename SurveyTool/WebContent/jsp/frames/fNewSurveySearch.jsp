@@ -39,11 +39,11 @@
 						    				<table class="table table-bordered" sumary="List of surveys where ...">
 					  							<caption>Surveys list</caption>
 												<tr class="info">
-													<th class="center">Survey title</th>
-													<th class="center">Project</th>
-													<th class="center">Last response</th>
-													<th class="center">Admin</th>
-													<th class="center">Stats</th>
+													<th class="tab-colum-title center">Survey title</th>
+													<th class="tab-colum-project center">Project</th>
+													<th class="tab-colum-date center">Last response</th>
+													<th class="tab-colum-admin center">Admin</th>
+													<th class="tab-colum-icons center">Stats</th>
 												</tr>
 												<tr>
 													<td>Disability and consumers</td>

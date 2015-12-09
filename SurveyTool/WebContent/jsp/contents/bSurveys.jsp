@@ -117,4 +117,4 @@
 	  				</div>
 	  			</div>
 	  			
-	  			<jsp:include page="../frames/fNewSurveySearch.jsp" />
+	  			<jsp:include page="../frames/fNewSurvey.jsp" />
