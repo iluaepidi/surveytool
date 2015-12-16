@@ -1,7 +1,9 @@
+<%@page import="ilu.surveytool.constants.Attribute"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
 String footerPath = "jsp/masterComponents/footer.jsp";
+String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -15,8 +17,7 @@ String footerPath = "jsp/masterComponents/footer.jsp";
   			</div>
   			
   			<div class="body-content">
-	  			<!--<jsp:include page="jsp/masterComponents/bodyContent.jsp" />-->
-	  			<jsp:include page="jsp/contents/bEditSurvey.jsp" />
+	  			<jsp:include page="<%= bodyPage %>" />
 	  		</div>
 	  		
 	  		<footer>

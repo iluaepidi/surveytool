@@ -43,7 +43,11 @@ h2 {width: auto;
 .btn-transparent {background: transparent;
     border: none !important;
     padding: 0px !important;}	
+.btn-survey {font-weight: bold !important;}
 .fleft {float:left;}
+.error-msg {color: #B60000;
+    font-size: 1.1em;
+    font-weight: bold;}
 	
 /*tablas*/
 .tab-colum-title {width: 25%;}
@@ -117,6 +121,16 @@ footer {margin-top: 10px;}
 	padding-top:5px;}
 
 /*----------------------------------------------*\
+		$LOGIN
+\*----------------------------------------------*/
+
+.login-content {display: flex;}
+.login-frame {width: 20%;
+    margin: 10% auto;}
+.login-frame form h3 {margin: 20px 0px;}
+.form-group label {width: 100%;}
+
+/*----------------------------------------------*\
 		$USER_PANEL_SURVEY
 \*----------------------------------------------*/
 
@@ -149,9 +163,10 @@ footer {margin-top: 10px;}
     padding: 0px 5px;
     display: inline-block;}
 .survey-frame label, 
-.survey-frame input[type="text"],
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
+.survey-frame input[type="text"] {padding-left: 5px !important;
+	padding-right: 5px !important;}
 .survey-frame a {
     margin-top: 2px;
     display: inline-block;
@@ -199,6 +214,19 @@ footer {margin-top: 10px;}
 .edit-content {border-color: #337ab7;
     border-radius: 10px;
 	padding: 10px;}
+.edit-with-browser {display:flex;}
+.edit-with-browser .edit-content-center{float:left;
+	width: 83%;
+	position: relative;
+    min-height: 1px;}
+.edit-with-browser .browser-left {display: inherit;
+	float:left;
+	width: 16%;
+	position: relative;
+    min-height: 1px;} 
+.edit-with-browser .edit-survey-frame {width: 90%;}
+.edit-with-browser .panel-section {width: 90%;}
+.browser-left {display: none;} 
 .nav-tab-edit {border-color: #007A00 !important;}
 .nav-tab-edit .active a {border-left-color: #337ab7 !important;
 	border-right-color: #337ab7 !important;
@@ -390,10 +418,20 @@ footer {margin-top: 10px;}
 	width: 33.3%;}
 	
 .option-list {width: 70%;
-	margin: 0 auto;}
-.option-item {margin:10px 0px;}
+	margin: 0 auto;
+    padding: 0px;}
+.option-item {margin: 5px 0px;
+    display: inline-block;
+    clear: both;
+    width: 100%;}
 .option-item .circle-info {}
 .option-title {width: 70% !important;
     margin: 0px 5px;
     height: 28px !important;}
 .option-icons a {margin: 0px 3px;}
+.btn-plus-small {font-size: 1.3em;}
+.btn-plus-small:hover {cursor:pointer;}
+.routes-select {display: flex;}
+.routes-select label {margin-top: 3px;}
+.routes-select select {margin: 0px 8px;}
+

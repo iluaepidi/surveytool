@@ -15,7 +15,7 @@ String footerPath = "jsp/masterComponents/footer.jsp";
   			</div>
   			
   			<div class="body-content">
-	  			<jsp:include page="jsp/masterComponents/bodyContent.jsp" />
+	  			<jsp:include page="jsp/bodyPages/bLogin.jsp" />
 	  		</div>
 	  		
 	  		<footer>

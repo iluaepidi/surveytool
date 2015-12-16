@@ -3,6 +3,48 @@ package ilu.surveytool.databasemanager.constants;
 public class DBSQLQueries {
 
 	//Selects
+		//Content
+		public final static String s_SELECT_CONTENT_BY_LANGUAGE_CONTENTTYPE = "SELECT c.text FROM surveytool.content c "
+				+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+				+ "WHERE l.isoName = ? and ct.name = ?";
+		
+		//project
+		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
+		
+		//User
+		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol WHERE (userName = ? or email = ?) and password = ?";
+		
+		//Questionnaire
+		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
+		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
+				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
+				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
+						+ "FROM surveytool.questionnaire q "
+						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
+						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";
+		
+		//User Questionnaire
+		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
+		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID_FINISHED = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ? and state = ?";
+		
+	//inserts
+		//content
+			public final static String s_INSERT_CONTENT = "INSERT INTO `surveytool`.`content` (`idContent`, `idLanguage`, `idContentType`, `text`) VALUES (?, "
+					+ "(SELECT idLanguage FROM surveytool.language WHERE isoName = ?), "
+					+ "(SELECT idContentType FROM surveytool.contenttype WHERE name = ?), ?)";
+		//contentIndex
+			public final static String s_INSERT_CONTENT_INDEX = "INSERT INTO `surveytool`.`contentindex` (`idContent`) VALUES (null);";
+		//project	
+			public final static String s_INSERT_PROJECT = "INSERT INTO `surveytool`.`project` (`projectName`) VALUES (?)";
+		//Questionnaire
+			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
+			
+		
+			
+		
 		/*
 		//language
 		public final static String s_SELECT_CONTENTTYPE_ALL_ORDERBY_CONTENTTYPEID = "Select * from personaemgrlacaixa.contenttype order by contentTypeId";

@@ -3,6 +3,7 @@
 	<name>SurveyTool</name>
 	<comment></comment>
 	<projects>
+		<project>DatabaseMgr</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
