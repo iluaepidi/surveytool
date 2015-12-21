@@ -1,16 +1,9 @@
-<%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
-<%@page import="ilu.surveytool.constants.Attribute"%>
-<%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
-    								<%
-    								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								%>
 										<div class="panel-question" id="panel-question1">
 											<div class="panel-heading">	
 												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
-												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
+												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="What is your favourite film?" /></h3>
 												<div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div>
 											</div>
 											
@@ -26,10 +19,10 @@
 														  </select>
 													</div>
 													<div class="col-md-2">
-														<button class="btn mandatory-question" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
+														<button class="btn mandatory-question" selected="false"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
 													</div>
 													<div class="col-md-2">
-														<button class="btn" selected="<%= question.isHelpText() %>"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+														<button class="btn" selected="false"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
 													</div>
 							  					</div>
 							  					
@@ -43,21 +36,55 @@
 							  							<div class="col-md-4">
 								  							<label for="type-question">Type</label>
 								  							<select class="form-control" id="type-question">
-															  	<option value="ls" selected>Text</option>
-															  	<option value="ls">Likert scale</option>
+															  	<option value="ls" selected>Likert scale</option>
 															    <option value="sim">Simple</option>
 															    <option value="mul">Multiple</option>
 																<option value="ma">Matrix</option>
 															</select>
 														</div>
-														<div class="col-md-8">
-															 <label for="qresponse">Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
-														     <textarea class="form-control" id="qresponse" rows="5" placeholder="Type here_"></textarea>
+														<div class="col-md-8 center">
+															 <div class="likert-options">
+															 	<div class="likert-options-frame">
+															 		<div>
+															 			<label for="likert1">1</label>
+															 			<input type="radio" name="likert" id="likert1"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert2">2</label>
+															 			<input type="radio" name="likert" id="likert2"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert3">3</label>
+															 			<input type="radio" name="likert" id="likert3"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert4">4</label>
+															 			<input type="radio" name="likert" id="likert4"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert5">5</label>
+															 			<input type="radio" name="likert" id="likert5"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert6">6</label>
+															 			<input type="radio" name="likert" id="likert6"/>
+															 		</div>
+															 		<div>
+															 			<label for="likert7">7</label>
+															 			<input type="radio" name="likert" id="likert7"/>
+															 		</div>
+															 	</div>
+															 </div>	
+															 <div class="likert-legend">
+															 	<div>Totally disgree</div>
+															 	<div>Indiferent</div>
+															 	<div>Totally agree</div>
+															 </div>
 														</div>													 
 							  						</div>						  						
 							  					</div>
 							  					
-							  					<!-- <div class="question-frame">
+							  					<div class="question-frame">
 							  						<h4>Response settings</h4>
 							  						
 							  						<ul class="option-list">
@@ -98,7 +125,7 @@
 														</select>
 														<i class="fa fa-cogs fa-2x"></i>
 													</div>
-							  					</div> -->
+							  					</div>
 							  							  					
 											</div>																							
 										</div>

@@ -51,7 +51,33 @@ public class QuestionDB {
 	 * Selects
 	 */
 	
-	
+	public String getQuestionTypeTemplateFileByName(String questionType)
+	{
+		String response = "";
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONTYPE_TEMPLATE_FILE_BY_ID);			
+	   		pstm.setString(1, questionType);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 	
 	/**
 	 * Inserts 
@@ -69,8 +95,7 @@ public class QuestionDB {
 		   pstm.setString(2, question.getQuestionType()); 
 		   pstm.setInt(3, contentId); 
 		   pstm.setString(4, question.getCategory()); 
-		   pstm.setBoolean(5, question.isMandatory());
-		   pstm.setString(6, question.getMainVersion());
+		   pstm.setString(5, question.getMainVersion());
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -90,6 +115,37 @@ public class QuestionDB {
 		
 		return questionId;
 	}
+
+	public boolean insertQuestionByPage(int questionId, int pageId, boolean mandatory, int numQuestion) {
+		//System.out.println("inserUser");
+		boolean inserted = false;
+		//int contentId = this.insertContentIndex();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QUESTION_BY_PAGE, Statement.RETURN_GENERATED_KEYS);
+		   pstm.setInt(1, pageId);
+		   pstm.setInt(2, questionId);
+		   pstm.setInt(3, numQuestion);
+		   pstm.setBoolean(4, mandatory);
+		   
+		   boolean notInserted = pstm.execute();
+		   
+		   if(!notInserted)
+		   {
+			   inserted = true;
+		   }
+		  		  	   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return inserted;
+	}
+	
 	
 
 }

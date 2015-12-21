@@ -9,5 +9,8 @@ public class Attribute {
 	public final static String s_SURVEYS = "surveys";
 	public final static String s_SURVEY_INFO = "surveyInfo";
 	public final static String s_JS_FILES = "jsFiles";
+	public final static String s_PAGE_ID = "pageId";
+	public final static String s_TEMPLATE_FILE = "templateFile";
+	public final static String s_QUESTION = "question";
 
 }

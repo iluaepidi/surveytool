@@ -1,5 +1,8 @@
 				
 				<!-- Modal -->
+				<%@page import="ilu.surveytool.constants.Attribute"%>
+				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
+				<%Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); %>
 				<div class="modal fade survey-win" id="newQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
@@ -45,6 +48,7 @@
 				    				<div class="row">
 				    					<form>
 				    						<input type="hidden" id="qtypevalue" name="qtype" value="" />
+				    						<input type="hidden" id="surveyid" name="surveyid" value="<%= survey.getSurveyId() %>" />
 				    						<div class="col-md-7">
 				    							<label for="qstatement" >Question statement</label>
 										     	<textarea class="form-control" id="qstatement" rows="5" placeholder="Type here_"></textarea>
@@ -61,7 +65,7 @@
 													    <option value="es">Spanish</option>
 													    <option value="fr">French</option>
 													    <option value="el">Greek</option>
-													  </select>
+													</select>
 												</div>
 												<div class="row">
 													<label for="mandatory" class="col-md-5" ><i class="fa fa-asterisk red"></i><span>Mandatory</span></label>
@@ -78,7 +82,7 @@
 													  </select>
 												</div>
 												<div class="center">
-													<a class="btn btn-primary" id="create-question">Create</a>
+													<a class="btn btn-primary" id="create-question" data-dismiss="modal" aria-label="Close">Create</a>
 												</div>
 											</div>
 				    					</form>

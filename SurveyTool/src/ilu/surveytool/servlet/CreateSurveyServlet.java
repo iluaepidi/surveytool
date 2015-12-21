@@ -73,8 +73,12 @@ public class CreateSurveyServlet extends HttpServlet {
 			survey.setSurveyId(surveyId);
 			
 			if(surveyId > 0)
-			{
+			{				
 				request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+				
+				int pageId = surveysOrch.createFormaAndPage(surveyId);
+				request.setAttribute(Attribute.s_PAGE_ID, pageId);
+				
 				List<String> jsFiles = new ArrayList<>();
 				jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
 				request.setAttribute(Attribute.s_JS_FILES, jsFiles);

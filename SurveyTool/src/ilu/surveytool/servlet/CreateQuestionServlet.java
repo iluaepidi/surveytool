@@ -1,6 +1,7 @@
 package ilu.surveytool.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +71,16 @@ public class CreateQuestionServlet extends HttpServlet {
 			question.setMandatory(Boolean.parseBoolean(request.getParameter(FormParameter.s_MANDATORY)));
 			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, mainVersion, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(FormParameter.s_QSTATEMENT)));
 			
+			int pageId = Integer.parseInt(request.getParameter(FormParameter.s_PAGE_ID));
+			
 			QuestionOrch questionOrch = new QuestionOrch();
-			int questionId = questionOrch.createQuestion(question);
-			question.setQuestionId(questionId);
+			/*int questionId = questionOrch.createQuestion(question, pageId);
+			question.setQuestionId(questionId);*/
+			String templateFile = questionOrch.getQuestionTypeTemplateFile(question.getQuestionType());
+			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
+			request.setAttribute(Attribute.s_QUESTION, question);			
+			
+			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}
 		else
 		{

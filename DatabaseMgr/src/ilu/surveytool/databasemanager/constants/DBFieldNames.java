@@ -21,6 +21,10 @@ public class DBFieldNames {
 	//project
 		public final static String s_PROJECTID = "idProject";
 		public final static String s_PROJECT_NAME = "projectName";
+	
+	//questiontype
+
+		public final static String s_QUESTIONTYPE_TEMPLATE_FILE = "templateFile";
 		
 	//questionnaire
 		public final static String s_QUESTIONNAIREID = "idQuestionnaire";

@@ -12,14 +12,11 @@ public class DBSQLQueries {
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
 		
+		//Question Type
+		public final static String s_SELECT_QUESTIONTYPE_TEMPLATE_FILE_BY_ID = "SELECT templateFile FROM surveytool.questiontype where name = ?";
+		
 		//User
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol WHERE (userName = ? or email = ?) and password = ?";
-		
-		//Question
-		public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`, `mandatory`, `mainVersion`) VALUES (?, "
-				+ "(select idQuestionType from surveytool.questiontype where name = ?), ?, "
-				+ "(select idCategory from surveytool.category where name = ?), ?, "
-				+ "(select idLanguage from surveytool.language where isoName = ?))";
 		
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
@@ -49,8 +46,20 @@ public class DBSQLQueries {
 					+ "(SELECT idContentType FROM surveytool.contenttype WHERE name = ?), ?)";
 		//contentIndex
 			public final static String s_INSERT_CONTENT_INDEX = "INSERT INTO `surveytool`.`contentindex` (`idContent`) VALUES (null);";
+		//forma
+			public final static String s_INSERT_FORMA = "INSERT INTO `surveytool`.`forma` (`idQuestionnaire`) VALUES (?)";
+		//page
+			public final static String s_INSERT_PAGE = "INSERT INTO `surveytool`.`page` (`idForma`, `numPage`) VALUES (?, ?)";
 		//project	
 			public final static String s_INSERT_PROJECT = "INSERT INTO `surveytool`.`project` (`projectName`) VALUES (?)";
+
+		//Question
+			public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`, `mainVersion`) VALUES (?, "
+				+ "(select idQuestionType from surveytool.questiontype where name = ?), ?, "
+				+ "(select idCategory from surveytool.category where name = ?), "
+				+ "(select idLanguage from surveytool.language where isoName = ?))";
+		//QuestionByPage
+			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `numQuestion`, `mandatory`) VALUES (?, ?, ?, ?)";
 		//Questionnaire
 			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
 			

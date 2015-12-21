@@ -265,6 +265,65 @@ public class SurveyDB {
 		
 		return surveyId;
 	}
+
+	public int insertForma(int surveyId) {
+		//System.out.println("inserUser");
+		int formaId = 0;
+		//int contentId = this.insertContentIndex();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_FORMA, Statement.RETURN_GENERATED_KEYS);
+		   pstm.setInt(1, surveyId);  
+		   
+		   boolean notInserted = pstm.execute();
+		   
+		   if(!notInserted)
+		   {
+			   ResultSet rs = pstm.getGeneratedKeys();
+			   if(rs.next())
+				   formaId = rs.getInt(1);
+		   }
+		  		  	   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return formaId;
+	}
+
+	public int insertPage(int formaId, int numPage) {
+		//System.out.println("inserUser");
+		int pageId = 0;
+		//int contentId = this.insertContentIndex();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_PAGE, Statement.RETURN_GENERATED_KEYS);
+		   pstm.setInt(1, formaId);
+		   pstm.setInt(2, numPage);
+		   
+		   boolean notInserted = pstm.execute();
+		   
+		   if(!notInserted)
+		   {
+			   ResultSet rs = pstm.getGeneratedKeys();
+			   if(rs.next())
+				   pageId = rs.getInt(1);
+		   }
+		  		  	   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return pageId;
+	}
 	
 
 }

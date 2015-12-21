@@ -37,12 +37,12 @@ $(function() {
 		$('#panel-section1 .panel-heading h3 #survey-section-title').focus();
 	});
 	
-	$('#add-menu-frame1 a').click(function(e){
+	$('#add-menu-frame-0 a').click(function(e){
 		e.stopPropagation();
 		bodyClick();
-		currentFrameActivate = "add-menu-frame1";
+		currentFrameActivate = "add-menu-frame-0";
 		//$('#add-menu-frame1 a').prop("class", "btn-add col-sm-1");
-		$('#add-menu-frame1 .add-menu').css("display", "inherit");
+		$('#add-menu-frame-0 .add-menu').css("display", "inherit");
 	});
 	
 	$('#add-menu-frame2 a').click(function(e){

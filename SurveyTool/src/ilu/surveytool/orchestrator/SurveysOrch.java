@@ -45,6 +45,17 @@ public class SurveysOrch {
 		return surveyId;
 	}
 	
+	public int createFormaAndPage(int surveyId)
+	{
+		int pageId = 0;
+		
+		SurveyDB surveyDB = new SurveyDB();
+		int formaId = surveyDB.insertForma(surveyId);
+		pageId = surveyDB.insertPage(formaId, 0);
+		
+		return pageId;
+	}
+	
 	public Survey getSurveyDetail(int surveyId)
 	{
 		SurveyDB surveyDB = new SurveyDB();

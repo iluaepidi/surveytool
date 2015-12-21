@@ -13,7 +13,7 @@ public class QuestionOrch {
 		super();
 	}
 
-	public int createQuestion(Question question)
+	public int createQuestion(Question question, int pageId)
 	{
 		int questionId = 0;
 		
@@ -33,9 +33,17 @@ public class QuestionOrch {
 				Content content = question.getContents().get(key);
 				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
 			}
+			
+			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), 1);
 		}
 		
 		return questionId;
+	}
+	
+	public String getQuestionTypeTemplateFile(String questionType)
+	{
+		QuestionDB questionDB = new QuestionDB();
+		return questionDB.getQuestionTypeTemplateFileByName(questionType);
 	}
 	
 }
