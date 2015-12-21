@@ -8,9 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
+import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
@@ -76,6 +78,49 @@ public class SurveyDB {
 	   			response.add(questionnaire);
 	   		}
 	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+	
+	public Survey getQuestionnairesById(int surveyId)
+	{
+		Survey response = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_ID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = new Survey();
+	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.setSurveyId(surveyId);
+	   			
+	   			String contenttypeName = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+	   			String isoname = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+	   			String text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+	   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));
+	   			
+		   		while(rs.next())
+		   		{
+		   			contenttypeName = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+		   			isoname = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+		   			text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+		   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));		   			
+		   		}
+	   		}
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block

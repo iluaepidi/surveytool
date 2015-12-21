@@ -1,4 +1,6 @@
-				<%@page import="ilu.surveytool.databasemanager.DataObject.SurveyTableInfo"%>
+				<%@page import="ilu.surveytool.constants.Address"%>
+<%@page import="ilu.surveytool.constants.FormParameter"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.SurveyTableInfo"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
 <div class="container-fluid">
@@ -27,16 +29,21 @@
 										<th class="center">Actions</th>
 									</tr>
 									<%
+									System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 									for(SurveyTableInfo survey : surveys)
 									{
 									%>
 									<tr>
 										<td class="center"><%= survey.getDeadLineDate() %></td>
-										<td><a href="#"><%= survey.getTitle() %></a></td>
+										<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + FormParameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 										<td>
 											<div class="progress percent-bar">
 												<%
-												float percentage = ((survey.getNumUsersFinished() * 100) / survey.getNumUsers());
+												float percentage = 0;
+												if(survey.getNumUsers() > 0)
+												{
+													percentage = ((survey.getNumUsersFinished() * 100) / survey.getNumUsers());	
+												}
 												%>
 												<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;"><%= survey.getNumUsersFinished() %>/<%= survey.getNumUsers() %></div>
 											</div>

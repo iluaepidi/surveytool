@@ -7,6 +7,7 @@ public class Attribute {
 	public final static String s_LOGIN_RESPONSE = "loginResponse";
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
 	public final static String s_SURVEYS = "surveys";
-	public final static String s_SURVEY_INFO = "surveyInfo";	
+	public final static String s_SURVEY_INFO = "surveyInfo";
+	public final static String s_JS_FILES = "jsFiles";
 
 }

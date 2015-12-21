@@ -1,5 +1,7 @@
 package ilu.surveytool.orchestrator;
 
+import java.util.Iterator;
+
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -31,13 +33,22 @@ public class SurveysOrch {
 		
 		if(surveyId > 0)
 		{
-			for(Content content : survey.getContents())
+			Iterator<String> iter = survey.getContents().keySet().iterator();
+			while(iter.hasNext())
 			{
+				String key = iter.next();
+				Content content = survey.getContents().get(key);
 				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
 			}
 		}
 		
 		return surveyId;
+	}
+	
+	public Survey getSurveyDetail(int surveyId)
+	{
+		SurveyDB surveyDB = new SurveyDB();
+		return surveyDB.getQuestionnairesById(surveyId);
 	}
 
 }

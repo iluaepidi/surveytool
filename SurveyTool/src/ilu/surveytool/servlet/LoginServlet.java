@@ -19,7 +19,7 @@ import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.orchestrator.LoginOrch;
-import ilu.surveytool.properties.BodyPages;
+import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
  * Servlet implementation class LoginServlet
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void ProcessRequest(HttpServletRequest request, HttpServletResponse response)
 	{
-		BodyPages bodyPages = new BodyPages(getServletContext().getRealPath("/"));
+		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
 		//System.out.println("Path: " + bodyPages.getBudyPagePath());
 		/**

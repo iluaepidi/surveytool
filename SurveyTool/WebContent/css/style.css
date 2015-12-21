@@ -344,6 +344,7 @@ footer {margin-top: 10px;}
 .btn-add-media span {margin-left: 12px;
     margin-top: 4px;}
     
+.frame-basic-Settings {display: none;}
 .panel-question {width: 95%;
 	margin: 20px auto;
 	text-align: center;

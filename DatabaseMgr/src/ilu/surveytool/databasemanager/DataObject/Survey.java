@@ -1,22 +1,24 @@
 package ilu.surveytool.databasemanager.DataObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Survey {
 	
 	int surveyId;
-	List<Content> contents;
+	//List<Content> contents;
+	HashMap<String, Content> contents;
 	String project = "";
 	int author;
 	
 
 	public Survey() {
-		this.contents = new ArrayList<Content>();
+		this.contents = new HashMap<String, Content>();
 	}
 
 
-	public Survey(int surveyId, List<Content> contents, String project, int author) {
+	public Survey(int surveyId, HashMap<String, Content> contents, String project, int author) {
 		super();
 		this.surveyId = surveyId;
 		this.contents = contents;
@@ -35,12 +37,12 @@ public class Survey {
 	}
 	
 	
-	public List<Content> getContents() {
+	public HashMap<String, Content> getContents() {
 		return contents;
 	}
 	
 	
-	public void setContents(List<Content> contents) {
+	public void setContents(HashMap<String, Content> contents) {
 		this.contents = contents;
 	}
 	

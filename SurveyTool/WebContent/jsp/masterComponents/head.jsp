@@ -1,3 +1,5 @@
+<%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="java.util.List"%>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,3 +27,15 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
 		<script src="js/stinterface.js"></script>
+	<%
+	List<String> jsFiles = (List<String>) request.getAttribute(Attribute.s_JS_FILES);
+	if(jsFiles != null)
+	{
+		for(String jsFile : jsFiles)
+		{
+	%>
+		<script src="<%= jsFile %>"></script>
+	<%
+		}
+	}
+	%>

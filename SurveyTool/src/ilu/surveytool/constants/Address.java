@@ -8,8 +8,14 @@ public class Address {
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
 		
+	//jsFiles
+		public final static String s_JS_EDIT_SURVEY = "editSurvey";
+		
 	//Servielt
+		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
+		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
+		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
 		
 	//JSP MasterPage

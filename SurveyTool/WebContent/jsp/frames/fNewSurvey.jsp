@@ -1,6 +1,7 @@
 
 	  			<!-- Modal -->
-				<div class="modal fade survey-win" id="newSurveyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<%@page import="ilu.surveytool.constants.Address"%>
+<div class="modal fade survey-win" id="newSurveyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
 				    		<div class="panel-heading"> 
@@ -10,7 +11,7 @@
 				    		<div class="panel-body">				    			
 				    			<div class="survey-frame">
 				    				<h3>Create from scratch</h3>
-									<form class="form-horizontal">
+									<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal">
 										<div class="row">
 											<div class="col-sm-7 margin-bottom-10">
 												<label for="surveyTitle" class="col-sm-2 control-label left">Survey title</label>

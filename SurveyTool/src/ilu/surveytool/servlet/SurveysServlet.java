@@ -1,6 +1,9 @@
 package ilu.surveytool.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,62 +15,61 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.FormParameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
-import ilu.surveytool.orchestrator.UserPanelHomeOrch;
+import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.orchestrator.SurveysOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class UserPanelHomeServlet
+ * Servlet implementation class SurveysServelt
  */
-@WebServlet("/UserPanelHomeServlet")
-public class UserPanelHomeServlet extends HttpServlet {
+@WebServlet("/SurveysServlet")
+public class SurveysServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserPanelHomeServlet() {
+    public SurveysServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProcessRequest(request, response);
+		this.processRequest(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProcessRequest(request, response);
+		this.processRequest(request, response);
 	}
 	
-	protected void ProcessRequest(HttpServletRequest request, HttpServletResponse response)
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
-		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			String bodyPage = request.getParameter(FormParameter.s_UPOPTION);
-			if(bodyPage != null && !bodyPage.isEmpty())
-			{
-				if(bodyPage.equals(Address.s_BODY_SURVEYS))
-				{
-					UserPanelHomeOrch uphOrch = new UserPanelHomeOrch();
-					request.setAttribute(Attribute.s_SURVEYS, uphOrch.getSurveysTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
-				}
-				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
-			}			
+			int surveyId = Integer.parseInt(request.getParameter(FormParameter.s_SURVEY_ID));		
+			SurveysOrch surveysOrch = new SurveysOrch();
+			Survey survey = surveysOrch.getSurveyDetail(surveyId);
+			
+			request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+			List<String> jsFiles = new ArrayList<>();
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
+			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
 		}
 		else
 		{
 			userSessionInfo = new LoginResponse();
 			userSessionInfo.setErrorMsg("Session is expired or not exist.");
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
 		}
 		

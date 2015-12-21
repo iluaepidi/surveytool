@@ -10,6 +10,13 @@ public class DBFieldNames {
 	
 	//content
 		public final static String s_CONTENTID = "idContent";
+		public final static String s_CONTENT_TEXT = "text";
+	
+	//contenttype
+		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";
+		
+	//language
+		public final static String s_LANGUAGE_ISONAME = "isoName";
 		
 	//project
 		public final static String s_PROJECTID = "idProject";

@@ -16,42 +16,41 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.FormParameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
-import ilu.surveytool.databasemanager.constants.DBFieldNames;
+import ilu.surveytool.orchestrator.QuestionOrch;
 import ilu.surveytool.orchestrator.SurveysOrch;
-import ilu.surveytool.orchestrator.UserPanelHomeOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class CreateSurveyServlet
+ * Servlet implementation class CreateQuestionServlet
  */
-@WebServlet("/CreateSurveyServlet")
-public class CreateSurveyServlet extends HttpServlet {
+@WebServlet("/CreateQuestionServlet")
+public class CreateQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String language = "en";
+	private String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateSurveyServlet() {
+    public CreateQuestionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		this.processRequest(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
+		this.processRequest(request, response);
 	}
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -61,26 +60,19 @@ public class CreateSurveyServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			Survey survey = new Survey();
-			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(FormParameter.s_TITLE)));
-			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(FormParameter.s_DESCRIPTION)));
-			survey.setProject(request.getParameter(FormParameter.s_PROJECT));
-			survey.setAuthor(userSessionInfo.getUserId());
+			String mainVersion = request.getParameter(FormParameter.s_MAIN_VERSION);
+			Question question = new Question();
+			question.setQuestionType(request.getParameter(FormParameter.s_QTYPE));
+			question.setCategory("generic");
+			question.setTag("generic");
+			question.setHelpText(Boolean.parseBoolean(request.getParameter(FormParameter.s_HELP_TEXT)));
+			question.setMainVersion(request.getParameter(FormParameter.s_MAIN_VERSION));
+			question.setMandatory(Boolean.parseBoolean(request.getParameter(FormParameter.s_MANDATORY)));
+			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, mainVersion, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(FormParameter.s_QSTATEMENT)));
 			
-			SurveysOrch surveysOrch = new SurveysOrch();
-			int surveyId = surveysOrch.createSurvey(survey);
-			
-			survey.setSurveyId(surveyId);
-			
-			if(surveyId > 0)
-			{
-				request.setAttribute(Attribute.s_SURVEY_INFO, survey);
-				List<String> jsFiles = new ArrayList<>();
-				jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
-				request.setAttribute(Attribute.s_JS_FILES, jsFiles);
-				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
-			}
-			
+			QuestionOrch questionOrch = new QuestionOrch();
+			int questionId = questionOrch.createQuestion(question);
+			question.setQuestionId(questionId);
 		}
 		else
 		{
@@ -88,9 +80,11 @@ public class CreateSurveyServlet extends HttpServlet {
 			userSessionInfo.setErrorMsg("Session is expired or not exist.");
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
+			
+			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		}
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+		//CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}
 
 }
