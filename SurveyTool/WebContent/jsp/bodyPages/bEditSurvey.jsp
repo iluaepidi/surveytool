@@ -3,6 +3,7 @@
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
+				int pageId = (int) request.getAttribute(Attribute.s_PAGE_ID);
 				%>
 				
 				<div class="container-fluid">
@@ -53,19 +54,20 @@
 									</div>
 									
 									<div class="page" id="page1">
-										<input type="hidden" id="pageid1" value="1" />
-										<div class="panel-body">									
-						  					<div class="add-menu-frame" id="add-menu-frame-0">
+										<input type="hidden" id="pageid1" value="<%= pageId %>" />
+										<div class="panel-body" id="panel-body">									
+						  					<div class="add-menu-frame" id="add-menu-frame">
 						  						<div class="col-sm-5 add-vacio"></div>
 					  							<a class="btn-add col-sm-2" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
 					  							<div class="col-sm-5 add-menu">
 					  								<div class="col-sm-1">...</div>
 					  								<div class="btn-group col-sm-11" role="group" aria-label="...">
-														<button type="button" class="btn btn-add-menu" id="btn-question-0" data-toggle="modal" data-target="#newQuestionModal">Question</button>
-														<button type="button" class="btn btn-add-menu" id="btn-body-content-0">Body content</button>
+														<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal">Question</button>
+														<button type="button" class="btn btn-add-menu" id="btn-body-content">Body content</button>
 													</div>
 					  							</div>  							
 					  						</div>	
+					  						
 					  							  					
 										</div>					
 									</div>																		

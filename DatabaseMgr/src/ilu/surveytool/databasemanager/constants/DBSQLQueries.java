@@ -9,6 +9,12 @@ public class DBSQLQueries {
 				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 				+ "WHERE l.isoName = ? and ct.name = ?";
 		
+		//page
+		public final static String s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID = "SELECT idPage FROM surveytool.questionnaire q "
+		+ "inner join surveytool.forma f on q.idQuestionnaire = f.idQuestionnaire "
+		+ "inner join surveytool.page p on f.idForma = p.idForma "
+		+ "where q.idQuestionnaire = ?";
+		
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
 		

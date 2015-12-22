@@ -2,7 +2,9 @@
 				<!-- Modal -->
 				<%@page import="ilu.surveytool.constants.Attribute"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
-				<%Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); %>
+				<%
+				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
+				%>
 				<div class="modal fade survey-win" id="newQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 

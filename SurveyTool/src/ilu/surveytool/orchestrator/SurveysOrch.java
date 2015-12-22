@@ -61,5 +61,11 @@ public class SurveysOrch {
 		SurveyDB surveyDB = new SurveyDB();
 		return surveyDB.getQuestionnairesById(surveyId);
 	}
+	
+	public int getPageIdBySurveyId(int surveyId)
+	{
+		SurveyDB surveyDB = new SurveyDB();
+		return surveyDB.getPageId(surveyId);
+	}
 
 }

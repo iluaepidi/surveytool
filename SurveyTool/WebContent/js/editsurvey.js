@@ -3,7 +3,7 @@
  */
 var qtypeId;
 var numQuestions = 0;
-var currentNode = 0;
+var currentAddNode;
 var addMenuFrameCad = "add-menu-frame-";
 
 $(function() {
@@ -37,18 +37,13 @@ $(function() {
 			surveyid: $('#surveyid').val(),
 			pageid: $('#pageid1').val()
 		}, function(responseText) {
-			//$('#tabla').html(responseText);
-			console.log("Question Simple: " + responseText);
-			$('#' + addMenuFrameCad + currentNode).after(responseText);
+			//$('#' + addMenuFrameCad + currentNode).after(responseText);
+			currentAddNode.after(responseText);			
 		});
-		//console.log("Page Id: " + $('#pageid1').val());
 	});
 	
-	$('#btn-question-0').click(function(){
-		var btnId = $(this).attr('id');
-		var aux = btnId.split('-');
-		currentNode = parseInt(aux[2]);
-		console.log("btn id: " + currentNode);
+	$('#panel-body').on("click", '#btn-question', function(){
+		currentAddNode = $(this).parent().parent().parent();
 	});
 	
 });

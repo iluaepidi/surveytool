@@ -199,6 +199,34 @@ public class SurveyDB {
 		
 		return response;
 	}
+
+	public int getPageId(int surveyId)
+	{
+		int response = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID);		
+		   	pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getInt(DBFieldNames.s_PAGE_ID);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 	
 	/**
 	 * Inserts 

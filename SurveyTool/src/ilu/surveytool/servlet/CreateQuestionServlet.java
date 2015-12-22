@@ -74,8 +74,8 @@ public class CreateQuestionServlet extends HttpServlet {
 			int pageId = Integer.parseInt(request.getParameter(FormParameter.s_PAGE_ID));
 			
 			QuestionOrch questionOrch = new QuestionOrch();
-			/*int questionId = questionOrch.createQuestion(question, pageId);
-			question.setQuestionId(questionId);*/
+			int questionId = questionOrch.createQuestion(question, pageId);
+			question.setQuestionId(questionId);
 			String templateFile = questionOrch.getQuestionTypeTemplateFile(question.getQuestionType());
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
 			request.setAttribute(Attribute.s_QUESTION, question);			

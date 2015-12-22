@@ -7,7 +7,7 @@
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								%>
-										<div class="panel-question" id="panel-question1">
+										<div class="panel-question" id="panel-question">
 											<div class="panel-heading">	
 												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
 												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
@@ -51,54 +51,11 @@
 															</select>
 														</div>
 														<div class="col-md-8">
-															 <label for="qresponse">Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
+															 <label for="qresponse"	>Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
 														     <textarea class="form-control" id="qresponse" rows="5" placeholder="Type here_"></textarea>
 														</div>													 
 							  						</div>						  						
 							  					</div>
-							  					
-							  					<!-- <div class="question-frame">
-							  						<h4>Response settings</h4>
-							  						
-							  						<ul class="option-list">
-							  							<li class="option-item">
-						  									<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button>
-						  									<div class="circle-info circle-grey fleft">1</div>
-						  									<input type="text" class="option-title form-control fleft" />
-						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
-							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
-							  								</div>
-							  							</li>
-							  							<li class="option-item">
-						  									<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button>
-						  									<div class="circle-info circle-grey fleft">2</div>
-						  									<input type="text" class="option-title form-control fleft" />
-						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
-							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
-							  								</div>
-							  							</li>
-							  							<li class="center">
-							  								<a class="btn-plus-small"><i class="fa fa-plus-square"></i></a>
-							  							</li>
-							  						</ul>
-							  					</div>
-							  					
-							  					<div class="question-frame">
-							  						<h4>Routes</h4>
-							  						<div class="routes-select">
-								  						<label for="dependencies">Dependencies</label>
-							  							<select class="form-control-small" id="dependencies">
-														  	<option value="q25" selected>To Q25 - Sports</option>
-														    <option value="q21">To Q21 - TV</option>
-														    <option value="q23">To Q23 - Internet</option>
-														</select>
-														<i class="fa fa-cogs fa-2x"></i>
-													</div>
-							  					</div> -->
-							  							  					
+							  									
 											</div>																							
 										</div>

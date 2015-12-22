@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-										<div class="add-menu-frame" id="add-menu-frame2">
+										<div class="add-menu-frame" id="add-menu-frame">
 											<div class="col-sm-5 add-vacio"></div>
 				  							<a class="btn-add col-sm-12" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
 				  							<div class="col-sm-5 add-menu">

@@ -18,6 +18,9 @@ public class DBFieldNames {
 	//language
 		public final static String s_LANGUAGE_ISONAME = "isoName";
 		
+	//page
+		public final static String s_PAGE_ID = "idPage";
+		
 	//project
 		public final static String s_PROJECTID = "idProject";
 		public final static String s_PROJECT_NAME = "projectName";

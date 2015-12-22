@@ -63,6 +63,9 @@ public class SurveysServlet extends HttpServlet {
 			List<String> jsFiles = new ArrayList<>();
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+			
+			int pageId = surveysOrch.getPageIdBySurveyId(surveyId);
+			request.setAttribute(Attribute.s_PAGE_ID, pageId);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
 		}
 		else
