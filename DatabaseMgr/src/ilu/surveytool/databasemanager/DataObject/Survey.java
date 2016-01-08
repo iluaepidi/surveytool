@@ -11,6 +11,7 @@ public class Survey {
 	HashMap<String, Content> contents;
 	String project = "";
 	int author;
+	List<Question> questions = null;
 	
 
 	public Survey() {
@@ -24,6 +25,17 @@ public class Survey {
 		this.contents = contents;
 		this.project = project;
 		this.author = author;
+	}
+	
+
+	public Survey(int surveyId, HashMap<String, Content> contents, String project, int author,
+			List<Question> questions) {
+		super();
+		this.surveyId = surveyId;
+		this.contents = contents;
+		this.project = project;
+		this.author = author;
+		this.questions = questions;
 	}
 	
 	
@@ -64,6 +76,16 @@ public class Survey {
 
 	public void setAuthor(int author) {
 		this.author = author;
+	}
+
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 

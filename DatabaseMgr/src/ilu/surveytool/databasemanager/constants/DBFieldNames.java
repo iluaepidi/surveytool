@@ -7,6 +7,9 @@ public class DBFieldNames {
 		public final static String s_GENERICO_ALL_USERS = "allUsers";
 		public final static String s_GENERICO_USERS_FINISHED = "usersFinished";
 		public final static String s_CREATION_DATE = "creationDate";
+		
+	//category
+		public final static String s_CATEGORY_NAME = "categoryName";
 	
 	//content
 		public final static String s_CONTENTID = "idContent";
@@ -24,9 +27,15 @@ public class DBFieldNames {
 	//project
 		public final static String s_PROJECTID = "idProject";
 		public final static String s_PROJECT_NAME = "projectName";
+		
+	//Question
+		public final static String s_QUESTION_ID = "idQuestion";
+		public final static String s_QUESTION_TAG = "tag";
+		public final static String s_QUESTION_MANDATORY = "mandatory";
+		public final static String s_QUESTION_MAIN_VERSION = "mainVersion";
 	
 	//questiontype
-
+		public final static String s_QUESTIONTYPE_NAME = "questionTypeName";
 		public final static String s_QUESTIONTYPE_TEMPLATE_FILE = "templateFile";
 		
 	//questionnaire

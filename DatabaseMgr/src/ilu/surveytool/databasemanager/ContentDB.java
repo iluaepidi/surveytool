@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
@@ -41,6 +43,38 @@ public class ContentDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		 }
+	}
+	
+	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String language)
+	{
+		HashMap<String, Content> contents = new HashMap<String, Content>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
+	   		pstm.setInt(1, contentId);
+	   		pstm.setString(2, language);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			String contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+	   			contents.put(contentType, new Content(contentId, language, 
+	   					rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_CONTENT_TEXT)));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
 	}
 	
 	public int insertContentIndex() {

@@ -1,4 +1,7 @@
-				<%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
+				<%@page import="ilu.surveytool.constants.Address"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
+<%@page import="java.util.List"%>
+<%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 				<%
@@ -68,6 +71,21 @@
 					  							</div>  							
 					  						</div>	
 					  						
+					  						<%
+					  							String token = "/";
+					  							List<Question> questions = survey.getQuestions();
+					  							if(questions != null && !questions.isEmpty())
+					  							{
+					  								for(Question question : questions)
+					  								{
+					  									request.setAttribute(Attribute.s_QUESTION, question);
+					  									request.setAttribute(Attribute.s_TEMPLATE_FILE, question.getTemplatePage());
+					  						%>
+					  									<jsp:include page="<%= token + Address.s_EDIT_QUESTION_MASTER %>" />
+					  						<%			
+					  								}
+					  							}
+					  						%>
 					  							  					
 										</div>					
 									</div>																		

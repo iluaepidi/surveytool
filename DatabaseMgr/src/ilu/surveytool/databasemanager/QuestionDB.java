@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -50,6 +51,49 @@ public class QuestionDB {
 	/**
 	 * Selects
 	 */
+	
+	public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
+	{
+		List<Question> questions = new ArrayList<Question>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			String mainVersion = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
+	   			ContentDB contentDB = new ContentDB();
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			questions.add(new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
+	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
+	   					null, 
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), 
+	   					contents, 
+	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
+	   					rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY), 
+	   					mainVersion, 
+	   					false,
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE)));
+	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questions;
+	}
 	
 	public String getQuestionTypeTemplateFileByName(String questionType)
 	{

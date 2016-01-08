@@ -3,6 +3,7 @@ package ilu.surveytool.orchestrator;
 import java.util.Iterator;
 
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -59,7 +60,18 @@ public class SurveysOrch {
 	public Survey getSurveyDetail(int surveyId)
 	{
 		SurveyDB surveyDB = new SurveyDB();
-		return surveyDB.getQuestionnairesById(surveyId);
+		Survey survey = surveyDB.getQuestionnairesById(surveyId);
+		QuestionDB questionDB = new QuestionDB();
+		survey.setQuestions(questionDB.getQuestionsBySurveyId(surveyId, ""));
+		return survey;
+	}
+	
+	public Survey getSurveyDetailByPublicId(String publicId, String lang)
+	{
+		SurveyDB surveyDB = new SurveyDB();
+		if(lang == null || lang.isEmpty()) lang = "en";
+		Survey survey = surveyDB.getQuestionnairesByPublicId(publicId, lang);
+		return survey;
 	}
 	
 	public int getPageIdBySurveyId(int surveyId)

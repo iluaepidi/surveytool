@@ -14,6 +14,7 @@ public class Question {
 	boolean mandatory = false;
 	String mainVersion = "";
 	boolean helpText = false;
+	String templatePage = "";
 	
 	public Question() {
 		super();
@@ -33,6 +34,24 @@ public class Question {
 		this.mandatory = mandatory;
 		this.mainVersion = mainVersion;
 		this.helpText = helpText;
+	}
+	
+	
+
+	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
+			HashMap<String, Content> contents, String category, boolean mandatory, String mainVersion, boolean helpText,
+			String templatePage) {
+		super();
+		this.questionId = questionId;
+		this.tag = tag;
+		this.creationDate = creationDate;
+		this.questionType = questionType;
+		this.contents = contents;
+		this.category = category;
+		this.mandatory = mandatory;
+		this.mainVersion = mainVersion;
+		this.helpText = helpText;
+		this.templatePage = templatePage;
 	}
 
 	public int getQuestionId() {
@@ -105,6 +124,14 @@ public class Question {
 
 	public void setHelpText(boolean helpText) {
 		this.helpText = helpText;
+	}
+
+	public String getTemplatePage() {
+		return templatePage;
+	}
+
+	public void setTemplatePage(String templatePage) {
+		this.templatePage = templatePage;
 	}
 
 	@Override

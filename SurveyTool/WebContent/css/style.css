@@ -436,3 +436,15 @@ footer {margin-top: 10px;}
 .routes-select label {margin-top: 3px;}
 .routes-select select {margin: 0px 8px;}
 
+/*----------------------------------------------*\
+		$USER_PANEL_EDIT_SURVEY
+\*----------------------------------------------*/
+
+.survey-form {border: 2px solid #337ab7;
+    border-radius: 10px;
+    padding: 15px 1.5%;}
+.form-question {background-color: #C8C8C8;
+	border-radius: 10px;
+    padding: 1.5%;}
+.form-question textarea {border: 1px solid #000;}
+.form-question label {font-size: 1.3em !important;}

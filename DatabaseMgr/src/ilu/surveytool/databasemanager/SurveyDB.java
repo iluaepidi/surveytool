@@ -1,5 +1,7 @@
 package ilu.surveytool.databasemanager;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -132,6 +134,44 @@ public class SurveyDB {
 		return response;
 	}
 	
+	public Survey getQuestionnairesByPublicId(String publicId, String lang)
+	{
+		Survey response = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = new Survey();
+	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			
+	   			ContentDB contentDB = new ContentDB();
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+		   		
+		   		QuestionDB questionDB = new QuestionDB();
+				response.setQuestions(questionDB.getQuestionsBySurveyId(response.getSurveyId(), lang));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+	
 	public List<SurveyTableInfo> getSurveysTableInfoByAuthor(int author, String language)
 	{
 		List<SurveyTableInfo> response = new ArrayList<SurveyTableInfo>();
@@ -228,6 +268,34 @@ public class SurveyDB {
 		return response;
 	}
 	
+	public boolean existPublicId(String publicId)
+	{
+		boolean result = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);		
+		   	pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			result = true;
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * Inserts 
 	 */
@@ -264,6 +332,7 @@ public class SurveyDB {
 	public int insertSurvey(int author, int project, int contentId) {
 		//System.out.println("inserUser");
 		int surveyId = 0;
+		
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -272,7 +341,7 @@ public class SurveyDB {
 		   pstm.setString(1, DBConstants.s_VALUE_SURVEY_STATE_STOP);
 		   pstm.setInt(2, contentId); 
 		   pstm.setInt(3, project); 
-		   pstm.setString(4, String.valueOf(contentId)); 
+		   pstm.setString(4, this._generatePublicId()); 
 		   pstm.setInt(5, author);  
 		   
 		   boolean notInserted = pstm.execute();
@@ -351,6 +420,19 @@ public class SurveyDB {
 		}
 		
 		return pageId;
+	}
+	
+	private String _generatePublicId()
+	{
+		String publicId = "";
+		
+		SecureRandom random = new SecureRandom();
+		
+		do{
+			publicId = new BigInteger(50, random).toString(32);
+		}while(this.existPublicId(publicId));
+						
+		return publicId;
 	}
 	
 
