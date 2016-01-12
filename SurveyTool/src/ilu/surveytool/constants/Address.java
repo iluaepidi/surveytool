@@ -17,6 +17,7 @@ public class Address {
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
+		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
 		
 	//JSP MasterPage

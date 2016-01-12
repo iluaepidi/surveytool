@@ -1,6 +1,10 @@
 package ilu.surveytool.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,16 +21,16 @@ import ilu.surveytool.orchestrator.SurveysOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class survey
+ * Servlet implementation class SurveyProcessServlet
  */
-@WebServlet("/survey")
-public class survey extends HttpServlet {
+@WebServlet("/SurveyProcessServlet")
+public class SurveyProcessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public survey() {
+    public SurveyProcessServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +39,7 @@ public class survey extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.processRequest(request, response);
+		
 	}
 
 	/**
@@ -47,18 +51,15 @@ public class survey extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
-		String sid = request.getParameter(Parameter.s_SID);
-		String language = request.getParameter(Parameter.s_LANGUAGE_LAN);
+		Enumeration<String> paramNames = request.getParameterNames();
 		
-		System.out.println("SID: " + sid + " - Language: " + language);
+		while(paramNames.hasMoreElements())
+		{
+			String element = paramNames.nextElement();
+			System.out.println("Param: " + element + " = " + request.getParameter(element));
+		}
 		
-		SurveysOrch surveyOrch = new SurveysOrch();
-		Survey survey = surveyOrch.getSurveyDetailByPublicId(sid, language);
-		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
-		
-		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
-		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE));
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+		//CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}
 
 }

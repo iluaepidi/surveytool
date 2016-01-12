@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.constants.FormParameter;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Question;
@@ -61,17 +61,17 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			String mainVersion = request.getParameter(FormParameter.s_MAIN_VERSION);
+			String mainVersion = request.getParameter(Parameter.s_MAIN_VERSION);
 			Question question = new Question();
-			question.setQuestionType(request.getParameter(FormParameter.s_QTYPE));
+			question.setQuestionType(request.getParameter(Parameter.s_QTYPE));
 			question.setCategory("generic");
 			question.setTag("generic");
-			question.setHelpText(Boolean.parseBoolean(request.getParameter(FormParameter.s_HELP_TEXT)));
-			question.setMainVersion(request.getParameter(FormParameter.s_MAIN_VERSION));
-			question.setMandatory(Boolean.parseBoolean(request.getParameter(FormParameter.s_MANDATORY)));
-			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, mainVersion, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(FormParameter.s_QSTATEMENT)));
+			question.setHelpText(Boolean.parseBoolean(request.getParameter(Parameter.s_HELP_TEXT)));
+			question.setMainVersion(request.getParameter(Parameter.s_MAIN_VERSION));
+			question.setMandatory(Boolean.parseBoolean(request.getParameter(Parameter.s_MANDATORY)));
+			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, mainVersion, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
 			
-			int pageId = Integer.parseInt(request.getParameter(FormParameter.s_PAGE_ID));
+			int pageId = Integer.parseInt(request.getParameter(Parameter.s_PAGE_ID));
 			
 			QuestionOrch questionOrch = new QuestionOrch();
 			int questionId = questionOrch.createQuestion(question, pageId);

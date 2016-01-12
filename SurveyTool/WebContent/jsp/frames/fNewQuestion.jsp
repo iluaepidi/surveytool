@@ -22,13 +22,13 @@
 										<div class="col-sm-1 center btn-qtype">
 											<a id="simple"><i class="fa fa-list-ul fa-2x btn btn-default"></i> <span class="qtype-icon-text">Simple</span></a>
 										</div>
-										<div class="col-sm-1 center btn-qtype">
+										<!-- <div class="col-sm-1 center btn-qtype">
 											<a id="multiple"><i class="fa fa-list fa-2x btn btn-default"></i> <span class="qtype-icon-text">Multiple</span></a>
-										</div>
+										</div> -->
 										<div class="col-sm-1 center btn-qtype">
 											<a id="scale"><i class="fa fa-arrows-h fa-2x btn btn-default"></i> <span class="qtype-icon-text">Scale</span></a>
 										</div>
-										<div class="col-sm-1 center btn-qtype">
+										<!-- <div class="col-sm-1 center btn-qtype">
 											<a id="ordering"><i class="fa fa-sort-numeric-asc fa-2x btn btn-default"></i> <span class="qtype-icon-text">Ordering</span></a>
 										</div>
 										<div class="col-sm-1 center btn-qtype">
@@ -39,7 +39,7 @@
 										</div>
 										<div class="col-sm-1 center btn-qtype">
 											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text">Code</span></a>
-										</div>
+										</div> -->
 									</div>
 				    			</div>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">

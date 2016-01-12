@@ -6,7 +6,7 @@
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								%>
-										<div class="panel-question" id="panel-question1">
+										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
 											<div class="panel-heading">	
 												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
 												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
@@ -42,40 +42,51 @@
 							  							<div class="col-md-4">
 								  							<label for="type-question">Type</label>
 								  							<select class="form-control" id="type-question">
-															  	<option value="ls" selected>Text</option>
-															  	<option value="ls" selected>Likert scale</option>
-															    <option value="sim">Simple</option>
+															  	<option value="tx">Text</option>
+															  	<option value="ls">Likert scale</option>
+															    <option value="sim" selected>Simple</option>
 															    <option value="mul">Multiple</option>
 																<option value="ma">Matrix</option>
 															</select>
 														</div>
-														<div class="col-md-8 center">
+														<div class="col-md-8">
 															 <label for="qresponse"	>Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
 															 <ul>
-															 	<li></li>
+															 	<li class="radio">
+																  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+																  <label for="optionsRadios1" id="optionRadioLabel1">
+																    Option 1
+																  </label>
+																</li>
+																<li class="radio">
+																  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+																  <label for="optionsRadios2" id="optionRadioLabel2">
+																    Option 2
+																  </label>
+																</li>
 															 </ul>
 														</div>													 
 							  						</div>						  						
 							  					</div>
 							  					
-							  					<!-- <div class="question-frame">
+							  					<div class="question-frame">
 							  						<h4>Response settings</h4>
 							  						
-							  						<ul class="option-list">
-							  							<li class="option-item">
+							  						<ul class="option-list" id="option-list" ogid="0">
+							  							<li class="option-item" id="option-item">
 						  									<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button>
 						  									<div class="circle-info circle-grey fleft">1</div>
-						  									<input type="text" class="option-title form-control fleft" />
+						  									<input type="text" class="option-title form-control fleft" index="1" placeholder="Option 1"/>
 						  									<div class="option-icons fleft">
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
 							  								</div>
 							  							</li>
-							  							<li class="option-item">
+							  							<li class="option-item" id="option-item">
 						  									<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button>
 						  									<div class="circle-info circle-grey fleft">2</div>
-						  									<input type="text" class="option-title form-control fleft" />
+						  									<input type="text" class="option-title form-control fleft" index="2" placeholder="Option 2"/>
 						  									<div class="option-icons fleft">
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
@@ -88,7 +99,7 @@
 							  						</ul>
 							  					</div>
 							  					
-							  					<div class="question-frame">
+							  					<!-- <div class="question-frame">
 							  						<h4>Routes</h4>
 							  						<div class="routes-select">
 								  						<label for="dependencies">Dependencies</label>

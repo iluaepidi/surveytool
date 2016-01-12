@@ -37,6 +37,7 @@ public class DBFieldNames {
 	//questiontype
 		public final static String s_QUESTIONTYPE_NAME = "questionTypeName";
 		public final static String s_QUESTIONTYPE_TEMPLATE_FILE = "templateFile";
+		public final static String s_QUESTIONTYPE_FORM_FILE = "formFile";
 		
 	//questionnaire
 		public final static String s_QUESTIONNAIREID = "idQuestionnaire";

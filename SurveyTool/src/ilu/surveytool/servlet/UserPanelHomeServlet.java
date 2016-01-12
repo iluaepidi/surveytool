@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.constants.FormParameter;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.orchestrator.UserPanelHomeOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
@@ -52,7 +52,7 @@ public class UserPanelHomeServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			String bodyPage = request.getParameter(FormParameter.s_UPOPTION);
+			String bodyPage = request.getParameter(Parameter.s_UPOPTION);
 			if(bodyPage != null && !bodyPage.isEmpty())
 			{
 				if(bodyPage.equals(Address.s_BODY_SURVEYS))

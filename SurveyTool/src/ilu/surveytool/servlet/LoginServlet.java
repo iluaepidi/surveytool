@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
-import ilu.surveytool.constants.FormParameter;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -63,8 +63,8 @@ public class LoginServlet extends HttpServlet {
 		
 		LoginOrch loginOrch = new LoginOrch();
 		Credentials credentials = new Credentials();
-		credentials.setUsername(request.getParameter(FormParameter.s_USERNAME));
-		credentials.setPassword(request.getParameter(FormParameter.s_PASSWORD));
+		credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
+		credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
 		System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
 		LoginResponse loginResp = loginOrch.login(credentials);
 		System.out.println(loginResp.toString());

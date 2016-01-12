@@ -42,14 +42,15 @@
 							  							<div class="col-md-4">
 								  							<label for="type-question">Type</label>
 								  							<select class="form-control" id="type-question">
-															  	<option value="ls" selected>Text</option>
+															  	<option value="tx" >Text</option>
 															  	<option value="ls" selected>Likert scale</option>
 															    <option value="sim">Simple</option>
 															    <option value="mul">Multiple</option>
 																<option value="ma">Matrix</option>
 															</select>
 														</div>
-														<div class="col-md-8 center">
+														<div class="col-md-8">
+															<label for="qresponse">Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
 															 <div class="likert-options">
 															 	<div class="likert-options-frame">
 															 		<div>

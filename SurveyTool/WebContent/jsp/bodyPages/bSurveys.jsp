@@ -1,5 +1,5 @@
 				<%@page import="ilu.surveytool.constants.Address"%>
-<%@page import="ilu.surveytool.constants.FormParameter"%>
+<%@page import="ilu.surveytool.constants.Parameter"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.SurveyTableInfo"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
@@ -35,7 +35,7 @@
 									%>
 									<tr>
 										<td class="center"><%= survey.getDeadLineDate() %></td>
-										<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + FormParameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
+										<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 										<td>
 											<div class="progress percent-bar">
 												<%

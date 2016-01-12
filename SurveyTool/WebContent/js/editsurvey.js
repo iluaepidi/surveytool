@@ -46,5 +46,37 @@ $(function() {
 		currentAddNode = $(this).parent().parent().parent();
 	});
 	
+	$('#option-list').on("keyup", "#option-item input", function(e){
+		e.stopPropagation();
+		var id = $(this).attr('id');
+		$(this).closest('div[id=panel-question1]').find('label[id=optionRadioLabel' + id + ']').text($(this).val());
+		//console.log("Option text field!!!! " + $(this).parent().parent().children("li").size());
+	});
+	
+	$('#option-list').on("focusout", "#option-item input", function(e){
+		e.stopPropagation();
+		console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('div[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
+		var req = {};
+		req.text = $(this).val();
+		req.index = $(this).attr('index');
+		req.qid = $(this).closest('div[id=panel-question1]').attr('qid');
+		req.ogid = $(this).closest('ul').attr('ogid');
+		$.ajax({ 
+		   type: "POST",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: "http://localhost:8080/SurveyTool/api/QCService/insertOption",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   console.log(data);
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+		});
+	});
+	
 });
-

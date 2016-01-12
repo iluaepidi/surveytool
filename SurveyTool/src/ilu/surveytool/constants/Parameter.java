@@ -1,9 +1,10 @@
 package ilu.surveytool.constants;
 
-public class FormParameter {
+public class Parameter {
 
 	public final static String s_DESCRIPTION = "description";
 	public final static String s_HELP_TEXT = "helpText";
+	public final static String s_INDEX = "index";
 	public final static String s_LANGUAGE_LAN = "lan";
 	public final static String s_MAIN_VERSION = "mainVersion";
 	public final static String s_MANDATORY = "mandatory";

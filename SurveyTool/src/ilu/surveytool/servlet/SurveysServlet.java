@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.constants.FormParameter;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.orchestrator.SurveysOrch;
@@ -55,7 +55,7 @@ public class SurveysServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			int surveyId = Integer.parseInt(request.getParameter(FormParameter.s_SURVEY_ID));		
+			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));		
 			SurveysOrch surveysOrch = new SurveysOrch();
 			Survey survey = surveysOrch.getSurveyDetail(surveyId);
 			

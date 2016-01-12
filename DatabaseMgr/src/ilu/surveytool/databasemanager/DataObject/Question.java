@@ -15,6 +15,7 @@ public class Question {
 	String mainVersion = "";
 	boolean helpText = false;
 	String templatePage = "";
+	String formPage = "";
 	
 	public Question() {
 		super();
@@ -40,7 +41,7 @@ public class Question {
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
 			HashMap<String, Content> contents, String category, boolean mandatory, String mainVersion, boolean helpText,
-			String templatePage) {
+			String templatePage, String formPage) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -52,6 +53,7 @@ public class Question {
 		this.mainVersion = mainVersion;
 		this.helpText = helpText;
 		this.templatePage = templatePage;
+		this.formPage = formPage;
 	}
 
 	public int getQuestionId() {
@@ -132,6 +134,14 @@ public class Question {
 
 	public void setTemplatePage(String templatePage) {
 		this.templatePage = templatePage;
+	}
+
+	public String getFormPage() {
+		return formPage;
+	}
+
+	public void setFormPage(String formPage) {
+		this.formPage = formPage;
 	}
 
 	@Override

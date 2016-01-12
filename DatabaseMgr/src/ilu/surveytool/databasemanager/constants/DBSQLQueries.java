@@ -29,7 +29,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol WHERE (userName = ? or email = ?) and password = ?";
 		
 		//Question
-		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, c.name categoryName, qp.mandatory, l.isoName FROM surveytool.questionnaire s "
+		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, l.isoName FROM surveytool.questionnaire s "
 		+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 		+ "inner join surveytool.page p on f.idForma = p.idForma "
 		+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "

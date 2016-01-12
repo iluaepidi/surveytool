@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.constants.FormParameter;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
@@ -62,9 +62,9 @@ public class CreateSurveyServlet extends HttpServlet {
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
 			Survey survey = new Survey();
-			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(FormParameter.s_TITLE)));
-			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(FormParameter.s_DESCRIPTION)));
-			survey.setProject(request.getParameter(FormParameter.s_PROJECT));
+			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_TITLE)));
+			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(Parameter.s_DESCRIPTION)));
+			survey.setProject(request.getParameter(Parameter.s_PROJECT));
 			survey.setAuthor(userSessionInfo.getUserId());
 			
 			SurveysOrch surveysOrch = new SurveysOrch();

@@ -81,7 +81,8 @@ public class QuestionDB {
 	   					rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY), 
 	   					mainVersion, 
 	   					false,
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE)));
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE)));
 	   			
 	   		}
 	   		
