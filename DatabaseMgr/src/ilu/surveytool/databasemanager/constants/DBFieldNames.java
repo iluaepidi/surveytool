@@ -21,6 +21,15 @@ public class DBFieldNames {
 	//language
 		public final static String s_LANGUAGE_ISONAME = "isoName";
 		
+	//option
+		public final static String s_OPTIONID = "idOption";
+		public final static String s_OPTION_INDEX = "index";
+		
+	//optionsgroup
+		public final static String s_OPTIONSGROUPID = "idOptionsGroup";
+		public final static String s_OPTIONSGROUP_OPTIONTYPE_NAME = "optionTypeName";
+		public final static String s_OPTIONSGROUP_RANDOM = "random";
+		
 	//page
 		public final static String s_PAGE_ID = "idPage";
 		

@@ -1,5 +1,5 @@
 					
-				<%@page import="ilu.surveytool.constants.Address"%>
+<%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
@@ -16,6 +16,7 @@
 	  				</div>	  				
 	  				<div class="content">
 	  					<form action="<%= Address.s_SERVLET_SURVEY_PROCESS %>" method="POST">
+	  						<input type="hidden" name="sid" value="<%= survey.getSurveyId() %>" />
 	  						<div class="survey-form" >
 	  							<p><%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 	  							

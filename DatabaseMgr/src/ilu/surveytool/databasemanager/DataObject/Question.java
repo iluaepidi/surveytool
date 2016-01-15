@@ -1,7 +1,9 @@
 package ilu.surveytool.databasemanager.DataObject;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Question {
 
@@ -16,10 +18,12 @@ public class Question {
 	boolean helpText = false;
 	String templatePage = "";
 	String formPage = "";
+	List<OptionsGroup> optionsGroups;
 	
 	public Question() {
 		super();
 		contents = new HashMap<String, Content>();
+		optionsGroups = new ArrayList<OptionsGroup>();
 	}
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
@@ -142,6 +146,14 @@ public class Question {
 
 	public void setFormPage(String formPage) {
 		this.formPage = formPage;
+	}
+	
+	public List<OptionsGroup> getOptionsGroups() {
+		return optionsGroups;
+	}
+
+	public void setOptionsGroups(List<OptionsGroup> optionsGroups) {
+		this.optionsGroups = optionsGroups;
 	}
 
 	@Override

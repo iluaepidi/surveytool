@@ -45,6 +45,10 @@ public class ContentDB {
 		 }
 	}
 	
+	/*
+	 * selects
+	 */
+	
 	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String language)
 	{
 		HashMap<String, Content> contents = new HashMap<String, Content>();
@@ -76,6 +80,44 @@ public class ContentDB {
 		
 		return contents;
 	}
+	
+	/*
+	 * exists 
+	 */
+	
+	public boolean existContent(int contentId, String language, String contentType)
+	{
+		boolean exist = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE);			
+	   		pstm.setInt(1, contentId);
+	   		pstm.setString(2, language);
+	   		pstm.setString(3, contentType);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			exist = true;
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return exist;
+	}
+	
+	/*
+	 * Inserts
+	 */
 	
 	public int insertContentIndex() {
 		//System.out.println("inserUser");
@@ -133,6 +175,33 @@ public class ContentDB {
 		}
 		
 		return inserted;
+	}
+	
+	/*
+	 * Update
+	 */
+	
+	public void updateContentText(int contentId, String language, String contentType, String text) {
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_CONTENT_TEXT);
+			pstm.setString(1, text);
+			pstm.setInt(2, contentId);
+			pstm.setString(3, language);
+			pstm.setString(4, contentType);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
 	}
 	
 

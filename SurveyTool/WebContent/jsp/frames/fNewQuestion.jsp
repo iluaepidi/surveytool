@@ -62,7 +62,7 @@
 												<div class="row">
 													<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Main version</span></label>
 													<select class="form-control-small col-md-6" id="main-version">
-													  	<option value="" disabled selected>Browser languages</option>
+													  	<option value="none" disabled selected>Browser languages</option>
 													    <option value="en">English</option>
 													    <option value="es">Spanish</option>
 													    <option value="fr">French</option>

@@ -6,6 +6,7 @@ public class Address {
 		public final static String s_BODY_LOGIN = "login";
 		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";
 		public final static String s_BODY_SURVEY_PAGE = "surveyPage";
+		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
 		

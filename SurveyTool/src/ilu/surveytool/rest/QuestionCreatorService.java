@@ -12,7 +12,8 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.rest.data.Option;
+import ilu.surveytool.data.Option;
+import ilu.surveytool.orchestrator.OptionOrch;
 
 @Path("/QCService")
 public class QuestionCreatorService {
@@ -57,8 +58,13 @@ public class QuestionCreatorService {
 			Option option = new Option(json.getString("text"), 
 					Integer.parseInt(json.getString("index")), 
 					Integer.parseInt(json.getString("qid")), 
-					Integer.parseInt(json.getString("ogid")));
-			response = String.valueOf(option.getOgid());
+					Integer.parseInt(json.getString("ogid")),
+					Integer.parseInt(json.getString("oid")),
+					json.getString("otype"),
+					json.getString("lang"));
+			System.out.println("Opción: " + option.toString());
+			OptionOrch optionOrch = new OptionOrch();
+			response = optionOrch.saveOption(option);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

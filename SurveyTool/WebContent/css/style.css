@@ -455,4 +455,10 @@ footer {margin-top: 10px;}
 	    width: 32%;
 	    min-width: 200px;}
 .form-question-content .likert-options .likert-options-frame {background-color: #fff;}
+/*.form-options {display: inline-block;
+    text-align: left;}*/
 .btn-submit-page {margin-top: 20px;}
+
+.survey-finish-content {width: 50%;
+	margin: 280px auto;
+	text-align: center;}

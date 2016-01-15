@@ -72,7 +72,7 @@ public class QuestionDB {
 	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
 	   			ContentDB contentDB = new ContentDB();
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
-	   			questions.add(new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
+	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), 
@@ -82,7 +82,12 @@ public class QuestionDB {
 	   					mainVersion, 
 	   					false,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE)));
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+	   			
+	   			OptionDB optionDB = new OptionDB();
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			
+	   			questions.add(question);
 	   			
 	   		}
 	   		

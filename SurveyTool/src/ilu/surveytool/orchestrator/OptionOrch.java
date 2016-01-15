@@ -1,0 +1,66 @@
+package ilu.surveytool.orchestrator;
+
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import ilu.surveytool.data.Option;
+import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.constants.DBConstants;
+
+public class OptionOrch {
+
+	public OptionOrch() {
+		super();
+	}
+	
+	public String saveOption(Option option)
+	{
+		ContentDB contentDB = new ContentDB();
+		OptionDB optionDB = new OptionDB();
+		JSONObject response = new JSONObject();
+		
+		try {
+			if(option.getOgid() == 0)
+			{
+				int contentId = contentDB.insertContentIndex();
+				option.setOgid(optionDB.insertOptionsGroup(option.getQid(), option.getOtype(), contentId));
+				response.put("ogid", String.valueOf(option.getOgid()));
+			}
+			
+			if(option.getOid() == 0)
+			{
+				int contentId = contentDB.insertContentIndex();
+				if(contentId != 0)
+				{
+					option.setOid(optionDB.insertOption(contentId));
+					contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+					if(option.getOid() != 0 && option.getOgid() != 0)
+					{
+						optionDB.insertOptionsByGroup(option.getOgid(), option.getOid(), option.getIndex());
+					}
+				}
+				response.put("oid", String.valueOf(option.getOid()));
+			}
+			else
+			{
+				int contentId = optionDB.getContentIdByOptionId(option.getOid());
+				if(contentDB.existContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))
+				{
+					contentDB.updateContentText(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+				}
+				else
+				{
+					contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+				}
+			}
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return response.toString();
+	}
+
+}
