@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
-<%@page import="ilu.surveytool.constants.FormParameter"%>
+<%@page import="ilu.surveytool.constants.Parameter"%>
 				<%
 				LoginResponse loginResponse = (LoginResponse) request.getAttribute(Attribute.s_LOGIN_RESPONSE);
 				%>
@@ -24,12 +24,12 @@
 	  							%>
 	  							<div class="form-group">
 	  								<label for="username"> Username
-		  								<input type="text" id="username" name="<%= FormParameter.s_USERNAME %>" class="form-control"/>
+		  								<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
 		  							</label>
 		  						</div>
 		  						<div class="form-group">
 		  							<label for="password"> Password
-		  								<input type="password" id="username" name="<%= FormParameter.s_PASSWORD %>" class="form-control"/>
+		  								<input type="password" id="username" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>
 		  							</label>
 	  							</div>	
 	  							<div class="right">

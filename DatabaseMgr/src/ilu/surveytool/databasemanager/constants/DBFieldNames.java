@@ -63,5 +63,6 @@ public class DBFieldNames {
 	//user
 		public final static String s_USERID = "idUser";
 		public final static String s_USERNAME = "username";
+		public final static String s_USER_EMAIL = "email";
 
 }

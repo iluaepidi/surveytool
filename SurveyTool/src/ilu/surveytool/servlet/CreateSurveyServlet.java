@@ -70,6 +70,8 @@ public class CreateSurveyServlet extends HttpServlet {
 			SurveysOrch surveysOrch = new SurveysOrch();
 			int surveyId = surveysOrch.createSurvey(survey);
 			
+			survey.setPublicId(surveysOrch.getSurveyPublicId(surveyId));
+			
 			survey.setSurveyId(surveyId);
 			
 			if(surveyId > 0)

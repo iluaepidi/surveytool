@@ -109,6 +109,8 @@ public class SurveyDB {
 	   			response = new Survey();
 	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
 	   			response.setSurveyId(surveyId);
+	   			response.setPublicId(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			response.setAuthor(rs.getInt(DBFieldNames.s_AUTHOR));
 	   			
 	   			String contenttypeName = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 	   			String isoname = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
@@ -133,6 +135,36 @@ public class SurveyDB {
 		
 		return response;
 	}
+	
+
+	public String getQuestionnairesPublicId(int surveyId)
+	{
+		String response = "";
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_PUBLICID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_PUBLIC_ID);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+	
 	
 	public Survey getQuestionnairesByPublicId(String publicId, String lang)
 	{

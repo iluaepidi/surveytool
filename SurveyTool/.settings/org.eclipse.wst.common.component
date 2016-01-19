@@ -47,6 +47,9 @@
         <dependent-module archiveName="jersey-core-1.18.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ExternalLibs/jersey-core-1.18.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="mail.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ExternalLibs/mail.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/SurveyTool/build/classes"/>
         <property name="context-root" value="SurveyTool"/>
     </wb-module>

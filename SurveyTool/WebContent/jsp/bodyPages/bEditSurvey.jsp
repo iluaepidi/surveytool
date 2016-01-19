@@ -41,6 +41,15 @@
 							     			<textarea class="form-control" id="surveyDescription" rows="2"><%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></textarea>
 							   		</div>
 								</div>
+								
+								<div class="survey-info-url">
+									<label for="surveyDescription" class="col-sm-3 control-label left">Survey URL: </label>
+							   		<div class="col-sm-8">
+							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>" disabled />
+							     			
+							   		</div>
+							   		<a class="col-sm-1 btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="Copy URL to clipboard"><i class="fa fa-clipboard fa-2x"></i></a>
+								</div>
 		  					</div>	
 		  					
 		  					<div class="survey-sections" id="survey-sections">

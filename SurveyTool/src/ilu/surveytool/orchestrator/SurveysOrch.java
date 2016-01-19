@@ -46,6 +46,16 @@ public class SurveysOrch {
 		return surveyId;
 	}
 	
+	public String getSurveyPublicId(int surveyId)
+	{
+		String publicId = "";
+		
+		SurveyDB surveyDB = new SurveyDB();
+		publicId = surveyDB.getQuestionnairesPublicId(surveyId);
+		
+		return publicId;
+	}
+	
 	public int createFormaAndPage(int surveyId)
 	{
 		int pageId = 0;

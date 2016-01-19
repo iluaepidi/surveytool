@@ -129,6 +129,35 @@ public class QuestionDB {
 		return response;
 	}
 	
+	public HashMap<String, String> getQuestionContentByQuestionId(int questionId, String lang)
+	{
+		HashMap<String, String> contents = new HashMap<String, String>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_CONTENT_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		pstm.setString(2, lang);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			contents.put(rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), rs.getString(DBFieldNames.s_CONTENT_TEXT));	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
 	/**
 	 * Inserts 
 	 */

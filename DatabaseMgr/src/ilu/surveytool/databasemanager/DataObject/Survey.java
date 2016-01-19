@@ -12,6 +12,7 @@ public class Survey {
 	String project = "";
 	int author;
 	List<Question> questions = null;
+	String publicId = "";
 	
 
 	public Survey() {
@@ -29,13 +30,14 @@ public class Survey {
 	
 
 	public Survey(int surveyId, HashMap<String, Content> contents, String project, int author,
-			List<Question> questions) {
+			List<Question> questions, String publicId) {
 		super();
 		this.surveyId = surveyId;
 		this.contents = contents;
 		this.project = project;
 		this.author = author;
 		this.questions = questions;
+		this.publicId = publicId;
 	}
 	
 	
@@ -87,11 +89,22 @@ public class Survey {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
+	
+	
+	public String getPublicId() {
+		return publicId;
+	}
+
+
+	public void setPublicId(String publicId) {
+		this.publicId = publicId;
+	}
 
 
 	@Override
 	public String toString() {
-		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author + "]";
+		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author
+				+ ", questions=" + questions + ", publicId=" + publicId + "]";
 	}
 	
 }

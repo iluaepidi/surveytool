@@ -253,7 +253,12 @@ footer {margin-top: 10px;}
 .survey-info-description {width: 70%;
     margin-top: 15px;
     display: none;}
+.survey-info-url {width: 70%;
+    margin-top: 15px;
+    display: none;}
 .survey-info-description label {margin-top: 15px;}
+.survey-info-url label {margin-top: 9px;}
+.btn-copy-clipboard i {margin-top: 5px;}
 .sect-arrow {float:left;
     margin-left: 20px;
     padding-top: 0px !important;}

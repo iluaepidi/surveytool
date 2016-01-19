@@ -24,6 +24,7 @@ $(function() {
 			$('.survey-info-title').focus();
 			$('.survey-info-project').css("display", "inherit");
 			$('.survey-info-description').css("display", "inline-block");
+			$('.survey-info-url').css("display", "inline-block");
 			$('.sect-arrow i').prop("class", "fa fa-caret-down fa-2x");
 			$('.sect-arrow').css("padding-top", "15px");
 		}
@@ -114,6 +115,7 @@ function bodyClick()
 			$('.survey-info-title').css("border-bottom", "none");
 			$('.survey-info-project').css("display", "none");
 			$('.survey-info-description').css("display", "none");
+			$('.survey-info-url').css("display", "none");
 			$('.sect-arrow i').prop("class", "fa fa-caret-right fa-2x");
 			$('.sect-arrow').css("padding-top", "0px");
 		}
