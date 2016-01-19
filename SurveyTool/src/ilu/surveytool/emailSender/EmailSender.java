@@ -37,12 +37,11 @@ public class EmailSender {
 				return new PasswordAuthentication(username, password);
 			}
 		  });
-		//Session session = Session.getDefaultInstance(props);
+		
  
 		try {
  
 			MimeMessage message = new MimeMessage(session);
-			//message.setFrom(new InternetAddress("soporte.apsis4all.ts@gmail.com"));
 			//message.setFrom(new InternetAddress("iluaepid@gmail.com"));
 			message.setFrom(new InternetAddress("soporte@apsis4all.eu"));
 			message.setRecipients(Message.RecipientType.TO,
