@@ -138,6 +138,29 @@ $(function() {
 							  							'</li>';
 		$(this).parent().before(optionHtml);
 	});
+	
+	$('#btnImportFile').click(function(e) {
+		$('#importFileForm').on("submit", function(e){
+		  console.log( "Handler for .submit() called." );
+		  e.preventDefault();
+		  console.log($("#uploadedFile").val());
+          var f = $(this);
+          var formData = new FormData(document.getElementById("formuploadajax"));
+          formData.append("uploadedFile", $("#uploadedFile").val());
+          //formData.append(f.attr("name"), $(this)[0].files[0]);
+          $.ajax({
+              url: "ImportFileServlet",
+              type: "post",
+              dataType: "html",
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false
+          }).done(function(res){
+              $("#mensaje").html("Respuesta: " + res);
+          });
+		});
+	});
 		
 });
 

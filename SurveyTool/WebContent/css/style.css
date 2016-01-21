@@ -259,9 +259,14 @@ footer {margin-top: 10px;}
 .survey-info-description label {margin-top: 15px;}
 .survey-info-url label {margin-top: 9px;}
 .btn-copy-clipboard i {margin-top: 5px;}
-.sect-arrow {float:left;
+.display-default-arrow {float:left;
     margin-left: 20px;
-    padding-top: 0px !important;}
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    border: none !important;
+    background-color: #fff;
+    border-radius: 3px;}
+.display-default-arrow:focus, .display-default-arrow:hover{background-color: #ddd;}
     
 
 .add-frame {width: 70%;
@@ -387,7 +392,8 @@ footer {margin-top: 10px;}
 .panel-question-basic-setting div button[selected="false"]:focus,
 .panel-question-basic-setting div button[selected="false"]:hover {border: 1px solid #3C3C3C; 
 	background-color: #B7D4FA;}
-	
+
+.btn-question-basic-settings {padding-top: 2px !important;}
 .question-frame {border: 1px solid #555;
 	margin: 15px 0px;
 	padding: 10px 20px;

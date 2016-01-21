@@ -16,7 +16,7 @@ $(function() {
 	$('#survey-info').click(function(e){
 		e.stopPropagation();
 		if(!surveyInfoOpen){
-			bodyClick();
+			/*bodyClick();
 			currentFrameActivate = "survey-info";
 			surveyInfoOpen = true;
 			$('.survey-info-title').focus();
@@ -26,9 +26,23 @@ $(function() {
 			$('.survey-info-description').css("display", "inline-block");
 			$('.survey-info-url').css("display", "inline-block");
 			$('.sect-arrow i').prop("class", "fa fa-caret-down fa-2x");
-			$('.sect-arrow').css("padding-top", "15px");
+			$('.sect-arrow').css("padding-top", "15px");*/
+			displaySurveyInfo();
 		}
 	});
+	
+	$('#display-survey-settings').click(function(e) {
+		e.stopPropagation();
+		if($(this).attr('display') == "false")
+		{
+			displaySurveyInfo();
+		}
+		else
+		{
+			hideSurveyInfo();
+		}
+		
+    });
 	
 	$('#panel-section1 .panel-heading h3 #survey-section-title').click(function(e){
 		e.stopPropagation();
@@ -104,6 +118,37 @@ $(function() {
 	
 });
 
+function displaySurveyInfo(node)
+{
+	bodyClick();
+	currentFrameActivate = "survey-info";
+	surveyInfoOpen = true;
+	$('.survey-info-title').focus();
+	$('.survey-info-title').css("border-bottom", "1px solid #555");
+	$('.survey-info-title').focus();
+	$('.survey-info-project').css("display", "inherit");
+	$('.survey-info-description').css("display", "inline-block");
+	$('.survey-info-url').css("display", "inline-block");
+	$('.display-default-arrow i').prop("class", "fa fa-caret-down fa-2x");
+	$('.display-default-arrow').css("padding-top", "15px");
+	$('#display-survey-settings').attr('display', 'true');
+	//$('#survey-info').attr('id', 'survey-info-displayed');
+}
+
+function hideSurveyInfo(node)
+{
+	$('.survey-info-title').css("border-bottom", "none");
+	$('.survey-info-project').css("display", "none");
+	$('.survey-info-description').css("display", "none");
+	$('.survey-info-url').css("display", "none");
+	$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
+	$('.display-default-arrow').css("padding-top", "0px");
+	currentFrameActivate = "";
+	$('#display-survey-settings').attr('display', 'false');
+	surveyInfoOpen = false;
+	//$('#survey-info-displayed').attr('id', 'survey-info');
+}
+
 
 function bodyClick()
 {
@@ -111,13 +156,14 @@ function bodyClick()
 	{
 		if(currentFrameActivate == "survey-info")
 		{
-			surveyInfoOpen = false;
+			/*surveyInfoOpen = false;
 			$('.survey-info-title').css("border-bottom", "none");
 			$('.survey-info-project').css("display", "none");
 			$('.survey-info-description').css("display", "none");
 			$('.survey-info-url').css("display", "none");
 			$('.sect-arrow i').prop("class", "fa fa-caret-right fa-2x");
-			$('.sect-arrow').css("padding-top", "0px");
+			$('.sect-arrow').css("padding-top", "0px");*/
+			hideSurveyInfo();
 		}
 		else
 		{

@@ -27,10 +27,13 @@
 														  </select>
 													</div>
 													<div class="col-md-2">
-														<button class="btn mandatory-question" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
+														<button class="btn btn-question-basic-settings mandatory-question" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
 													</div>
 													<div class="col-md-2">
-														<button class="btn" selected="<%= question.isHelpText() %>"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+														<button class="btn btn-question-basic-settings" selected="<%= question.isHelpText() %>"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+													</div>
+													<div class="col-md-2">
+														<button class="btn btn-question-basic-settings" selected="<%= question.isHelpText() %>" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
 													</div>
 							  					</div>
 							  					
@@ -90,7 +93,7 @@
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="Option <%= index %>" value="<%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>"/>
 						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
+							  									<a class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
 							  								</div>
@@ -110,7 +113,7 @@
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="Option <%= index %>"/>
 						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
+							  									<a class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
 							  								</div>
@@ -141,7 +144,7 @@
 						  									<div class="circle-info circle-grey fleft">1</div>
 						  									<input type="text" class="option-title form-control fleft" index="1" oid="0" placeholder="Option 1"/>
 						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
+							  									<a class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
 							  								</div>
@@ -152,7 +155,7 @@
 						  									<div class="circle-info circle-grey fleft">2</div>
 						  									<input type="text" class="option-title form-control fleft" index="2" oid="0" placeholder="Option 2"/>
 						  									<div class="option-icons fleft">
-							  									<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a>
+							  									<a class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a>
 							  									<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a>
 							  								</div>
@@ -181,3 +184,5 @@
 							  							  					
 											</div>																							
 										</div>
+										
+										

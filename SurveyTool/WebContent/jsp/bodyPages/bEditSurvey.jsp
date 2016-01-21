@@ -22,9 +22,9 @@
 	  					<div class="browser-left">Hello</div>	  						  		
 	  					<div class="edit-content-center">
 		  					<div class="edit-survey-frame survey-info" id="survey-info">
-		  						<div class="sect-arrow">
+		  						<button class="display-default-arrow" id="display-survey-settings" display="false">
 		  							<i class="fa fa-caret-right fa-2x"></i>
-		  						</div>
+		  						</button>
 		  						 
 		  						<input type="text" class="survey-info-title" id="survey-info-title" value="<%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" />
 		  						
@@ -110,3 +110,5 @@
 	  			</div>
 	  			
 	  			<jsp:include page="../frames/fNewQuestion.jsp" />
+	  			
+	  			<jsp:include page="../frames/fImportFile.jsp" />
