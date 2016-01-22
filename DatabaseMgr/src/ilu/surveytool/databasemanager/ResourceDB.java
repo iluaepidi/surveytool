@@ -22,9 +22,9 @@ import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
-public class QuestionDB {
+public class ResourceDB {
 
-	public QuestionDB() {
+	public ResourceDB() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -53,7 +53,7 @@ public class QuestionDB {
 	 * Selects
 	 */
 	
-	public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
+	/*public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -157,25 +157,23 @@ public class QuestionDB {
 		}
 		
 		return contents;
-	}
+	}*/
 	
 	/**
 	 * Inserts 
 	 */
 	
-	public int insertQuestion(Question question, int contentId) {
+	public int insertResource(Resource resource, int contentId) {
 		//System.out.println("inserUser");
-		int questionId = 0;
+		int resourceId = 0;
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QUESTION, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setString(1, question.getTag());
-		   pstm.setString(2, question.getQuestionType()); 
-		   pstm.setInt(3, contentId); 
-		   pstm.setString(4, question.getCategory()); 
-		   pstm.setString(5, question.getMainVersion());
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_RESOURCE, Statement.RETURN_GENERATED_KEYS);
+		   pstm.setString(1, resource.getType());
+		   pstm.setString(2, resource.getPathFile()); 
+		   pstm.setInt(3, contentId);
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -183,7 +181,7 @@ public class QuestionDB {
 		   {
 			   ResultSet rs = pstm.getGeneratedKeys();
 			   if(rs.next())
-				   questionId = rs.getInt(1);
+				   resourceId = rs.getInt(1);
 		   }
 		  		  	   
 		} catch (SQLException e) {
@@ -193,21 +191,19 @@ public class QuestionDB {
 			this._closeConnections(con, pstm, null);
 		}
 		
-		return questionId;
+		return resourceId;
 	}
 
-	public boolean insertQuestionByPage(int questionId, int pageId, boolean mandatory, int numQuestion) {
+	public boolean insertQuestionResource(int questionId, int resourceId) {
 		//System.out.println("inserUser");
 		boolean inserted = false;
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QUESTION_BY_PAGE, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setInt(1, pageId);
-		   pstm.setInt(2, questionId);
-		   pstm.setInt(3, numQuestion);
-		   pstm.setBoolean(4, mandatory);
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QUESTION_RESOURCE);
+		   pstm.setInt(1, questionId);
+		   pstm.setInt(2, resourceId);
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -226,4 +222,6 @@ public class QuestionDB {
 		return inserted;
 	}
 	
+	
+
 }

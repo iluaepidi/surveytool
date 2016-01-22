@@ -18,16 +18,16 @@
 				    				
 			    					<form method="POST" action="ImportFileServlet" id="importFileForm" enctype="multipart/form-data" >
 			    						<div class="form-group">
-								            <label for="imageTitle">Title</label>
-								            <input type="text" id="imageTitle" class="form-control" name="imageTitle" placeholder="Type here_"/>
+								            <label for="resourceTitle">Title</label>
+								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="Type here_"/>
 								        </div>
 								        <div class="form-group">
 								        	<label for="uploadedFile">File input</label>
 								            <input type="file" name="uploadedFile" class="form-control" id="uploadedFile" />
 								        </div>
 								        <div class="form-group">									            
-								            <label for="imageAltText">Texto alternativo</label>
-								            <textarea rows="2" id="imageAltText" name="imageAltText" class="form-control" placeholder="Type here_"></textarea>
+								            <label for="resourceAltText">Texto alternativo</label>
+								            <textarea rows="2" id="resourceAltText" name="resourceAltText" class="form-control" placeholder="Type here_"></textarea>
 								        </div>
 								            
 								            <!-- <input type="submit" value="Upload" name="upload" id="upload" />  data-dismiss="modal" aria-label="Close" -->

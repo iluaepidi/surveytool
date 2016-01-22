@@ -24,4 +24,7 @@ public class Address {
 	//JSP MasterPage
 		public final static String s_MASTER_PAGE = "master.jsp";
 		public final static String s_EDIT_QUESTION_MASTER= "EditQuestionMaster.jsp";
+		
+	//Folder paths
+		public final static String s_FOLDER_RESOURCES= "/resources/";
 }

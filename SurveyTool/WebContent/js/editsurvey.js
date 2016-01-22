@@ -4,6 +4,7 @@
 var qtypeId;
 var numQuestions = 0;
 var currentAddNode;
+var currentQuestion = 0;
 var addMenuFrameCad = "add-menu-frame-";
 
 $(function() {
@@ -146,8 +147,10 @@ $(function() {
 		  console.log($("#uploadedFile").val());
           var f = $(this);
           var formData = new FormData(document.getElementById("formuploadajax"));
-          formData.append("uploadedFile", $("#uploadedFile").val());
-          //formData.append(f.attr("name"), $(this)[0].files[0]);
+          formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
+          formData.append("resourceTitle", $('#resourceTitle').val());
+          formData.append("resourceAltText", $('#resourceAltText').val());
+          formData.append("qid", currentQuestion);
           $.ajax({
               url: "ImportFileServlet",
               type: "post",
@@ -157,9 +160,14 @@ $(function() {
               contentType: false,
               processData: false
           }).done(function(res){
-              $("#mensaje").html("Respuesta: " + res);
+              console.log("Respuesta: " + res);
           });
 		});
+	});
+	
+	$('#panel-body').on("click", "#btn-question-import-file", function(e){
+		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
+		console.log("current question: " + currentQuestion);
 	});
 		
 });

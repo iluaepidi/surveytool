@@ -2,6 +2,9 @@ package ilu.surveytool.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -12,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
+import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
@@ -51,23 +58,28 @@ public class ImportFileServlet extends HttpServlet {
 		System.out.println("Llega la petición a ImportFileServlet");
 		
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
-		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		String rootPath = getServletContext().getRealPath("/");
+		SurveyToolProperties properties = new SurveyToolProperties(rootPath);
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
-		{
-			Enumeration<String> names = request.getParameterNames();
-			while(names.hasMoreElements())
-			{
-				System.out.println("Parameter: " + names.nextElement());
-			}
-						
+		{						
 			try {
-				//String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 			    Part filePart;
 				filePart = request.getPart("uploadedFile");
 				String fileName = filePart.getSubmittedFileName();
-			    System.out.print("File name: " + fileName);
+
 			    InputStream fileContent = filePart.getInputStream();
+			    System.out.println("RootPath: " + rootPath);
+			    Path fpath = Paths.get("C:\\resources", fileName);
+			    Files.copy(fileContent, fpath);
+
+				Resource resource = new Resource();
+				resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
+				resource.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE));
+				resource.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT));
+				resource.setType("image");
+			    System.out.print("Resource: " + resource);
+			    
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
