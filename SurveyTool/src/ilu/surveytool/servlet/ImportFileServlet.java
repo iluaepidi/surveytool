@@ -2,10 +2,13 @@ package ilu.surveytool.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,12 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Resource;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.orchestrator.QuestionOrch;
+import ilu.surveytool.orchestrator.ResourceOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
@@ -30,6 +37,7 @@ import ilu.surveytool.properties.SurveyToolProperties;
 @MultipartConfig
 public class ImportFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -64,21 +72,58 @@ public class ImportFileServlet extends HttpServlet {
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{						
 			try {
-			    Part filePart;
-				filePart = request.getPart("uploadedFile");
-				String fileName = filePart.getSubmittedFileName();
-
-			    InputStream fileContent = filePart.getInputStream();
-			    System.out.println("RootPath: " + rootPath);
-			    Path fpath = Paths.get("C:\\resources", fileName);
-			    Files.copy(fileContent, fpath);
-
-				Resource resource = new Resource();
-				resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
-				resource.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE));
-				resource.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT));
-				resource.setType("image");
-			    System.out.print("Resource: " + resource);
+				String action = request.getParameter(Parameter.s_ACTION);
+				
+				if(action.equals("file") || action.equals("fileUpdate"))
+				{
+				    Part filePart;
+					filePart = request.getPart("uploadedFile");
+					String fileName = filePart.getSubmittedFileName();
+	
+				    fileName = this._importFile(filePart, fileName, rootPath, 0);
+	
+					Resource resource = new Resource();
+					resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
+					
+					resource.setType("image");
+				    System.out.print("Resource: " + resource);
+				    
+				    if(action.equals("file"))
+				    {
+					    QuestionOrch questionOrch = new QuestionOrch();
+					    
+					    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					    questionOrch.insertResource(resource, questionId);
+				    }
+				    else if(action.equals("fileUpdate"))
+				    {
+				    	ResourceOrch resourceOrch = new ResourceOrch();
+				    	int resourceId = Integer.parseInt(request.getParameter(Parameter.s_RID));
+				    	resourceOrch.updateResourceUrlPath(resourceId, resource.getPathFile());
+				    }
+				    
+				    request.setAttribute(Attribute.s_RESOURCE, resource);
+				    request.setAttribute(Attribute.s_ACTION, action);
+				    
+				    CommonCode.redirect(request, response, Address.s_IMPORT_IMAGE_OPTION);
+				}
+				else if(action.equals("options"))
+				{
+					int resourceId = Integer.parseInt(request.getParameter(Parameter.s_RID));
+					this.language = request.getParameter(Parameter.s_MAIN_VERSION);
+					HashMap<String, Content> contents = new HashMap<String, Content>();
+					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
+							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
+					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,
+							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT)));
+					
+					ResourceOrch resourceOrch = new ResourceOrch();
+					Resource resource = resourceOrch.insertImageContent(resourceId, contents);
+					
+					request.setAttribute(Attribute.s_RESOURCE, resource);
+				    
+				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
+				}				
 			    
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -91,6 +136,30 @@ public class ImportFileServlet extends HttpServlet {
 		}
 		    
 	
+	}
+	
+	private String _importFile(Part filePart, String fileName, String rootPath, int index)
+	{
+		String fileNameFinal = fileName;
+		try{
+			if(index > 0)
+			{
+				String[] cads = fileName.split(Pattern.quote("."));
+				fileNameFinal = cads[0] + index + "." + cads[1];
+			}
+			System.out.println("File Name: " + fileNameFinal);
+			
+			InputStream fileContent = filePart.getInputStream();
+		    System.out.println("RootPath: " + rootPath);
+		    Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+		    Files.copy(fileContent, fpath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			index++;
+			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+		}
+		return fileNameFinal;
 	}
 
 }

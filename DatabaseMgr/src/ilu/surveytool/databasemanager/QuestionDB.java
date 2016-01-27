@@ -88,6 +88,9 @@ public class QuestionDB {
 	   			OptionDB optionDB = new OptionDB();
 	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
 	   			
+	   			ResourceDB resourceDB = new ResourceDB();
+	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));
+	   			
 	   			questions.add(question);
 	   			
 	   		}

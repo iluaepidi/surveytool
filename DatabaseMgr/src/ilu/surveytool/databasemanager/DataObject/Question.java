@@ -19,11 +19,13 @@ public class Question {
 	String templatePage = "";
 	String formPage = "";
 	List<OptionsGroup> optionsGroups;
+	List<Resource> resources;
 	
 	public Question() {
 		super();
 		contents = new HashMap<String, Content>();
 		optionsGroups = new ArrayList<OptionsGroup>();
+		resources = new ArrayList<Resource>();
 	}
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
@@ -154,6 +156,14 @@ public class Question {
 
 	public void setOptionsGroups(List<OptionsGroup> optionsGroups) {
 		this.optionsGroups = optionsGroups;
+	}
+	
+	public List<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(List<Resource> resources) {
+		this.resources = resources;
 	}
 
 	@Override

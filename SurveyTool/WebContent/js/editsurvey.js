@@ -5,7 +5,9 @@ var qtypeId;
 var numQuestions = 0;
 var currentAddNode;
 var currentQuestion = 0;
+var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
+var pending;
 
 $(function() {
 	
@@ -140,34 +142,77 @@ $(function() {
 		$(this).parent().before(optionHtml);
 	});
 	
-	$('#btnImportFile').click(function(e) {
+	//$('#uploadedFile').change(function(e) {
+	$('#selectFile').on("change", "#uploadedFile", function(e){
+		console.log( "uploadedFile" );
+		console.log($("#uploadedFile").val());
+		var fileValue = $('uploadedFile').val();
+		 var formData = new FormData(document.getElementById("importFileForm"));
+         formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
+         
+         //alert($('#optionsFile').hasClass('hidden'));
+         if($('#optionsFile').hasClass('hidden') == true){
+        	 formData.append("qid", currentQuestion);
+        	 formData.append("action", "file");
+         } else {
+        	 formData.append("rid", $('#rid').val());
+        	 formData.append("action", "fileUpdate");
+         }
+         
+         $.ajax({
+             url: "ImportFileServlet",
+             type: "post",
+             dataType: "html",
+             data: formData,
+             cache: false,
+             contentType: false,
+             processData: false
+         }).done(function(res){
+             console.log("Respuesta: " + res);
+             //$('#selectFile').addClass('hidden');
+             if($('#optionsFile').hasClass('hidden')){
+            	 $('#optionsFile').removeClass('hidden');
+                 $('#optionsFile').append(res);
+             }
+             else
+             {
+            	 $('#previewFileUploaded').replaceWith(res);
+             }
+             
+         });
+	});
+	
+	$('#optionsFile').on("click", "#btnImportFile", function(e){
 		$('#importFileForm').on("submit", function(e){
-		  console.log( "Handler for .submit() called." );
-		  e.preventDefault();
-		  console.log($("#uploadedFile").val());
-          var f = $(this);
-          var formData = new FormData(document.getElementById("formuploadajax"));
-          formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
-          formData.append("resourceTitle", $('#resourceTitle').val());
-          formData.append("resourceAltText", $('#resourceAltText').val());
-          formData.append("qid", currentQuestion);
-          $.ajax({
-              url: "ImportFileServlet",
-              type: "post",
-              dataType: "html",
-              data: formData,
-              cache: false,
-              contentType: false,
-              processData: false
-          }).done(function(res){
-              console.log("Respuesta: " + res);
-          });
+			e.preventDefault();
+			if(pending)
+			{
+				return;
+			}
+			pending = true;
+	        $.post('ImportFileServlet', {
+	        	action : "options",
+	        	resourceTitle: $('#resourceTitle').val(),
+	  			resourceAltText: $('#resourceAltText').val(),
+	  			mainVersion: currentLanguage,
+	  			rid: $('#rid').val()
+	  		}, function(res) {
+	  			$('#importFileForm')[0].reset();
+	              $("#importFile").modal("hide");
+	              var multimediaFrame = $("div[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+	              multimediaFrame.removeClass("hidden");
+	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+	              $('#optionsFile').empty();
+	              $('#optionsFile').addClass('hidden');
+	              pending = false;
+	  		});
 		});
 	});
 	
 	$('#panel-body').on("click", "#btn-question-import-file", function(e){
 		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
-		console.log("current question: " + currentQuestion);
+		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
+		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
 		
 });

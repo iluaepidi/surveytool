@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
@@ -33,13 +35,37 @@
 														<button class="btn btn-question-basic-settings" selected="<%= question.isHelpText() %>"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
 													</div>
 													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings" id="btn-question-import-file" selected="<%= question.isHelpText() %>" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
+														<button class="btn btn-question-basic-settings" id="btn-question-import-file" selected="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
 													</div>
 							  					</div>
 							  					
-							  					<div class="question-frame">
+							  					<div class="question-frame question-frame-help" id="helpTextFrame">
 							  						<p>Instructions /Help text for selectiong option</p>
 							  					</div>	
+							  					
+							  					<%
+							  					String hidden = "";
+							  					List<Resource> resources = question.getResources();
+							  					if(resources.isEmpty())
+							  					{
+							  						hidden = "hidden";
+							  					}
+							  					%>
+							  					<div class="question-frame question-frame-multimedia <%= hidden %>" id="multimediaFrame">
+							  					
+							  						<h4>Question Multimedia Files</h4>
+							  						<ul class="multimedia-list" id="multimediaFilesList">
+							  						<%							  						
+							  						for(Resource resource : resources)
+							  						{
+							  							request.setAttribute(Attribute.s_RESOURCE, resource);
+							  						%>
+							  							<jsp:include page="../components/cMultimediaItem.jsp" />
+							  						<%
+							  						}
+							  						%>
+							  						</ul>
+							  					</div>
 							  					
 							  					<div class="question-frame">
 							  						<h4>Options</h4>

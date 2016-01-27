@@ -19,6 +19,7 @@
 .center {text-align: center;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}
+.hidden {display:none;}
 .margin-bottom-10 {margin-bottom: 10px;}
 .icon-small i {font-size: 1.4em;}
 .nav-tabs-right {padding-right: 20px;
@@ -413,6 +414,11 @@ footer {margin-top: 10px;}
     width: 90px;
     height: 45px;}
 .question-frame p {margin: 0px;}
+.question-frame-help {display:none;}
+.question-frame-multimedia {}
+.multimedia-item a {font-size: 1.3em;
+    margin-left: 5px;}
+.multimedia-item i {font-size: 1.3em;}
 
 .likert-options {display: inline-flex;
     width: 100%;
@@ -449,6 +455,10 @@ footer {margin-top: 10px;}
 .routes-select label {margin-top: 3px;}
 .routes-select select {margin: 0px 8px;}
 
+.previewFileUpliaded {text-align: center;
+	margin-top: 5px;}
+.previewFileUpliaded img{max-width: 60%}
+
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
 \*----------------------------------------------*/
@@ -461,7 +471,9 @@ footer {margin-top: 10px;}
     padding: 1.5%;
     margin-bottom: 2%;}
 .form-question textarea {border: 1px solid #000;}
-.form-question label {font-size: 1.3em !important;}
+.form-question label {font-size: 1.3em !important;
+	width: 95%;}
+.form-question label img {margin: 5px;}
 .form-question-content {margin: 0 auto;
 	    width: 32%;
 	    min-width: 200px;}

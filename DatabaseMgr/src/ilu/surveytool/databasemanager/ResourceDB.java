@@ -53,43 +53,30 @@ public class ResourceDB {
 	 * Selects
 	 */
 	
-	/*public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
+	public List<Resource> getResourcesByQuestionId(int questionId, String lang)
 	{
-		List<Question> questions = new ArrayList<Question>();
+		List<Resource> resources = new ArrayList<Resource>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_SURVEYID);			
-	   		pstm.setInt(1, surveyId);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCES_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
-	   			String mainVersion = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
-	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
 	   			ContentDB contentDB = new ContentDB();
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
-	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
-	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
-	   					null, 
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), 
-	   					contents, 
-	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
-	   					rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY), 
-	   					mainVersion, 
-	   					false,
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
-	   			
-	   			OptionDB optionDB = new OptionDB();
-	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
-	   			
-	   			questions.add(question);
-	   			
+	   				   			
+	   			Resource resource = new Resource(rs.getInt(DBFieldNames.s_RESOURCEID), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					contents);
+	   			resources.add(resource);
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -99,25 +86,28 @@ public class ResourceDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return questions;
+		return resources;
 	}
 	
-	public String getQuestionTypeTemplateFileByName(String questionType)
+	public Resource getResourceById(int resourceId)
 	{
-		String response = "";
+		Resource resource = null;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONTYPE_TEMPLATE_FILE_BY_ID);			
-	   		pstm.setString(1, questionType);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_BY_ID);			
+	   		pstm.setInt(1, resourceId);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
-	   			response = rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE);
+	   			resource = new Resource(resourceId, 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					rs.getInt(DBFieldNames.s_CONTENTID));
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -127,10 +117,10 @@ public class ResourceDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return response;
+		return resource;
 	}
 	
-	public HashMap<String, String> getQuestionContentByQuestionId(int questionId, String lang)
+	/*public HashMap<String, String> getQuestionContentByQuestionId(int questionId, String lang)
 	{
 		HashMap<String, String> contents = new HashMap<String, String>();
 		
@@ -222,6 +212,40 @@ public class ResourceDB {
 		return inserted;
 	}
 	
+	/**
+	 * Update
+	 */
+	
+	public boolean updateResourceUrlPath(int resourceId, String urlPath) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_RESOURCE_URLPATH);
+			pstm.setString(1, urlPath);
+			pstm.setInt(2, resourceId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+
 	
 
 }

@@ -41,6 +41,15 @@ public class DBSQLQueries {
 		//Question Type
 		public final static String s_SELECT_QUESTIONTYPE_TEMPLATE_FILE_BY_ID = "SELECT templateFile FROM surveytool.questiontype where name = ?";
 		
+		//resources
+		public final static String s_SELECT_RESOURCES_BY_QUESTIONID = "SELECT r.*, rt.name resourceTypeName FROM surveytool.resoruces r "
+				+ "inner join surveytool.questionresource qr on r.idResoruces = qr.idResoruces "
+				+ "inner join surveytool.resourcetype rt on r.idResourceType = rt.idResourceType "
+				+ "where qr.idQuestion = ?";
+		public final static String s_SELECT_RESOURCE_BY_ID = "select r.*, rt.name resourceTypeName from surveytool.resoruces r "
+				+ "inner join surveytool.resourcetype rt on r.idResourceType = rt.idResourceType "
+				+ "where idResoruces = ?";
+		
 		//User
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol WHERE (userName = ? or email = ?) and password = ?";
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
@@ -119,7 +128,7 @@ public class DBSQLQueries {
 		//QuestionByPage
 			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `numQuestion`, `mandatory`) VALUES (?, ?, ?, ?)";
 		//QuestionResource
-			public final static String s_INSERT_QUESTION_RESOURCE = "INSERT INTO `surveytool`.`questionresource` (`idQuestion`, `idResoruces`) VALUES ('1', '1')";
+			public final static String s_INSERT_QUESTION_RESOURCE = "INSERT INTO `surveytool`.`questionresource` (`idQuestion`, `idResoruces`) VALUES (?, ?)";
 		//Questionnaire
 			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
 		//Resource
@@ -131,6 +140,9 @@ public class DBSQLQueries {
 					+ "WHERE `idContent`= ? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+		//resources
+			public final static String s_UPDATE_RESOURCE_URLPATH = "UPDATE `surveytool`.`resoruces` SET `urlPath`=? WHERE `idResoruces`=?";
+		
 			
 		
 		/*

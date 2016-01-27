@@ -15,8 +15,27 @@
 				    		<div class="panel-body">
 				    			<div class="survey-frame" id="import-multimedia-file">
 				    				<h3>Select a multimedia file</h3>
+
+			    					<form method="POST" action="ImportFileServlet" id="importFileForm" enctype="multipart/form-data">
+			    						<div id="selectFile">			    						
+									        <div class="form-group">
+									        	<label for="uploadedFile">File input</label>
+									            <input type="file" name="uploadedFile" class="form-control" id="uploadedFile" />
+									        </div>
+										</div>
+										<div class="hidden" id="optionsFile">
+										
+										</div>
+			    					</form>
+				    								    				
+				    			</div>				    			
+				    		</div>
+				    		<!-- <div class="panel-body">
+				    			<div class="survey-frame" id="import-multimedia-file">
+				    				<h3>Select a multimedia file</h3>
 				    				
-			    					<form method="POST" action="ImportFileServlet" id="importFileForm" enctype="multipart/form-data" >
+			    					<form method="POST" action="ImportFileServlet" id="importFileForm" enctype="multipart/form-data">
+			    						
 			    						<div class="form-group">
 								            <label for="resourceTitle">Title</label>
 								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="Type here_"/>
@@ -32,13 +51,13 @@
 								            
 								            <!-- <input type="submit" value="Upload" name="upload" id="upload" />  data-dismiss="modal" aria-label="Close" -->
 			    						
-										<div class="center">
-											<button name="upload" id="btnImportFile" class="btn btn-primary">Import</button> 
+										<!--  <div class="center">
+											<button name="upload" id="btnImportFile" class="btn btn-primary" aria-label="Import">Import</button> 
 										</div>
 			    					</form>
 				    								    				
 				    			</div>				    			
-				    		</div> 
+				    		</div> -->
 				    	</div>
 				  	</div>
 				</div>

@@ -4,20 +4,39 @@ import java.util.HashMap;
 
 public class Resource {
 	
+	int resourceId = 0;
 	String type = "";
 	String pathFile = "";
 	HashMap<String, Content> contents;
+	int contentId = 0;
 	
 	public Resource() {
 		super();
-		// TODO Auto-generated constructor stub
+		contents = new HashMap<String, Content>();
 	}
 	
-	public Resource(String type, String pathFile, HashMap<String, Content> contents) {
+	public Resource(int resourceId, String type, String pathFile, HashMap<String, Content> contents) {
 		super();
+		this.resourceId = resourceId;
 		this.type = type;
 		this.pathFile = pathFile;
 		this.contents = contents;
+	}
+	
+	public Resource(int resourceId, String type, String pathFile, int contentId) {
+		super();
+		this.resourceId = resourceId;
+		this.type = type;
+		this.pathFile = pathFile;
+		this.contentId = contentId;
+	}
+	
+	public int getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
 	}
 
 	public String getType() {
@@ -42,6 +61,14 @@ public class Resource {
 
 	public void setContents(HashMap<String, Content> contents) {
 		this.contents = contents;
+	}
+	
+	public int getContentId() {
+		return contentId;
+	}
+
+	public void setContentId(int contentId) {
+		this.contentId = contentId;
 	}
 
 	@Override
