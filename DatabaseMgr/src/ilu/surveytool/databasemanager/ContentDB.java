@@ -204,5 +204,30 @@ public class ContentDB {
 		   
 	}
 	
+	/*
+	 * Delete
+	 */
+
+	public void removeContent(int contentId) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT);
+		   	pstm.setInt(1, contentId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
 
 }

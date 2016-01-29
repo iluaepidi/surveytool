@@ -29,10 +29,10 @@
 														  </select>
 													</div>
 													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings mandatory-question" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
+														<button class="btn btn-question-basic-settings mandatory-question" id="mandatoryButton" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
 													</div>
 													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings" selected="<%= question.isHelpText() %>"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+														<button class="btn btn-question-basic-settings" selected="<%= question.isHelpText() %>" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
 													</div>
 													<div class="col-md-2">
 														<button class="btn btn-question-basic-settings" id="btn-question-import-file" selected="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>

@@ -23,7 +23,7 @@ $(function() {
 	    clientTarget.on( "complete", function(clientTarget, args) {
 	        clientTarget.setText( args.text );
 	        $('#target-to-copy-text').fadeIn();
-	    } );
+	    });
 	});
 
 	$('body_').click(function() {
@@ -214,8 +214,110 @@ $(function() {
 		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
+	
+	$('#panel-body').on("click", "#removeMultimediaFile", function(e){
+		var item = $(this).closest('li.multimedia-item');
+		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
+		$("#removeElemId").val(item.attr('rid'));
+		$("#removeElemService").val('ResourceService');
+		$("#removeElement").modal("show");
+	});
+	
+	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
 		
+		var elementId = $('#removeElemId').val(); 
+		var service = $("#removeElemService").val();
+		console.log("Resource ID: " + elementId);
+		
+		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
+		
+		$.ajax({ 
+		   url: "http://localhost:8080/SurveyTool/api/" + service + "/" + elementId,
+		   type: "DELETE",
+		   success: function (data) {
+			   console.log(data);
+			   if(data == 'true')
+			   {
+				   $("#removeElement").modal("hide");
+				   $('li[rid=' + elementId + ']').remove();
+				   var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
+				   console.log("Items: " + numItems);
+				   if(numItems == 0)
+				   {
+					   $('#multimediaFrame').addClass('hidden');
+				   }
+			   }
+			   
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+		});
+	});
+	
+	$('#survey-info').on("focusout", "#survey-info-title", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "title";
+		req.lan = "en";
+		req.sid = $(this).closest('#survey-info').attr('sid');		
+		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateContent";
+		
+		updateContent(req, serviceUrl);
+	});
+	
+	$('#survey-info').on("focusout", "#surveyDescription", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "description";
+		req.lan = "en";
+		req.sid = $(this).closest('#survey-info').attr('sid');		
+		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateContent";
+		
+		updateContent(req, serviceUrl);
+	});
+	
+	$('#survey-info').on("focusout", "#surveyProject", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.project = $(this).val();
+		req.sid = $(this).closest('#survey-info').attr('sid');		
+		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateProject";
+		
+		updateContent(req, serviceUrl);
+	});
+	
+	$('#panel-body').on("click", "#helpTextButton", function(e){
+		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
+		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
+		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+	});
+	
 });
 
-
+function updateContent(req, serviceUrl)
+{
+	
+	$.ajax({ 
+	   type: "PUT",
+	   dataType: "text",
+	   contentType: "text/plain",
+	   url: serviceUrl,
+	   data: JSON.stringify(req),
+	   success: function (data) {
+		   console.log(data);		   
+	   },
+	   error: function (xhr, ajaxOptions, thrownError) {
+		   console.log(xhr.status);
+		   console.log(thrownError);
+		   console.log(xhr.responseText);
+		   console.log(xhr);
+	   }
+	});
+}
 

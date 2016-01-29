@@ -245,7 +245,26 @@ public class ResourceDB {
 		   
 	}
 	
+	public void removeResource(int resourceId) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_RESOURCE);
+		   	pstm.setInt(1, resourceId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
 
+	}
 	
 
 }

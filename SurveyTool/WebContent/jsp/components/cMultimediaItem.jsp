@@ -20,6 +20,6 @@
 							  							<li class="multimedia-item" rid="<%= resource.getResourceId() %>">
 							  								<i class="fa fa-file-image-o"></i>
 							  								<a href="#"><%= title + resource.getPathFile() %></a>
-							  								<a class="btn btn-transparent fright red"><i class="fa fa-trash"></i></a>
+							  								<button id="removeMultimediaFile" class="btn btn-transparent fright red"><i class="fa fa-trash"></i></button>
 							  							</li>
 							  					

@@ -4,6 +4,7 @@ public class Parameter {
 
 	public final static String s_ACTION = "action";
 	public final static String s_CID = "cid";
+	public final static String s_CONTENT_TYPE = "contentType";
 	public final static String s_DESCRIPTION = "description";
 	public final static String s_HELP_TEXT = "helpText";
 	public final static String s_INDEX = "index";
@@ -23,6 +24,7 @@ public class Parameter {
 	public final static String s_RID = "rid";
 	public final static String s_SID = "sid";
 	public final static String s_TITLE = "title";
+	public final static String s_TEXT = "text";
 	public final static String s_USERNAME = "username";
 	public final static String s_UPOPTION = "upoption";
 	

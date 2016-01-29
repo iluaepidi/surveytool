@@ -21,7 +21,7 @@
 	  				<div class="content-box-tabs edit-content">
 	  					<div class="browser-left">Hello</div>	  						  		
 	  					<div class="edit-content-center">
-		  					<div class="edit-survey-frame survey-info" id="survey-info">
+		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false">
 		  							<i class="fa fa-caret-right fa-2x"></i>
 		  						</button>
@@ -31,7 +31,7 @@
 		  						<div class="survey-info-project">
 									<label for="surveyTitle" class="col-sm-4 control-label"> for project </label>
 							   		<div class="col-sm-8">
-							   			<input type="text" class="form-control" name="project" value="<%= survey.getProject() %>" />
+							   			<input type="text" class="form-control" id="surveyProject" name="project" value="<%= survey.getProject() %>" />
 							   		</div>
 								</div>
 								
@@ -48,7 +48,7 @@
 							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>" disabled />
 							     			
 							   		</div>
-							   		<a class="col-sm-1 btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="Copy URL to clipboard"><i class="fa fa-clipboard fa-2x"></i></a>
+							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="Copy URL to clipboard"><i class="fa fa-clipboard fa-2x"></i></button>
 								</div>
 		  					</div>	
 		  					
@@ -112,3 +112,7 @@
 	  			<jsp:include page="../frames/fNewQuestion.jsp" />
 	  			
 	  			<jsp:include page="../frames/fImportFile.jsp" />
+	  			
+	  			<jsp:include page="../frames/fDeleteElement.jsp" />
+	  			
+	  			<jsp:include page="../frames/fHelpText.jsp" />

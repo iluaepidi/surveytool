@@ -43,5 +43,20 @@ public class ResourceOrch {
 		ResourceDB resourceDB = new ResourceDB();
 		return resourceDB.updateResourceUrlPath(resourceId, urlPath);
 	}
+	
+	public boolean removeResource(int resourceId)
+	{
+		boolean removed = false;
+		
+		ResourceDB resourceDB = new ResourceDB();
+		ContentDB contentDB = new ContentDB();
+		
+		Resource resource = resourceDB.getResourceById(resourceId);
+		resourceDB.removeResource(resourceId);
+		contentDB.removeContent(resource.getContentId());
+		removed = true;
+		
+		return removed;
+	}
 
 }

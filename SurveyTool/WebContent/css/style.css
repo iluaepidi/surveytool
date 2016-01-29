@@ -153,6 +153,11 @@ footer {margin-top: 10px;}
 {margin: 20% auto;}
 .survey-win-dialog {margin: 14% auto !important;
 	width: 60% !important;}
+.remove-win-dialog {margin: 14% auto !important;
+	width: 30% !important;}
+.remove-frame-buttons {width: 70%;
+	margin: 5px auto;}
+.btn-accept-remove-element {float:right;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
 	padding: 20px 10px;
@@ -259,7 +264,10 @@ footer {margin-top: 10px;}
     display: none;}
 .survey-info-description label {margin-top: 15px;}
 .survey-info-url label {margin-top: 9px;}
-.btn-copy-clipboard i {margin-top: 5px;}
+.btn-copy-clipboard {color:#337AB7;
+	padding: 5px !important;}
+.btn-copy-clipboard:focus, 
+.btn-copy-clipboard:hover {color:#000 !important;}
 .display-default-arrow {float:left;
     margin-left: 20px;
     padding-top: 1px !important;
@@ -416,7 +424,7 @@ footer {margin-top: 10px;}
 .question-frame p {margin: 0px;}
 .question-frame-help {display:none;}
 .question-frame-multimedia {}
-.multimedia-item a {font-size: 1.3em;
+.multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}
 
