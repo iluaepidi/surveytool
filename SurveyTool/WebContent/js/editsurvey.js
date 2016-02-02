@@ -31,12 +31,14 @@ $(function() {
     });
 	
 	//survey-info  #e6e6e6
-	$('.btn-qtype a').click(function(){
+	$('.btn-qtype button').click(function(){
 		$('#frame-basic-Settings').css('display', 'inherit');
 		$('#' + qtypeId + " i").css("background-color","#fff");
 		qtypeId = $(this).attr('id');
 		$('#' + qtypeId + ' i').css("background-color","#e6e6e6");
 		$('#qtypevalue').val(qtypeId);
+		$('#qstatement').focus();
+		
 	});
 	
 	$('#basic-settings-close').click(function(){
@@ -84,48 +86,53 @@ $(function() {
 	
 	$('#panel-body').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
-		console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('div[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
-		var req = {};
-		var currentNode = $(this);
-		req.text = currentNode.val();
-		req.oid = currentNode.attr('oid');
-		req.index = currentNode.attr('index');
-		req.qid = currentNode.closest('div[id=panel-question1]').attr('qid');
-		req.ogid = currentNode.closest('ul').attr('ogid');
-		req.otype = currentNode.closest('ul').attr('otype');
-		req.lang = currentNode.closest('div[id=panel-body]').find('select[id=main-version]').val();
-		
-		$.ajax({ 
-		   type: "POST",
-		   dataType: "text",
-		   contentType: "text/plain",
-		   url: "http://localhost:8080/SurveyTool/api/QCService/insertOption",
-		   data: JSON.stringify(req),
-		   success: function (data) {
-			   console.log(data);
-			   if(data != '')
-			   {
-				   var json = JSON.parse(data);
-				   if(json.hasOwnProperty('oid'))
+		if($(this).val() != "")
+		{
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('div[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.attr('oid');
+			req.index = currentNode.attr('index');
+			req.qid = currentNode.closest('div[id=panel-question1]').attr('qid');
+			req.ogid = currentNode.closest('ul').attr('ogid');
+			req.otype = currentNode.closest('ul').attr('otype');
+			req.lang = currentNode.closest('div[id=panel-body]').find('select[id=main-version]').val();
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: "http://localhost:8080/SurveyTool/api/QCService/insertOption",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
 				   {
-					   console.log("hello oid: " + json.oid);
-					   currentNode.attr('oid', json.oid);
+					   var json = JSON.parse(data);
+					   if(json.hasOwnProperty('oid'))
+					   {
+						   console.log("hello oid: " + json.oid);
+						   currentNode.attr('oid', json.oid);
+					   }
+					   
+					   if(json.hasOwnProperty('ogid'))
+					   {
+						   console.log("hello ogid: " + json.ogid);
+						   currentNode.closest('ul').attr('ogid', json.ogid);
+					   }
+					   
+					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
 				   }
-				   
-				   if(json.hasOwnProperty('ogid'))
-				   {
-					   console.log("hello ogid: " + json.ogid);
-					   currentNode.closest('ul').attr('ogid', json.ogid);
-				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
 			   }
-		   },
-		   error: function (xhr, ajaxOptions, thrownError) {
-			   console.log(xhr.status);
-			   console.log(thrownError);
-			   console.log(xhr.responseText);
-			   console.log(xhr);
-		   }
-		});
+			});
+		}
 	});
 	
 	$('#panel-body').on("click", "#option-list #btn-add-option", function(e){
@@ -133,7 +140,7 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item">' +
 															//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 						  									'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-						  									'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '"/> ' +
+						  									'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '" autofocus/> ' +
 						  									'<div class="option-icons fleft"> ' +
 							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -141,6 +148,7 @@ $(function() {
 							  								'</div> ' +
 							  							'</li>';
 		$(this).parent().before(optionHtml);
+		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
 	//$('#uploadedFile').change(function(e) {

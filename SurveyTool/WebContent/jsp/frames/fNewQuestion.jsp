@@ -15,19 +15,19 @@
 				    		<div class="panel-body">
 				    			<div class="survey-frame">
 				    				<h3>Select question type</h3>
-									<div class="row">
-										<div class="col-sm-1 center btn-qtype">
-											<a id="text"><i class="fa fa-align-center fa-2x btn btn-default"></i> <span class="qtype-icon-text">Text</span></a>
-										</div>
-										<div class="col-sm-1 center btn-qtype">
-											<a id="simple"><i class="fa fa-list-ul fa-2x btn btn-default"></i> <span class="qtype-icon-text">Simple</span></a>
-										</div>
+									<ul class="row qtype-list">
+										<li class="col-sm-1 center btn-qtype">
+											<button class="btn-transparent" id="text"><i class="fa fa-align-center fa-2x btn btn-default"></i> <span class="qtype-icon-text">Text</span></button>
+										</li>
+										<li class="col-sm-1 center btn-qtype">
+											<button class="btn-transparent" id="simple"><i class="fa fa-list-ul fa-2x btn btn-default"></i> <span class="qtype-icon-text">Simple</span></button>
+										</li>
 										<!-- <div class="col-sm-1 center btn-qtype">
 											<a id="multiple"><i class="fa fa-list fa-2x btn btn-default"></i> <span class="qtype-icon-text">Multiple</span></a>
 										</div> -->
-										<div class="col-sm-1 center btn-qtype">
-											<a id="scale"><i class="fa fa-arrows-h fa-2x btn btn-default"></i> <span class="qtype-icon-text">Scale</span></a>
-										</div>
+										<li class="col-sm-1 center btn-qtype">
+											<button class="btn-transparent" id="scale"><i class="fa fa-arrows-h fa-2x btn btn-default"></i> <span class="qtype-icon-text">Scale</span></button>
+										</li>
 										<!-- <div class="col-sm-1 center btn-qtype">
 											<a id="ordering"><i class="fa fa-sort-numeric-asc fa-2x btn btn-default"></i> <span class="qtype-icon-text">Ordering</span></a>
 										</div>
@@ -40,12 +40,12 @@
 										<div class="col-sm-1 center btn-qtype">
 											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text">Code</span></a>
 										</div> -->
-									</div>
+									</ul>
 				    			</div>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">
 				    				<h3>Basic settings</h3>
 				    				<div class="close-frame">
-				    					<a class="btn-close-aspa" id="basic-settings-close" title="Close basic settings"><i class="fa fa-times-circle fa-2x"></i></a>
+				    					<a class="btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="Close basic settings"><i class="fa fa-times-circle fa-2x"></i></a>
 				    				</div>
 				    				<div class="row">
 				    					<form>
@@ -84,7 +84,7 @@
 													  </select>
 												</div>
 												<div class="center">
-													<a class="btn btn-primary" id="create-question" data-dismiss="modal" aria-label="Close">Create</a>
+													<button class="btn btn-primary" id="create-question" data-dismiss="modal" aria-label="Close">Create</button>
 												</div>
 											</div>
 				    					</form>

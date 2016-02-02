@@ -9,12 +9,13 @@
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
+    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								%>
 										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
 											<div class="panel-heading">	
-												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
-												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
-												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
+												<!-- <div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div> -->				
+												<h3 class="col-sm-11 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" /></h3>
+												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" aria-label="Remove question: <%= title %> " title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
 											</div>
 											
 											<div class="panel-body">									
@@ -90,8 +91,8 @@
 																<option value="ma">Matrix</option> -->
 															</select>
 														</div>
-														<div class="col-md-8">
-															 <label for="qresponse"	>Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
+														<fieldset class="col-md-8">
+															 <legend>Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
 															 <ul>
 															 	<li class="radio">
 																  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
@@ -106,7 +107,7 @@
 																  </label>
 																</li>
 															 </ul>
-														</div>													 
+														</fieldset>													 
 							  						</div>						  						
 							  					</div>
 							  					<%
@@ -123,15 +124,16 @@
 							  						for(Option option : optionsGroup.getOptions())
 							  						{
 							  							int index = option.getIndex();
+							  							String text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  						%>
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="Option <%= index %>" value="<%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>"/>
+						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="Option <%= index %>" value="<%= text %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button>
+							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  						<%
@@ -159,8 +161,8 @@
 							  							}
 							  						}
 							  						%>
-							  							<li class="center">
-							  								<a class="btn-plus-small" id="btn-add-option"><i class="fa fa-plus-square"></i></a>
+							  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
+							  								<a class="btn-plus-small" id="btn-add-option" href="#li-add-option<%= question.getQuestionId() %>" aria-label="Add option"><i class="fa fa-plus-square"></i></a>
 							  							</li>
 							  						</ul>
 							  					</div>
@@ -197,8 +199,8 @@
 							  								</div>
 							  							</li>
 							  						
-							  							<li class="center">
-							  								<a class="btn-plus-small" id="btn-add-option"><i class="fa fa-plus-square"></i></a>
+							  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
+							  								<a class="btn-plus-small" id="btn-add-option" href="#li-add-option<%= question.getQuestionId() %>" aria-label="Add option"><i class="fa fa-plus-square"></i></a>
 							  							</li>
 							  						</ul>
 							  					</div>

@@ -58,6 +58,7 @@ $(function() {
 		currentFrameActivate = "add-menu-frame";
 		//$('#add-menu-frame .add-menu').css("display", "inherit");
 		$(this).parent().children(".add-menu").css("display", "inherit");
+		$(this).parent().find('#btn-question').focus();
 	});
 	
 	/*$('#add-menu-frame a').click(function(e){

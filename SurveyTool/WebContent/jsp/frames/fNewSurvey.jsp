@@ -8,10 +8,11 @@
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    			<h2 class="panel-title">New survey</h2> 
 				    		</div> 
-				    		<div class="panel-body">				    			
-				    			<div class="survey-frame">
-				    				<h3>Create from scratch</h3>
-									<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal">
+				    		<div class="panel-body">
+			    				<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal">
+			    					<fieldset class="survey-frame">
+				    					<legend>Create survey from scratch</legend>
+									
 										<div class="row">
 											<div class="col-sm-7 margin-bottom-10">
 												<label for="surveyTitle" class="col-sm-2 control-label left">Survey title</label>
@@ -20,9 +21,9 @@
 										   		</div>
 											</div>
 											<div class="col-sm-5">
-												<label for="surveyTitle" class="col-sm-3 control-label left"> for project </label>
+												<label for="surveyProject" class="col-sm-3 control-label left"> for project </label>
 										   		<div class="col-sm-9">
-										   			<input type="text" class="form-control" name="project" placeholder="Insert project name_"/>														
+										   			<input type="text" class="form-control" id="surveyProject" name="project" placeholder="Insert project name_"/>														
 										   		</div>
 											</div>
 										</div>
@@ -36,8 +37,8 @@
 												<input type="submit" class="btn btn-primary btn-create-survey" value="Create" />
 											</div>
 										</div>
-									</form>
-				    			</div>
+									</fieldset>
+								</form>
 				    		</div> 
 				    	</div>
 				  	</div>

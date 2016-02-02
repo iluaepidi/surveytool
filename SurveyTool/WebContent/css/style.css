@@ -163,11 +163,20 @@ footer {margin-top: 10px;}
 	padding: 20px 10px;
     border-radius: 5px;}
 .survey-frame h3 {font-size: 1em;
-    margin-left: 10px;
+ 	margin-left: 10px;
     margin-top: -28px;
     background-color: #fff;
     padding: 0px 5px;
     display: inline-block;}
+.survey-frame legend {font-size: 1em;
+    margin-left: 10px;
+    /*margin-top: -28px;*/
+    margin-bottom: 0px;
+    background-color: #fff;
+    padding: 0px 5px;
+    /*display: inline-block;*/
+    border: none;
+    max-width: 185px;}
 .survey-frame label, 
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
@@ -365,6 +374,9 @@ footer {margin-top: 10px;}
 .btn-add-media span {margin-left: 12px;
     margin-top: 4px;}
     
+.qtype-list {padding: 0px;
+    margin: 0px -15px;}
+    
 .frame-basic-Settings {display: none;}
 .panel-question {width: 95%;
 	margin: 30px auto;
@@ -430,6 +442,11 @@ footer {margin-top: 10px;}
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}
 
+.question-frame legend{font-size: 1em;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 5px;}
+
 .likert-options {display: inline-flex;
     width: 100%;
     text-align: center;}
@@ -483,6 +500,11 @@ footer {margin-top: 10px;}
 .form-question textarea {border: 1px solid #000;}
 .form-question label {font-size: 1.3em !important;
 	width: 95%;}
+.form-question legend {font-size: 1.3em !important;
+    width: 95%;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 5px;}
 .form-question label img {margin: 5px;}
 .form-question-content {margin: 0 auto;
 	    width: 32%;

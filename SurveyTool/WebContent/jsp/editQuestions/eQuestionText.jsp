@@ -8,12 +8,13 @@
     
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
+    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								%>
 										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
 											<div class="panel-heading">	
-												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
-												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
-												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
+												<!-- <div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div> -->				
+												<h3 class="col-sm-11 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" /></h3>
+												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" aria-label="Remove question: <%= title %> " title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
 											</div>
 											
 											<div class="panel-body">									
@@ -90,7 +91,7 @@
 															</select>
 														</div>
 														<div class="col-md-8">
-															 <label for="qresponse"	>Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
+															 <label for="qresponse"	>Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
 														     <textarea class="form-control" id="qresponse" rows="5" placeholder="Type here_"></textarea>
 														</div>													 
 							  						</div>						  						
