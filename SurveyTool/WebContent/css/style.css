@@ -19,6 +19,7 @@
 .center {text-align: center;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}
+.hidden {display:none;}
 .margin-bottom-10 {margin-bottom: 10px;}
 .icon-small i {font-size: 1.4em;}
 .nav-tabs-right {padding-right: 20px;
@@ -152,16 +153,30 @@ footer {margin-top: 10px;}
 {margin: 20% auto;}
 .survey-win-dialog {margin: 14% auto !important;
 	width: 60% !important;}
+.remove-win-dialog {margin: 14% auto !important;
+	width: 30% !important;}
+.remove-frame-buttons {width: 70%;
+	margin: 5px auto;}
+.btn-accept-remove-element {float:right;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
 	padding: 20px 10px;
     border-radius: 5px;}
 .survey-frame h3 {font-size: 1em;
-    margin-left: 10px;
+ 	margin-left: 10px;
     margin-top: -28px;
     background-color: #fff;
     padding: 0px 5px;
     display: inline-block;}
+.survey-frame legend {font-size: 1em;
+    margin-left: 10px;
+    /*margin-top: -28px;*/
+    margin-bottom: 0px;
+    background-color: #fff;
+    padding: 0px 5px;
+    /*display: inline-block;*/
+    border: none;
+    max-width: 185px;}
 .survey-frame label, 
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
@@ -200,7 +215,9 @@ footer {margin-top: 10px;}
     border: 1px solid #2566C2;}
 .circle-grey {background-color: #585858;
     color: #fff;
-    border: 1px solid #585858;}
+    border: 1px solid #585858;    
+    margin-top: 1px;
+    margin-right: 2px;}
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
@@ -258,10 +275,18 @@ footer {margin-top: 10px;}
     display: none;}
 .survey-info-description label {margin-top: 15px;}
 .survey-info-url label {margin-top: 9px;}
-.btn-copy-clipboard i {margin-top: 5px;}
-.sect-arrow {float:left;
+.btn-copy-clipboard {color:#337AB7;
+	padding: 5px !important;}
+.btn-copy-clipboard:focus, 
+.btn-copy-clipboard:hover {color:#000 !important;}
+.display-default-arrow {float:left;
     margin-left: 20px;
-    padding-top: 0px !important;}
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    border: none !important;
+    background-color: #fff;
+    border-radius: 3px;}
+.display-default-arrow:focus, .display-default-arrow:hover{background-color: #ddd;}
     
 
 .add-frame {width: 70%;
@@ -349,9 +374,12 @@ footer {margin-top: 10px;}
 .btn-add-media span {margin-left: 12px;
     margin-top: 4px;}
     
+.qtype-list {padding: 0px;
+    margin: 0px -15px;}
+    
 .frame-basic-Settings {display: none;}
 .panel-question {width: 95%;
-	margin: 20px auto;
+	margin: 30px auto;
 	text-align: center;
 	background-color: #fff;
     border: 1px solid #255885;
@@ -381,13 +409,14 @@ footer {margin-top: 10px;}
 .panel-question-basic-setting div button span {margin-top: 4px;}
 .panel-question-basic-setting div label i, 
 .panel-question-basic-setting div button i {margin-right: 5px;}
-.panel-question-basic-setting div button[selected="false"]{border: 1px solid #3C3C3C; 
+.panel-question-basic-setting div button[active="false"]{border: 1px solid #3C3C3C; 
 	background-color: transparent;}
-.panel-question-basic-setting div button[selected="true"],
-.panel-question-basic-setting div button[selected="false"]:focus,
-.panel-question-basic-setting div button[selected="false"]:hover {border: 1px solid #3C3C3C; 
+.panel-question-basic-setting div button[active="true"],
+.panel-question-basic-setting div button[active="false"]:focus,
+.panel-question-basic-setting div button[active="false"]:hover {border: 1px solid #3C3C3C; 
 	background-color: #B7D4FA;}
-	
+
+.btn-question-basic-settings {padding-top: 2px !important;}
 .question-frame {border: 1px solid #555;
 	margin: 15px 0px;
 	padding: 10px 20px;
@@ -407,6 +436,16 @@ footer {margin-top: 10px;}
     width: 90px;
     height: 45px;}
 .question-frame p {margin: 0px;}
+/*.question-frame-help {display:none;}*/
+.question-frame-multimedia {}
+.multimedia-item button {font-size: 1.3em;
+    margin-left: 5px;}
+.multimedia-item i {font-size: 1.3em;}
+
+.question-frame legend{font-size: 1em;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 5px;}
 
 .likert-options {display: inline-flex;
     width: 100%;
@@ -436,12 +475,16 @@ footer {margin-top: 10px;}
 .option-title {width: 70% !important;
     margin: 0px 5px;
     height: 28px !important;}
-.option-icons a {margin: 0px 3px;}
+.option-icons button {margin: 0px 3px;}
 .btn-plus-small {font-size: 1.3em;}
 .btn-plus-small:hover {cursor:pointer;}
 .routes-select {display: flex;}
 .routes-select label {margin-top: 3px;}
 .routes-select select {margin: 0px 8px;}
+
+.previewFileUpliaded {text-align: center;
+	margin-top: 5px;}
+.previewFileUpliaded img{max-width: 60%}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
@@ -455,7 +498,14 @@ footer {margin-top: 10px;}
     padding: 1.5%;
     margin-bottom: 2%;}
 .form-question textarea {border: 1px solid #000;}
-.form-question label {font-size: 1.3em !important;}
+.form-question label {font-size: 1.3em !important;
+	width: 95%;}
+.form-question legend {font-size: 1.3em !important;
+    width: 95%;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 5px;}
+.form-question label img {margin: 5px;}
 .form-question-content {margin: 0 auto;
 	    width: 32%;
 	    min-width: 200px;}

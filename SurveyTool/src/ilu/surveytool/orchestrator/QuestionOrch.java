@@ -4,8 +4,10 @@ import java.util.Iterator;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Question;
+import ilu.surveytool.databasemanager.DataObject.Resource;
 
 public class QuestionOrch {
 
@@ -46,4 +48,71 @@ public class QuestionOrch {
 		return questionDB.getQuestionTypeTemplateFileByName(questionType);
 	}
 	
+
+	public Resource insertResource(Resource resource, int questionId)
+	{
+		int resourceId = 0;
+		
+		ResourceDB resourceDB = new ResourceDB();
+		ContentDB contentDB = new ContentDB();
+		
+		int contentId = contentDB.insertContentIndex();
+		resourceId = resourceDB.insertResource(resource, contentId);
+		
+		if(resourceId > 0)
+		{
+			/*Iterator<String> iter = resource.getContents().keySet().iterator();
+			while(iter.hasNext())
+			{
+				String key = iter.next();
+				Content content = resource.getContents().get(key);
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+				resource.getContents().get(key).setContentId(contentId);
+			}*/
+			
+			resourceDB.insertQuestionResource(questionId, resourceId);
+			resource.setResourceId(resourceId);
+		}
+		
+		return resource;
+	}
+
+	public boolean updateContent(int questionId, Content content)
+	{
+		boolean updated = false;
+		
+		QuestionDB questionDB = new QuestionDB();
+		int contentId = questionDB.getQuestionContentIdByQuestionId(questionId);
+		ContentDB contentDB = new ContentDB();
+		if(contentDB.existContent(contentId, content.getLanguage(), content.getContentType()))
+		{
+			contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		else
+		{
+			contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		
+		updated = true;
+		
+		return updated;
+	}
+	
+	public boolean updateMandatory(int questionId, int pageId)
+	{
+		QuestionDB questionDB = new QuestionDB();
+		boolean mandatory = !questionDB.getQuestionByPageMandatory(questionId, pageId);
+		questionDB.updateQuestionMandatory(questionId, pageId, mandatory);
+		
+		return mandatory;
+	}
+	
+	public boolean removeQuestionByPage(int questionId, int pageId)
+	{
+		boolean removed = false;
+		QuestionDB questionDB = new QuestionDB();
+		questionDB.removeQuestionByPage(questionId, pageId);
+		removed = true;
+		return removed;
+	}
 }

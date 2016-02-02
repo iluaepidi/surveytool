@@ -240,6 +240,93 @@ public class SurveyDB {
 		
 		return response;
 	}
+
+	public int getQuestionnairesContentId(int surveyId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_CONTENTID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
+	
+	public int getQuestionnairesProjectId(int surveyId)
+	{
+		int projectId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_PROJECTID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			projectId = rs.getInt(DBFieldNames.s_PROJECTID);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return projectId;
+	}
+	
+	public List<Integer> getQuestionnairesIdByProjectId(int projectId)
+	{
+		List<Integer> projectsId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_PROJECTID);			
+	   		pstm.setInt(1, projectId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			projectsId.add(rs.getInt(DBFieldNames.s_PROJECTID));
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return projectsId;
+	}
 	
 	public Project getProjectByName(String name)
 	{
@@ -453,6 +540,61 @@ public class SurveyDB {
 		
 		return pageId;
 	}
+	
+	/*
+	 * update
+	 */
+	
+	public boolean updateSurveyProject(int projectId, int surveyId) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONNAIRE_PROJECT);
+			pstm.setInt(1, projectId);
+			pstm.setInt(2, surveyId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		 
+		return updated;
+	}
+
+	public boolean updateProjectName(int projectId, String projectName) {
+		boolean updated = false;
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_PROJECT_NAME);
+			pstm.setString(1, projectName);
+			pstm.setInt(2, projectId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+		return updated;
+	}
+	
 	
 	private String _generatePublicId()
 	{

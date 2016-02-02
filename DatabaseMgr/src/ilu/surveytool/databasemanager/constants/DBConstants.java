@@ -6,6 +6,8 @@ public class DBConstants {
 		//ContentType
 			public final static String s_VALUE_CONTENTTYPE_NAME_TITLE = "title";
 			public final static String s_VALUE_CONTENTTYPE_NAME_DESCRIPTION = "description";
+			public final static String s_VALUE_CONTENTTYPE_NAME_ALT_TEXT = "altText";
+			public final static String s_VALUE_CONTENTTYPE_NAME_HELP_TEXT = "helpText";
 		//language
 			public final static String s_VALUE_LANGUAGE_ISONAME_ENGLISH = "en";
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";

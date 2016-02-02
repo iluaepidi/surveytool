@@ -12,6 +12,7 @@ import java.util.List;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
+import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
@@ -157,6 +158,64 @@ public class OptionDB {
 		return options;
 	}
 	
+	public int getOptionByGroupIdByOptionId(int optionId)
+	{
+		int optionGroupId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSBYGROUP_ID_BY_OPTIONID);			
+	   		pstm.setInt(1, optionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			optionGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionGroupId;
+	}
+	
+	public List<OptionsByGroup> getOptionsByGroupById(int optionsGroupId)
+	{
+		List<OptionsByGroup> optionsByGroup = new ArrayList<OptionsByGroup>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSBYGROUP_BY_ID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			optionsByGroup.add(new OptionsByGroup(optionsGroupId, 
+	   					rs.getInt(DBFieldNames.s_OPTIONID), 
+	   					rs.getInt(DBFieldNames.s_OPTION_INDEX)));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionsByGroup;
+	}
+	
 	/**
 	 * Inserts 
 	 */
@@ -248,6 +307,64 @@ public class OptionDB {
 		}
 		
 		return inserted;
+	}
+	
+	/**
+	 * Update
+	 */
+	
+	public boolean updateOptionsByGroupIndex(int optionsGroupId, int optionId, int index) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSBYGROUP_INDEX);
+			pstm.setInt(1, index);
+			pstm.setInt(2, optionsGroupId);
+			pstm.setInt(3, optionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	/*
+	 * Remove
+	 */
+	
+	public void removeOption(int optionId) {
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTION);
+		   	pstm.setInt(1, optionId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
 	}
 
 }

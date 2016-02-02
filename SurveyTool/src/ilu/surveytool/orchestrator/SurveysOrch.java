@@ -1,6 +1,7 @@
 package ilu.surveytool.orchestrator;
 
 import java.util.Iterator;
+import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.QuestionDB;
@@ -88,6 +89,44 @@ public class SurveysOrch {
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		return surveyDB.getPageId(surveyId);
+	}
+	
+	public boolean updateContent(int surveyId, Content content)
+	{
+		boolean updated = false;
+		
+		SurveyDB surveyDB = new SurveyDB();
+		int contentId = surveyDB.getQuestionnairesContentId(surveyId);
+		ContentDB contentDB = new ContentDB();
+		contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		updated = true;
+		
+		return updated;
+	}
+	
+	public boolean updateProject(int surveyId, String projectName)
+	{
+		boolean updated = false;
+		
+		SurveyDB surveyDB = new SurveyDB();
+		int projectId = surveyDB.getQuestionnairesProjectId(surveyId);
+		List<Integer> surveysId = surveyDB.getQuestionnairesIdByProjectId(projectId);
+		Project project = surveyDB.getProjectByName(projectName);
+		if(project != null)
+		{
+			updated = surveyDB.updateSurveyProject(project.getProjectId(), surveyId);
+		}
+		else if(surveysId.size() > 1)
+		{
+			projectId = surveyDB.insertProject(projectName);			
+			updated = surveyDB.updateSurveyProject(projectId, surveyId);
+		}
+		else
+		{
+			updated = surveyDB.updateProjectName(projectId, projectName);
+		}
+		
+		return updated;
 	}
 
 }

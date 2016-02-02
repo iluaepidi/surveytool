@@ -3,7 +3,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Panel de usuario</title>
+		<title>User Panel</title>
 		
 		<!-- CSS de Bootstrap -->
 		<link href="css/style.css" rel="stylesheet" media="screen">

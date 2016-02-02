@@ -1,6 +1,6 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 String footerPath = "jsp/masterComponents/footer.jsp";
 String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
