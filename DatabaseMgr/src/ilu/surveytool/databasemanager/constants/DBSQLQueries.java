@@ -29,6 +29,11 @@ public class DBSQLQueries {
 				+ "inner join surveytool.optiontype ot on og.idOptionType = ot.idOptionType "
 				+ "where idQuestion = ?";
 		
+		//optionsByGroup
+		public final static String s_SELECT_OPTIONSBYGROUP_BY_ID = "SELECT * FROM surveytool.optionsbygroup where idOptionsGroup = ? "
+				+ "order by 'index'";
+		public final static String s_SELECT_OPTIONSBYGROUP_ID_BY_OPTIONID = "SELECT idOptionsGroup FROM surveytool.optionsbygroup where idOption = ?";
+		
 		//page
 		public final static String s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID = "SELECT idPage FROM surveytool.questionnaire q "
 				+ "inner join surveytool.forma f on q.idQuestionnaire = f.idQuestionnaire "
@@ -69,6 +74,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where q.idQuestion = ? and l.isoName = ?";
+		public final static String s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID = "SELECT idContent FROM surveytool.question where idQuestion = ?";
 		
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
@@ -93,6 +99,9 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTIONNAIRE_CONTENTID = "SELECT idContent FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PROJECTID = "SELECT idProject FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRESID_BY_PROJECTID = "SELECT idQuestionnaire FROM surveytool.questionnaire WHERE idProject = ?";
+		
+		//QuestionByPage
+		public final static String s_SELECT_QUESTIONBYPAGE_MANDATORY = "SELECT mandatory FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
 		
 		//User Questionnaire
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
@@ -143,8 +152,12 @@ public class DBSQLQueries {
 					+ "WHERE `idContent`= ? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+		//optionsByCroup
+			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
+		//questionByPage
+			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
 		//questionnaire
 			public final static String s_UPDATE_QUESTIONNAIRE_PROJECT = "UPDATE surveytool.questionnaire SET idProject=? WHERE idQuestionnaire= ?";
 		//resources
@@ -153,6 +166,12 @@ public class DBSQLQueries {
 	//delete
 		//contentIndex
 			public final static String s_DELETE_CONTENT = "DELETE FROM `surveytool`.`contentindex` WHERE `idContent`=?";
+			
+		//option
+			public final static String s_DELETE_OPTION = "DELETE FROM surveytool.option WHERE idOption = ?";
+			
+		//questionByPage
+			public final static String s_DELETE_QUESTION_BY_PAGE = "DELETE FROM surveytool.questionbypage WHERE idPage=? and idQuestion=?";
 			
 		//resources
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";

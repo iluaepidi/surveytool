@@ -162,6 +162,63 @@ public class QuestionDB {
 		return contents;
 	}
 	
+	public int getQuestionContentIdByQuestionId(int questionId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
+	
+	public boolean getQuestionByPageMandatory(int questionId, int pageId)
+	{
+		boolean mandatory = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONBYPAGE_MANDATORY);			
+	   		pstm.setInt(1, questionId);
+	   		pstm.setInt(2, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			mandatory = rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return mandatory;
+	}
+	
 	/**
 	 * Inserts 
 	 */
@@ -227,6 +284,58 @@ public class QuestionDB {
 		}
 		
 		return inserted;
+	}
+	
+	/*
+	 * Update
+	 */
+	
+	public void updateQuestionMandatory(int questionId, int pageId, boolean mandatory) {
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONBYPAGE_MANDATORY);
+			pstm.setBoolean(1, mandatory);
+			pstm.setInt(2, pageId);
+			pstm.setInt(3, questionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+	}
+	
+	/*
+	 * Remove
+	 */
+	
+	public void removeQuestionByPage(int questionId, int pageId) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_QUESTION_BY_PAGE);
+		   	pstm.setInt(1, pageId);
+		   	pstm.setInt(2, questionId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
 	}
 	
 }

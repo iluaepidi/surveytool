@@ -13,7 +13,7 @@
 											<div class="panel-heading">	
 												<div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
 												<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" /></h3>
-												<div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div>
+												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
 											</div>
 											
 											<div class="panel-body">									
@@ -22,24 +22,34 @@
 														<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Alternatives</span></label>
 														<select class="form-control-small col-md-6" id="main-version">
 														  	<option value="en" selected>Main (English)</option>
-														    <option value="es">Spanish</option>
+														    <!-- <option value="es">Spanish</option>
 														    <option value="fr">French</option>
-														    <option value="el">Greek</option>
+														    <option value="el">Greek</option> -->
 														  </select>
 													</div>
 													<div class="col-md-2">
-														<button class="btn mandatory-question" id="mandatoryButton" selected="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
+														<button class="btn mandatory-question" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
 													</div>
 													<div class="col-md-2">
-														<button class="btn" selected="<%= question.isHelpText() %>" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+														<button class="btn" active="<%= question.isHelpText() %>" id="helpTextButton" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
 													</div>
 													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings" id="btn-question-import-file" selected="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
+														<button class="btn btn-question-basic-settings" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
 													</div>
 							  					</div>
 							  					
-							  					<div class="question-frame question-frame-help">
-							  						<p>Instructions /Help text for selectiong option</p>
+							  					<%
+							  					String htHiddenClass = "hidden";
+											    String helpText = "";
+							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_HELP_TEXT))
+							  					{
+							  						htHiddenClass = "";
+							  						helpText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_HELP_TEXT).getText(); 
+							  					}
+							  					%>
+							  					<div class="question-frame question-frame-help <%= htHiddenClass %>" id="question-frame-help">
+							  						<h4>Help Text</h4>
+							  						<p id="question-frame-help-text"><%= helpText %></p>
 							  					</div>	
 							  					
 							  					<%
@@ -73,10 +83,10 @@
 								  							<label for="type-question">Type</label>
 								  							<select class="form-control" id="type-question">
 															  	<option value="ls" selected>Text</option>
-															  	<option value="ls">Likert scale</option>
+															  	<!-- <option value="ls">Likert scale</option>
 															    <option value="sim">Simple</option>
 															    <option value="mul">Multiple</option>
-																<option value="ma">Matrix</option>
+																<option value="ma">Matrix</option> -->
 															</select>
 														</div>
 														<div class="col-md-8">

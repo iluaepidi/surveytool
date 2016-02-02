@@ -87,12 +87,15 @@ $(function() {
 		}
 	});
 	
-	$('#panel-question1 .panel-heading h3 #survey-question-title').click(function(e){
+	//$('#panel-question1 .panel-heading h3 #survey-question-title').click(function(e){
+	$('#panel-body').on("click", "#survey-question-title", function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "panel-question1";
-		$('#panel-question1 .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-selected");
-		$('#panel-question1 .panel-heading h3 #survey-question-title').focus();
+		//$('#panel-question1 .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-selected");
+		$(this).prop("class", "survey-section-title-selected");
+		//$('#panel-question1 .panel-heading h3 #survey-question-title').focus();
+		$(this).focus();
 	});
 	
 	//abrir cerrar question panel

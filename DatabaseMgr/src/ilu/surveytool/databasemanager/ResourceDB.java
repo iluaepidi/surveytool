@@ -245,6 +245,10 @@ public class ResourceDB {
 		   
 	}
 	
+	/*
+	 * Remove
+	 */
+	
 	public void removeResource(int resourceId) {
 		//System.out.println("removeUserOptionValues");
 		

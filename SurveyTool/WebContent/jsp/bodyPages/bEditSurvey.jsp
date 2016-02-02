@@ -54,21 +54,22 @@
 		  					
 		  					<div class="survey-sections" id="survey-sections">
 		  					
-			  					<div class="add-frame">
+			  					<!-- <div class="add-frame">
 		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
-		  						</div>
+		  						</div> -->
 			  					
 			  					<div class="panel-section" id="panel-section1">
 									<div class="panel-heading">	
-										<div class="col-sm-1 left"><a id="display-section-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div>				
-										<h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected center" id="survey-section-title" value="Section 1:" /></h3>
-										<div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div>
+										<!-- <div class="col-sm-1 left"><a id="display-section-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div> -->				
+										<!-- <h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected center" id="survey-section-title" value="Section 1:" /></h3> -->
+										<!-- <div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div> -->
+										<h3 class="panel-title">Questions</h3>
 									</div>
 									
-									<div class="page" id="page1">
+									<div class="page" id="page" pid="<%= pageId %>">
 										<input type="hidden" id="pageid1" value="<%= pageId %>" />
 										<div class="panel-body" id="panel-body">									
-						  					<div class="add-menu-frame" id="add-menu-frame">
+						  					<!-- <div class="add-menu-frame" id="add-menu-frame">
 						  						<div class="col-sm-5 add-vacio"></div>
 					  							<a class="btn-add col-sm-2" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
 					  							<div class="col-sm-5 add-menu">
@@ -78,7 +79,7 @@
 														<button type="button" class="btn btn-add-menu" id="btn-body-content">Body content</button>
 													</div>
 					  							</div>  							
-					  						</div>	
+					  						</div> -->	
 					  						
 					  						<%
 					  							String token = "/";
@@ -95,14 +96,24 @@
 					  								}
 					  							}
 					  						%>
-					  							  					
+					  						<div class="add-menu-frame" id="add-menu-frame">
+						  						<div class="col-sm-5 add-vacio"></div>
+					  							<a class="btn-add col-sm-2" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>
+					  							<div class="col-sm-5 add-menu">
+					  								<div class="col-sm-1">...</div>
+					  								<div class="btn-group col-sm-11" role="group" aria-label="...">
+														<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal">Question</button>
+														<!-- <button type="button" class="btn btn-add-menu" id="btn-body-content">Body content</button> -->
+													</div>
+					  							</div>  							
+					  						</div>	  					
 										</div>					
 									</div>																		
 								</div>			
 														
-			  					<div class="add-frame">
+			  					<!-- <div class="add-frame">
 		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
-		  						</div>
+		  						</div> -->
 		  						
 		  					</div>	
 						</div>

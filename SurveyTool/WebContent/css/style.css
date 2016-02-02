@@ -206,7 +206,9 @@ footer {margin-top: 10px;}
     border: 1px solid #2566C2;}
 .circle-grey {background-color: #585858;
     color: #fff;
-    border: 1px solid #585858;}
+    border: 1px solid #585858;    
+    margin-top: 1px;
+    margin-right: 2px;}
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
@@ -365,7 +367,7 @@ footer {margin-top: 10px;}
     
 .frame-basic-Settings {display: none;}
 .panel-question {width: 95%;
-	margin: 20px auto;
+	margin: 30px auto;
 	text-align: center;
 	background-color: #fff;
     border: 1px solid #255885;
@@ -395,11 +397,11 @@ footer {margin-top: 10px;}
 .panel-question-basic-setting div button span {margin-top: 4px;}
 .panel-question-basic-setting div label i, 
 .panel-question-basic-setting div button i {margin-right: 5px;}
-.panel-question-basic-setting div button[selected="false"]{border: 1px solid #3C3C3C; 
+.panel-question-basic-setting div button[active="false"]{border: 1px solid #3C3C3C; 
 	background-color: transparent;}
-.panel-question-basic-setting div button[selected="true"],
-.panel-question-basic-setting div button[selected="false"]:focus,
-.panel-question-basic-setting div button[selected="false"]:hover {border: 1px solid #3C3C3C; 
+.panel-question-basic-setting div button[active="true"],
+.panel-question-basic-setting div button[active="false"]:focus,
+.panel-question-basic-setting div button[active="false"]:hover {border: 1px solid #3C3C3C; 
 	background-color: #B7D4FA;}
 
 .btn-question-basic-settings {padding-top: 2px !important;}
@@ -422,7 +424,7 @@ footer {margin-top: 10px;}
     width: 90px;
     height: 45px;}
 .question-frame p {margin: 0px;}
-.question-frame-help {display:none;}
+/*.question-frame-help {display:none;}*/
 .question-frame-multimedia {}
 .multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}
@@ -456,7 +458,7 @@ footer {margin-top: 10px;}
 .option-title {width: 70% !important;
     margin: 0px 5px;
     height: 28px !important;}
-.option-icons a {margin: 0px 3px;}
+.option-icons button {margin: 0px 3px;}
 .btn-plus-small {font-size: 1.3em;}
 .btn-plus-small:hover {cursor:pointer;}
 .routes-select {display: flex;}

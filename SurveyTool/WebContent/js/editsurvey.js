@@ -60,7 +60,8 @@ $(function() {
 			pageid: $('#pageid1').val()
 		}, function(responseText) {
 			//$('#' + addMenuFrameCad + currentNode).after(responseText);
-			currentAddNode.after(responseText);			
+			//currentAddNode.after(responseText);
+			currentAddNode.before(responseText);
 		});
 		$('#qstatement').val("");
 		//$('#main-version').val("none");
@@ -130,13 +131,13 @@ $(function() {
 	$('#panel-body').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="option-item">' +
-															'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
+															//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 						  									'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
 						  									'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '"/> ' +
 						  									'<div class="option-icons fleft"> ' +
-							  									'<a class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></a> ' +
-							  									'<a class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></a> ' +
-							  									'<a class="btn btn-transparent fleft red"><i class="fa fa-trash fa-2x"></i></a> ' +
+							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
+							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
+							  									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 							  								'</div> ' +
 							  							'</li>';
 		$(this).parent().before(optionHtml);
@@ -215,11 +216,30 @@ $(function() {
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
 	
+	$('#panel-body').on("click", "#removeQuestion", function(e){
+		var item = $(this).closest('#panel-question1');
+		currentQuestion = item.attr('qid');
+		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-question-title').val() + '"');
+		$("#removeElemId").val(item.attr('qid') + '/' + item.closest('div[id=page]').attr('pid'));
+		$("#removeElemService").val('QuestionService');
+		$("#removeElement").modal("show");
+	});
+	
 	$('#panel-body').on("click", "#removeMultimediaFile", function(e){
 		var item = $(this).closest('li.multimedia-item');
 		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
 		$("#removeElemId").val(item.attr('rid'));
 		$("#removeElemService").val('ResourceService');
+		$("#removeElement").modal("show");
+	});
+	
+	$('#panel-body').on("click", "#remove-option", function(e){
+		currentQuestion = $(this).closest('#panel-question1').attr('qid');
+		var item = $(this).closest('li');
+		var input = item.find('input');
+		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
+		$("#removeElemId").val(input.attr('oid'));
+		$("#removeElemService").val('OptionService');
 		$("#removeElement").modal("show");
 	});
 	
@@ -239,12 +259,41 @@ $(function() {
 			   if(data == 'true')
 			   {
 				   $("#removeElement").modal("hide");
-				   $('li[rid=' + elementId + ']').remove();
-				   var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
-				   console.log("Items: " + numItems);
-				   if(numItems == 0)
+				   if(service == "ResourceService")
 				   {
-					   $('#multimediaFrame').addClass('hidden');
+					   $('li[rid=' + elementId + ']').remove();
+					   var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
+					   console.log("Items: " + numItems);
+					   if(numItems == 0)
+					   {
+						   $('#multimediaFrame').addClass('hidden');
+					   }
+				   }
+				   else if(service == "QuestionService")
+				   {
+					   $('div[qid="' + currentQuestion + '"]').remove();
+				   }
+				   else if(service == "OptionService")
+				   {
+					   var input = $('input[oid=' + elementId + ']'); 					   
+					   var numItems = input.closest("ul").find("li").size();
+					   console.log("Items: " + numItems);
+					   if(numItems > 3)
+					   {
+						   input.closest("li").remove();
+						   $('div[qid=' + currentQuestion + '] ul[id=option-list] li[id=option-item]').each(function(i, elem)
+						   {
+							   console.log("li: " + i + " - elem: " + $(elem).find('input').val());
+							   var index = i + 1;
+							   $(elem).find('input').attr('index', index);
+							   $(elem).find('input').attr('placeholder', "Option " + index)
+							   $(elem).find('.circle-grey').text(index);
+						   });
+					   }
+					   else
+					   {
+						   input.val("");
+					   }
 				   }
 			   }
 			   
@@ -297,6 +346,76 @@ $(function() {
 		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
+	
+	$('#setHelpText').on("click", "#btnSendHelpText", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.text = $('#helpText').val();
+		req.contentType = "helpText";
+		req.lan = currentLanguage;
+		req.qid = currentQuestion;	
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: "http://localhost:8080/SurveyTool/api/QuestionService/updateContent",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   if(data == "true")
+				   {
+					   var qNode = $('div[qid=' + currentQuestion + ']');
+					   qNode.find('#question-frame-help').removeClass("hidden");
+					   qNode.find('#question-frame-help-text').html(req.text);
+					   $("#setHelpText").modal("hide");
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+	});
+	
+	$('#panel-body').on("click", "#mandatoryButton", function(e){
+		e.stopPropagation();
+		var node = $(this); 
+		var req = {};
+		req.qid = node.closest('div[id=panel-question1]').attr('qid');
+		req.pid = node.closest('div[id=page]').attr('pid');
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: "http://localhost:8080/SurveyTool/api/QuestionService/updateMandatory",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   node.attr('active', data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+	});
+	
+	$('#panel-body').on("focusout", "#survey-question-title", function(e){
+		e.stopPropagation();
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "title";
+		req.lan = "en";
+		req.qid = $(this).closest('#panel-question1').attr('qid');		
+		var serviceUrl = "http://localhost:8080/SurveyTool/api/QuestionService/updateContent";
+		
+		updateContent(req, serviceUrl);
+	});
+	
+	
 	
 });
 

@@ -1,11 +1,14 @@
 package ilu.surveytool.orchestrator;
 
+import java.util.List;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveytool.data.Option;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class OptionOrch {
@@ -61,6 +64,28 @@ public class OptionOrch {
 		}
 		
 		return response.toString();
+	}
+	
+	public boolean removeOption(int optionId)
+	{
+		boolean removed = false;
+		
+		OptionDB optionDB = new OptionDB();
+		int optionsGroupId = optionDB.getOptionByGroupIdByOptionId(optionId);
+		optionDB.removeOption(optionId);
+		List<OptionsByGroup> optionsByGroup = optionDB.getOptionsByGroupById(optionsGroupId);
+		int index = 1;
+		for(OptionsByGroup optionByGroup : optionsByGroup)
+		{
+			if(optionByGroup.getIndex() != index)
+			{
+				optionDB.updateOptionsByGroupIndex(optionsGroupId, optionByGroup.getOptionId(), index);
+			}
+			index++;
+		}
+		removed = true;
+		
+		return removed;
 	}
 
 }

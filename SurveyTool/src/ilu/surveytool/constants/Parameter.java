@@ -15,6 +15,7 @@ public class Parameter {
 	public final static String s_PROJECT = "project";
 	public final static String s_SURVEY_ID = "surveyid";
 	public final static String s_PAGE_ID = "pageid";
+	public final static String s_PID = "pid";
 	public final static String s_QTYPE = "qtype";
 	public final static String s_QID = "qid";
 	public final static String s_QSTATEMENT = "qstatement";

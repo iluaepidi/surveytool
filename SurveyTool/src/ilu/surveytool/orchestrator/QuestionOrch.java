@@ -77,5 +77,42 @@ public class QuestionOrch {
 		return resource;
 	}
 
+	public boolean updateContent(int questionId, Content content)
+	{
+		boolean updated = false;
+		
+		QuestionDB questionDB = new QuestionDB();
+		int contentId = questionDB.getQuestionContentIdByQuestionId(questionId);
+		ContentDB contentDB = new ContentDB();
+		if(contentDB.existContent(contentId, content.getLanguage(), content.getContentType()))
+		{
+			contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		else
+		{
+			contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		
+		updated = true;
+		
+		return updated;
+	}
 	
+	public boolean updateMandatory(int questionId, int pageId)
+	{
+		QuestionDB questionDB = new QuestionDB();
+		boolean mandatory = !questionDB.getQuestionByPageMandatory(questionId, pageId);
+		questionDB.updateQuestionMandatory(questionId, pageId, mandatory);
+		
+		return mandatory;
+	}
+	
+	public boolean removeQuestionByPage(int questionId, int pageId)
+	{
+		boolean removed = false;
+		QuestionDB questionDB = new QuestionDB();
+		questionDB.removeQuestionByPage(questionId, pageId);
+		removed = true;
+		return removed;
+	}
 }

@@ -6,7 +6,7 @@
 	  					</div>
 	  				</h1>
 	  				<div class="header-buttons">
-	  					<a href="#"><i class="fa fa-cog fa-5x"></i></a>
-	  					<a href="#"><i class="fa fa-user fa-5x"></i></a>
+	  					<!-- <a href="#"><i class="fa fa-cog fa-5x"></i></a>
+	  					<a href="#"><i class="fa fa-user fa-5x"></i></a> -->	  					
 	  				</div>
   				</div>
