@@ -1,9 +1,14 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
+<%
+	String title = "";
+	String pageTitle = (String) request.getAttribute(Attribute.s_PAGE_TITLE);
+	if(pageTitle != null && !pageTitle.isEmpty()) title = ": " + pageTitle; 
+%>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>User Panel</title>
+		<title>Survey Tool<%= title %></title>
 		
 		<!-- CSS de Bootstrap -->
 		<link href="css/style.css" rel="stylesheet" media="screen">

@@ -74,11 +74,13 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
 			HttpSession session = request.getSession();
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+			request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
 		}
 		else
 		{
 			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
