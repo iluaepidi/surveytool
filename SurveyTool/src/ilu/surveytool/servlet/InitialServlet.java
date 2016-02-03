@@ -16,17 +16,16 @@ import ilu.surveytool.orchestrator.UserPanelHomeOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class UserPanelHomeServlet
+ * Servlet implementation class InitialServlet
  */
-@WebServlet("/UserPanelHomeServlet")
-public class UserPanelHomeServlet extends HttpServlet {
+@WebServlet("/InitialServlet")
+public class InitialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserPanelHomeServlet() {
+    public InitialServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +33,7 @@ public class UserPanelHomeServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessRequest(request, response);
 	}
 
@@ -52,17 +51,8 @@ public class UserPanelHomeServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			String bodyPage = request.getParameter(Parameter.s_UPOPTION);
-			if(bodyPage != null && !bodyPage.isEmpty())
-			{
-				if(bodyPage.equals(Address.s_BODY_SURVEYS))
-				{
-					UserPanelHomeOrch uphOrch = new UserPanelHomeOrch();
-					request.setAttribute(Attribute.s_SURVEYS, uphOrch.getSurveysTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
-				}
-				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");
-			}			
+			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
 		}
 		else
 		{

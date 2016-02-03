@@ -67,6 +67,7 @@ public class SurveysServlet extends HttpServlet {
 			int pageId = surveysOrch.getPageIdBySurveyId(surveyId);
 			request.setAttribute(Attribute.s_PAGE_ID, pageId);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
 		}
 		else
 		{
@@ -74,6 +75,7 @@ public class SurveysServlet extends HttpServlet {
 			userSessionInfo.setErrorMsg("Session is expired or not exist.");
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);

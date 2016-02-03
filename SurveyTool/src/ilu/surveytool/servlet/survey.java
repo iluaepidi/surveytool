@@ -13,6 +13,7 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.orchestrator.SurveysOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
@@ -55,6 +56,7 @@ public class survey extends HttpServlet {
 		SurveysOrch surveyOrch = new SurveysOrch();
 		Survey survey = surveyOrch.getSurveyDetailByPublicId(sid, language);
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+		request.setAttribute(Attribute.s_PAGE_TITLE, survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE));

@@ -77,6 +77,7 @@ public class SurveyProcessServlet extends HttpServlet {
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISH_PAGE));
+		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}

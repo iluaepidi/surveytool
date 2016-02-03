@@ -11,6 +11,9 @@ var pending;
 
 $(function() {
 	
+	var host = "http://" + window.location.host;
+	console.log("host: " + host);
+	
 	var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
 	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
 	    debug: false
@@ -103,7 +106,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: "http://localhost:8080/SurveyTool/api/QCService/insertOption",
+			   url: host + "/SurveyTool/api/QCService/insertOption",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -260,7 +263,7 @@ $(function() {
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
 		
 		$.ajax({ 
-		   url: "http://localhost:8080/SurveyTool/api/" + service + "/" + elementId,
+		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log(data);
@@ -322,7 +325,7 @@ $(function() {
 		req.contentType = "title";
 		req.lan = "en";
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateContent";
+		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});
@@ -334,7 +337,7 @@ $(function() {
 		req.contentType = "description";
 		req.lan = "en";
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateContent";
+		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});
@@ -344,7 +347,7 @@ $(function() {
 		var req = {};		
 		req.project = $(this).val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = "http://localhost:8080/SurveyTool/api/SurveyService/updateProject";
+		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateProject";
 		
 		updateContent(req, serviceUrl);
 	});
@@ -366,7 +369,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: "http://localhost:8080/SurveyTool/api/QuestionService/updateContent",
+			   url: host + "/SurveyTool/api/QuestionService/updateContent",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   if(data == "true")
@@ -396,7 +399,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: "http://localhost:8080/SurveyTool/api/QuestionService/updateMandatory",
+			   url: host + "/SurveyTool/api/QuestionService/updateMandatory",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -418,7 +421,7 @@ $(function() {
 		req.contentType = "title";
 		req.lan = "en";
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
-		var serviceUrl = "http://localhost:8080/SurveyTool/api/QuestionService/updateContent";
+		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});

@@ -85,6 +85,7 @@ public class CreateSurveyServlet extends HttpServlet {
 				jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
 				request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
 			}
 			
 		}
@@ -93,6 +94,7 @@ public class CreateSurveyServlet extends HttpServlet {
 			userSessionInfo = new LoginResponse();
 			userSessionInfo.setErrorMsg("Session is expired or not exist.");
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
 		}
 		
