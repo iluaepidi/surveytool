@@ -39,7 +39,7 @@ CREATE TABLE `anonimousresponse` (
   CONSTRAINT `fk_AnonimousResponse_AnonimousUser1` FOREIGN KEY (`idAnonimousUser`) REFERENCES `anonimoususer` (`idAnonimousUser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_AnonimousResponse_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_AnonimousResponse_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,6 +48,7 @@ CREATE TABLE `anonimousresponse` (
 
 LOCK TABLES `anonimousresponse` WRITE;
 /*!40000 ALTER TABLE `anonimousresponse` DISABLE KEYS */;
+
 /*!40000 ALTER TABLE `anonimousresponse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +66,7 @@ CREATE TABLE `anonimoususer` (
   PRIMARY KEY (`idAnonimousUser`),
   KEY `fk_AnonimousUser_Questionnaire1_idx` (`idQuestionnaire`),
   CONSTRAINT `fk_AnonimousUser_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +75,7 @@ CREATE TABLE `anonimoususer` (
 
 LOCK TABLES `anonimoususer` WRITE;
 /*!40000 ALTER TABLE `anonimoususer` DISABLE KEYS */;
+
 /*!40000 ALTER TABLE `anonimoususer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +118,7 @@ CREATE TABLE `content` (
   PRIMARY KEY (`idContent`,`idLanguage`,`idContentType`),
   KEY `fk_Content_Language1_idx` (`idLanguage`),
   KEY `fk_Content_ContentType1_idx` (`idContentType`),
-  CONSTRAINT `fk_Content_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Content_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_Content_ContentType1` FOREIGN KEY (`idContentType`) REFERENCES `contenttype` (`idContentType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Content_Language1` FOREIGN KEY (`idLanguage`) REFERENCES `language` (`idLanguage`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -128,6 +130,7 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
+
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +144,7 @@ DROP TABLE IF EXISTS `contentindex`;
 CREATE TABLE `contentindex` (
   `idContent` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idContent`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=269 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,6 +153,7 @@ CREATE TABLE `contentindex` (
 
 LOCK TABLES `contentindex` WRITE;
 /*!40000 ALTER TABLE `contentindex` DISABLE KEYS */;
+
 /*!40000 ALTER TABLE `contentindex` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +168,7 @@ CREATE TABLE `contenttype` (
   `idContentType` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`idContentType`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +177,7 @@ CREATE TABLE `contenttype` (
 
 LOCK TABLES `contenttype` WRITE;
 /*!40000 ALTER TABLE `contenttype` DISABLE KEYS */;
-INSERT INTO `contenttype` VALUES (1,'title'),(2,'description');
+INSERT INTO `contenttype` VALUES (1,'title'),(2,'description'),(3,'altText'),(4,'helpText');
 /*!40000 ALTER TABLE `contenttype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +247,7 @@ CREATE TABLE `forma` (
   PRIMARY KEY (`idForma`),
   KEY `fk_Forma_Questionnaire1_idx` (`idQuestionnaire`),
   CONSTRAINT `fk_Forma_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,8 +300,8 @@ CREATE TABLE `option` (
   KEY `fk_Option_ContentIndex1_idx` (`idContent`),
   KEY `fk_Option_Resoruces1_idx` (`idResoruces`),
   CONSTRAINT `fk_Option_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Option_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_Option_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +326,7 @@ CREATE TABLE `optionsbygroup` (
   `index` int(11) NOT NULL,
   PRIMARY KEY (`idOptionsGroup`,`idOption`),
   KEY `fk_optionsByGroup_Option1_idx` (`idOption`),
-  CONSTRAINT `fk_optionsByGroup_Option1` FOREIGN KEY (`idOption`) REFERENCES `option` (`idOption`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_optionsByGroup_Option1` FOREIGN KEY (`idOption`) REFERENCES `option` (`idOption`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_optionsByGroup_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -357,7 +361,7 @@ CREATE TABLE `optionsgroup` (
   CONSTRAINT `fk_OptionsGroup_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_OptionsGroup_OptionType1` FOREIGN KEY (`idOptionType`) REFERENCES `optiontype` (`idOptionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_OptionsGroup_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,8 +414,8 @@ CREATE TABLE `page` (
   KEY `fk_Page_Forma1_idx` (`idForma`),
   KEY `fk_Page_Resoruces1_idx` (`idResoruces`),
   CONSTRAINT `fk_Page_Forma1` FOREIGN KEY (`idForma`) REFERENCES `forma` (`idForma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Page_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_Page_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,7 +462,7 @@ CREATE TABLE `project` (
   `projectName` varchar(100) NOT NULL,
   `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idProject`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,25 +549,22 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `idQuestion` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(45) NOT NULL,
-  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idQuestionType` int(11) NOT NULL,
   `parentQuestion` int(11) NOT NULL DEFAULT '0',
   `isTemplate` tinyint(1) NOT NULL DEFAULT '0',
   `idContent` int(11) NOT NULL,
   `idCategory` int(11) NOT NULL,
-  `idResoruces` int(11) DEFAULT NULL,
   `mainVersion` int(11) NOT NULL,
   PRIMARY KEY (`idQuestion`),
   KEY `fk_Question_QuestionType1_idx` (`idQuestionType`),
   KEY `fk_Question_ContentIndex1_idx` (`idContent`),
   KEY `fk_Question_Category1_idx` (`idCategory`),
-  KEY `fk_Question_Resoruces1_idx` (`idResoruces`),
   KEY `fk_Question_Language1_idx` (`mainVersion`),
   CONSTRAINT `fk_Question_Category1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_Language1` FOREIGN KEY (`mainVersion`) REFERENCES `language` (`idLanguage`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`idQuestionType`) REFERENCES `questiontype` (`idQuestionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Question_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`idQuestionType`) REFERENCES `questiontype` (`idQuestionType`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -628,7 +629,7 @@ CREATE TABLE `questionnaire` (
   CONSTRAINT `fk_Questionnaire_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnaire_Project1` FOREIGN KEY (`idProject`) REFERENCES `project` (`idProject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnaire_User1` FOREIGN KEY (`author`) REFERENCES `user` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -638,6 +639,33 @@ CREATE TABLE `questionnaire` (
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionresource`
+--
+
+DROP TABLE IF EXISTS `questionresource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionresource` (
+  `idQuestion` int(11) NOT NULL,
+  `idResoruces` int(11) NOT NULL,
+  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idQuestion`,`idResoruces`),
+  KEY `fk_QuestionResource_Resoruces1_idx` (`idResoruces`),
+  CONSTRAINT `fk_QuestionResource_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QuestionResource_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionresource`
+--
+
+LOCK TABLES `questionresource` WRITE;
+/*!40000 ALTER TABLE `questionresource` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questionresource` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -702,11 +730,14 @@ DROP TABLE IF EXISTS `resoruces`;
 CREATE TABLE `resoruces` (
   `idResoruces` int(11) NOT NULL AUTO_INCREMENT,
   `idResourceType` int(11) NOT NULL,
-  `url` varchar(100) NOT NULL,
+  `urlPath` varchar(100) NOT NULL,
+  `idContent` int(11) NOT NULL,
   PRIMARY KEY (`idResoruces`),
   KEY `fk_Resoruces_ResourceType1_idx` (`idResourceType`),
+  KEY `fk_Resoruces_ContentIndex1_idx` (`idContent`),
+  CONSTRAINT `fk_Resoruces_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Resoruces_ResourceType1` FOREIGN KEY (`idResourceType`) REFERENCES `resourcetype` (`idResourceType`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -726,10 +757,10 @@ DROP TABLE IF EXISTS `resourcetype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resourcetype` (
-  `idResourceType` int(11) NOT NULL,
+  `idResourceType` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`idResourceType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -738,6 +769,7 @@ CREATE TABLE `resourcetype` (
 
 LOCK TABLES `resourcetype` WRITE;
 /*!40000 ALTER TABLE `resourcetype` DISABLE KEYS */;
+INSERT INTO `resourcetype` VALUES (1,'image');
 /*!40000 ALTER TABLE `resourcetype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -828,7 +860,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'guti','jagdkw@gmail.com','lalala','2015-12-14 15:47:23',0,1);
+INSERT INTO `user` VALUES (1,'guti','jagdkw@gmail.com','lalala','2016-01-22 12:16:51',0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -875,4 +907,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-18 13:27:56
+-- Dump completed on 2016-02-03  9:40:34
