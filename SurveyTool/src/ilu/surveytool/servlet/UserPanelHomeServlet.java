@@ -59,6 +59,7 @@ public class UserPanelHomeServlet extends HttpServlet {
 				{
 					UserPanelHomeOrch uphOrch = new UserPanelHomeOrch();
 					request.setAttribute(Attribute.s_SURVEYS, uphOrch.getSurveysTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
+					request.setAttribute(Attribute.s_POLLS, uphOrch.getPollsTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
 				}
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
 				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");

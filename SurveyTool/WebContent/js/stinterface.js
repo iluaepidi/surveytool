@@ -120,6 +120,20 @@ $(function() {
 		}
 	});
 	
+	$('#tab-display-surveys').click('click', function(e){
+		$('#nav-tabs-li-surveys').addClass('active');
+		$('#nav-tabs-li-polls').removeClass('active');
+		$('#polls-list').addClass('hidden');
+		$('#surveys-list').removeClass('hidden');
+	});
+
+	$('#tab-display-polls').click('click', function(e){
+		$('#nav-tabs-li-surveys').removeClass('active');
+		$('#nav-tabs-li-polls').addClass('active');
+		$('#polls-list').removeClass('hidden');
+		$('#surveys-list').addClass('hidden');
+	});
+	
 });
 
 function displaySurveyInfo(node)

@@ -40,6 +40,14 @@ public class DBSQLQueries {
 				+ "inner join surveytool.page p on f.idForma = p.idForma "
 				+ "where q.idQuestionnaire = ?";
 		
+		//poll
+		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
+						+ "FROM surveytool.poll p "
+						+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
+						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+						+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
+		
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
 		

@@ -33,6 +33,9 @@ public class DBFieldNames {
 	//page
 		public final static String s_PAGE_ID = "idPage";
 		
+	//poll
+		public final static String s_POLL_ID = "idPoll";
+		
 	//project
 		public final static String s_PROJECTID = "idProject";
 		public final static String s_PROJECT_NAME = "projectName";
