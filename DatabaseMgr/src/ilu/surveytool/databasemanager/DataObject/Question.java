@@ -170,7 +170,9 @@ public class Question {
 	public String toString() {
 		return "Question [questionId=" + questionId + ", tag=" + tag + ", creationDate=" + creationDate
 				+ ", questionType=" + questionType + ", contents=" + contents + ", category=" + category
-				+ ", mandatory=" + mandatory + ", mainVersion=" + mainVersion + ", helpText=" + helpText + "]";
+				+ ", mandatory=" + mandatory + ", mainVersion=" + mainVersion + ", helpText=" + helpText
+				+ ", templatePage=" + templatePage + ", formPage=" + formPage + ", optionsGroups=" + optionsGroups
+				+ ", resources=" + resources + "]";
 	}
-		
+	
 }

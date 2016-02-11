@@ -47,6 +47,10 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_POLL_BY_PUBLIC_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
+				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
+				+ "where publicId = ?";
+		
 		
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
@@ -83,6 +87,12 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where q.idQuestion = ? and l.isoName = ?";
 		public final static String s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID = "SELECT idContent FROM surveytool.question where idQuestion = ?";
+		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, l.isoName FROM surveytool.questionbypoll qbp "
+				+ "inner join surveytool.question q on qbp.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
+				+ "inner join surveytool.language l on q.mainVersion = l.idLanguage "
+				+ "where qbp.idPoll = ?";
 		
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
@@ -135,6 +145,8 @@ public class DBSQLQueries {
 		//OptionGroup
 			public final static String s_INSERT_OPTIONS_GROUP = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idContent`, `idOptionType`) VALUES (?, ?, "
 					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?))";
+		//poll
+			public final static String s_INSERT_POLL = "INSERT INTO `surveytool`.`poll` (`publicId`, `author`, `idQuestionnaire`, `idContent`, `idProject`, `callUrl`) VALUES (?, ?, ?, ?, ?, ?)";
 		//page
 			public final static String s_INSERT_PAGE = "INSERT INTO `surveytool`.`page` (`idForma`, `numPage`) VALUES (?, ?)";
 		//project	
@@ -147,6 +159,8 @@ public class DBSQLQueries {
 					+ "(select idLanguage from surveytool.language where isoName = ?))";
 		//QuestionByPage
 			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `numQuestion`, `mandatory`) VALUES (?, ?, ?, ?)";
+		//QuestionByPoll
+			public final static String s_INSERT_QUESTION_BY_POLL = "INSERT INTO `surveytool`.`questionbypoll` (`idPoll`, `idQuestion`, `index`) VALUES (?, ?, ?)";
 		//QuestionResource
 			public final static String s_INSERT_QUESTION_RESOURCE = "INSERT INTO `surveytool`.`questionresource` (`idQuestion`, `idResoruces`) VALUES (?, ?)";
 		//Questionnaire
@@ -183,33 +197,5 @@ public class DBSQLQueries {
 			
 		//resources
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";
-		
-		/*
-		//language
-		public final static String s_SELECT_CONTENTTYPE_ALL_ORDERBY_CONTENTTYPEID = "Select * from personaemgrlacaixa.contenttype order by contentTypeId";
-		//multilanguagecontent
-		public final static String s_SELECT_MULTILANGUAGECONTENT_TEXT_BY_CONTENTID_LANGUAGENAME_CONTENTTYPENAME = "SELECT text FROM personaemgrlacaixa.multilanguagecontent as mlc " + 
-				"INNER JOIN personaemgrlacaixa.language as l ON  l.language_id = mlc.languageId " + 
-				"INNER JOIN personaemgrlacaixa.contenttype as ct ON mlc.contentTypeId = ct.contentTypeId " +
-				"where mlc.contentId = ? and l.isoName = ? and ct.name = ?";
-		public final static String s_SELECT_USER_FROM_USER_PROFILE_SENT = "SELECT distinct u.* FROM personaemgrlacaixa.userprofilesent as ups INNER JOIN personaemgrlacaixa.user as u on u.userId = ups.userId";
-		*/
-		
-		
-	//updates
-		/*
-		public final static String s_UPDATE_USER_PREVIEW_AND_REQUESTDATE = "UPDATE user SET preview = ?, cardRequestDate = ? WHERE userId =?";
-		public final static String s_UPDATE_MULTILANGUAGECONTENT = "UPDATE `personaemgrlacaixa`.`multilanguagecontent` SET `text`= ? WHERE `contentId`=? and`languageId`=? and`contentTypeId`=?";
-		*/
-		
-	//inserts
-		/*
-		public final static String s_INSERT_USER_PREPROFILES = "INSERT INTO userpreprofile (`userId`, `preprofileId`) VALUES (?, ?)";
-		*/
-		
-	//delete
-		/*
-		public final static String s_DELETE_USER_OPTION_VALUE_BY_USERID_OPTIONID = "DELETE FROM useroptionvalue WHERE userId = ? and optionId = ?";
-		*/
 		
 }

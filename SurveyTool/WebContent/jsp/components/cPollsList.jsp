@@ -24,23 +24,23 @@
 			  						<table class="table table-bordered" sumary="List of surveys where ...">
 			  							<caption>Polls list</caption>
 										<tr class="info">
-											<th class="center">*Deadline*</th>
-											<th class="center">Survey</th>
-											<th class="center">Public URL</th>
-											<th class="center">Actions</th>
+											<th class="poll-table-tr-th-deadline center">*Deadline*</th>
+											<th class="center">Poll</th>
+											<th class="poll-table-tr-th-responses center">Responses number</th>
+											<th class="poll-table-tr-th-actions center">Actions</th>
 										</tr>
 										<%
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(PollTableInfo poll : polls)
 										{
+											String deadLine = "none";
+											if(poll.getDeadLineDate() != null) deadLine = poll.getDeadLineDate().toString();
 										%>
 										<tr>
-											<td class="center"><%= poll.getDeadLineDate() %></td>
+											<td class="center"><%= deadLine %></td>
 											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + poll.getPollId() %>"><%= poll.getTitle() %></a></td>
-											<td>
-												<div class="progress percent-bar">
-													<%= poll.getPublicUrl() %>
-												</div>
+											<td class="center">
+												none
 											</td>
 											<td>
 												<ul class="row">

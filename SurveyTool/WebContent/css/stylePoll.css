@@ -1,0 +1,28 @@
+
+/*----------------------------------------------*\
+		$POLL
+\*----------------------------------------------*/
+/**
+* 
+*	GENERAL
+* 
+*/
+
+/*----------------------------------------------*\
+		$GENERAL
+\*----------------------------------------------*/
+
+.main-container-poll {margin: 0px auto; 
+   padding: 0.8em; 
+   max-width: 100%; }
+
+.poll-question{font-size: 1.2em; 
+    color: #fff; 
+    padding: 5px 4%;
+    background: #337AB7;
+    border-radius: 5px;}
+    
+.poll-question-option{padding: 0 10%;}
+
+.poll-send-button{text-align: center;
+	margin-top: 15px;}

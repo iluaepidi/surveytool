@@ -8,7 +8,9 @@ import org.codehaus.jettison.json.JSONObject;
 import ilu.surveytool.data.Option;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
+import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class OptionOrch {
@@ -64,6 +66,30 @@ public class OptionOrch {
 		}
 		
 		return response.toString();
+	}
+	
+	public void createOptionsGroup(OptionsGroup optionsGroup, int questionId)
+	{
+		ContentDB contentDB = new ContentDB();
+		OptionDB optionDB = new OptionDB();
+		
+		int contentId = contentDB.insertContentIndex();
+		int optionsGroupId = optionDB.insertOptionsGroup(questionId, optionsGroup.getOptionType(), contentId);
+		
+		for(ilu.surveytool.databasemanager.DataObject.Option option : optionsGroup.getOptions())
+		{
+			int optionContentId = contentDB.insertContentIndex();
+			if(contentId != 0)
+			{
+				int optionId = optionDB.insertOption(optionContentId);
+				Content content = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+				contentDB.insertContent(optionContentId, content.getLanguage(), content.getContentType(), content.getText());
+				if(optionsGroupId != 0 && optionId != 0)
+				{
+					optionDB.insertOptionsByGroup(optionsGroupId, optionId, option.getIndex());
+				}
+			}
+		}
 	}
 	
 	public boolean removeOption(int optionId)

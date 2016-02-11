@@ -35,6 +35,7 @@ public class DBFieldNames {
 		
 	//poll
 		public final static String s_POLL_ID = "idPoll";
+		public final static String s_POLL_CALL_URL = "callUrl";
 		
 	//project
 		public final static String s_PROJECTID = "idProject";

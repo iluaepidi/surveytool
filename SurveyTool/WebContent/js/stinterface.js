@@ -40,8 +40,7 @@ $(function() {
 		else
 		{
 			hideSurveyInfo();
-		}
-		
+		}		
     });
 	
 	$('#panel-section1 .panel-heading h3 #survey-section-title').click(function(e){
@@ -132,6 +131,75 @@ $(function() {
 		$('#nav-tabs-li-polls').addClass('active');
 		$('#polls-list').removeClass('hidden');
 		$('#surveys-list').addClass('hidden');
+	});
+	
+	$('#option-list').on("click", "#btn-add-option-poll", function(e){
+		var index = $(this).parent().parent().children("li").size();
+		var optionHtml = '<li class="option-item" id="option-item">' +
+							//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
+							'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
+							'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+							'<div class="option-icons fleft"> ' +
+								//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
+								//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
+								'<button class="btn btn-transparent fleft red" id="remove-option-poll" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+							'</div> ' +
+						'</li>';
+		$(this).parent().before(optionHtml);
+		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+	});
+	
+	$('#option-list').on("click", "#remove-option-poll", function(e){
+		e.stopPropagation();
+		var currentli = $(this).closest('li'); 
+		var numItems = currentli.closest("ul").find("li").size();
+		if(numItems > 3)
+		{
+			currentli.remove();			
+			$('li[id=option-item]').each(function (i, elem)
+			{
+			   var index = i + 1;
+			   $(elem).find('input').attr('index', index);
+			   $(elem).find('input').attr('placeholder', "Option " + index)
+			   $(elem).find('.circle-grey').text(index);
+		   });
+		}
+		else
+		{
+			var input = currentli.find('input');
+			input.val('');
+		}
+	});
+	
+	$('#newPollForm').on("submit", function(e){
+		e.preventDefault();
+		console.log('Entra 2: ' + e.target.id);
+	});
+	
+	$('#btnCreateNewPoll').click(function(){
+		var pollOptions = [];
+		$('li[id=option-item]').each(function (i, elem)
+		{
+			var option = {};
+			var input = $(elem).find('input');
+			option.title = input.val();
+			option.index = input.attr('index');
+			pollOptions.push(option);
+		});
+		
+		$.post('CreatePollServlet', {
+        	title : $('#pollTitle').val(),
+        	project: $('#pollProject').val(),
+        	qstatement: $('#qstatement').val(),
+  			options: JSON.stringify(pollOptions),
+  			ackText: $('#ackText').val(),
+  			callText: $('#pollCallText').val(),
+  			linkLabel: $('#pollLinkLabel').val(),
+  			linkUrl: $('#pollLinkUrl').val()
+  		}, function(res) {
+  			$('#newPollForm')[0].reset();
+  			$("#newPollModal").modal("hide");
+  		});
 	});
 	
 });

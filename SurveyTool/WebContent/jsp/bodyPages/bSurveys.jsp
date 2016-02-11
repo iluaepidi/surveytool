@@ -21,3 +21,5 @@
 	  			</div>
 	  			
 	  			<jsp:include page="../frames/fNewSurvey.jsp" />
+	  			
+	  			<jsp:include page="../frames/fNewPoll.jsp" />

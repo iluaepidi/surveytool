@@ -2,15 +2,20 @@ package ilu.surveytool.constants;
 
 public class Parameter {
 
+	public final static String s_ACKNOWLEDGMENT_TEXT = "ackText";
 	public final static String s_ACTION = "action";
+	public final static String s_CALL_TEXT = "callText";
 	public final static String s_CID = "cid";
 	public final static String s_CONTENT_TYPE = "contentType";
 	public final static String s_DESCRIPTION = "description";
 	public final static String s_HELP_TEXT = "helpText";
 	public final static String s_INDEX = "index";
 	public final static String s_LANGUAGE_LAN = "lan";
+	public final static String s_LINK_LABEL = "linkLabel";
+	public final static String s_LINK_URL = "linkUrl";
 	public final static String s_MAIN_VERSION = "mainVersion";
 	public final static String s_MANDATORY = "mandatory";
+	public final static String s_OPTIONS = "options";
 	public final static String s_PASSWORD = "password";
 	public final static String s_PROJECT = "project";
 	public final static String s_SURVEY_ID = "surveyid";

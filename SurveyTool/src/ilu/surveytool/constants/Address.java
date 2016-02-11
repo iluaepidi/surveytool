@@ -4,6 +4,7 @@ public class Address {
 	
 	//BodypPagesNames
 		public final static String s_BODY_LOGIN = "login";
+		public final static String s_BODY_POLL_QUESTION = "pollQuestion";
 		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";
 		public final static String s_BODY_SURVEY_PAGE = "surveyPage";
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
@@ -23,6 +24,7 @@ public class Address {
 		
 	//JSP MasterPage
 		public final static String s_MASTER_PAGE = "master.jsp";
+		public final static String s_MASTER_POLL = "masterPoll.jsp";
 		public final static String s_EDIT_QUESTION_MASTER= "EditQuestionMaster.jsp";
 		public final static String s_MULTIMEDIA_ITEM= "jsp/components/cMultimediaItem.jsp";
 		public final static String s_IMPORT_IMAGE_OPTION= "jsp/components/cImportImageOptions.jsp";

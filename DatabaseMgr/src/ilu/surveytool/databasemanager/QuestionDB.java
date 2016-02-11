@@ -104,6 +104,58 @@ public class QuestionDB {
 		
 		return questions;
 	}
+
+	public List<Question> getQuestionsByPollId(int pollId, String lang)
+	{
+		List<Question> questions = new ArrayList<Question>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_POLLID);			
+	   		pstm.setInt(1, pollId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			String mainVersion = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
+	   			ContentDB contentDB = new ContentDB();
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
+	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
+	   					null, 
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), 
+	   					contents, 
+	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
+	   					true, 
+	   					mainVersion, 
+	   					false,
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+	   			
+	   			OptionDB optionDB = new OptionDB();
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			
+	   			ResourceDB resourceDB = new ResourceDB();
+	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));
+	   			
+	   			questions.add(question);
+	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questions;
+	}
 	
 	public String getQuestionTypeTemplateFileByName(String questionType)
 	{

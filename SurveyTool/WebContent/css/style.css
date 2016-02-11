@@ -8,7 +8,7 @@
 * BODY_CONTENT
 * FOOTER
 * USER_PANEL_SURVEY
-* 
+* POLLS
 * 
 */
 
@@ -95,7 +95,7 @@ h1 span{font-size: 0.6em;
 .body-content {margin:10px 10px;}
 .title-content {border-bottom: 1px solid #eee;
 	padding-bottom: 20px;}
-.title-content-no-underline {padding-bottom: 20px;}
+.title-content-no-underline {}
 .content {margin: 10px 30px 0px 30px;}
 .row-menu {width: 70%;
 	left: 15%;
@@ -154,6 +154,8 @@ footer {margin-top: 10px;}
 {margin: 20% auto;}
 .survey-win-dialog {margin: 14% auto !important;
 	width: 60% !important;}
+.poll-win-dialog {margin: 1% auto !important;
+	width: 60% !important;}
 .remove-win-dialog {margin: 14% auto !important;
 	width: 30% !important;}
 .remove-frame-buttons {width: 70%;
@@ -170,15 +172,19 @@ footer {margin-top: 10px;}
     padding: 0px 5px;
     display: inline-block;}
 .survey-frame legend {font-size: 1em;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     /*margin-top: -28px;*/
     margin-bottom: 0px;
     background-color: #fff;
     padding: 0px 5px;
     /*display: inline-block;*/
     border: none;
-    max-width: 185px;}
-.survey-frame label, 
+    /*max-width: 185px;*/
+    width: auto;}
+.survey-frame fieldset legend{margin-bottom: 5px;
+    font-weight: bold;}
+.survey-frame label {padding-left: 5px !important;
+	padding-right: 0px !important;} 
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
 .survey-frame input[type="text"] {padding-left: 5px !important;
@@ -518,3 +524,14 @@ footer {margin-top: 10px;}
 .survey-finish-content {width: 50%;
 	margin: 280px auto;
 	text-align: center;}
+
+/*----------------------------------------------*\
+		$POLLS
+\*----------------------------------------------*/
+	
+.results-page-call {width: 92%;
+    margin: 0 auto;}
+.results-page-call label {font-weight: normal;}
+.poll-table-tr-th-actions {width: 23.1%;}
+.poll-table-tr-th-responses {width: 22.8%;}
+.poll-table-tr-th-deadline {width: 23.9%;}

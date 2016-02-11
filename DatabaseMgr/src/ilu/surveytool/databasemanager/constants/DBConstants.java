@@ -8,6 +8,9 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_DESCRIPTION = "description";
 			public final static String s_VALUE_CONTENTTYPE_NAME_ALT_TEXT = "altText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_HELP_TEXT = "helpText";
+			public final static String s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT = "ackText";
+			public final static String s_VALUE_CONTENTTYPE_NAME_CALL_TEXT = "callText";
+			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
 		//language
 			public final static String s_VALUE_LANGUAGE_ISONAME_ENGLISH = "en";
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";

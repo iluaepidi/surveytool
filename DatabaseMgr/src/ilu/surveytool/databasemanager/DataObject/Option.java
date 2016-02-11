@@ -9,7 +9,7 @@ public class Option {
 	int index;
 
 	public Option() {
-		// TODO Auto-generated constructor stub
+		contents = new HashMap<String, Content>();
 	}
 	
 	public Option(int id, HashMap<String, Content> contents, int index) {
