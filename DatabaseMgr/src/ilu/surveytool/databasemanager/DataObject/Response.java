@@ -1,20 +1,24 @@
 package ilu.surveytool.databasemanager.DataObject;
 
-public class AnonimousResponse {
+public class Response {
 	
 	int questionId;
 	int optionsGroupId;
 	String value = "";
+	int pollId;
 
-	public AnonimousResponse() {
-		// TODO Auto-generated constructor stub
+	public Response() {
+		super();
+		this.optionsGroupId = 0;
+		this.pollId = 0;
 	}
 
-	public AnonimousResponse(int questionId, int optionsGroupId, String value) {
+	public Response(int questionId, int optionsGroupId, String value, int pollId) {
 		super();
 		this.questionId = questionId;
 		this.optionsGroupId = optionsGroupId;
 		this.value = value;
+		this.pollId = pollId;
 	}
 
 	public int getQuestionId() {
@@ -40,11 +44,19 @@ public class AnonimousResponse {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public int getPollId() {
+		return pollId;
+	}
+
+	public void setPollId(int pollId) {
+		this.pollId = pollId;
+	}
 
 	@Override
 	public String toString() {
-		return "AnonymousResponse [questionId=" + questionId
-				+ ", optionsGroupId=" + optionsGroupId + ", value=" + value + "]";
+		return "Response [questionId=" + questionId + ", optionsGroupId=" + optionsGroupId + ", value=" + value
+				+ ", pollId=" + pollId + "]";
 	}
-
+	
 }

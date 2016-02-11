@@ -28,12 +28,12 @@ public class Parameter {
 	public final static String s_RESOURCE_ALTERNTIVE_TEXT = "resourceAltText";
 	public final static String s_RESOURCE_UPLOADED_FILE = "uploadedFile";
 	public final static String s_RID = "rid";
+	public final static String s_SEND_POLL_BUTTON = "sendPoll";
 	public final static String s_SID = "sid";
 	public final static String s_TITLE = "title";
 	public final static String s_TEXT = "text";
 	public final static String s_USERNAME = "username";
 	public final static String s_UPOPTION = "upoption";
-	
 	
 
 }

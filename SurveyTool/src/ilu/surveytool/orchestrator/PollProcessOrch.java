@@ -7,32 +7,37 @@ import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.emailSender.EmailsToSend;
 
-public class SurveyProcessOrch {
+public class PollProcessOrch {
 
-	public SurveyProcessOrch() {
+	public PollProcessOrch() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean storeAnonimousResponse(int surveyId, List<Response> responses)
+	public boolean storePollResponse(Response response)
 	{
 		boolean stored = true;
 		
-		AnonimousDB anonimousDB = new AnonimousDB();
-		ResponsesDB responsesDB = new ResponsesDB();
-		int anonymousUserId = anonimousDB.insertAnonimousUser(surveyId);
-		if(anonymousUserId != 0)
+		if(response != null)
 		{
-			for(Response response : responses)
+			AnonimousDB anonimousDB = new AnonimousDB();
+			ResponsesDB responsesDB = new ResponsesDB();
+			int anonymousUserId = anonimousDB.insertAnonimousUser(0);
+			if(anonymousUserId != 0)
 			{
 				int responseId = responsesDB.insertResponse(response);
 				stored = stored && anonimousDB.insertAnonimousResponse(anonymousUserId, responseId);	
+				
+				
+				if(stored)
+				{
+					/*EmailsToSend emailToSend = new EmailsToSend("en");
+					emailToSend.sendUserResponse(surveyId, anonymousUserId, responses);*/
+				}
 			}
-			
-			if(stored)
-			{
-				/*EmailsToSend emailToSend = new EmailsToSend("en");
-				emailToSend.sendUserResponse(surveyId, anonymousUserId, responses);*/
-			}
+		}
+		else
+		{
+			stored = false;
 		}
 		
 		return stored;

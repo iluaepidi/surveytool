@@ -11,7 +11,7 @@
 	Question question = poll.getQuestion();
 %>
 						
-            <form action="#" method="post" target="_blank" id="poll_form" class="">		
+            <form action="PollProcessServlet" method="post" id="poll_form" class="">		
             	<input type="hidden" name="pid" value="<%= poll.getPollId() %>" />		
                 <fieldset>
                 
@@ -41,16 +41,6 @@
                 	}
                 	%>
                 	
-                	<!-- <div class="poll-question-option">
-						<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-					    <label for="optionsRadios1">yes</label>
-					</div>
-					
-					<div class="poll-question-option">						  
-					    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-					    <label for="optionsRadios2">no</label>
-					</div> -->
-                    
                 </fieldset>
                   
                 <div class="poll-send-button">               				

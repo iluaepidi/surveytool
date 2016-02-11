@@ -25,9 +25,9 @@ import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
-public class AnonimousDB {
+public class ResponsesDB {
 
-	public AnonimousDB() {
+	public ResponsesDB() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -62,20 +62,29 @@ public class AnonimousDB {
 	 * Inserts 
 	 */
 	
-	public int insertAnonimousUser(int surveyId) 
+	public int insertResponse(Response response) 
 	{		
-		int anonimousUserId = 0;
+		int responseId = 0;
 
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_ANONIMOUS_USER, Statement.RETURN_GENERATED_KEYS);
-		   
-		   if(surveyId != 0)
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_RESPONSE, Statement.RETURN_GENERATED_KEYS);
+		   pstm.setInt(1, response.getQuestionId());
+		   int optionsGroupId = response.getOptionsGroupId();
+		   if(optionsGroupId != 0)
 		   {
-			   pstm.setInt(1, surveyId);
+			   pstm.setInt(2, optionsGroupId);
 		   }else {
-			   pstm.setNull(1, Types.INTEGER);
+			   pstm.setNull(2, Types.INTEGER);
+		   }
+		   pstm.setString(3, response.getValue());
+		   int pollId = response.getPollId();
+		   if(pollId != 0)
+		   {
+			   pstm.setInt(4, pollId);
+		   }else {
+			   pstm.setNull(4, Types.INTEGER);
 		   }
 		   
 		   boolean notInserted = pstm.execute();
@@ -84,7 +93,7 @@ public class AnonimousDB {
 		   {
 			   ResultSet rs = pstm.getGeneratedKeys();
 			   if(rs.next())
-				   anonimousUserId = rs.getInt(1);
+				   responseId = rs.getInt(1);
 		   }
 		  		  	   
 		} catch (SQLException e) {
@@ -94,36 +103,7 @@ public class AnonimousDB {
 			this._closeConnections(con, pstm, null);
 		}
 		
-		return anonimousUserId;
-	}
-	
-	public boolean insertAnonimousResponse(int anonimousUserId, int responseId) 
-	{		
-		boolean inserted = true;
-
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-	    try {
-	    	pstm = con.prepareStatement(DBSQLQueries.s_INSERT_ANONIMOUS_RESPONSE);
-			pstm.setInt(1, anonimousUserId);
-			pstm.setInt(2, responseId);
-			   
-			boolean notInserted = pstm.execute();
-			   
-			if(notInserted)
-			{
-				inserted = false; 
-			}
-		  		  	   
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			inserted = false;
-		}    finally {
-			this._closeConnections(con, pstm, null);
-		}
-		
-		return inserted;
+		return responseId;
 	}
 	
 }

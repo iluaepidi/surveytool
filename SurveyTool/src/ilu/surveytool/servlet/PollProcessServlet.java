@@ -16,23 +16,21 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Response;
-import ilu.surveytool.databasemanager.DataObject.LoginResponse;
-import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.orchestrator.PollProcessOrch;
 import ilu.surveytool.orchestrator.SurveyProcessOrch;
-import ilu.surveytool.orchestrator.SurveysOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class SurveyProcessServlet
+ * Servlet implementation class PollProcessServlet
  */
-@WebServlet("/SurveyProcessServlet")
-public class SurveyProcessServlet extends HttpServlet {
+@WebServlet("/PollProcessServlet")
+public class PollProcessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SurveyProcessServlet() {
+    public PollProcessServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,7 +38,7 @@ public class SurveyProcessServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
@@ -54,32 +52,32 @@ public class SurveyProcessServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
 		Enumeration<String> paramNames = request.getParameterNames();
-		List<Response> responses = new ArrayList<Response>();
-		int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SID));
+		Response pollRes = null;
+		int pollId = Integer.parseInt(request.getParameter(Parameter.s_PID));
 		
 		while(paramNames.hasMoreElements())
 		{
 			String element = paramNames.nextElement();
-			if(!element.equalsIgnoreCase(Parameter.s_SID))
+			if(!element.equalsIgnoreCase(Parameter.s_PID) && !element.equalsIgnoreCase(Parameter.s_SEND_POLL_BUTTON))
 			{
 				String[] elemSplit = element.split("-");
 				int questionId = Integer.parseInt(elemSplit[0]);
 				int optionsGroupId = 0;
 				if(elemSplit.length > 1) optionsGroupId = Integer.parseInt(elemSplit[1]);
-				Response aresp = new Response(questionId, optionsGroupId, request.getParameter(element), 0); 
-				responses.add(aresp);
-				System.out.println("Param: " + aresp.toString());				
+				pollRes = new Response(questionId, optionsGroupId, request.getParameter(element), pollId); 
+			
+				System.out.println("Param: " + pollRes.toString());				
 			}
 		}
 		
-		SurveyProcessOrch spOrch = new SurveyProcessOrch();
-		boolean stored = spOrch.storeAnonimousResponse(surveyId, responses);
+		PollProcessOrch ppOrch = new PollProcessOrch();
+		boolean stored = ppOrch.storePollResponse(pollRes);
 		
-		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		/*SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISH_PAGE));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);*/
 	}
 
 }

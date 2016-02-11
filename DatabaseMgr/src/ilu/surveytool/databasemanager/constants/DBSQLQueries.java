@@ -129,7 +129,7 @@ public class DBSQLQueries {
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 		//AnonimousResponse
-			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idQuestion`, `value`, `idOptionsGroup`) VALUES (?, ?, ?, ?)";
+			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idResponse`) VALUES (?, ?)";
 		//content
 			public final static String s_INSERT_CONTENT = "INSERT INTO `surveytool`.`content` (`idContent`, `idLanguage`, `idContentType`, `text`) VALUES (?, "
 					+ "(SELECT idLanguage FROM surveytool.language WHERE isoName = ?), "
@@ -167,6 +167,8 @@ public class DBSQLQueries {
 			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
 		//Resource
 			public final static String s_INSERT_RESOURCE = "INSERT INTO `surveytool`.`resoruces` (`idResourceType`, `urlPath`, `idContent`) VALUES ((SELECT idResourceType FROM surveytool.resourcetype where name = ?), ?, ?)";
+		//Responses
+			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
 			
 	//updates
 		//content

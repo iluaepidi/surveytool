@@ -7,7 +7,7 @@ import ilu.surveytool.databasemanager.OptionDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.UserDB;
-import ilu.surveytool.databasemanager.DataObject.AnonimousResponse;
+import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.Option;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -29,7 +29,7 @@ public class EmailsToSend {
 		this.language = language;
 	}
 	
-	public boolean sendUserResponse(int surveyId, int anonymousUserId, List<AnonimousResponse> anonymousResponses)
+	public boolean sendUserResponse(int surveyId, int anonymousUserId, List<Response> anonymousResponses)
 	{
 		boolean sent = false;
 		String msg = "";
@@ -47,7 +47,7 @@ public class EmailsToSend {
 		msg += "<ul>";
 		
 		int index = 1;
-		for(AnonimousResponse anonymousResponse : anonymousResponses)
+		for(Response anonymousResponse : anonymousResponses)
 		{
 			msg += "<li>";
 			String qtitle = questionDB.getQuestionContentByQuestionId(anonymousResponse.getQuestionId(), language).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
