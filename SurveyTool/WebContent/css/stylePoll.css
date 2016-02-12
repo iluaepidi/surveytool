@@ -5,6 +5,7 @@
 /**
 * 
 *	GENERAL
+*	RESULT
 * 
 */
 
@@ -12,17 +13,45 @@
 		$GENERAL
 \*----------------------------------------------*/
 
+body {border:1px solid #337AB7;} 
+
+.main-container-poll h1 {font-size: 1.3em;
+    text-align: center;
+    background: #337AB7;
+    padding: 10px 0;
+    margin: 0;
+    color: #fff;}
+
 .main-container-poll {margin: 0px auto; 
-   padding: 0.8em; 
+   /*padding: 0.8em;*/ 
    max-width: 100%; }
 
-.poll-question{font-size: 1.2em; 
-    color: #fff; 
+.poll-question{font-size: 1.1em;
+    color: #000;
     padding: 5px 4%;
-    background: #337AB7;
-    border-radius: 5px;}
+    border: none;
+    margin-bottom: 10px;}
+    
+form fieldset {min-height: 140px;}
     
 .poll-question-option{padding: 0 10%;}
 
 .poll-send-button{text-align: center;
-	margin-top: 15px;}
+    margin: 7px 0;}
+.content-poll {margin: 0 8px;}
+
+/*----------------------------------------------*\
+		$GENERAL
+\*----------------------------------------------*/
+	
+.chart-area{width: 100px;
+	height: 100px;}
+.canvas-holder{text-align: center;
+	margin: 5px 0;
+	width: 60%;}
+.legendPoll {padding:10px;
+	border:1px solid red;
+	width: 39%;
+    float: right;}
+.graphic-poll {display: inline-block;
+    width: 99%;}

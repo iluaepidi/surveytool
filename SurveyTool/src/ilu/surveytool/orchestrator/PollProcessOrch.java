@@ -3,8 +3,11 @@ package ilu.surveytool.orchestrator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.AnonimousDB;
+import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.Response;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.emailSender.EmailsToSend;
 
 public class PollProcessOrch {
@@ -41,6 +44,19 @@ public class PollProcessOrch {
 		}
 		
 		return stored;
+	}
+	
+	public String getPollTitle(int pollId, String language)
+	{
+		String title = "";
+		
+		PollDB pollDB = new PollDB();
+		int contentId = pollDB.getPollContentId(pollId);
+		
+		ContentDB contentDB = new ContentDB();
+		title = contentDB.getContentByIdAndLanguage(contentId, language).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+		
+		return title;
 	}
 
 }

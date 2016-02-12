@@ -58,6 +58,7 @@ public class poll extends HttpServlet {
 		Poll poll = pollOrch.getPollDetailByPublicId(pid, language);
 		request.setAttribute(Attribute.s_POLL_INFO, poll);
 		request.setAttribute(Attribute.s_PAGE_TITLE, poll.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+		request.setAttribute(Attribute.s_POLL_TITLE, poll.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_QUESTION));

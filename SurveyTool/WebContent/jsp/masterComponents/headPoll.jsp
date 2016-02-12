@@ -16,4 +16,20 @@
 		<link href="css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
 		
-				
+		<!-- Librería jQuery requerida por los plugins de JavaScript -->
+		<script src="js/jquery-2.1.4.js"></script>
+		
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-accessibility.min.js"></script>
+	<%
+	List<String> jsFiles = (List<String>) request.getAttribute(Attribute.s_JS_FILES);
+	if(jsFiles != null)
+	{
+		for(String jsFile : jsFiles)
+		{
+	%>
+		<script src="<%= jsFile %>"></script>
+	<%
+		}
+	}
+	%>

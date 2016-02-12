@@ -5,6 +5,7 @@ public class Address {
 	//BodypPagesNames
 		public final static String s_BODY_LOGIN = "login";
 		public final static String s_BODY_POLL_QUESTION = "pollQuestion";
+		public final static String s_BODY_POLL_RESULT = "pollResult";
 		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";
 		public final static String s_BODY_SURVEY_PAGE = "surveyPage";
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
@@ -13,6 +14,7 @@ public class Address {
 		
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
+		public final static String s_JS_CHART_GRAPHICS = "chart";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";

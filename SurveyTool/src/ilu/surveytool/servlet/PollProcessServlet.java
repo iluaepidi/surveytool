@@ -16,6 +16,7 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Response;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.orchestrator.PollProcessOrch;
 import ilu.surveytool.orchestrator.SurveyProcessOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
@@ -26,6 +27,7 @@ import ilu.surveytool.properties.SurveyToolProperties;
 @WebServlet("/PollProcessServlet")
 public class PollProcessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -72,12 +74,18 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		PollProcessOrch ppOrch = new PollProcessOrch();
 		boolean stored = ppOrch.storePollResponse(pollRes);
+
+		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		List<String> jsFiles = new ArrayList<>();
+		jsFiles.add(properties.getJsFilePath(Address.s_JS_CHART_GRAPHICS));
+		request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 		
-		/*SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
-		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISH_PAGE));
+		request.setAttribute(Attribute.s_POLL_TITLE, ppOrch.getPollTitle(pollId, language));
+		
+		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_RESULT));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);*/
+		CommonCode.redirect(request, response, Address.s_MASTER_POLL);
 	}
 
 }
