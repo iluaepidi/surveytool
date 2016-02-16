@@ -48,10 +48,17 @@ form fieldset {min-height: 140px;}
 	height: 100px;}
 .canvas-holder{text-align: center;
 	margin: 5px 0;
-	width: 60%;}
+	width: 50%;}
 .legendPoll {padding:10px;
-	border:1px solid red;
-	width: 39%;
+	width: 48%;
     float: right;}
 .graphic-poll {display: inline-block;
     width: 99%;}
+    
+.legendPoll ul {list-style: none;
+	margin: 0px;
+	padding: 0px;}
+	
+.red {color: #F7464A;}
+.cian {color: #46BFBD;}
+.gray {color: #C5C5C5;}

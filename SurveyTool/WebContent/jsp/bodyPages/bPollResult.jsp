@@ -7,17 +7,36 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%
-	/*Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
-	Question question = poll.getQuestion();*/
+	Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
+	//Question question = poll.getQuestion();
 %>
-			<div class="content-poll">			
-	            <div>
-	            	<p>Thank you for your collaboration.</p>
+			<div class="content-poll">
+				<%
+	            if(poll.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT))
+	            {
+	            %>			
+	            <div>	           
+	            	<p><%= poll.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT).getText() %></p>
 	            </div>
+	            <%
+	            }
+	            %>
 		  		
 		  		<div class="graphic-poll">
 		  			
-			  		<div class="legendPoll"></div>
+			  		<div class="legendPoll">
+			  			<ul>
+			  				<li>
+			  					<i class="fa fa-square cian"></i> Jaws 39 %
+			  				</li>
+			  				<li>
+			  					<i class="fa fa-square red" ></i> NVDA 30 %
+			  				</li>
+			  				<li>
+			  					<i class="fa fa-square gray"></i> Orca 21 %
+			  				</li>
+			  			</ul>
+			  		</div>
 		  		
 			  		<div id="canvas-holder" class="canvas-holder">
 						<canvas id="chart-area" width="100%" height="100%"/>		                
@@ -25,9 +44,29 @@
 			  		
 			  	</div>
 			  	
-		  		<div>
-		  			<p>If you want to participate in other surveys, fill in the register form. <a href="http://localhost:8080/SurveyTool" target="_blanck" title="go to register form">Register form</a></p>
-		  		</div>
+		  		
+		  		<%
+		  		String callText = "";
+	            if(poll.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_CALL_TEXT))
+	            {	           	
+		  			callText = poll.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_CALL_TEXT).getText();
+	            }
+	            if(poll.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL))
+	            {	        
+	            	String label = poll.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL).getText();
+		  			callText += " <a href=" + poll.getCallUrl() + " target='_blanck' title='go to " + label + "'>" + label + "</a>";		  		
+	            }
+	            if(!callText.isEmpty()) 
+	            {
+	            	callText = "<p>" + callText + "</p>";
+	            %>
+	            <div>
+	            	<%= callText %>
+	            </div>
+	            <%
+	            }
+	            %>
+		  		
 		  	</div>
 	  		
 	  		<script>
@@ -42,7 +81,7 @@
 						{
 							value: 21,
 							color:"#c5c5c5",
-							highlight: "#FF5A5E",
+							highlight: "#c6c6c6",
 							label: "Orca"
 						},
 						{

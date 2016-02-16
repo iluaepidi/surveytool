@@ -14,6 +14,7 @@ public class Attribute {
 	public final static String s_PAGE_ID = "pageId";
 	public final static String s_PAGE_TITLE = "pageTitle";
 	public final static String s_POLL_TITLE = "pollTitle";
+	public final static String s_POLL_ID = "pollId";
 	public final static String s_POLL_INFO = "pollInfo";
 	public final static String s_TEMPLATE_FILE = "templateFile";
 	public final static String s_QUESTION = "question";

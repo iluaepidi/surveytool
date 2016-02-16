@@ -16,6 +16,8 @@
 		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal">+ Create new</button>
 		  						</div>
 			  					<%
+			  					String host = request.getServerName();
+			  					int port = request.getServerPort();
 			  					List<PollTableInfo> polls = (List<PollTableInfo>) request.getAttribute(Attribute.s_POLLS);
 			  					if(polls != null && !polls.isEmpty())
 			  					{
@@ -26,7 +28,7 @@
 										<tr class="info">
 											<th class="poll-table-tr-th-deadline center">*Deadline*</th>
 											<th class="center">Poll</th>
-											<th class="poll-table-tr-th-responses center">Responses number</th>
+											<th class="poll-table-tr-th-responses center">Poll URL</th>
 											<th class="poll-table-tr-th-actions center">Actions</th>
 										</tr>
 										<%
@@ -38,9 +40,9 @@
 										%>
 										<tr>
 											<td class="center"><%= deadLine %></td>
-											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + poll.getPollId() %>"><%= poll.getTitle() %></a></td>
+											<td><a href="#"><%= poll.getTitle() %></a></td>
 											<td class="center">
-												none
+												<a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>">http://<%= host %>:<%= port %>/SurveyTool/poll?pid=<%= poll.getPublicUrl() %></a>
 											</td>
 											<td>
 												<ul class="row">

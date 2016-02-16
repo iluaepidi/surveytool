@@ -6,6 +6,7 @@ import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
+import ilu.surveytool.databasemanager.DataObject.Poll;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.emailSender.EmailsToSend;
@@ -16,19 +17,19 @@ public class PollProcessOrch {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean storePollResponse(Response response)
+	public int storePollResponse(Response response)
 	{
-		boolean stored = true;
+		int anonymousUserId = 0;
 		
 		if(response != null)
 		{
 			AnonimousDB anonimousDB = new AnonimousDB();
 			ResponsesDB responsesDB = new ResponsesDB();
-			int anonymousUserId = anonimousDB.insertAnonimousUser(0);
+			anonymousUserId = anonimousDB.insertAnonimousUser(0);
 			if(anonymousUserId != 0)
 			{
 				int responseId = responsesDB.insertResponse(response);
-				stored = stored && anonimousDB.insertAnonimousResponse(anonymousUserId, responseId);	
+				boolean stored = anonimousDB.insertAnonimousResponse(anonymousUserId, responseId);	
 				
 				
 				if(stored)
@@ -38,12 +39,8 @@ public class PollProcessOrch {
 				}
 			}
 		}
-		else
-		{
-			stored = false;
-		}
-		
-		return stored;
+				
+		return anonymousUserId;
 	}
 	
 	public String getPollTitle(int pollId, String language)
@@ -57,6 +54,12 @@ public class PollProcessOrch {
 		title = contentDB.getContentByIdAndLanguage(contentId, language).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 		
 		return title;
+	}
+	
+	public Poll getPollDetail(int pollId, String language)
+	{
+		PollDB pollDB = new PollDB();
+		return pollDB.getPollById(pollId, language);
 	}
 
 }

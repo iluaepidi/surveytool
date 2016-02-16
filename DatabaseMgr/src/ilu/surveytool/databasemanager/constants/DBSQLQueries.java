@@ -51,6 +51,9 @@ public class DBSQLQueries {
 				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
 				+ "where publicId = ?";
 		public final static String s_SELECT_POLL_CONTENTID = "SELECT idContent FROM surveytool.poll where idPoll = ?";
+		public final static String s_SELECT_POLL_BY_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
+				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
+				+ "where p.idPoll = ?";
 		
 		
 		//project

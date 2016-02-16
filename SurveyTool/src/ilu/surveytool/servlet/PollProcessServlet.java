@@ -73,7 +73,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		}
 		
 		PollProcessOrch ppOrch = new PollProcessOrch();
-		boolean stored = ppOrch.storePollResponse(pollRes);
+		int anonymousUserId = ppOrch.storePollResponse(pollRes);
 
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		List<String> jsFiles = new ArrayList<>();
@@ -81,6 +81,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 		
 		request.setAttribute(Attribute.s_POLL_TITLE, ppOrch.getPollTitle(pollId, language));
+		
+		request.setAttribute(Attribute.s_POLL_INFO, ppOrch.getPollDetail(pollId, language));
 		
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_RESULT));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");

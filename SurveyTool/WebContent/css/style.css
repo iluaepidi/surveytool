@@ -535,3 +535,8 @@ footer {margin-top: 10px;}
 .poll-table-tr-th-actions {width: 23.1%;}
 .poll-table-tr-th-responses {width: 22.8%;}
 .poll-table-tr-th-deadline {width: 23.9%;}
+
+.iframe-example {border: 2px solid #CCCCCC;
+    padding: 15px;
+    width: 475px;
+    margin: 8.5% auto;}

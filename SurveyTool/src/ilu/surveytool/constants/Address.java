@@ -4,6 +4,7 @@ public class Address {
 	
 	//BodypPagesNames
 		public final static String s_BODY_LOGIN = "login";
+		public final static String s_BODY_POLL_EXAMPLE_CODE = "pollExampleCode";
 		public final static String s_BODY_POLL_QUESTION = "pollQuestion";
 		public final static String s_BODY_POLL_RESULT = "pollResult";
 		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";

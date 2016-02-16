@@ -135,6 +135,58 @@ public class PollDB {
 		
 		return response;
 	}
+
+	public Poll getPollById(int pollId, String lang)
+	{
+		Poll response = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLL_BY_ID);			
+	   		pstm.setInt(1, pollId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = new Poll();
+	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.setPollId(pollId);
+	   			response.setPublicUrl(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			response.setAuthor(rs.getInt(DBFieldNames.s_AUTHOR));
+	   			try{
+	   				response.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			}catch(NumberFormatException e)
+	   			{
+	   				response.setSurveyId(0);
+	   			}
+	   			response.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
+	   			response.setCallUrl(rs.getString(DBFieldNames.s_POLL_CALL_URL));
+	   			
+	   			if(lang != null && !lang.isEmpty())
+	   			{
+		   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+		   			
+		   			ContentDB contentDB = new ContentDB();
+			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			}
+		   		
+		   		QuestionDB questionDB = new QuestionDB();
+		   		List<Question> questions = questionDB.getQuestionsByPollId(response.getPollId(), lang);
+		   		if(!questions.isEmpty()) response.setQuestion(questions.get(0));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 	
 	public int getPollContentId(int pollId)
 	{
