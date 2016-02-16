@@ -128,7 +128,7 @@ footer {margin-top: 10px;}
 
 .login-content {display: flex;}
 .login-frame {width: 20%;
-    margin: 10% auto;}
+    margin: 175px auto;}
 .login-frame form h3 {margin: 20px 0px;}
 .form-group label {width: 100%;}
 
@@ -264,10 +264,17 @@ footer {margin-top: 10px;}
     border-radius: 10px;
     padding: 10px;
     text-align: center;}
+
+.survey-language {margin: 10px auto;
+    width: 70%;
+    text-align: right;}   
+.survey-language select {margin: 0 5px;}
+.survey-language label span {margin-left: 5px;}
+    
 .survey-info-title {font-size: 1.5em;
     border: none;
     margin: 0 auto;
-    width: 45%;
+    width: 42%;
     text-align: center;}
     
 .survey-info-project {float:right;
@@ -539,4 +546,4 @@ footer {margin-top: 10px;}
 .iframe-example {border: 2px solid #CCCCCC;
     padding: 15px;
     width: 475px;
-    margin: 8.5% auto;}
+    margin: 160px auto;}

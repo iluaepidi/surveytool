@@ -76,14 +76,13 @@ public class DBSQLQueries {
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
 		
 		//Question
-		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, l.isoName FROM surveytool.questionnaire s "
+		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.page p on f.idForma = p.idForma "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "inner join surveytool.language l on q.mainVersion = l.idLanguage "
 				+ "where s.idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTION_CONTENT_BY_QUESTIONID = "SELECT ct.name questionTypeName, c.text FROM surveytool.question q "
 				+ "inner join surveytool.content c on q.idContent = c.idContent "
@@ -91,11 +90,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where q.idQuestion = ? and l.isoName = ?";
 		public final static String s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID = "SELECT idContent FROM surveytool.question where idQuestion = ?";
-		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, l.isoName FROM surveytool.questionbypoll qbp "
+		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName FROM surveytool.questionbypoll qbp "
 				+ "inner join surveytool.question q on qbp.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "inner join surveytool.language l on q.mainVersion = l.idLanguage "
 				+ "where qbp.idPoll = ?";
 		
 		//Questionnaire
@@ -157,10 +155,9 @@ public class DBSQLQueries {
 			public final static String s_INSERT_PROJECT = "INSERT INTO `surveytool`.`project` (`projectName`) VALUES (?)";
 
 		//Question
-			public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`, `mainVersion`) VALUES (?, "
+			public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`) VALUES (?, "
 					+ "(select idQuestionType from surveytool.questiontype where name = ?), ?, "
-					+ "(select idCategory from surveytool.category where name = ?), "
-					+ "(select idLanguage from surveytool.language where isoName = ?))";
+					+ "(select idCategory from surveytool.category where name = ?))";
 		//QuestionByPage
 			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `numQuestion`, `mandatory`) VALUES (?, ?, ?, ?)";
 		//QuestionByPoll

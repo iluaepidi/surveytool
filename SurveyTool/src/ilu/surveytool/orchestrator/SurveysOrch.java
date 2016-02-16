@@ -68,12 +68,12 @@ public class SurveysOrch {
 		return pageId;
 	}
 	
-	public Survey getSurveyDetail(int surveyId)
+	public Survey getSurveyDetail(int surveyId, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		Survey survey = surveyDB.getQuestionnairesById(surveyId);
 		QuestionDB questionDB = new QuestionDB();
-		survey.setQuestions(questionDB.getQuestionsBySurveyId(surveyId, ""));
+		survey.setQuestions(questionDB.getQuestionsBySurveyId(surveyId, lang));
 		return survey;
 	}
 	

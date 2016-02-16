@@ -49,7 +49,7 @@ public class QuestionCreatorService {
 	@Path("/insertOption")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-    public String getSaludoPlain(String req) {
+    public String insertOption(String req) {
     	System.out.println("Opción: " + req);
     	JSONObject json = null;
     	String response = "";

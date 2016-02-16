@@ -87,7 +87,6 @@ public class CreatePollServlet extends HttpServlet {
 				
 				Question question = new Question();
 				question.setCategory("generic");
-				question.setMainVersion(language);
 				question.setTag("generic");
 				question.setQuestionType("simple");
 				question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, 

@@ -58,7 +58,6 @@ $(function() {
 		$.post('CreateQuestionServlet', {
 			qtype : $('#qtypevalue').val(),
 			qstatement: $('#qstatement').val(),
-			mainVersion: $('#main-version').val(),
 			mandatory: $('#mandatory').val(),
 			helpText: $('#help-text').val(),
 			surveyid: $('#surveyid').val(),
@@ -89,6 +88,7 @@ $(function() {
 	
 	$('#panel-body').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
+		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
 			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('div[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
@@ -99,8 +99,8 @@ $(function() {
 			req.index = currentNode.attr('index');
 			req.qid = currentNode.closest('div[id=panel-question1]').attr('qid');
 			req.ogid = currentNode.closest('ul').attr('ogid');
+			req.lang = $('#survey-language-version').val();
 			req.otype = currentNode.closest('ul').attr('otype');
-			req.lang = currentNode.closest('div[id=panel-body]').find('select[id=main-version]').val();
 			
 			$.ajax({ 
 			   type: "POST",
@@ -223,7 +223,7 @@ $(function() {
 	
 	$('#panel-body').on("click", "#btn-question-import-file", function(e){
 		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
-		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
+		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
 	
@@ -354,7 +354,7 @@ $(function() {
 	
 	$('#panel-body').on("click", "#helpTextButton", function(e){
 		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
-		currentLanguage = $(this).closest('div[id=panel-question1]').find('select[id=main-version]').val();
+		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
 	

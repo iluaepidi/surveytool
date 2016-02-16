@@ -69,9 +69,7 @@ public class QuestionDB {
 	   		while(rs.next())
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
-	   			String mainVersion = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
-	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
-	   			ContentDB contentDB = new ContentDB();
+	   			ContentDB contentDB = new ContentDB();	   			
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
@@ -80,7 +78,6 @@ public class QuestionDB {
 	   					contents, 
 	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
 	   					rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY), 
-	   					mainVersion, 
 	   					false,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
@@ -121,8 +118,6 @@ public class QuestionDB {
 	   		while(rs.next())
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
-	   			String mainVersion = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
-	   			if(lang == null || lang.isEmpty()) lang = mainVersion;
 	   			ContentDB contentDB = new ContentDB();
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
@@ -131,8 +126,7 @@ public class QuestionDB {
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), 
 	   					contents, 
 	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
-	   					true, 
-	   					mainVersion, 
+	   					true,  
 	   					false,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
@@ -287,7 +281,6 @@ public class QuestionDB {
 		   pstm.setString(2, question.getQuestionType()); 
 		   pstm.setInt(3, contentId); 
 		   pstm.setString(4, question.getCategory()); 
-		   pstm.setString(5, question.getMainVersion());
 		   
 		   boolean notInserted = pstm.execute();
 		   

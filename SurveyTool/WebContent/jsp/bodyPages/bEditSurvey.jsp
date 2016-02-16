@@ -21,6 +21,18 @@
 	  				<div class="content-box-tabs edit-content">
 	  					<div class="browser-left">Hello</div>	  						  		
 	  					<div class="edit-content-center">
+	  						<div class="survey-language" id="survey-language">
+	  							<form class="" id="survey-language-form">
+	  								<label for="main-version" class="" ><i class="fa fa-language fa-2x"></i><span>Language version</span></label>
+									<select class="form-control-small" id="survey-language-version">
+										<option value="en" selected>English (Default)</option>
+									    <!-- <option value="es">Spanish</option>
+									    <option value="fr">French</option>
+									    <option value="el">Greek</option> -->
+									</select>
+	  							</form>
+	  						</div>
+	  						
 		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="Display survey info">
 		  							<i class="fa fa-caret-right fa-2x"></i>

@@ -59,16 +59,15 @@
 										     	</div> -->
 											</div>
 											<div class="col-md-5 basic-settings-right-options">
-												<div class="row">
+												<!-- <div class="row">
 													<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Main version</span></label>
 													<select class="form-control-small col-md-6" id="main-version">
-													  	<!-- <option value="none" disabled selected>Browser languages</option> -->
 													    <option value="en" selected>English</option>
-													    <!-- <option value="es">Spanish</option>
+													    <option value="es">Spanish</option>
 													    <option value="fr">French</option>
-													    <option value="el">Greek</option> -->
+													    <option value="el">Greek</option>
 													</select>
-												</div>
+												</div> -->
 												<div class="row">
 													<label for="mandatory" class="col-md-5" ><i class="fa fa-asterisk red"></i><span>Mandatory</span></label>
 													<select class="form-control-small col-md-6" id="mandatory">

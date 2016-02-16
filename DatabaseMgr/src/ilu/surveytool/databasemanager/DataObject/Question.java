@@ -14,7 +14,6 @@ public class Question {
 	HashMap<String, Content> contents;
 	String category = "";
 	boolean mandatory = false;
-	String mainVersion = "";
 	boolean helpText = false;
 	String templatePage = "";
 	String formPage = "";
@@ -29,8 +28,7 @@ public class Question {
 	}
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
-			HashMap<String, Content> contents, String category, boolean mandatory, String mainVersion,
-			boolean helpText) {
+			HashMap<String, Content> contents, String category, boolean mandatory, boolean helpText) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -39,14 +37,13 @@ public class Question {
 		this.contents = contents;
 		this.category = category;
 		this.mandatory = mandatory;
-		this.mainVersion = mainVersion;
 		this.helpText = helpText;
 	}
 	
 	
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
-			HashMap<String, Content> contents, String category, boolean mandatory, String mainVersion, boolean helpText,
+			HashMap<String, Content> contents, String category, boolean mandatory, boolean helpText,
 			String templatePage, String formPage) {
 		super();
 		this.questionId = questionId;
@@ -56,7 +53,6 @@ public class Question {
 		this.contents = contents;
 		this.category = category;
 		this.mandatory = mandatory;
-		this.mainVersion = mainVersion;
 		this.helpText = helpText;
 		this.templatePage = templatePage;
 		this.formPage = formPage;
@@ -118,14 +114,6 @@ public class Question {
 		this.mandatory = mandatory;
 	}
 
-	public String getMainVersion() {
-		return mainVersion;
-	}
-
-	public void setMainVersion(String mainVersion) {
-		this.mainVersion = mainVersion;
-	}
-
 	public boolean isHelpText() {
 		return helpText;
 	}
@@ -170,7 +158,7 @@ public class Question {
 	public String toString() {
 		return "Question [questionId=" + questionId + ", tag=" + tag + ", creationDate=" + creationDate
 				+ ", questionType=" + questionType + ", contents=" + contents + ", category=" + category
-				+ ", mandatory=" + mandatory + ", mainVersion=" + mainVersion + ", helpText=" + helpText
+				+ ", mandatory=" + mandatory + ", helpText=" + helpText
 				+ ", templatePage=" + templatePage + ", formPage=" + formPage + ", optionsGroups=" + optionsGroups
 				+ ", resources=" + resources + "]";
 	}

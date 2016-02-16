@@ -18,15 +18,15 @@
 											
 											<div class="panel-body">									
 							  					<div class="panel-question-basic-setting row">
-							  						<div class="alt-question col-md-5">
+							  						<!-- <div class="alt-question col-md-5">
 														<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Alternatives</span></label>
 														<select class="form-control-small col-md-6" id="main-version">
 														  	<option value="en" selected>Main (English)</option>
-														    <!-- <option value="es">Spanish</option>
+														    <option value="es">Spanish</option>
 														    <option value="fr">French</option>
-														    <option value="el">Greek</option> -->
+														    <option value="el">Greek</option>
 														  </select>
-													</div>
+													</div> -->
 													<div class="col-md-2">
 														<button class="btn mandatory-question" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
 													</div>

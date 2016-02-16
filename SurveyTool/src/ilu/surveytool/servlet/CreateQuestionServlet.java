@@ -61,15 +61,13 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			String mainVersion = request.getParameter(Parameter.s_MAIN_VERSION);
 			Question question = new Question();
 			question.setQuestionType(request.getParameter(Parameter.s_QTYPE));
 			question.setCategory("generic");
 			question.setTag("generic");
 			question.setHelpText(Boolean.parseBoolean(request.getParameter(Parameter.s_HELP_TEXT)));
-			question.setMainVersion(request.getParameter(Parameter.s_MAIN_VERSION));
 			question.setMandatory(Boolean.parseBoolean(request.getParameter(Parameter.s_MANDATORY)));
-			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, mainVersion, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
+			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
 			
 			int pageId = Integer.parseInt(request.getParameter(Parameter.s_PAGE_ID));
 			

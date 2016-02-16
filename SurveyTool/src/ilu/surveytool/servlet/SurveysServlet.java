@@ -25,6 +25,7 @@ import ilu.surveytool.properties.SurveyToolProperties;
 @WebServlet("/SurveysServlet")
 public class SurveysServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -57,7 +58,7 @@ public class SurveysServlet extends HttpServlet {
 		{
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));		
 			SurveysOrch surveysOrch = new SurveysOrch();
-			Survey survey = surveysOrch.getSurveyDetail(surveyId);
+			Survey survey = surveysOrch.getSurveyDetail(surveyId, language);
 			
 			request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 			List<String> jsFiles = new ArrayList<>();
