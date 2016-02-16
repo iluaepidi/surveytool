@@ -181,6 +181,8 @@ footer {margin-top: 10px;}
     border: none;
     /*max-width: 185px;*/
     width: auto;}
+.div-create-question-mandatory {margin-top: 10px;}
+.div-btn-create-question {margin-top: 28px;}
 .survey-frame fieldset legend{margin-bottom: 5px;
     font-weight: bold;}
 .survey-frame label {padding-left: 5px !important;

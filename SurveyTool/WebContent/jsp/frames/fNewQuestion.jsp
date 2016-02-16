@@ -68,21 +68,21 @@
 													    <option value="el">Greek</option>
 													</select>
 												</div> -->
-												<div class="row">
+												<div class="div-create-question-mandatory row">
 													<label for="mandatory" class="col-md-5" ><i class="fa fa-asterisk red"></i><span>Mandatory</span></label>
 													<select class="form-control-small col-md-6" id="mandatory">
 													  	<option value="false" selected>No</option>
-													    <option value="true">Sí</option>
+													    <option value="true">Yes</option>
 													  </select>
 												</div>
-												<div class="row">
+												<!-- <div class="row">
 													<label for="help-text" class="col-md-5" ><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></label>
 													<select class="form-control-small col-md-6" id="help-text">
 													  	<option value="false" selected>No</option>
-													    <option value="true">Sí</option>
+													    <option value="true">Yes</option>
 													  </select>
-												</div>
-												<div class="center">
+												</div> -->
+												<div class="div-btn-create-question center">
 													<button class="btn btn-primary" id="create-question" data-dismiss="modal" aria-label="Close">Create</button>
 												</div>
 											</div>

@@ -18,20 +18,13 @@
 											
 											<div class="panel-body">									
 							  					<div class="panel-question-basic-setting row">
-							  						<!-- <div class="alt-question col-md-5">
-														<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Alternatives</span></label>
-														<select class="form-control-small col-md-6" id="main-version">
-														  	<option value="en" selected>Main (English)</option>
-														    <option value="es">Spanish</option>
-														    <option value="fr">French</option>
-														    <option value="el">Greek</option>
-														  </select>
-													</div> -->
-													<div class="col-md-2">
-														<button class="btn mandatory-question" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>													
+							  						<div class="alt-question col-md-5">
 													</div>
 													<div class="col-md-2">
-														<button class="btn" active="<%= question.isHelpText() %>" id="helpTextButton" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button>
+														<!-- <button class="btn btn-question-basic-settings" id="helpTextButton" active="<%= question.isHelpText() %>" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button> -->													
+													</div>
+													<div class="col-md-2">
+														<button class="btn btn-question-basic-settings mandatory-question" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>
 													</div>
 													<div class="col-md-2">
 														<button class="btn btn-question-basic-settings" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
@@ -39,17 +32,15 @@
 							  					</div>
 							  					
 							  					<%
-							  					String htHiddenClass = "hidden";
-											    String helpText = "";
-							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_HELP_TEXT))
+											    String descriptionText = "";
+							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
 							  					{
-							  						htHiddenClass = "";
-							  						helpText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_HELP_TEXT).getText(); 
+							  						descriptionText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText(); 
 							  					}
 							  					%>
-							  					<div class="question-frame question-frame-help <%= htHiddenClass %>" id="question-frame-help">
-							  						<h4>Help Text</h4>
-							  						<p id="question-frame-help-text"><%= helpText %></p>
+							  					<div class="question-frame question-frame-help" id="question-frame-help">
+							  						<h4>Description (Optional)</h4>
+							  						<textarea class="form-control" id="survey-question-description-text" rows="2" placeholder="Type here_" aria-label="Description question"><%= descriptionText %></textarea>
 							  					</div>	
 							  					
 							  					<%

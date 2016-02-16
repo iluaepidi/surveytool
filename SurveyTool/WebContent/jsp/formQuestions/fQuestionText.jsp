@@ -14,9 +14,18 @@
     								List<Resource> resources = question.getResources();
     								%>
 										<div class="form-question" id="form-question">
-											<label for="<%= questionId %>">
-												Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
+											<fieldset>
+												<legend>
+													Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+												</legend>
 												<%
+							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
+							  					{
+							  					%>
+							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
+							  					<% 
+							  					}
+							  					
 												if(!resources.isEmpty())
 												{
 												%>
@@ -33,8 +42,10 @@
 									            <%
 												}
 									            %>
-											</label>
-											<div class="form-question-content">
-												<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="3" placeholder="Type here_"></textarea>
-											</div>																							
+							  					
+												<div class="form-question-content">
+													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="3" placeholder="Type here_"></textarea>
+												</div>	
+												
+											</fieldset>																						
 										</div>

@@ -16,25 +16,33 @@
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
-													Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
+													Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+												</legend>
+												<%
+							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
+							  					{
+							  					%>
+							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
+							  					<% 
+							  					}
+							  					
+												if(!resources.isEmpty())
+												{
+												%>
+												<div class="previewFileUpliaded" id="previewFileUploaded">
 													<%
-													if(!resources.isEmpty())
+													for(Resource resource : resources)
 													{
 													%>
-													<div class="previewFileUpliaded" id="previewFileUploaded">
-														<%
-														for(Resource resource : resources)
-														{
-														%>
-										            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
-										            	<%
-														}
-											            %>
-										            </div>
-										            <%
+									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
+									            	<%
 													}
 										            %>
-												</legend>
+									            </div>
+									            <%
+												}
+									            %>
+							  					
 												<div class="form-question-content">
 													<div class="likert-options">
 													 	<div class="likert-options-frame">

@@ -425,8 +425,18 @@ $(function() {
 		
 		updateContent(req, serviceUrl);
 	});
-	
-	
+
+	$('#panel-body').on("focusout", "#survey-question-description-text", function(e){
+		e.stopPropagation();
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "description";
+		req.lan = "en";
+		req.qid = $(this).closest('#panel-question1').attr('qid');		
+		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+		
+		updateContent(req, serviceUrl);
+	});	
 	
 });
 
