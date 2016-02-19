@@ -115,7 +115,7 @@
 					  								<div class="col-sm-1">...</div>
 					  								<div class="btn-group col-sm-11" role="group" aria-label="...">
 														<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal">Question</button>
-														<!-- <button type="button" class="btn btn-add-menu" id="btn-body-content">Body content</button> -->
+														<button type="button" class="btn btn-add-menu" id="btn-body-content" disabled="disabled">Body content</button>
 													</div>
 					  							</div>  							
 					  						</div>	  					

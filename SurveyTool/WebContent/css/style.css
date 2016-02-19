@@ -57,6 +57,10 @@ h2 {width: auto;
 .tab-colum-admin {width: 4%;}
 .tab-colum-stats {width: 20%;}
 
+.btn-add-small {padding: 2px 20px !important;
+    margin-left: 60px;}
+.btn-add-small span {margin-left: 5px;}
+textarea {resize:none;}
 
 /*----------------------------------------------*\
 		$HEADER_PAGE
@@ -87,6 +91,7 @@ h1 span{font-size: 0.6em;
 	margin-top: 33px;
 	margin-right: 50px;}
 .header-buttons a {margin-left: 35px;}
+button span {margin-left: 5px;}
 
 /*----------------------------------------------*\
 		$BODY_CONTENT
@@ -342,7 +347,10 @@ footer {margin-top: 10px;}
 /*.panel-section > .panel-heading h3:hover, .panel-section > .panel-heading h3:focus {
 	background-color: #004D00;
 }*/
-.panel-heading h3 {margin: 4px 0px;}
+.panel-heading h3 {margin: 4px 0px;
+    float: left;
+    width: 70%;}
+.panel-heading .panel-section-buttons button {margin: 0px 5px;}
 .survey-section-title-unselected {border:none;
 	background-color: transparent;
 	/*color: #fff;*/
@@ -356,7 +364,7 @@ footer {margin-top: 10px;}
 	/*text-align:center;*/
 	width: 100%;
 	padding: 5px;}
-.panel-section-delete {float: right;}
+.panel-section-buttons {float: right;}
 .panel-section .panel-heading a {color: #fff;}
 .panel-section .panel-heading a:hover, .panel-section .panel-heading a:focus {color: #70FFFF;}
 
@@ -411,11 +419,24 @@ footer {margin-top: 10px;}
     display: inline-block;}
 .panel-question .panel-heading a {color: #000;}
 .panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
-.panel-question-basic-setting {background-color: #ccc;
+
+.btn.btn-question-head {color: #000;
+    background-color: #B7D4FA;
+    border-color: #404A57;}
+.btn.btn-question-head[active=true] {color: #fff;
+    background-color: #404A57;
+    border-color: #000;}
+.btn.btn-question-head:hover,
+.btn.btn-question-head:focus {box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.500);}
+.display-question-arrow {border: none;
+    background-color: #B7D4FA;
+    float: left;
+    margin-right: 15px;}
+
+/*.panel-question-basic-setting {background-color: #ccc;
 	color: #000;
     margin: -20px -15px 0px -15px;
     padding-top: 9px;}
-.panel-question-basic-setting .alt-question {/*padding-top: 4px;*/}
 .panel-question-basic-setting .mandatory-question i {background-color: #ccc;}
 .panel-question-basic-setting div label,
 .panel-question-basic-setting div button {display: inline-flex;
@@ -432,7 +453,8 @@ footer {margin-top: 10px;}
 .panel-question-basic-setting div button[active="false"]:hover {border: 1px solid #3C3C3C; 
 	background-color: #B7D4FA;}
 
-.btn-question-basic-settings {padding-top: 2px !important;}
+.btn-question-basic-settings {padding-top: 2px !important;}*/
+
 .question-frame {border: 1px solid #555;
 	margin: 15px 0px;
 	padding: 10px 20px;
@@ -453,7 +475,9 @@ footer {margin-top: 10px;}
     height: 45px;}
 .question-frame p {margin: 0px;}
 /*.question-frame-help {display:none;}*/
-.question-frame-multimedia {}
+.question-frame-multimedia button {margin-left: 60px;}
+
+    
 .multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}

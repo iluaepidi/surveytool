@@ -58,7 +58,7 @@
 							  							String id = "optionsRadios" + option.getIndex();
 							  						%>
 													 	<li class="radio">
-														  <input type="radio" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>" checked>
+														  <input type="radio" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
 														  <label for="<%= id %>">
 														    <%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
 														  </label>

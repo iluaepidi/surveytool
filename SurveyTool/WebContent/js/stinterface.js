@@ -99,22 +99,19 @@ $(function() {
 	});
 	
 	//abrir cerrar question panel
-	$('#panel-question').on('click', '#display-question-panel', function(e){
+	$('#panel-body').on('click', '#display-question-panel', function(e){
 		e.stopPropagation();
-		//var cl = $('#panel-question1 div div #display-question-panel i').prop("class");
+		bodyClick();
+		currentFrameActivate = "display-question-panel";
 		var cl = $(this).children('i').prop("class");
 		if (cl == "fa fa-caret-down fa-2x")
 		{
-			//$('#panel-question1 .panel-body').css("display", "none");
-			$('#panel-question').children('.panel-body').css("display", "none");
-			//$('#panel-question1 div div #display-question-panel i').prop("class", "fa fa-caret-right fa-2x");
+			$(this).closest('#panel-question1').children('.panel-body').css("display", "none");
 			$(this).children('i').prop("class", "fa fa-caret-right fa-2x");
 		}
 		else if(cl == "fa fa-caret-right fa-2x")
 		{
-			/*$('#panel-question1 .panel-body').css("display", "inherit");
-			$('#panel-question1 div div #display-question-panel i').prop("class", "fa fa-caret-down fa-2x");*/
-			$('#panel-question').children('.panel-body').css("display", "inherit");
+			$(this).closest('#panel-question1').children('.panel-body').css("display", "inherit");
 			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
 		}
 	});

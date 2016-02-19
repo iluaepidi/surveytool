@@ -13,25 +13,15 @@
     								%>
 										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
 											<div class="panel-heading">	
-												<!-- <div class="col-sm-1 left"><a id="display-question-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div> -->				
-												<h3 class="col-sm-11 panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" /></h3>
-												<div class="col-sm-1 panel-section-delete right"><button class="btn btn-transparent red" id="removeQuestion" aria-label="Remove question: <%= title %> " title="remove section 1"><i class="fa fa-trash fa-2x"></i></button></div>
+												<button id="display-question-panel" class="display-question-arrow" aria-label="hide question: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
+												<h3 class="panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" /></h3>
+												<div class="panel-section-buttons right">
+													<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>
+													<button class="btn btn-transparent red" id="removeQuestion" aria-label="Remove question: <%= title %> " title="remove section 1"><i class="fa fa-trash fa-2x"></i></button>
+												</div>
 											</div>
 											
 											<div class="panel-body">									
-							  					<div class="panel-question-basic-setting row">
-							  						<div class="alt-question col-md-5">
-													</div>
-													<div class="col-md-2">
-														<!-- <button class="btn btn-question-basic-settings" id="helpTextButton" active="<%= question.isHelpText() %>" data-toggle="modal" data-target="#setHelpText"><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></button> -->													
-													</div>
-													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings mandatory-question" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span>Mandatory</span></button>
-													</div>
-													<div class="col-md-2">
-														<button class="btn btn-question-basic-settings" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i><span>Import multimedia file</span></button>
-													</div>
-							  					</div>
 							  					
 							  					<%
 											    String descriptionText = "";
@@ -46,16 +36,11 @@
 							  					</div>	
 							  					
 							  					<%
-							  					String hidden = "";
 							  					List<Resource> resources = question.getResources();
-							  					if(resources.isEmpty())
-							  					{
-							  						hidden = "hidden";
-							  					}
 							  					%>
-							  					<div class="question-frame question-frame-multimedia <%= hidden %>" id="multimediaFrame">
+							  					<div class="question-frame question-frame-multimedia" id="multimediaFrame">
 							  					
-							  						<h4>Question Multimedia Files</h4>
+							  						<h4>Question Files</h4>
 							  						<ul class="multimedia-list" id="multimediaFilesList">
 							  						<%							  						
 							  						for(Resource resource : resources)
@@ -67,6 +52,8 @@
 							  						}
 							  						%>
 							  						</ul>
+							  						
+							  						<button class="btn btn-primary btn-sm active" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o"></i><span>Add file</span></button>
 							  					</div>
 							  					
 							  					<div class="question-frame">
@@ -153,7 +140,7 @@
 							  						}
 							  						%>
 							  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
-							  								<a class="btn-plus-small" id="btn-add-option" href="#li-add-option<%= question.getQuestionId() %>" aria-label="Add option"><i class="fa fa-plus-square"></i></a>
+							  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square"></i><span>Add option</span></button>
 							  							</li>
 							  						</ul>
 							  					</div>
@@ -191,7 +178,7 @@
 							  							</li>
 							  						
 							  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
-							  								<a class="btn-plus-small" id="btn-add-option" href="#li-add-option<%= question.getQuestionId() %>" aria-label="Add option"><i class="fa fa-plus-square"></i></a>
+							  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square"></i><span>Add option</span></button>
 							  							</li>
 							  						</ul>
 							  					</div>
