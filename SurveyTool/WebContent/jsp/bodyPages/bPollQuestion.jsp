@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
@@ -9,6 +10,9 @@
 <%
 	Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
 	Question question = poll.getQuestion();
+	
+	Language lang = new Language(getServletContext().getRealPath("/")); 
+	lang.loadLanguage("en");
 %>
 						
             <form action="PollProcessServlet" method="post" id="poll_form" class="">		
@@ -44,8 +48,12 @@
                 </fieldset>
                   
                 <div class="poll-send-button">               				
-                	<input name="sendPoll" id="sendPoll" type="submit" value="Vote" class="btn btn-primary">
+                	<input name="sendPoll" id="sendPoll" type="submit" value="<%= lang.getContent("button.vote") %>" class="btn btn-primary">
                 </div>
                 			
             </form>
+	  			
+<%
+lang.close();
+%>
 	  			

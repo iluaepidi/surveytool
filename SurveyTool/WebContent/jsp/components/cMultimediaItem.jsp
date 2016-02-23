@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Content"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
@@ -9,6 +10,9 @@
     								
 							  					
 							  					<%
+							  					Language lang = new Language(getServletContext().getRealPath("/")); 
+							  					lang.loadLanguage("en");
+							  					
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();
 							  					String title = "";
@@ -20,6 +24,9 @@
 							  							<li class="multimedia-item" rid="<%= resource.getResourceId() %>">
 							  								<i class="fa fa-file-image-o"></i>
 							  								<a href="#"><%= title + " - " + resource.getPathFile() %></a>
-							  								<button id="removeMultimediaFile" class="btn btn-transparent fright red" aria-label="Remove file: <%= title %>"><i class="fa fa-trash"></i></button>
+							  								<button id="removeMultimediaFile" class="btn btn-transparent fright red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  							</li>
+												<%
+												lang.close();
+												%>
 							  					

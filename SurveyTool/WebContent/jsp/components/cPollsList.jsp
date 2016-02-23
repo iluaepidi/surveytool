@@ -1,19 +1,23 @@
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
 <%@page import="ilu.surveytool.databasemanager.DataObject.PollTableInfo"%>
 <%@page import="ilu.surveytool.constants.Parameter"%>
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page import="ilu.surveytool.language.Language"%>
+<%
+Language lang = new Language(getServletContext().getRealPath("/")); 
+lang.loadLanguage("en");
+%>
     								
 						<div class="hidden" id="polls-list">	  					
-							<h3>Polls</h3>			
-							<p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
-		  					<p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
+							<h3><%= lang.getContent("survey_manager.polls.title") %></h3>							
+							<%= lang.getContent("survey_manager.polls.description") %>
 		  					<div class="user-panel-surveys">
 		  						<div class="surveys-create-button">
-		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal">+ Create new</button>
+		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal"><%= lang.getContent("button.create_new") %></button>
 		  						</div>
 			  					<%
 			  					String host = request.getServerName();
@@ -24,12 +28,12 @@
 			  					%>
 			  					<div class="surveys-table">
 			  						<table class="table table-bordered" sumary="List of surveys where ...">
-			  							<caption>Polls list</caption>
+			  							<caption><%= lang.getContent("survey_manager.polls.table.caption") %></caption>
 										<tr class="info">
-											<th class="poll-table-tr-th-deadline center">*Deadline*</th>
-											<th class="center">Poll</th>
-											<th class="poll-table-tr-th-responses center">Poll URL</th>
-											<th class="poll-table-tr-th-actions center">Actions</th>
+											<th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th>
+											<th class="center"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
+											<th class="poll-table-tr-th-responses center"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
+											<th class="poll-table-tr-th-actions center"><%= lang.getContent("survey_manager.polls.table.column.actions") %></th>
 										</tr>
 										<%
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
@@ -98,7 +102,7 @@
 			  					{
 			  					%>
 			  					
-			  					<div><p>There are not polls created by you.</p></div>
+			  					<div><p><%= lang.getContent("survey_manager.polls.msg.no_polls") %></p></div>
 			  					
 			  					<%
 			  					}
@@ -106,3 +110,6 @@
 			  					  					
 			  				</div>
 			  			</div>
+<%
+lang.close();
+%>

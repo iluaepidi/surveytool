@@ -6,7 +6,11 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+<%@page import="ilu.surveytool.language.Language"%>
+<%
+Language lang = new Language(getServletContext().getRealPath("/")); 
+lang.loadLanguage("en");
+%>  
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
@@ -77,10 +81,13 @@
 													 	</div>
 													 </div>	
 													 <div class="likert-legend">
-													 	<div>Totally disgree</div>
-													 	<div>Indiferent</div>
-													 	<div>Totally agree</div>
+													 	<div><%= lang.getContent("question.form.scale.liker_legend.t_disgree") %></div>
+													 	<div><%= lang.getContent("question.form.scale.liker_legend.t_indiferent") %></div>
+													 	<div><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
 													 </div>
 												</div>	
 											</fieldset>																						
 										</div>
+<%
+lang.close();
+%>

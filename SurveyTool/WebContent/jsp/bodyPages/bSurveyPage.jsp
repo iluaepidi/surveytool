@@ -1,4 +1,5 @@
 					
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
@@ -8,6 +9,9 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
+				
+				Language lang = new Language(getServletContext().getRealPath("/")); 
+				lang.loadLanguage("en");
 				%>	
 								
 				<div class="container-fluid">
@@ -36,9 +40,13 @@
 	  							%>
 	  						</div>
 	  						<div class="center">
-	  							<input type="submit" class="btn btn-primary btn-submit-page" Value="Submit"/>
+	  							<input type="submit" class="btn btn-primary btn-submit-page" Value="<%= lang.getContent("button.submit") %>"/>
 	  						</div>
 	  					</form>
 	  				</div>
 	  			</div>
+	  			
+<%
+lang.close();
+%>
 	  			

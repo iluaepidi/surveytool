@@ -1,16 +1,20 @@
-				
+<%@page import="ilu.surveytool.language.Language"%>
+<%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
+<%
+Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
+
+Language lang = new Language(getServletContext().getRealPath("/")); 
+lang.loadLanguage("en");
+%>	
 				<!-- Modal -->
-				<%@page import="ilu.surveytool.constants.Attribute"%>
-				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
-				<%
-				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
-				%>
+				
 				<div class="modal fade survey-win" id="newQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
 				    		<div class="panel-heading"> 
-				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title">Add new question</h2> 
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("question.new.title") %>"><span aria-hidden="true">&times;</span></button>
+				    			<h2 class="panel-title"><%= lang.getContent("question.new.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 				    			<div class="survey-frame">
@@ -43,47 +47,28 @@
 									</ul>
 				    			</div>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">
-				    				<h3>Basic settings</h3>
+				    				<h3><%= lang.getContent("question.new.basic_settings.title") %></h3>
 				    				<div class="close-frame">
-				    					<a class="btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="Close basic settings"><i class="fa fa-times-circle fa-2x"></i></a>
+				    					<a class="btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("question.new.basic_settings.title") %>"><i class="fa fa-times-circle fa-2x"></i></a>
 				    				</div>
 				    				<div class="row">
 				    					<form>
 				    						<input type="hidden" id="qtypevalue" name="qtype" value="" />
 				    						<input type="hidden" id="surveyid" name="surveyid" value="<%= survey.getSurveyId() %>" />
 				    						<div class="col-md-7">
-				    							<label for="qstatement" >Question statement</label>
-										     	<textarea class="form-control" id="qstatement" rows="5" placeholder="Type here_"></textarea>
-										     	<!-- <div class="center">
-										     		<a class="btn btn-add-media"><i class="fa fa-picture-o fa-2x"></i><span>Add media</span></a>
-										     	</div> -->
+				    							<label for="qstatement" ><%= lang.getContent("question.statement") %></label>
+										     	<textarea class="form-control" id="qstatement" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 											</div>
 											<div class="col-md-5 basic-settings-right-options">
-												<!-- <div class="row">
-													<label for="main-version" class="col-md-5" ><i class="fa fa-language fa-2x"></i><span>Main version</span></label>
-													<select class="form-control-small col-md-6" id="main-version">
-													    <option value="en" selected>English</option>
-													    <option value="es">Spanish</option>
-													    <option value="fr">French</option>
-													    <option value="el">Greek</option>
-													</select>
-												</div> -->
 												<div class="div-create-question-mandatory row">
-													<label for="mandatory" class="col-md-5" ><i class="fa fa-asterisk red"></i><span>Mandatory</span></label>
+													<label for="mandatory" class="col-md-5" ><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></label>
 													<select class="form-control-small col-md-6" id="mandatory">
-													  	<option value="false" selected>No</option>
-													    <option value="true">Yes</option>
+													  	<option value="false" selected><%= lang.getContent("label.no") %></option>
+													    <option value="true"><%= lang.getContent("label.yes") %></option>
 													  </select>
 												</div>
-												<!-- <div class="row">
-													<label for="help-text" class="col-md-5" ><i class="fa fa-question-circle fa-2x"></i><span>Help text</span></label>
-													<select class="form-control-small col-md-6" id="help-text">
-													  	<option value="false" selected>No</option>
-													    <option value="true">Yes</option>
-													  </select>
-												</div> -->
 												<div class="div-btn-create-question center">
-													<button class="btn btn-primary" id="create-question" data-dismiss="modal" aria-label="Close">Create</button>
+													<button class="btn btn-primary" id="create-question" data-dismiss="modal"><%= lang.getContent("button.create") %></button>
 												</div>
 											</div>
 				    					</form>

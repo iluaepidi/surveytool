@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
@@ -6,7 +7,10 @@
     pageEncoding="ISO-8859-1"%>
     								
 							  					
-					  					<%
+					  					<%					  					
+					  					Language lang = new Language(getServletContext().getRealPath("/")); 
+					  					lang.loadLanguage("en");
+					  					
 					  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 					  					String action = (String) request.getAttribute(Attribute.s_ACTION);
 					  					
@@ -17,22 +21,22 @@
 					  					<input type="hidden" name="rid" id="rid" value="<%= resource.getResourceId() %>" />
 					  					
 								        <div class="form-group">
-								        	<label for="uploadedFile">Image selected</label>
+								        	<label for="uploadedFile"><%= lang.getContent("file.import.label.img_selected") %></label>
 								            <div class="previewFileUpliaded" id="previewFileUploaded">
-								            	<img src="<%= resource.getPathFile() %>" alt="Preview image. Add alternative text in the next field" />
+								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>
 								        </div>
 										<div class="form-group">
-								            <label for="resourceTitle">Title</label>
-								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="Type here_"/>
+								            <label for="resourceTitle"><%= lang.getContent("file.import.title") %></label>
+								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
 								        </div>
 								        <div class="form-group">									            
-								            <label for="resourceAltText">Texto alternativo</label>
-								            <textarea rows="2" id="resourceAltText" name="resourceAltText" class="form-control" placeholder="Type here_"></textarea>
+								            <label for="resourceAltText"><%= lang.getContent("file.import.label.alt") %></label>
+								            <textarea rows="2" id="resourceAltText" name="resourceAltText" class="form-control" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 								        </div>
 					  					
 										<div class="center">
-											<button name="upload" id="btnImportFile" class="btn btn-primary" aria-label="Import">Import</button> 
+											<button name="upload" id="btnImportFile" class="btn btn-primary"><%= lang.getContent("button.import") %></button> 
 										</div>	
 										
 										<%
@@ -41,8 +45,10 @@
 					  					{
 										%>
 											<div class="previewFileUpliaded" id="previewFileUploaded">
-								            	<img src="<%= resource.getPathFile() %>" alt="Preview image. Add alternative text in the next field" />
+								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>
 										<%
 					  					}
+					  					
+					  					lang.close();
 										%>									

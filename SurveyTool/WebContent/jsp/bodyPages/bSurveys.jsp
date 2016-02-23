@@ -3,13 +3,18 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.SurveyTableInfo"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
-<div class="container-fluid">
+<%@page import="ilu.surveytool.language.Language"%>
+<%
+Language lang = new Language(getServletContext().getRealPath("/")); 
+lang.loadLanguage("en");
+%>   
+				<div class="container-fluid">
 	  				<div class="title-content-no-underline">
-	  					<h2><a href="InitialServlet">User Panel</a> > Survey Manager</h2>
+	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <%= lang.getContent("survey_manager.title") %></h2>
 	  				</div>
 	  					<ul class="nav nav-tabs nav-justified">
-						  <li role="presentation" id="nav-tabs-li-surveys" class="active"><a href="#" id="tab-display-surveys">Surveys</a></li>
-						  <li role="presentation" id="nav-tabs-li-polls"><a href="#" id="tab-display-polls">Polls</a></li>
+						  <li role="presentation" id="nav-tabs-li-surveys" class="active"><a href="#" id="tab-display-surveys"><%= lang.getContent("survey_manager.tab.surveys") %></a></li>
+						  <li role="presentation" id="nav-tabs-li-polls"><a href="#" id="tab-display-polls"><%= lang.getContent("survey_manager.tab.polls") %></a></li>
 						</ul>
 	  				<div class="content">
 	  					
@@ -19,7 +24,9 @@
 	  					
 	  				</div>
 	  			</div>
-	  			
+<%
+lang.close();
+%>	  			
 	  			<jsp:include page="../frames/fNewSurvey.jsp" />
 	  			
 	  			<jsp:include page="../frames/fNewPoll.jsp" />
