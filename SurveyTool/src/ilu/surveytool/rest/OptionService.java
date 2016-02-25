@@ -13,9 +13,9 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.data.Option;
-import ilu.surveytool.orchestrator.OptionOrch;
-import ilu.surveytool.orchestrator.ResourceOrch;
+import ilu.surveytool.userpanel.data.Option;
+import ilu.surveytool.userpanel.handler.OptionHandler;
+import ilu.surveytool.userpanel.handler.ResourceHandler;
 
 @Path("/OptionService")
 public class OptionService {
@@ -43,8 +43,8 @@ public class OptionService {
     	
     	String response = "false";
     	
-    	OptionOrch optionOrch = new OptionOrch();
-    	response = String.valueOf(optionOrch.removeOption(Integer.parseInt(optionId)));
+    	OptionHandler optionHandler = new OptionHandler();
+    	response = String.valueOf(optionHandler.removeOption(Integer.parseInt(optionId)));
     	
     	return response;
     }

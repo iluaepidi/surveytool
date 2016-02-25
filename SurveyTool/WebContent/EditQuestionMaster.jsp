@@ -8,4 +8,4 @@
     
     <jsp:include page="<%= templateFile %>" />
     
-    <!-- <jsp:include page="jsp/editQuestions/cAddMenu.jsp" />-->
+    <!-- <jsp:include page="jsp/userPanel/editQuestions/cAddMenu.jsp" />-->

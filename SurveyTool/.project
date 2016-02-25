@@ -4,6 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>DatabaseMgr</project>
+		<project>UserPanel</project>
+		<project>SurveyPanel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

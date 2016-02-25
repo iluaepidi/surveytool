@@ -12,8 +12,8 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
-import ilu.surveytool.orchestrator.UserPanelHomeOrch;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.userpanel.handler.UserPanelHomeHandler;
 
 /**
  * Servlet implementation class InitialServlet

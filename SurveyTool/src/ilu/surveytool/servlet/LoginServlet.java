@@ -18,7 +18,7 @@ import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
-import ilu.surveytool.orchestrator.LoginOrch;
+import ilu.surveytool.login.Login;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
@@ -61,12 +61,12 @@ public class LoginServlet extends HttpServlet {
 		 * cargar correspondiente body page
 		 */
 		
-		LoginOrch loginOrch = new LoginOrch();
+		Login loginHandler = new Login();
 		Credentials credentials = new Credentials();
 		credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
 		credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
 		System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
-		LoginResponse loginResp = loginOrch.login(credentials);
+		LoginResponse loginResp = loginHandler.login(credentials);
 		System.out.println(loginResp.toString());
 		
 		if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_ADMIN))

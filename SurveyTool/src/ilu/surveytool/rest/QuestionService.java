@@ -15,12 +15,12 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveytool.constants.Parameter;
-import ilu.surveytool.data.Option;
 import ilu.surveytool.databasemanager.DataObject.Content;
-import ilu.surveytool.orchestrator.OptionOrch;
-import ilu.surveytool.orchestrator.QuestionOrch;
-import ilu.surveytool.orchestrator.ResourceOrch;
-import ilu.surveytool.orchestrator.SurveysOrch;
+import ilu.surveytool.userpanel.data.Option;
+import ilu.surveytool.userpanel.handler.OptionHandler;
+import ilu.surveytool.userpanel.handler.QuestionHandler;
+import ilu.surveytool.userpanel.handler.ResourceHandler;
+import ilu.surveytool.userpanel.handler.SurveysHandler;
 
 @Path("/QuestionService")
 public class QuestionService {
@@ -42,8 +42,8 @@ public class QuestionService {
 					json.getString(Parameter.s_TEXT));
 			System.out.println("content: " + content.toString());
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.updateContent(questionId, content));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateContent(questionId, content));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -65,8 +65,8 @@ public class QuestionService {
 			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
 			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.updateMandatory(questionId, pageId));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateMandatory(questionId, pageId));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -88,8 +88,8 @@ public class QuestionService {
 			int questionId = Integer.parseInt(qid);
 			int pageId = Integer.parseInt(pid);
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.removeQuestionByPage(questionId, pageId));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.removeQuestionByPage(questionId, pageId));
 			
 		/*} catch (JSONException e) {
 			// TODO Auto-generated catch block
