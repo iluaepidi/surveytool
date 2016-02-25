@@ -15,7 +15,7 @@ lang.loadLanguage("en");
 	  				</div>
 	  				<div class="login-content">
   						<div class="login-frame">
-	  						<form method="post" action="LoginServlet">
+	  						<form method="post" id="loginForm" action="LoginServlet">
 	  							<fieldset>
 		  							<!-- <h3>Login</h3> -->
 		  							<legend><%= lang.getContent("home.login.title") %></legend>
@@ -25,20 +25,22 @@ lang.loadLanguage("en");
 		  							%>
 		  							<div class="error-msg"><p><%= loginResponse.getErrorMsg() %></p></div>
 		  							<%
-		  							}
+		  							}		  							
 		  							%>
 		  							<div class="form-group">
-		  								<label for="username"> <%= lang.getContent("home.login.label.username") %>
-			  								<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
-			  							</label>
+		  								<label class="control-label" for="username"> <%= lang.getContent("home.login.label.username") %></label>
+			  							<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
+			  							<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
+			  							<span id='username-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.username") %></span>
 			  						</div>
 			  						<div class="form-group">
-			  							<label for="password"> <%= lang.getContent("home.login.label.password") %>
-			  								<input type="password" id="username" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>
-			  							</label>
+			  							<label class="control-label" for="password"> <%= lang.getContent("home.login.label.password") %></label>
+			  							<input type="password" id="password" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>			  							
+			  							<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
+			  							<span id='password-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.password") %></span>
 		  							</div>	
 		  							<div class="right">
-		  								<input type="submit" class="btn btn-primary btn-survey" value="<%= lang.getContent("button.send") %>" />
+		  								<input type="button" id="loginSubmit" class="btn btn-primary btn-survey" value="<%= lang.getContent("button.send") %>" />
 		  							</div>  	
 		  						</fieldset>						
 	  						</form>

@@ -62,6 +62,30 @@ h2 {width: auto;
 .btn-add-small span {margin-left: 5px;}
 textarea {resize:none;}
 
+
+/*----------------------------------------------*\
+		$HEADER_PAGE
+\*----------------------------------------------*/
+
+.error{background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	width: 120px;
+	position: absolute;
+	right: -130px;
+    top: 26px;}
+.error:before{content: '';
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 8px solid #A94442;
+	border-left: 8px solid transparent;
+	left: -16px;
+	position: absolute;
+	top: 5px;}
+
+
 /*----------------------------------------------*\
 		$HEADER_PAGE
 \*----------------------------------------------*/
@@ -150,6 +174,7 @@ footer {margin-top: 10px;}
 .btn-arrow {padding-top: 9px !important;}
 .percent-bar {margin: 0 !important;
 	border: 1px solid #555;}
+.progress-bar {min-width: 2em}
 .surveys-table ul {margin: 0;
 	padding: 0 !important;}
 .surveys-table ul li{padding: 0 !important;}

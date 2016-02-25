@@ -35,9 +35,18 @@ lang.loadLanguage("en");
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(SurveyTableInfo survey : surveys)
 										{
+											String deadLine = "";
+											if(survey.getDeadLineDate() != null) 
+											{
+												deadLine = survey.getDeadLineDate().toString();
+											}
+											else
+											{
+												deadLine =  lang.getContent("survey_manager.table.content.none");
+											}
 										%>
 										<tr>
-											<td class="center"><%= survey.getDeadLineDate() %></td>
+											<td class="center"><%= deadLine %></td>
 											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 											<td>
 												<div class="progress percent-bar">
@@ -48,7 +57,7 @@ lang.loadLanguage("en");
 														percentage = ((survey.getNumUsersFinished() * 100) / survey.getNumUsers());	
 													}
 													%>
-													<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;"><%= survey.getNumUsersFinished() %>/<%= survey.getNumUsers() %></div>
+													<div class="progress-bar" role="progressbar" aria-valuenow="<%= survey.getNumUsersFinished() %>" aria-valuemin="0" aria-valuemax="<%= survey.getNumUsers() %>" style="width: <%=percentage%>%;"><%= survey.getNumUsersFinished() %>/<%= survey.getNumUsers() %></div>
 												</div>
 											</td>
 											<td>

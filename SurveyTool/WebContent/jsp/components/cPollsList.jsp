@@ -39,8 +39,15 @@ lang.loadLanguage("en");
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(PollTableInfo poll : polls)
 										{
-											String deadLine = "none";
-											if(poll.getDeadLineDate() != null) deadLine = poll.getDeadLineDate().toString();
+											String deadLine = "";
+											if(poll.getDeadLineDate() != null) 
+											{
+												deadLine = poll.getDeadLineDate().toString();
+											}
+											else
+											{
+												deadLine =  lang.getContent("survey_manager.table.content.none");
+											}
 										%>
 										<tr>
 											<td class="center"><%= deadLine %></td>
