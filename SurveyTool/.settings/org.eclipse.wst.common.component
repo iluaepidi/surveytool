@@ -50,10 +50,10 @@
         <dependent-module archiveName="mail.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ExternalLibs/mail.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="UserPanel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/UserPanel/UserPanel">
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/SurveyManager/SurveyManager">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="SurveyPanel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SurveyPanel/SurveyPanel">
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/SurveyEngine/SurveyEngine">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/SurveyTool/build/classes"/>

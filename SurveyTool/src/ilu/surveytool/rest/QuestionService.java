@@ -14,13 +14,13 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.QuestionHandler;
+import ilu.surveymanager.handler.ResourceHandler;
+import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
-import ilu.surveytool.userpanel.data.Option;
-import ilu.surveytool.userpanel.handler.OptionHandler;
-import ilu.surveytool.userpanel.handler.QuestionHandler;
-import ilu.surveytool.userpanel.handler.ResourceHandler;
-import ilu.surveytool.userpanel.handler.SurveysHandler;
 
 @Path("/QuestionService")
 public class QuestionService {

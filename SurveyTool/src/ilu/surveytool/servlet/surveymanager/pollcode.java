@@ -1,4 +1,4 @@
-package ilu.surveytool.servlet;
+package ilu.surveytool.servlet.surveymanager;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -15,16 +16,16 @@ import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class InitialServlet
+ * Servlet implementation class pollcode
  */
-@WebServlet("/InitialServlet")
-public class InitialServlet extends HttpServlet {
+@WebServlet("/pollcode")
+public class pollcode extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InitialServlet() {
+    public pollcode() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,36 +34,37 @@ public class InitialServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProcessRequest(request, response);
+		// TODO Auto-generated method stub
+    	processRequest(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProcessRequest(request, response);
+		processRequest(request, response);
 	}
 	
-	protected void ProcessRequest(HttpServletRequest request, HttpServletResponse response)
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
-		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
+			String pid = request.getParameter(Parameter.s_PID);
+			request.setAttribute(Attribute.s_POLL_ID, pid);
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_EXAMPLE_CODE));
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Poll example and code");
 		}
 		else
 		{
-			userSessionInfo = new LoginResponse();
-			userSessionInfo.setErrorMsg("Session is expired or not exist.");
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
-			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			SessionHandler sessionHandler = new SessionHandler();
+			sessionHandler.sessionClosed(request, properties);
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}
+		
 
 }

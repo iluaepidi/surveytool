@@ -7,12 +7,24 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class handles the different session options 
+ */
+
 public class SessionHandler {
 
 	public SessionHandler() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * This method carries out all needed when the server receives a request but the session is closed.
+	 * @param request
+	 * @param properties
+	 */
 	public void sessionClosed(HttpServletRequest request , SurveyToolProperties properties)
 	{
 		LoginResponse userSessionInfo = new LoginResponse();

@@ -1,4 +1,4 @@
-package ilu.surveytool.servlet;
+package ilu.surveytool.servlet.surveymanager;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ilu.surveymanager.handler.PollHandler;
+import ilu.surveymanager.handler.SurveysHandler;
+import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -15,16 +18,17 @@ import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
- * Servlet implementation class InitialServlet
+ * Servlet implementation class UserPanelHomeServlet
  */
-@WebServlet("/InitialServlet")
-public class InitialServlet extends HttpServlet {
+@WebServlet("/UserPanelHomeServlet")
+public class UserPanelHomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InitialServlet() {
+    public UserPanelHomeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +36,7 @@ public class InitialServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessRequest(request, response);
 	}
 
@@ -50,16 +54,24 @@ public class InitialServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
+			String bodyPage = request.getParameter(Parameter.s_UPOPTION);
+			if(bodyPage != null && !bodyPage.isEmpty())
+			{
+				if(bodyPage.equals(Address.s_BODY_SURVEYS))
+				{
+					SurveysHandler surveysHandler = new SurveysHandler();
+					request.setAttribute(Attribute.s_SURVEYS, surveysHandler.getSurveysTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
+					PollHandler pollHandler = new PollHandler();
+					request.setAttribute(Attribute.s_POLLS, pollHandler.getPollsTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
+				}
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");
+			}			
 		}
 		else
 		{
-			userSessionInfo = new LoginResponse();
-			userSessionInfo.setErrorMsg("Session is expired or not exist.");
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
-			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			SessionHandler sessionHandler = new SessionHandler();
+			sessionHandler.sessionClosed(request, bodyPages);
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);

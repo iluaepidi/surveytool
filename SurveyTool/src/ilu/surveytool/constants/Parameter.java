@@ -1,5 +1,12 @@
 package ilu.surveytool.constants;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class contains the constants about parameter names received from the forms. 
+ */
+
 public class Parameter {
 
 	public final static String s_ACKNOWLEDGMENT_TEXT = "ackText";

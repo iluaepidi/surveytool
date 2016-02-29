@@ -1,5 +1,12 @@
 package ilu.surveytool.constants;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class contains the constants about the keys of the request attributes. 
+ */
+
 public class Attribute {
 
 	public final static String s_ACTION = "action";

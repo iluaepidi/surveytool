@@ -8,8 +8,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import ilu.surveytool.exception.STException;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class contain common methods to all the web application.
+ */
+
 public class CommonCode {
 	
+	/**
+	 * This method redirects to other jsp from a servlet.
+	 * @param request
+	 * @param response
+	 * @param dir
+	 */
 	public static void redirect(HttpServletRequest request, HttpServletResponse response, String dir){
 		try {
 			//IE compatibility

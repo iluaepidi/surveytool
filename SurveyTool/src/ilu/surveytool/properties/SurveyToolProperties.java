@@ -6,6 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class contain the methods to obtain the path of the different property files.
+ */
+
 public class SurveyToolProperties {
 	
 	String rootPath = "";
@@ -14,6 +21,11 @@ public class SurveyToolProperties {
 		this.rootPath = rootPath;
 	}
 	
+	/**
+	 * Get path to the property body pages file.
+	 * @param bodyName
+	 * @return
+	 */
 	public String getBudyPagePath(String bodyName) {
 
 		String response = "";
@@ -46,6 +58,11 @@ public class SurveyToolProperties {
 		return response;
 	 }
 	
+	/**
+	 * Get path to the property js file.
+	 * @param bodyName
+	 * @return
+	 */
 	public String getJsFilePath(String jsFileName) {
 
 		String response = "";

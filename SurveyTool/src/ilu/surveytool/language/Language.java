@@ -10,16 +10,32 @@ import javax.servlet.http.HttpServletRequest;
 
 import ilu.surveytool.constants.Attribute;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class handles the language of the pages contents.
+ */
+
 public class Language {
 
 	String rootPath = "";
 	InputStream input = null;
 	Properties prop = null;
 
+	/**
+	 * rootPath is the root path of the project in the local system.
+	 * @param rootPath
+	 */
 	public Language(String rootPath) {
 		this.rootPath = rootPath;
 	}
 	
+	/**
+	 * This method load the web contents file corresponding to the language specified.
+	 * @param lang
+	 * @return
+	 */
 	public Properties loadLanguage(String lang) {
 
 		this.prop = new Properties();
@@ -38,6 +54,9 @@ public class Language {
 		return prop;
 	}
 	
+	/**
+	 * Close the InputStream.
+	 */
 	public void close()
 	{
 		if (input != null) {
@@ -49,11 +68,21 @@ public class Language {
 		}
 	}
 	
+	/**
+	 * This method return a content corresponding to the key specified.
+	 * @param content (key of the content)
+	 * @return
+	 */
 	public String getContent(String content)
 	{
 		return prop.getProperty(content);
 	}
 	
+	/**
+	 * This method get the language from web browser through request.
+	 * @param request
+	 * @return
+	 */
 	public static String getLanguageRequest(HttpServletRequest request)
 	{
 		String language = "en";

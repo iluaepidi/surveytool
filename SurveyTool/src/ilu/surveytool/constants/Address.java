@@ -1,5 +1,14 @@
 package ilu.surveytool.constants;
 
+/**
+ * 
+ * @author JAgutierrez
+ *
+ *	This class contains the constants about the Servlet and JSPs location, 
+ *	and keys to JSP properties file. This properties file contain the location of the 
+ *	JSP with the body of the pages. 
+ */
+
 public class Address {
 	
 	//BodypPagesNames

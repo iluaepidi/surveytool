@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.userpanel.data.Option;
-import ilu.surveytool.userpanel.handler.OptionHandler;
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.handler.OptionHandler;
 
 @Path("/QCService")
 public class QuestionCreatorService {
