@@ -7,7 +7,7 @@
 												<%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 												<%
 												Language lang = new Language(getServletContext().getRealPath("/")); 
-												lang.loadLanguage("en");
+												lang.loadLanguage(Language.getLanguageRequest(request));
 
 												Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 												List<Resource> resources = question.getResources();

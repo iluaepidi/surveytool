@@ -9,7 +9,7 @@
 							  					
 					  					<%					  					
 					  					Language lang = new Language(getServletContext().getRealPath("/")); 
-					  					lang.loadLanguage("en");
+					  					lang.loadLanguage(Language.getLanguageRequest(request));
 					  					
 					  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 					  					String action = (String) request.getAttribute(Attribute.s_ACTION);

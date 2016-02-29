@@ -2,7 +2,7 @@
 <%@page import="java.util.Properties"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 				<div class="container-fluid">
 		  			<div class="footer-links">

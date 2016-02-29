@@ -63,9 +63,9 @@ $(function() {
 			surveyid: $('#surveyid').val(),
 			pageid: $('#pageid1').val()
 		}, function(responseText) {
-			//$('#' + addMenuFrameCad + currentNode).after(responseText);
-			//currentAddNode.after(responseText);
-			currentAddNode.before(responseText);
+			var index = responseText.indexOf("<html");
+			if(index >= 0) {window.location.replace("http://localhost:8080/SurveyTool/SurveysServlet");}
+			else {currentAddNode.before(responseText);}
 		});
 		$('#qstatement').val("");
 		//$('#main-version').val("none");

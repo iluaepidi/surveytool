@@ -8,7 +8,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+lang.loadLanguage(Language.getLanguageRequest(request));
 %>    								
 						<div id="surveys-list">	    					
 							<h3><%= lang.getContent("survey_manager.surveys.title") %></h3>							

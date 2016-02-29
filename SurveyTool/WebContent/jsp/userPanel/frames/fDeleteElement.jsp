@@ -7,7 +7,7 @@
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
 				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
-				lang.loadLanguage("en");
+				lang.loadLanguage(Language.getLanguageRequest(request));
 				%>
 				<div class="modal fade remove-win" id="removeElement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog remove-win-dialog" role="document">

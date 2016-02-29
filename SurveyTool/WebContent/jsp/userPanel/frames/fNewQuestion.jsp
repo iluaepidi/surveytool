@@ -5,7 +5,7 @@
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+lang.loadLanguage(Language.getLanguageRequest(request));
 %>	
 				<!-- Modal -->
 				

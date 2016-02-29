@@ -12,7 +12,7 @@
 	Question question = poll.getQuestion();
 	
 	Language lang = new Language(getServletContext().getRealPath("/")); 
-	lang.loadLanguage("en");
+	lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 						
             <form action="PollProcessServlet" method="post" id="poll_form" class="">		

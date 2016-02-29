@@ -11,7 +11,7 @@
 							  					
 							  					<%
 							  					Language lang = new Language(getServletContext().getRealPath("/")); 
-							  					lang.loadLanguage("en");
+							  					lang.loadLanguage(Language.getLanguageRequest(request));
 							  					
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();

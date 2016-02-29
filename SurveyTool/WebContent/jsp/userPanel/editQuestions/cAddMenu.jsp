@@ -3,7 +3,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 										<div class="add-menu-frame" id="add-menu-frame">
 											<div class="col-sm-5 add-vacio"></div>

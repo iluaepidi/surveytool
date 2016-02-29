@@ -10,7 +10,7 @@
 				int pageId = (int) request.getAttribute(Attribute.s_PAGE_ID);
 				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
-				lang.loadLanguage("en");
+				lang.loadLanguage(Language.getLanguageRequest(request));
 				%>
 				
 				<div class="container-fluid">

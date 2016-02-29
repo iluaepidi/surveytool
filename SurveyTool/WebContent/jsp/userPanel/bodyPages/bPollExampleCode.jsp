@@ -5,7 +5,7 @@
 				String pollUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/poll?pid=" + pid;
 				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
-				lang.loadLanguage("en");
+				lang.loadLanguage(Language.getLanguageRequest(request));
 				%>		
 				
 				<div class="container-fluid">

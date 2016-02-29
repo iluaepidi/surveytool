@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -58,11 +59,8 @@ public class pollcode extends HttpServlet {
 		}
 		else
 		{
-			userSessionInfo = new LoginResponse();
-			userSessionInfo.setErrorMsg("Session is expired or not exist.");
-			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
-			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
+			SessionHandler sessionHandler = new SessionHandler();
+			sessionHandler.sessionClosed(request, properties);
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);

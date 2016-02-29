@@ -2,7 +2,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 
 	  			<!-- Modal -->

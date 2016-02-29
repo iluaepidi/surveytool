@@ -15,6 +15,9 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveytool.accesscontrol.SessionHandler;
+import ilu.surveytool.commoncode.CommonCode;
+import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -122,6 +125,13 @@ public class CreatePollServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else
+		{
+			SessionHandler sessionHandler = new SessionHandler();
+			sessionHandler.sessionClosed(request, properties);
+			
+			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		}
 		
 	}

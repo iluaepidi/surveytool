@@ -5,6 +5,7 @@ public class Attribute {
 	public final static String s_ACTION = "action";
 	public final static String s_BODY_PAGE = "bodyPage";
 	public final static String s_CREDENTIALS = "credentials";
+	public final static String s_CURRENT_LANGUAGE = "currentLanguage";
 	public final static String s_LOGIN_RESPONSE = "loginResponse";
 	public final static String s_POLLS = "polls";
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
