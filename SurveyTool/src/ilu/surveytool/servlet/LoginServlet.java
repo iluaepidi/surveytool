@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.accesscontrol.Login;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Parameter;
@@ -20,6 +19,7 @@ import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.userpanel.accesscontrol.Login;
 
 /**
  * Servlet implementation class LoginServlet

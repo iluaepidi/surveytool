@@ -1,4 +1,4 @@
-package ilu.surveytool.accesscontrol;
+package ilu.surveytool.sessioncontrol;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ilu.surveymanager.handler.QuestionHandler;
 import ilu.surveymanager.handler.SurveysHandler;
-import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -24,6 +23,7 @@ import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.sessioncontrol.SessionHandler;
 
 /**
  * Servlet implementation class CreateQuestionServlet

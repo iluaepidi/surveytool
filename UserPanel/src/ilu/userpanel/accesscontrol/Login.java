@@ -1,4 +1,4 @@
-package ilu.surveytool.accesscontrol;
+package ilu.userpanel.accesscontrol;
 
 import ilu.surveytool.databasemanager.LoginDB;
 import ilu.surveytool.databasemanager.DataObject.Credentials;

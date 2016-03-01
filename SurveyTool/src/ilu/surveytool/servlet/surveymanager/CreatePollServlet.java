@@ -16,7 +16,6 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveymanager.handler.PollHandler;
-import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -29,6 +28,7 @@ import ilu.surveytool.databasemanager.DataObject.Poll;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.sessioncontrol.SessionHandler;
 
 /**
  * Servlet implementation class CreatePollServlet

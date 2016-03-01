@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import ilu.surveymanager.handler.ResourceHandler;
-import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -29,6 +28,7 @@ import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Resource;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.sessioncontrol.SessionHandler;
 
 /**
  * Servlet implementation class ImportFileServlet

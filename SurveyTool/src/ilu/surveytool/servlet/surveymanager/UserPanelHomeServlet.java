@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import ilu.surveymanager.handler.PollHandler;
 import ilu.surveymanager.handler.SurveysHandler;
-import ilu.surveytool.accesscontrol.SessionHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.sessioncontrol.SessionHandler;
 
 /**
  * Servlet implementation class UserPanelHomeServlet
