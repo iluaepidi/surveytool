@@ -1,8 +1,8 @@
 package ilu.surveyengine.handler;
 
-import java.util.List;
+//import java.util.List;
 
-import ilu.surveyengine.emailSender.EmailsToSend;
+//import ilu.surveyengine.emailSender.EmailsToSend;
 import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PollDB;

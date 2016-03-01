@@ -2,7 +2,7 @@ package ilu.surveyengine.handler;
 
 import java.util.List;
 
-import ilu.surveyengine.emailSender.EmailsToSend;
+//import ilu.surveyengine.emailSender.EmailsToSend;
 import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.Response;

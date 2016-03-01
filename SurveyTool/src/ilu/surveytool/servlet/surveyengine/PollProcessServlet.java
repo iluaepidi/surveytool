@@ -12,13 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ilu.surveyengine.handler.PollProcessHandler;
-import ilu.surveyengine.handler.SurveyProcessHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Response;
-import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
 
 /**
