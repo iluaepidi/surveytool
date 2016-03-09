@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Poll;
+import ilu.surveytool.databasemanager.DataObject.PollResultResume;
 import ilu.surveytool.databasemanager.DataObject.PollTableInfo;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Survey;
@@ -85,6 +86,41 @@ public class PollDB {
 		}
 		
 		return response;
+	}
+
+	public PollTableInfo getPollsTableInfoById(int pollId, String language)
+	{
+		PollTableInfo poll = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLL_TABLE_INFO_BY_ID);	
+	   		pstm.setInt(1, pollId);
+	   		pstm.setString(2, language);
+	   		pstm.setString(3, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			poll = new PollTableInfo();
+	   			poll.setPollId(rs.getInt(DBFieldNames.s_POLL_ID));
+	   			poll.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
+	   			poll.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
+	   			poll.setPublicUrl(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return poll;
 	}
 
 	public Poll getPollByPublicId(String publicId, String lang)
@@ -215,7 +251,40 @@ public class PollDB {
 		
 		return contentId;
 	}
-	
+
+	public List<PollResultResume> getPollResponsesResume(int pollId, String language)
+	{
+		List<PollResultResume> response = new ArrayList<PollResultResume>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLL_RESPONSES_RESUME);	
+	   		pstm.setInt(1, pollId);
+	   		pstm.setString(2, language);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			PollResultResume result = new PollResultResume(rs.getInt(DBFieldNames.s_OPTIONID), 
+	   					rs.getString(DBFieldNames.s_CONTENT_TEXT), 
+	   					rs.getInt(DBFieldNames.s_RESPONSES_NUMBER));
+	   			
+	   			response.add(result);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
 	public boolean existPublicId(String publicId)
 	{
 		boolean result = false;

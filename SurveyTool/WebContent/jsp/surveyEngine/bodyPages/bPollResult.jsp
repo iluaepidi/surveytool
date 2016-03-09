@@ -1,3 +1,5 @@
+<%@page import="ilu.surveytool.databasemanager.DataObject.PollResultResume"%>
+<%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
@@ -8,6 +10,10 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%
 	Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
+	List<PollResultResume> results = (List<PollResultResume>) request.getAttribute(Attribute.s_RESPONSES_INFO);
+	String[] colors = {"cian", "yellow", "red", "gray", "brown", "green", "blue", "purple", "black"};
+	String[] grafColors = {"#576C99", "#FFB506", "#F7464A", "#c5c5c5", "#B28B6E", "#ADC6A6", "#57A4DA", "#E3DBEC", "#151C25"};
+	String[] highlight = {"#4A5C82", "#D99A05", "#D23C3F", "#A7A7A7", "#97765E", "#93A88D", "#4A8BB9", "#C1BAC9", "#12181F"};
 	//Question question = poll.getQuestion();
 %>
 			<div class="content-poll">
@@ -26,15 +32,24 @@
 		  			
 			  		<div class="legendPoll">
 			  			<ul>
+			  			<%
+			  			int index = 0;
+			  			for(PollResultResume result : results)
+			  			{
+			  			%>
 			  				<li>
-			  					<i class="fa fa-square cian"></i> Jaws 39 %
+			  					<i class="fa fa-square <%= colors[index] %>"></i> <%= result.getValue() + " " + result.getPercentage() + " %" %>
 			  				</li>
-			  				<li>
+			  			<%
+			  				index++;
+			  			}
+			  			%>
+			  				<!--  <li>
 			  					<i class="fa fa-square red" ></i> NVDA 30 %
 			  				</li>
 			  				<li>
 			  					<i class="fa fa-square gray"></i> Orca 21 %
-			  				</li>
+			  				</li>-->
 			  			</ul>
 			  		</div>
 		  		
@@ -70,27 +85,23 @@
 		  	</div>
 	  		
 	  		<script>
-
+	  		<%
+			index = 0;
+			String graf = "";
+			for(PollResultResume result : results)
+			{
+				graf += "{value: " + results.get(index).getPercentage() + ", " +
+						"color: \"" + grafColors[index] + "\", " +
+						"highlight: \"" +highlight[index] + "\", " +
+						"label: \"" + results.get(index).getValue() + "\"}";
+				if(index < results.size() - 1)graf += ",";
+				
+				index++;
+			}
+			
+			%>
 				var pieData = [
-						{
-							value: 30,
-							color:"#F7464A",
-							highlight: "#FF5A5E",
-							label: "NVDA"
-						},
-						{
-							value: 21,
-							color:"#c5c5c5",
-							highlight: "#c6c6c6",
-							label: "Orca"
-						},
-						{
-							value: 39,
-							color: "#46BFBD",
-							highlight: "#5AD3D1",
-							label: "Jaws"
-						}
-		
+					     <%= graf %>   	
 					];
 		
 					window.onload = function(){

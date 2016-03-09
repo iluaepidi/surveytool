@@ -51,13 +51,14 @@ $(function() {
 		$('#panel-section1 .panel-heading h3 #survey-section-title').focus();
 	});
 	
-	$('#panel-body').on("click", "#add-menu-frame a", function(e){
+	$('#panel-body').on("click", "#add-menu-frame div button", function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "add-menu-frame";
+		var root = $(this).closest('div[id=add-menu-frame]')
 		//$('#add-menu-frame .add-menu').css("display", "inherit");
-		$(this).parent().children(".add-menu").css("display", "inherit");
-		$(this).parent().find('#btn-question').focus();
+		root.find(".add-menu").css("display", "inherit");
+		root.find('#btn-question').focus();
 	});
 	
 	/*$('#add-menu-frame a').click(function(e){
@@ -175,6 +176,13 @@ $(function() {
 	
 	$('#btnCreateNewPoll').click(function(){
 		var pollOptions = [];
+		var existPolls = 'false';
+		if($('#poll-table').length)
+		{
+			existPolls = 'true';
+			console.log("Exist polls: " + existPolls);
+		}
+		
 		$('li[id=option-item]').each(function (i, elem)
 		{
 			var option = {};
@@ -192,10 +200,21 @@ $(function() {
   			ackText: $('#ackText').val(),
   			callText: $('#pollCallText').val(),
   			linkLabel: $('#pollLinkLabel').val(),
-  			linkUrl: $('#pollLinkUrl').val()
+  			linkUrl: $('#pollLinkUrl').val(),
+  			existPolls: existPolls
   		}, function(res) {
+  			console.log('create poll response: ' + res);
   			$('#newPollForm')[0].reset();
   			$("#newPollModal").modal("hide");
+  			if(existPolls === 'false')
+  			{
+  				$('#no-polls-msg').after(res);
+  				$('#no-polls-msg').remove();
+  			}
+  			else
+  			{
+  				$('#poll-table').find('tbody').append(res);
+  			}
   		});
 	});
 	

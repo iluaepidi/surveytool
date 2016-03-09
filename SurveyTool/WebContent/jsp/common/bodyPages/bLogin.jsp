@@ -30,13 +30,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							<div class="form-group">
 		  								<label class="control-label" for="username"> <%= lang.getContent("home.login.label.username") %></label>
 			  							<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
-			  							<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
+			  							<span  id='username-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
 			  							<span id='username-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.username") %></span>
 			  						</div>
 			  						<div class="form-group">
 			  							<label class="control-label" for="password"> <%= lang.getContent("home.login.label.password") %></label>
 			  							<input type="password" id="password" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>			  							
-			  							<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
+			  							<span id='password-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
 			  							<span id='password-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.password") %></span>
 		  							</div>	
 		  							<div class="right">

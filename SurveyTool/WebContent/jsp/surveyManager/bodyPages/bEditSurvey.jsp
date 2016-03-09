@@ -25,17 +25,23 @@
 	  				<div class="content-box-tabs edit-content">
 	  					<div class="browser-left">Hello</div>	  						  		
 	  					<div class="edit-content-center">
-	  						<div class="survey-language" id="survey-language">
-	  							<form class="" id="survey-language-form">
-	  								<label for="main-version" class="" ><i class="fa fa-language fa-2x"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
-									<select class="form-control-small" id="survey-language-version">
-										<option value="en" selected><%= lang.getContent("language.en") %> <%= lang.getContent("language.default") %></option>
-									    <!-- <option value="es">Spanish</option>
-									    <option value="fr">French</option>
-									    <option value="el">Greek</option> -->
-									</select>
-	  							</form>
-	  						</div>
+	  						<div class="edit-survey-head">
+		  						<div class="survey-preview">
+		  							<button class="btn btn-primary" onclick="window.open('http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>','_blank')"><%= lang.getContent("button.survey_preview") %></button>
+		  						</div>
+		  							
+		  						<div class="survey-language" id="survey-language">
+		  							<form class="" id="survey-language-form">
+		  								<label for="survey-language-version" class="" ><i class="fa fa-language fa-2x"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
+										<select class="form-control-small" id="survey-language-version">
+											<option value="en" selected><%= lang.getContent("language.en") %> <%= lang.getContent("language.default") %></option>
+										    <!-- <option value="es">Spanish</option>
+										    <option value="fr">French</option>
+										    <option value="el">Greek</option> -->
+										</select>
+		  							</form>
+		  						</div>
+		  					</div>
 	  						
 		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">
@@ -45,7 +51,7 @@
 		  						<input type="text" class="survey-info-title" id="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>" value="<%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" />
 		  						
 		  						<div class="survey-info-project">
-									<label for="surveyTitle" class="col-sm-4 control-label"> <%= lang.getContent("survey.edit.info.label.project") %> </label>
+									<label for="surveyProject" class="col-sm-4 control-label"> <%= lang.getContent("survey.edit.info.label.project") %> </label>
 							   		<div class="col-sm-8">
 							   			<input type="text" class="form-control" id="surveyProject" name="project" value="<%= survey.getProject() %>" />
 							   		</div>
@@ -58,14 +64,14 @@
 							   		</div>
 								</div>
 								
-								<div class="survey-info-url">
+								<!-- <div class="survey-info-url">
 									<label for="clipboard-text" class="col-sm-3 control-label left"><%= lang.getContent("survey.edit.info.label.url") %></label>
 							   		<div class="col-sm-8">
 							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>" disabled />
 							     			
 							   		</div>
 							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x"></i></button>
-								</div>
+								</div> -->
 		  					</div>	
 		  					
 		  					<div class="survey-sections" id="survey-sections">

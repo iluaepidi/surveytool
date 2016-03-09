@@ -69,7 +69,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					  							</li>
 					  						
 					  							<li class="center" id="li-add-option-poll">
-					  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_option") %></span></button>
+					  								<button class="btn btn-primary btn-sm active" id="btn-add-option-poll" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_option") %></span></button>
 					  							</li>
 					  						</ul>								     		
 								     	</fieldset>

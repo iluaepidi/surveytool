@@ -25,6 +25,7 @@ import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Poll;
+import ilu.surveytool.databasemanager.DataObject.PollTableInfo;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.properties.SurveyToolProperties;
@@ -117,9 +118,26 @@ public class CreatePollServlet extends HttpServlet {
 				poll.setQuestion(question);
 				
 				PollHandler pollHandler = new PollHandler();
-				pollHandler.createPoll(poll);
+				int pollId = pollHandler.createPoll(poll);
+				PollTableInfo pollTableInfo = pollHandler.getPollsTableInfoById(pollId, language);
 				
-				System.out.println("options: " + poll.toString());
+				request.setAttribute(Attribute.s_POLL_INFO, pollTableInfo);
+				
+				boolean existPolls = Boolean.parseBoolean(request.getParameter(Parameter.s_EXIST_POLLS));
+
+				System.out.println("exist polls: " + existPolls);
+				
+				if(existPolls)
+				{
+					CommonCode.redirect(request, response, Address.s_POLL_ROW);
+				}
+				else
+				{
+					List<PollTableInfo> pollsTableInfo = new ArrayList<PollTableInfo>();
+					pollsTableInfo.add(pollTableInfo);
+					request.setAttribute(Attribute.s_POLLS, pollsTableInfo);
+					CommonCode.redirect(request, response, Address.s_POLLS_TABLE_LIST);
+				}
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

@@ -26,6 +26,7 @@ public class Attribute {
 	public final static String s_POLL_INFO = "pollInfo";
 	public final static String s_TEMPLATE_FILE = "templateFile";
 	public final static String s_QUESTION = "question";
+	public final static String s_RESPONSES_INFO = "responsesInfo";
 	public final static String s_RESOURCE = "resource";
 
 }

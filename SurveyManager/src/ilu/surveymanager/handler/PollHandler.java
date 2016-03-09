@@ -11,6 +11,7 @@ import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Poll;
+import ilu.surveytool.databasemanager.DataObject.PollResultResume;
 import ilu.surveytool.databasemanager.DataObject.PollTableInfo;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Survey;
@@ -80,5 +81,16 @@ public class PollHandler {
 		
 		return response;
 	}
-
+	
+	public PollTableInfo getPollsTableInfoById(int pollId, String language)
+	{
+		PollTableInfo response = null;
+		
+		PollDB pollDB = new PollDB();
+		response = pollDB.getPollsTableInfoById(pollId, language);
+		
+		return response;
+	}
+	
+	
 }

@@ -12,21 +12,13 @@ Language lang = new Language(getServletContext().getRealPath("/"));
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>
     								
-						<div class="hidden" id="polls-list">	  					
-							<h3><%= lang.getContent("survey_manager.polls.title") %></h3>							
-							<%= lang.getContent("survey_manager.polls.description") %>
-		  					<div class="user-panel-surveys">
-		  						<div class="surveys-create-button">
-		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal"><%= lang.getContent("button.create_new") %></button>
-		  						</div>
+						
 			  					<%
-			  					String host = request.getServerName();
-			  					int port = request.getServerPort();
 			  					List<PollTableInfo> polls = (List<PollTableInfo>) request.getAttribute(Attribute.s_POLLS);
 			  					if(polls != null && !polls.isEmpty())
 			  					{
 			  					%>
-			  					<div class="surveys-table">
+			  					<div class="surveys-table" id="poll-table">
 			  						<table class="table table-bordered" sumary="List of surveys where ...">
 			  							<caption><%= lang.getContent("survey_manager.polls.table.caption") %></caption>
 										<tr class="info">
@@ -39,37 +31,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(PollTableInfo poll : polls)
 										{
-											String deadLine = "";
-											if(poll.getDeadLineDate() != null) 
-											{
-												deadLine = poll.getDeadLineDate().toString();
-											}
-											else
-											{
-												deadLine =  lang.getContent("survey_manager.table.content.none");
-											}
+											request.setAttribute(Attribute.s_POLL_INFO, poll);
 										%>
-										<tr>
-											<td class="center"><%= deadLine %></td>
-											<td><a href="#"><%= poll.getTitle() %></a></td>
-											<td class="center">
-												<a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>">http://<%= host %>:<%= port %>/SurveyTool/poll?pid=<%= poll.getPublicUrl() %></a>
-											</td>
-											<td>
-												<ul class="row">
-													<!-- <li class="col-sm-3 center"><a href="#" title="clone survey"><i class="fa fa-clone fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="settings"><i class="fa fa-cogs fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="download"><i class="fa fa-download fa-2x"></i></a></li>
-								  					<li class="col-sm-3 center"><a href="#" title="pause survey"><i class="fa fa-pause-circle-o fa-2x"></i></a></li> -->
-								  					<li class="col-sm-3 center"><i class="fa fa-clone fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><i class="fa fa-bar-chart fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><i class="fa fa-cogs fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><i class="fa fa-download fa-2x"></i></li>
-								  					<li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x"></i></li>
-												</ul>
-											</td>
-										</tr>
+										
+										<jsp:include page="cPollRow.jsp" />
+										
 										<%
 										}
 										%>
@@ -109,14 +75,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  					{
 			  					%>
 			  					
-			  					<div><p><%= lang.getContent("survey_manager.polls.msg.no_polls") %></p></div>
+			  					<div id="no-polls-msg"><p><%= lang.getContent("survey_manager.polls.msg.no_polls") %></p></div>
 			  					
 			  					<%
 			  					}
 			  					%>
-			  					  					
-			  				</div>
-			  			</div>
+			  				
 <%
 lang.close();
 %>

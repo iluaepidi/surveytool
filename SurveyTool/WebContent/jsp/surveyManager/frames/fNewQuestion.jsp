@@ -17,8 +17,8 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    			<h2 class="panel-title"><%= lang.getContent("question.new.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
-				    			<div class="survey-frame">
-				    				<h3>Select question type</h3>
+				    			<fieldset class="survey-frame">
+				    				<legend>Select question type</legend>
 									<ul class="row qtype-list">
 										<li class="col-sm-1 center btn-qtype">
 											<button class="btn-transparent" id="text"><i class="fa fa-align-center fa-2x btn btn-default"></i> <span class="qtype-icon-text">Text</span></button>
@@ -45,11 +45,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text">Code</span></a>
 										</div> -->
 									</ul>
-				    			</div>
+				    			</fieldset>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">
 				    				<h3><%= lang.getContent("question.new.basic_settings.title") %></h3>
 				    				<div class="close-frame">
-				    					<a class="btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("question.new.basic_settings.title") %>"><i class="fa fa-times-circle fa-2x"></i></a>
+				    					<button class="btn-transparent btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("question.new.basic_settings.title") %>"><i class="fa fa-times-circle fa-2x"></i></button>
 				    				</div>
 				    				<div class="row">
 				    					<form>

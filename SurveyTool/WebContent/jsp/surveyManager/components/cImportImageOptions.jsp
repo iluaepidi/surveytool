@@ -21,7 +21,7 @@
 					  					<input type="hidden" name="rid" id="rid" value="<%= resource.getResourceId() %>" />
 					  					
 								        <div class="form-group">
-								        	<label for="uploadedFile"><%= lang.getContent("file.import.label.img_selected") %></label>
+								        	<label><%= lang.getContent("file.import.label.img_selected") %></label>
 								            <div class="previewFileUpliaded" id="previewFileUploaded">
 								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>

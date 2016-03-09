@@ -25,6 +25,7 @@ public class Address {
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
 		public final static String s_JS_CHART_GRAPHICS = "chart";
+		public final static String s_JS_ZERO_CLIPBOARD = "zeroClipboard";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
@@ -38,8 +39,10 @@ public class Address {
 		public final static String s_MASTER_PAGE = "master.jsp";
 		public final static String s_MASTER_POLL = "masterPoll.jsp";
 		public final static String s_EDIT_QUESTION_MASTER= "EditQuestionMaster.jsp";
-		public final static String s_MULTIMEDIA_ITEM= "jsp/userPanel/components/cMultimediaItem.jsp";
-		public final static String s_IMPORT_IMAGE_OPTION= "jsp/userPanel/components/cImportImageOptions.jsp";
+		public final static String s_MULTIMEDIA_ITEM= "jsp/surveyManager/components/cMultimediaItem.jsp";
+		public final static String s_IMPORT_IMAGE_OPTION= "jsp/surveyManager/components/cImportImageOptions.jsp";
+		public final static String s_POLL_ROW= "jsp/surveyManager/components/cPollRow.jsp";
+		public final static String s_POLLS_TABLE_LIST= "jsp/surveyManager/components/cPollsTableList.jsp";
 		
 	//Folder paths
 		public final static String s_FOLDER_RESOURCES= "resources/";

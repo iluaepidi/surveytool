@@ -16,6 +16,7 @@ import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.DataObject.PollResultResume;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.properties.SurveyToolProperties;
 
@@ -72,7 +73,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		PollProcessHandler ppHandler = new PollProcessHandler();
 		int anonymousUserId = ppHandler.storePollResponse(pollRes);
-
+		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		List<String> jsFiles = new ArrayList<>();
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_CHART_GRAPHICS));
@@ -81,6 +82,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		request.setAttribute(Attribute.s_POLL_TITLE, ppHandler.getPollTitle(pollId, language));
 		
 		request.setAttribute(Attribute.s_POLL_INFO, ppHandler.getPollDetail(pollId, language));
+		
+		request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollResultsResume(pollId, language));
 		
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_RESULT));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");

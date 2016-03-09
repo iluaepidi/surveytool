@@ -79,7 +79,8 @@ public class ImportFileServlet extends HttpServlet {
 				    Part filePart;
 					filePart = request.getPart("uploadedFile");
 					String fileName = filePart.getSubmittedFileName();
-	
+					fileName = this._checkFilename(fileName);	
+					
 				    fileName = this._importFile(filePart, fileName, rootPath, 0);
 	
 					Resource resource = new Resource();
@@ -166,6 +167,18 @@ public class ImportFileServlet extends HttpServlet {
 			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
 		}
 		return fileNameFinal;
+	}
+	
+	private String _checkFilename(String fname)
+	{
+		String response = fname;
+		
+		if(fname.contains(":\\"))
+		{
+			Path path = Paths.get(fname);
+			response = path.getFileName().toString();
+		}
+		return response;
 	}
 
 }

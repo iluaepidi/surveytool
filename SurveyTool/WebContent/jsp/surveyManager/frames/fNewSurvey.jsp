@@ -37,7 +37,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<div class="row">
 											<div class="col-sm-9 margin-bottom-10">
 												<label for="surveyDescription" class="control-label left"><%= lang.getContent("survey.new.label.short_description") %></label>
-										   		<textarea class="form-control" id="surveyDescription" name="description" rows="2" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
+										   		<textarea class="form-control" id="surveyDescription" name="description" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 											</div>
 											<div class="col-sm-3 center">
 												<input type="submit" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />

@@ -14,7 +14,7 @@ $(function() {
 	var host = "http://" + window.location.host;
 	console.log("host: " + host);
 	
-	var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
+	/*var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
 	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
 	    debug: false
 	} );
@@ -27,7 +27,7 @@ $(function() {
 	        clientTarget.setText( args.text );
 	        $('#target-to-copy-text').fadeIn();
 	    });
-	});
+	});*/
 
 	$('body_').click(function() {
 				
@@ -77,6 +77,7 @@ $(function() {
 	
 	$('#panel-body').on("click", '#btn-question', function(){
 		currentAddNode = $(this).parent().parent().parent();
+		$("#newQuestionModal").modal("show");
 	});
 	
 	$('#panel-body').on("keyup", "#option-list #option-item input", function(e){
@@ -273,12 +274,12 @@ $(function() {
 				   if(service == "ResourceService")
 				   {
 					   $('li[rid=' + elementId + ']').remove();
-					   var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
+					  /* var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
 					   console.log("Items: " + numItems);
 					   if(numItems == 0)
 					   {
 						   $('#multimediaFrame').addClass('hidden');
-					   }
+					   }*/
 				   }
 				   else if(service == "QuestionService")
 				   {

@@ -7,6 +7,7 @@ public class DBFieldNames {
 		public final static String s_GENERICO_ALL_USERS = "allUsers";
 		public final static String s_GENERICO_USERS_FINISHED = "usersFinished";
 		public final static String s_CREATION_DATE = "creationDate";
+		public final static String s_RESPONSES_NUMBER = "numResp";
 		
 	//category
 		public final static String s_CATEGORY_NAME = "categoryName";

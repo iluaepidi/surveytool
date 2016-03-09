@@ -47,6 +47,12 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_POLL_TABLE_INFO_BY_ID = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
+				+ "FROM surveytool.poll p "
+				+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
+				+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+				+ "WHERE p.idPoll = ? and l.isoName = ? and ct.name = ? ";
 		public final static String s_SELECT_POLL_BY_PUBLIC_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
 				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
 				+ "where publicId = ?";
@@ -55,6 +61,17 @@ public class DBSQLQueries {
 				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
 				+ "where p.idPoll = ?";
 		
+		//poll response
+		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text,  (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
+				+ "FROM surveytool.questionbypoll qbp "
+				+ "inner join surveytool.optionsgroup og on qbp.idQuestion = og.idQuestion "
+				+ "inner join surveytool.optionsbygroup obg on og.idOptionsGroup = obg.idOptionsGroup "
+				+ "inner join surveytool.`option` o on obg.idOption = o.idOption "
+				+ "inner join surveytool.content c on o.idContent = c.idContent "
+				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "where qbp.idPoll = ? and l.isoName = ? and ct.name = 'title' "
+				+ "order by numResp desc";
 		
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";

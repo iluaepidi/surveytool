@@ -38,6 +38,8 @@ function showFieldError(element)
 	element.closest("div").addClass("has-error has-feedback");
 	element.attr('aria-describedby', errorId);
 	$('#' + errorId).removeClass('hidden');
+	$('#' + element.attr('id') + "-feedback").removeClass('hidden');
+	
 	error = true;
 }
 
@@ -47,4 +49,5 @@ function hideFieldError(element)
 	element.closest("div").removeClass("has-error has-feedback");
 	element.removeAttr('aria-describedby');
 	$('#' + errorId).addClass('hidden');
+	$('#' + element.attr('id') + "-feedback").addClass('hidden');
 }

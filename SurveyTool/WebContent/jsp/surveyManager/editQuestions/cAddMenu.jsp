@@ -6,12 +6,13 @@ Language lang = new Language(getServletContext().getRealPath("/"));
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 										<div class="add-menu-frame" id="add-menu-frame">
-											<div class="col-sm-5 add-vacio"></div>
-				  							<a class="btn-add col-sm-2" href="#btn-question" aria-label="<%= lang.getContent("button.aria_label.add_content") %>"><i class="fa fa-plus-circle fa-2x"></i></a>
-				  							<div class="col-sm-5 add-menu">
-				  								<div class="col-sm-1">...</div>
-				  								<div class="btn-group col-sm-11" role="group" aria-label="...">
-													<button type="button" class="btn btn-add-menu" id="btn-question" data-toggle="modal" data-target="#newQuestionModal"><%= lang.getContent("button.add_content.question") %></button>
+				  							<div class="btn-add-element">
+				  								<button class="btn-transparent btn-add" aria-label="<%= lang.getContent("button.aria_label.add_content") %>"><i class="fa fa-plus-circle fa-2x"></i></button>
+				  							</div>
+				  							<div class="add-menu">
+				  								<div class="add-menu-points">...</div>
+				  								<div class="btn-group" role="group" aria-label="...">
+													<button type="button" class="btn btn-add-menu" id="btn-question" active="false" data-toggle="modal" data-target="#newQuestionModal"><%= lang.getContent("button.add_content.question") %></button>
 													<button type="button" class="btn btn-add-menu" id="btn-body-content" disabled="disabled"><%= lang.getContent("button.add_content.body") %></button>
 												  	<button type="button" class="btn btn-add-menu" id="btn-page-break" disabled="disabled"><%= lang.getContent("button.add_content.page_break") %></button>
 												</div>

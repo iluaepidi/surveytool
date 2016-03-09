@@ -744,7 +744,7 @@ CREATE TABLE `questiontype` (
 
 LOCK TABLES `questiontype` WRITE;
 /*!40000 ALTER TABLE `questiontype` DISABLE KEYS */;
-INSERT INTO `questiontype` VALUES (1,'text',NULL,'jsp/userPanel/editQuestions/eQuestionText.jsp','jsp/surveyPanel/questions/fQuestionText.jsp',NULL,NULL),(2,'scale',NULL,'jsp/userPanel/editQuestions/eQuestionScale.jsp','jsp/surveyPanel/questions/fQuestionScale.jsp',NULL,NULL),(3,'simple',NULL,'jsp/userPanel/editQuestions/eQuestionSimple.jsp','jsp/surveyPanel/questions/fQuestionSimple.jsp',NULL,NULL);
+INSERT INTO `questiontype` VALUES (1,'text',NULL,'jsp/surveyManager/editQuestions/eQuestionText.jsp','jsp/surveyEngine/questions/fQuestionText.jsp',NULL,NULL),(2,'scale',NULL,'jsp/surveyManager/editQuestions/eQuestionScale.jsp','jsp/surveyEngine/questions/fQuestionScale.jsp',NULL,NULL),(3,'simple',NULL,'jsp/surveyManager/editQuestions/eQuestionSimple.jsp','jsp/surveyEngine/questions/fQuestionSimple.jsp',NULL,NULL);
 /*!40000 ALTER TABLE `questiontype` ENABLE KEYS */;
 UNLOCK TABLES;
 
