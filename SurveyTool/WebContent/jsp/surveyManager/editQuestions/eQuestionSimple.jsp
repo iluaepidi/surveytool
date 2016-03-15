@@ -11,7 +11,7 @@
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								%>
-										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
+										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
 											<jsp:include page="eqComponents/eqHead.jsp" />
 											
@@ -25,8 +25,8 @@
 							  						<h4>Options</h4>
 							  						<div class="row">
 							  							<div class="col-md-4">
-								  							<label for="type-question">Type</label>
-								  							<select class="form-control" id="type-question">
+								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
+								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<!-- <option value="tx">Text</option>
 															  	<option value="ls">Likert scale</option> -->
 															    <option value="sim" selected>Simple</option>
@@ -38,14 +38,14 @@
 															 <legend>Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
 															 <ul>
 															 	<li class="radio">
-																  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-																  <label for="optionsRadios1" id="optionRadioLabel1">
+																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-1" value="option1" checked>
+																  <label for="example-<%= question.getIndex() %>-1" id="optionRadioLabel1">
 																    Option 1
 																  </label>
 																</li>
 																<li class="radio">
-																  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-																  <label for="optionsRadios2" id="optionRadioLabel2">
+																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-2" value="option2">
+																  <label for="example-<%= question.getIndex() %>-2" id="optionRadioLabel2">
 																    Option 2
 																  </label>
 																</li>
@@ -72,6 +72,6 @@
 							  					</div> -->
 							  							  					
 											</div>																							
-										</div>
+										</li>
 										
 										

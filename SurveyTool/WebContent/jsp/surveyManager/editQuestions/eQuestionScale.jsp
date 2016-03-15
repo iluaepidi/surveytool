@@ -9,7 +9,7 @@
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								%>
-										<div class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>">
+										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
 											<jsp:include page="eqComponents/eqHead.jsp" />
 											
@@ -23,8 +23,8 @@
 							  						<h4>Options</h4>
 							  						<div class="row">
 							  							<div class="col-md-4">
-								  							<label for="type-question">Type</label>
-								  							<select class="form-control" id="type-question">
+								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
+								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<!-- <option value="tx" >Text</option> -->
 															  	<option value="ls" selected>Likert scale</option>
 															    <!-- <option value="sim">Simple</option>
@@ -37,32 +37,32 @@
 															 <div class="likert-options">
 															 	<div class="likert-options-frame">
 															 		<div>
-															 			<label for="likert1">1</label>
-															 			<input type="radio" name="likert" id="likert1"/>
+															 			<label for="example-<%= question.getIndex() %>-1">1</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-1"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert2">2</label>
-															 			<input type="radio" name="likert" id="likert2"/>
+															 			<label for="example-<%= question.getIndex() %>-2">2</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-2"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert3">3</label>
-															 			<input type="radio" name="likert" id="likert3"/>
+															 			<label for="example-<%= question.getIndex() %>-3">3</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-3"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert4">4</label>
-															 			<input type="radio" name="likert" id="likert4"/>
+															 			<label for="example-<%= question.getIndex() %>-4">4</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-4"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert5">5</label>
-															 			<input type="radio" name="likert" id="likert5"/>
+															 			<label for="example-<%= question.getIndex() %>-5">5</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-5"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert6">6</label>
-															 			<input type="radio" name="likert" id="likert6"/>
+															 			<label for="example-<%= question.getIndex() %>-6">6</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-6"/>
 															 		</div>
 															 		<div>
-															 			<label for="likert7">7</label>
-															 			<input type="radio" name="likert" id="likert7"/>
+															 			<label for="example-<%= question.getIndex() %>-7">7</label>
+															 			<input type="radio" name="likert" id="example-<%= question.getIndex() %>-7"/>
 															 		</div>
 															 	</div>
 															 </div>	
@@ -119,4 +119,4 @@
 							  					</div> -->
 							  							  					
 											</div>																							
-										</div>
+										</li>

@@ -47,11 +47,11 @@ $(function() {
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "panel-section1";
-		$('#panel-section1 .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-selected center");
+		$('#panel-section1 .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-selected");
 		$('#panel-section1 .panel-heading h3 #survey-section-title').focus();
 	});
 	
-	$('#panel-body').on("click", "#add-menu-frame div button", function(e){
+	$('#page').on("click", "#add-menu-frame div button", function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "add-menu-frame";
@@ -78,18 +78,18 @@ $(function() {
 		var cl = $('#panel-section1 div div #display-section-panel i').prop("class");
 		if (cl == "fa fa-caret-down fa-2x")
 		{
-			$('#panel-section1 .panel-body').css("display", "none");
+			$('#panel-section1 .page-items').css("display", "none");
 			$('#panel-section1 div div #display-section-panel i').prop("class", "fa fa-caret-right fa-2x");
 		}
 		else if(cl == "fa fa-caret-right fa-2x")
 		{
-			$('#panel-section1 .panel-body').css("display", "inherit");
+			$('#panel-section1 .page-items').css("display", "inherit");
 			$('#panel-section1 div div #display-section-panel i').prop("class", "fa fa-caret-down fa-2x");
 		}
 	});
 	
 	//$('#panel-question1 .panel-heading h3 #survey-question-title').click(function(e){
-	$('#panel-body').on("click", "#survey-question-title", function(e){
+	$('#page-items').on("click", "#survey-question-title", function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "panel-question1";
@@ -99,11 +99,29 @@ $(function() {
 		$(this).focus();
 	});
 	
-	//abrir cerrar question panel
-	$('#panel-body').on('click', '#display-question-panel', function(e){
+	//abrir cerrar section panel
+	$('#survey-sections').on('click', '#panel-heading-display', function(e){
 		e.stopPropagation();
 		bodyClick();
-		currentFrameActivate = "display-question-panel";
+		currentFrameActivate = "panel-heading-display";
+		var cl = $(this).children('i').prop("class");
+		if (cl == "fa fa-caret-down fa-2x")
+		{
+			$(this).closest('#panel-section1').children('#section-pages').css("display", "none");
+			$(this).children('i').prop("class", "fa fa-caret-right fa-2x");
+		}
+		else if(cl == "fa fa-caret-right fa-2x")
+		{
+			$(this).closest('#panel-section1').children('#section-pages').css("display", "inherit");
+			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
+		}
+	});
+	
+	//abrir cerrar question panel
+	$('#page-items').on('click', '#panel-heading-display', function(e){
+		e.stopPropagation();
+		bodyClick();
+		currentFrameActivate = "panel-heading-display";
 		var cl = $(this).children('i').prop("class");
 		if (cl == "fa fa-caret-down fa-2x")
 		{
@@ -269,7 +287,7 @@ function bodyClick()
 		}
 		else
 		{
-			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected center");
+			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected");
 			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-unselected");
 			$('#' + currentFrameActivate + ' .add-menu').css("display", "none");
 			//$('#' + currentFrameActivate + ' .btn-add').prop("class", "btn-add col-sm-12");

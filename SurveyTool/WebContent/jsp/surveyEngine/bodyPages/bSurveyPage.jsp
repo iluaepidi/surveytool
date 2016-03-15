@@ -1,4 +1,6 @@
 					
+<%@page import="ilu.surveytool.databasemanager.DataObject.Page"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Section"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="java.util.List"%>
@@ -27,15 +29,21 @@
 	  							<% 
 	  							String token = "/";
 	  							int index = 1;
-	  							for(Question question : survey.getQuestions())
+	  							for(Section section : survey.getSections())
 	  							{
-	  								request.setAttribute(Attribute.s_QUESTION, question);
+	  								for(Page pag : section.getPages())
+	  								{
+		  								for(Question question : pag.getQuestions())
+		  								{
+		  									request.setAttribute(Attribute.s_QUESTION, question);
 	  							%>	  							
 	  								<jsp:include page="<%= token + question.getFormPage() %>">
 	  									<jsp:param name="index" value="<%= index %>" />
 	  								</jsp:include>
 	  							<%
-	  								index++;
+	  										index++;
+		  								}
+	  								}
 	  							}
 	  							%>
 	  						</div>

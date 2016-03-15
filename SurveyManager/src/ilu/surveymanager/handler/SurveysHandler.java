@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -59,13 +61,18 @@ public class SurveysHandler {
 		return publicId;
 	}
 	
-	public int createFormaAndPage(int surveyId)
+	public int createFormaSectionAndPage(int surveyId)
 	{
 		int pageId = 0;
-		
+		ContentDB contentDB = new ContentDB();
+				
 		SurveyDB surveyDB = new SurveyDB();
+		SectionDB sectionDB = new SectionDB();
+		PageDB pageDB = new PageDB();
 		int formaId = surveyDB.insertForma(surveyId);
-		pageId = surveyDB.insertPage(formaId, 0);
+		int contentId = contentDB.insertContentIndex();
+		int sectionId = sectionDB.insertSection(formaId, 1, contentId);
+		pageId = pageDB.insertPage(sectionId, 1);
 		
 		return pageId;
 	}
@@ -74,8 +81,8 @@ public class SurveysHandler {
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		Survey survey = surveyDB.getQuestionnairesById(surveyId);
-		QuestionDB questionDB = new QuestionDB();
-		survey.setQuestions(questionDB.getQuestionsBySurveyId(surveyId, lang));
+		SectionDB sectionDB = new SectionDB();
+		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang));
 		return survey;
 	}
 	
@@ -89,8 +96,8 @@ public class SurveysHandler {
 	
 	public int getPageIdBySurveyId(int surveyId)
 	{
-		SurveyDB surveyDB = new SurveyDB();
-		return surveyDB.getPageId(surveyId);
+		PageDB pageDB = new PageDB();
+		return pageDB.getPageId(surveyId);
 	}
 
 	public List<SurveyTableInfo> getSurveysTableInfoByAuthor(int author, String language)

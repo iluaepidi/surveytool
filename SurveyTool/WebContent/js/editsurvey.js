@@ -64,8 +64,8 @@ $(function() {
 			pageid: $('#pageid1').val()
 		}, function(responseText) {
 			var index = responseText.indexOf("<html");
-			if(index >= 0) {window.location.replace("http://localhost:8080/SurveyTool/SurveysServlet");}
-			else {currentAddNode.before(responseText);}
+			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			else {currentAddNode.closest('li[id=page]').find('#page-items').append(responseText);}
 		});
 		$('#qstatement').val("");
 		//$('#main-version').val("none");
@@ -75,30 +75,30 @@ $(function() {
 		$('#frame-basic-Settings').css('display', 'none');
 	});
 	
-	$('#panel-body').on("click", '#btn-question', function(){
+	$('#page').on("click", '#btn-question', function(){
 		currentAddNode = $(this).parent().parent().parent();
 		$("#newQuestionModal").modal("show");
 	});
 	
-	$('#panel-body').on("keyup", "#option-list #option-item input", function(e){
+	$('#page-items').on("keyup", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		var index = $(this).attr('index');
-		$(this).closest('div[id=panel-question1]').find('label[id=optionRadioLabel' + index + ']').text($(this).val());
+		$(this).closest('li[id=panel-question1]').find('label[id=optionRadioLabel' + index + ']').text($(this).val());
 		//console.log("Option text field!!!! " + $(this).parent().parent().children("li").size());
 	});
 	
-	$('#panel-body').on("focusout", "#option-list #option-item input", function(e){
+	$('#page-items').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('div[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
 			req.oid = currentNode.attr('oid');
 			req.index = currentNode.attr('index');
-			req.qid = currentNode.closest('div[id=panel-question1]').attr('qid');
+			req.qid = currentNode.closest('li[id=panel-question1]').attr('qid');
 			req.ogid = currentNode.closest('ul').attr('ogid');
 			req.lang = $('#survey-language-version').val();
 			req.otype = currentNode.closest('ul').attr('otype');
@@ -139,18 +139,18 @@ $(function() {
 		}
 	});
 	
-	$('#panel-body').on("click", "#option-list #btn-add-option", function(e){
+	$('#page-items').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="option-item">' +
-															//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
-						  									'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-						  									'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '" autofocus/> ' +
-						  									'<div class="option-icons fleft"> ' +
-							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
-							  									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-							  									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
-							  								'</div> ' +
-							  							'</li>';
+								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
+								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
+								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '" autofocus/> ' +
+								'<div class="option-icons fleft"> ' +
+									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
+									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+								'</div> ' +
+							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
@@ -212,7 +212,7 @@ $(function() {
 	  		}, function(res) {
 	  			$('#importFileForm')[0].reset();
 	              $("#importFile").modal("hide");
-	              var multimediaFrame = $("div[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
 	              multimediaFrame.removeClass("hidden");
 	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
 	              $('#optionsFile').empty();
@@ -222,22 +222,31 @@ $(function() {
 		});
 	});
 	
-	$('#panel-body').on("click", "#btn-question-import-file", function(e){
-		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
+	$('#page-items').on("click", "#btn-question-import-file", function(e){
+		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
+
+	$('#survey-sections').on("click", "#removeSection", function(e){
+		var item = $(this).closest('#panel-section1');
+		currentQuestion = item.attr('scid');
+		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-section-title').val() + '"');
+		$("#removeElemId").val(item.attr('scid') + '/' + $('#survey-info').attr('sid'));
+		$("#removeElemService").val('SectionService');
+		$("#removeElement").modal("show");
+	});
 	
-	$('#panel-body').on("click", "#removeQuestion", function(e){
+	$('#page-items').on("click", "#removeQuestion", function(e){
 		var item = $(this).closest('#panel-question1');
 		currentQuestion = item.attr('qid');
 		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-question-title').val() + '"');
-		$("#removeElemId").val(item.attr('qid') + '/' + item.closest('div[id=page]').attr('pid'));
+		$("#removeElemId").val(item.attr('qid') + '/' + item.closest('li[id=page]').attr('pid'));
 		$("#removeElemService").val('QuestionService');
 		$("#removeElement").modal("show");
 	});
 	
-	$('#panel-body').on("click", "#removeMultimediaFile", function(e){
+	$('#page-items').on("click", "#removeMultimediaFile", function(e){
 		var item = $(this).closest('li.multimedia-item');
 		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
 		$("#removeElemId").val(item.attr('rid'));
@@ -245,7 +254,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#panel-body').on("click", "#remove-option", function(e){
+	$('#page-items').on("click", "#remove-option", function(e){
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
 		var input = item.find('input');
@@ -274,16 +283,10 @@ $(function() {
 				   if(service == "ResourceService")
 				   {
 					   $('li[rid=' + elementId + ']').remove();
-					  /* var numItems = $('li[rid=' + elementId + ']').closest("ul").find("li").size();
-					   console.log("Items: " + numItems);
-					   if(numItems == 0)
-					   {
-						   $('#multimediaFrame').addClass('hidden');
-					   }*/
 				   }
 				   else if(service == "QuestionService")
 				   {
-					   $('div[qid="' + currentQuestion + '"]').remove();
+					   $('li[qid="' + currentQuestion + '"]').remove();
 				   }
 				   else if(service == "OptionService")
 				   {
@@ -293,7 +296,7 @@ $(function() {
 					   if(numItems > 3)
 					   {
 						   input.closest("li").remove();
-						   $('div[qid=' + currentQuestion + '] ul[id=option-list] li[id=option-item]').each(function(i, elem)
+						   $('li[qid=' + currentQuestion + '] ul[id=option-list] li[id=option-item]').each(function(i, elem)
 						   {
 							   console.log("li: " + i + " - elem: " + $(elem).find('input').val());
 							   var index = i + 1;
@@ -306,6 +309,29 @@ $(function() {
 					   {
 						   input.val("");
 					   }
+				   }
+				   else if(service == "SectionService")
+				   {
+					   var ids = elementId.split('/');
+					   $('li[scid=' + ids[0] + ']').find('ul[id=section-pages]').each(function(indice, elemento) {
+						   if(indice == 0)
+						   {
+							   $(elemento).find('ul[id=page-items]').empty();
+						   }
+						   else
+						   {
+							   $(elemento).remove();
+						   }
+					   });
+					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title]').val('Section 1');
+				   }
+			   }
+			   else
+			   {
+				   if(service == "SectionService")
+				   {
+					   var ids = elementId.split('/');
+					   $('li[scid=' + ids[0] + ']').remove();
 				   }
 			   }
 			   
@@ -353,8 +379,20 @@ $(function() {
 		updateContent(req, serviceUrl);
 	});
 	
-	$('#panel-body').on("click", "#helpTextButton", function(e){
-		currentQuestion = $(this).closest('div[id=panel-question1]').attr('qid');
+	$('#survey-sections').on("focusout", "#survey-section-title", function(e){
+		e.stopPropagation();	
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "title";
+		req.lan = "en";
+		req.scid = $(this).closest('#panel-section1').attr('scid');		
+		var serviceUrl = host + "/SurveyTool/api/SectionService/updateContent";
+		
+		updateContent(req, serviceUrl);
+	});
+	
+	$('#page-items').on("click", "#helpTextButton", function(e){
+		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
@@ -375,7 +413,7 @@ $(function() {
 			   success: function (data) {
 				   if(data == "true")
 				   {
-					   var qNode = $('div[qid=' + currentQuestion + ']');
+					   var qNode = $('li[qid=' + currentQuestion + ']');
 					   qNode.find('#question-frame-help').removeClass("hidden");
 					   qNode.find('#question-frame-help-text').html(req.text);
 					   $("#setHelpText").modal("hide");
@@ -387,15 +425,15 @@ $(function() {
 				   console.log(xhr.responseText);
 				   console.log(xhr);
 			   }
-			});
+		});
 	});
 	
-	$('#panel-body').on("click", "#mandatoryButton", function(e){
+	$('#page-items').on("click", "#mandatoryButton", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
-		req.qid = node.closest('div[id=panel-question1]').attr('qid');
-		req.pid = node.closest('div[id=page]').attr('pid');
+		req.qid = node.closest('li[id=panel-question1]').attr('qid');
+		req.pid = node.closest('li[id=page]').attr('pid');
 		$.ajax({ 
 			   type: "PUT",
 			   dataType: "text",
@@ -415,7 +453,7 @@ $(function() {
 		});
 	});
 	
-	$('#panel-body').on("focusout", "#survey-question-title", function(e){
+	$('#page-items').on("focusout", "#survey-question-title", function(e){
 		e.stopPropagation();
 		var req = {};		
 		req.text = $(this).val();
@@ -427,7 +465,7 @@ $(function() {
 		updateContent(req, serviceUrl);
 	});
 
-	$('#panel-body').on("focusout", "#survey-question-description-text", function(e){
+	$('#page-items').on("focusout", "#survey-question-description-text", function(e){
 		e.stopPropagation();
 		var req = {};		
 		req.text = $(this).val();
@@ -439,6 +477,46 @@ $(function() {
 		updateContent(req, serviceUrl);
 	});	
 	
+	//drag and drop
+	$("#page-items").sortable({
+		connectWith:".s1",
+		start:function(){
+			console.log("Estas utilizando Drag and Drop: " + $(this).attr('id'));
+		},
+		stop:function(event, ui){
+			var prevId = '0';
+			if($(ui.item).prev().length) prevId = $(ui.item).prev().attr('qid');
+	
+			var req = {};		
+			req.qid = $(ui.item).attr('qid');
+			req.prevId = prevId;
+			req.pid = $(this).closest('li[id=page]').attr('pid');
+			
+			$.ajax({ 
+				   type: "PUT",
+				   dataType: "text",
+				   contentType: "text/plain",
+				   url: host + "/SurveyTool/api/QuestionService/updateIndex",
+				   data: JSON.stringify(req),
+				   success: function (data) {
+					   if(data == "")
+					   {
+						   console.log("llega");
+						  /* var qNode = $('li[qid=' + currentQuestion + ']');
+						   qNode.find('#question-frame-help').removeClass("hidden");
+						   qNode.find('#question-frame-help-text').html(req.text);
+						   $("#setHelpText").modal("hide");*/
+					   }
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   console.log(xhr.status);
+					   console.log(thrownError);
+					   console.log(xhr.responseText);
+					   console.log(xhr);
+				   }
+			});
+		}
+	});
 });
 
 function updateContent(req, serviceUrl)

@@ -8,6 +8,8 @@ public class DBFieldNames {
 		public final static String s_GENERICO_USERS_FINISHED = "usersFinished";
 		public final static String s_CREATION_DATE = "creationDate";
 		public final static String s_RESPONSES_NUMBER = "numResp";
+		public final static String s_INDEX = "index";
+		public final static String s_NUM_ELEMENTS = "numElements";
 		
 	//category
 		public final static String s_CATEGORY_NAME = "categoryName";
@@ -19,12 +21,14 @@ public class DBFieldNames {
 	//contenttype
 		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";
 		
+	//forma
+		public final static String s_FORMAID = "idForma";
+		
 	//language
 		public final static String s_LANGUAGE_ISONAME = "isoName";
 		
 	//option
 		public final static String s_OPTIONID = "idOption";
-		public final static String s_OPTION_INDEX = "index";
 		
 	//optionsgroup
 		public final static String s_OPTIONSGROUPID = "idOptionsGroup";
@@ -33,6 +37,7 @@ public class DBFieldNames {
 		
 	//page
 		public final static String s_PAGE_ID = "idPage";
+		public final static String s_NUM_PAGE = "numPage";
 		
 	//poll
 		public final static String s_POLL_ID = "idPoll";
@@ -47,6 +52,7 @@ public class DBFieldNames {
 		public final static String s_QUESTION_TAG = "tag";
 		public final static String s_QUESTION_MANDATORY = "mandatory";
 		public final static String s_QUESTION_MAIN_VERSION = "mainVersion";
+		public final static String s_NUM_QUESTION = "numQuestions";
 	
 	//questiontype
 		public final static String s_QUESTIONTYPE_NAME = "questionTypeName";
@@ -69,6 +75,9 @@ public class DBFieldNames {
 	//rol
 		public final static String s_ROLID = "idRol";
 		public final static String s_ROLNAME = "rolName";
+		
+	//section
+		public final static String s_SECTIONID = "idSection";
 		
 	//user
 		public final static String s_USERID = "idUser";

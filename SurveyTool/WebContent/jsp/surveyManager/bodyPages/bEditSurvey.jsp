@@ -74,47 +74,15 @@
 								</div> -->
 		  					</div>	
 		  					
-		  					<div class="survey-sections" id="survey-sections">
+		  					<ul class="survey-sections" id="survey-sections">
 		  					
 			  					<!-- <div class="add-frame">
 		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
 		  						</div> -->
 			  					
-			  					<div class="panel-section" id="panel-section1">
-									<div class="panel-heading">	
-										<!-- <div class="col-sm-1 left"><a id="display-section-panel" title="diplay section 1"><i class="fa fa-caret-down fa-2x"></i></a></div> -->				
-										<!-- <h3 class="col-sm-10 panel-title"><input type="text" class="survey-section-title-unselected center" id="survey-section-title" value="Section 1:" /></h3> -->
-										<!-- <div class="col-sm-1 panel-section-delete right"><a href="#" title="remove section 1"><i class="fa fa-trash fa-2x"></i></a></div> -->
-										<h3 class="panel-title"><%= lang.getContent("survey.edit.section.title") %></h3>
-									</div>
+			  					<jsp:include page="../components/cSection.jsp" />		
 									
-									<div class="page" id="page" pid="<%= pageId %>">
-										<input type="hidden" id="pageid1" value="<%= pageId %>" />
-										<div class="panel-body" id="panel-body">									
-						  										  						
-					  						<%
-					  							String token = "/";
-					  							List<Question> questions = survey.getQuestions();
-					  							if(questions != null && !questions.isEmpty())
-					  							{
-					  								for(Question question : questions)
-					  								{
-					  									request.setAttribute(Attribute.s_QUESTION, question);
-					  									request.setAttribute(Attribute.s_TEMPLATE_FILE, question.getTemplatePage());
-					  						%>
-					  									<jsp:include page="<%= token + Address.s_EDIT_QUESTION_MASTER %>" />
-					  						<%			
-					  								}
-					  							}
-					  						%>
-					  						
-					  						<jsp:include page="../editQuestions/cAddMenu.jsp" />
-					  							  					
-										</div>					
-									</div>																		
-								</div>			
-									
-		  					</div>	
+		  					</ul>	
 						</div>
 	  				</div>
 	  			</div>

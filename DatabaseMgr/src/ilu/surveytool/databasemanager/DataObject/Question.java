@@ -19,6 +19,7 @@ public class Question {
 	String formPage = "";
 	List<OptionsGroup> optionsGroups;
 	List<Resource> resources;
+	int index = 0;
 	
 	public Question() {
 		super();
@@ -40,8 +41,6 @@ public class Question {
 		this.helpText = helpText;
 	}
 	
-	
-
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
 			HashMap<String, Content> contents, String category, boolean mandatory, boolean helpText,
 			String templatePage, String formPage) {
@@ -153,14 +152,22 @@ public class Question {
 	public void setResources(List<Resource> resources) {
 		this.resources = resources;
 	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 	@Override
 	public String toString() {
 		return "Question [questionId=" + questionId + ", tag=" + tag + ", creationDate=" + creationDate
 				+ ", questionType=" + questionType + ", contents=" + contents + ", category=" + category
-				+ ", mandatory=" + mandatory + ", helpText=" + helpText
-				+ ", templatePage=" + templatePage + ", formPage=" + formPage + ", optionsGroups=" + optionsGroups
-				+ ", resources=" + resources + "]";
+				+ ", mandatory=" + mandatory + ", helpText=" + helpText + ", templatePage=" + templatePage
+				+ ", formPage=" + formPage + ", optionsGroups=" + optionsGroups + ", resources=" + resources
+				+ ", index=" + index + "]";
 	}
 	
 }

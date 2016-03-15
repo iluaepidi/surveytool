@@ -78,7 +78,7 @@ public class CreateSurveyServlet extends HttpServlet {
 			{				
 				request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 				
-				int pageId = surveysHandler.createFormaAndPage(surveyId);
+				int pageId = surveysHandler.createFormaSectionAndPage(surveyId);
 				request.setAttribute(Attribute.s_PAGE_ID, pageId);
 				
 				List<String> jsFiles = new ArrayList<>();

@@ -1,6 +1,7 @@
 package ilu.surveymanager.handler;
 
 import java.util.Iterator;
+import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.QuestionDB;
@@ -35,8 +36,10 @@ public class QuestionHandler {
 				Content content = question.getContents().get(key);
 				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
 			}
+
+			int index = questionDB.getNumQuestionByPage(pageId) + 1;
 			
-			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), 1);
+			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), index);
 		}
 		
 		return questionId;
@@ -104,10 +107,49 @@ public class QuestionHandler {
 		return mandatory;
 	}
 	
+	public boolean updateIndex(int questionId, int prevQuestionId, int pageId)
+	{
+		boolean updated = false;
+		QuestionDB questionDB = new QuestionDB();
+		
+		int currrentIndex = questionDB.getQuestionByPageIndex(questionId, pageId);
+		int prevIndex = questionDB.getQuestionByPageIndex(prevQuestionId, pageId);
+		List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);		
+		
+		for(int i = 0; i < questions.size(); i++)
+		{
+			int index = questions.get(i).getIndex(); 
+			if(index < currrentIndex)
+			{
+				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index + 1);
+			}
+			else if(index > currrentIndex)
+			{
+				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index - 1);
+			}
+			else
+			{
+				if(prevIndex < currrentIndex)
+				{
+					questionDB.updateQuestionIndex(questionId, pageId, prevIndex + 1);
+				}
+				else
+				{
+					questionDB.updateQuestionIndex(questionId, pageId, prevIndex);
+				}
+			}
+		}
+		
+		return updated;
+	}
+	
 	public boolean removeQuestionByPage(int questionId, int pageId)
 	{
 		boolean removed = false;
 		QuestionDB questionDB = new QuestionDB();
+		int numQuestions = questionDB.getNumQuestionByPage(pageId);
+		int prevQuestionId = questionDB.getQuestionByPageIdIndex(numQuestions, pageId);
+		this.updateIndex(questionId, prevQuestionId, pageId);
 		questionDB.removeQuestionByPage(questionId, pageId);
 		removed = true;
 		return removed;

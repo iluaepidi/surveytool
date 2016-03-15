@@ -25,6 +25,7 @@
 		
 		<!-- Librería jQuery requerida por los plugins de JavaScript -->
 		<script src="js/jquery-2.1.4.js"></script>
+		<script src="js/jquery-ui.js"></script>
 		
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
