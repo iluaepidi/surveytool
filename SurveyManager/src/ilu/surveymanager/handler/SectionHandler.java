@@ -1,16 +1,29 @@
 package ilu.surveymanager.handler;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.Section;
 
 public class SectionHandler {
 
 	public SectionHandler() {
 		super();
+	}
+
+	public List<Section> getSectionsBySurveyId(int surveyId, String lang)
+	{
+		List<Section> sections = new ArrayList<Section>();
+		
+		SectionDB sectionDB = new SectionDB();
+		sections = sectionDB.getSectionsBySurveyId(surveyId, lang);
+		
+		return sections;
 	}
 	
 	public boolean updateContent(int sectionId, Content content)

@@ -27,7 +27,7 @@
 								            </div>
 								        </div>
 										<div class="form-group">
-								            <label for="resourceTitle"><%= lang.getContent("file.import.title") %></label>
+								            <label for="resourceTitle"><%= lang.getContent("file.import.label.title") %></label>
 								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
 								        </div>
 								        <div class="form-group">									            

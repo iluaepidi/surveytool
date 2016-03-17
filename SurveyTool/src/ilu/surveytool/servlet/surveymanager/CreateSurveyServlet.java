@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ilu.surveymanager.handler.SectionHandler;
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
@@ -80,6 +81,9 @@ public class CreateSurveyServlet extends HttpServlet {
 				
 				int pageId = surveysHandler.createFormaSectionAndPage(surveyId);
 				request.setAttribute(Attribute.s_PAGE_ID, pageId);
+				
+				SectionHandler sectionHandler = new SectionHandler();
+				survey.setSections(sectionHandler.getSectionsBySurveyId(surveyId, language));
 				
 				List<String> jsFiles = new ArrayList<>();
 				jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
