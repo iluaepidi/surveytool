@@ -114,28 +114,31 @@ public class QuestionHandler {
 		
 		int currrentIndex = questionDB.getQuestionByPageIndex(questionId, pageId);
 		int prevIndex = questionDB.getQuestionByPageIndex(prevQuestionId, pageId);
-		List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);		
+		List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);	
 		
-		for(int i = 0; i < questions.size(); i++)
-		{
-			int index = questions.get(i).getIndex(); 
-			if(index < currrentIndex)
+		if(prevIndex != 0 || questions.get(0).getQuestionId() != questionId)
+		{		
+			for(int i = 0; i < questions.size(); i++)
 			{
-				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index + 1);
-			}
-			else if(index > currrentIndex)
-			{
-				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index - 1);
-			}
-			else
-			{
-				if(prevIndex < currrentIndex)
+				int index = questions.get(i).getIndex(); 
+				if(index < currrentIndex)
 				{
-					questionDB.updateQuestionIndex(questionId, pageId, prevIndex + 1);
+					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index + 1);
+				}
+				else if(index > currrentIndex)
+				{
+					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index - 1);
 				}
 				else
 				{
-					questionDB.updateQuestionIndex(questionId, pageId, prevIndex);
+					if(prevIndex < currrentIndex)
+					{
+						questionDB.updateQuestionIndex(questionId, pageId, prevIndex + 1);
+					}
+					else
+					{
+						questionDB.updateQuestionIndex(questionId, pageId, prevIndex);
+					}
 				}
 			}
 		}
