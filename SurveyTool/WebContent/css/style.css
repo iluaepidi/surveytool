@@ -15,7 +15,10 @@
 /*----------------------------------------------*\
 		$GENERAL
 \*----------------------------------------------*/
-
+html {position: relative;
+  min-height: 100%;}
+body {margin-bottom: 135px !important;}  
+  
 .center {text-align: center;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}
@@ -55,6 +58,7 @@ h2 {width: auto;
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
 	border-color: #4A4A4A;}
+
 
 /*focus*/
 
@@ -116,9 +120,9 @@ input[type="color"]:focus,
 .btn-add-small {padding: 2px 20px !important;
     margin-left: 60px;}
 .btn-add-small span {margin-left: 5px;}
-.st-styles .btn {box-shadow: inset 0 3px 5px rgba(255, 255, 255, .30) !important;}
+.st-styles .btn {/*box-shadow: inset 0 3px 5px rgba(255, 255, 255, .30) !important;*/}
 .st-styles .btn:hover,
-.st-styles .btn:focus {box-shadow: inset 0 3px 5px rgba(0, 0, 0, .30) !important;}
+.st-styles .btn:focus {/*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .30) !important;*/}
 .st-styles .btn-primary {background-color: #337AB7 !important;}
 .st-styles .btn-primary:hover,
 .st-styles .btn-primary:focus {background-color: #286090 !important;}
@@ -128,7 +132,7 @@ textarea {resize:none;
 
 
 /*----------------------------------------------*\
-		$HEADER_PAGE
+		$ERROR
 \*----------------------------------------------*/
 
 .error{background-color: #A94442;
@@ -154,11 +158,9 @@ textarea {resize:none;
 		$HEADER_PAGE
 \*----------------------------------------------*/
 
-.page-header {
-    padding-left: 20px;
-    margin: 0px 0 20px;
+.page-header {margin: 0px 0 20px;
     border-bottom: 3px solid #ccc !important;
-   /* height: 135px;*/
+    padding-left: 4% !important;
 }
 h1 {float: left;
 	/*width: 50%;*/
@@ -174,7 +176,7 @@ h1 span{font-size: 0.6em;
     left: 169px;}
 .logo {float:left;}
 .title-header {margin-top: 28px;}
-.title-header p {font-size: 0.6em;}
+.title-header p {font-size: 0.5em;}
 .header-buttons {float:right;
 	margin-top: 33px;
 	margin-right: 50px;}
@@ -188,8 +190,8 @@ button span {margin-left: 5px;}
 .body-content {margin:10px 10px;}
 .title-content {border-bottom: 1px solid #eee;
 	padding-bottom: 20px;}
-.title-content-no-underline {}
-.content {margin: 10px 30px 0px 30px;}
+.title-content-no-underline {margin: 0 4%;}
+.content {margin: 10px 4% 0px;}
 .row-menu {width: 70%;
 	left: 15%;
 	position: relative;}
@@ -204,7 +206,10 @@ button span {margin-left: 5px;}
 		$FOOTER
 \*----------------------------------------------*/
 
-footer {margin-top: 10px;}
+footer {margin-top: 10px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;}
 .row-footer {width: 70%;
 	left: 15%;
 	position: relative;
@@ -214,16 +219,34 @@ footer {margin-top: 10px;}
 	padding-bottom: 5px;
 	border-top: 1px solid #eee;
 	padding-top:5px;}
+.footer-logo-content {width: 80%;
+    margin: 0 auto;}
+.footer-logo-content img {width: 60px;
+    float: left;
+    margin-left: 20px;}
 
 /*----------------------------------------------*\
 		$LOGIN
 \*----------------------------------------------*/
 
-.login-content {display: flex;}
-.login-frame {width: 20%;
-    margin: 175px auto;}
+.login-content {display: flex;
+	width: 80%;
+    margin: 0 auto;}
+.login-content-text {width: 70%;
+    margin: 30px auto 0;
+    padding: 0 5%;}
+.login-content-text ul li{list-style: initial !important;}
+.login-frame {width: 30%;
+    margin-top: 30px;}
+.login-frame form {min-width: 250px;
+    width: 85%;
+    border: 1px solid #e0e0e0;
+    background-color: #fbfbfb;
+    padding: 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
 .login-frame form h3 {margin: 20px 0px;}
 .form-group label {width: 100%;}
+.login-button {margin-bottom: 6px !important;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_SURVEY
@@ -254,6 +277,7 @@ footer {margin-top: 10px;}
 .gray-padding{height: 20px;
 	background-color: #eee}
 .user-panel-surveys {min-height: 388px;
+	margin: 0 12%;
 	/*padding-top: 7%;*/}
 .surveys-create-button {text-align: right;
 	padding: 10px;}
@@ -691,7 +715,8 @@ footer {margin-top: 10px;}
 /*----------------------------------------------*\
 		$POLLS
 \*----------------------------------------------*/
-	
+
+.list-content li {list-style: initial !important;}	
 .results-page-call {width: 92%;
     margin: 0 auto;}
 .results-page-call label {font-weight: normal;}

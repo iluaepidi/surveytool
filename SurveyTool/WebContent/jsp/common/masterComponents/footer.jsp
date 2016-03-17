@@ -15,7 +15,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  				</ul>	  			
 		  			</div>
 		  			<div class="content footer-logos">
-		  				<p><%= lang.getContent("master.footer.content") %></p>
+		  				<div class="footer-logo-content">
+			  				<img src="img/euroflag.jpg" />
+			  				<p><%= lang.getContent("master.footer.content") %></p>
+			  			</div>
 		  			</div>
 		  		</div>
 <%

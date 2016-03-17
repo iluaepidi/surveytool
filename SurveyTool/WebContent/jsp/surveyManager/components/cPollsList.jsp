@@ -15,6 +15,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 						<div class="hidden" id="polls-list">	  					
 							<h3><%= lang.getContent("survey_manager.polls.title") %></h3>							
 							<%= lang.getContent("survey_manager.polls.description") %>
+							
 		  					<div class="user-panel-surveys">
 		  						<div class="surveys-create-button">
 		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal"><%= lang.getContent("button.create_new") %></button>

@@ -1,7 +1,7 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.language.Language"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 String footerPath = "jsp/common/masterComponents/footer.jsp";
 %>
@@ -20,7 +20,7 @@ String footerPath = "jsp/common/masterComponents/footer.jsp";
 	  			<jsp:include page="jsp/common/bodyPages/bLogin.jsp" />
 	  		</div>
 	  		
-	  		<footer>
+	  		<footer class="footer">
 	  			<jsp:include page="<%= footerPath %>" />
 	  		</footer>	
  		</div> 

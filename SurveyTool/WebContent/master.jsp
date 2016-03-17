@@ -20,7 +20,7 @@ String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
 	  			<jsp:include page="<%= bodyPage %>" />
 	  		</div>
 	  		
-	  		<footer>
+	  		<footer class="footer">
 	  			<jsp:include page="<%= footerPath %>" />
 	  		</footer>	
  		</div> 
