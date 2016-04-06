@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ilu.surveytool.databasemanager.DataObject.AnonimousResponse;
+import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
@@ -70,7 +70,13 @@ public class AnonimousDB {
 		PreparedStatement pstm = null;
 	    try {
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_ANONIMOUS_USER, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setInt(1, surveyId);
+		   
+		   if(surveyId != 0)
+		   {
+			   pstm.setInt(1, surveyId);
+		   }else {
+			   pstm.setNull(1, Types.INTEGER);
+		   }
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -91,34 +97,23 @@ public class AnonimousDB {
 		return anonimousUserId;
 	}
 	
-	public boolean insertAnonimousResponses(int anonimousUserId, List<AnonimousResponse> responses) 
+	public boolean insertAnonimousResponse(int anonimousUserId, int responseId) 
 	{		
 		boolean inserted = true;
 
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-	    	for(AnonimousResponse response : responses)
-	    	{	    		
-			   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_ANONIMOUS_RESPONSE);
-			   pstm.setInt(1, anonimousUserId);
-			   pstm.setInt(2, response.getQuestionId());
-			   pstm.setString(3, response.getValue());
-			   int optionsGroupId = response.getOptionsGroupId();
-			   if(optionsGroupId != 0)
-			   {
-				   pstm.setInt(4, optionsGroupId);
-			   }else {
-				   pstm.setNull(4, Types.INTEGER);
-			   }
+	    	pstm = con.prepareStatement(DBSQLQueries.s_INSERT_ANONIMOUS_RESPONSE);
+			pstm.setInt(1, anonimousUserId);
+			pstm.setInt(2, responseId);
 			   
-			   boolean notInserted = pstm.execute();
+			boolean notInserted = pstm.execute();
 			   
-			   if(notInserted)
-			   {
-				  inserted = false; 
-			   }
-	    	} 
+			if(notInserted)
+			{
+				inserted = false; 
+			}
 		  		  	   
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

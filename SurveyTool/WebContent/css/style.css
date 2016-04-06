@@ -8,14 +8,17 @@
 * BODY_CONTENT
 * FOOTER
 * USER_PANEL_SURVEY
-* 
+* POLLS
 * 
 */
 
 /*----------------------------------------------*\
 		$GENERAL
 \*----------------------------------------------*/
-
+html {position: relative;
+  min-height: 100%;}
+body {margin-bottom: 135px !important;}  
+  
 .center {text-align: center;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}
@@ -23,8 +26,7 @@
 .margin-bottom-10 {margin-bottom: 10px;}
 .icon-small i {font-size: 1.4em;}
 .nav-tabs-right {padding-right: 20px;
-	margin-top: -40px;
-	border-bottom: none !important;}
+	margin-top: -40px;}
 .nav-tabs-right li {float: right !important;
 	margin-bottom: -2px !important;}
 .nav-tabs-right li a {border-width: 2px !important;}
@@ -40,15 +42,72 @@ h2 {width: auto;
 .close-frame {text-align: right;
     margin-top: -18px;
     margin-right: -7px;}
-.red {color: #B60000}
+.red {color: #B60000;
+	border-color: #B60000 !important;}
 .btn-transparent {background: transparent;
-    border: none !important;
-    padding: 0px !important;}	
+    border: 2px solid transparent !important;
+	border-radius: 5px;
+    padding: 1px 2px !important;
+    vertical-align: middle;}
+.btn-transparent:hover, .btn-transparent:focus {border-color: inherit !important;}	
 .btn-survey {font-weight: bold !important;}
 .fleft {float:left;}
 .error-msg {color: #B60000;
     font-size: 1.1em;
     font-weight: bold;}
+.st-styles .form-control, 
+.st-styles .form-control-small {color: #4A4A4A;
+	border-color: #4A4A4A;}
+
+
+/*focus*/
+
+a:focus {border: 2px solid !important;
+	border-radius: 5px;
+	padding: 2px;}
+
+:focus {border: 2px solid !important;
+	/*border-color: rgba(38, 92, 137, 0.8) !important;*/
+	border-color: #23527C !important; 
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.6) !important;
+  	/*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(38, 92, 137, 0.6) !important;*/
+  	outline: 0 none !important;
+  	display: inline-block;
+}
+
+textarea:focus,
+select:focus,
+input[type="radio"]:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {border: 2px solid !important;
+	border-color: #23527C !important;   
+  	/*border-color: rgba(69, 105, 136, 0.8) !important;*/
+  	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.6) !important;
+  	outline: 0 none !important;
+}
+
+.has-error input[type="text"]:focus,
+.has-error input[type="password"]:focus {border: 2px solid !important;
+	border-color: #800000 !important;   
+  	/*border-color: rgba(128, 0, 0, 0.8) !important;*/
+  	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(128, 0, 0, 0.6) !important;
+  	outline: 0 none !important;
+}
 	
 /*tablas*/
 .tab-colum-title {width: 25%;}
@@ -57,16 +116,51 @@ h2 {width: auto;
 .tab-colum-admin {width: 4%;}
 .tab-colum-stats {width: 20%;}
 
+/*buttons*/
+.btn-add-small {padding: 2px 20px !important;
+    margin-left: 60px;}
+.btn-add-small span {margin-left: 5px;}
+.st-styles .btn {/*box-shadow: inset 0 3px 5px rgba(255, 255, 255, .30) !important;*/}
+.st-styles .btn:hover,
+.st-styles .btn:focus {/*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .30) !important;*/}
+.st-styles .btn-primary {background-color: #337AB7 !important;}
+.st-styles .btn-primary:hover,
+.st-styles .btn-primary:focus {background-color: #286090 !important;}
+
+textarea {resize:none;
+	margin-top: 3px !important;}
+
+
+/*----------------------------------------------*\
+		$ERROR
+\*----------------------------------------------*/
+
+.error{background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	width: 120px;
+	position: absolute;
+	right: -130px;
+    top: 26px;}
+.error:before{content: '';
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 8px solid #A94442;
+	border-left: 8px solid transparent;
+	left: -16px;
+	position: absolute;
+	top: 5px;}
+
 
 /*----------------------------------------------*\
 		$HEADER_PAGE
 \*----------------------------------------------*/
 
-.page-header {
-    padding-left: 20px;
-    margin: 0px 0 20px;
+.page-header {margin: 0px 0 20px;
     border-bottom: 3px solid #ccc !important;
-   /* height: 135px;*/
+    padding-left: 4% !important;
 }
 h1 {float: left;
 	/*width: 50%;*/
@@ -82,11 +176,12 @@ h1 span{font-size: 0.6em;
     left: 169px;}
 .logo {float:left;}
 .title-header {margin-top: 28px;}
-.title-header p {font-size: 0.6em;}
+.title-header p {font-size: 0.5em;}
 .header-buttons {float:right;
 	margin-top: 33px;
 	margin-right: 50px;}
 .header-buttons a {margin-left: 35px;}
+button span {margin-left: 5px;}
 
 /*----------------------------------------------*\
 		$BODY_CONTENT
@@ -95,7 +190,8 @@ h1 span{font-size: 0.6em;
 .body-content {margin:10px 10px;}
 .title-content {border-bottom: 1px solid #eee;
 	padding-bottom: 20px;}
-.content {margin: 10px 30px 0px 30px;}
+.title-content-no-underline {margin: 0 4%;}
+.content {margin: 10px 4% 0px;}
 .row-menu {width: 70%;
 	left: 15%;
 	position: relative;}
@@ -110,7 +206,10 @@ h1 span{font-size: 0.6em;
 		$FOOTER
 \*----------------------------------------------*/
 
-footer {margin-top: 10px;}
+footer {margin-top: 10px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;}
 .row-footer {width: 70%;
 	left: 15%;
 	position: relative;
@@ -120,22 +219,65 @@ footer {margin-top: 10px;}
 	padding-bottom: 5px;
 	border-top: 1px solid #eee;
 	padding-top:5px;}
+.footer-logo-content {width: 80%;
+    margin: 0 auto;}
+.footer-logo-content img {width: 60px;
+    float: left;
+    margin-left: 20px;}
 
 /*----------------------------------------------*\
 		$LOGIN
 \*----------------------------------------------*/
 
-.login-content {display: flex;}
-.login-frame {width: 20%;
-    margin: 10% auto;}
+.login-content {display: flex;
+	width: 80%;
+    margin: 0 auto;}
+.login-content-text {width: 70%;
+    margin: 30px auto 0;
+    padding: 0 5%;}
+.login-content-text ul li{list-style: initial !important;}
+.login-frame {width: 30%;
+    margin-top: 30px;}
+.login-frame form {min-width: 250px;
+    width: 85%;
+    border: 1px solid #e0e0e0;
+    background-color: #fbfbfb;
+    padding: 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
 .login-frame form h3 {margin: 20px 0px;}
 .form-group label {width: 100%;}
+.login-button {margin-bottom: 6px !important;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_SURVEY
 \*----------------------------------------------*/
 
+.nav-tabs-survey-manager {border-bottom: 2px solid #6e6e6e !important;}
+.nav-tabs-survey-manager li {min-width: 85px;
+    text-align: center;
+    width: 10%;}
+.nav-tabs-survey-manager li a {background-color: #6e6e6e;
+	border: none !important;
+	color: #eee;}
+.nav-tabs-survey-manager li a:focus, 
+.nav-tabs-survey-manager li a:hover {background-color: #6e6e6e !important;
+	border: none !important;
+	color: #eee !important;
+	margin-top: -10px;
+    height: 50px;}
+.nav-tabs-survey-manager li.active a:focus, 
+.nav-tabs-survey-manager li.active a:hover {margin-top: -10px;
+    height: 54px;
+    /*box-shadow: none !important;*/
+    outline: 0 none !important;}
+.nav-tabs-survey-manager > li.active > a {background-color: #eee !important;
+    border: 2px solid #6e6e6e !important;
+    border-bottom-color: transparent !important;
+    color: #444 !important;}
+.gray-padding{height: 20px;
+	background-color: #eee}
 .user-panel-surveys {min-height: 388px;
+	margin: 0 12%;
 	/*padding-top: 7%;*/}
 .surveys-create-button {text-align: right;
 	padding: 10px;}
@@ -144,6 +286,7 @@ footer {margin-top: 10px;}
 .btn-arrow {padding-top: 9px !important;}
 .percent-bar {margin: 0 !important;
 	border: 1px solid #555;}
+.progress-bar {min-width: 2em}
 .surveys-table ul {margin: 0;
 	padding: 0 !important;}
 .surveys-table ul li{padding: 0 !important;}
@@ -153,6 +296,8 @@ footer {margin-top: 10px;}
 {margin: 20% auto;}
 .survey-win-dialog {margin: 14% auto !important;
 	width: 60% !important;}
+.poll-win-dialog {margin: 1% auto !important;
+	width: 60% !important;}
 .remove-win-dialog {margin: 14% auto !important;
 	width: 30% !important;}
 .remove-frame-buttons {width: 70%;
@@ -161,23 +306,33 @@ footer {margin-top: 10px;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
 	padding: 20px 10px;
-    border-radius: 5px;}
+    border-radius: 5px;
+    position: relative;}
 .survey-frame h3 {font-size: 1em;
- 	margin-left: 10px;
-    margin-top: -28px;
+ 	/*margin-left: 10px;
+    margin-top: -28px;*/
     background-color: #fff;
     padding: 0px 5px;
-    display: inline-block;}
+    display: inline-block;
+    position: absolute;
+	top: -13px;}
 .survey-frame legend {font-size: 1em;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     /*margin-top: -28px;*/
     margin-bottom: 0px;
     background-color: #fff;
     padding: 0px 5px;
     /*display: inline-block;*/
     border: none;
-    max-width: 185px;}
-.survey-frame label, 
+    /*max-width: 185px;*/
+    width: auto;}
+.survey-frame textarea {height: 54px !important;}
+.div-create-question-mandatory {margin-top: 10px;}
+.div-btn-create-question {margin-top: 28px;}
+.survey-frame fieldset legend{margin-bottom: 5px;
+    font-weight: bold;}
+.survey-frame label {padding-left: 5px !important;
+	padding-right: 0px !important;} 
 .survey-frame select {padding-left: 0px !important;
 	padding-right: 0px !important;}
 .survey-frame input[type="text"] {padding-left: 5px !important;
@@ -221,7 +376,7 @@ footer {margin-top: 10px;}
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
-.btn-create-survey {margin-top: 30px;
+.btn-create-survey {margin-top: 33px;
 	height: 45px;}
 
 /*----------------------------------------------*\
@@ -244,7 +399,8 @@ footer {margin-top: 10px;}
 .edit-with-browser .edit-survey-frame {width: 90%;}
 .edit-with-browser .panel-section {width: 90%;}
 .browser-left {display: none;} 
-.nav-tab-edit {border-color: #007A00 !important;}
+.nav-tab-edit {border-color: #007A00 !important;
+	border-bottom: none !important;}
 .nav-tab-edit .active a {border-left-color: #337ab7 !important;
 	border-right-color: #337ab7 !important;
 	border-top-color: #337ab7 !important;}
@@ -257,10 +413,22 @@ footer {margin-top: 10px;}
     border-radius: 10px;
     padding: 10px;
     text-align: center;}
+
+.edit-survey-head{margin: 10px auto;
+    width: 70%;
+    display: flex;
+    padding: 0 1.5%;}
+.survey-language {width: 50%;
+	text-align: right;}
+.survey-preview {width: 50%;
+	margin: auto 0;}   
+.survey-language select {margin: 0 5px;}
+.survey-language label span {margin-left: 5px;}
+    
 .survey-info-title {font-size: 1.5em;
     border: none;
     margin: 0 auto;
-    width: 45%;
+    width: 42%;
     text-align: center;}
     
 .survey-info-project {float:right;
@@ -292,10 +460,15 @@ footer {margin-top: 10px;}
 .add-frame {width: 70%;
 	margin: 20px auto;
 	text-align: center;}
-.add-menu-frame {width: 100%;
-	margin: 20px auto;
-	text-align: center;
-    display: inline-block;}
+.add-menu-frame {width: 50%;
+    margin-left: 48%;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 39px;}
+.btn-add-element {float: left;}
+.add-menu-points {width: 20px;
+    padding: 0 15px;
+    display: inherit;}
 .btn-add-menu {padding: 2.5px 10px !important;
     background-color: #fff;
     border: 1px solid #337ab7 !important;
@@ -303,11 +476,24 @@ footer {margin-top: 10px;}
 .btn-add-menu:hover, .btn-add-menu:focus {color:#fff !important;
 	background-color: #337ab7;}
 .add-menu {display: none;
-	width: 46% !important;
 	padding-left: 0px !important;}
 .add-vacio {width: 46% !important;}
-.btn-add { width: 8% !important;
-	color: #337ab7;}
+.btn-add {color: #337ab7;}
+
+
+/* Panel heading */
+.panel-heading {border-radius: 7px;
+    width: 100%;
+    display: inline-block;
+    border-top-left-radius: 6px !important;
+    border-top-right-radius: 6px !important;}
+.panel-heading-display-arrow {/*border: none;*/
+    /*background-color: transparent;*/
+    float: left;
+    margin-right: 15px;}
+    
+/** section **/    
+.survey-sections {padding: 0;}
 .panel-section {width: 70%;
 	margin: 20px auto;
 	text-align: center;
@@ -315,32 +501,31 @@ footer {margin-top: 10px;}
     border: 1px solid #337ab7;
     border-radius: 10px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}    
 .panel-section > .panel-heading {
     color: #fff;
     background-color: #337ab7;
     border-color: #337ab7;
-    border-radius: 7px;
-    width: 100%;
-    display: inline-block;}
-/*.panel-section > .panel-heading h3:hover, .panel-section > .panel-heading h3:focus {
-	background-color: #004D00;
-}*/
-.panel-heading h3 {margin: 4px 0px;}
+    }
+.section-head.btn-transparent:hover,
+.section-head.btn-transparent:focus {border-color: #fff !important}
+.panel-heading h3 {margin: 4px 0px;
+    float: left;
+    width: 70%;}
+.panel-heading .panel-section-buttons button {margin: 0px 5px;}
 .survey-section-title-unselected {border:none;
 	background-color: transparent;
-	/*color: #fff;*/
-	/*text-align:center;*/
-	width: 100%;}
+	width: 100%;
+	height: 26px;}
 .survey-section-title-selected, 
 .survey-section-title-unselected:hover, 
 .survey-section-title-unselected:focus {border:none;
 	background-color: #fff;
 	color: #000;
-	/*text-align:center;*/
 	width: 100%;
-	padding: 5px;}
-.panel-section-delete {float: right;}
+	padding: 5px;
+	border-radius: 5px;}
+.panel-section-buttons {float: right;}
 .panel-section .panel-heading a {color: #fff;}
 .panel-section .panel-heading a:hover, .panel-section .panel-heading a:focus {color: #70FFFF;}
 
@@ -369,6 +554,10 @@ footer {margin-top: 10px;}
 .basic-settings-right-options div label span {padding-top: 5px;}
 .basic-settings-right-options div {margin-bottom: 9px;}
 .btn-qtype {display: inline-table;}
+.btn-qtype .btn-default {border: 1px solid #4A4A4A;}
+.btn-qtype .btn-default:hover {border-color: rgba(74, 74, 74, 0.8) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(74, 74, 74, 0.6) !important;
+  outline: 0 none !important;} 
 .btn-add-media {margin-top: 10px;
     display: inline-flex;}
 .btn-add-media span {margin-left: 12px;
@@ -378,56 +567,56 @@ footer {margin-top: 10px;}
     margin: 0px -15px;}
     
 .frame-basic-Settings {display: none;}
+
+.section-pages {padding: 0;}
+
+/** questions **/
 .panel-question {width: 95%;
-	margin: 30px auto;
+	margin: 15px auto;
 	text-align: center;
 	background-color: #fff;
-    border: 1px solid #255885;
+    border: 1px solid #1F4B71;
     border-radius: 8px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
 .panel-question > .panel-heading {
-    color: #000;
+    color: #1F4B71;
     background-color: #B7D4FA;
-    border-color: #255885;
+    border-color: #1F4B71;
     border-radius: 7px;
     width: 100%;
+    padding: 3px 15px;
     display: inline-block;}
 .panel-question .panel-heading a {color: #000;}
 .panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
-.panel-question-basic-setting {background-color: #ccc;
-	color: #000;
-    margin: -20px -15px 0px -15px;
-    padding-top: 9px;}
-.panel-question-basic-setting .alt-question {/*padding-top: 4px;*/}
-.panel-question-basic-setting .mandatory-question i {background-color: #ccc;}
-.panel-question-basic-setting div label,
-.panel-question-basic-setting div button {display: inline-flex;
-    padding: 0px 10px;
-    min-height: 30px;}
-.panel-question-basic-setting div label span,
-.panel-question-basic-setting div button span {margin-top: 4px;}
-.panel-question-basic-setting div label i, 
-.panel-question-basic-setting div button i {margin-right: 5px;}
-.panel-question-basic-setting div button[active="false"]{border: 1px solid #3C3C3C; 
-	background-color: transparent;}
-.panel-question-basic-setting div button[active="true"],
-.panel-question-basic-setting div button[active="false"]:focus,
-.panel-question-basic-setting div button[active="false"]:hover {border: 1px solid #3C3C3C; 
-	background-color: #B7D4FA;}
 
-.btn-question-basic-settings {padding-top: 2px !important;}
+.btn.btn-question-head {color: #1F4B71;
+    background-color: #B7D4FA;
+    border-color: #1F4B71;}
+.btn.btn-question-head[active=true] {color: #B7D4FA;
+    background-color: #1F4B71;
+    border-color: #000;}
+.btn.btn-question-head:hover,
+.btn.btn-question-head:focus {box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.500);}
+.panel-question .btn-remove {color: #B60000 !important;}
+.btn-transparent.btn-remove:hover,
+.btn-transparent.btn-remove:focus {border-color: #B60000 !important;}
+
 .question-frame {border: 1px solid #555;
 	margin: 15px 0px;
-	padding: 10px 20px;
+	padding: 15px 20px;
     border-radius: 5px;
-    text-align: left;}
+    text-align: left;
+    position: relative;}
 .question-frame h4 {font-size: 1em;
-    margin-left: -5px;
-    margin-top: -19px;
+    /*margin-left: -5px;
+    margin-top: -19px;*/
     background-color: #fff;
     padding: 0px 5px;
-    display: inline-block;}
+    display: inline-block;
+    position: absolute;
+    top: -19px;
+    left: 12px;}
 .question-frame label, 
 .question-frame input[type="text"],
 .question-frame select {padding-left: 0px !important;
@@ -437,7 +626,9 @@ footer {margin-top: 10px;}
     height: 45px;}
 .question-frame p {margin: 0px;}
 /*.question-frame-help {display:none;}*/
-.question-frame-multimedia {}
+.question-frame-multimedia button {margin-left: 60px;}
+
+
 .multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}
@@ -482,8 +673,10 @@ footer {margin-top: 10px;}
 .routes-select label {margin-top: 3px;}
 .routes-select select {margin: 0px 8px;}
 
+.form-group input[type=file] {height: auto;}
 .previewFileUpliaded {text-align: center;
-	margin-top: 5px;}
+	margin-top: 5px;
+	margin-bottom: 10px;}
 .previewFileUpliaded img{max-width: 60%}
 
 /*----------------------------------------------*\
@@ -496,7 +689,8 @@ footer {margin-top: 10px;}
 .form-question {background-color: #C8C8C8;
 	border-radius: 10px;
     padding: 1.5%;
-    margin-bottom: 2%;}
+    margin-bottom: 2%;
+    border: 2px solid #000;}
 .form-question textarea {border: 1px solid #000;}
 .form-question label {font-size: 1.3em !important;
 	width: 95%;}
@@ -517,3 +711,20 @@ footer {margin-top: 10px;}
 .survey-finish-content {width: 50%;
 	margin: 280px auto;
 	text-align: center;}
+
+/*----------------------------------------------*\
+		$POLLS
+\*----------------------------------------------*/
+
+.list-content li {list-style: initial !important;}	
+.results-page-call {width: 92%;
+    margin: 0 auto;}
+.results-page-call label {font-weight: normal;}
+.poll-table-tr-th-actions {width: 23.1%;}
+.poll-table-tr-th-responses {width: 22.8%;}
+.poll-table-tr-th-deadline {width: 23.9%;}
+
+.iframe-example {border: 2px solid #CCCCCC;
+    padding: 15px;
+    width: 475px;
+    margin: 160px auto;}

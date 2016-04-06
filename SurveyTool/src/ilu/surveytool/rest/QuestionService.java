@@ -14,13 +14,13 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.QuestionHandler;
+import ilu.surveymanager.handler.ResourceHandler;
+import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.constants.Parameter;
-import ilu.surveytool.data.Option;
 import ilu.surveytool.databasemanager.DataObject.Content;
-import ilu.surveytool.orchestrator.OptionOrch;
-import ilu.surveytool.orchestrator.QuestionOrch;
-import ilu.surveytool.orchestrator.ResourceOrch;
-import ilu.surveytool.orchestrator.SurveysOrch;
 
 @Path("/QuestionService")
 public class QuestionService {
@@ -42,8 +42,8 @@ public class QuestionService {
 					json.getString(Parameter.s_TEXT));
 			System.out.println("content: " + content.toString());
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.updateContent(questionId, content));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateContent(questionId, content));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -65,8 +65,32 @@ public class QuestionService {
 			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
 			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.updateMandatory(questionId, pageId));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateMandatory(questionId, pageId));
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+
+	@PUT
+	@Path("/updateIndex")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateIndex(String req) {
+    	System.out.println("Opción: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
+			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
+			int prevQuestionId = Integer.parseInt(json.getString(Parameter.s_PREV_ID));
+			
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateIndex(questionId, prevQuestionId, pageId));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -88,8 +112,8 @@ public class QuestionService {
 			int questionId = Integer.parseInt(qid);
 			int pageId = Integer.parseInt(pid);
 			
-			QuestionOrch questionOrch = new QuestionOrch();
-			response = String.valueOf(questionOrch.removeQuestionByPage(questionId, pageId));
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.removeQuestionByPage(questionId, pageId));
 			
 		/*} catch (JSONException e) {
 			// TODO Auto-generated catch block

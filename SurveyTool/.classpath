@@ -4,13 +4,14 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DatabaseMgr"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SurveyPanel"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/UserPanel"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/ExternalLibs/mail.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SurveyManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SurveyEngine"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/UserPanel"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

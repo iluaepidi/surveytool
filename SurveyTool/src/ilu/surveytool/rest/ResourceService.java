@@ -13,9 +13,9 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.data.Option;
-import ilu.surveytool.orchestrator.OptionOrch;
-import ilu.surveytool.orchestrator.ResourceOrch;
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.ResourceHandler;
 
 @Path("/ResourceService")
 public class ResourceService {
@@ -43,8 +43,8 @@ public class ResourceService {
     	JSONObject json = null;
     	String response = "false";
     	
-    	ResourceOrch resourceOrch = new ResourceOrch();
-    	response = String.valueOf(resourceOrch.removeResource(Integer.parseInt(resourceId)));
+    	ResourceHandler resourceHandler = new ResourceHandler();
+    	response = String.valueOf(resourceHandler.removeResource(Integer.parseInt(resourceId)));
     	
     	return response;
     }

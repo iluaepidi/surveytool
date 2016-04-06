@@ -11,7 +11,7 @@ public class Survey {
 	HashMap<String, Content> contents;
 	String project = "";
 	int author;
-	List<Question> questions = null;
+	List<Section> sections = null;
 	String publicId = "";
 	
 
@@ -30,13 +30,13 @@ public class Survey {
 	
 
 	public Survey(int surveyId, HashMap<String, Content> contents, String project, int author,
-			List<Question> questions, String publicId) {
+			List<Section> sections, String publicId) {
 		super();
 		this.surveyId = surveyId;
 		this.contents = contents;
 		this.project = project;
 		this.author = author;
-		this.questions = questions;
+		this.sections = sections;
 		this.publicId = publicId;
 	}
 	
@@ -81,13 +81,13 @@ public class Survey {
 	}
 
 
-	public List<Question> getQuestions() {
-		return questions;
+	public List<Section> getSections() {
+		return sections;
 	}
 
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setSections(List<Section> sections) {
+		this.sections = sections;
 	}
 	
 	
@@ -104,7 +104,7 @@ public class Survey {
 	@Override
 	public String toString() {
 		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author
-				+ ", questions=" + questions + ", publicId=" + publicId + "]";
+				+ ", sections=" + sections + ", publicId=" + publicId + "]";
 	}
 	
 }

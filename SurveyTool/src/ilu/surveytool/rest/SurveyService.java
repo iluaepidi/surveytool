@@ -13,11 +13,11 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.constants.Parameter;
-import ilu.surveytool.data.Option;
 import ilu.surveytool.databasemanager.DataObject.Content;
-import ilu.surveytool.orchestrator.OptionOrch;
-import ilu.surveytool.orchestrator.SurveysOrch;
 
 @Path("/SurveyService")
 public class SurveyService {
@@ -39,8 +39,8 @@ public class SurveyService {
 					json.getString(Parameter.s_TEXT));
 			System.out.println("content: " + content.toString());
 			
-			SurveysOrch surveysOrch = new SurveysOrch();
-			response = String.valueOf(surveysOrch.updateContent(surveyId, content));
+			SurveysHandler surveysHandler = new SurveysHandler();
+			response = String.valueOf(surveysHandler.updateContent(surveyId, content));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -62,8 +62,8 @@ public class SurveyService {
 			int surveyId = Integer.parseInt(json.getString(Parameter.s_SID));
 			String projectName = json.getString(Parameter.s_PROJECT);
 			
-			SurveysOrch surveysOrch = new SurveysOrch();
-			surveysOrch.updateProject(surveyId, projectName);
+			SurveysHandler surveysHandler = new SurveysHandler();
+			surveysHandler.updateProject(surveyId, projectName);
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

@@ -35,10 +35,48 @@ public class DBSQLQueries {
 		public final static String s_SELECT_OPTIONSBYGROUP_ID_BY_OPTIONID = "SELECT idOptionsGroup FROM surveytool.optionsbygroup where idOption = ?";
 		
 		//page
-		public final static String s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID = "SELECT idPage FROM surveytool.questionnaire q "
+		public final static String s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID = "SELECT p.idPage FROM surveytool.questionnaire q "
 				+ "inner join surveytool.forma f on q.idQuestionnaire = f.idQuestionnaire "
-				+ "inner join surveytool.page p on f.idForma = p.idForma "
+				+ "inner join surveytool.section s on s.idForma = f.idForma "
+				+ "inner join surveytool.page p on s.idSection = p.idSection "
 				+ "where q.idQuestionnaire = ?";
+		public final static String s_SELECT_PAGES_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage";
+		public final static String s_SELECT_PAGES_ID_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage desc";
+		public final static String s_SELECT_PAGE_BY_PAGEID = "SELECT * FROM surveytool.page where idPage = ?";
+		public final static String s_SELECT_NUM_PAGE_BY_SECTIONID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page where idSection = ?";
+		
+		//poll
+		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
+						+ "FROM surveytool.poll p "
+						+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
+						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+						+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_POLL_TABLE_INFO_BY_ID = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
+				+ "FROM surveytool.poll p "
+				+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
+				+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+				+ "WHERE p.idPoll = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_POLL_BY_PUBLIC_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
+				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
+				+ "where publicId = ?";
+		public final static String s_SELECT_POLL_CONTENTID = "SELECT idContent FROM surveytool.poll where idPoll = ?";
+		public final static String s_SELECT_POLL_BY_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
+				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
+				+ "where p.idPoll = ?";
+		
+		//poll response
+		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text,  (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
+				+ "FROM surveytool.questionbypoll qbp "
+				+ "inner join surveytool.optionsgroup og on qbp.idQuestion = og.idQuestion "
+				+ "inner join surveytool.optionsbygroup obg on og.idOptionsGroup = obg.idOptionsGroup "
+				+ "inner join surveytool.`option` o on obg.idOption = o.idOption "
+				+ "inner join surveytool.content c on o.idContent = c.idContent "
+				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "where qbp.idPoll = ? and l.isoName = ? and ct.name = 'title' "
+				+ "order by numResp desc";
 		
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
@@ -60,21 +98,42 @@ public class DBSQLQueries {
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
 		
 		//Question
-		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, l.isoName FROM surveytool.questionnaire s "
+		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+				+ "FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
-				+ "inner join surveytool.page p on f.idForma = p.idForma "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "inner join surveytool.page p on sc.idSection = p.idSection "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "inner join surveytool.language l on q.mainVersion = l.idLanguage "
-				+ "where s.idQuestionnaire = ?";
+				+ "where s.idQuestionnaire = ? order by qp.`index`";
+		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+				+ "FROM surveytool.section sc "
+				+ "inner join surveytool.page p on sc.idSection = p.idSection "
+				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
+				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
+				+ "where sc.idSection = ? order by qp.`index`";
+		public final static String s_SELECT_QUESTION_BY_PAGEID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+				+ "FROM surveytool.page p "
+				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
+				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
+				+ "where p.idPage = ? order by qp.`index`";
 		public final static String s_SELECT_QUESTION_CONTENT_BY_QUESTIONID = "SELECT ct.name questionTypeName, c.text FROM surveytool.question q "
 				+ "inner join surveytool.content c on q.idContent = c.idContent "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where q.idQuestion = ? and l.isoName = ?";
 		public final static String s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID = "SELECT idContent FROM surveytool.question where idQuestion = ?";
+		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName FROM surveytool.questionbypoll qbp "
+				+ "inner join surveytool.question q on qbp.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
+				+ "where qbp.idPoll = ?";
 		
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
@@ -101,7 +160,22 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTIONNAIRESID_BY_PROJECTID = "SELECT idQuestionnaire FROM surveytool.questionnaire WHERE idProject = ?";
 		
 		//QuestionByPage
+		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";
 		public final static String s_SELECT_QUESTIONBYPAGE_MANDATORY = "SELECT mandatory FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
+		public final static String s_SELECT_QUESTIONBYPAGE_INDEX = "SELECT `index` FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
+		public final static String s_SELECT_NUMQUESTION_BY_PAGE = "SELECT COUNT(*) numQuestions FROM surveytool.questionbypage where idPage = ?";
+		public final static String s_SELECT_QUESTIONBYPAGE_QUESTIONID_BY_PAGEID_INDEX = "SELECT idQuestion FROM surveytool.questionbypage where idPage = ? and `index` = ?";
+		
+		//sections
+		public final static String s_SELECT_SECTIONS_BY_SURVEYID = "SELECT sc.* FROM surveytool.questionnaire s "
+				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "where s.idQuestionnaire = ? order by sc.`index`";
+		public final static String s_SELECT_SECTION_COTENTID_BY_ID = "SELECT idContent FROM surveytool.section where idSection = ?";
+		public final static String s_SELECT_SECTION_NUM_ROWS_BY_SURVEYID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.questionnaire s "
+				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "where s.idQuestionnaire = ?";
 		
 		//User Questionnaire
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
@@ -111,7 +185,7 @@ public class DBSQLQueries {
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 		//AnonimousResponse
-			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idQuestion`, `value`, `idOptionsGroup`) VALUES (?, ?, ?, ?)";
+			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idResponse`) VALUES (?, ?)";
 		//content
 			public final static String s_INSERT_CONTENT = "INSERT INTO `surveytool`.`content` (`idContent`, `idLanguage`, `idContentType`, `text`) VALUES (?, "
 					+ "(SELECT idLanguage FROM surveytool.language WHERE isoName = ?), "
@@ -127,24 +201,31 @@ public class DBSQLQueries {
 		//OptionGroup
 			public final static String s_INSERT_OPTIONS_GROUP = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idContent`, `idOptionType`) VALUES (?, ?, "
 					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?))";
+		//poll
+			public final static String s_INSERT_POLL = "INSERT INTO `surveytool`.`poll` (`publicId`, `author`, `idQuestionnaire`, `idContent`, `idProject`, `callUrl`) VALUES (?, ?, ?, ?, ?, ?)";
 		//page
-			public final static String s_INSERT_PAGE = "INSERT INTO `surveytool`.`page` (`idForma`, `numPage`) VALUES (?, ?)";
+			public final static String s_INSERT_PAGE = "INSERT INTO `surveytool`.`page` (`idSection`, `numPage`) VALUES (?, ?)";
 		//project	
 			public final static String s_INSERT_PROJECT = "INSERT INTO `surveytool`.`project` (`projectName`) VALUES (?)";
 
 		//Question
-			public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`, `mainVersion`) VALUES (?, "
+			public final static String s_INSERT_QUESTION = "INSERT INTO `surveytool`.`question` (`tag`, `idQuestionType`, `idContent`, `idCategory`) VALUES (?, "
 					+ "(select idQuestionType from surveytool.questiontype where name = ?), ?, "
-					+ "(select idCategory from surveytool.category where name = ?), "
-					+ "(select idLanguage from surveytool.language where isoName = ?))";
+					+ "(select idCategory from surveytool.category where name = ?))";
 		//QuestionByPage
-			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `numQuestion`, `mandatory`) VALUES (?, ?, ?, ?)";
+			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `index`, `mandatory`) VALUES (?, ?, ?, ?)";
+		//QuestionByPoll
+			public final static String s_INSERT_QUESTION_BY_POLL = "INSERT INTO `surveytool`.`questionbypoll` (`idPoll`, `idQuestion`, `index`) VALUES (?, ?, ?)";
 		//QuestionResource
 			public final static String s_INSERT_QUESTION_RESOURCE = "INSERT INTO `surveytool`.`questionresource` (`idQuestion`, `idResoruces`) VALUES (?, ?)";
 		//Questionnaire
 			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
 		//Resource
 			public final static String s_INSERT_RESOURCE = "INSERT INTO `surveytool`.`resoruces` (`idResourceType`, `urlPath`, `idContent`) VALUES ((SELECT idResourceType FROM surveytool.resourcetype where name = ?), ?, ?)";
+		//Responses
+			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
+		//Section
+			public final static String s_INSERT_SECTION = "INSERT INTO `surveytool`.`section` (`index`, `idForma`, `idContent`) VALUES (?, ?, ?)";
 			
 	//updates
 		//content
@@ -158,11 +239,12 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
 		//questionByPage
 			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
+			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX = "UPDATE surveytool.questionbypage SET `index`=? WHERE idPage=? and idQuestion=?";			
 		//questionnaire
 			public final static String s_UPDATE_QUESTIONNAIRE_PROJECT = "UPDATE surveytool.questionnaire SET idProject=? WHERE idQuestionnaire= ?";
 		//resources
 			public final static String s_UPDATE_RESOURCE_URLPATH = "UPDATE `surveytool`.`resoruces` SET `urlPath`=? WHERE `idResoruces`=?";
-		
+			
 	//delete
 		//contentIndex
 			public final static String s_DELETE_CONTENT = "DELETE FROM `surveytool`.`contentindex` WHERE `idContent`=?";
@@ -170,38 +252,17 @@ public class DBSQLQueries {
 		//option
 			public final static String s_DELETE_OPTION = "DELETE FROM surveytool.option WHERE idOption = ?";
 			
+		//page
+			public final static String s_DELETE_PAGE = "DELETE FROM surveytool.page WHERE idPage = ?";
+			
 		//questionByPage
 			public final static String s_DELETE_QUESTION_BY_PAGE = "DELETE FROM surveytool.questionbypage WHERE idPage=? and idQuestion=?";
+			public final static String s_DELETE_QUESTION_BY_PAGE_WHERE_PAGEID = "DELETE FROM surveytool.questionbypage WHERE idPage=?";
 			
 		//resources
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";
-		
-		/*
-		//language
-		public final static String s_SELECT_CONTENTTYPE_ALL_ORDERBY_CONTENTTYPEID = "Select * from personaemgrlacaixa.contenttype order by contentTypeId";
-		//multilanguagecontent
-		public final static String s_SELECT_MULTILANGUAGECONTENT_TEXT_BY_CONTENTID_LANGUAGENAME_CONTENTTYPENAME = "SELECT text FROM personaemgrlacaixa.multilanguagecontent as mlc " + 
-				"INNER JOIN personaemgrlacaixa.language as l ON  l.language_id = mlc.languageId " + 
-				"INNER JOIN personaemgrlacaixa.contenttype as ct ON mlc.contentTypeId = ct.contentTypeId " +
-				"where mlc.contentId = ? and l.isoName = ? and ct.name = ?";
-		public final static String s_SELECT_USER_FROM_USER_PROFILE_SENT = "SELECT distinct u.* FROM personaemgrlacaixa.userprofilesent as ups INNER JOIN personaemgrlacaixa.user as u on u.userId = ups.userId";
-		*/
-		
-		
-	//updates
-		/*
-		public final static String s_UPDATE_USER_PREVIEW_AND_REQUESTDATE = "UPDATE user SET preview = ?, cardRequestDate = ? WHERE userId =?";
-		public final static String s_UPDATE_MULTILANGUAGECONTENT = "UPDATE `personaemgrlacaixa`.`multilanguagecontent` SET `text`= ? WHERE `contentId`=? and`languageId`=? and`contentTypeId`=?";
-		*/
-		
-	//inserts
-		/*
-		public final static String s_INSERT_USER_PREPROFILES = "INSERT INTO userpreprofile (`userId`, `preprofileId`) VALUES (?, ?)";
-		*/
-		
-	//delete
-		/*
-		public final static String s_DELETE_USER_OPTION_VALUE_BY_USERID_OPTIONID = "DELETE FROM useroptionvalue WHERE userId = ? and optionId = ?";
-		*/
+
+		//section
+			public final static String s_DELETE_SECTION = "DELETE FROM surveytool.section WHERE idSection = ?";
 		
 }

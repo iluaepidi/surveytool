@@ -139,7 +139,7 @@ public class OptionDB {
 	   		{
 	   			Option option = new Option();
 	   			option.setId(rs.getInt(DBFieldNames.s_OPTIONID));
-	   			option.setIndex(rs.getInt(DBFieldNames.s_OPTION_INDEX));
+	   			option.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
@@ -203,7 +203,7 @@ public class OptionDB {
 	   		{
 	   			optionsByGroup.add(new OptionsByGroup(optionsGroupId, 
 	   					rs.getInt(DBFieldNames.s_OPTIONID), 
-	   					rs.getInt(DBFieldNames.s_OPTION_INDEX)));
+	   					rs.getInt(DBFieldNames.s_INDEX)));
 	   		}
 	   		
 		} catch (SQLException e) {
