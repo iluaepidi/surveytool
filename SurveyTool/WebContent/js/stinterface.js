@@ -296,3 +296,19 @@ function bodyClick()
 		currentFrameActivate = "";
 	}
 }
+
+
+function showHideRegister(register){
+	if(register==true){
+		$('#registerDivForm').show();
+		$('#loginDivForm').hide();
+	}else{
+		$('#registerDivForm').hide();
+		$('#loginDivForm').show();
+	}
+	
+	
+	
+}
+
+
