@@ -27,6 +27,7 @@
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/bootbox.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
 		
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
