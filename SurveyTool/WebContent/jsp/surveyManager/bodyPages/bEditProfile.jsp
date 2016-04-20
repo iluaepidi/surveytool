@@ -25,7 +25,7 @@
 							label: "<%= lang.getContent("profile.button.accept") %>",
 							className: "btn-success",
 								callback: function() {
-								   //window.location.href = "InitialServlet?logout=true";
+								   window.location.href = "InitialServlet";
 								
 								}
 							}}
@@ -96,9 +96,10 @@
 			           
 			            <div class="form-group" style="margin-top: 200px;">
 			                <label class="col-md-4 control-label" for="guardar" style="width: 33%;"></label>
-			                <div class="col-md-4">
+			                <div class="col-md-8">
+			                    <button type="button" id="cancelprofile" name="cancelprofile" class="btn btn-default" style="width: 200px;"><%= lang.getContent("profile.cancel") %></button>
 			                    <button id="savesubmit" name="savesubmit" class="btn btn-primary" style="width: 200px;"><%= lang.getContent("profile.save") %></button>
-			                </div>
+			                 </div>
 			            </div>
 			
 			        </fieldset>

@@ -87,6 +87,11 @@ $(function() {
 		}
 	});
 	
+	$('#cancelprofile').click(function(e){
+		window.location.href = "InitialServlet";
+		//window.location.href = 'http://example.com';
+	});
+	
 	$('.form-group').on('keyup', 'input', function(){
 		if(error)
 		{

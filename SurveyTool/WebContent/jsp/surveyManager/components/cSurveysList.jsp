@@ -29,7 +29,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  					{
 			  					%>
 			  					<div class="surveys-table">
-			  						<table class="table table-bordered" sumary="List of surveys where ..." id="surveys-table">
+			  						<table class="table table-bordered" sumary="List of surveys where ..." id="surveys-table"  data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
 			  							<thead>
 										<tr class="info" id="titles">
@@ -144,12 +144,22 @@ lang.close();
         
         
         $('#surveys-table').dataTable({
+        	"iDisplayLength": 25,
         	"pagingType": "full_numbers",
             "scrollY":        "530px",
             "scrollCollapse": false,
-           "searching": true,
+            "searching": true,
             "ordering": false
         });
+        
+        
+       
+    });
+    
+    
+    $( window ).load(function() {
+    	 $('[name="surveys-table_length"]').val("10");
+    	 $('[name="surveys-table_length"]').change();
     });
     
     
