@@ -4,16 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
-public class LoginDB {
+public class ProfileDB {
 
-	public LoginDB() {
+	public ProfileDB() {
 		super();
 	}
 	
@@ -38,33 +40,58 @@ public class LoginDB {
 		 }
 	}
 	
-	public LoginResponse login(Credentials credentials)
+	/*
+	 * update
+	 */
+	
+	public boolean updatePassword(int userid, String username, String password, String email) {
+		boolean updated = false;
+		
+		if(!this.existsEmail(email,username)){
+			
+			//System.out.println("updateState");
+			
+			Connection con = this._openConnection();
+			PreparedStatement pstm = null;
+			   
+			try{
+			   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_USER_PASSWORD_AND_EMAIL);
+				pstm.setString(1, password);
+				pstm.setString(2, email);
+				pstm.setInt(3, userid);
+			   		
+				int numUpdated = pstm.executeUpdate();
+				
+				if(numUpdated > 0) updated = true;
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				this._closeConnections(con, pstm, null);
+			}
+		}
+		 
+		return updated;
+	}
+	
+	public boolean existsEmail(String email,String username)
 	{
-		LoginResponse response = new LoginResponse();
+		boolean existemail = false;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LOGIN);			
-	   		pstm.setString(1, credentials.getUsername());
-	   		pstm.setString(2, credentials.getUsername());
-	   		pstm.setString(3, credentials.getPassword());
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE);			
+	   		pstm.setString(1, email);
+	   		pstm.setString(2, username);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
-	   			response.setValid(true);
-	   			response.setUserId(rs.getInt(DBFieldNames.s_USERID));
-	   			response.setUserName(rs.getString(DBFieldNames.s_USERNAME));
-	   			response.setRol(rs.getString(DBFieldNames.s_ROLNAME));
-	   			response.setPassword(credentials.getPassword());
-	   			response.setEmail(rs.getString(DBFieldNames.s_USER_EMAIL));
-	   		}
-	   		else
-	   		{
-	   			response.setErrorMsg("Invalid username or password");
+	   			existemail = true;
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -74,7 +101,7 @@ public class LoginDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return response;
+		return existemail;
 	}
 
 }

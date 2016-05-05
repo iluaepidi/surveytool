@@ -1,25 +1,27 @@
 package ilu.surveytool.databasemanager.DataObject;
 
-public class LoginResponse {
+public class RegisterResponse {
 	
 	int userId;
 	String userName = "";
-	String rol = "";
+	private String email = "";
+	private String password = "";
+	private String repassword = "";
 	boolean isValid = false;
 	String errorMsg = "";
-	private String password;
-	private String email;
-	
 
-	public LoginResponse() {
+	public static int ROL_NORMAL_USER = 1;
+	
+	public RegisterResponse() {
 		super();
 	}
 
-	public LoginResponse(int userId, String userName, String rol, boolean isValid, String errorMsg) {
+	public RegisterResponse(int userId, String userName, String email,String password, boolean isValid, String errorMsg) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
-		this.rol = rol;
+		this.setEmail(email);
+		this.setPassword(password);
 		this.isValid = isValid;
 		this.errorMsg = errorMsg;
 	}
@@ -56,18 +58,20 @@ public class LoginResponse {
 		this.errorMsg = errorMsg;
 	}
 
-	public String getRol() {
-		return rol;
-	}
-
-	public void setRol(String rol) {
-		this.rol = rol;
-	}
+	
 
 	@Override
 	public String toString() {
-		return "LoginResponse [userId=" + userId + ", userName=" + userName + ", isValid=" + isValid + ", errorMsg="
+		return "RegisterResponse [userId=" + userId + ", userName=" + userName + ", email=" + getEmail() + ", password=" + getPassword() + ", isValid=" + isValid + ", errorMsg="
 				+ errorMsg + "]";
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -78,12 +82,12 @@ public class LoginResponse {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getRepassword() {
+		return repassword;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
 	}
 
 }
