@@ -124,6 +124,16 @@ $(function() {
 		}
 	});
 	
+	$('.form-group').on('keyup', 'textarea', function(){
+		if(error)
+		{
+			var value = $(this).val();
+			
+			if(value != ''){hideFieldError($(this));}
+			else{showFieldError($(this));}
+		}
+	});
+	
 });
 
 function showFieldError(element)

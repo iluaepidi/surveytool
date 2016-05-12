@@ -164,6 +164,16 @@ $(function() {
 						'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+		
+		$('.form-group').on('keyup', 'input', function(){
+			if(error)
+			{
+				var value = $(this).val();
+				
+				if(value != ''){hideFieldError($(this));}
+				else{showFieldError($(this));}
+			}
+		});
 	});
 	
 	$('#option-list').on("click", "#remove-option-poll", function(e){
