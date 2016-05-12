@@ -27,7 +27,6 @@
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/bootbox.js"></script>
-		<script src="js/jquery.dataTables.js"></script>
 		
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
@@ -48,3 +47,7 @@
 		}
 	}
 	%>
+	<!-- Librería tabla dinamica -->
+	<link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>

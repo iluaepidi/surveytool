@@ -54,25 +54,42 @@ $(function() {
 	});
 	
 	$('#create-question').click(function(event) {
-		// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
-		$.post('CreateQuestionServlet', {
-			qtype : $('#qtypevalue').val(),
-			qstatement: $('#qstatement').val(),
-			mandatory: $('#mandatory').val(),
-			helpText: $('#help-text').val(),
-			surveyid: $('#surveyid').val(),
-			pageid: $('#pageid1').val()
-		}, function(responseText) {
-			var index = responseText.indexOf("<html");
-			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
-			else {currentAddNode.closest('li[id=page]').find('#page-items').append(responseText);}
-		});
-		$('#qstatement').val("");
-		//$('#main-version').val("none");
-		$('#mandatory').val("false");
-		$('#help-text').val("false");
-		$('#' + qtypeId + " i").css("background-color","#fff");
-		$('#frame-basic-Settings').css('display', 'none');
+		
+		var valid = true;
+		//check de name project
+		if($('#qstatement').val() == ""){
+			valid = false;
+			showFieldError($('#qstatement'));
+		}else{
+			hideFieldError($('#qstatement'));
+			
+			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
+			$.post('CreateQuestionServlet', {
+				qtype : $('#qtypevalue').val(),
+				qstatement: $('#qstatement').val(),
+				mandatory: $('#mandatory').val(),
+				helpText: $('#help-text').val(),
+				surveyid: $('#surveyid').val(),
+				pageid: $('#pageid1').val()
+			}, function(responseText) {
+				var index = responseText.indexOf("<html");
+				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+				else {currentAddNode.closest('li[id=page]').find('#page-items').append(responseText);}
+			});
+			$('#qstatement').val("");
+			//$('#main-version').val("none");
+			$('#mandatory').val("false");
+			$('#help-text').val("false");
+			$('#' + qtypeId + " i").css("background-color","#fff");
+			$('#frame-basic-Settings').css('display', 'none');
+			
+			//$('#modal').modal('hide');
+			//$('#newQuestionModal').hide();
+			$('#newQuestionModal').modal('toggle');
+		}
+		
+		
+		
 	});
 	
 	$('#page').on("click", '#btn-question', function(){
@@ -349,12 +366,22 @@ $(function() {
 		e.stopPropagation();		
 		var req = {};		
 		req.text = $(this).val();
+		
 		req.contentType = "title";
 		req.lan = "en";
 		req.sid = $(this).closest('#survey-info').attr('sid');		
 		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
 		
-		updateContent(req, serviceUrl);
+		//check de title
+		var valid = true;
+		if(req.text == ""){
+			valid = false;
+			showFieldError($('#survey-info-title'));
+		}else{
+			hideFieldError($('#survey-info-title'));
+			updateContent(req, serviceUrl);
+		}
+		
 	});
 	
 	$('#survey-info').on("focusout", "#surveyDescription", function(e){
@@ -376,7 +403,16 @@ $(function() {
 		req.sid = $(this).closest('#survey-info').attr('sid');		
 		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateProject";
 		
-		updateContent(req, serviceUrl);
+		var valid = true;
+		//check de name project
+		if(req.project == ""){
+			valid = false;
+			showFieldError($('#surveyProject'));
+		}else{
+			hideFieldError($('#surveyProject'));
+			updateContent(req, serviceUrl);
+		}
+		
 	});
 	
 	$('#survey-sections').on("focusout", "#survey-section-title", function(e){
@@ -388,7 +424,15 @@ $(function() {
 		req.scid = $(this).closest('#panel-section1').attr('scid');		
 		var serviceUrl = host + "/SurveyTool/api/SectionService/updateContent";
 		
-		updateContent(req, serviceUrl);
+		//check de section title
+		var valid = true;
+		if(req.text == ""){
+			valid = false;
+			showFieldError($('#survey-section-title'));
+		}else{
+			hideFieldError($('#survey-section-title'));
+			updateContent(req, serviceUrl);
+		}
 	});
 	
 	$('#page-items').on("click", "#helpTextButton", function(e){
@@ -454,6 +498,7 @@ $(function() {
 	});
 	
 	$('#page-items').on("focusout", "#survey-question-title", function(e){
+		
 		e.stopPropagation();
 		var req = {};		
 		req.text = $(this).val();
@@ -462,7 +507,21 @@ $(function() {
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
 		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
-		updateContent(req, serviceUrl);
+		//check de section title
+		var valid = true;
+		if(req.text == ""){
+			valid = false;
+			//showFieldError($('#survey-question-title'+req.qid));
+			$('#survey-question-title'+req.qid+'-error').removeClass('hidden');
+			$('#survey-question-title'+req.qid+"-feedback").removeClass('hidden');
+		}else{
+			//hideFieldError($('#survey-question-title'+req.qid));
+			$('#survey-question-title'+req.qid+'-error').addClass('hidden');
+			$('#survey-question-title'+req.qid+"-feedback").addClass('hidden');
+			updateContent(req, serviceUrl);
+		}
+		
+		
 	});
 
 	$('#page-items').on("focusout", "#survey-question-description-text", function(e){
@@ -517,6 +576,12 @@ $(function() {
 			});
 		}
 	});
+	
+	
+	
+	
+	
+	
 });
 
 function updateContent(req, serviceUrl)

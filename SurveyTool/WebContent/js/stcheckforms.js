@@ -57,6 +57,7 @@ $(function() {
 		}
 	});
 	
+	
 	$('#savesubmit').click(function(e){
 		e.preventDefault();
 		var valid = true;
@@ -87,6 +88,27 @@ $(function() {
 		}
 	});
 	
+	
+	$('#createnewsurvey').click(function(e){
+		e.preventDefault();
+		var valid = true;
+		if($('#surveyTitle').val() == ""){
+			valid = false;
+			showFieldError($('#surveyTitle'));
+		}
+		
+		if($('#surveyProject').val() == ""){
+			valid = false;
+			showFieldError($('#surveyProject'));
+		}
+		
+		if(valid){
+			error = false;
+			$('#formcreatenewsurvey').submit();
+		}
+		
+	});
+	
 	$('#cancelprofile').click(function(e){
 		window.location.href = "InitialServlet";
 		//window.location.href = 'http://example.com';
@@ -114,6 +136,9 @@ function showFieldError(element)
 	
 	error = true;
 }
+
+
+
 
 function showFieldErrorRegisterUsername(element)
 {	

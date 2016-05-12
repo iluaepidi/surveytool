@@ -146,7 +146,7 @@ lang.close();
         $('#surveys-table').dataTable({
         	"iDisplayLength": 25,
         	"pagingType": "full_numbers",
-            "scrollY":        "530px",
+            "scrollY":    "530px",
             "scrollCollapse": false,
             "searching": true,
             "ordering": false
@@ -157,7 +157,7 @@ lang.close();
     });
     
     
-    $( window ).load(function() {
+    $(window).load(function() {
     	 $('[name="surveys-table_length"]').val("10");
     	 $('[name="surveys-table_length"]').change();
     });

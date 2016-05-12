@@ -154,7 +154,8 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item">' +
 							//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 							'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-							'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+							//'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+							'<div class="col-sm-8"><div class="form-group" style="margin:0px;"><input type="text" id="option' + index + '" class="form-control fleft" index="' + index + '" placeholder="Option ' + index + '" style="width: 100%; !important;"/><span  id="option' + index + '-feedback" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true" style="color:#A94442;right: 20px;"></span><span  id="option' + index + '-error" class="error hidden" style="top: 0px;right: -180px;">'+'textmultilanguage'+'</span></div></div>'+
 							'<div class="option-icons fleft"> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -193,47 +194,91 @@ $(function() {
 	});
 	
 	$('#btnCreateNewPoll').click(function(){
-		var pollOptions = [];
-		var existPolls = 'false';
-		if($('#poll-table').length)
-		{
-			existPolls = 'true';
-			console.log("Exist polls: " + existPolls);
+		var valid = true;
+		if($('#pollTitle').val() == ""){
+			valid = false;
+			showFieldError($('#pollTitle'));
+		}else{
+			hideFieldError($('#pollTitle'));
 		}
 		
-		$('li[id=option-item]').each(function (i, elem)
-		{
-			var option = {};
-			var input = $(elem).find('input');
-			option.title = input.val();
-			option.index = input.attr('index');
-			pollOptions.push(option);
-		});
+		if($('#pollProject').val() == ""){
+			valid = false;
+			showFieldError($('#pollProject'));
+		}else{
+			hideFieldError($('#pollProject'));
+		}
 		
-		$.post('CreatePollServlet', {
-        	title : $('#pollTitle').val(),
-        	project: $('#pollProject').val(),
-        	qstatement: $('#qstatement').val(),
-  			options: JSON.stringify(pollOptions),
-  			ackText: $('#ackText').val(),
-  			callText: $('#pollCallText').val(),
-  			linkLabel: $('#pollLinkLabel').val(),
-  			linkUrl: $('#pollLinkUrl').val(),
-  			existPolls: existPolls
-  		}, function(res) {
-  			console.log('create poll response: ' + res);
-  			$('#newPollForm')[0].reset();
-  			$("#newPollModal").modal("hide");
-  			if(existPolls === 'false')
-  			{
-  				$('#no-polls-msg').after(res);
-  				$('#no-polls-msg').remove();
-  			}
-  			else
-  			{
-  				$('#poll-table').find('tbody').append(res);
-  			}
-  		});
+		if($('#qstatement').val() == ""){
+			valid = false;
+			showFieldError($('#qstatement'));
+		}else{
+			hideFieldError($('#qstatement'));
+		}
+		
+		
+		var option=1;
+		while($('#option'+option)!="undefined" && $('#option'+option).length>0){
+			
+			if($('#option'+option).val() == ""){
+				valid = false;
+				showFieldError($('#option'+option));
+			}else{
+				hideFieldError($('#option'+option));
+			}
+			
+			option++;
+		}
+		
+		
+		
+		if(valid){
+		
+			var pollOptions = [];
+			var existPolls = 'false';
+			if($('#poll-table').length)
+			{
+				existPolls = 'true';
+				console.log("Exist polls: " + existPolls);
+			}
+			
+			$('li[id=option-item]').each(function (i, elem)
+			{
+				var option = {};
+				var input = $(elem).find('input');
+				option.title = input.val();
+				option.index = input.attr('index');
+				pollOptions.push(option);
+			});
+			
+			$.post('CreatePollServlet', {
+	        	title : $('#pollTitle').val(),
+	        	project: $('#pollProject').val(),
+	        	qstatement: $('#qstatement').val(),
+	  			options: JSON.stringify(pollOptions),
+	  			ackText: $('#ackText').val(),
+	  			callText: $('#pollCallText').val(),
+	  			linkLabel: $('#pollLinkLabel').val(),
+	  			linkUrl: $('#pollLinkUrl').val(),
+	  			existPolls: existPolls
+	  		}, function(res) {
+	  			console.log('create poll response: ' + res);
+	  			$('#newPollForm')[0].reset();
+	  			$("#newPollModal").modal("hide");
+	  			if(existPolls === 'false')
+	  			{
+	  				$('#no-polls-msg').after(res);
+	  				$('#no-polls-msg').remove();
+	  			}
+	  			else
+	  			{
+	  				$('#poll-table').find('tbody').append(res);
+	  			}
+	  		});
+
+		}else{
+			//$('#newPollForm').validator();
+		}
 	});
 	
 });

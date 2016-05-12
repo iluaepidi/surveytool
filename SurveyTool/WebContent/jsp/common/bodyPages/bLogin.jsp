@@ -123,7 +123,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 lang.close();
 if(registerResponse!=null){				  									
 %>
-<<script type="text/javascript">
+<script type="text/javascript">
 showHideRegister(true);
 </script>
 
