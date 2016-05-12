@@ -23,13 +23,21 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 											<div class="col-sm-7 margin-bottom-10">
 												<label for="pollTitle" class="col-sm-2 control-label left"><%= lang.getContent("poll.new.label.poll_title") %></label>
 										   		<div class="col-sm-10">
+										     		<div class="form-group" style="margin:0px;">
 										     			<input type="text" class="form-control" id="pollTitle" name="title" placeholder="<%= lang.getContent("poll.new.placeholder.poll_title") %>">
+										     			<span  id='pollTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+			  											<span id='pollTitle-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.poll.title") %></span>
+										   			</div>
 										   		</div>
 											</div>
 											<div class="col-sm-5">
 												<label for="pollProject" class="col-sm-3 control-label left"> <%= lang.getContent("poll.new.label.project") %> </label>
 										   		<div class="col-sm-9">
-										   			<input type="text" class="form-control" id="pollProject" name="project" placeholder="<%= lang.getContent("poll.new.placeholder.project") %>"/>														
+										   			<div class="form-group" style="margin:0px;">
+										   				<input type="text" class="form-control" id="pollProject" name="project" placeholder="<%= lang.getContent("poll.new.placeholder.project") %>"/>
+										   				<span  id='pollProject-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+			  											<span id='pollProject-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.poll.project") %></span>															
+										   			</div>
 										   		</div>
 											</div>
 										</div>										
@@ -39,8 +47,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    					<legend><%= lang.getContent("poll.new.legend.question") %></legend>
 									
 										<div class="margin-bottom-10">
-											<label for="qstatement" ><%= lang.getContent("question.statement") %></label>
-									     	<textarea class="form-control" id="qstatement" rows="3" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>									     	
+											<div class="form-group" style="margin:0px;">
+												<label for="qstatement" ><%= lang.getContent("question.statement") %></label>
+									     		<textarea class="form-control" id="qstatement" rows="3" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>									     	
+												<span  id='qstatement-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  									<span id='qstatement-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+											</div>
 										</div>
 										
 										<fieldset>
@@ -49,7 +61,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					  							<li class="option-item" id="option-item">
 				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 				  									<div class="circle-info circle-grey fleft">1</div>
-				  									<input type="text" class="option-title form-control fleft" index="1" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 1"/>
+				  									<div class="col-sm-8">
+				  										<div class="form-group" style="margin:0px;">
+				  											<input type="text" id='option1' class="form-control fleft" index="1" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 1" style="width: 100%; !important;"/>
+				  											<span  id='option1-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color:#A94442;right: 20px;"></span>
+			  												<span  id='option1-error' class='error hidden' style='top: 0px;right: -180px;'><%= lang.getContent("msg.error.poll.option") %></span>	
+				  										</div>
+				  									</div>
 				  									<div class="option-icons fleft">
 					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -60,7 +78,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					  							<li class="option-item" id="option-item">
 				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 				  									<div class="circle-info circle-grey fleft">2</div>
-				  									<input type="text" class="option-title form-control fleft" index="2" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 2"/>
+				  									<div class="col-sm-8">
+				  										<div class="form-group" style="margin:0px;">
+				  											<input type="text" id='option2' class="form-control fleft" index="2" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 2" style="width: 100%; !important;"/>
+				  											<span  id='option2-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color:#A94442;right: 20px;"></span>
+			  												<span  id='option2-error' class='error hidden' style='top: 0px;right: -180px;'><%= lang.getContent("msg.error.poll.option") %></span>	
+				  										</div>
+				  									</div>
 				  									<div class="option-icons fleft">
 					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -106,7 +130,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 							     	</fieldset>
 							     	
 							     	<div class="center">
-										<button name="createNewPoll" id="btnCreateNewPoll" class="btn btn-primary"><%= lang.getContent("button.create") %></button> 
+							     	    <input type="button" name="createNewPoll" id="btnCreateNewPoll" class="btn btn-primary" value="<%= lang.getContent("button.create") %>"/> 
 									</div>
 								</form>
 				    		</div> 

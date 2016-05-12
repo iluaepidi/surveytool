@@ -56,8 +56,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    						<input type="hidden" id="qtypevalue" name="qtype" value="" />
 				    						<input type="hidden" id="surveyid" name="surveyid" value="<%= survey.getSurveyId() %>" />
 				    						<div class="col-md-7">
-				    							<label for="qstatement" ><%= lang.getContent("question.statement") %></label>
-										     	<textarea class="form-control" id="qstatement" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
+				    							<div class="form-group" style="margin:0px;">
+				    								<label for="qstatement" ><%= lang.getContent("question.statement") %></label>
+										     		<textarea class="form-control" id="qstatement" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
+													<span  id='qstatement-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  										<span id='qstatement-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+												</div>
 											</div>
 											<div class="col-md-5 basic-settings-right-options">
 												<div class="div-create-question-mandatory row">
@@ -68,7 +72,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 													  </select>
 												</div>
 												<div class="div-btn-create-question center">
-													<button class="btn btn-primary" id="create-question" data-dismiss="modal"><%= lang.getContent("button.create") %></button>
+													<input type="button" value="<%= lang.getContent("button.create") %>" class="btn btn-primary" id="create-question"/>
 												</div>
 											</div>
 				    					</form>

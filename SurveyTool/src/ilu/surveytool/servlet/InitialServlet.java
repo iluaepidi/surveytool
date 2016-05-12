@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
@@ -45,24 +46,39 @@ public class InitialServlet extends HttpServlet {
 	
 	protected void ProcessRequest(HttpServletRequest request, HttpServletResponse response)
 	{
-		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
-		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
-		if(userSessionInfo != null && userSessionInfo.isValid())
-		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
+		String logout = (String)request.getParameter(Parameter.s_LOGOUT);
+		if(logout!=null){
+			//hacer logout
+			HttpSession session = request.getSession();
+			session.removeAttribute(Attribute.s_USER_SESSION_INFO);
+			try {
+				response.sendRedirect("index.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}else{
+			LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
+			SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+			
+			if(userSessionInfo != null && userSessionInfo.isValid())
+			{
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
+			}
+			else
+			{
+				userSessionInfo = new LoginResponse();
+				userSessionInfo.setErrorMsg("Session is expired or not exist.");
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
+				request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			}
+			
+			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		}
-		else
-		{
-			userSessionInfo = new LoginResponse();
-			userSessionInfo.setErrorMsg("Session is expired or not exist.");
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
-			request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
-		}
-		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}
 
 }

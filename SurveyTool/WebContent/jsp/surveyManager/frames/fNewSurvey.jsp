@@ -15,21 +15,29 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    			<h2 class="panel-title"><%= lang.getContent("survey.new.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
-			    				<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal">
+			    				<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal" id="formcreatenewsurvey">
 			    					<fieldset class="survey-frame">
 				    					<legend><%= lang.getContent("survey.new.legend") %></legend>
 									
 										<div class="row">
 											<div class="col-sm-7 margin-bottom-10">
-												<label for="surveyTitle" class="col-sm-2 control-label left"><%= lang.getContent("survey.new.label.survey_title") %></label>
-										   		<div class="col-sm-10">
-										     			<input type="text" class="form-control" id="surveyTitle" name="title" placeholder="<%= lang.getContent("placeholder.type_here") %>">
+												<div class="form-group" style="margin:0px;">
+													<label for="surveyTitle" class="col-sm-2 control-label left"><%= lang.getContent("survey.new.label.survey_title") %></label>
+											   		<div class="col-sm-10">
+											     		<input type="text" class="form-control" id="surveyTitle" name="title" placeholder="<%= lang.getContent("placeholder.type_here") %>">
+											     		<span  id='surveyTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+				  										<span id='surveyTitle-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.title") %></span>
+											   		</div>
 										   		</div>
 											</div>
 											<div class="col-sm-5">
-												<label for="surveyProject" class="col-sm-3 control-label left"> <%= lang.getContent("survey.new.label.project") %> </label>
-										   		<div class="col-sm-9">
-										   			<input type="text" class="form-control" id="surveyProject" name="project" placeholder="<%= lang.getContent("survey.new.placeholder.project") %>"/>														
+												<div class="form-group" style="margin:0px;">
+													<label for="surveyProject" class="col-sm-3 control-label left"> <%= lang.getContent("survey.new.label.project") %> </label>
+											   		<div class="col-sm-9">
+											   			<input type="text" class="form-control" id="surveyProject" name="project" placeholder="<%= lang.getContent("survey.new.placeholder.project") %>"/>	
+											   			<span  id='surveyProject-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+				  										<span id='surveyProject-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.project") %></span>													
+											   		</div>
 										   		</div>
 											</div>
 										</div>
@@ -40,7 +48,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										   		<textarea class="form-control" id="surveyDescription" name="description" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 											</div>
 											<div class="col-sm-3 center">
-												<input type="submit" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />
+												<input type="button" id="createnewsurvey" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />
 											</div>
 										</div>
 									</fieldset>

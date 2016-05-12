@@ -47,13 +47,21 @@
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">
 		  							<i class="fa fa-caret-right fa-2x"></i>
 		  						</button>
-		  						 
-		  						<input type="text" class="survey-info-title" id="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>" value="<%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" />
-		  						
+		  						<div style="float: left;width: 42%;">
+		  							<div class="form-group" style="margin:0px;">
+		  								<input type="text" class="survey-info-title" id="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>" value="<%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" />
+		  								<span  id='survey-info-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+			  							<span id='survey-info-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.newsurvey.title") %></span>	
+			  						</div>
+			  					</div>					
 		  						<div class="survey-info-project">
 									<label for="surveyProject" class="col-sm-4 control-label"> <%= lang.getContent("survey.edit.info.label.project") %> </label>
 							   		<div class="col-sm-8">
-							   			<input type="text" class="form-control" id="surveyProject" name="project" value="<%= survey.getProject() %>" />
+							   			<div class="form-group" style="margin:0px;">
+							   				<input type="text" class="form-control" id="surveyProject" name="project" value="<%= survey.getProject() %>" />
+							   				<span  id='surveyProject-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='right: 20px'></span>
+			  								<span id='surveyProject-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.project") %></span>	
+							   			</div>
 							   		</div>
 								</div>
 								
