@@ -163,6 +163,11 @@ $(function() {
 						'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> 58bde51... multilanguage
 	});
 	
 	$('#option-list').on("click", "#remove-option-poll", function(e){
