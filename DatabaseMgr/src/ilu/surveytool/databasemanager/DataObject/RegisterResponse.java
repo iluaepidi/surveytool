@@ -9,6 +9,7 @@ public class RegisterResponse {
 	private String repassword = "";
 	boolean isValid = false;
 	String errorMsg = "";
+	private String isoLanguage ="";
 
 	public static int ROL_NORMAL_USER = 1;
 	
@@ -88,6 +89,14 @@ public class RegisterResponse {
 
 	public void setRepassword(String repassword) {
 		this.repassword = repassword;
+	}
+
+	public String getIsoLanguage() {
+		return isoLanguage;
+	}
+
+	public void setIsoLanguage(String isoLanguage) {
+		this.isoLanguage = isoLanguage;
 	}
 
 }

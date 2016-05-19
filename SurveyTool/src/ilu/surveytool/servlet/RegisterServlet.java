@@ -19,6 +19,7 @@ import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.userpanel.accesscontrol.Login;
 import ilu.userpanel.accesscontrol.Register;
@@ -63,12 +64,17 @@ public class RegisterServlet extends HttpServlet {
 		 * cargar correspondiente body page
 		 */
 		
+		String langReq = Language.getLanguageRequest(request);
+		
 		Register registerHandler = new Register();
 		RegisterResponse registerReponse = new RegisterResponse();
 		registerReponse.setUserName(request.getParameter(Parameter.s_USERNAME));
 		registerReponse.setPassword(request.getParameter(Parameter.s_PASSWORD));
 		registerReponse.setRepassword(request.getParameter(Parameter.s_REPASSWORD));
 		registerReponse.setEmail(request.getParameter(Parameter.s_EMAIL));
+		registerReponse.setIsoLanguage(langReq);
+		
+		
 		
 		System.out.println("Parameters: " + registerReponse.getUserName() + " - " + registerReponse.getPassword());
 		RegisterResponse regResp = registerHandler.register(registerReponse);

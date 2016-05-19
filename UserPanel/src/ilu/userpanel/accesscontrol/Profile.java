@@ -23,7 +23,7 @@ public class Profile {
 	public boolean updateUser(RegisterResponse registerResponse)
 	{
 		ProfileDB profileDB = new ProfileDB();
-		return profileDB.updatePassword(registerResponse.getUserId(),registerResponse.getUserName(),registerResponse.getPassword(),registerResponse.getEmail());
+		return profileDB.updatePassword(registerResponse.getUserId(),registerResponse.getUserName(),registerResponse.getPassword(),registerResponse.getEmail(),registerResponse.getIsoLanguage());
 		
 	}
 

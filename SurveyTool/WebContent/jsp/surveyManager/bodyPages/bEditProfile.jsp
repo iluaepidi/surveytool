@@ -2,6 +2,8 @@
 				<%@page import="ilu.surveytool.constants.Attribute"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
 				<%@page import="ilu.surveytool.constants.Parameter"%>
+				<%@page import="java.util.HashMap"%>
+				<%@page import="java.util.Map"%>
 				<%
 				String pid = (String) request.getAttribute(Attribute.s_POLL_ID);
 				
@@ -79,8 +81,7 @@
 			                </div>
 			            </div>
 			            
-			            <!-- Textarea -->
-			            <div class="form-group" style="margin-top: 150px;">
+			           <div class="form-group" style="margin-top: 150px;">
 			                <label class="col-md-4 control-label" for="descripcion" style="width: 33%;text-align: right;"><%= lang.getContent("profile.repeat.password") %></label>
 			                <div class="col-md-6">     
 			                	<div class="form-group">                   
@@ -91,7 +92,23 @@
 			                </div>
 			            </div>
 			                
-			           
+			           <div class="form-group" style="margin-top: 200px;">
+			                <label class="col-md-4 control-label" for="language" style="width: 33%;text-align: right;"><%= lang.getContent("profile.select.language") %></label>
+			                <div class="col-md-6">     
+			                	<div class="form-group">                   
+			                    	<select id="language" name="language" class="form-control">
+			                    	<%
+			                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
+			                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+			                    		
+			                    	<%}%>
+			                    	</select>
+			                	</div>
+			                </div>
+			            </div>
+			            <script type="text/javascript">
+			            	$("#language").val('<%=loginResp.getIsoLanguage() %>');
+			            </script>
 			                
 			           
 			            <div class="form-group" style="margin-top: 200px;">

@@ -44,8 +44,10 @@ public class ProfileDB {
 	 * update
 	 */
 	
-	public boolean updatePassword(int userid, String username, String password, String email) {
+	public boolean updatePassword(int userid, String username, String password, String email,String isoLanguage) {
 		boolean updated = false;
+		
+		int idLanguage = this.getIdLanguage(isoLanguage);
 		
 		if(!this.existsEmail(email,username)){
 			
@@ -58,7 +60,8 @@ public class ProfileDB {
 			   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_USER_PASSWORD_AND_EMAIL);
 				pstm.setString(1, password);
 				pstm.setString(2, email);
-				pstm.setInt(3, userid);
+				pstm.setInt(3, idLanguage);
+				pstm.setInt(4, userid);
 			   		
 				int numUpdated = pstm.executeUpdate();
 				
@@ -102,6 +105,34 @@ public class ProfileDB {
 		}
 		
 		return existemail;
+	}
+	
+	public int getIdLanguage(String isoLanguage)
+	{
+		int idLanguage = 1;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_GET_IDLANGUEGE_FROM_ISONAME);			
+	   		pstm.setString(1, isoLanguage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			idLanguage = rs.getInt("idLanguage");
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return idLanguage;
 	}
 
 }

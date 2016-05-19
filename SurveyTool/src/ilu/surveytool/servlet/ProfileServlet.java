@@ -65,6 +65,7 @@ public class ProfileServlet extends HttpServlet {
 			registerReponse.setRepassword(request.getParameter(Parameter.s_REPASSWORD));
 			registerReponse.setEmail(request.getParameter(Parameter.s_EMAIL));
 			registerReponse.setUserId(userSessionInfo.getUserId());
+			registerReponse.setIsoLanguage(request.getParameter(Parameter.s_LANGUAGE));
 		if(savesubmit!=null){	
 			boolean updateuser = profileHandler.updateUser(registerReponse);
 			if(updateuser){

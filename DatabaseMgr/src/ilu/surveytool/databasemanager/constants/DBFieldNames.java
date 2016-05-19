@@ -26,6 +26,7 @@ public class DBFieldNames {
 		
 	//language
 		public final static String s_LANGUAGE_ISONAME = "isoName";
+		public final static String s_LANGUAGE_NAME = "name";
 		
 	//option
 		public final static String s_OPTIONID = "idOption";
@@ -83,5 +84,6 @@ public class DBFieldNames {
 		public final static String s_USERID = "idUser";
 		public final static String s_USERNAME = "username";
 		public final static String s_USER_EMAIL = "email";
+		public final static String s_USER_ISO_LANGUAGE = "isoName";
 
 }
