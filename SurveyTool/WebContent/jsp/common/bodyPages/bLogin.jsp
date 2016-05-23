@@ -36,7 +36,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							if(loginResponse != null && !loginResponse.isValid())
 		  							{
 		  							%>
-		  							<div class="error-msg"><p><%= loginResponse.getErrorMsg() %></p></div>
+		  							<div class="error-msg"><p><%= lang.getContent(loginResponse.getErrorMsg()) %></p></div>
 		  							<%
 		  							}		  							
 		  							%>
@@ -75,7 +75,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							if(registerResponse != null && !registerResponse.isValid())
 		  							{
 		  							%>
-		  							<div class="error-msg"><p><%= registerResponse.getErrorMsg() %></p></div>
+		  							<div class="error-msg"><p><%= lang.getContent(registerResponse.getErrorMsg()) %></p></div>
 		  							<%
 		  							}		  							
 		  							%>

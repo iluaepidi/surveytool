@@ -18,6 +18,7 @@ import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.userpanel.accesscontrol.Login;
 
@@ -61,6 +62,8 @@ public class LoginServlet extends HttpServlet {
 		 * cargar correspondiente body page
 		 */
 		
+		Language lang = new Language(getServletContext().getRealPath("/")); 
+		lang.loadLanguage(Language.getLanguageRequest(request));
 		
 		
 			Login loginHandler = new Login();
@@ -69,6 +72,8 @@ public class LoginServlet extends HttpServlet {
 			credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
 			System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
 			LoginResponse loginResp = loginHandler.login(credentials);
+			
+			
 			System.out.println(loginResp.toString());
 			
 			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_ADMIN))

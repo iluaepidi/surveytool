@@ -18,31 +18,31 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    		</div> 
 				    		<div class="panel-body">
 				    			<fieldset class="survey-frame">
-				    				<legend>Select question type</legend>
+				    				<legend><%= lang.getContent("survey.select.question.type") %></legend>
 									<ul class="row qtype-list">
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="text"><i class="fa fa-align-center fa-2x btn btn-default"></i> <span class="qtype-icon-text">Text</span></button>
+											<button class="btn-transparent" id="text"><i class="fa fa-align-center fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.text") %></span></button>
 										</li>
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="simple"><i class="fa fa-list-ul fa-2x btn btn-default"></i> <span class="qtype-icon-text">Simple</span></button>
+											<button class="btn-transparent" id="simple"><i class="fa fa-list-ul fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.simple") %></span></button>
 										</li>
 										<!-- <div class="col-sm-1 center btn-qtype">
-											<a id="multiple"><i class="fa fa-list fa-2x btn btn-default"></i> <span class="qtype-icon-text">Multiple</span></a>
+											<a id="multiple"><i class="fa fa-list fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.multiple") %></span></a>
 										</div> -->
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="scale"><i class="fa fa-arrows-h fa-2x btn btn-default"></i> <span class="qtype-icon-text">Scale</span></button>
+											<button class="btn-transparent" id="scale"><i class="fa fa-arrows-h fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.scale") %></span></button>
 										</li>
 										<!-- <div class="col-sm-1 center btn-qtype">
-											<a id="ordering"><i class="fa fa-sort-numeric-asc fa-2x btn btn-default"></i> <span class="qtype-icon-text">Ordering</span></a>
+											<a id="ordering"><i class="fa fa-sort-numeric-asc fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.ordering") %></span></a>
 										</div>
 										<div class="col-sm-1 center btn-qtype">
-											<a id="grading"><i class="fa fa-star-half-o fa-2x btn btn-default"></i> <span class="qtype-icon-text">Grading</span></a>
+											<a id="grading"><i class="fa fa-star-half-o fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.grading") %></span></a>
 										</div>
 										<div class="col-sm-1 center btn-qtype">
-											<a id="matrix"><i class="fa fa-th fa-2x btn btn-default"></i> <span class="qtype-icon-text">Matrix</span></a>
+											<a id="matrix"><i class="fa fa-th fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.matrix") %></span></a>
 										</div>
 										<div class="col-sm-1 center btn-qtype">
-											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text">Code</span></a>
+											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("survey.type.code") %></span></a>
 										</div> -->
 									</ul>
 				    			</fieldset>

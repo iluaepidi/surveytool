@@ -149,7 +149,11 @@ lang.close();
             "scrollY":    "530px",
             "scrollCollapse": false,
             "searching": true,
-            "ordering": false
+            "ordering": false,
+            "language": {
+                "url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
+            }
+            
         });
         
         

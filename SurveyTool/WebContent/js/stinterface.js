@@ -155,7 +155,7 @@ $(function() {
 							//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 							'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
 							//'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
-							'<div class="col-sm-8"><div class="form-group" style="margin:0px;"><input type="text" id="option' + index + '" class="form-control fleft" index="' + index + '" placeholder="Option ' + index + '" style="width: 100%; !important;"/><span  id="option' + index + '-feedback" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true" style="color:#A94442;right: 20px;"></span><span  id="option' + index + '-error" class="error hidden" style="top: 0px;right: -180px;">'+'textmultilanguage'+'</span></div></div>'+
+							'<div class="col-sm-8"><div class="form-group" style="margin:0px;"><input type="text" id="option' + index + '" class="form-control fleft" index="' + index + '" placeholder="'+textOption+' ' + index + '" style="width: 100%; !important;"/><span  id="option' + index + '-feedback" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true" style="color:#A94442;right: 20px;"></span><span  id="option' + index + '-error" class="error hidden" style="top: 0px;right: -180px;">'+textErrorPollOption+'</span></div></div>'+
 							'<div class="option-icons fleft"> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
