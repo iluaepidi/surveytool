@@ -77,7 +77,7 @@ public class RegisterDB {
 					   
 			   		else
 			   		{
-			   			response.setErrorMsg("Invalid username or password");
+			   			response.setErrorMsg("register.invalid");
 			   		}
 			   		
 			    } catch (SQLException e) {
@@ -87,10 +87,10 @@ public class RegisterDB {
 					this._closeConnections(con, pstm, rs);
 				}
 			}else{
-				response.setErrorMsg("This email already exists in the system");
+				response.setErrorMsg("register.exists.email");
 			}
 		}else{
-			response.setErrorMsg("This username already exists in the system");
+			response.setErrorMsg("register.exists.username");
 		}
 		
 		

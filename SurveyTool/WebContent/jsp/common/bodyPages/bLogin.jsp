@@ -35,7 +35,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							if(loginResponse != null && !loginResponse.isValid())
 		  							{
 		  							%>
-		  							<div class="error-msg"><p><%= loginResponse.getErrorMsg() %></p></div>
+		  							<div class="error-msg"><p><%= lang.getContent(loginResponse.getErrorMsg()) %></p></div>
 		  							<%
 		  							}		  							
 		  							%>
@@ -54,6 +54,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							<div class="login-button">
 		  								<input type="button" id="loginSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.login") %>" />
 		  							</div>  	
+
 		  						</fieldset>						
 	  						</form>
 	  					</div>

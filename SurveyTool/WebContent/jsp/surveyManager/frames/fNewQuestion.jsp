@@ -47,6 +47,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<!--  <div class="col-sm-1 center btn-qtype">
 											<a id="code"><i class="fa fa-file-code-o fa-2x btn btn-default"></i> <span class="qtype-icon-text"><%= lang.getContent("question.new.code")%></span></a>
 										</div>--> 
+
 									</ul>
 				    			</fieldset>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">

@@ -68,7 +68,7 @@ public class LoginDB {
 	   		}
 	   		else
 	   		{
-	   			response.setErrorMsg("Invalid username or password");
+	   			response.setErrorMsg("login.invalid");
 	   		}
 	   		
 	   } catch (SQLException e) {

@@ -11,10 +11,11 @@
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								
     								Language lang = new Language(getServletContext().getRealPath("/")); 
-									lang.loadLanguage(Language.getLanguageRequest(request));
-								  									
-									%>
+    								lang.loadLanguage(Language.getLanguageRequest(request));
+    								%>
+    								
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
 											<jsp:include page="eqComponents/eqHead.jsp" />
@@ -42,6 +43,7 @@
 															<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 														</div>
+
 							  					</div>
 							  					
 							  					<div class="question-frame">
@@ -53,7 +55,7 @@
 							  					
 							  					
 												<jsp:include page="eqComponents/eqResponseSettings.jsp" >
-												<jsp:param name="response" value="../eqResponses/eqSimple.jsp" />
+													<jsp:param name="response" value="../eqResponses/eqSimple.jsp" />
 												</jsp:include>
 												
 												<!-- <%

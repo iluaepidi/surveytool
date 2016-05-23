@@ -260,7 +260,7 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '" autofocus/> ' +
+								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +

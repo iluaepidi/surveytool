@@ -1,4 +1,5 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="java.util.List"%>
 <%
 	String title = "";
@@ -30,6 +31,13 @@
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
 		     plugins que utilices) -->
+		     <%Language lang = new Language(getServletContext().getRealPath("/")); 
+				lang.loadLanguage(Language.getLanguageRequest(request));
+				%>
+		<script>
+		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
+		 var textOption = "<%= lang.getContent("survey.type.option") %>";
+		</script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
 		<script src="js/stinterface.js"></script>

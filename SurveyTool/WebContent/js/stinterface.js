@@ -154,7 +154,9 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item">' +
 							//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 							'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
+
 							'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+
 							'<div class="option-icons fleft"> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -163,11 +165,7 @@ $(function() {
 						'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
-<<<<<<< HEAD
-=======
-		
-		
->>>>>>> 58bde51... multilanguage
+
 	});
 	
 	$('#option-list').on("click", "#remove-option-poll", function(e){
