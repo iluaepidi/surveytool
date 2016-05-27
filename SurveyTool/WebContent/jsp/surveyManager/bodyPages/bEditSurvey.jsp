@@ -4,13 +4,23 @@
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
+				<%@page import="java.util.Map"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 				int pageId = (int) request.getAttribute(Attribute.s_PAGE_ID);
+				String description = "";
+				if(survey!=null && survey.getContents()!=null && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null){
+					description = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
+				}
 				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
 				lang.loadLanguage(Language.getLanguageRequest(request));
+				
+				HttpSession sessions = request.getSession(false); 
+  				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
 				%>
 				
 				<div class="container-fluid">
@@ -27,21 +37,42 @@
 	  					<div class="edit-content-center">
 	  						<div class="edit-survey-head">
 		  						<div class="survey-preview">
-		  							<button class="btn btn-primary" onclick="window.open('http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>','_blank')"><%= lang.getContent("button.survey_preview") %></button>
+		  							<button class="btn btn-primary" id="survey-preview_btn"><%= lang.getContent("button.survey_preview") %></button>
 		  						</div>
 		  							
 		  						<div class="survey-language" id="survey-language">
 		  							<form class="" id="survey-language-form">
 		  								<label for="survey-language-version" class="" ><i class="fa fa-language fa-2x"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
 										<select class="form-control-small" id="survey-language-version">
-											<option value="en" selected><%= lang.getContent("language.en") %> <%= lang.getContent("language.default") %></option>
-										    <!-- <option value="es">Spanish</option>
-										    <option value="fr">French</option>
-										    <option value="el">Greek</option> -->
+											<%
+					                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
+					                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+					                    		
+					                    	<%}%>
+										    
 										</select>
 		  							</form>
 		  						</div>
 		  					</div>
+		  					
+		  					<script type="text/javascript">
+		  						
+			  					if(window.location.href.indexOf("langsurvey") > -1) {
+			  						$("#survey-language-version").val(window.location.href.substring(window.location.href.indexOf("langsurvey=")+11));
+			  					}else{
+			  				    	$("#survey-language-version").val('<%=survey.getDefaultLanguage() %>');
+			  				    }
+			            		
+			            		
+			            		$('#survey-preview_btn').click(function(publicid){
+			            			
+			            			langselect = $('#survey-language-version').val();
+			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%=survey.getPublicId()%>&lang='+langselect,'_blank');
+			            			
+			            		});
+			            		
+			            	</script>
+			                
 	  						
 		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">
@@ -60,7 +91,7 @@
 								<div class="survey-info-description">
 									<label for="surveyDescription" class="col-sm-3 control-label left"><%= lang.getContent("survey.edit.info.label.short_description") %></label>
 							   		<div class="col-sm-9">
-							     			<textarea class="form-control" id="surveyDescription" rows="2"><%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></textarea>
+							     			<textarea class="form-control" id="surveyDescription" rows="2"><%= description %></textarea>
 							   		</div>
 								</div>
 								

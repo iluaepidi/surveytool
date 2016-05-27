@@ -10,7 +10,10 @@
 											lang.loadLanguage(Language.getLanguageRequest(request));
 
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-											String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+											String title = "";
+		    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+		    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+		    								}
 						  					%>
 						  					
 											<div class="panel-heading">	

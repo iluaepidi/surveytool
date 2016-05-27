@@ -49,24 +49,26 @@ public class ContentDB {
 	 * selects
 	 */
 	
-	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String language)
+	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String lang, String langdefault)
 	{
 		HashMap<String, Content> contents = new HashMap<String, Content>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
+		
+		if(lang==null)lang = langdefault;
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
 	   		pstm.setInt(1, contentId);
-	   		pstm.setString(2, language);
+	   		pstm.setString(2, lang);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
 	   			String contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
-	   			contents.put(contentType, new Content(contentId, language, 
+	   			contents.put(contentType, new Content(contentId, lang, 
 	   					rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
 	   					rs.getString(DBFieldNames.s_CONTENT_TEXT)));
 	   		}
@@ -184,7 +186,7 @@ public class ContentDB {
 	public void updateContentText(int contentId, String language, String contentType, String text) {
 		//System.out.println("updateState");
 		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
+		PreparedStatement pstm = null,pstm2 = null;;
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_CONTENT_TEXT);
@@ -194,6 +196,12 @@ public class ContentDB {
 			pstm.setString(4, contentType);
 		   		
 			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated<1){
+				//es necesario insertarlo
+				this.insertContent(contentId, language, contentType, text);
+				
+			}
 					
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

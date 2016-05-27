@@ -147,11 +147,11 @@ public class QuestionDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
-	   			
+
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterPollByPollIDQuestionID(pollId, rs.getInt(DBFieldNames.s_QUESTION_ID));
-	   			
+
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -692,11 +692,12 @@ public class QuestionDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();	   			
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+
+				HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang, null);
 	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID));
-	   				   			
+
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 

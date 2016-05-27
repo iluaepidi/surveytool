@@ -592,7 +592,7 @@ $(function() {
 		var req = {};		
 		req.text = $(this).val();
 		req.contentType = "title";
-		req.lan = "en";
+		req.lan = $("#survey-language-version").val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
 		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
 		
@@ -604,7 +604,7 @@ $(function() {
 		var req = {};		
 		req.text = $(this).val();
 		req.contentType = "description";
-		req.lan = "en";
+		req.lan = $("#survey-language-version").val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
 		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
 		
@@ -626,7 +626,7 @@ $(function() {
 		var req = {};		
 		req.text = $(this).val();
 		req.contentType = "title";
-		req.lan = "en";
+		req.lan = $("#survey-language-version").val();
 		req.scid = $(this).closest('#panel-section1').attr('scid');		
 		var serviceUrl = host + "/SurveyTool/api/SectionService/updateContent";
 		
@@ -1072,7 +1072,7 @@ $(function() {
 		var req = {};		
 		req.text = $(this).val();
 		req.contentType = "title";
-		req.lan = "en";
+		req.lan = $("#survey-language-version").val();
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
 		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
@@ -1084,7 +1084,7 @@ $(function() {
 		var req = {};		
 		req.text = $(this).val();
 		req.contentType = "description";
-		req.lan = "en";
+		req.lan = $("#survey-language-version").val();
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
 		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
@@ -1143,6 +1143,15 @@ $(function() {
 			});
 		}
 	});
+	
+	$('#survey-language-version').change(function(event) {
+		
+		var loc = location.href;
+		if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
+		
+		 window.location=loc+"&langsurvey="+$("#survey-language-version").val();
+	});
+	
 });
 
 

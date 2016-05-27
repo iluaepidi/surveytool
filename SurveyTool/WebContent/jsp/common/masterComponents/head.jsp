@@ -37,7 +37,7 @@
 		<script>
 		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
 		 var textOption = "<%= lang.getContent("survey.type.option") %>";
-		</script>
+		 </script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
 		<script src="js/stinterface.js"></script>

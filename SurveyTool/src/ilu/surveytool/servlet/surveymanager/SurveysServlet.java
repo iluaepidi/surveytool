@@ -26,7 +26,7 @@ import ilu.surveytool.sessioncontrol.SessionHandler;
 @WebServlet("/SurveysServlet")
 public class SurveysServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String language = "en";
+	//String language = "en";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,8 +58,12 @@ public class SurveysServlet extends HttpServlet {
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
+			//cargar lenguaje seleccionado en el combo
+			
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));		
 			SurveysHandler surveysHandler = new SurveysHandler();
+			String language = request.getParameter(Parameter.s_LANGUAGE_SURVEY);
+			
 			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
 			
 			request.setAttribute(Attribute.s_SURVEY_INFO, survey);

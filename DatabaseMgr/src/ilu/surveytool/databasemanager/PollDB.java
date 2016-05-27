@@ -156,7 +156,7 @@ public class PollDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			
 	   			ContentDB contentDB = new ContentDB();
-		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 		   		
 		   		QuestionDB questionDB = new QuestionDB();
 		   		List<Question> questions = questionDB.getQuestionsByPollId(response.getPollId(), lang);
@@ -207,7 +207,7 @@ public class PollDB {
 		   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 		   			
 		   			ContentDB contentDB = new ContentDB();
-			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 	   			}
 		   		
 		   		QuestionDB questionDB = new QuestionDB();

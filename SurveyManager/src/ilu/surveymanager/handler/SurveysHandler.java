@@ -42,7 +42,7 @@ public class SurveysHandler {
 			project = new Project(surveyDB.insertProject(survey.getProject()), "", null);
 		}
 		
-		surveyId = surveyDB.insertSurvey(survey.getAuthor(), project.getProjectId(), contentId);
+		surveyId = surveyDB.insertSurvey(survey.getAuthor(), project.getProjectId(), contentId,survey.getDefaultLanguage());
 		
 		if(surveyId > 0)
 		{
@@ -87,9 +87,9 @@ public class SurveysHandler {
 	public Survey getSurveyDetail(int surveyId, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
-		Survey survey = surveyDB.getQuestionnairesById(surveyId);
+		Survey survey = surveyDB.getQuestionnairesById(surveyId,lang);
 		SectionDB sectionDB = new SectionDB();
-		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang));
+		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang,survey.getDefaultLanguage()));
 		return survey;
 	}
 	

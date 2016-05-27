@@ -70,7 +70,7 @@ public class ResourceDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);
 	   				   			
 	   			Resource resource = new Resource(rs.getInt(DBFieldNames.s_RESOURCEID), 
 	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
