@@ -1,8 +1,16 @@
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.language.Language"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
+<%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+
+HttpSession sessions = request.getSession(false); 
+	LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
+	
 %>
 
 	  			<!-- Modal -->
@@ -41,7 +49,22 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										   		</div>
 											</div>
 										</div>
-										
+										<div class="row">
+											<div class="col-sm-7 margin-bottom-10">
+												<div class="form-group" style="margin:0px;">
+													<label for="defaultLanguage" class="col-sm-2 control-label left"><%= lang.getContent("survey.new.default.language") %></label>
+											   		<div class="col-sm-10">
+											     		<select id="defaultLanguage" name="defaultLanguage" class="form-control">
+									                    	<%
+									                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
+									                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+									                    		
+									                    	<%}%>
+									                   </select>
+											   		</div>
+										   		</div>
+											</div>
+										</div>
 										<div class="row">
 											<div class="col-sm-9 margin-bottom-10">
 												<label for="surveyDescription" class="control-label left"><%= lang.getContent("survey.new.label.short_description") %></label>
@@ -51,6 +74,8 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 												<input type="button" id="createnewsurvey" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />
 											</div>
 										</div>
+										
+										
 									</fieldset>
 								</form>
 				    		</div> 

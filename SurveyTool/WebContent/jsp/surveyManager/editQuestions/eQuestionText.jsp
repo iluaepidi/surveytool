@@ -9,7 +9,10 @@
     
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
     								
     								Language lang = new Language(getServletContext().getRealPath("/")); 
     								lang.loadLanguage(Language.getLanguageRequest(request));
@@ -38,7 +41,7 @@
 															</select>
 														</div>
 														<div class="col-md-8">
-															 <label for="example-<%= question.getIndex() %>"><%= lang.getContent("survey.type.example") %> <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
+															 <label for="example-<%= question.getIndex() %>"><%= lang.getContent("survey.type.example") %> <%= title %></label>
 														     <textarea class="form-control" id="example-<%= question.getIndex() %>" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 														</div>													 
 							  						</div>						  						

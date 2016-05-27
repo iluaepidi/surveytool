@@ -38,7 +38,7 @@ public class EmailsToSend {
 		OptionDB optionDB = new OptionDB();
 		SurveyDB surveyDB = new SurveyDB();
 		ContentDB contentDB = new ContentDB();
-		Survey survey = surveyDB.getQuestionnairesById(surveyId);
+		Survey survey = surveyDB.getQuestionnairesById(surveyId,null);
 		
 		msg = "<h1>Survey result for anonymous user: " + anonymousUserId + "</h1>";
 		String surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
@@ -58,7 +58,7 @@ public class EmailsToSend {
 			if(anonymousResponse.getOptionsGroupId() != 0)
 			{
 				int contentId = optionDB.getContentIdByOptionId(Integer.parseInt(anonymousResponse.getValue()));
-				value = contentDB.getContentByIdAndLanguage(contentId, language).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();				
+				value = contentDB.getContentByIdAndLanguage(contentId, language,null).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();				
 			}
 			
 			msg += "<p>" + value + "</p>";

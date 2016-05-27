@@ -41,6 +41,7 @@ public class Parameter {
 	public final static String s_SID = "sid";
 	public final static String s_SCID = "scid";
 	public final static String s_TITLE = "title";
+	public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
 	public final static String s_TEXT = "text";
 	public final static String s_USERNAME = "username";
 	public final static String s_EMAIL = "email";
@@ -48,6 +49,7 @@ public class Parameter {
 	public final static String s_REPASSWORD = "repassword";
 	public final static String s_UPOPTION = "upoption";
 	public final static String s_LOGOUT = "logout";
+	public final static String s_LANGUAGE_SURVEY = "langsurvey";
 	
 
 }

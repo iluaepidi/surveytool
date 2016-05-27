@@ -8,6 +8,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "where c.idContent = ? and l.isoName = ?";
+		
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
@@ -100,6 +101,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL = "SELECT idUser FROM surveytool.user WHERE email LIKE ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE = "SELECT idUser FROM surveytool.user WHERE email LIKE ? AND userName!=?";
 		public final static String s_GET_IDLANGUEGE_FROM_ISONAME = "SELECT idLanguage FROM surveytool.language WHERE isoName LIKE ?";
+		public final static String s_GET_ISOLANGUEGE_FROM_IDLANGUAGE = "SELECT isoName FROM surveytool.language WHERE idLanguage = ?";
 		public final static String s_SELECT_LIST_LANGUAGES = "SELECT name,isoName FROM surveytool.language";
 		
 		
@@ -146,6 +148,14 @@ public class DBSQLQueries {
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PUBLICID = "SELECT publicId FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
+		/*public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
+				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
+				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
+						+ "FROM surveytool.questionnaire q "
+						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
+						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";*/
 		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
 				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
 				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
@@ -153,13 +163,19 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
-						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";
-		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author FROM surveytool.questionnaire q "
+						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
+		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "inner join surveytool.content c on c.idContent = q.idContent "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on l.idLanguage = c.idLanguage "
 				+ "where q.idQuestionnaire = ?";
+		public final static String s_SELECT_QUESTIONNAIRE_BY_ID_AND_LANG = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage FROM surveytool.questionnaire q "
+				+ "inner join surveytool.project p on p.idProject = q.idProject "
+				+ "inner join surveytool.content c on c.idContent = q.idContent "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "inner join surveytool.language l on l.idLanguage = c.idLanguage "
+				+ "where q.idQuestionnaire = ? and  l.isoName = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID = "SELECT q.*, p.projectName FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "where publicId = ?";
@@ -229,7 +245,7 @@ public class DBSQLQueries {
 		//QuestionResource
 			public final static String s_INSERT_QUESTION_RESOURCE = "INSERT INTO `surveytool`.`questionresource` (`idQuestion`, `idResoruces`) VALUES (?, ?)";
 		//Questionnaire
-			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`) VALUES (?, ?, ?, ?, ?)";
+			public final static String s_INSERT_QUESTIONNAIRE = "INSERT INTO `surveytool`.`questionnaire` (`state`, `idContent`, `idProject`, `publicId`, `author`, `defaultLanguage`) VALUES (?, ?, ?, ?, ?, ?)";
 		//Resource
 			public final static String s_INSERT_RESOURCE = "INSERT INTO `surveytool`.`resoruces` (`idResourceType`, `urlPath`, `idContent`) VALUES ((SELECT idResourceType FROM surveytool.resourcetype where name = ?), ?, ?)";
 		//Responses

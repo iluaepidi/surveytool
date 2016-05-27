@@ -105,7 +105,7 @@ public class OptionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 	   			
 	   			optionsGroup.setOptions(this.getOptionsByOptionsGroupId(optionsGroup.getId(), lang));
 	   			
@@ -143,7 +143,7 @@ public class OptionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 	   			
 	   			options.add(option);
 	   		}

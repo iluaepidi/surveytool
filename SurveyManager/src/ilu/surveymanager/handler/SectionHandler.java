@@ -21,7 +21,7 @@ public class SectionHandler {
 		List<Section> sections = new ArrayList<Section>();
 		
 		SectionDB sectionDB = new SectionDB();
-		sections = sectionDB.getSectionsBySurveyId(surveyId, lang);
+		sections = sectionDB.getSectionsBySurveyId(surveyId, lang,null);
 		
 		return sections;
 	}

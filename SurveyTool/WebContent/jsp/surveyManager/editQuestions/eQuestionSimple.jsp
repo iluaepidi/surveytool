@@ -10,7 +10,10 @@
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
     								
     								Language lang = new Language(getServletContext().getRealPath("/")); 
     								lang.loadLanguage(Language.getLanguageRequest(request));
@@ -39,7 +42,7 @@
 															</select>
 														</div>
 														<fieldset class="col-md-8">
-															 <legend><%= lang.getContent("survey.type.example") %> <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
+															 <legend><%= lang.getContent("survey.type.example") %> <%= title %></legend>
 															 <ul>
 															 	<li class="radio">
 																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-1" value="option1" checked>
