@@ -46,14 +46,16 @@ public class PageDB {
 	 * Selects
 	 */
 	
-	public List<Page> getPagesBySectionId(int sectionId, String lang)
+	public List<Page> getPagesBySectionId(int sectionId, String lang, String langdefault)
 	{
 		List<Page> pages = new ArrayList<Page>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		   
+		
+		if(lang==null)lang = langdefault;
+		
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGES_BY_SECTIONID);			
 	   		pstm.setInt(1, sectionId);
@@ -66,7 +68,7 @@ public class PageDB {
 	   			page.setNumPage(rs.getInt(DBFieldNames.s_NUM_PAGE));
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
-	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang));
+	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang,langdefault));
 	   			
 	   			pages.add(page);
 	   		}

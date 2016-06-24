@@ -18,6 +18,7 @@ import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.userpanel.accesscontrol.Login;
 
@@ -61,29 +62,37 @@ public class LoginServlet extends HttpServlet {
 		 * cargar correspondiente body page
 		 */
 		
-		Login loginHandler = new Login();
-		Credentials credentials = new Credentials();
-		credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
-		credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
-		System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
-		LoginResponse loginResp = loginHandler.login(credentials);
-		System.out.println(loginResp.toString());
+		Language lang = new Language(getServletContext().getRealPath("/")); 
+		lang.loadLanguage(Language.getLanguageRequest(request));
 		
-		if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_ADMIN))
-		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-			HttpSession session = request.getSession();
-			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
-		}
-		else
-		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
-			request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
-		}
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+			Login loginHandler = new Login();
+			Credentials credentials = new Credentials();
+			credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
+			credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
+			System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
+			LoginResponse loginResp = loginHandler.login(credentials);
+			
+			
+			System.out.println(loginResp.toString());
+			
+			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_ADMIN))
+			{
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+				HttpSession session = request.getSession();
+				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+				request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
+			}
+			else
+			{
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
+				request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			}
+			
+			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+		
+		
 		
 	}
 

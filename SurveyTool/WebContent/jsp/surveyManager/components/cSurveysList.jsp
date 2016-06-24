@@ -10,27 +10,37 @@
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>    								
+
+
 						<div id="surveys-list">	    					
 							<h3><%= lang.getContent("survey_manager.surveys.title") %></h3>							
 							<%= lang.getContent("survey_manager.surveys.description") %>
 		  					<div class="user-panel-surveys">
+		  						
 		  						<div class="surveys-create-button">
 		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newSurveyModal"><%= lang.getContent("button.create_new") %></button>
 		  						</div>
-			  					<%
+		  						
+		  						
+		  						
+		  						<%
 			  					List<SurveyTableInfo> surveys = (List<SurveyTableInfo>) request.getAttribute(Attribute.s_SURVEYS);
 			  					if(!surveys.isEmpty())
 			  					{
 			  					%>
 			  					<div class="surveys-table">
-			  						<table class="table table-bordered" sumary="List of surveys where ...">
+			  						<table class="table table-bordered" sumary="List of surveys where ..." id="surveys-table"  data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
-										<tr class="info">
+			  							<thead>
+										<tr class="info" id="titles">
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.deadline") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.survey") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.progress") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.actions") %></th>
 										</tr>
+										</thead>
+										<tbody>
+										
 										<%
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(SurveyTableInfo survey : surveys)
@@ -45,7 +55,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 												deadLine =  lang.getContent("survey_manager.table.content.none");
 											}
 										%>
-										<tr>
+										<tr id="resultdevice">
 											<td class="center"><%= deadLine %></td>
 											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 											<td>
@@ -74,10 +84,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 								  					<li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x"></i></li>
 												</ul>
 											</td>
-										</tr>
+										
 										<%
 										}
 										%>
+										</tr>
+										</tbody>
 			  						</table>
 			  					</div>
 			  					
@@ -125,3 +137,35 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 <%
 lang.close();
 %>
+
+<script> 
+ 
+    $(document).ready(function() {
+        
+        
+        $('#surveys-table').dataTable({
+        	"iDisplayLength": 25,
+        	"pagingType": "full_numbers",
+            "scrollY":    "530px",
+            "scrollCollapse": false,
+            "searching": true,
+            "ordering": false,
+            "language": {
+                "url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
+            }
+            
+        });
+        
+        
+       
+    });
+    
+    
+    $(window).load(function() {
+    	 $('[name="surveys-table_length"]').val("10");
+    	 $('[name="surveys-table_length"]').change();
+    });
+    
+    
+    
+</script> 

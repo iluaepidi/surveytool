@@ -13,6 +13,7 @@ public class Survey {
 	int author;
 	List<Section> sections = null;
 	String publicId = "";
+	String defaultLanguage;
 	
 
 	public Survey() {
@@ -105,6 +106,16 @@ public class Survey {
 	public String toString() {
 		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author
 				+ ", sections=" + sections + ", publicId=" + publicId + "]";
+	}
+
+
+	public String getDefaultLanguage() {
+		return defaultLanguage;
+	}
+
+
+	public void setDefaultLanguage(String defaultLanguage) {
+		this.defaultLanguage = defaultLanguage;
 	}
 	
 }

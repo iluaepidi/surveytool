@@ -143,7 +143,9 @@ textarea {resize:none;
 	width: 120px;
 	position: absolute;
 	right: -130px;
-    top: 26px;}
+    top: 26px;
+    z-index: 999;}
+
 .error:before{content: '';
 	border-top: 8px solid transparent;
 	border-bottom: 8px solid transparent;
@@ -153,7 +155,15 @@ textarea {resize:none;
 	position: absolute;
 	top: 5px;}
 
-
+.error-profile{background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	width: 120px;
+	position: absolute;
+	right: -130px;
+    top: 0px;}
 /*----------------------------------------------*\
 		$HEADER_PAGE
 \*----------------------------------------------*/
@@ -247,6 +257,16 @@ footer {margin-top: 10px;
 .login-frame form h3 {margin: 20px 0px;}
 .form-group label {width: 100%;}
 .login-button {margin-bottom: 6px !important;}
+
+.register-frame {width: 30%;
+    margin-top: 30px;display:none;}
+.register-frame form {min-width: 250px;
+    width: 85%;
+    border: 1px solid #e0e0e0;
+    background-color: #fbfbfb;
+    padding: 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
+.register-frame form h3 {margin: 20px 0px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_SURVEY
@@ -412,7 +432,8 @@ footer {margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    text-align: center;}
+    text-align: center;
+    min-height: 45px;}
 
 .edit-survey-head{margin: 10px auto;
     width: 70%;
@@ -428,7 +449,7 @@ footer {margin-top: 10px;
 .survey-info-title {font-size: 1.5em;
     border: none;
     margin: 0 auto;
-    width: 42%;
+    width: 100%;
     text-align: center;}
     
 .survey-info-project {float:right;
@@ -728,3 +749,8 @@ footer {margin-top: 10px;
     padding: 15px;
     width: 475px;
     margin: 160px auto;}
+    
+    
+
+
+

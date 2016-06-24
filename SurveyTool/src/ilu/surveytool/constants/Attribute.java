@@ -14,10 +14,14 @@ public class Attribute {
 	public final static String s_CREDENTIALS = "credentials";
 	public final static String s_CURRENT_LANGUAGE = "currentLanguage";
 	public final static String s_LOGIN_RESPONSE = "loginResponse";
+	public final static String s_REGISTER_RESPONSE = "registerResponse";
 	public final static String s_POLLS = "polls";
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
 	public final static String s_SURVEYS = "surveys";
 	public final static String s_SURVEY_INFO = "surveyInfo";
+	
+	public final static String s_SURVEY_INFO_DEFAULT_LANGUAGE = "surveyInfoDefaultLanguage";
+	
 	public final static String s_JS_FILES = "jsFiles";
 	public final static String s_PAGE_ID = "pageId";
 	public final static String s_PAGE_TITLE = "pageTitle";

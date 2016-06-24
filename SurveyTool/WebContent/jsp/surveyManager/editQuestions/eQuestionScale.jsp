@@ -3,11 +3,25 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
+<%@page import="ilu.surveytool.language.Language"%>
+<%@page import="ilu.surveytool.constants.Attribute"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
+    								
+    								
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage(Language.getLanguageRequest(request));
+    								
+    								String text = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									text = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
     								%>
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
@@ -20,20 +34,20 @@
 							  					<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					
 							  					<div class="question-frame">
-							  						<h4>Options</h4>
+							  						<h4><%= lang.getContent("question.form.options") %></h4>
 							  						<div class="row">
 							  							<div class="col-md-4">
-								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
+								  							<label for="type-question-<%= question.getIndex() %>"><%= lang.getContent("question.form.type") %></label>
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<!-- <option value="tx" >Text</option> -->
-															  	<option value="ls" selected>Likert scale</option>
+															  	<option value="ls" selected><%= lang.getContent("question.form.scale.likert") %></option>
 															    <!-- <option value="sim">Simple</option>
 															    <option value="mul">Multiple</option>
 																<option value="ma">Matrix</option> -->
 															</select>
 														</div>
 														<fieldset class="col-md-8">
-															<legend>Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
+															<legend><%= lang.getContent("question.form.example") %> <%= text %></legend>
 															 <div class="likert-options">
 															 	<div class="likert-options-frame">
 															 		<div>
@@ -67,9 +81,9 @@
 															 	</div>
 															 </div>	
 															 <div class="likert-legend">
-															 	<div>Totally disgree</div>
-															 	<div>Indiferent</div>
-															 	<div>Totally agree</div>
+															 	<div><%= lang.getContent("question.form.scale.liker_legend.t_disgree") %></div>
+															 	<div><%= lang.getContent("question.form.scale.liker_legend.indiferent") %></div>
+															 	<div><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
 															 </div>
 														</fieldset>													 
 							  						</div>						  						

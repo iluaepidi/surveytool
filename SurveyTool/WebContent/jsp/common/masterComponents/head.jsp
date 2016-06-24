@@ -1,4 +1,5 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="ilu.surveytool.language.Language"%>
 <%@page import="java.util.List"%>
 <%
 	String title = "";
@@ -26,10 +27,18 @@
 		<!-- Librería jQuery requerida por los plugins de JavaScript -->
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/jquery-ui.js"></script>
+		<script src="js/bootbox.js"></script>
 		
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
 		     plugins que utilices) -->
+		     <%Language lang = new Language(getServletContext().getRealPath("/")); 
+				lang.loadLanguage(Language.getLanguageRequest(request));
+				%>
+		<script>
+		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
+		 var textOption = "<%= lang.getContent("survey.type.option") %>";
+		 </script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
 		<script src="js/stinterface.js"></script>
@@ -46,3 +55,7 @@
 		}
 	}
 	%>
+	<!-- Librería tabla dinamica -->
+	<link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>

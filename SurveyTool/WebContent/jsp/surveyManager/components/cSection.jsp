@@ -32,7 +32,15 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 								<li class="panel-section" id="panel-section1" scid="<%= section.getSectionId() %>">
 									<div class="panel-heading">	
 										<button id="panel-heading-display" class="section-head btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_section") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
-										<h3 class="panel-title"><input type="text" class="survey-section-title-unselected" id="survey-section-title" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/></h3>
+										<h3 class="panel-title">
+										<div class="col-sm-12">
+											<div class="form-group" style="margin:0px;">
+												<input type="text" class="survey-section-title-unselected" id="survey-section-title" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
+												<span  id='survey-section-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
+				  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span>
+											</div>
+										</div>
+										</h3>
 										<div class="panel-section-buttons right">
 											<button class="btn-transparent" id="removeSection" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
 										</div>

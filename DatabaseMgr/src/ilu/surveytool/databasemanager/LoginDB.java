@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -41,6 +42,8 @@ public class LoginDB {
 	public LoginResponse login(Credentials credentials)
 	{
 		LoginResponse response = new LoginResponse();
+		//Load list language
+		response.setListLanguage(loadListLanguage());
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -59,10 +62,13 @@ public class LoginDB {
 	   			response.setUserId(rs.getInt(DBFieldNames.s_USERID));
 	   			response.setUserName(rs.getString(DBFieldNames.s_USERNAME));
 	   			response.setRol(rs.getString(DBFieldNames.s_ROLNAME));
+	   			response.setPassword(credentials.getPassword());
+	   			response.setEmail(rs.getString(DBFieldNames.s_USER_EMAIL));
+	   			response.setIsoLanguage(rs.getString(DBFieldNames.s_USER_ISO_LANGUAGE));
 	   		}
 	   		else
 	   		{
-	   			response.setErrorMsg("Invalid username or password");
+	   			response.setErrorMsg("login.invalid");
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -73,6 +79,33 @@ public class LoginDB {
 		}
 		
 		return response;
+	}
+	
+	public HashMap<String,String> loadListLanguage(){
+		
+		HashMap<String,String> listlanguage=new HashMap<String, String>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LIST_LANGUAGES);	
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next()){
+	   			listlanguage.put(rs.getString(DBFieldNames.s_LANGUAGE_ISONAME), rs.getString(DBFieldNames.s_LANGUAGE_NAME));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return listlanguage;
+		
 	}
 
 }

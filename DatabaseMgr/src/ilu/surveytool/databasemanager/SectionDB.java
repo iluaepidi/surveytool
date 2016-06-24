@@ -45,10 +45,11 @@ public class SectionDB {
 	 * Selects
 	 */
 	
-	public List<Section> getSectionsBySurveyId(int surveyId, String lang)
+	public List<Section> getSectionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Section> sections = new ArrayList<Section>();
 		
+		//if(lang==null)lang = langdefault;
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -66,10 +67,10 @@ public class SectionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
 	   			
 	   			PageDB pageDB = new PageDB();
-	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang));
+	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang,langdefault));
 	   			
 	   			sections.add(section);
 	   		}

@@ -31,8 +31,7 @@ import ilu.surveytool.sessioncontrol.SessionHandler;
 @WebServlet("/CreateQuestionServlet")
 public class CreateQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String language = "en";
-       
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -59,6 +58,8 @@ public class CreateQuestionServlet extends HttpServlet {
 	{
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		
+		String language = request.getParameter(Parameter.s_LANGUAGE_SURVEY);
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
