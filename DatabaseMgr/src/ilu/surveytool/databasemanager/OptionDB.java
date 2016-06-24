@@ -83,7 +83,7 @@ public class OptionDB {
 		return contentId;
 	}
 	
-	public List<OptionsGroup> getOptionsGroupByQuestionId(int questionId, String lang)
+	public List<OptionsGroup> getOptionsGroupByQuestionId(int questionId, String lang, String langdefault)
 	{
 		List<OptionsGroup> optionsGroups = new ArrayList<OptionsGroup>();
 		
@@ -105,9 +105,9 @@ public class OptionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
+	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
 	   			
-	   			optionsGroup.setOptions(this.getOptionsByOptionsGroupId(optionsGroup.getId(), lang));
+	   			optionsGroup.setOptions(this.getOptionsByOptionsGroupId(optionsGroup.getId(), lang,langdefault));
 	   			
 	   			optionsGroups.add(optionsGroup);
 	   		}
@@ -122,7 +122,7 @@ public class OptionDB {
 		return optionsGroups;
 	}
 	
-	public List<Option> getOptionsByOptionsGroupId(int optionsGroupId, String lang)
+	public List<Option> getOptionsByOptionsGroupId(int optionsGroupId, String lang, String langdefault)
 	{
 		List<Option> options = new ArrayList<Option>();
 		
@@ -143,7 +143,7 @@ public class OptionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
+	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
 	   			
 	   			options.add(option);
 	   		}

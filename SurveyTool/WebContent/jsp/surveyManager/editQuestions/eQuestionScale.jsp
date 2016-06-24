@@ -9,10 +9,19 @@
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
+    								
     								
     								Language lang = new Language(getServletContext().getRealPath("/")); 
     								lang.loadLanguage(Language.getLanguageRequest(request));
+    								
+    								String text = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									text = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
     								%>
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
@@ -38,7 +47,7 @@
 															</select>
 														</div>
 														<fieldset class="col-md-8">
-															<legend><%= lang.getContent("question.form.example") %> <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
+															<legend><%= lang.getContent("question.form.example") %> <%= text %></legend>
 															 <div class="likert-options">
 															 	<div class="likert-options-frame">
 															 		<div>

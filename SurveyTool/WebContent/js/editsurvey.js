@@ -70,7 +70,8 @@ $(function() {
 				mandatory: $('#mandatory').val(),
 				helpText: $('#help-text').val(),
 				surveyid: $('#surveyid').val(),
-				pageid: $('#pageid1').val()
+				pageid: $('#pageid1').val(),
+				langsurvey : $("#survey-language-version").val()
 			}, function(responseText) {
 				var index = responseText.indexOf("<html");
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
@@ -579,13 +580,13 @@ $(function() {
 	
 	
 	
-	$('#survey-language-version').change(function(event) {
+	/*$('#survey-language-version').change(function(event) {
 		
 		var loc = location.href;
 		if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
 		
 		 window.location=loc+"&langsurvey="+$("#survey-language-version").val();
-	});
+	});*/
 	
 	
 });
