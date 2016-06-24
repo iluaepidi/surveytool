@@ -18,6 +18,9 @@ public class Attribute {
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
 	public final static String s_SURVEYS = "surveys";
 	public final static String s_SURVEY_INFO = "surveyInfo";
+	
+	public final static String s_SURVEY_INFO_DEFAULT_LANGUAGE = "surveyInfoDefaultLanguage";
+	
 	public final static String s_JS_FILES = "jsFiles";
 	public final static String s_PAGE_ID = "pageId";
 	public final static String s_PAGE_TITLE = "pageTitle";

@@ -137,7 +137,7 @@ public class SurveyDB {
 	   			rs2 = pstm2.executeQuery();
 				if(rs2.next()){
 		   			response = new Survey();
-		   			response.setProject("");
+		   			response.setProject(rs2.getString(DBFieldNames.s_PROJECT_NAME));
 		   			response.setSurveyId(surveyId);
 		   			response.setPublicId(rs2.getString(DBFieldNames.s_PUBLIC_ID));
 		   			response.setAuthor(rs2.getInt(DBFieldNames.s_AUTHOR));
@@ -152,7 +152,7 @@ public class SurveyDB {
 			   		{
 			   			contenttypeName = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 			   			isoname = rs2.getString(DBFieldNames.s_LANGUAGE_ISONAME);
-			   			text = rs2.getString(DBFieldNames.s_CONTENT_TEXT);
+			   			text = "";
 			   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));		   			
 			   		}
 				

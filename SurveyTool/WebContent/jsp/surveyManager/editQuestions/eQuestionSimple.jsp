@@ -42,32 +42,12 @@
 															    <!-- <option value="c"><%=lang.getContent("question.new.code")%></option> -->
 															</select>
 														</div>
-<<<<<<< HEAD
+
 														<div class="right col-md-7">
 															<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 														</div>
 
-=======
-														<fieldset class="col-md-8">
-															 <legend><%= lang.getContent("survey.type.example") %> <%= title %></legend>
-															 <ul>
-															 	<li class="radio">
-																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-1" value="option1" checked>
-																  <label for="example-<%= question.getIndex() %>-1" id="optionRadioLabel1">
-																    <%= lang.getContent("survey.type.option") %> 1
-																  </label>
-																</li>
-																<li class="radio">
-																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-2" value="option2">
-																  <label for="example-<%= question.getIndex() %>-2" id="optionRadioLabel2">
-																    <%= lang.getContent("survey.type.option") %> 2
-																  </label>
-																</li>
-															 </ul>
-														</fieldset>													 
-							  						</div>						  						
->>>>>>> 186e818... multilanguagev27May
 							  					</div>
 							  					
 							  					<div class="question-frame">

@@ -20,7 +20,11 @@
 							  						for(Option option : optionsGroup.getOptions())
 							  						{
 							  							int index = option.getIndex();
-							  							String text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  							String text = "";
+							  							if(option!=null && option.getContents()!=null && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+							  								text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  							}
+							  							
 							  						%>
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->

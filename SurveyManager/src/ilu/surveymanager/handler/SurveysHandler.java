@@ -89,7 +89,7 @@ public class SurveysHandler {
 		SurveyDB surveyDB = new SurveyDB();
 		Survey survey = surveyDB.getQuestionnairesById(surveyId,lang);
 		SectionDB sectionDB = new SectionDB();
-		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang,survey.getDefaultLanguage()));
+		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang, survey.getDefaultLanguage()));
 		return survey;
 	}
 	
@@ -156,15 +156,17 @@ public class SurveysHandler {
 		return updated;
 	}
 	
-	public File exportResults(int surveyId)
+	public File exportResults(int surveyId, String userLang)
 	{
 		File file = null;
 		
 		ResponsesDB responsesDB = new ResponsesDB();
 		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId);  
 		
+		Survey survey = this.getSurveyDetail(surveyId, "");
+				
 		QuestionDB questionDB = new QuestionDB();
-		List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, "en");
+		List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, userLang, survey.getDefaultLanguage());
 		
 		ExportData exportData = new ExportData();
 		file = exportData.exportSurveyResponses(surveyId, questions, responses);

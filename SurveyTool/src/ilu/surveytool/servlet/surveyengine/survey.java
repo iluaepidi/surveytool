@@ -49,7 +49,7 @@ public class survey extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
 		String sid = request.getParameter(Parameter.s_SID);
-		String language = request.getParameter(Parameter.s_LANGUAGE_LAN);
+		String language = request.getParameter(Parameter.s_LANGUAGE_SURVEY);
 		
 		System.out.println("SID: " + sid + " - Language: " + language);
 		

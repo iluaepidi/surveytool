@@ -1144,13 +1144,13 @@ $(function() {
 		}
 	});
 	
-	$('#survey-language-version').change(function(event) {
+	/*$('#survey-language-version').change(function(event) {
 		
 		var loc = location.href;
 		if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
 		
 		 window.location=loc+"&langsurvey="+$("#survey-language-version").val();
-	});
+	});*/
 	
 });
 

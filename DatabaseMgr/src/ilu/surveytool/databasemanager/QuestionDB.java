@@ -55,7 +55,7 @@ public class QuestionDB {
 	 * Selects
 	 */
 	
-	public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
+	public List<Question> getQuestionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		System.out.println("Get questions by survey Id="+surveyId);
@@ -68,7 +68,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, surveyId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -80,7 +80,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public List<Question> getQuestionsBySectionId(int sectionId, String lang)
+	public List<Question> getQuestionsBySectionId(int sectionId, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -93,7 +93,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, sectionId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -105,7 +105,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public List<Question> getQuestionsByPageId(int pageId, String lang)
+	public List<Question> getQuestionsByPageId(int pageId, String lang,String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -118,7 +118,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -166,7 +166,7 @@ public class QuestionDB {
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
 	   			
 	   			OptionDB optionDB = new OptionDB();
-	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang,null));
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));
@@ -682,7 +682,7 @@ public class QuestionDB {
 		return maxMin;
 	}
 	
-	private List<Question> _getQuestionList(ResultSet rs, String lang)
+	private List<Question> _getQuestionList(ResultSet rs, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -693,7 +693,7 @@ public class QuestionDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();	   			
 
-				HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang, null);
+				HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang, langdefault);
 	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID));
@@ -714,7 +714,7 @@ public class QuestionDB {
 	   			question.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
 	   			OptionDB optionDB = new OptionDB();
-	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang, langdefault));
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));

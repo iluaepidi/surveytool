@@ -10,10 +10,22 @@
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
+				Survey surveyDefaultLanguage = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO_DEFAULT_LANGUAGE);
 				int pageId = (int) request.getAttribute(Attribute.s_PAGE_ID);
 				String description = "";
-				if(survey!=null && survey.getContents()!=null && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null){
+				String descriptionplaceholder="";
+				if(survey!=null && survey.getContents()!=null && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null && !survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText().equals("")){
 					description = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
+				}else if(surveyDefaultLanguage!=null && surveyDefaultLanguage.getContents()!=null && surveyDefaultLanguage.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null && !surveyDefaultLanguage.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText().equals("")){
+					description = surveyDefaultLanguage.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
+				}
+				
+				String title = "";
+				String titleplaceholder = "";
+				if(survey!=null && survey.getContents()!=null && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().equals("")){
+					title = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+				}else if(surveyDefaultLanguage!=null && surveyDefaultLanguage.getContents()!=null && surveyDefaultLanguage.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+					title = surveyDefaultLanguage.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 				}
 				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
@@ -67,9 +79,18 @@
 			            		$('#survey-preview_btn').click(function(publicid){
 			            			
 			            			langselect = $('#survey-language-version').val();
-			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%=survey.getPublicId()%>&lang='+langselect,'_blank');
+			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%=survey.getPublicId()%>&langsurvey='+langselect,'_blank');
 			            			
 			            		});
+			            		
+			            			$('#survey-language-version').change(function(event) {
+			            				
+			            				var loc = "http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/SurveysServlet?surveyid=<%=survey.getSurveyId()%>&langsurvey="+$("#survey-language-version").val();
+			            				//if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
+			            				
+			            				 window.location=loc;
+			            			});
+			            			
 			            		
 			            	</script>
 			                
@@ -80,7 +101,7 @@
 		  						</button>
 		  						 
 		  						<input type="text" class="survey-info-title" id="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>" value="<%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>" />
-		  						
+
 		  						<div class="survey-info-project">
 									<label for="surveyProject" class="col-sm-4 control-label"> <%= lang.getContent("survey.edit.info.label.project") %> </label>
 							   		<div class="col-sm-8">
@@ -91,7 +112,7 @@
 								<div class="survey-info-description">
 									<label for="surveyDescription" class="col-sm-3 control-label left"><%= lang.getContent("survey.edit.info.label.short_description") %></label>
 							   		<div class="col-sm-9">
-							     			<textarea class="form-control" id="surveyDescription" rows="2"><%= description %></textarea>
+							     			<textarea class="form-control" id="surveyDescription" rows="2" placeholder="<%=descriptionplaceholder%>"><%= description %></textarea>
 							   		</div>
 								</div>
 								

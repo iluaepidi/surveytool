@@ -17,19 +17,28 @@
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
+    								String title = "";
+    								String description = "";
+    								if(question!=null&&question.getContents()!=null&&question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();	
+    								}
+    								
+    								if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null){
+    									description = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
+    								}
+    								
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
+
 													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+
 												</legend>
-												<%
-							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
-							  					{
-							  					%>
-							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
+												
+							  						<p><%= description %></p>
 							  					<% 
-							  					}
+							  					
 							  					
 												if(!resources.isEmpty())
 												{
@@ -38,11 +47,15 @@
 													<%
 													for(Resource resource : resources)
 													{
-														System.out.println("Error: " + resource.toString());
-														String altText = "";
-														if(!resource.getContents().isEmpty()) altText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
+
+														String resourceText = "";
+														if(resource!=null && resource.getContents()!=null && resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT)!=null){
+															resourceText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
+														}
+													
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= altText %>" />
+									            	<img src="<%= resource.getPathFile() %>" alt="<%= resourceText %>" />
+
 									            	<%
 													}
 										            %>
@@ -62,11 +75,17 @@
 							  						for(Option option : optionsGroup.getOptions())
 							  						{
 							  							String id = "optionsRadios" + option.getId();
+							  							
+							  							String optionText = "";
+														if(option!=null && option.getContents()!=null && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+															optionText = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+														}
+							  							
 							  						%>
 													 	<li class="radio">
 														  <input type="radio" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
 														  <label for="<%= id %>">
-														    <%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
+														    <%= optionText %>
 														  </label>
 														</li>
 													<%

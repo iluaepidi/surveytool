@@ -277,7 +277,7 @@ public class OptionHandler {
 		int questionId = optionDB.getQuestionIdByOptionsGroupId(optionsGroupId);
 		optionDB.removeOptionsGroup(optionsGroupId);
 		
-		List<OptionsGroup> optionsGroup = optionDB.getOptionsGroupByQuestionId(questionId, "");
+		List<OptionsGroup> optionsGroup = optionDB.getOptionsGroupByQuestionId(questionId, "", "");
 		int index = 1;
 		
 		for(OptionsGroup optionGroup : optionsGroup)

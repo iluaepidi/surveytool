@@ -68,7 +68,7 @@ public class PageDB {
 	   			page.setNumPage(rs.getInt(DBFieldNames.s_NUM_PAGE));
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
-	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang));
+	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang,langdefault));
 	   			
 	   			pages.add(page);
 	   		}
