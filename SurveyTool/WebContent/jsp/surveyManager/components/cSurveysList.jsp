@@ -44,6 +44,8 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 											{
 												deadLine =  lang.getContent("survey_manager.table.content.none");
 											}
+											
+											String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
 										%>
 										<tr>
 											<td class="center"><%= deadLine %></td>
@@ -70,7 +72,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 								  					<li class="col-sm-3 center"><i class="fa fa-clone fa-2x"></i></li>
 								  					<li class="col-sm-2 center"><i class="fa fa-bar-chart fa-2x"></i></li>
 								  					<li class="col-sm-2 center"><i class="fa fa-cogs fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><i class="fa fa-download fa-2x"></i></li>
+								  					<li class="col-sm-2 center"><a href="<%= downloadServiceUrl %>" title="download"><i class="fa fa-download fa-2x"></i></a></li>
 								  					<li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x"></i></li>
 												</ul>
 											</td>

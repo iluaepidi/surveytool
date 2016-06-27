@@ -1,12 +1,16 @@
 package ilu.surveymanager.handler;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import ilu.surveymanager.exportdata.ExportData;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
@@ -14,6 +18,7 @@ import ilu.surveytool.databasemanager.DataObject.Poll;
 import ilu.surveytool.databasemanager.DataObject.PollResultResume;
 import ilu.surveytool.databasemanager.DataObject.PollTableInfo;
 import ilu.surveytool.databasemanager.DataObject.Project;
+import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 
 public class PollHandler {
@@ -92,5 +97,21 @@ public class PollHandler {
 		return response;
 	}
 	
-	
+
+	public File exportResults(int pollId)
+	{
+		File file = null;
+		
+		ResponsesDB responsesDB = new ResponsesDB();
+		HashMap<Integer, HashMap<Integer, String>> responses = responsesDB.getAnonimousResponseByPollId(pollId);  
+		
+		QuestionDB questionDB = new QuestionDB();
+		List<Question> questions = questionDB.getQuestionsByPollId(pollId, "en");
+		
+		ExportData exportData = new ExportData();
+		file = exportData.exportPollResponses(pollId, questions, responses);
+		
+		return file;
+	}
+
 }

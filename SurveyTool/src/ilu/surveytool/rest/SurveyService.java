@@ -1,5 +1,7 @@
 package ilu.surveytool.rest;
 
+import java.io.File;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -71,4 +74,20 @@ public class SurveyService {
 		}
     	return response;
     }
+		
+	@GET
+	@Path("/export/{param}")
+	@Produces("application/vnd.ms-excel")
+	public Response getOption(@PathParam("param") String surveyId) {
+	   	System.out.println("Opción: " + surveyId);
+	   	
+	   	SurveysHandler surveysHandler = new SurveysHandler();
+	   	File file = surveysHandler.exportResults(Integer.parseInt(surveyId));
+		ResponseBuilder response = Response.ok((Object) file);
+		response.header("Content-Disposition", "attachment; filename=" + file.getName());
+		
+		//file.delete();
+		
+		return response.build();
+	}
 }

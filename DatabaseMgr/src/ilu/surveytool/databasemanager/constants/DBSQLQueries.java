@@ -3,6 +3,32 @@ package ilu.surveytool.databasemanager.constants;
 public class DBSQLQueries {
 
 	//Selects
+		//AnonymousResponse
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
+					+ "if(qt.name = 'simple', "
+					+ "(SELECT c.text FROM surveytool.`option` as o "
+					+ "inner join surveytool.content as c on o.idContent = c.idContent "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "where idQuestionnaire = ? order by idAnonimousUser";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
+					+ "if(qt.name = 'simple', "
+					+ "(SELECT c.text FROM surveytool.`option` as o "
+					+ "inner join surveytool.content as c on o.idContent = c.idContent "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "where r.idPoll = ? order by au.idAnonimousUser";
+	
 		//Content
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "

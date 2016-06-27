@@ -56,8 +56,81 @@ public class ResponsesDB {
 	 * Selects
 	 */
 	
-	
-	
+	public HashMap<Integer, HashMap<Integer, String>> getAnonimousResponseBySurveyId(int surveyId)
+	{
+		HashMap<Integer, HashMap<Integer, String>> responses = new HashMap<Integer, HashMap<Integer, String>>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{	   			
+	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			
+	   			if(!responses.containsKey(anonymousUserId))
+	   			{
+	   				responses.put(anonymousUserId, new HashMap<Integer, String>());
+	   			}
+	   			
+	   			responses.get(anonymousUserId).put(rs.getInt(DBFieldNames.s_QUESTION_ID), 
+   						rs.getString(DBFieldNames.s_VALUE));
+	   			
+	   		}
+	   			   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return responses;
+	}
+		
+
+	public HashMap<Integer, HashMap<Integer, String>> getAnonimousResponseByPollId(int pollId)
+	{
+		HashMap<Integer, HashMap<Integer, String>> responses = new HashMap<Integer, HashMap<Integer, String>>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID);			
+	   		pstm.setInt(1, pollId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{	   			
+	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			
+	   			if(!responses.containsKey(anonymousUserId))
+	   			{
+	   				responses.put(anonymousUserId, new HashMap<Integer, String>());
+	   			}
+	   			
+	   			responses.get(anonymousUserId).put(rs.getInt(DBFieldNames.s_QUESTION_ID), 
+   						rs.getString(DBFieldNames.s_VALUE));
+	   			
+	   		}
+	   			   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return responses;
+	}
+		
 	/**
 	 * Inserts 
 	 */

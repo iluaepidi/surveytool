@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DatabaseMgr"/>
 	<classpathentry kind="lib" path="/ExternalLibs/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="/ExternalLibs/poi-3.14-20160307.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
