@@ -28,7 +28,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<tr class="info">
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.deadline") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.survey") %></th>
-											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.progress") %></th>
+											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.num_responses") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.actions") %></th>
 										</tr>
 										<%
@@ -50,8 +50,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<tr>
 											<td class="center"><%= deadLine %></td>
 											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
-											<td>
-												<div class="progress percent-bar">
+											<td class="center">
+												<%= survey.getNumUsers() %> <%= lang.getContent("survey_manager.surveys.table.survey_responses") %>
+												<!-- <div class="progress percent-bar">
 													<%
 													float percentage = 0;
 													if(survey.getNumUsers() > 0)
@@ -60,7 +61,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 													}
 													%>
 													<div class="progress-bar" role="progressbar" aria-valuenow="<%= survey.getNumUsersFinished() %>" aria-valuemin="0" aria-valuemax="<%= survey.getNumUsers() %>" style="width: <%=percentage%>%;"><%= survey.getNumUsersFinished() %>/<%= survey.getNumUsers() %></div>
-												</div>
+												</div> -->
 											</td>
 											<td>
 												<ul class="row">

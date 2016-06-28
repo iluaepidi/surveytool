@@ -111,7 +111,8 @@ public class SurveysHandler {
 		List<SurveyTableInfo> response = new ArrayList<SurveyTableInfo>();
 		
 		SurveyDB surveyDB = new SurveyDB();
-		response = surveyDB.getSurveysTableInfoByAuthor(author, language);
+		//response = surveyDB.getSurveysTableInfoByAuthor(author, language);
+		response = surveyDB.getSurveysTableInfoAnonimousByAuthor(author, language);
 		
 		return response;
 	}

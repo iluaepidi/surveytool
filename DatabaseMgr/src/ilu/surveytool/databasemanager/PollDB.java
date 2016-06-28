@@ -75,6 +75,7 @@ public class PollDB {
 	   			poll.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
 	   			poll.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
 	   			poll.setPublicUrl(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			poll.setNumResponses(rs.getInt(DBFieldNames.s_RESPONSES_NUMBER));
 	   			response.add(poll);
 	   		}	   		
 	   		

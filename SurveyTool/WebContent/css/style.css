@@ -58,7 +58,10 @@ h2 {width: auto;
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
 	border-color: #4A4A4A;}
+.panel-primary {border-radius: 10px !important;}
 
+.sr-only {position: absolute;
+    top: -99999px;} 
 
 /*focus*/
 
@@ -722,7 +725,8 @@ footer {margin-top: 10px;
 .results-page-call label {font-weight: normal;}
 .poll-table-tr-th-actions {width: 23.1%;}
 .poll-table-tr-th-responses {width: 22.8%;}
-.poll-table-tr-th-deadline {width: 23.9%;}
+.poll-table-tr-th-deadline {width: 15%;}
+.poll-table-tr-th-numresp {width: 16%;}
 
 .iframe-example {border: 2px solid #CCCCCC;
     padding: 15px;

@@ -34,6 +34,9 @@
 											<td class="center">
 												<a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>">http://<%= host %>:<%= port %>/SurveyTool/poll?pid=<%= poll.getPublicUrl() %></a>
 											</td>
+											<td class="center">
+												<%= poll.getNumResponses() %> <%= lang.getContent("survey_manager.polls.table.poll_responses") %>
+											</td>
 											<td>
 												<ul class="row">
 													<!-- <li class="col-sm-3 center"><a href="#" title="clone survey"><i class="fa fa-clone fa-2x"></i></a></li>
