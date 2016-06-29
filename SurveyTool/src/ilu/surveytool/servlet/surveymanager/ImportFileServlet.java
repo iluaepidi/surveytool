@@ -163,13 +163,8 @@ public class ImportFileServlet extends HttpServlet {
 		    Files.copy(fileContent, fpath);
 		} catch (FileAlreadyExistsException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			index++;
-			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			//index++;
+			index++;
 			//fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
 		}
 		return fileNameFinal;

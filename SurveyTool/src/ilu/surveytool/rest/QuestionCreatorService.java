@@ -1,5 +1,8 @@
 package ilu.surveytool.rest;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,7 +16,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveymanager.data.Option;
+import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveytool.databasemanager.DataObject.Content;
 
 @Path("/QCService")
 public class QuestionCreatorService {
@@ -50,7 +55,7 @@ public class QuestionCreatorService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
     public String insertOption(String req) {
-    	System.out.println("Opción: " + req);
+    	System.out.println("Opción (insertOption): " + req);
     	JSONObject json = null;
     	String response = "";
     	try {
@@ -65,6 +70,60 @@ public class QuestionCreatorService {
 			System.out.println("Opción: " + option.toString());
 			OptionHandler optionHandler = new OptionHandler();
 			response = optionHandler.saveOption(option);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@POST
+	@Path("/insertOptionMatrix")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String insertOptionMatrix(String req) {
+    	System.out.println("Opción (insertOptionMatrix): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			Option option = new Option(json.getString("text"), 
+					Integer.parseInt(json.getString("index")), 
+					Integer.parseInt(json.getString("qid")), 
+					0,
+					Integer.parseInt(json.getString("oid")),
+					json.getString("otype"),
+					json.getString("lang"));
+			System.out.println("Opción: " + option.toString());
+			OptionHandler optionHandler = new OptionHandler();
+			response = optionHandler.saveOptionMatrix(option);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@POST
+	@Path("/insertOptionsGroupMatrix")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String insertOptionsGroupMatrix(String req) {
+    	System.out.println("Opción (insertOptionsGroupMatrix): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			OptionsGroupSurveyManager option = new OptionsGroupSurveyManager(json.getString("text"), 
+					Integer.parseInt(json.getString("index")), 
+					Integer.parseInt(json.getString("qid")), 
+					Integer.parseInt(json.getString("ogid")),
+					json.getString("otype"),
+					json.getString("lang"));
+			System.out.println("Opción(insertOptionsGroupMatrix-option): " + option.toString());
+			OptionHandler optionHandler = new OptionHandler();
+			response = optionHandler.saveOptionsGroupMatrix(option);
+			System.out.println("Opción (insertOptionsGroupMatrix-response): " + response);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

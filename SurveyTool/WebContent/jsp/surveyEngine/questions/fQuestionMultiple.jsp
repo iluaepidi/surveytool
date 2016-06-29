@@ -38,11 +38,8 @@
 													<%
 													for(Resource resource : resources)
 													{
-														System.out.println("Error: " + resource.toString());
-														String altText = "";
-														if(!resource.getContents().isEmpty()) altText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= altText %>" />
+									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
 									            	<%
 													}
 										            %>
@@ -61,10 +58,10 @@
 													<%
 							  						for(Option option : optionsGroup.getOptions())
 							  						{
-							  							String id = "optionsRadios" + option.getId();
+							  							String id = "optionsChecks" + option.getId();
 							  						%>
-													 	<li class="radio">
-														  <input type="radio" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
+													 	<li class="checkbox">
+														  <input type="checkbox" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
 														  <label for="<%= id %>">
 														    <%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
 														  </label>

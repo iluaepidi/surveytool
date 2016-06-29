@@ -1,7 +1,5 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="java.util.List"%>
-<%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
-<%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
 <%@page import="ilu.surveytool.constants.Parameter"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
@@ -17,6 +15,9 @@
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
+    								String lines = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES);
+    								if(lines.equals(""))
+    									lines = "1";
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
@@ -38,11 +39,8 @@
 													<%
 													for(Resource resource : resources)
 													{
-														System.out.println("Error: " + resource.toString());
-														String altText = "";
-														if(!resource.getContents().isEmpty()) altText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= altText %>" />
+									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
 									            	<%
 													}
 										            %>
@@ -52,30 +50,8 @@
 									            %>
 							  					
 												<div class="form-question-content">
-																			  					
-												<%
-								  				for(OptionsGroup optionsGroup : question.getOptionsGroups())
-								  				{
-								  				%>
-													<ul class="form-options">
-													<%
-							  						for(Option option : optionsGroup.getOptions())
-							  						{
-							  							String id = "optionsRadios" + option.getId();
-							  						%>
-													 	<li class="radio">
-														  <input type="radio" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
-														  <label for="<%= id %>">
-														    <%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
-														  </label>
-														</li>
-													<%
-							  						}
-													%>
-													</ul>
-												<%
-								  				}
-												%>
+													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_"></textarea>
 												</div>	
+												
 											</fieldset>																						
 										</div>

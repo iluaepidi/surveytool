@@ -3,6 +3,8 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+
+System.out.println("new survey");
 %>
 
 	  			<!-- Modal -->

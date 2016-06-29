@@ -3,6 +3,7 @@ package ilu.surveytool.servlet.surveymanager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -57,6 +58,7 @@ public class CreateQuestionServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		System.out.println("processRequest en CreateQuestionServlet");
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
@@ -64,10 +66,31 @@ public class CreateQuestionServlet extends HttpServlet {
 		{
 			Question question = new Question();
 			question.setQuestionType(request.getParameter(Parameter.s_QTYPE));
+			System.out.println(request.getParameter(Parameter.s_QTYPE));
+			if (request.getParameter(Parameter.s_QTYPE).equals("matrix")){
+				HashMap<String, String> matrixType = new HashMap<String, String>();
+				matrixType.put(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE, DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE);
+				question.setParameters(matrixType);
+			}
+			
+			if (request.getParameter(Parameter.s_QTYPE).equals("longText")){
+				HashMap<String, String> longtext = new HashMap<String, String>();
+				longtext.put(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES, "");
+				question.setParameters(longtext);
+			}
+			
+			if (request.getParameter(Parameter.s_QTYPE).equals("shortText")){
+				HashMap<String, String> shorttext = new HashMap<String, String>();
+				shorttext.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE, DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE);
+				shorttext.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE, DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL);
+				question.setParameters(shorttext);
+			}
+			
 			question.setCategory("generic");
 			question.setTag("generic");
 			question.setHelpText(Boolean.parseBoolean(request.getParameter(Parameter.s_HELP_TEXT)));
 			question.setMandatory(Boolean.parseBoolean(request.getParameter(Parameter.s_MANDATORY)));
+			question.setOptionalAnswer(Boolean.parseBoolean(request.getParameter(Parameter.s_OPTIONALANSWER)));
 			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
 			
 			int pageId = Integer.parseInt(request.getParameter(Parameter.s_PAGE_ID));
@@ -77,8 +100,7 @@ public class CreateQuestionServlet extends HttpServlet {
 			question.setQuestionId(questionId);
 			String templateFile = questionHandler.getQuestionTypeTemplateFile(question.getQuestionType());
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
-			request.setAttribute(Attribute.s_QUESTION, question);			
-			
+			request.setAttribute(Attribute.s_QUESTION, question);	
 			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}
 		else

@@ -83,6 +83,34 @@ public class OptionDB {
 		return contentId;
 	}
 	
+	public int getContentIdByOptionsGroupId(int optionsGroupId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUP_BY_ID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
+	
 	public List<OptionsGroup> getOptionsGroupByQuestionId(int questionId, String lang)
 	{
 		List<OptionsGroup> optionsGroups = new ArrayList<OptionsGroup>();
@@ -102,7 +130,7 @@ public class OptionDB {
 	   			optionsGroup.setId(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
 	   			optionsGroup.setOptionType(rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME));
 	   			optionsGroup.setRandom(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
-	   			
+	   			optionsGroup.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
@@ -120,6 +148,34 @@ public class OptionDB {
 		}
 		
 		return optionsGroups;
+	}
+	
+	public List<Integer> getOptionsGroupIdByQuestionId(int questionId)
+	{
+		List<Integer> optionsGroupsId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUPID_BY_QUESTION_ID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			optionsGroupsId.add(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionsGroupsId;
 	}
 	
 	public List<Option> getOptionsByOptionsGroupId(int optionsGroupId, String lang)
@@ -158,9 +214,9 @@ public class OptionDB {
 		return options;
 	}
 	
-	public int getOptionByGroupIdByOptionId(int optionId)
+	public List<Integer> getOptionByGroupIdByOptionId(int optionId)
 	{
-		int optionGroupId = 0;
+		List<Integer> optionGroupId = new ArrayList<Integer>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -171,9 +227,10 @@ public class OptionDB {
 	   		pstm.setInt(1, optionId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		if(rs.next())
+	   		
+	   		while(rs.next())
 	   		{
-	   			optionGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   			optionGroupId.add(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
 	   		}
 	   		
 		} catch (SQLException e) {
@@ -184,6 +241,64 @@ public class OptionDB {
 		}
 		
 		return optionGroupId;
+	}
+	
+	public List<Integer> getOptionIdByQuestionId(int questionId)
+	{
+		List<Integer> optionId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONID_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		while(rs.next())
+	   		{
+	   			optionId.add(rs.getInt(DBFieldNames.s_OPTIONID));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionId;
+	}
+	
+	public int getQuestionIdByOptionsGroupId(int optionsGroupId)
+	{
+		int questionId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUP_BY_ID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		if(rs.next())
+	   		{
+	   			questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questionId;
 	}
 	
 	public List<OptionsByGroup> getOptionsByGroupById(int optionsGroupId)
@@ -220,7 +335,7 @@ public class OptionDB {
 	 * Inserts 
 	 */
 	
-	public int insertOptionsGroup(int questionId, String optionType, int contentId) 
+	public int insertOptionsGroup(int questionId, String optionType, int contentId, int index) 
 	{		
 		int optionsGroupId = 0;
 
@@ -231,6 +346,7 @@ public class OptionDB {
 		   pstm.setInt(1, questionId); 
 		   pstm.setInt(2, contentId); 
 		   pstm.setString(3, optionType);
+		   pstm.setInt(4, index);
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -343,7 +459,36 @@ public class OptionDB {
 		   
 	}
 	
-	/*
+	public boolean updateOptionsGroupIndex(int optionsGroupId, int index) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSGROUP_INDEX);
+			pstm.setInt(1, index);
+			pstm.setInt(2, optionsGroupId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	/**
 	 * Remove
 	 */
 	
@@ -355,6 +500,26 @@ public class OptionDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTION);
 		   	pstm.setInt(1, optionId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeOptionsGroup(int optionsGroupId) {
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTIONSGROUP);
+		   	pstm.setInt(1, optionsGroupId);
 	   		
 		   	pstm.execute();
 		   	

@@ -12,9 +12,11 @@
 												Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 												List<Resource> resources = question.getResources();
 							  					%>
-							  					<div class="question-frame question-frame-multimedia" id="multimediaFrame">
+							  					<div class="row" padding="20px" id="multimediaFrame">
 							  					
-							  						<h4><%= lang.getContent("question.edit.files.title") %></h4>
+							  						<label><%= lang.getContent("question.edit.files.title") %></label>
+							  						<div id="div_files">
+							  						<div class="col-md-8 question-files-frame">
 							  						<ul class="multimedia-list" id="multimediaFilesList">
 							  						<%							  						
 							  						for(Resource resource : resources)
@@ -26,8 +28,11 @@
 							  						}
 							  						%>
 							  						</ul>
-							  						
+							  						</div>
+							  						<div class="col-md-4">
 							  						<button class="btn btn-primary btn-sm active" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o"></i><span><%= lang.getContent("button.add_file") %></span></button>
+							  					</div>
+							  					</div>
 							  					</div>	
 							  					
 												<%

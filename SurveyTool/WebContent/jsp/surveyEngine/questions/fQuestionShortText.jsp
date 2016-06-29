@@ -6,17 +6,21 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="ilu.surveytool.language.Language"%>
     
     								<%
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage("en");
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
+    								String inputMode = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
-													Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
 												</legend>
 												<%
 							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
@@ -44,7 +48,7 @@
 									            %>
 							  					
 												<div class="form-question-content">
-													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="3" placeholder="Type here_"></textarea>
+													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%>></textarea>
 												</div>	
 												
 											</fieldset>																						

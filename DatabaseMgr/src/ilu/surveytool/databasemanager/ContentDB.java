@@ -148,7 +148,7 @@ public class ContentDB {
 	}
 	
 	public boolean insertContent(int contentId, String language, String contentType, String text) {
-		//System.out.println("inserUser");
+		System.out.println("insertContent: [contentId: "+ contentId+", language: "+language+", contentType: "+contentType+", text: "+text+"]");
 		boolean inserted = false;
 		
 		Connection con = this._openConnection();
@@ -217,6 +217,29 @@ public class ContentDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT);
 		   	pstm.setInt(1, contentId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeContentByTypeLang(int contentId, String language, String contentType) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT_BY_ID_TYPE_LANG);
+		   	pstm.setInt(1, contentId);
+			pstm.setString(2, language);
+			pstm.setString(3, contentType);
 	   		
 		   	pstm.execute();
 		   	
