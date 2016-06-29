@@ -76,20 +76,36 @@ public class CreateSurveyServlet extends HttpServlet {
 			survey.setSurveyId(surveyId);
 			
 			if(surveyId > 0)
-			{				
-				request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+			{	
+
+				//request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 				
 				int pageId = surveysHandler.createFormaSectionAndPage(surveyId);
 				request.setAttribute(Attribute.s_PAGE_ID, pageId);
 				
-				SectionHandler sectionHandler = new SectionHandler();
+				/*SectionHandler sectionHandler = new SectionHandler();
 				survey.setSections(sectionHandler.getSectionsBySurveyId(surveyId, language));
 				
 				List<String> jsFiles = new ArrayList<>();
 				jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
 				request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");*/
+				
+				String editSurveyUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/SurveysServlet?surveyid=" + surveyId;
+				
+				try {
+					response.sendRedirect(editSurveyUrl);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			else
+			{
+
+				CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 			}
 			
 		}
@@ -97,9 +113,10 @@ public class CreateSurveyServlet extends HttpServlet {
 		{
 			SessionHandler sessionHandler = new SessionHandler();
 			sessionHandler.sessionClosed(request, properties);
+			
+			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		}
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 	}
 
 }
