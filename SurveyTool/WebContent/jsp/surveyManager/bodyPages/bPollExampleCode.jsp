@@ -39,6 +39,13 @@
 	  							<%= lang.getContent("poll.preview.size.label.pixels") %>
 	  						</fieldset>
   						</div>
+	  					<div class="code-poll-frame">
+  							<h3><%= lang.getContent("poll.preview.section.url") %></h3>
+  							<div>
+	  							<label for="pollCode" class="sr-only"><%= lang.getContent("poll.preview.label.url") %></label>
+	  							<input type="text" id="pollUrl" class="form-control" value="<%= pollUrl %>" />
+	  						</div>
+  						</div>
 	  				</div>
 	  			</div>
 	  			
