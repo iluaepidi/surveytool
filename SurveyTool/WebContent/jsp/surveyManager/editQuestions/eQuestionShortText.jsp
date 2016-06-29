@@ -112,7 +112,7 @@
 								  										<input type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
 															  			<label for="range"><%=lang.getContent("question.form.options.text.range") %></label>
 								  									</div>
-															 		<div class="question-response-settings-sub col-md-4" <% if(!minValue.equals("") || !maxValue.equals("")){ %> style="display: none" <%} %>>
+															 		<div class="question-response-settings-sub col-md-4" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display: none" <%} %>>
 								  										<div class="col-md-6">
 								  										<div class="col-md-2">
 								  											<label for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
