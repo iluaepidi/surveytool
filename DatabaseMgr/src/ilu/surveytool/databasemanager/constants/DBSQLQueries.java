@@ -3,6 +3,32 @@ package ilu.surveytool.databasemanager.constants;
 public class DBSQLQueries {
 
 	//Selects
+		//AnonymousResponse
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
+					+ "if(qt.name = 'simple', "
+					+ "(SELECT c.text FROM surveytool.`option` as o "
+					+ "inner join surveytool.content as c on o.idContent = c.idContent "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "where idQuestionnaire = ? order by idAnonimousUser";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
+					+ "if(qt.name = 'simple', "
+					+ "(SELECT c.text FROM surveytool.`option` as o "
+					+ "inner join surveytool.content as c on o.idContent = c.idContent "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "where r.idPoll = ? order by au.idAnonimousUser";
+	
 		//Content
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
@@ -46,12 +72,12 @@ public class DBSQLQueries {
 		public final static String s_SELECT_NUM_PAGE_BY_SECTIONID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page where idSection = ?";
 		
 		//poll
-		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
-						+ "FROM surveytool.poll p "
-						+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
-						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
-						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
-						+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title, (SELECT count(*) FROM surveytool.responses where idPoll = p.idPoll) numResp  "
+				+ "FROM surveytool.poll p "
+				+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
+				+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+				+ "WHERE p.author = ? and l.isoName = ? and ct.name = ? ";
 		public final static String s_SELECT_POLL_TABLE_INFO_BY_ID = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title "
 				+ "FROM surveytool.poll p "
 				+ "INNER JOIN surveytool.content c ON p.idContent = c.idContent "
@@ -67,7 +93,7 @@ public class DBSQLQueries {
 				+ "where p.idPoll = ?";
 		
 		//poll response
-		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text,  (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
+		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text, (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
 				+ "FROM surveytool.questionbypoll qbp "
 				+ "inner join surveytool.optionsgroup og on qbp.idQuestion = og.idQuestion "
 				+ "inner join surveytool.optionsbygroup obg on og.idOptionsGroup = obg.idOptionsGroup "
@@ -141,6 +167,13 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
 				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
 				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
+						+ "FROM surveytool.questionnaire q "
+						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
+						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
+						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";
+		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
+				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "

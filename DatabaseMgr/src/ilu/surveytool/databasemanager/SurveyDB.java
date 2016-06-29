@@ -241,6 +241,41 @@ public class SurveyDB {
 		return response;
 	}
 
+	public List<SurveyTableInfo> getSurveysTableInfoAnonimousByAuthor(int author, String language)
+	{
+		List<SurveyTableInfo> response = new ArrayList<SurveyTableInfo>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS);	
+	   		pstm.setInt(1, author);
+	   		pstm.setString(2, language);
+	   		pstm.setString(3, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			SurveyTableInfo survey = new SurveyTableInfo();
+	   			survey.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			survey.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
+	   			survey.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
+	   			survey.setNumUsers(rs.getInt(DBFieldNames.s_GENERICO_ALL_USERS));
+	   			response.add(survey);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
 	public int getQuestionnairesContentId(int surveyId)
 	{
 		int contentId = 0;

@@ -35,8 +35,11 @@
 													<%
 													for(Resource resource : resources)
 													{
+														System.out.println("Error: " + resource.toString());
+														String altText = "";
+														if(!resource.getContents().isEmpty()) altText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
+									            	<img src="<%= resource.getPathFile() %>" alt="<%= altText %>" />
 									            	<%
 													}
 										            %>

@@ -2,6 +2,9 @@ package ilu.surveytool.databasemanager.constants;
 
 public class DBFieldNames {
 	
+	//anonymousUser
+	 	public final static String s_ANONYMOUS_USER_ID = "idAnonimousUser";
+	 
 	//generico
 		public final static String s_GENERICO_TITLE = "title";
 		public final static String s_GENERICO_ALL_USERS = "allUsers";
@@ -29,6 +32,7 @@ public class DBFieldNames {
 		
 	//option
 		public final static String s_OPTIONID = "idOption";
+		public final static String s_VALUE = "value";
 		
 	//optionsgroup
 		public final static String s_OPTIONSGROUPID = "idOptionsGroup";

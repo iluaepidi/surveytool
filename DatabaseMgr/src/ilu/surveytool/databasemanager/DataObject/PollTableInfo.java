@@ -8,17 +8,19 @@ public class PollTableInfo {
 	String title = "";
 	String publicUrl = "";
 	Timestamp deadLineDate;
+	int numResponses;
 
 	public PollTableInfo() {
 		super();
 	}
 
-	public PollTableInfo(int pollId, String title, Timestamp deadLineDate, String publicUrl) {
+	public PollTableInfo(int pollId, String title, Timestamp deadLineDate, String publicUrl, int numResponses) {
 		super();
 		this.pollId = pollId;
 		this.title = title;
 		this.publicUrl = publicUrl;
 		this.deadLineDate = deadLineDate;
+		this.numResponses = numResponses;
 	}
 
 	public int getPollId() {
@@ -51,6 +53,14 @@ public class PollTableInfo {
 
 	public void setDeadLineDate(Timestamp deadLineDate) {
 		this.deadLineDate = deadLineDate;
+	}
+
+	public int getNumResponses() {
+		return numResponses;
+	}
+
+	public void setNumResponses(int numResponses) {
+		this.numResponses = numResponses;
 	}
 
 	@Override

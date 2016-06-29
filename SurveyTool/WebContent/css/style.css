@@ -58,7 +58,10 @@ h2 {width: auto;
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
 	border-color: #4A4A4A;}
+.panel-primary {border-radius: 10px !important;}
 
+.sr-only {position: absolute;
+    top: -99999px;} 
 
 /*focus*/
 
@@ -722,9 +725,29 @@ footer {margin-top: 10px;
 .results-page-call label {font-weight: normal;}
 .poll-table-tr-th-actions {width: 23.1%;}
 .poll-table-tr-th-responses {width: 22.8%;}
-.poll-table-tr-th-deadline {width: 23.9%;}
+.poll-table-tr-th-deadline {width: 15%;}
+.poll-table-tr-th-numresp {width: 16%;}
 
-.iframe-example {border: 2px solid #CCCCCC;
+.iframe-example {/*border: 2px solid #CCCCCC;*/
     padding: 15px;
-    width: 475px;
-    margin: 160px auto;}
+    /*width: 475px;*/
+    margin: 20px auto;
+    display: table;}
+.code-poll-frame {border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 20px 20px;
+    width: 700px;
+    margin: 10px auto;}
+.poll-size {margin-top: 15px;}
+.poll-size legend {font-size: 1.1em;
+    border: none;
+    margin-bottom: 0px;
+    float: left;
+    width: inherit;
+    margin-right: 10px;
+    padding: 5px 0px;
+    font-weight: bold;}
+.poll-size input {width: 75px;
+    text-align: right;
+    display: inline;
+    height: 30px;}
