@@ -1,5 +1,6 @@
 package ilu.surveymanager.handler;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class QuestionHandler {
 
 			int index = questionDB.getNumQuestionByPage(pageId) + 1;
 			
-			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), index);
+			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), question.isOptionalAnswer(), index, question.getParameters());
 		}
 		
 		return questionId;
@@ -80,7 +81,7 @@ public class QuestionHandler {
 	public boolean updateContent(int questionId, Content content)
 	{
 		boolean updated = false;
-		
+				
 		QuestionDB questionDB = new QuestionDB();
 		int contentId = questionDB.getQuestionContentIdByQuestionId(questionId);
 		ContentDB contentDB = new ContentDB();
@@ -90,7 +91,8 @@ public class QuestionHandler {
 		}
 		else
 		{
-			contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			if (!content.getText().equals(""))
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
 		}
 		
 		updated = true;
@@ -100,12 +102,31 @@ public class QuestionHandler {
 	
 	public boolean updateMandatory(int questionId, int pageId)
 	{
+		System.out.println("Update mandatory");
 		QuestionDB questionDB = new QuestionDB();
 		boolean mandatory = !questionDB.getQuestionByPageMandatory(questionId, pageId);
 		questionDB.updateQuestionMandatory(questionId, pageId, mandatory);
 		
 		return mandatory;
 	}
+	
+	public boolean updateOptionalAnswer(int questionId, int pageId)
+	{
+		System.out.println("Update opt answer");
+		QuestionDB questionDB = new QuestionDB();
+		boolean optionalAnswer = !questionDB.getQuestionByPageOptionalAnswer(questionId, pageId);
+		questionDB.updateQuestionOptionalAnswer(questionId, pageId, optionalAnswer);
+		
+		return optionalAnswer;
+	}
+	
+	public HashMap<String,String> updateParameters(int questionId, int pageId, HashMap<String,String> parameters)
+	{
+		System.out.println("Update parameters");
+		QuestionDB questionDB = new QuestionDB();		
+		questionDB.updateQuestionParameters(questionId, pageId, parameters);	
+		return parameters;
+	}	
 	
 	public boolean updateIndex(int questionId, int prevQuestionId, int pageId)
 	{
@@ -154,6 +175,24 @@ public class QuestionHandler {
 		int prevQuestionId = questionDB.getQuestionByPageIdIndex(numQuestions, pageId);
 		this.updateIndex(questionId, prevQuestionId, pageId);
 		questionDB.removeQuestionByPage(questionId, pageId);
+		removed = true;
+		return removed;
+	}
+	
+	public boolean removeParameterByQuestionByPage(int questionId, int pageId, String parameter)
+	{
+		boolean removed = false;
+		QuestionDB questionDB = new QuestionDB();
+		questionDB.removeQuestionParameter(questionId, pageId, parameter);
+		removed = true;
+		return removed;
+	}
+	
+	public boolean removeParametersByQuestionByPage(int questionId, int pageId)
+	{
+		boolean removed = false;
+		QuestionDB questionDB = new QuestionDB();
+		questionDB.removeQuestionParameters(questionId, pageId);
 		removed = true;
 		return removed;
 	}
