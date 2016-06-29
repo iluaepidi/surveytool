@@ -8,8 +8,11 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="ilu.surveytool.language.Language"%>
     
     								<%
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage("en");
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
@@ -18,7 +21,7 @@
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
-													Question <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
 												</legend>
 												<%
 							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))

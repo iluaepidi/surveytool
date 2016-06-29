@@ -53,6 +53,7 @@ public class SurveyProcessServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		System.out.println("");
 		Enumeration<String> paramNames = request.getParameterNames();
 		List<Response> responses = new ArrayList<Response>();
 		int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SID));

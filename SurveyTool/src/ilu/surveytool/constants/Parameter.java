@@ -23,6 +23,7 @@ public class Parameter {
 	public final static String s_LINK_URL = "linkUrl";
 	public final static String s_MAIN_VERSION = "mainVersion";
 	public final static String s_MANDATORY = "mandatory";
+	public final static String s_OPTIONALANSWER = "mandatory";
 	public final static String s_OPTIONS = "options";
 	public final static String s_PASSWORD = "password";
 	public final static String s_PROJECT = "project";
@@ -44,6 +45,7 @@ public class Parameter {
 	public final static String s_TEXT = "text";
 	public final static String s_USERNAME = "username";
 	public final static String s_UPOPTION = "upoption";
+	public final static String s_INPUTMODE = "inputMode";
 	
 
 }

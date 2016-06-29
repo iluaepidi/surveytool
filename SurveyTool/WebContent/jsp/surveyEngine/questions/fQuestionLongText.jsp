@@ -7,15 +7,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="ilu.surveytool.language.Language"%>
-<%
-Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
-%>  
+    
     								<%
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage("en");
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
+    								String lines = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES);
+    								if(lines.equals(""))
+    									lines = "1";
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
@@ -48,46 +50,8 @@ lang.loadLanguage("en");
 									            %>
 							  					
 												<div class="form-question-content">
-													<div class="likert-options">
-													 	<div class="likert-options-frame">
-													 		<div>
-													 			<label for="likert1">1</label>
-													 			<input type="radio" name="<%= questionId %>" value="1" id="likert1"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert2">2</label>
-													 			<input type="radio" name="<%= questionId %>" value="2" id="likert2"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert3">3</label>
-													 			<input type="radio" name="<%= questionId %>" value="3" id="likert3"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert4">4</label>
-													 			<input type="radio" name="<%= questionId %>" value="4" id="likert4"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert5">5</label>
-													 			<input type="radio" name="<%= questionId %>" value="5" id="likert5"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert6">6</label>
-													 			<input type="radio" name="<%= questionId %>" value="6" id="likert6"/>
-													 		</div>
-													 		<div>
-													 			<label for="likert7">7</label>
-													 			<input type="radio" name="<%= questionId %>" value="7" id="likert7"/>
-													 		</div>
-													 	</div>
-													 </div>	
-													 <div class="likert-legend">
-													 	<div><%= lang.getContent("question.form.scale.liker_legend.t_disgree") %></div>
-													 	<div><%= lang.getContent("question.form.scale.liker_legend.indiferent") %></div>
-													 	<div><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
-													 </div>
+													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_"></textarea>
 												</div>	
+												
 											</fieldset>																						
 										</div>
-<%
-lang.close();
-%>
