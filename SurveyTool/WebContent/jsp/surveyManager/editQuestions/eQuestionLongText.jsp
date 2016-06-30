@@ -36,17 +36,22 @@
 															    <option value="sc"><%=lang.getContent("question.new.scale")%></option>
 															    <!-- <option value="c"><%=lang.getContent("question.new.code")%></option> -->
 															</select>
-														</div>
+														</div>														
+														
 														<div class="right col-md-7">
-															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>															
 														</div>
+														
+														
 							  					</div>
 							  					
 							  					<div class="question-frame">
 							  					<h4><%=lang.getContent("question.edit.statementSetting.title")%></h4>
-							  						<jsp:include page="eqComponents/eqDescription.jsp" />	
+							  					
+							  					<jsp:include page="eqComponents/eqDescription.jsp" />	
 							  					
 							  						<jsp:include page="eqComponents/eqFiles.jsp" />
+							  						
 							  					</div>
 																										
 												<div class="question-frame">

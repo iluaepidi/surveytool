@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -410,6 +411,51 @@ public class QuestionParameterDB {
 		   
 	}
 	
+	public void updateQuestionParameters(int questionId, int pageId, HashMap<String, String> parameters) {
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();		
+		   
+		try{
+			
+			
+			Iterator<String> iter = parameters.keySet().iterator();
+			while(iter.hasNext()){
+				String parameterName = iter.next();
+				String value = parameters.get(parameterName);
+				
+				if(questionParameterDB.getQuestionParameterByPageIDQuestionIDParameterName(pageId, questionId, parameterName) != null){
+					pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_PARAMETERFORQUESTION);
+					System.out.println(DBSQLQueries.s_UPDATE_PARAMETERFORQUESTION+", 1:"+value+", 2:"+pageId+", 3:"+questionId+", 4:"+parameterName);
+					pstm.setString(1, value);
+			   		pstm.setInt(2, pageId);
+					pstm.setInt(3, questionId);
+					pstm.setString(4, parameterName);
+					pstm.executeUpdate();
+				}
+				else{
+					pstm = con.prepareStatement(DBSQLQueries.s_INSERT_PARAMETER_FOR_QUESTION);
+					System.out.println(DBSQLQueries.s_INSERT_PARAMETER_FOR_QUESTION+", 1:"+questionId+", 2:"+pageId+", 3:"+parameterName+", 4:"+value);
+					pstm.setInt(1, questionId);
+			   		pstm.setInt(2, pageId);
+					pstm.setString(3, parameterName);
+					pstm.setString(4, value);
+					pstm.executeUpdate();
+				}
+				
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+	}
+	
 	/*
 	 * Delete
 	 */
@@ -448,6 +494,51 @@ public class QuestionParameterDB {
 		   	pstm.setInt(1, pollId);
 		   	pstm.setInt(2, questionId);
 		   	pstm.setString(3, parameterName);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeQuestionParameter(int questionId, int pageId, String parameter) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID_PARAMETER_NAME);
+		   	pstm.setInt(1, pageId);
+		   	pstm.setInt(2, questionId);
+		   	pstm.setString(3, parameter);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeQuestionParameters(int questionId, int pageId) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID);
+		   	pstm.setInt(1, pageId);
+		   	pstm.setInt(2, questionId);
 	   		
 		   	pstm.execute();
 		   	
