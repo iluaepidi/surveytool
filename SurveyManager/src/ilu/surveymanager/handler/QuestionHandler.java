@@ -6,6 +6,7 @@ import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Question;
@@ -182,8 +183,8 @@ public class QuestionHandler {
 	public boolean removeParameterByQuestionByPage(int questionId, int pageId, String parameter)
 	{
 		boolean removed = false;
-		QuestionDB questionDB = new QuestionDB();
-		questionDB.removeQuestionParameter(questionId, pageId, parameter);
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+		questionParameterDB.removeQuestionParameter(questionId, pageId, parameter);
 		removed = true;
 		return removed;
 	}
@@ -191,8 +192,8 @@ public class QuestionHandler {
 	public boolean removeParametersByQuestionByPage(int questionId, int pageId)
 	{
 		boolean removed = false;
-		QuestionDB questionDB = new QuestionDB();
-		questionDB.removeQuestionParameters(questionId, pageId);
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+		questionParameterDB.removeQuestionParameters(questionId, pageId);
 		removed = true;
 		return removed;
 	}

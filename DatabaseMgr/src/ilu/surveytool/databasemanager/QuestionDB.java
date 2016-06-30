@@ -676,51 +676,6 @@ public class QuestionDB {
 
 	}
 	
-	public void removeQuestionParameter(int questionId, int pageId, String parameter) {
-		//System.out.println("removeUserOptionValues");
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		   
-		try{			
-		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID_PARAMETER_NAME);
-		   	pstm.setInt(1, pageId);
-		   	pstm.setInt(2, questionId);
-		   	pstm.setString(3, parameter);
-	   		
-		   	pstm.execute();
-		   	
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, null);
-		}
-
-	}
-	
-	public void removeQuestionParameters(int questionId, int pageId) {
-		//System.out.println("removeUserOptionValues");
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		   
-		try{			
-		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID);
-		   	pstm.setInt(1, pageId);
-		   	pstm.setInt(2, questionId);
-	   		
-		   	pstm.execute();
-		   	
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, null);
-		}
-
-	}
-	
 	private String _maxMinIndex(int currentIndex, int prevIndex)
 	{
 		String maxMin = "";
