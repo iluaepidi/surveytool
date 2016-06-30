@@ -166,6 +166,9 @@ public class ImportFileServlet extends HttpServlet {
 			e.printStackTrace();
 			index++;
 			//fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return fileNameFinal;
 	}

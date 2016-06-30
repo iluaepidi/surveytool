@@ -59,7 +59,6 @@ public class DBFieldNames {
 		public final static String s_QUESTION_MAIN_VERSION = "mainVersion";
 		public final static String s_NUM_QUESTION = "numQuestions";
 		public final static String s_PARAMETER_NAME = "parameterName";
-		public final static String s_VALUE = "value";
 	
 	//questiontype
 		public final static String s_QUESTIONTYPE_NAME = "questionTypeName";
