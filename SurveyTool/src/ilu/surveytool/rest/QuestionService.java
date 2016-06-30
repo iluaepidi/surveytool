@@ -178,7 +178,7 @@ public class QuestionService {
     }
 	
 	@PUT
-	@Path("/updateInputType")
+	@Path("/updateInputTypeMode")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
     public String updateInputType(String req) {

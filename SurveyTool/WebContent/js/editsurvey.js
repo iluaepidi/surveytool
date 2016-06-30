@@ -904,7 +904,9 @@ $(function() {
 		if(node.val()==="formFieldTypeNumber"){
 			console.log("isNumber");
 			node.closest('div.row').find('#rangeOptions').css('display', 'inherit');
+			node.closest('div.row').find('#rangeOptions').css('display', 'inline-block');
 			node.closest('div.row').find('#decimalsOptions').css('display', 'inherit');
+			node.closest('div.row').find('#decimalsOptions').css('display', 'inline-block');
 		}else{
 			console.log("isNotNumber");
 			node.closest('div.row').find('#rangeOptions').css('display', 'none');
@@ -915,7 +917,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateInputType",
+			   url: host + "/SurveyTool/api/QuestionService/updateInputTypeMode",
 			   data: JSON.stringify(reqF),
 			   success: function (data) {
 				   console.log(data);
