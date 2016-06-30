@@ -61,7 +61,7 @@
 							  							String id = "optionsChecks" + option.getId();
 							  						%>
 													 	<li class="checkbox">
-														  <input type="checkbox" name="<%= questionId + "-" + optionsGroup.getId() %>" id="<%= id %>" value="<%= option.getId() %>">
+														  <input type="checkbox" name="<%= questionId + "-" + optionsGroup.getId() + "-" + option.getId()%>" id="<%= id %>" value="<%= option.getId() %>">
 														  <label for="<%= id %>">
 														    <%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>
 														  </label>

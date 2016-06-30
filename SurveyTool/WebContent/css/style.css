@@ -58,7 +58,17 @@ h2 {width: auto;
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
 	border-color: #4A4A4A; margin-top: 0 !important;}
+	
+.textarea-subsection {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;
+	margin-left: 5px !important;
+	max-width:150px !important;
+	vertical-align: middle !important;
+	display:inline-block}
 
+.respsettingsCheckbox {
+	vertical-align: middle !important;
+}
 
 /*focus*/
 
@@ -201,6 +211,7 @@ button span {margin-left: 5px;}
 .user-panel-menu i {margin-bottom: 10px;
 	font-size: 8em;}
 .user-panel-menu ul li {margin-bottom: 40px;}
+
 
 /*----------------------------------------------*\
 		$FOOTER
@@ -608,7 +619,7 @@ footer {margin-top: 10px;
 .btn-transparent.btn-remove:focus {border-color: #B60000 !important;}
 
 .question-frame {border: 1px solid #555;
-	margin: 15px 0px;
+	margin: 15px 0px !important;
 	padding: 15px 20px;
     border-radius: 5px;
     text-align: left;
@@ -622,17 +633,17 @@ footer {margin-top: 10px;
     position: absolute;
     top: -19px;
     left: 12px;}
-.question-frame label, 
+.question-frame div[type="global"], 
 .question-frame input[type="text"],
-.question-frame select {padding-left: 0px !important;
-	padding-right: 0px !important;}
+.question-frame select {padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-bottom: 10px !important;}
 .question-frame input[type="submit"] {margin-top: 4px;
     width: 90px;
     height: 45px;}
 .question-frame p {margin: 0px;}
 /*.question-frame-help {display:none;}*/
 .question-frame-multimedia button {margin-left: 60px;}
-
 
 
 
@@ -766,17 +777,22 @@ footer {margin-top: 10px;
     display: inline-block;}
     
 .question-response-settings {
-    margin-top: 0px !important;
+    margin-top: 5px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
     width: 100%;
+    vertical-align: middle;
     display: inline-block;}
 .question-response-settings label{
     font-weight: normal;
+    vertical-align: middle;
     }
 .question-response-settings-sub label{
 	color: #C8C8C8;
 	font-weight: normal;
+	padding: 0px !important;
+    vertical-align: middle;
+	display: inline-block;
 	}
 /*----------------------------------------------*\
 		$POLLS
