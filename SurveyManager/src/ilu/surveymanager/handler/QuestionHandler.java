@@ -124,8 +124,8 @@ public class QuestionHandler {
 	public HashMap<String,String> updateParameters(int questionId, int pageId, HashMap<String,String> parameters)
 	{
 		System.out.println("Update parameters");
-		QuestionDB questionDB = new QuestionDB();		
-		questionDB.updateQuestionParameters(questionId, pageId, parameters);	
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();		
+		questionParameterDB.updateQuestionParameters(questionId, pageId, parameters);	
 		return parameters;
 	}	
 	
