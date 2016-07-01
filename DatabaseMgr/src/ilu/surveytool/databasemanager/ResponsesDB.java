@@ -56,9 +56,9 @@ public class ResponsesDB {
 	 * Selects
 	 */
 	
-	public HashMap<Integer, HashMap<Integer, String>> getAnonimousResponseBySurveyId(int surveyId)
+	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId)
 	{
-		HashMap<Integer, HashMap<Integer, String>> responses = new HashMap<Integer, HashMap<Integer, String>>();
+		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -72,14 +72,25 @@ public class ResponsesDB {
 	   		while(rs.next())
 	   		{	   			
 	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
 	   			
 	   			if(!responses.containsKey(anonymousUserId))
 	   			{
-	   				responses.put(anonymousUserId, new HashMap<Integer, String>());
+	   				responses.put(anonymousUserId, new HashMap<Integer, HashMap<Integer, List<String>>>());
 	   			}
 	   			
-	   			responses.get(anonymousUserId).put(rs.getInt(DBFieldNames.s_QUESTION_ID), 
-   						rs.getString(DBFieldNames.s_VALUE));
+	   			if(!responses.get(anonymousUserId).containsKey(questionId))
+	   			{
+	   				responses.get(anonymousUserId).put(questionId, new HashMap<Integer, List<String>>());
+	   			}
+	   			
+	   			if(!responses.get(anonymousUserId).get(questionId).containsKey(optionsGroupId))
+	   			{
+	   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
+	   			}
+	   			
+	   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(rs.getString(DBFieldNames.s_VALUE));
 	   			
 	   		}
 	   			   		

@@ -16,6 +16,7 @@ import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
+import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.ResponseSimple;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
@@ -160,7 +161,7 @@ public class SurveysHandler {
 		File file = null;
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		HashMap<Integer, HashMap<Integer, String>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId);  
+		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId);  
 		
 		QuestionDB questionDB = new QuestionDB();
 		List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, "en");

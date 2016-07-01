@@ -4,8 +4,8 @@ public class DBSQLQueries {
 
 	//Selects
 		//AnonymousResponse
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
-					+ "if(qt.name = 'simple', "
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, r.idQuestion, r.idOptionsGroup, "
+					+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
 					+ "inner join surveytool.content as c on o.idContent = c.idContent "
 					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
