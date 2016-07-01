@@ -12,7 +12,11 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT = "ackText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_CALL_TEXT = "callText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
-		//Question parameters
+			//OptionsGroup type
+			public final static String s_VALUE_OPTIONSGROUP_TYPE_RADIO = "radio";
+			public final static String s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX = "checkbox";
+			
+			//Question parameters
 			public final static String s_VALUE_QUESTIONTYPE_FORMFIELD = "formfield";
 			public final static String s_VALUE_QUESTIONTYPE_PARAGRAPH = "paragraph";
 			public final static String s_VALUE_QUESTIONTYPE_GRADING = "grading";

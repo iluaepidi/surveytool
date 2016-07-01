@@ -603,6 +603,37 @@ public class QuestionDB {
 		   
 	}
 	
+	public boolean updateOptionsGroupType(int questionId, String type) {
+		System.out.println("updateOptionsGroupType: "+type);
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE);
+			pstm.setString(1, type);
+			pstm.setInt(2, questionId);
+		   		
+			System.out.println(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE +": qID: " +questionId+", type: "+type);
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+				System.out.println("numUpdated: "+numUpdated);
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
 	
 	
 	/*

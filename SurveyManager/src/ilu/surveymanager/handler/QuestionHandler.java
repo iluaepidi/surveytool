@@ -9,8 +9,10 @@ import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class QuestionHandler {
 
@@ -167,6 +169,19 @@ public class QuestionHandler {
 		
 		return updated;
 	}
+	
+	public boolean updateOptionsGroupType(int questionId, String optionType){
+		boolean updated = false;
+		
+		QuestionDB questionDB = new QuestionDB();
+		if (optionType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_MULTIPLE)){
+			updated = questionDB.updateOptionsGroupType( questionId, DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX);
+		}
+		else if (optionType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE))
+			updated = questionDB.updateOptionsGroupType( questionId, DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO);
+		
+		return updated;
+	}	
 	
 	public boolean removeQuestionByPage(int questionId, int pageId)
 	{

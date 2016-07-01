@@ -272,6 +272,7 @@ public class QuestionService {
 			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE,json.getString(Parameter.s_TEXT));
 			QuestionHandler questionHandler = new QuestionHandler();
 			questionHandler.updateParameters(questionId, pageId, parameters);
+			questionHandler.updateOptionsGroupType(questionId, json.getString(Parameter.s_TEXT));
 			response=json.getString(Parameter.s_TEXT);
 			
 		} catch (JSONException e) {
