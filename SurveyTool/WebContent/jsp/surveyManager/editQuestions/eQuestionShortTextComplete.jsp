@@ -39,6 +39,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			</div>
 			
 			<div class="right col-md-7">
+				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 			</div>
 		</div>
@@ -68,19 +69,20 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					</select>
 				</div>
 				
-				<div class="col-md-3" id="inputType">
+				<div class="col-md-3" id="inputTypeFree" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%>style="display:none"<%}%>>
 					<label for="input-type"><%=lang.getContent("question.form.options.text.inputTextBoxType") %></label>
-					<select class="form-control" id="input-type">
-						<%System.out.println("inputMode: "+inputMode);
-						if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){ %>
-							<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.general")%></option>
-							<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.text")%></option>
-							<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.numerical")%></option>
-						<%}
-						else{%>
-							<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.range")%></option>
-							<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.custom")%></option>
-						<%} %>
+					<select class="form-control" id="input-type-free">
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL%>" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.general")%></option>
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT%>" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.text")%></option>
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER%>" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.numerical")%></option>
+					</select>
+				</div>
+				
+				<div class="col-md-3" id="inputTypePullDown" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%>style="display:none"<%}%>>
+					<label for="input-type"><%=lang.getContent("question.form.options.text.inputTextBoxType") %></label>
+					<select class="form-control" id="input-type-pulldown">
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE%>" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.range")%></option>
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM%>" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.custom")%></option>
 					</select>
 				</div>
 				
@@ -94,7 +96,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 						</div>
 					</div>
 								
-					<div class="question-response-settings" id="decimalsOptions" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>								  									
+					<div class="question-response-settings" id="decimalsOptions" <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>								  									
 						<input style="display:inline-block" type="checkbox" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals" <%if(!decimals.equals("")){%> checked <%}%>>
 					  	<label style="display:inline-block" for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
 						<div class="question-response-settings-sub" <% if(decimals.equals("")){ %> style="display: none" <%} %>>
@@ -103,7 +105,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 						</div>
 					</div>
 								
-					<div class="question-response-settings" id="rangeOptions"  <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>	
+					<div class="question-response-settings" id="rangeOptions"  <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>	
 					 	<input style="display:inline-block"  type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
 					  	<label style="display:inline-block"  for="range"><%=lang.getContent("question.form.options.text.range") %></label>
 						<div class="question-response-settings-sub" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display:none" <%} %>>
@@ -115,19 +117,19 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					</div>
 				</div>
 				
-				<div class="respsettingsCheckbox col-md-6" id="inputOptionsPullDown" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN)){%>style="display:none"<%}%>>
-					<div class="question-response-settings" id="rangeOptions"  <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%>style="display:inline-block; display:none"<%}%>>	
+				<div class="respsettingsCheckbox col-md-6" id="inputOptionsPullDown" <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%>style="display:none"<%}%>>
+					<div class="question-response-settings" id="rangeOptions" >	
 					 	<div class="question-response-settings-sub" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display:none" <%} %>>
 							<label class="textarea-subsection" for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-minValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= minValue %></textarea>
+							<textarea class="textarea-subsection" id="survey-minValue-pull" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= minValue %></textarea>
 							<label class="textarea-subsection" for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-maxValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
+							<textarea class="textarea-subsection" id="survey-maxValue-pull" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
 						</div>
 					</div>
 				</div>
 			</div>	
 			
-			<div id="inputOptionsCustom">
+			<div id="inputOptionsCustom" <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%>style="display:none"<%}%>>
 				<hr>
 				<div class="question-frame">
 					<h4><%= lang.getContent("question.edit.custom_settings.title") %></h4>

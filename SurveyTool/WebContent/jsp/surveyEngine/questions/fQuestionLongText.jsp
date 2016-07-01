@@ -40,7 +40,7 @@
 													for(Resource resource : resources)
 													{
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
+									            	<img id="img" src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
 									            	<%
 													}
 										            %>
@@ -50,7 +50,8 @@
 									            %>
 							  					
 												<div class="form-question-content">
-													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_"></textarea>
+													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_"></textarea>
 												</div>	
 												
 											</fieldset>																						

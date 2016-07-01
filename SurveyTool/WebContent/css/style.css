@@ -70,9 +70,18 @@ h2 {width: auto;
 	vertical-align: middle !important;
 }
 
+.visuallyhidden{
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+}
+
+
 /*focus*/
 
-a:focus {border: 2px solid !important;
+a:focus {
+	border: 2px solid !important;
 	border-radius: 5px;
 	padding: 2px;}
 

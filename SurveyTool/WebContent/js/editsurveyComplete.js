@@ -891,7 +891,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#input-type", function(e){
+	$('#page-items').on("change", "#input-type-free", function(e){
 		e.stopPropagation();
 		console.log("change in input type");
 		var node = $(this);
@@ -903,14 +903,133 @@ $(function() {
 		
 		if(node.val()==="formFieldTypeNumber"){
 			console.log("isNumber");
+			node.closest('div.row').find('#input-type-free').val('formFieldTypeGeneral');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inline-block');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'none');
+			
 			node.closest('div.row').find('#rangeOptions').css('display', 'inherit');
 			node.closest('div.row').find('#rangeOptions').css('display', 'inline-block');
 			node.closest('div.row').find('#decimalsOptions').css('display', 'inherit');
 			node.closest('div.row').find('#decimalsOptions').css('display', 'inline-block');
 		}else{
 			console.log("isNotNumber");
+			console.log("isNumber");
+			node.closest('div.row').find('#input-type-free').val('formFieldTypeGeneral');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inline-block');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'none');
+			
 			node.closest('div.row').find('#rangeOptions').css('display', 'none');
 			node.closest('div.row').find('#decimalsOptions').css('display', 'none');
+		}
+		
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuestionService/updateInputTypeMode",
+			   data: JSON.stringify(reqF),
+			   success: function (data) {
+				   console.log(data);
+				   node.attr('active', data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+		
+	});
+	
+	$('#page-items').on("change", "#input-type-pulldown", function(e){
+		e.stopPropagation();
+		console.log("change in input type");
+		var node = $(this);
+		var reqF = {};
+		reqF.qid = node.closest('li[id=panel-question1]').attr('qid');
+		reqF.pid = node.closest('li[id=page]').attr('pid');
+		reqF.inputMode = node.closest('div.row').find('#input-mode').val();
+		reqF.text = node.val();
+		
+		if(node.val()==="formFieldRange"){
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'inherit');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'inline-block');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'none');
+		}else{
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'none');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'inherit');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'inline-block');
+		}
+		
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuestionService/updateInputTypeMode",
+			   data: JSON.stringify(reqF),
+			   success: function (data) {
+				   console.log(data);
+				   node.attr('active', data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+		
+	});
+	
+	$('#page-items').on("change", "#input-mode", function(e){
+		e.stopPropagation();
+		console.log("change in input type");
+		var node = $(this);
+		var reqF = {};
+		reqF.qid = node.closest('li[id=panel-question1]').attr('qid');
+		reqF.pid = node.closest('li[id=page]').attr('pid');
+		reqF.inputMode = node.closest('div.row').find('#input-mode').val();		
+		
+		if(reqF.inputMode==="formFieldInputModeFree"){
+			reqF.text = "formFieldTypeGeneral";
+			node.closest('div.row').find('#input-type-free').val('formFieldTypeGeneral');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inherit');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'inline-block');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'none');
+		}
+		else{
+			reqF.text = "formFieldRange";
+			node.closest('div.row').find('#input-type-pulldown').val('formFieldRange');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inherit');
+			node.closest('div.row').find('#inputTypePullDown').css('display', 'inline-block');
+			node.closest('div.row').find('#inputTypeFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsFree').css('display', 'none');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'inherit');
+			node.closest('div.row').find('#inputOptionsPullDown').css('display', 'inline-block');
+			node.closest('div.question-frame').find('#inputOptionsCustom').css('display', 'none');
 		}
 		
 		$.ajax({ 
@@ -1020,6 +1139,34 @@ $(function() {
 		var node = $(this); 
 		var req = {};
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
+		req.pid = node.closest('li[id=page]').attr('pid');
+		req.text = $(this).val();
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuestionService/updateMinValue",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   node.attr('active', data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+	});
+	
+	$('#page-items').on("focusout", "#survey-minValue-pull", function(e){
+		e.stopPropagation();
+		var node = $(this); 
+		var req = {};
+		
+		String maxValue =  
+		req.qid = node.closest('div.question-response-settings-sub').find('#survey-maxValue-pull').;
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = $(this).val();
 		$.ajax({ 

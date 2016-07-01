@@ -39,6 +39,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			</div>	
 																
 			<div class="right col-md-7">
+				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>															
 			</div>
 		</div>

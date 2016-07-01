@@ -40,7 +40,8 @@
 													for(Resource resource : resources)
 													{
 													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
+													<label for="img" class="visuallyhidden"><%= lang.getContent("accesibility.question.image") %></label>
+							  						<img id="img" src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
 									            	<%
 													}
 										            %>

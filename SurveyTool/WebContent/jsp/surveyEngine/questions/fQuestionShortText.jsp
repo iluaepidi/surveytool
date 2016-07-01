@@ -48,7 +48,8 @@
 									            %>
 							  					
 												<div class="form-question-content">
-													<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%>></textarea>
+													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%>></textarea>
 												</div>	
 												
 											</fieldset>																						

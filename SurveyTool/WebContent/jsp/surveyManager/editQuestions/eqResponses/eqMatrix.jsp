@@ -27,8 +27,10 @@
 							  				%>
 											<div class="row">	
 												<div class="col-md-4">
-													<label for="type-matrix"><%=lang.getContent("question.form.responsesettings") %></label>
-								  					<select class="form-control" id="type-matrix">
+													<label><%=lang.getContent("question.form.responsesettings") %></label>
+								  					
+													<label for="type-matrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.type") %></label>
+													<select class="form-control" id="type-matrix">
 														<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE%>" <%if(matrixType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE)){%> selected <%}%>><%=lang.getContent("question.edit.matrix.type.simple")%></option>
 														<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_MULTIPLE%>" <%if(matrixType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_MULTIPLE)){%> selected <%}%>><%=lang.getContent("question.edit.matrix.type.multiple")%></option>
 														<!-- <option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_PULLDOWN%>" <%if(matrixType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_PULLDOWN)){%> selected <%}%>><%=lang.getContent("question.edit.matrix.type.pulldown")%></option>
@@ -55,11 +57,13 @@
 							  							<li class="option-item" id="optionsgroupmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  										<input type="text" class="option-title form-control fleft" index="<%= index %>" ogid="<%= optionsGroup.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> <%= index %>"/>
+						  										<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") %> <%= index %></label>
+																<input type="text" id="inputRow" class="option-title form-control fleft" index="<%= index %>" ogid="<%= optionsGroup.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>" />
 						  										<div class="option-icons fleft">
 							  										<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  										<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  										<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
+							  										<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item")+":"+ text %></label>
+																	<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  									</div>
 							  								</li>
 							  						<%							  						
@@ -76,11 +80,13 @@
 						  									<li class="option-item" id="optionsgroupmatrix-item">
 					  											<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 					  											<div class="circle-info circle-grey fleft"><%= index %></div>
-					  											<input type="text" class="option-title form-control fleft" index="<%= index %>" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" aria-label="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+					  											<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") %> <%= index %></label>
+																<input type="text" id="inputRow" class="option-title form-control fleft" index="<%= index %>" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
 					  											<div class="option-icons fleft">
 						  											<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 						  											<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-						  											<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
+						  											<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") %> <%= index %></label>
+																	<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
 						  										</div>
 						  									</li>
 						  							
@@ -89,7 +95,8 @@
 						  							}
 						  							%>
 					  								<li class="center" id="li-add-optionsgroupmatrix<%= question.getQuestionId() %>">
-					  									<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
+					  									<label for="btn-add-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.item") %></label>
+														<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
 					  								</li>
 					  							</ul>
 					  					<%
@@ -103,27 +110,32 @@
 							  							<li class="option-item" id="optionsgroupmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
-						  									<input type="text" class="option-title form-control fleft" index="1" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 1"/>
+						  									<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") + "1"%> </label>
+															<input type="text" id="inputRow" class="option-title form-control fleft" index="1" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") +" 1"%></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="option-item" id="optionsgroupmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
-						  									<input type="text" class="option-title form-control fleft" index="2" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 2"/>
+						  									<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") + "2"%></label>
+															<input type="text" id="inputRow" class="option-title form-control fleft" index="2" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") +" 2"%></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="center" id="li-add-optionsgroupmatrix<%= question.getQuestionId() %>">
-							  								<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
+							  								<label for="btn-add-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.item") %></label>
+															<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
 							  							</li>
 							  						</ul>
 							  					<%
@@ -149,11 +161,13 @@
 							  							<li class="option-item" id="optionmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> <%= index %>"/>
+						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column") %> <%= index %></label>
+															<input type="text" id="inputCol" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionmatrix" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+": "+text %></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  						<%
@@ -169,11 +183,13 @@
 							  							<li class="option-item" id="optionmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  									<input type="text" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" aria-label="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column") %> <%= index %></label>
+															<input type="text" id="inputCol" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionmatrix" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column") %> <%= index %></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  							
@@ -182,7 +198,8 @@
 							  						}
 							  						%>
 							  							<li class="center" id="li-add-optionmatrix<%= question.getQuestionId() %>">
-							  								<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
+							  								<label for="btn-add-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.column") %></label>
+															<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
 							  							</li>
 							  						</ul>
 							  					<%
@@ -196,27 +213,32 @@
 							  							<li class="option-item" id="optionmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
-						  									<input type="text" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 1"/>
+						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column")+" 1" %></label>
+															<input type="text" id="inputCol" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionmatrix" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+" 1" %></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="option-item" id="optionmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
-						  									<input type="text" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 2"/>
+						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column")+" 2" %></label>
+															<input type="text" id="inputCol" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<button class="btn btn-transparent fleft red" id="remove-optionmatrix" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
+							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+" 2" %></label>
+																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="center" id="li-add-optionmatrix<%= question.getQuestionId() %>">
-							  								<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
+							  								<label for="btn-add-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.column") %></label>
+															<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
 							  							</li>
 							  						</ul>
 							  					<%
