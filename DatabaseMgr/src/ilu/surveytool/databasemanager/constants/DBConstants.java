@@ -14,7 +14,10 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
 		//OptionType	
 			public final static String s_VALUE_OPTIONTYPE_CHECKBOX = "checkbox";
-			public final static String s_VALUE_OPTIONTYPE_RADIO = "radio";
+			public final static String s_VALUE_OPTIONTYPE_RADIO = "radio";		
+		//OptionsGroup type
+			public final static String s_VALUE_OPTIONSGROUP_TYPE_RADIO = "radio";
+			public final static String s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX = "checkbox";
 		//Question parameters
 			public final static String s_VALUE_QUESTIONTYPE_FORMFIELD = "formfield";
 			public final static String s_VALUE_QUESTIONTYPE_PARAGRAPH = "paragraph";

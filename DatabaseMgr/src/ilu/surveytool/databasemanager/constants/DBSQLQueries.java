@@ -313,6 +313,7 @@ public class DBSQLQueries {
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
 		//optionsGroup
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
+			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 		//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
 		//project

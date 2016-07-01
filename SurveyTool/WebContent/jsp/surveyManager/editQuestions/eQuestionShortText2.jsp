@@ -63,53 +63,69 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 					<label for="input-mode"><%=lang.getContent("question.form.options.text.inputTextBoxInput") %></label>
 					<select class="form-control" id="input-mode">
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.free")%></option>
-						<!-- <option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.pulldown")%></option>-->
+						<!-- <option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.pulldown")%></option> -->
 					</select>
 				</div>
 				
 				<div class="col-md-3" id="inputType">
 					<label for="input-type"><%=lang.getContent("question.form.options.text.inputTextBoxType") %></label>
 					<select class="form-control" id="input-type">
-						<!-- <%System.out.println("inputMode: "+inputMode);
-						if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){ %> -->
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.general")%></option>
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.text")%></option>
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.numerical")%></option>
-						<!-- <%}
-						else{%>
-						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.range")%></option>
-						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.custom")%></option>
-						<%} %>-->
 					</select>
 				</div>
 				
-				<div class="respsettingsCheckbox col-md-6" id="inputOptions" ><!-- <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%>style="display:none"<%}%>>-->
+				<div class="col-md-6" id="inputOptions">
 					<div class="question-response-settings" id="genericOptions">								  									
-						<input style="display:inline-block" type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars" <%if(!textLength.equals("")){%> checked <%}%>>
-						<label style="display:inline-block" for="isLimitedChars"><%=lang.getContent("question.form.options.text.chars") %></label>
-						<div class="question-response-settings-sub" <% if(textLength.equals("")){ %> style="display: none" <%} %>>
-				  			<textarea class="textarea-subsection" id="survey-question-max-chars" cols="4" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= textLength %></textarea>
-							<label class="textarea-subsection" for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
+						<div class="col-md-4">
+							<input type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars" <%if(!textLength.equals("")){%> checked <%}%>>
+							<label for="isLimitedChars"><%=lang.getContent("question.form.options.text.chars") %></label>
+						</div>
+						
+				  		<div class="question-response-settings-sub col-md-8" <% if(textLength.equals("")){ %> style="display: none" <%} %>>
+				  			<div class="col-md-4">
+				  				<textarea class="form-control" id="survey-question-max-chars" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= textLength %></textarea>
+							</div>
+							<div class="col-md-8">
+								<label for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
+							</div>
 						</div>
 					</div>
 								
-					<div class="question-response-settings" id="decimalsOptions" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>								  									
-						<input style="display:inline-block" type="checkbox" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals" <%if(!decimals.equals("")){%> checked <%}%>>
-					  	<label style="display:inline-block" for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
-						<div class="question-response-settings-sub" <% if(decimals.equals("")){ %> style="display: none" <%} %>>
-				  			<textarea class="textarea-subsection" id="survey-question-decimals" cols="4" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= decimals %></textarea>
-							<label class="textarea-subsection" for="survey-question-decimals"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
+					<div class="question-response-settings" id="decimalsOptions" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:none<%}%>">								  									
+						<div class="col-md-5">
+							<input type="checkbox" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals" <%if(!decimals.equals("")){%> checked <%}%>>
+					  		<label for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
+						</div>
+						<div class="question-response-settings-sub col-md-7" <% if(decimals.equals("")){ %> style="display: none" <%} %>>
+				  			<textarea class="form-control" id="survey-question-decimals" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= decimals %></textarea>
+							<label for="survey-question-decimals"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
 						</div>
 					</div>
 								
-					<div class="question-response-settings" id="rangeOptions"  <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>	
-					 	<input style="display:inline-block"  type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
-					  	<label style="display:inline-block"  for="range"><%=lang.getContent("question.form.options.text.range") %></label>
-						<div class="question-response-settings-sub" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display:none" <%} %>>
-							<label class="textarea-subsection" for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-minValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= minValue %></textarea>
-							<label class="textarea-subsection" for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-maxValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
+					<div class="question-response-settings" id="rangeOptions"  <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:none"<%}%>>	
+					 	<div class="col-md-4">
+							<input type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
+					  		<label for="range"><%=lang.getContent("question.form.options.text.range") %></label>
+						</div>
+					 	<div class="question-response-settings-sub col-md-4" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display: none" <%} %>>
+							<div class="col-md-6">
+								<div class="col-md-2">
+									<label for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
+								</div>
+								<div class="col-md-4">
+									<textarea class="form-control" id="survey-minValue" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= minValue %></textarea>
+							 	</div>
+							</div>
+							<div class="col-md-6"> 
+								<div class="col-md-2">
+									<label for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
+								</div>
+								<div class="col-md-4">
+									<textarea class="form-control" id="survey-maxValue" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

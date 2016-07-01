@@ -25,7 +25,7 @@
 							  							<div class="col-md-1">
 								  							<label for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 														</div>	
-														<div class="col-md-4">
+														<div class="col-md-4">															
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<option value="f"><%=lang.getContent("question.new.formfield")%></option>
 															    <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
@@ -39,6 +39,7 @@
 															</select>
 														</div>
 														<div class="right col-md-7">
+															<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 														</div>
 							  					</div>

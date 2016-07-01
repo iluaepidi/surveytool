@@ -83,7 +83,7 @@ else
                     		for(Option option: optionGroup.getOptions()){
                     			String id = "options-" + optionGroup.getId() + "-" + option.getId();
                     			%>
-                    			<th class="matrix-title"><input type="<%= otype%>" name="<%= questionId + "-" + optionGroup.getId()%>" id="<%= id %>" value="<%= option.getId() %>"></th>
+                    			<th class="matrix-title"><input type="<%= otype%>" name="<%= questionId + "-" + optionGroup.getId() + "-" + option.getId()%>" id="<%= id %>" value="<%= option.getId() %>"></th>
                     			<%
                     		}
                     		%>
