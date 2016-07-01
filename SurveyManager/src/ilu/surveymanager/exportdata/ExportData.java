@@ -71,20 +71,17 @@ public class ExportData {
 			Cell cell3 = row3.createCell(0);
 			cell1.setCellValue("User Id");
 			sheet.autoSizeColumn(0);
-			int desp = 0;
+			int desp = 1;
 			for(int c = 0; c < questions.size(); c++)
 			{
-				System.out.println("Question " + c + ": " + questions.get(c));
-				cell1 = row1.createCell(c + 1 + desp);
+				//System.out.println("Question " + c + ": " + questions.get(c));
+				cell1 = row1.createCell(desp);
 				cell1.setCellValue(questions.get(c).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
-				sheet.autoSizeColumn(c + 1);
+				sheet.autoSizeColumn(desp);
 
 				int size = questions.get(c).getOptionsGroups().size();
 				if(size > 0)
 				{
-					boolean isRadio = false;
-					int numCheckbox = 0;
-					int ogdesp = 0;
 					for(int og = 0; og < size; og++)
 					{
 						int ogsize = questions.get(c).getOptionsGroups().get(0).getOptions().size();
@@ -93,9 +90,9 @@ public class ExportData {
 						Content ogcontent = optionGroup.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
 						if(ogcontent != null)
 						{
-							cell2 = row2.createCell(c + og + 1 + desp + ogdesp);
+							cell2 = row2.createCell(desp);
 							cell2.setCellValue(ogcontent.getText());
-							sheet.autoSizeColumn(c + 1);
+							sheet.autoSizeColumn(desp);
 						}
 						
 						//System.out.println("Type: " + optionGroup.getOptionType());
@@ -105,28 +102,24 @@ public class ExportData {
 							int osize = optionGroup.getOptions().size();
 							for(int o = 0; o < osize; o++)
 							{
-								cell3 = row3.createCell(c + og + o + 1 + desp + ogdesp);
+								cell3 = row3.createCell(desp);
 								cell3.setCellValue(optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
-								sheet.autoSizeColumn(c + 1);
+								sheet.autoSizeColumn(desp);
+								desp++;
 							}
-							numCheckbox += osize;
-							ogdesp = numCheckbox - 1;
 						}
 						else if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 						{
-							isRadio = true;
+							desp++;
 						}
 					}
 					
-					if(isRadio)
-					{
-						desp += questions.get(c).getOptionsGroups().size() - 1;
-					}
-					
-					if(numCheckbox > 0) desp += numCheckbox - 1;
 				}
-				
-				
+				else
+				{
+					desp++;
+				}
+
 			}
 			
 			List<Integer> userList = new ArrayList<Integer>();
@@ -136,34 +129,32 @@ public class ExportData {
 			int rowIndex = 3;
 			for(Integer user : userList)
 			{
-				System.out.println("user " + user + ": " + responses.get(user).toString());
+				//System.out.println("user " + user + ": " + responses.get(user).toString());
 				Row row = sheet.createRow(rowIndex);
 				Cell cell = row.createCell(0);
 				cell.setCellValue(user);
-				desp = 0;
+				desp = 1;
 				for(int c = 0; c < questions.size(); c++)
 				{
 					HashMap<Integer, List<String>> optionGroups = responses.get(user).get(questions.get(c).getQuestionId());
 					List<OptionsGroup> ogList = questions.get(c).getOptionsGroups();
 					if(ogList.isEmpty())
 					{
-						cell = row.createCell(c + 1 + desp);
+						cell = row.createCell(desp);
 						cell.setCellValue(optionGroups.get(0).get(0));
+						desp++;
 					}
 					else
 					{
-						boolean isRadio = false;
-						int numCheckbox = 0;
-						int ogdesp = 0;
 						for(int og = 0; og < ogList.size(); og++)
 						{
 							OptionsGroup ogItem = ogList.get(og);
 							List<String> values = optionGroups.get(ogItem.getId());
 							if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 							{
-								cell = row.createCell(c + 1 + desp + og);
+								cell = row.createCell(desp);
 								cell.setCellValue(values.get(0));
-								isRadio = true;
+								desp++;				
 							}
 							else if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
 							{
@@ -171,39 +162,22 @@ public class ExportData {
 								{
 									if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
 									{
-										cell = row.createCell(c + 1 + desp + ogdesp + o);
+										cell = row.createCell(desp);
 										cell.setCellValue("yes");
-										//desp++;
+										desp++;
 									}
 									else
 									{
-										cell = row.createCell(c + 1 + desp + ogdesp + o);
+										cell = row.createCell(desp);
 										cell.setCellValue("no");
-										//desp++;
+										desp++;
 									}
 								}
-								//desp = ogItem.getOptions().size() - 1;
-								numCheckbox += ogItem.getOptions().size();
-								ogdesp = numCheckbox;
 							} 
 						}
 
-						if(isRadio)
-						{
-							desp += ogList.size() - 1;
-						}
-						
-						if(numCheckbox > 0) desp += numCheckbox - 1;
-						
 					}
 					
-					
-					/*else if(optionGroup.size() == 1)
-					{
-						for()
-						cell.setCellValue(optionGroup.get(0).get(0));
-					}*/
-					//cell.setCellValue();
 				}
 				rowIndex++;
 			}
