@@ -65,6 +65,16 @@ h2 {width: auto;
 	max-width:150px !important;
 	vertical-align: middle !important;
 	display:inline-block}
+	
+.input-subsection {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;
+	margin-left: 5px !important;
+	max-width:150px !important;
+	vertical-align: middle !important;
+	text-align:center;
+	border: 2px solid !important;
+	border-color: #23527C !important;   
+	display:inline-block}
 
 .respsettingsCheckbox {
 	vertical-align: middle !important;
@@ -75,6 +85,13 @@ h2 {width: auto;
 	height: 1px;
 	overflow: hidden;
 	position: absolute !important;
+}
+
+input[type="number"] {
+   width:60px;
+   text-align:center;
+   rows:1;
+   cols:4;
 }
 
 
@@ -148,7 +165,6 @@ input[type="color"]:focus,
 
 textarea {resize:none;
 	margin-top: 3px !important;}
-
 
 /*----------------------------------------------*\
 		$ERROR
@@ -768,7 +784,8 @@ footer {margin-top: 10px;
 	margin: 280px auto;
 	text-align: center;}
 	
-.question-files-frame {border: 1px solid #555;
+.question-files-frame {
+	/*border: 1px solid #555;*/
 	margin: 0px 0px;
 	padding: 5px 5px;
     border-radius: 5px;
@@ -779,11 +796,32 @@ footer {margin-top: 10px;
 .question-options {background-color: #C8C8C8;
     padding: 1.5%;
     margin-bottom: 2%;
-    margin-top: 0px !important;
+    margin-top: -4px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
     width: 100%;
     display: inline-block;}
+    
+.question-options-aligned {background-color: #C8C8C8;
+    padding: 1.5%;
+    margin-bottom: 2%;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle !important;
+    height: 50px;
+	line-height: 50px;}
+	
+.question-options-aligned select {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;}
+	
+.question-options-aligned label{
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle !important;
+}
     
 .question-response-settings {
     margin-top: 5px !important;
@@ -797,7 +835,7 @@ footer {margin-top: 10px;
     vertical-align: middle;
     }
 .question-response-settings-sub label{
-	color: #C8C8C8;
+	color: #696464;
 	font-weight: normal;
 	padding: 0px !important;
     vertical-align: middle;
