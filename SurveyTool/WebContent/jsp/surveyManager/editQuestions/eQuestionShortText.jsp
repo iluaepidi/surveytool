@@ -8,7 +8,7 @@
     pageEncoding="ISO-8859-1"%>
 <%
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+//String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 			
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
@@ -70,16 +70,16 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				<div class="col-md-3" id="inputType">
 					<label for="input-type"><%=lang.getContent("question.form.options.text.inputTextBoxType") %></label>
 					<select class="form-control" id="input-type">
-						<!-- <%System.out.println("inputMode: "+inputMode);
-						if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){ %> -->
+						<%/*System.out.println("inputMode: "+inputMode);
+						if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){ */%>
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.general")%></option>
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.text")%></option>
 						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.numerical")%></option>
-						<!-- <%}
-						else{%>
-						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.range")%></option>
-						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.custom")%></option>
-						<%} %>-->
+						<%/*}
+						else{*/%>
+						<!-- <option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_RANGE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.range")%></option>
+						<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_CUSTOM)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxType.custom")%></option>-->
+						<%/*}*/ %>
 					</select>
 				</div>
 				

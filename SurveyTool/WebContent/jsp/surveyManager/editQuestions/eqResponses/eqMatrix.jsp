@@ -52,7 +52,8 @@
 							  						for(OptionsGroup optionsGroup : question.getOptionsGroups())
 							  						{
 							  							int index = optionsGroup.getIndex();
-							  							String text = optionsGroup.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  							String text = "";
+							  							if(optionsGroup.getContents() != null && !optionsGroup.getContents().isEmpty()) text = optionsGroup.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  							%>
 							  							<li class="option-item" id="optionsgroupmatrix-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->

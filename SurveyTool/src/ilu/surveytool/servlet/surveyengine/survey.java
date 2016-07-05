@@ -56,7 +56,9 @@ public class survey extends HttpServlet {
 		SurveysHandler surveyHandler = new SurveysHandler();
 		Survey survey = surveyHandler.getSurveyDetailByPublicId(sid, language);
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
-		request.setAttribute(Attribute.s_PAGE_TITLE, survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+		String surveyTitle = "";
+		if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+		request.setAttribute(Attribute.s_PAGE_TITLE, surveyTitle);
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE));

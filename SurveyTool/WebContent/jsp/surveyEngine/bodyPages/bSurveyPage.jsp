@@ -18,13 +18,21 @@
 								
 				<div class="container-fluid">
 	  				<div class="title-content">
-	  					<h2><%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></h2>	  					
+	  					<%
+	  					String surveyTitle = "";
+	  					if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+	  					%>
+	  					<h2><%= surveyTitle %></h2>	  					
 	  				</div>	  				
 	  				<div class="content">
 	  					<form action="<%= Address.s_SERVLET_SURVEY_PROCESS %>" method="POST">
 	  						<input type="hidden" name="sid" value="<%= survey.getSurveyId() %>" />
 	  						<div class="survey-form" >
-	  							<p><%= survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
+	  							<%
+	  							String surveyDesc = "";
+	  		  					if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION) != null) surveyDesc = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
+	  							%>
+	  							<p><%= surveyDesc %></p>
 	  							
 	  							<% 
 	  							String token = "/";

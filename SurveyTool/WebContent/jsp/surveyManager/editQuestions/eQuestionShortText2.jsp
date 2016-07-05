@@ -8,7 +8,7 @@
     pageEncoding="ISO-8859-1"%>
 <%
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+//String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 			
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));

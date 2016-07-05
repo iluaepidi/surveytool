@@ -64,7 +64,8 @@ $(function() {
 			askAlways: $('#askAlways').val(),
 			helpText: $('#help-text').val(),
 			surveyid: $('#surveyid').val(),
-			pageid: $('#pageid1').val()
+			pageid: $('#pageid1').val(),
+			langsurvey: $('#survey-language-version').val()
 		}, function(responseText) {
 			var index = responseText.indexOf("<html");
 			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}

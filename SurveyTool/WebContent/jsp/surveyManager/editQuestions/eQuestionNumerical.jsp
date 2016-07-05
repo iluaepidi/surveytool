@@ -8,7 +8,7 @@
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								//String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								%>
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											

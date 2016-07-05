@@ -13,30 +13,8 @@
 				HttpSession sessions = request.getSession(false); 
   				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
   				
-  				String confMsg = (String)request.getAttribute("ConformationUpdateProfile");
-  				if(confMsg!=null){
 				%>		
 				
-				<script type="text/javascript">
-					function alertUpdateProfile(){
-					    bootbox.dialog({
-							message: "<%= lang.getContent("profile.confirm.update.msg") %>",
-							title: "<%= lang.getContent("profile.confirm.update.title") %>",
-							buttons: {
-							success: {
-							label: "<%= lang.getContent("profile.button.accept") %>",
-							className: "btn-success",
-								callback: function() {
-								   window.location.href = "InitialServlet";
-								
-								}
-							}}
-						});
-					}
-					
-					alertUpdateProfile();
-				</script>
-				<% } %>
 				
 				
 				<div class="container-fluid">
