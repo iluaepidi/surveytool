@@ -16,32 +16,33 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 <li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 	<jsp:include page="eqComponents/eqHead.jsp" />
 	
-	<div class="panel-body">									
-		<div class="question-options">
+	<div class="panel-body question-options">
+			
 			<div class="col-md-1">
-				<label for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
+				<label style="margin-top: 6px !important" for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 			</div>
 				
 			<div class="col-md-4">														
 				<select class="form-control" id="type-question-<%= question.getIndex() %>">
 					<option value="f" selected><%=lang.getContent("question.new.formfield")%></option>
-				    <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
+				    <!-- <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
 				    <option value="m"><%=lang.getContent("question.new.multiple")%></option>
 				    <option value="s"><%=lang.getContent("question.new.simple")%></option>
-				    <!-- <option value="o"><%=lang.getContent("question.new.ordering")%></option>
-				    <option value="g"><%=lang.getContent("question.new.grading")%></option> -->
+				    <option value="o"><%=lang.getContent("question.new.ordering")%></option>
+				    <option value="g"><%=lang.getContent("question.new.grading")%></option>
 				    <option value="ma"><%=lang.getContent("question.new.matrix")%></option>
 				    <option value="sc"><%=lang.getContent("question.new.scale")%></option>
-				    <!-- <option value="c"><%=lang.getContent("question.new.code")%></option> -->
+				    <option value="c"><%=lang.getContent("question.new.code")%></option> -->
 				</select>
 			</div>
 			
 			<div class="right col-md-7">
 				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
-				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+				<button style="margin-top: 3px !important" class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 			</div>
 		</div>
-				
+	
+	<div class="panel-body">	
 		<div class="question-frame">
 			<h4><%=lang.getContent("question.edit.statementSetting.title")%></h4>
 			<jsp:include page="eqComponents/eqDescription.jsp" />	
@@ -86,30 +87,30 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				<div class="respsettingsCheckbox col-md-6" id="inputOptions" ><!-- <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%>style="display:none"<%}%>>-->
 					<div class="question-response-settings" id="genericOptions">								  									
 						<input style="display:inline-block" type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars" <%if(!textLength.equals("")){%> checked <%}%>>
-						<label style="display:inline-block" for="isLimitedChars"><%=lang.getContent("question.form.options.text.chars") %></label>
-						<div class="question-response-settings-sub" <% if(textLength.equals("")){ %> style="display: none" <%} %>>
-				  			<textarea class="textarea-subsection" id="survey-question-max-chars" cols="4" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= textLength %></textarea>
-							<label class="textarea-subsection" for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
+						<label style="margin-top: 3px !important;display:inline-block" for="isLimitedChars"><%=lang.getContent("question.form.options.text.chars") %></label>
+						<div class="question-response-settings-sub" <% if(textLength.equals("")){ %> style="display: none; margin-top: 0px !important" <%} %>>
+				  			<input type="number" min="0" max="9999" onkeydown="limit(this);" onkeyup="limit(this);" id="survey-question-max-chars" value="<%= textLength %>"></input>
+							<label style="margin-top: 4.5px !important" class="textarea-subsection" for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
 						</div>
 					</div>
 								
 					<div class="question-response-settings" id="decimalsOptions" <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>								  									
 						<input style="display:inline-block" type="checkbox" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals" <%if(!decimals.equals("")){%> checked <%}%>>
-					  	<label style="display:inline-block" for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
-						<div class="question-response-settings-sub" <% if(decimals.equals("")){ %> style="display: none" <%} %>>
-				  			<textarea class="textarea-subsection" id="survey-question-decimals" cols="4" rows="1" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= decimals %></textarea>
-							<label class="textarea-subsection" for="survey-question-decimals"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
+					  	<label style="margin-top: 3px !important;display:inline-block" for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
+						<div class="question-response-settings-sub" <% if(decimals.equals("")){ %> style="display: none; margin-top: 0px !important" <%} %>>
+				  			<input type="number" min="0" max="9999" onkeydown="limit(this);" onkeyup="limit(this);" id="survey-question-decimals" value="<%= decimals %>"></input>
+							<label style="margin-top: 4.5px !important" class="textarea-subsection" for="survey-question-decimals"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
 						</div>
 					</div>
 								
 					<div class="question-response-settings" id="rangeOptions"  <%if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>style="display:inline-block; display:none"<%}%>>	
 					 	<input style="display:inline-block"  type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
-					  	<label style="display:inline-block"  for="range"><%=lang.getContent("question.form.options.text.range") %></label>
-						<div class="question-response-settings-sub" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display:none" <%} %>>
-							<label class="textarea-subsection" for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-minValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= minValue %></textarea>
-							<label class="textarea-subsection" for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
-							<textarea class="textarea-subsection" id="survey-maxValue" rows="1" cols="4" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="4" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
+					  	<label style="margin-top: 3px !important;display:inline-block"  for="range"><%=lang.getContent("question.form.options.text.range") %></label>
+						<div class="question-response-settings-sub" <% if(minValue.equals("") && maxValue.equals("")){ %> style="display:none; margin-top: 0px !important" <%} %>>
+							<label style="margin-top: 4.5px !important" class="textarea-subsection" for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
+							<input type="number" min="0" max="9999" onkeydown="limit(this);" onkeyup="limit(this);" id="survey-minValue" value="<%= minValue %>"></input>
+							<label style="margin-top: 4.5px !important" class="textarea-subsection" for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
+							<input type="number" min="0" max="9999" onkeydown="limit(this);" onkeyup="limit(this);" id="survey-maxValue" value="<%= maxValue %>"></input>
 						</div>
 					</div>
 				</div>

@@ -19,23 +19,21 @@
 											
 											<jsp:include page="eqComponents/eqHead.jsp" />
 											
-											<div class="panel-body">									
-							  					
-							  					<div class="question-options">
+											<div class="panel-body question-options">
 							  							<div class="col-md-1">
 								  							<label for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 														</div>	
 														<div class="col-md-4">															
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
-															  	<option value="f"><%=lang.getContent("question.new.formfield")%></option>
+															  	<!-- <option value="f"><%=lang.getContent("question.new.formfield")%></option>
 															    <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
-															    <option value="m"><%=lang.getContent("question.new.multiple")%></option>
+															    <option value="m"><%=lang.getContent("question.new.multiple")%></option> -->
 															    <option value="s" selected><%=lang.getContent("question.new.simple")%></option>
 															    <!-- <option value="o"><%=lang.getContent("question.new.ordering")%></option>
-															    <option value="g"><%=lang.getContent("question.new.grading")%></option> -->
+															    <option value="g"><%=lang.getContent("question.new.grading")%></option>
 															    <option value="ma"><%=lang.getContent("question.new.matrix")%></option>
 															    <option value="sc"><%=lang.getContent("question.new.scale")%></option>
-															    <!-- <option value="c"><%=lang.getContent("question.new.code")%></option> -->
+															    <option value="c"><%=lang.getContent("question.new.code")%></option> -->
 															</select>
 														</div>
 														<div class="right col-md-7">
@@ -43,6 +41,8 @@
 															<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 														</div>
 							  					</div>
+											
+											<div class="panel-body">	
 							  					
 							  					<div class="question-frame">
 							  					<h4><%=lang.getContent("question.edit.statementSetting.title")%></h4>
