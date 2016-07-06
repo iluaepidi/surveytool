@@ -22,6 +22,10 @@
     									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								}
     								
+    								String textLength = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLENGTH);    								
+    								if(textLength.equals(""))
+    									textLength = "9999";    								
+
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
@@ -55,7 +59,7 @@
 							  					
 												<div class="form-question-content">
 													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
-							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%>></textarea>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%> maxlength="<%= textLength%>"></textarea>
 												</div>	
 												
 											</fieldset>																						

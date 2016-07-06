@@ -28,7 +28,6 @@
 											<div class="row">	
 												<div class="col-md-4">
 													<label><%=lang.getContent("question.form.responsesettings") %></label>
-								  					
 													<label for="type-matrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.type") %></label>
 													<select class="form-control" id="type-matrix">
 														<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE%>" <%if(matrixType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE)){%> selected <%}%>><%=lang.getContent("question.edit.matrix.type.simple")%></option>
@@ -59,11 +58,11 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  										<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") %> <%= index %></label>
-																<input type="text" id="inputRow" class="option-title form-control fleft" index="<%= index %>" ogid="<%= optionsGroup.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>" />
+																<input type="text" id="inputRow" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" ogid="<%= optionsGroup.getId() %>" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.item") %> <%= index %>" value="<%= text %>" />
 						  										<div class="option-icons fleft">
 							  										<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  										<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  										<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item")+":"+ text %></label>
+							  										<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item")%> <%= index %></label>
 																	<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  									</div>
 							  								</li>
@@ -82,7 +81,7 @@
 					  											<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 					  											<div class="circle-info circle-grey fleft"><%= index %></div>
 					  											<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") %> <%= index %></label>
-																<input type="text" id="inputRow" class="option-title form-control fleft" index="<%= index %>" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+																<input type="text" id="inputRow" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" ogid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.item") %> <%= index %>"/>
 					  											<div class="option-icons fleft">
 						  											<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 						  											<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -112,7 +111,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
 						  									<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") + "1"%> </label>
-															<input type="text" id="inputRow" class="option-title form-control fleft" index="1" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1"/>
+															<input type="text" id="inputRow" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="1" ogid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.item") %> 1"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -125,7 +124,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
 						  									<label for="inputRow" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.row") + "2"%></label>
-															<input type="text" id="inputRow" class="option-title form-control fleft" index="2" ogid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
+															<input type="text" id="inputRow" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="2" ogid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.item") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -166,11 +165,11 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column") %> <%= index %></label>
-															<input type="text" id="inputCol" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
+															<input type="text" id="inputCol" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.column") %> <%= index %>" value="<%= text %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+": "+text %></label>
+							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")%> <%= index %></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
@@ -188,7 +187,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column") %> <%= index %></label>
-															<input type="text" id="inputCol" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+															<input type="text" id="inputCol" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.column") %> <%= index %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -218,7 +217,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
 						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column")+" 1" %></label>
-															<input type="text" id="inputCol" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1"/>
+															<input type="text" id="inputCol" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.column") %> 1"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -231,7 +230,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
 						  									<label for="inputCol" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.input.column")+" 2" %></label>
-															<input type="text" id="inputCol" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
+															<input type="text" id="inputCol" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.matrix.placeholder.column") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->

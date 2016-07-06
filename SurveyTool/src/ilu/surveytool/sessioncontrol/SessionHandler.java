@@ -28,7 +28,7 @@ public class SessionHandler {
 	public void sessionClosed(HttpServletRequest request , SurveyToolProperties properties)
 	{
 		LoginResponse userSessionInfo = new LoginResponse();
-		userSessionInfo.setErrorMsg("Session is expired or not exist.");
+		userSessionInfo.setErrorMsg("msg.error.session.expired");
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);

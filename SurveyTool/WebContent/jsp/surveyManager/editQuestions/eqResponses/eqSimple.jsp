@@ -30,11 +30,11 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
+							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>:  <%= text %></label>
+							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option"><i class="fa fa-trash fa-2x"></i></button>
 							  								</div>
 							  							</li>
@@ -52,7 +52,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
 						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -85,7 +85,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
 						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  1</label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" />
+							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" />
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -98,7 +98,7 @@
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
 						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  2</label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
+							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
