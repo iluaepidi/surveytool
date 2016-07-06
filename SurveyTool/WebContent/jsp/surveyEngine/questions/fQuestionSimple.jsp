@@ -17,14 +17,11 @@
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
+
     								String title = "";
     								String description = "";
     								if(question!=null&&question.getContents()!=null&&question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
     									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();	
-    								}
-    								
-    								if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null){
-    									description = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText();
     								}
     								
     								%>
@@ -32,13 +29,16 @@
 											<fieldset>
 												<legend>
 
-													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= title %>													
 
 												</legend>
-												
-							  						<p><%= description %></p>
+												<%
+							  					if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null)
+							  					{
+							  					%>
+							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
-							  					
+							  					}
 							  					
 												if(!resources.isEmpty())
 												{

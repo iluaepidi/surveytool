@@ -13,10 +13,10 @@
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
-    								
-    								String text = "";
+
+    								String title = "";
     								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-    									text = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								}
     								
     								Language lang = new Language(getServletContext().getRealPath("/")); 
@@ -26,13 +26,16 @@
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
-													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= title %>													
 
 												</legend>
-												
-							  						<p><%= text %></p>
+												<%
+							  					if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null)
+							  					{
+							  					%>
+							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
-							  					
+							  					}
 							  					
 												if(!resources.isEmpty())
 												{

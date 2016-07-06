@@ -16,14 +16,20 @@ lang.loadLanguage("en");
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
+
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
+    								
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
-													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>													
+													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= title %>													
 												</legend>
 												<%
-							  					if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
+							  					if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null)
 							  					{
 							  					%>
 							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
