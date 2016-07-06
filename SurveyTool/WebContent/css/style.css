@@ -835,6 +835,9 @@ footer {margin-top: 10px;
     font-weight: normal;
     vertical-align: middle;
     }
+.question-response-settings-sub {
+	display: inline-block;
+}
 .question-response-settings-sub label{
 	color: #696464;
 	font-weight: normal;
