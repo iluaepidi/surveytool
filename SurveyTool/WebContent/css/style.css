@@ -66,6 +66,7 @@ h2 {width: auto;
 	vertical-align: middle !important;
 	display:inline-block}
 	
+
 .input-subsection {color: #4A4A4A;
 	border-color: #4A4A4A; margin-top: 0 !important;
 	margin-left: 5px !important;
@@ -677,6 +678,11 @@ footer {margin-top: 10px;
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}
 
+.multimedia-list{
+	padding-bottom:10px;
+	padding-left: 20px;
+}
+
 .question-frame legend{font-size: 1em;
     font-weight: bold;
     border: none;
@@ -784,10 +790,18 @@ footer {margin-top: 10px;
 	margin: 280px auto;
 	text-align: center;}
 	
+.type-tittle{
+	margin-top: 6px !important
+}
+
+.mandatory-button{
+	margin-top: 3px !important
+}
+
 .question-files-frame {
 	/*border: 1px solid #555;*/
 	margin: 0px 0px;
-	padding: 5px 5px;
+	padding: 5px 0px;
     border-radius: 5px;
     text-align: left;
     position: relative;
@@ -795,7 +809,6 @@ footer {margin-top: 10px;
     
 .question-options {background-color: #C8C8C8;
     padding: 1.5%;
-    margin-bottom: 2%;
     margin-top: -4px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
@@ -823,18 +836,44 @@ footer {margin-top: 10px;
 	vertical-align: middle !important;
 }
     
-.question-response-settings {
-    margin-top: 5px !important;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-    width: 100%;
+.question-response-settings{
     vertical-align: middle;
-    display: inline-block;}
+    }
+    
 .question-response-settings label{
     font-weight: normal;
     vertical-align: middle;
     }
-.question-response-settings-sub label{
+
+.question-response-settings-options input{
+    display:inline-block;
+    vertical-align: middle;
+    }
+
+.question-response-settings-options label{
+    display:inline-block;
+    vertical-align: middle;
+	}
+  
+.question-response-settings-sub-inherit{
+	display: inline-block;
+    vertical-align: middle;
+}
+
+.question-response-settings-sub-none{
+	display: none !important;
+}
+  
+.question-response-settings-sub-inherit input{
+	display: inline-block;	
+	min: 0;
+	max: 9999;
+	onkeydown:limit(this);
+	onkeyup: limit(this); 
+    vertical-align: middle;
+}	
+
+.question-response-settings-sub-inherit label{
 	color: #696464;
 	font-weight: normal;
 	padding: 0px !important;

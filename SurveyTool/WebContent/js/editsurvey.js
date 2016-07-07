@@ -363,6 +363,7 @@ $(function() {
 	              $("#importFile").modal("hide");
 	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
 	              multimediaFrame.removeClass("hidden");
+	              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
 	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
 	              $('#optionsFile').empty();
 	              $('#optionsFile').addClass('hidden');
@@ -783,10 +784,12 @@ $(function() {
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
 		console.log("node.checked: "+node.is(":checked"));
-		if(node.is(":checked"))
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'inherit');
-		else
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'none');
+		if(node.is(":checked")){
+			node.closest('div.question-response-settings').find('#charsId').attr('class','question-response-settings-sub-inherit');
+		}else{
+			console.log("Está deseleccionado");
+			node.closest('div.question-response-settings').find('#charsId').attr('class','question-response-settings-sub-none');
+		}
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -816,10 +819,12 @@ $(function() {
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
 		console.log("node.checked: "+node.is(":checked"));
-		if(node.is(":checked"))
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'inherit');
-		else
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'none');
+		if(node.is(":checked")){
+			node.closest('div.question-response-settings').find('#rangeId').attr('class','question-response-settings-sub-inherit');
+		}else{
+			console.log("Está deseleccionado");
+			node.closest('div.question-response-settings').find('#rangeId').attr('class','question-response-settings-sub-none');
+		}
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -867,10 +872,12 @@ $(function() {
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
 		console.log("node.checked: "+node.is(":checked"));
-		if(node.is(":checked"))
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'inherit');
-		else
-			node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'none');
+		if(node.is(":checked")){
+			node.closest('div.question-response-settings').find('#decimalsDiv').attr('class','question-response-settings-sub-inherit');
+		}else{
+			console.log("Está deseleccionado");
+			node.closest('div.question-response-settings').find('#decimalsDiv').attr('class','question-response-settings-sub-none');
+		}
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -903,14 +910,12 @@ $(function() {
 		
 		if(node.val()==="formFieldTypeNumber"){
 			console.log("isNumber");
-			node.closest('div.row').find('#rangeOptions').css('display', 'inherit');
-			node.closest('div.row').find('#rangeOptions').css('display', 'inline-block');
-			node.closest('div.row').find('#decimalsOptions').css('display', 'inherit');
-			node.closest('div.row').find('#decimalsOptions').css('display', 'inline-block');
+			node.closest('div.row').find('#rangeOptions').removeClass('hidden');
+			node.closest('div.row').find('#decimalsOptions').removeClass('hidden');
 		}else{
 			console.log("isNotNumber");
-			node.closest('div.row').find('#rangeOptions').css('display', 'none');
-			node.closest('div.row').find('#decimalsOptions').css('display', 'none');
+			node.closest('div.row').find('#rangeOptions').addClass('hidden');
+			node.closest('div.row').find('#decimalsOptions').addClass('hidden');
 		}
 		
 		$.ajax({ 
@@ -964,7 +969,7 @@ $(function() {
 		var node = $(this); 
 		var req = {};
 		console.log("OnClick on adjust-lines-adjust");
-		node.closest('div.row').find('div.question-response-settings-sub').css('display', 'none');
+		node.closest('div.row').find('#lines').attr('class', 'question-response-settings-sub-none');
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
@@ -992,7 +997,7 @@ $(function() {
 		var node = $(this); 
 		var req = {};
 		console.log("OnClick on adjust-lines-set");
-		node.closest('div.question-response-settings').find('div.question-response-settings-sub').css('display', 'inherit');
+		node.closest('div.question-response-settings').find('#lines').attr('class','question-response-settings-sub-inherit');
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";

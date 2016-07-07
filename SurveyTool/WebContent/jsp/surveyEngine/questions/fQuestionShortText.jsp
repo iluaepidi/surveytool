@@ -14,6 +14,7 @@
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
     								String inputMode = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE);
+    								String maxValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE);
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
     								
@@ -53,7 +54,11 @@
 							  					
 												<div class="form-question-content">
 													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
-							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="1" placeholder="Type here_" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%> maxlength="<%= textLength%>"></textarea>
+													<%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){ %>
+							  							<input type="number" class="form-control" min="0" max="9999" onkeydown="limit(this);" name="<%= questionId %>" placeholder=<%= lang.getContent("placeholder.type_here")%> onkeyup="limit(this);" id="<%= questionId %>"></input>
+							  						<%} else{ %>
+							  							<input type="text" class="form-control" id="<%= questionId %>" name="<%= questionId %>" placeholder=<%= lang.getContent("placeholder.type_here")%> <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%> onkeypress="return isNumber(event)" <%}%> maxlength="<%= textLength%>"></textarea>
+							  						<%} %>
 												</div>	
 												
 											</fieldset>																						

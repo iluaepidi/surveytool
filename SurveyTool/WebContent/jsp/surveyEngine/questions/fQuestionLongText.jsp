@@ -63,7 +63,7 @@
 							  					
 												<div class="form-question-content">
 													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
-							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_" maxlength="<%= textLength%>"></textarea>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder=<%= lang.getContent("placeholder.type_here")%> maxlength="<%= textLength%>"></textarea>
 												</div>	
 												
 											</fieldset>																						

@@ -6,6 +6,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+System.out.println("fImportFile opened");
 %>		
 				<!-- Modal -->
 			
