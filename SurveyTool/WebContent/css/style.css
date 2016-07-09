@@ -57,12 +57,49 @@ h2 {width: auto;
     font-weight: bold;}
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
-	border-color: #4A4A4A;}
+	border-color: #4A4A4A; margin-top: 0 !important;}
+	
+.textarea-subsection {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;
+	margin-left: 5px !important;
+	max-width:150px !important;
+	vertical-align: middle !important;
+	display:inline-block}
+	
+
+.input-subsection {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;
+	margin-left: 5px !important;
+	max-width:150px !important;
+	vertical-align: middle !important;
+	text-align:center;
+	border: 2px solid !important;
+	border-color: #23527C !important;   
+	display:inline-block}
+
+.respsettingsCheckbox {
+	vertical-align: middle !important;
+}
+
+.visuallyhidden{
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+}
+
+input[type="number"] {
+   width:60px;
+   text-align:center;
+   rows:1;
+   cols:4;
+}
 
 
 /*focus*/
 
-a:focus {border: 2px solid !important;
+a:focus {
+	border: 2px solid !important;
 	border-radius: 5px;
 	padding: 2px;}
 
@@ -129,7 +166,6 @@ input[type="color"]:focus,
 
 textarea {resize:none;
 	margin-top: 3px !important;}
-
 
 /*----------------------------------------------*\
 		$ERROR
@@ -201,6 +237,7 @@ button span {margin-left: 5px;}
 .user-panel-menu i {margin-bottom: 10px;
 	font-size: 8em;}
 .user-panel-menu ul li {margin-bottom: 40px;}
+
 
 /*----------------------------------------------*\
 		$FOOTER
@@ -571,6 +608,11 @@ footer {margin-top: 10px;
 .section-pages {padding: 0;}
 
 /** questions **/
+
+
+
+
+
 .panel-question {width: 95%;
 	margin: 15px auto;
 	text-align: center;
@@ -603,7 +645,7 @@ footer {margin-top: 10px;
 .btn-transparent.btn-remove:focus {border-color: #B60000 !important;}
 
 .question-frame {border: 1px solid #555;
-	margin: 15px 0px;
+	margin: 15px 0px !important;
 	padding: 15px 20px;
     border-radius: 5px;
     text-align: left;
@@ -617,10 +659,11 @@ footer {margin-top: 10px;
     position: absolute;
     top: -19px;
     left: 12px;}
-.question-frame label, 
+.question-frame div[type="global"], 
 .question-frame input[type="text"],
-.question-frame select {padding-left: 0px !important;
-	padding-right: 0px !important;}
+.question-frame select {padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-bottom: 10px !important;}
 .question-frame input[type="submit"] {margin-top: 4px;
     width: 90px;
     height: 45px;}
@@ -629,9 +672,16 @@ footer {margin-top: 10px;
 .question-frame-multimedia button {margin-left: 60px;}
 
 
+
+
 .multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}
 .multimedia-item i {font-size: 1.3em;}
+
+.multimedia-list{
+	padding-bottom:10px;
+	padding-left: 20px;
+}
 
 .question-frame legend{font-size: 1em;
     font-weight: bold;
@@ -654,6 +704,29 @@ footer {margin-top: 10px;
 .likert-legend div {float:left;
 	width: 33.3%;
 	text-align: center;}
+
+.matrix-title {
+	padding: 5px;
+	text-align: center;}
+
+
+	
+.matrix-options {display: inline-flex;
+    width: 100%;
+    text-align: center;}
+.matrix-options-frame {border: 1px solid #000;
+    width: 60%;
+    margin: 0 auto;}
+.matrix-options-frame div {float:left;
+	margin:	5px 0px;
+	width: 14.2%;}
+.matrix-options-frame div input[type="radio"] {width: 100%;}
+.matrix-legend {width: 99%;
+    margin-top: 5px;
+    display: inline-block;}
+.matrix-legend div {float:left;
+	width: 33.3%;
+	text-align: center;}
 	
 .option-list {width: 70%;
 	margin: 0 auto;
@@ -661,6 +734,11 @@ footer {margin-top: 10px;
 .option-item {margin: 5px 0px;
     display: inline-block;
     clear: both;
+    width: 100%;}
+.option-item-add {margin: 5px 0px;
+    display: inline-block;
+    clear: both;
+    float:center;
     width: 100%;}
 .option-item .circle-info {}
 .option-title {width: 70% !important;
@@ -711,6 +789,93 @@ footer {margin-top: 10px;
 .survey-finish-content {width: 50%;
 	margin: 280px auto;
 	text-align: center;}
+	
+.type-tittle{
+	margin-top: 6px !important
+}
+
+.mandatory-button{
+	margin-top: 3px !important
+}
+
+.question-files-frame {
+	/*border: 1px solid #555;*/
+	margin: 0px 0px;
+	padding: 5px 0px;
+    border-radius: 5px;
+    text-align: left;
+    position: relative;
+    min-height:30px !important;}
+    
+.question-options {background-color: #C8C8C8;
+    padding: 1.5%;
+    margin-top: -4px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100%;
+    display: inline-block;}
+    
+.question-options-aligned {background-color: #C8C8C8;
+    padding: 1.5%;
+    margin-bottom: 2%;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle !important;
+    height: 50px;
+	line-height: 50px;}
+	
+.question-options-aligned select {color: #4A4A4A;
+	border-color: #4A4A4A; margin-top: 0 !important;}
+	
+.question-options-aligned label{
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle !important;
+}
+    
+.question-response-settings{
+    vertical-align: middle;
+    }
+    
+.question-response-settings label{
+    font-weight: normal;
+    vertical-align: middle;
+    }
+
+.question-response-settings-options input{
+    display:inline-block;
+    vertical-align: middle;
+    }
+
+.question-response-settings-options label{
+    display:inline-block;
+    vertical-align: middle;
+	}
+  
+.question-response-settings-sub-inherit{
+	display: inline-block;
+    vertical-align: middle;
+}
+
+.question-response-settings-sub-none{
+	display: none !important;
+}
+  
+.question-response-settings-sub-inherit input{
+	display: inline-block;
+    vertical-align: middle;
+}	
+
+.question-response-settings-sub-inherit label{
+	color: #696464;
+	font-weight: normal;
+	padding: 0px !important;
+    vertical-align: middle;
+	display: inline-block;
+	}
 
 /*----------------------------------------------*\
 		$POLLS

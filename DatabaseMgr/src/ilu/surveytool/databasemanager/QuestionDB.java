@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -56,7 +58,7 @@ public class QuestionDB {
 	public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
 	{
 		List<Question> questions = new ArrayList<Question>();
-		
+		System.out.println("Get questions by survey Id="+surveyId);
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -146,6 +148,10 @@ public class QuestionDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			
+	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterPollByPollIDQuestionID(pollId, rs.getInt(DBFieldNames.s_QUESTION_ID));
+	   			
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -154,6 +160,8 @@ public class QuestionDB {
 	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
 	   					true,  
 	   					false,
+	   					false,
+	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
 	   			
@@ -326,8 +334,38 @@ public class QuestionDB {
 		}
 		
 		return mandatory;
+	}	
+	
+	
+	public boolean getQuestionByPageOptionalAnswer(int questionId, int pageId)
+	{
+		boolean optionalAnswer = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONBYPAGE_OPTIONALANSWER);			
+	   		pstm.setInt(1, questionId);
+	   		pstm.setInt(2, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			optionalAnswer = rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionalAnswer;
 	}
-
+	
 	public int getQuestionByPageIndex(int questionId, int pageId)
 	{
 		int index = 0;
@@ -422,7 +460,7 @@ public class QuestionDB {
 	 */
 	
 	public int insertQuestion(Question question, int contentId) {
-		//System.out.println("inserUser");
+		System.out.println("inserQuestion");
 		int questionId = 0;
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
@@ -453,8 +491,8 @@ public class QuestionDB {
 		return questionId;
 	}
 
-	public boolean insertQuestionByPage(int questionId, int pageId, boolean mandatory, int numQuestion) {
-		//System.out.println("inserUser");
+	public boolean insertQuestionByPage(int questionId, int pageId, boolean mandatory, boolean optionalAnswer, int numQuestion, HashMap<String, String> parameters) {
+		System.out.println("inserQuestionByPage");
 		boolean inserted = false;
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
@@ -465,12 +503,24 @@ public class QuestionDB {
 		   pstm.setInt(2, questionId);
 		   pstm.setInt(3, numQuestion);
 		   pstm.setBoolean(4, mandatory);
+		   pstm.setBoolean(5, optionalAnswer);
 		   
 		   boolean notInserted = pstm.execute();
 		   
 		   if(!notInserted)
 		   {
 			   inserted = true;
+		   }
+		   
+		   if (parameters !=null){
+			   QuestionParameterDB qpDB = new QuestionParameterDB();
+			   Iterator<String> iter = parameters.keySet().iterator();
+			   while(iter.hasNext())
+			   {
+				   String parameterName = iter.next();
+				   String value = parameters.get(parameterName);
+				   qpDB.insertQuestionParameter(pageId, questionId, parameterName, value);
+			   }
 		   }
 		  		  	   
 		} catch (SQLException e) {
@@ -488,13 +538,35 @@ public class QuestionDB {
 	 */
 	
 	public void updateQuestionMandatory(int questionId, int pageId, boolean mandatory) {
-		//System.out.println("updateState");
+		System.out.println("updateQuestionMandatory");
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONBYPAGE_MANDATORY);
 			pstm.setBoolean(1, mandatory);
+			pstm.setInt(2, pageId);
+			pstm.setInt(3, questionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+	}
+	
+	public void updateQuestionOptionalAnswer(int questionId, int pageId, boolean optionalAnswer) {
+		System.out.println("updateQuestionOptionalAnswer");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONBYPAGE_OPTIONALANSWER);
+			pstm.setBoolean(1, optionalAnswer);
 			pstm.setInt(2, pageId);
 			pstm.setInt(3, questionId);
 		   		
@@ -530,6 +602,39 @@ public class QuestionDB {
 		}
 		   
 	}
+	
+	public boolean updateOptionsGroupType(int questionId, String type) {
+		System.out.println("updateOptionsGroupType: "+type);
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE);
+			pstm.setString(1, type);
+			pstm.setInt(2, questionId);
+		   		
+			System.out.println(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE +": qID: " +questionId+", type: "+type);
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+				System.out.println("numUpdated: "+numUpdated);
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	
 	
 	/*
 	 * Remove
@@ -588,6 +693,10 @@ public class QuestionDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();	   			
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			
+	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID));
+	   				   			
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -595,7 +704,9 @@ public class QuestionDB {
 	   					contents, 
 	   					rs.getString(DBFieldNames.s_CATEGORY_NAME), 
 	   					rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY), 
+	   					rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER),
 	   					false,
+	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
 	   			

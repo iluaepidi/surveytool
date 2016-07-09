@@ -1,14 +1,18 @@
 package ilu.surveymanager.handler;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class QuestionHandler {
 
@@ -39,7 +43,7 @@ public class QuestionHandler {
 
 			int index = questionDB.getNumQuestionByPage(pageId) + 1;
 			
-			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), index);
+			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), question.isOptionalAnswer(), index, question.getParameters());
 		}
 		
 		return questionId;
@@ -80,7 +84,7 @@ public class QuestionHandler {
 	public boolean updateContent(int questionId, Content content)
 	{
 		boolean updated = false;
-		
+				
 		QuestionDB questionDB = new QuestionDB();
 		int contentId = questionDB.getQuestionContentIdByQuestionId(questionId);
 		ContentDB contentDB = new ContentDB();
@@ -90,7 +94,8 @@ public class QuestionHandler {
 		}
 		else
 		{
-			contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			if (!content.getText().equals(""))
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
 		}
 		
 		updated = true;
@@ -100,12 +105,31 @@ public class QuestionHandler {
 	
 	public boolean updateMandatory(int questionId, int pageId)
 	{
+		System.out.println("Update mandatory");
 		QuestionDB questionDB = new QuestionDB();
 		boolean mandatory = !questionDB.getQuestionByPageMandatory(questionId, pageId);
 		questionDB.updateQuestionMandatory(questionId, pageId, mandatory);
 		
 		return mandatory;
 	}
+	
+	public boolean updateOptionalAnswer(int questionId, int pageId)
+	{
+		System.out.println("Update opt answer");
+		QuestionDB questionDB = new QuestionDB();
+		boolean optionalAnswer = !questionDB.getQuestionByPageOptionalAnswer(questionId, pageId);
+		questionDB.updateQuestionOptionalAnswer(questionId, pageId, optionalAnswer);
+		
+		return optionalAnswer;
+	}
+	
+	public HashMap<String,String> updateParameters(int questionId, int pageId, HashMap<String,String> parameters)
+	{
+		System.out.println("Update parameters");
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();		
+		questionParameterDB.updateQuestionParameters(questionId, pageId, parameters);	
+		return parameters;
+	}	
 	
 	public boolean updateIndex(int questionId, int prevQuestionId, int pageId)
 	{
@@ -146,6 +170,19 @@ public class QuestionHandler {
 		return updated;
 	}
 	
+	public boolean updateOptionsGroupType(int questionId, String optionType){
+		boolean updated = false;
+		
+		QuestionDB questionDB = new QuestionDB();
+		if (optionType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_MULTIPLE)){
+			updated = questionDB.updateOptionsGroupType( questionId, DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX);
+		}
+		else if (optionType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE))
+			updated = questionDB.updateOptionsGroupType( questionId, DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO);
+		
+		return updated;
+	}	
+	
 	public boolean removeQuestionByPage(int questionId, int pageId)
 	{
 		boolean removed = false;
@@ -154,6 +191,24 @@ public class QuestionHandler {
 		int prevQuestionId = questionDB.getQuestionByPageIdIndex(numQuestions, pageId);
 		this.updateIndex(questionId, prevQuestionId, pageId);
 		questionDB.removeQuestionByPage(questionId, pageId);
+		removed = true;
+		return removed;
+	}
+	
+	public boolean removeParameterByQuestionByPage(int questionId, int pageId, String parameter)
+	{
+		boolean removed = false;
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+		questionParameterDB.removeQuestionParameter(questionId, pageId, parameter);
+		removed = true;
+		return removed;
+	}
+	
+	public boolean removeParametersByQuestionByPage(int questionId, int pageId)
+	{
+		boolean removed = false;
+		QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+		questionParameterDB.removeQuestionParameters(questionId, pageId);
 		removed = true;
 		return removed;
 	}

@@ -6,11 +6,13 @@ import java.util.List;
 
 public class OptionsGroup {
 	
-	int id;
+	int id = 1;
 	HashMap<String, Content> contents;
 	String optionType = "";
 	boolean random = false;
 	List<Option> options;
+	int index;
+	int questionId = 0;
 
 	public OptionsGroup() 
 	{
@@ -18,7 +20,7 @@ public class OptionsGroup {
 		options = new ArrayList<Option>();
 	}
 
-	public OptionsGroup(int id, HashMap<String, Content> contents, String optionType, boolean random,
+	public OptionsGroup(int id, HashMap<String, Content> contents, String optionType, boolean random, int index, int questionId,
 			List<Option> options) {
 		super();
 		this.id = id;
@@ -26,6 +28,8 @@ public class OptionsGroup {
 		this.optionType = optionType;
 		this.random = random;
 		this.options = options;
+		this.index = index;
+		this.questionId = questionId;
 	}
 
 	public int getId() {
@@ -34,6 +38,22 @@ public class OptionsGroup {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
 	}
 
 	public HashMap<String, Content> getContents() {

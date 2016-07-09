@@ -14,10 +14,11 @@
 						  					%>
 						  					
 											<div class="panel-heading">	
-												<button id="panel-heading-display" class="btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
-												<h3 class="panel-title"><input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/></h3>
-												<div class="panel-section-buttons right">
-													<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+												<div class="col-md-6">
+													<button id="panel-heading-display" class="btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
+													<h3 class="panel-title"><input type="text" maxlength="1000" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/></h3>
+												</div>
+												<div class="panel-section-buttons right col-md-6">
 													<button class="btn-transparent btn-remove" id="removeQuestion" aria-label="<%= lang.getContent("button.remove_question") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
 												</div>
 											</div>	

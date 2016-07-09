@@ -23,15 +23,21 @@ public class DBSQLQueries {
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "where obg.idOptionsGroup = ? "
 				+ "order by obg.index";
+		public final static String s_SELECT_OPTIONID_BY_QUESTIONID = "SELECT o.idOption FROM surveytool.optionsbygroup obg "
+				+ "inner join surveytool.option o on obg.idOption = o.idOption "
+				+ "inner join surveytool.optionsgroup og on obg.idOptionsGroup = og.idOptionsGroup "
+				+ "where og.idQuestion = ? ";
 		//optionsGroup
 		public final static String s_SELECT_OPTIONSGROUP_BY_ID = "select * from surveytool.optionsgroup where idOptionsGroup = ?";
 		public final static String s_SELECT_OPTIONSGROUP_BY_QUESTION_ID = "SELECT og.*, ot.name optionTypeName FROM surveytool.optionsgroup og "
 				+ "inner join surveytool.optiontype ot on og.idOptionType = ot.idOptionType "
-				+ "where idQuestion = ?";
+				+ "where og.idQuestion = ? order by og.index";
+		public final static String s_SELECT_OPTIONSGROUPID_BY_QUESTION_ID = "SELECT og.idOptionsGroup FROM surveytool.optionsgroup og "
+				+ "where og.idQuestion = ? order by og.index";
 		
 		//optionsByGroup
-		public final static String s_SELECT_OPTIONSBYGROUP_BY_ID = "SELECT * FROM surveytool.optionsbygroup where idOptionsGroup = ? "
-				+ "order by 'index'";
+		public final static String s_SELECT_OPTIONSBYGROUP_BY_ID = "SELECT obg.* FROM surveytool.optionsbygroup obg where obg.idOptionsGroup = ? "
+				+ "order by obg.index";
 		public final static String s_SELECT_OPTIONSBYGROUP_ID_BY_OPTIONID = "SELECT idOptionsGroup FROM surveytool.optionsbygroup where idOption = ?";
 		
 		//page
@@ -98,7 +104,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
 		
 		//Question
-		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.index, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
@@ -107,8 +113,8 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "where s.idQuestionnaire = ? order by qp.`index`";
-		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+				+ "where s.idQuestionnaire = ? order by qp.index";
+		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.section sc "
 				+ "inner join surveytool.page p on sc.idSection = p.idSection "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
@@ -116,7 +122,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
 				+ "where sc.idSection = ? order by qp.`index`";
-		public final static String s_SELECT_QUESTION_BY_PAGEID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory "
+		public final static String s_SELECT_QUESTION_BY_PAGEID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.page p "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
@@ -162,9 +168,44 @@ public class DBSQLQueries {
 		//QuestionByPage
 		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";
 		public final static String s_SELECT_QUESTIONBYPAGE_MANDATORY = "SELECT mandatory FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
+		public final static String s_SELECT_QUESTIONBYPAGE_OPTIONALANSWER = "SELECT optionalAnswer FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
 		public final static String s_SELECT_QUESTIONBYPAGE_INDEX = "SELECT `index` FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
 		public final static String s_SELECT_NUMQUESTION_BY_PAGE = "SELECT COUNT(*) numQuestions FROM surveytool.questionbypage where idPage = ?";
 		public final static String s_SELECT_QUESTIONBYPAGE_QUESTIONID_BY_PAGEID_INDEX = "SELECT idQuestion FROM surveytool.questionbypage where idPage = ? and `index` = ?";
+		
+		//QuestionParameter
+		public final static String s_SELECT_QUESTIONPARAMETER_BY_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idPage = ?";
+		public final static String s_SELECT_QUESTIONPARAMETERPOLL_BY_POLLID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestionpoll pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idPoll = ?";
+		public final static String s_SELECT_QUESTIONPARAMETER_BY_QUESTIONID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ?";
+		public final static String s_SELECT_QUESTIONPARAMETERPOLL_BY_QUESTIONID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestionpoll pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ?";
+		public final static String s_SELECT_QUESTIONPARAMETER_BY_PARAMETERNAME = "SELECT pfq.value FROM surveytool.parameterforquestion pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where qp.parameterName = ?";
+		public final static String s_SELECT_QUESTIONPARAMETERPOLL_BY_PARAMETERNAME = "SELECT pfq.value FROM surveytool.parameterforquestionpoll pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where qp.parameterName = ?";
+		public final static String s_SELECT_QUESTIONPARAMETER_BY_QUESTIONID_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ? and pfq.idPage = ?";
+		public final static String s_SELECT_QUESTIONPARAMETER_BY_QUESTIONID_PAGEID_PARAMETERNAME = "SELECT pfq.value FROM surveytool.parameterforquestion pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ? and pfq.idPage = ? and qp.parameterName=?";
+		public final static String s_SELECT_QUESTIONPARAMETERPOLL_BY_QUESTIONID_POLLID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestionpoll pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ? and pfq.idPoll = ?";
+		public final static String s_SELECT_QUESTIONPARAMETERPOLL_BY_QUESTIONID_POLLID_PARAMETERNAME = "SELECT pfq.value FROM surveytool.parameterforquestionpoll pfq "
+				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
+				+ "where pfq.idQuestion = ? and pfq.idPoll = ? and qp.parameterName=?";
+		public final static String s_SELECT_QUESTIONPARAMETER_ID_FOR_NAME = "SELECT idParameter FROM surveytool.questionparameter "
+				+ "where parameterName = ?";
 		
 		//sections
 		public final static String s_SELECT_SECTIONS_BY_SURVEYID = "SELECT sc.* FROM surveytool.questionnaire s "
@@ -199,8 +240,8 @@ public class DBSQLQueries {
 		//OptionByGroup
 			public final static String s_INSERT_OPTIONS_BY_GROUP = "INSERT INTO `surveytool`.`optionsbygroup` (`idOptionsGroup`, `idOption`, `index`) VALUES ( ?, ?, ?)";
 		//OptionGroup
-			public final static String s_INSERT_OPTIONS_GROUP = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idContent`, `idOptionType`) VALUES (?, ?, "
-					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?))";
+			public final static String s_INSERT_OPTIONS_GROUP = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idContent`, `idOptionType`, `index`) VALUES (?, ?, "
+					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?), ?)";
 		//poll
 			public final static String s_INSERT_POLL = "INSERT INTO `surveytool`.`poll` (`publicId`, `author`, `idQuestionnaire`, `idContent`, `idProject`, `callUrl`) VALUES (?, ?, ?, ?, ?, ?)";
 		//page
@@ -213,7 +254,11 @@ public class DBSQLQueries {
 					+ "(select idQuestionType from surveytool.questiontype where name = ?), ?, "
 					+ "(select idCategory from surveytool.category where name = ?))";
 		//QuestionByPage
-			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `index`, `mandatory`) VALUES (?, ?, ?, ?)";
+			public final static String s_INSERT_QUESTION_BY_PAGE = "INSERT INTO `surveytool`.`questionbypage` (`idPage`, `idQuestion`, `index`, `mandatory`, `optionalAnswer`) VALUES (?, ?, ?, ?, ?)";
+		//ParameterForQuestion
+			public final static String s_INSERT_PARAMETER_FOR_QUESTION = "INSERT INTO `surveytool`.`parameterforquestion` (`idQuestion`, `idPage`, `idParameter`, `value`) VALUES (?, ?, (SELECT idParameter FROM surveytool.questionparameter where parameterName = ?), ?)";
+		//ParameterForQuestionPoll
+			public final static String s_INSERT_PARAMETER_FOR_QUESTION_POLL = "INSERT INTO `surveytool`.`parameterforquestionpoll` (`idQuestion`, `idPoll`, `idParameter`, `value`) VALUES (?, ?, (SELECT idParameter FROM surveytool.questionparameter where parameterName = ?), ?)";
 		//QuestionByPoll
 			public final static String s_INSERT_QUESTION_BY_POLL = "INSERT INTO `surveytool`.`questionbypoll` (`idPoll`, `idQuestion`, `index`) VALUES (?, ?, ?)";
 		//QuestionResource
@@ -233,13 +278,21 @@ public class DBSQLQueries {
 					+ "WHERE `idContent`= ? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+		//optionsGroup
+			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
+			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 		//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
 		//questionByPage
 			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
+			public final static String s_UPDATE_QUESTIONBYPAGE_OPTIONALANSWER = "UPDATE surveytool.questionbypage SET optionalAnswer=? WHERE idPage=? and idQuestion=?";
 			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX = "UPDATE surveytool.questionbypage SET `index`=? WHERE idPage=? and idQuestion=?";			
+		//ParameterForQuestion
+			public final static String s_UPDATE_PARAMETERFORQUESTION = "UPDATE surveytool.parameterforquestion SET value=? WHERE idPage=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
+		//ParameterForQuestionPoll
+			public final static String s_UPDATE_PARAMETERFORQUESTIONPOLL = "UPDATE surveytool.parameterforquestionpoll SET `value`=? WHERE idPoll=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
 		//questionnaire
 			public final static String s_UPDATE_QUESTIONNAIRE_PROJECT = "UPDATE surveytool.questionnaire SET idProject=? WHERE idQuestionnaire= ?";
 		//resources
@@ -249,8 +302,16 @@ public class DBSQLQueries {
 		//contentIndex
 			public final static String s_DELETE_CONTENT = "DELETE FROM `surveytool`.`contentindex` WHERE `idContent`=?";
 			
+		//content
+			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
+					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
+					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+		
 		//option
 			public final static String s_DELETE_OPTION = "DELETE FROM surveytool.option WHERE idOption = ?";
+			
+		//optionsgroup
+			public final static String s_DELETE_OPTIONSGROUP = "DELETE FROM surveytool.optionsgroup WHERE idOptionsGroup = ?";
 			
 		//page
 			public final static String s_DELETE_PAGE = "DELETE FROM surveytool.page WHERE idPage = ?";
@@ -259,6 +320,14 @@ public class DBSQLQueries {
 			public final static String s_DELETE_QUESTION_BY_PAGE = "DELETE FROM surveytool.questionbypage WHERE idPage=? and idQuestion=?";
 			public final static String s_DELETE_QUESTION_BY_PAGE_WHERE_PAGEID = "DELETE FROM surveytool.questionbypage WHERE idPage=?";
 			
+		//ParameterForQuestion
+			public final static String s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID = "DELETE FROM surveytool.parameterforquestion WHERE idPage=? and idQuestion=?";
+			public final static String s_DELETE_PARAMETERFORQUESTION_BY_PAGE_QUESTION_ID_PARAMETER_NAME = "DELETE FROM surveytool.parameterforquestion WHERE idPage=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
+			
+		//ParameterForQuestionPoll
+			public final static String s_DELETE_PARAMETERFORQUESTIONPOLL_BY_POLL_QUESTION_ID = "DELETE FROM surveytool.parameterforquestionpoll WHERE idPoll=? and idQuestion=?";
+			public final static String s_DELETE_PARAMETERFORQUESTIONPOLL_BY_POLL_QUESTION_ID_PARAMETER_NAME = "DELETE FROM surveytool.parameterforquestionpoll WHERE idPoll=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
+		
 		//resources
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";
 

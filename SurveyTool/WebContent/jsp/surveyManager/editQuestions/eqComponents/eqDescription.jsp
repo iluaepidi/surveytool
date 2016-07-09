@@ -14,9 +14,9 @@
 							  						descriptionText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText(); 
 							  					}
 							  					%>
-							  					<div class="question-frame question-frame-help" id="question-frame-help">
-							  						<h4><%= lang.getContent("question.edit.description.title") %></h4>
-							  						<textarea class="form-control" id="survey-question-description-text" rows="2" placeholder="<%= lang.getContent("placeholder.type_here") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>"><%= descriptionText %></textarea>
+							  					<div class="row" type="global" id="question-frame-help">
+							  						<label><%= lang.getContent("question.edit.description.title") %></label>
+							  						<textarea class="form-control" id="survey-question-description-text" rows="2" placeholder="<%= lang.getContent("placeholder.type_here") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000"><%= descriptionText %></textarea>
 							  					</div>	
 							  					
 												<%
