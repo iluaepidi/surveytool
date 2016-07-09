@@ -81,6 +81,44 @@ public class ContentDB {
 		return contents;
 	}
 	
+
+	
+	/*
+	 * selects
+	 */
+	
+	public HashMap<String, Content> getContentByIdLanguageContentType(int contentId, String language, String contentType)
+	{
+		HashMap<String, Content> contents = new HashMap<String, Content>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE);
+	    	pstm.setInt(1, contentId);
+			pstm.setString(2, language); 
+			pstm.setString(3, contentType);
+			   
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			contents.put(contentType, new Content(contentId, language, 
+	   					rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_CONTENT_TEXT)));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
 	/*
 	 * exists 
 	 */
@@ -150,18 +188,23 @@ public class ContentDB {
 	public boolean insertContent(int contentId, String language, String contentType, String text) {
 		System.out.println("insertContent: [contentId: "+ contentId+", language: "+language+", contentType: "+contentType+", text: "+text+"]");
 		boolean inserted = false;
+		boolean notInserted = false;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
+	    if(getContentByIdLanguageContentType(contentId, language, contentType).isEmpty()){
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_CONTENT);
 		   pstm.setInt(1, contentId);
 		   pstm.setString(2, language); 
 		   pstm.setString(3, contentType); 
 		   pstm.setString(4, text);
 		   
-		   boolean notInserted = pstm.execute();
-		   
+		   notInserted = pstm.execute();
+	    }
+	    else
+	    	updateContentText(contentId, language, contentType, text);
+	    
 		   if(!notInserted)
 		   {
 			   inserted = true;

@@ -73,7 +73,7 @@ public class ImportFileServlet extends HttpServlet {
 		{						
 			try {
 				String action = request.getParameter(Parameter.s_ACTION);
-				
+				System.out.println(request.getParameter(Parameter.s_ACTION));;
 				if(action.equals("file") || action.equals("fileUpdate"))
 				{
 				    Part filePart;

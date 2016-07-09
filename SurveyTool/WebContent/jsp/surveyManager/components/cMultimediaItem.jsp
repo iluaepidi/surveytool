@@ -16,14 +16,17 @@
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();
 							  					String title = "";
+							  					String altText = "";
 							  					if(!contents.isEmpty())
 							  					{
 							  						title = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  						altText = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
 							  					}
+							  					String path = resource.getPathFile();
 							  					%>
 							  							<li class="multimedia-item" rid="<%= resource.getResourceId() %>">
 							  								<i class="fa fa-file-image-o"></i>
-							  								<a id="editFile" href="#"><%= title + " - " + resource.getPathFile() %></a>
+							  								<a class="active" active="false" id="editFile" data-image='{"rId":"<%= resource.getResourceId()%>","tittle":"<%=title %>","altText":"<%=altText %>","path":"<%=path %>"}' href="#"><%= title + " - " + path %></a>
 							  								<button id="removeMultimediaFile" class="btn btn-transparent fright red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  							</li>
 												<%

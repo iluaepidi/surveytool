@@ -84,6 +84,15 @@ $(function() {
 		$("#newQuestionModal").modal("show");
 	});
 	
+	$('#page-items').on("click", '#editFile', function(){
+		console.log("editfile opening...");
+		$(".panel-body.form-group").attr("id",$(this).data("image").rId);
+		$("#resourceTitle").val($(this).data("image").tittle);
+		$("#resourceAltText").val($(this).data("image").altText);
+		$("#imageFilePreview").attr("src",$(this).data("image").path);
+		$("#updateFile").modal("show");
+	});
+	
 	$('#page-items').on("keyup", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		var index = $(this).attr('index');
@@ -346,6 +355,7 @@ $(function() {
 	
 	$('#optionsFile').on("click", "#btnImportFile", function(e){
 		$('#importFileForm').on("submit", function(e){
+			console.log("en on(click, #btnImportFile");
 			e.preventDefault();
 			if(pending)
 			{
@@ -370,6 +380,37 @@ $(function() {
 	              pending = false;
 	  		});
 		});
+	});
+	
+	$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
+			console.log("en on(click, #btnUpdateFile");
+			e.preventDefault();
+			if(pending)
+			{
+				return;
+			}
+			pending = true;
+			console.log( $('#resourceTitle').val());
+			console.log($('#resourceAltText').val());
+			console.log(currentLanguage);
+			console.log($(this).closest('.form-group').attr('id'));
+	        $.post('ImportFileServlet', {
+	        	action : "options",
+	        	resourceTitle: $('#resourceTitle').val(),
+	  			resourceAltText: $('#resourceAltText').val(),
+	  			mainVersion: currentLanguage,
+	  			rid: $(this).attr('rid').val()
+	  		}, function(res) {
+	  			$('#updateFileForm')[0].reset();
+	              $("#updateFile").modal("hide");
+	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+	              multimediaFrame.removeClass("hidden");
+	              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
+	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+	              $('#updateFilesSection').empty();
+	              $('#updateFilesSection').addClass('hidden');
+	              pending = false;
+	  		});
 	});
 	
 	$('#page-items').on("click", "#btn-question-import-file", function(e){
@@ -433,7 +474,7 @@ $(function() {
 	$('#page-items').on("click", "#remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
-		var item = $(this).closest('li');
+		
 		var input = item.find('input');
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(input.attr('oid'));
@@ -481,7 +522,12 @@ $(function() {
 				   $("#removeElement").modal("hide");
 				   if(service == "ResourceService")
 				   {
+					   if($('#multimediaFilesList li').length<2){
+						   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden'); 
+					   }
 					   $('li[rid=' + elementId + ']').remove();
+					   console.log("Number of elements: "+$('#multimediaFilesList li').length);
+					   
 				   }
 				   else if(service == "QuestionService")
 				   {
@@ -790,6 +836,7 @@ $(function() {
 			console.log("Está deseleccionado");
 			node.closest('div.question-response-settings').find('#charsId').attr('class','question-response-settings-sub-none');
 		}
+		node.closest('#genericOptions').find('#survey-question-max-chars').val('');
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -825,6 +872,8 @@ $(function() {
 			console.log("Está deseleccionado");
 			node.closest('div.question-response-settings').find('#rangeId').attr('class','question-response-settings-sub-none');
 		}
+		node.closest('#rangeOptions').find('#survey-minValue').val('');
+		node.closest('#rangeOptions').find('#survey-maxValue').val('');
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -878,6 +927,7 @@ $(function() {
 			console.log("Está deseleccionado");
 			node.closest('div.question-response-settings').find('#decimalsDiv').attr('class','question-response-settings-sub-none');
 		}
+		node.closest('#decimalsOptions').find('#survey-question-decimals').val('');
 		
 		$.ajax({ 
 			   type: "PUT",
@@ -912,10 +962,12 @@ $(function() {
 			console.log("isNumber");
 			node.closest('div.row').find('#rangeOptions').removeClass('hidden');
 			node.closest('div.row').find('#decimalsOptions').removeClass('hidden');
+			node.closest('div.row').find('#genericOptions').addClass('hidden');
 		}else{
 			console.log("isNotNumber");
 			node.closest('div.row').find('#rangeOptions').addClass('hidden');
 			node.closest('div.row').find('#decimalsOptions').addClass('hidden');
+			node.closest('div.row').find('#genericOptions').removeClass('hidden');
 		}
 		
 		$.ajax({ 
@@ -973,6 +1025,8 @@ $(function() {
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
+
+		node.closest('div.row').find('#survey-question-max-lines').val('');
 		$.ajax({ 
 			   type: "PUT",
 			   dataType: "text",
@@ -1001,6 +1055,9 @@ $(function() {
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
 		req.pid = node.closest('li[id=page]').attr('pid');
 		req.text = "";
+
+		node.closest('div.question-response-settings').find('#survey-question-max-lines').val('');
+		
 		$.ajax({ 
 			   type: "PUT",
 			   dataType: "text",
@@ -1173,19 +1230,18 @@ function updateContent(req, serviceUrl)
 	});
 }
 
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    return true;
-}
-
 function limit(element)
 {
     var max_chars = 4;
 
+    if(element.value.length >= max_chars) {
+        element.value = element.value.substr(0, max_chars);
+    }
+}
+
+function limitInput(element, max_chars)
+{
+console.log(max_chars);
     if(element.value.length >= max_chars) {
         element.value = element.value.substr(0, max_chars);
     }

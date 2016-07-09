@@ -865,11 +865,7 @@ footer {margin-top: 10px;
 }
   
 .question-response-settings-sub-inherit input{
-	display: inline-block;	
-	min: 0;
-	max: 9999;
-	onkeydown:limit(this);
-	onkeyup: limit(this); 
+	display: inline-block;
     vertical-align: middle;
 }	
 
@@ -880,6 +876,7 @@ footer {margin-top: 10px;
     vertical-align: middle;
 	display: inline-block;
 	}
+
 /*----------------------------------------------*\
 		$POLLS
 \*----------------------------------------------*/

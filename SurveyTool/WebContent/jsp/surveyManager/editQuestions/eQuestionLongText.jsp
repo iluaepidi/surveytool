@@ -60,11 +60,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
   			%>
   			<div class="row" type="global">
 				<label><%=lang.getContent("question.long.chars")%></label>																															  							
-  				<div class="question-response-settings">
+  				<div class="question-response-settings" id="genericOptions">
   					<input class= "question-response-settings-options" type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars" <%if(!textLength.equals("")){%> checked <%}%>>
 					<label class= "question-response-settings-options" for="isLimitedChars"><%=lang.getContent("question.long.chars.label") %></label>
   					<div id="charsId" <% if(textLength.equals("")){ %> class="question-response-settings-sub-none" <%} else{%>class="question-response-settings-sub-inherit"<%} %>>
-						<input type="number" id="survey-question-max-chars" value="<%= textLength %>"></input>
+						<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" id="survey-question-max-chars" value="<%= textLength %>"></input>
 						<label for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
  					</div>
  				</div>
@@ -82,7 +82,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
   					<input class= "question-response-settings-options" type="radio" name="lines-<%= question.getIndex() %>" id="adjust-lines-set" value="set" <%if(!lines.equals("")){%> checked <%}%>>
   					<label class= "question-response-settings-options" for="adjust-lines-set"><%=lang.getContent("question.long.lines.set")%></label>
 					<div id="lines" <% if(lines.equals("")){ %> class="question-response-settings-sub-none" <%} else{%>class="question-response-settings-sub-inherit"<%} %>>
-						<input type="number" id="survey-question-max-lines" value="<%= lines %>"></input>
+						<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" id="survey-question-max-lines" value="<%= lines %>"></input>
  						<label for="survey-question-max-lines"><%=lang.getContent("question.long.lines.set.type")%></label>
   					</div>
   				</div>

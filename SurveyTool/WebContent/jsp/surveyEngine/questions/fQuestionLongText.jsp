@@ -21,6 +21,7 @@
     								
     								String lines = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES);    								
     								if(lines.equals("")){
+    									System.out.println("No hay lineas");
     									double div = Double.parseDouble(textLength)/40.0;
     									if(div>10.0)
     										lines="10";
