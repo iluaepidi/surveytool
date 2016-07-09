@@ -94,5 +94,7 @@ lang.close();
 	  			
 	  			<jsp:include page="../frames/fImportFile.jsp" />
 	  			
+	  			<jsp:include page="../frames/fUpdateFile.jsp" />
+	  			
 	  			<jsp:include page="../frames/fDeleteElement.jsp" />
 	  			

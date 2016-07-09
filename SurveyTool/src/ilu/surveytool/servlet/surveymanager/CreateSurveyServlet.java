@@ -57,6 +57,7 @@ public class CreateSurveyServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		System.out.println("processRequest in CreateSurveyServlet");
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		

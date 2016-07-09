@@ -73,7 +73,7 @@ public class ImportFileServlet extends HttpServlet {
 		{						
 			try {
 				String action = request.getParameter(Parameter.s_ACTION);
-				
+				System.out.println(request.getParameter(Parameter.s_ACTION));;
 				if(action.equals("file") || action.equals("fileUpdate"))
 				{
 				    Part filePart;
@@ -162,9 +162,9 @@ public class ImportFileServlet extends HttpServlet {
 		    Files.copy(fileContent, fpath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			index++;
-			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+			//fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
 		}
 		return fileNameFinal;
 	}

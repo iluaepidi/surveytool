@@ -12,8 +12,10 @@ public class Question {
 	Timestamp creationDate;
 	String questionType = "";
 	HashMap<String, Content> contents;
+	HashMap<String, String> parameters;
 	String category = "";
 	boolean mandatory = false;
+	boolean optionalAnswer = false;
 	boolean helpText = false;
 	String templatePage = "";
 	String formPage = "";
@@ -24,12 +26,13 @@ public class Question {
 	public Question() {
 		super();
 		contents = new HashMap<String, Content>();
+		parameters = new HashMap<String, String>();
 		optionsGroups = new ArrayList<OptionsGroup>();
 		resources = new ArrayList<Resource>();
 	}
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
-			HashMap<String, Content> contents, String category, boolean mandatory, boolean helpText) {
+			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -38,11 +41,13 @@ public class Question {
 		this.contents = contents;
 		this.category = category;
 		this.mandatory = mandatory;
+		this.optionalAnswer = optionalAnswer;
 		this.helpText = helpText;
+		this.parameters = parameters;
 	}
 	
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
-			HashMap<String, Content> contents, String category, boolean mandatory, boolean helpText,
+			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters,
 			String templatePage, String formPage) {
 		super();
 		this.questionId = questionId;
@@ -52,7 +57,9 @@ public class Question {
 		this.contents = contents;
 		this.category = category;
 		this.mandatory = mandatory;
+		this.optionalAnswer = optionalAnswer;
 		this.helpText = helpText;
+		this.parameters = parameters;
 		this.templatePage = templatePage;
 		this.formPage = formPage;
 	}
@@ -112,6 +119,14 @@ public class Question {
 	public void setMandatory(boolean mandatory) {
 		this.mandatory = mandatory;
 	}
+	
+	public boolean isOptionalAnswer() {
+		return optionalAnswer;
+	}
+
+	public void setOptionalAnswer(boolean optionalAnswer) {
+		this.optionalAnswer = optionalAnswer;
+	}
 
 	public boolean isHelpText() {
 		return helpText;
@@ -119,6 +134,26 @@ public class Question {
 
 	public void setHelpText(boolean helpText) {
 		this.helpText = helpText;
+	}
+
+	public HashMap<String, String> getParameters() {
+		return parameters;
+	}
+	
+	public String getParameterValue(String parameterName) {
+		String value = "";
+		
+		if(!parameters.isEmpty()){
+			value = parameters.get(parameterName);
+			if(value==null)
+				value = "";
+		}
+		
+		return value;
+	}
+	
+	public void setParameters(HashMap<String, String> parameters) {
+		this.parameters = parameters;
 	}
 
 	public String getTemplatePage() {
@@ -165,7 +200,8 @@ public class Question {
 	public String toString() {
 		return "Question [questionId=" + questionId + ", tag=" + tag + ", creationDate=" + creationDate
 				+ ", questionType=" + questionType + ", contents=" + contents + ", category=" + category
-				+ ", mandatory=" + mandatory + ", helpText=" + helpText + ", templatePage=" + templatePage
+				+ ", mandatory=" + mandatory + ", optionalAnswer=" + optionalAnswer
+				+ ", helpText=" + helpText + ", templatePage=" + templatePage
 				+ ", formPage=" + formPage + ", optionsGroups=" + optionsGroups + ", resources=" + resources
 				+ ", index=" + index + "]";
 	}
