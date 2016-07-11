@@ -93,6 +93,7 @@ public class SurveysServlet extends HttpServlet {
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
+		System.out.println(response);
 	}
 	
 	/*public void completeTextDefault(Survey survey, Survey surveyDefault){
