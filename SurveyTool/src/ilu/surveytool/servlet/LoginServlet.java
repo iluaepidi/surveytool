@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 			Credentials credentials = new Credentials();
 			credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
 			credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
-			System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
+			//System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
 			LoginResponse loginResp = loginHandler.login(credentials);
 			
 			

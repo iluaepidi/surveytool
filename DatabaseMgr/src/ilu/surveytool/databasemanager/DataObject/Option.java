@@ -28,7 +28,6 @@ public class Option {
 	}
 
 	public HashMap<String, Content> getContents() {
-		System.out.println("Obtener contenidos");
 		return contents;
 	}
 
