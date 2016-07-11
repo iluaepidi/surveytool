@@ -21,6 +21,7 @@
     								
     								String lines = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES);    								
     								if(lines.equals("")){
+    									System.out.println("No hay lineas");
     									double div = Double.parseDouble(textLength)/40.0;
     									if(div>10.0)
     										lines="10";
@@ -63,7 +64,7 @@
 							  					
 												<div class="form-question-content">
 													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
-							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder="Type here_" maxlength="<%= textLength%>"></textarea>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder=<%= lang.getContent("placeholder.type_here")%> maxlength="<%= textLength%>"></textarea>
 												</div>	
 												
 											</fieldset>																						

@@ -14,6 +14,8 @@
 					  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 					  					String action = (String) request.getAttribute(Attribute.s_ACTION);
 					  					
+					  					System.out.println("En cImportImageOptions");
+					  					
 					  					if(action.equals("file"))
 					  					{
 					  					%>
