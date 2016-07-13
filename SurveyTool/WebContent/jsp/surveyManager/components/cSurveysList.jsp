@@ -12,7 +12,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 %>    								
 
 
-						<div id="surveys-list">	    					
+						<div id="surveys-list" style="margin-bottom: 20px;">	    					
 							<h3><%= lang.getContent("survey_manager.surveys.title") %></h3>							
 							<%= lang.getContent("survey_manager.surveys.description") %>
 		  					<div class="user-panel-surveys">
@@ -142,16 +142,16 @@ lang.close();
  
     $(document).ready(function() {
         
-        
+    	//$('#surveys-table').DataTable();
+    	
         $('#surveys-table').dataTable({
         	"iDisplayLength": 25,
         	"pagingType": "full_numbers",
-            "scrollY":    "530px",
             "scrollCollapse": false,
             "searching": true,
             "ordering": false,
             "language": {
-                "url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
+            	"url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
             }
             
         });

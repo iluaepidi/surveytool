@@ -396,8 +396,8 @@ footer {margin-top: 10px;
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
-.btn-create-survey {margin-top: 33px;
-	height: 45px;}
+.btn-create-survey {margin-top: 10px;
+	height: 45px;width: 60%;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
