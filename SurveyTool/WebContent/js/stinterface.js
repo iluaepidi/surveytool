@@ -304,15 +304,17 @@ function displaySurveyInfo(node)
 
 function hideSurveyInfo(node)
 {
-	$('.survey-info-title').css("border-bottom", "none");
-	$('.survey-info-project').css("display", "none");
-	$('.survey-info-description').css("display", "none");
-	$('.survey-info-url').css("display", "none");
-	$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
-	$('.display-default-arrow').css("padding-top", "0px");
-	currentFrameActivate = "";
-	$('#display-survey-settings').attr('display', 'false');
-	surveyInfoOpen = false;
+	if($('#surveyProject-error').is(':hidden')){
+		$('.survey-info-title').css("border-bottom", "none");
+		$('.survey-info-project').css("display", "none");
+		$('.survey-info-description').css("display", "none");
+		$('.survey-info-url').css("display", "none");
+		$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
+		$('.display-default-arrow').css("padding-top", "0px");
+		currentFrameActivate = "";
+		$('#display-survey-settings').attr('display', 'false');
+		surveyInfoOpen = false;
+	}
 	//$('#survey-info-displayed').attr('id', 'survey-info');
 }
 
