@@ -2,11 +2,13 @@ package ilu.surveymanager.handler;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.DataObject.ResourceType;
 
 public class ResourceHandler {
 
@@ -14,6 +16,12 @@ public class ResourceHandler {
 		super();
 	}
 
+	public List<ResourceType> getResourceTypes()
+	{
+		ResourceDB resourceDB = new ResourceDB();
+		return resourceDB.getResourceTypes();
+	}
+	
 	public Resource insertResource(Resource resource, int questionId)
 	{
 		int resourceId = 0;
@@ -23,6 +31,7 @@ public class ResourceHandler {
 		
 		int contentId = contentDB.insertContentIndex();
 		resourceId = resourceDB.insertResource(resource, contentId);
+		//resource.setContentId(contentId);
 		
 		if(resourceId > 0)
 		{
@@ -42,7 +51,7 @@ public class ResourceHandler {
 		return resource;
 	}
 
-	public Resource insertImageContent(int resourceId, HashMap<String, Content> contents)
+	public Resource insertContent(int resourceId, HashMap<String, Content> contents)
 	{
 		Resource resource = null;
 		

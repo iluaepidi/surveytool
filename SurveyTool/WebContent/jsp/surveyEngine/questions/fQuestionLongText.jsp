@@ -9,8 +9,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
     
     								<%
-    								Language lang = new Language(getServletContext().getRealPath("/")); 
-    								lang.loadLanguage("en");
+    								Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
@@ -49,27 +48,13 @@
 							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
 							  					}
-							  					
-												if(!resources.isEmpty())
-												{
 												%>
-												<div class="previewFileUpliaded" id="previewFileUploaded">
-													<%
-													for(Resource resource : resources)
-													{
-													%>
-									            	<img id="img" src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
-									            	<%
-													}
-										            %>
-									            </div>
-									            <%
-												}
-									            %>
-							  					
+	
+												<jsp:include page="fqComponents/fqResources.jsp" />
+												
 												<div class="form-question-content">
 													<label for="<%= questionId %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
-							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder=<%= lang.getContent("placeholder.type_here")%> maxlength="<%= textLength%>"></textarea>
+							  						<textarea class="form-control" id="<%= questionId %>" name="<%= questionId %>" rows="<%= lines %>" placeholder='<%= lang.getContent("placeholder.type_here")%>' maxlength="<%= textLength%>"></textarea>
 												</div>	
 												
 											</fieldset>																						

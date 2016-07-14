@@ -11,8 +11,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
     
     								<%
-    								Language lang = new Language(getServletContext().getRealPath("/")); 
-    								lang.loadLanguage("en");
+    								Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
     								String index = request.getParameter(Parameter.s_INDEX);
     								int questionId = question.getQuestionId();
@@ -39,31 +38,10 @@
 							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
 							  					}
-							  					
-												if(!resources.isEmpty())
-												{
 												%>
-												<div class="previewFileUpliaded" id="previewFileUploaded">
-													<%
-													for(Resource resource : resources)
-													{
-
-														String resourceText = "";
-														if(resource!=null && resource.getContents()!=null && resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT)!=null){
-															resourceText = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
-														}
-													
-													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= resourceText %>" />
-
-									            	<%
-													}
-										            %>
-									            </div>
-									            <%
-												}
-									            %>
-							  					
+												
+												<jsp:include page="fqComponents/fqResources.jsp" />
+												
 												<div class="form-question-content">
 																			  					
 												<%

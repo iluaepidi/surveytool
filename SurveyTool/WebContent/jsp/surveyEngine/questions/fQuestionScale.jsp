@@ -19,8 +19,7 @@
     									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								}
     								
-    								Language lang = new Language(getServletContext().getRealPath("/")); 
-    								lang.loadLanguage(Language.getLanguageRequest(request));
+    								Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
     								
     								%>
 										<div class="form-question" id="form-question">
@@ -36,30 +35,10 @@
 							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
 							  					}
-							  					
-												if(!resources.isEmpty())
-												{
 												%>
-												<div class="previewFileUpliaded" id="previewFileUploaded">
-													<%
-													for(Resource resource : resources)
-													{
-														
-														String textResource = "";
-														if(resource!=null &&  resource.getContents()!=null && resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT)!=null){
-															textResource = resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText();
-					    								}
-														
-													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= textResource %>" />
-									            	<%
-													}
-										            %>
-									            </div>
-									            <%
-												}
-									            %>
-							  					
+	
+												<jsp:include page="fqComponents/fqResources.jsp" />
+												
 												<div class="form-question-content">
 													<div class="likert-options">
 													 	<div class="likert-options-frame">

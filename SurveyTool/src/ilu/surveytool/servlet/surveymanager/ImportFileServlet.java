@@ -74,7 +74,7 @@ public class ImportFileServlet extends HttpServlet {
 		{						
 			try {
 				String action = request.getParameter(Parameter.s_ACTION);
-				System.out.println(request.getParameter(Parameter.s_ACTION));;
+				System.out.println("action: " + request.getParameter(Parameter.s_ACTION));;
 				if(action.equals("file") || action.equals("fileUpdate"))
 				{
 				    Part filePart;
@@ -88,7 +88,7 @@ public class ImportFileServlet extends HttpServlet {
 					resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
 					
 					resource.setType("image");
-				    System.out.print("Resource: " + resource);
+				    //System.out.print("Resource: " + resource);
 
 			    	ResourceHandler resourceHandler = new ResourceHandler();
 				    
@@ -111,20 +111,30 @@ public class ImportFileServlet extends HttpServlet {
 				else if(action.equals("options"))
 				{
 					int resourceId = Integer.parseInt(request.getParameter(Parameter.s_RID));
-					this.language = request.getParameter(Parameter.s_MAIN_VERSION);
-					HashMap<String, Content> contents = new HashMap<String, Content>();
-					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
-							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
-					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,
-							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT)));
 					
-					ResourceHandler resourceHandler = new ResourceHandler();
-					Resource resource = resourceHandler.insertImageContent(resourceId, contents);
+					Resource resource = this._insertFileContent(request, resourceId, request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					request.setAttribute(Attribute.s_RESOURCE, resource);
 				    
 				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
-				}				
+				}
+				else if(action.equals("video"))
+				{
+					Resource resource = new Resource();
+					
+					resource.setPathFile(request.getParameter(Parameter.s_RESOURCE_URL));					
+					resource.setType(request.getParameter(Parameter.s_RESOURCE_TYPE));
+					
+					int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					ResourceHandler resourceHandler = new ResourceHandler();
+					resource = resourceHandler.insertResource(resource, questionId);
+					
+					resource = this._insertFileContent(request, resource.getResourceId(), resource.getType());
+					
+					request.setAttribute(Attribute.s_RESOURCE, resource);
+				    
+				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
+				}
 			    
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -163,9 +173,9 @@ public class ImportFileServlet extends HttpServlet {
 		    Files.copy(fileContent, fpath);
 		} catch (FileAlreadyExistsException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			index++;
-			//fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,4 +195,25 @@ public class ImportFileServlet extends HttpServlet {
 		return response;
 	}
 
+	private Resource _insertFileContent(HttpServletRequest request, int resourceId, String type)
+	{
+		this.language = request.getParameter(Parameter.s_MAIN_VERSION);
+		HashMap<String, Content> contents = new HashMap<String, Content>();
+		contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
+				new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
+		if(type.equals("image"))
+		{
+			contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,
+					new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT)));
+		}
+		else if(type.equals("video"))
+		{
+			contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION,
+					new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(Parameter.s_RESOURCE_DESCRIPTION_TEXT)));
+		}
+		
+		ResourceHandler resourceHandler = new ResourceHandler();
+		return resourceHandler.insertContent(resourceId, contents);
+	}
+	
 }

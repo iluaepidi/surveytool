@@ -20,8 +20,10 @@ public class Attribute {
 	public final static String s_SURVEY_INFO = "surveyInfo";
 	
 	public final static String s_SURVEY_INFO_DEFAULT_LANGUAGE = "surveyInfoDefaultLanguage";
+	public final static String s_SURVEY_LANGUAGE = "surveyLanguage";
 	
 	public final static String s_JS_FILES = "jsFiles";
+	public final static String s_CSS_FILES = "cssFiles";
 	public final static String s_PAGE_ID = "pageId";
 	public final static String s_PAGE_TITLE = "pageTitle";
 	public final static String s_POLL_TITLE = "pollTitle";

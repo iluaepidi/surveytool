@@ -17,6 +17,18 @@
 		<link href="css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
 		
+	<%
+	List<String> cssFiles = (List<String>) request.getAttribute(Attribute.s_CSS_FILES);
+	if(cssFiles != null)
+	{
+		for(String cssFile : cssFiles)
+		{
+	%>
+		<link href="<%= cssFile %>" rel="stylesheet" media="screen">
+	<%
+		}
+	}
+	%>
 		
 		<!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
 		<!--[if lt IE 9]>

@@ -346,7 +346,7 @@ footer {margin-top: 10px;
 .btn-accept-remove-element {float:right;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
-	padding: 20px 10px;
+	padding: 20px 15px;
     border-radius: 5px;
     position: relative;}
 .survey-frame h3 {font-size: 1em;
@@ -374,8 +374,8 @@ footer {margin-top: 10px;
     font-weight: bold;}
 .survey-frame label {padding-left: 5px !important;
 	padding-right: 0px !important;} 
-.survey-frame select {padding-left: 0px !important;
-	padding-right: 0px !important;}
+.survey-frame select {/*padding-left: 0px !important;
+	padding-right: 0px !important;*/}
 .survey-frame input[type="text"] {padding-left: 5px !important;
 	padding-right: 5px !important;}
 .survey-frame a {
@@ -672,8 +672,9 @@ footer {margin-top: 10px;
 /*.question-frame-help {display:none;}*/
 .question-frame-multimedia button {margin-left: 60px;}
 
-
-
+.resource-type-select {
+	width: 25% !important;
+}
 
 .multimedia-item button {font-size: 1.3em;
     margin-left: 5px;}

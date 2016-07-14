@@ -21,12 +21,16 @@ public class Address {
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
+	
+	//cssFiles
+		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
 		
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
 		public final static String s_JS_EDIT_POLL = "editPoll";
 		public final static String s_JS_CHART_GRAPHICS = "chart";
 		public final static String s_JS_ZERO_CLIPBOARD = "zeroClipboard";
+		public final static String s_JS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesAccesiblesYoutubeIframes";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";

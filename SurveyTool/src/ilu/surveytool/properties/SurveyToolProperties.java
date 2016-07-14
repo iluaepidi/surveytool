@@ -95,4 +95,40 @@ public class SurveyToolProperties {
 		return response;
 	 }
 
+	/**
+	 * Get path to the property js file.
+	 * @param bodyName
+	 * @return
+	 */
+	public String getCssFilePath(String cssFileName) {
+
+		String response = "";
+		Properties prop = new Properties();
+		InputStream input = null;
+
+		try {
+			File folder = new File("");
+			//System.out.println(folder.getAbsolutePath());
+			
+			input = new FileInputStream(this.rootPath + "/properties/cssfiles.properties");
+
+			// load a properties file
+			prop.load(input);
+			response = prop.getProperty(cssFileName);
+			// get the property value and print it out
+			//System.out.println(response);
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return response;
+	 }
 }

@@ -87,7 +87,7 @@ $(function() {
 	
 	$('#page-items').on("click", '#editFile', function(){
 		console.log("editfile opening...");
-		$(".panel-body.form-group").attr("id",$(this).data("image").rId);
+		$("#updateFile").attr("rid", JSON.parse($(this).attr("data-image")).rId);
 		$("#resourceTitle").val($(this).data("image").tittle);
 		$("#resourceAltText").val($(this).data("image").altText);
 		$("#imageFilePreview").attr("src",$(this).data("image").path);
@@ -354,7 +354,11 @@ $(function() {
          });
 	});
 	
-	$('#optionsFile').on("click", "#btnImportFile", function(e){
+	$('#importFile').on('hidden.bs.modal', function () {
+	    //alert("close");
+	})
+	
+	$('#importFileForm').on("click", "#btnImportFile", function(e){
 		$('#importFileForm').on("submit", function(e){
 			console.log("en on(click, #btnImportFile");
 			e.preventDefault();
@@ -363,13 +367,29 @@ $(function() {
 				return;
 			}
 			pending = true;
-	        $.post('ImportFileServlet', {
-	        	action : "options",
-	        	resourceTitle: $('#resourceTitle').val(),
-	  			resourceAltText: $('#resourceAltText').val(),
-	  			mainVersion: currentLanguage,
-	  			rid: $('#rid').val()
-	  		}, function(res) {
+
+			var type = $('#fileType').val();
+			//alert("resource: " + type);
+			var req = {};
+			req.resourceTitle = $('#resourceTitle').val();
+			req.mainVersion= currentLanguage;
+			req.resourceType = type;
+			
+			if(type === "image")
+			{
+				req.action = "options";
+				req.resourceAltText = $('#resourceAltText').val();
+				req.rid = $('#rid').val();
+			}
+			else if(type === "video")
+			{
+				req.action = type;
+				req.resourceDescText = $('#resourceDescText').val();
+				req.resourceUrl = $('#resourceUrl').val();
+				req.qid = currentQuestion;
+			}
+			
+	        $.post('ImportFileServlet', req, function(res) {
 	  			$('#importFileForm')[0].reset();
 	              $("#importFile").modal("hide");
 	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
@@ -378,12 +398,60 @@ $(function() {
 	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
 	              $('#optionsFile').empty();
 	              $('#optionsFile').addClass('hidden');
+	              $('#selectFile').addClass("hidden");
+	              $('#optionsVideoFile').addClass("hidden");
 	              pending = false;
 	  		});
 		});
 	});
 	
+	$('#selectFiteType').on("change", "#fileType", function(e){
+		var type = $(this).val();
+		if(type === "video")
+		{
+			$('#selectFile').addClass("hidden");
+			$('#optionsVideoFile').removeClass("hidden");
+		}
+		else
+		{
+			$('#selectFile').removeClass("hidden");
+			$('#optionsVideoFile').addClass("hidden");
+		}
+	});
+	
 	$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.textTitle = $('#resourceTitle').val();
+		req.textDesc = $('#resourceAltText').val();
+		req.lan = currentLanguage;
+		req.rid = currentQuestion;	
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/ResourceService/updateContent",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   if(data == "true")
+				   {
+					   console.log("Update Resource: " + data);
+					   /*var qNode = $('li[qid=' + currentQuestion + ']');
+					   qNode.find('#question-frame-help').removeClass("hidden");
+					   qNode.find('#question-frame-help-text').html(req.text);
+					   $("#setHelpText").modal("hide");*/
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+	});
+	
+	/*$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
 			console.log("en on(click, #btnUpdateFile");
 			e.preventDefault();
 			if(pending)
@@ -412,7 +480,7 @@ $(function() {
 	              $('#updateFilesSection').addClass('hidden');
 	              pending = false;
 	  		});
-	});
+	});*/
 	
 	$('#page-items').on("click", "#btn-question-import-file", function(e){
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');

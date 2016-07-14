@@ -11,8 +11,7 @@
 <%@page import="ilu.surveytool.language.Language"%>
 
 <%
-Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 String index = request.getParameter(Parameter.s_INDEX);
 int questionId = question.getQuestionId();
@@ -46,22 +45,10 @@ if(question!=null &&  question.getContents()!=null && question.getContents().get
 			<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 		<% 
 		}
-		if(!resources.isEmpty())
-		{
 		%>
-		<div class="previewFileUpliaded" id="previewFileUploaded">
-			<%
-			for(Resource resource : resources)
-			{
-			%>
-				<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
-			<%
-			}
-			%>
-		</div>
-		<%
-		}
-		%>
+		
+		<jsp:include page="fqComponents/fqResources.jsp" />
+		
 		<div class="form-question-content">
         	<table>
             	<thead>
@@ -71,8 +58,10 @@ if(question!=null &&  question.getContents()!=null && question.getContents().get
                     	List<OptionsGroup> optionsGroup = question.getOptionsGroups();
                     	if (!optionsGroup.isEmpty()){
                     		for(Option option: optionsGroup.get(0).getOptions()){
+                    			String opTitle = "";
+                    			if(!option.getContents().isEmpty() && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) opTitle = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText(); 
                     		%>
-                    			<th class="matrix-title"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></th>
+                    			<th class="matrix-title"><%= opTitle %></th>
                     		<%
                     		}
                     	}

@@ -8,8 +8,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%
-Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage("en");
+Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
 %>  
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
@@ -35,24 +34,10 @@ lang.loadLanguage("en");
 							  						<p><%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText() %></p>
 							  					<% 
 							  					}
-							  					
-												if(!resources.isEmpty())
-												{
 												%>
-												<div class="previewFileUpliaded" id="previewFileUploaded">
-													<%
-													for(Resource resource : resources)
-													{
-													%>
-									            	<img src="<%= resource.getPathFile() %>" alt="<%= resource.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT).getText() %>" />
-									            	<%
-													}
-										            %>
-									            </div>
-									            <%
-												}
-									            %>
-							  					
+	
+												<jsp:include page="fqComponents/fqResources.jsp" />
+												
 												
 											</fieldset>																						
 										</div>

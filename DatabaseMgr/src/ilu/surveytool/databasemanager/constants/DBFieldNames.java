@@ -80,6 +80,9 @@ public class DBFieldNames {
 		public final static String s_RESOURCE_TYPE_NAME = "resourceTypeName";
 		public final static String s_RESOURCE_URL_PATH = "urlPath";
 		
+	//resourcetype
+		public final static String s_RESOURCE_TYPE_ID = "idResourceType";
+		
 	//rol
 		public final static String s_ROLID = "idRol";
 		public final static String s_ROLNAME = "rolName";

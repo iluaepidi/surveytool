@@ -36,7 +36,10 @@ public class Parameter {
 	public final static String s_QSTATEMENT = "qstatement";
 	public final static String s_RESOURCE_TITLE = "resourceTitle";
 	public final static String s_RESOURCE_ALTERNTIVE_TEXT = "resourceAltText";
+	public final static String s_RESOURCE_DESCRIPTION_TEXT = "resourceDescText";
 	public final static String s_RESOURCE_UPLOADED_FILE = "uploadedFile";
+	public final static String s_RESOURCE_URL = "resourceUrl";
+	public final static String s_RESOURCE_TYPE = "resourceType";
 	public final static String s_RID = "rid";
 	public final static String s_SEND_POLL_BUTTON = "sendPoll";
 	public final static String s_SID = "sid";

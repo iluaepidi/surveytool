@@ -125,6 +125,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_RESOURCE_BY_ID = "select r.*, rt.name resourceTypeName from surveytool.resoruces r "
 				+ "inner join surveytool.resourcetype rt on r.idResourceType = rt.idResourceType "
 				+ "where idResoruces = ?";
+		public final static String s_SELECT_RESOURCE_TYPES = "SELECT idResourceType, name as resourceTypeName FROM surveytool.resourcetype";
 		
 		//User
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol inner join surveytool.language l on l.idLanguage = u.idLanguage WHERE (userName = ? or email = ?) and password = ?";
