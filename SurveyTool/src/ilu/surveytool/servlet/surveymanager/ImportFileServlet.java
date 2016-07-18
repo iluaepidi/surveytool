@@ -122,7 +122,8 @@ public class ImportFileServlet extends HttpServlet {
 				{
 					Resource resource = new Resource();
 					
-					resource.setPathFile(request.getParameter(Parameter.s_RESOURCE_URL));					
+					String idVideo = this._getIdVideoFromURL(request.getParameter(Parameter.s_RESOURCE_URL));
+					resource.setPathFile(idVideo);					
 					resource.setType(request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
@@ -214,6 +215,45 @@ public class ImportFileServlet extends HttpServlet {
 		
 		ResourceHandler resourceHandler = new ResourceHandler();
 		return resourceHandler.insertContent(resourceId, contents);
+	}
+	
+	private String _getIdVideoFromURL(String url)
+	{
+		String idVideo = "";
+		boolean indexOfSol = false;
+		
+		String[] cads = url.split("v=");
+		if(cads.length > 1)
+		{
+			indexOfSol = true;
+		}
+		else
+		{
+			cads = url.split("youtu.be/");
+			if(cads.length > 1)
+			{
+				indexOfSol = true;
+			}
+			else
+			{
+				idVideo = url;
+			}
+		}
+		
+		if(indexOfSol)
+		{
+			int endId = cads[1].indexOf("&");
+			if(endId > -1)
+			{
+				idVideo = cads[1].substring(endId);
+			}
+			else
+			{
+				idVideo = cads[1];
+			}	
+		}
+		
+		return idVideo;
 	}
 	
 }

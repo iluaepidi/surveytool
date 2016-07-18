@@ -15,7 +15,7 @@ function agregaTitulo(titulo, prefijo, incluirSpanOculto) {
 	if (titulo !== undefined) {
 		return (incluirSpanOculto ? '<span class="element-invisible">' : '') +
 			(prefijo !== undefined ? ' ' + prefijo + ' ' : '') +
-			' "' + titulo + '"' + (incluirSpanOculto ? '</span>' : '');
+			'"' + titulo + '"' + (incluirSpanOculto ? '</span>' : '');
 	}
 	else {
 		return '';
@@ -100,19 +100,19 @@ function onPlayerReady(event) {
 
 function agregaControlesAccesibles(pl, iframeId, titulo) {
 	var ifr = jQuery("#" + iframeId);
-	var btnPlay = jQuery('<button class="btnPlayerControl" id="btnPlay_' + iframeId + '">Reproducir' + agregaTitulo(titulo, 'el vídeo') + '</button>');
-	var btnMute = jQuery('<button class="btnPlayerControl" id="btnMute_' + iframeId + '">Desactivar / activar sonido' + agregaTitulo(titulo, 'al vídeo') + '</button>');
-	var btnVolumeDown = jQuery('<button class="btnPlayerControl" id="btnVolumeDown_' + iframeId + '">Bajar volumen' + agregaTitulo(titulo, 'al vídeo') + '</button>');
-	var btnVolumeUp = jQuery('<button class="btnPlayerControl" id="btnVolumeUp_' + iframeId + '">Subir volumen' + agregaTitulo(titulo, 'al vídeo') + '</button>');
-	var btnFw30Secs = jQuery('<button class="btnPlayerControl" id="btnFw30Secs_' + iframeId + '">Avanzar treinta segundos' + agregaTitulo(titulo, 'en el vídeo') + '</button>');
-	var btnBw30Secs = jQuery('<button class="btnPlayerControl" id="btnBw30Secs_' + iframeId + '">Retroceder treinta segundos' + agregaTitulo(titulo, 'en el vídeo') + '</button>');
+	var btnPlay = jQuery('<button type="button" class="btnPlayerControl" id="btnPlay_' + iframeId + '">' + agregaTitulo(titulo, playText) + '</button>');
+	var btnMute = jQuery('<button type="button" class="btnPlayerControl" id="btnMute_' + iframeId + '">' + agregaTitulo(titulo, muteText) + '</button>');
+	var btnVolumeDown = jQuery('<button type="button" class="btnPlayerControl" id="btnVolumeDown_' + iframeId + '">' + agregaTitulo(titulo, volDownText) + '</button>');
+	var btnVolumeUp = jQuery('<button type="button" class="btnPlayerControl" id="btnVolumeUp_' + iframeId + '">' + agregaTitulo(titulo, volUpText) + '</button>');
+	var btnFw30Secs = jQuery('<button type="button" class="btnPlayerControl" id="btnFw30Secs_' + iframeId + '">' + agregaTitulo(titulo, fwdText) + '</button>');
+	var btnBw30Secs = jQuery('<button type="button" class="btnPlayerControl" id="btnBw30Secs_' + iframeId + '">' + agregaTitulo(titulo, rewText) + '</button>');
 	var dlInfo = jQuery('<dl class="element-invisible" id="dl_' + iframeId + '"></dl>');
-	var dtPosicion = jQuery('<dt>Posición:</dt>');
-	var ddPosicion = jQuery('<dd id="ddPosicion_' + iframeId + '">0 segundos</dd>');
-	var dtDuracion = jQuery('<dt>Duración:</dt>');
-	var ddDuracion = jQuery('<dd id="ddDuracion_' + iframeId + '">Desconocida</dd>');
-	var LnkSaltarFlash = jQuery('<a href="#saltar_' + iframeId + '" class="element-invisible">Saltar el flash ' + agregaTitulo(titulo, 'del vídeo', false) + '</a>');
-	var lnkUrl = jQuery('<a target="_blank" class="element-invisible" href="' + pl.getVideoUrl() + '">Ver' + agregaTitulo(titulo, "el vídeo", true) + ' en Youtube<span class="element-invisible"> (Abre en ventana nueva)</span></a>');
+	var dtPosicion = jQuery('<dt>' + positionText + ':</dt>');
+	var ddPosicion = jQuery('<dd id="ddPosicion_' + iframeId + '">0 ' + secondsText + '</dd>');
+	var dtDuracion = jQuery('<dt>' + durationText + ':</dt>');
+	var ddDuracion = jQuery('<dd id="ddDuracion_' + iframeId + '">' + unknownText + '</dd>');
+	var LnkSaltarFlash = jQuery('<a href="#saltar_' + iframeId + '" class="element-invisible">' + agregaTitulo(titulo, skipVideoText, false) + '</a>');
+	var lnkUrl = jQuery('<a target="_blank" class="element-invisible" href="' + pl.getVideoUrl() + '">' + agregaTitulo(titulo, watchYtText, true) + '<span class="element-invisible"> (' + openNewWindowText + ')</span></a>');
 	var pLnkUrl = jQuery("<p></p>");
 	pLnkUrl.append(lnkUrl);
 	var ul = jQuery("<ul></ul>"), liPlay = jQuery('<li class="liControl"></li>'), liMute = jQuery('<li class="liControl"></li>'), liVolumeDown = jQuery('<li class="liControl"></li>'), liVolumeUp = jQuery('<li class="liControl"></li>'), liFw30Secs = jQuery('<li class="liControl"></li>'), liBw30Secs = jQuery('<li class="liControl"></li>');
@@ -154,14 +154,14 @@ function agregaControlesAccesibles(pl, iframeId, titulo) {
 			case YT.PlayerState.ENDED:
 				// btnBw30Secs.attr("disabled", "disabled");
 				// btnFw30Secs.attr("disabled", "disabled");
-				txtAlert = "Vídeo finalizado.";
-				jQuery("#ddPosicion_" + iframeId).html("0 segundos");
+				txtAlert = finishedText;
+				jQuery("#ddPosicion_" + iframeId).html("0 " + secondsText);
 				break;
 			case YT.PlayerState.PLAYING:
 				var duracion = pl.getDuration();
 				if (duracion == 0)
 				{
-					jQuery("#ddDuracion_" + iframeId).html("Desconocida");
+					jQuery("#ddDuracion_" + iframeId).html(unknownText);
 				}
 				else
 				{
@@ -171,27 +171,27 @@ function agregaControlesAccesibles(pl, iframeId, titulo) {
 				{
 					jQuery(document).data("interval_" + iframeId, setInterval(function() { actualizaPosicion(pl, iframeId); }, 1000));
 				}
-				txtAlert = "Reproduciendo vídeo...";
+				txtAlert = playingText;
 				// btnBw30Secs.removeAttr("disabled");
 				// btnFw30Secs.removeAttr("disabled");
 				break;
 			case YT.PlayerState.PAUSED:
-				txtAlert = "Pausado.";
+				txtAlert = pausedText;
 				break;
 			case YT.PlayerState.BUFFERING:
-				txtAlert = "Cargando vídeo...";
+				txtAlert = loadingText;
 				break;
 		}
 		if (txtAlert != "") accessibleAlert(txtAlert);
 		switch (state) {
 			case -1: case 0: case 2:
-				txtBtnPlay = "Reproducir";
+				txtBtnPlay = playText;
 				break;
 			default:
-				txtBtnPlay = "Pausar";
+				txtBtnPlay = pauseText;
 				break;
 		}
-		jQuery("#btnPlay_" + iframeId).html(txtBtnPlay + agregaTitulo(titulo, 'el vídeo'));
+		jQuery("#btnPlay_" + iframeId).html(agregaTitulo(titulo, txtBtnPlay));
 	};
 	pl.addEventListener("onStateChange", "onPlayerStateChange_" + iframeId);
 	jQuery("button.btnPlayerControl").on("focus", function () { jQuery(this).parents(":eq(1)").removeClass("element-invisible"); });
@@ -200,27 +200,35 @@ function agregaControlesAccesibles(pl, iframeId, titulo) {
 	lnkUrl.on("blur", function () { jQuery(this).addClass("element-invisible"); });
 	btnPlay.on("click", function () {
 		var playerState = pl.getPlayerState();
-		if (playerState == 1) pl.pauseVideo();
-		else pl.playVideo();
+		if (playerState == 1)
+		{
+			pl.pauseVideo();
+			$(this).css("background", "url(img/ico_reproductor/play.jpg) no-repeat scroll center bottom #1B1B1B");
+		}
+		else
+		{
+			pl.playVideo();
+			$(this).css("background", "url(img/ico_reproductor/pause.jpg) no-repeat scroll center bottom #1B1B1B");			
+		}
 	});
 	btnMute.on("click", function () {
 		if (pl.isMuted()) {
-			accessibleAlert("Sonido activado.");
+			accessibleAlert(soundActivatedText);
 			pl.unMute();
 		}
 		else {
-			accessibleAlert("Sonido desactivado.");
+			accessibleAlert(soundDeactivatedText);
 			pl.mute();
 		}
 	});
 	btnVolumeUp.on("click", function () {
 		var vActual = pl.getVolume(), nuevoVolumen;
 		if (vActual >= 100) {
-			accessibleAlert("El volumen está al máximo.");
+			accessibleAlert(volumeMaxText);
 		}
 		else {
 			nuevoVolumen = vActual + (vActual + 5 > 100 ? (100 - vActual) : 5);
-			accessibleAlert("Volúmen ajustado al " + nuevoVolumen.toString() + "%.");
+			accessibleAlert(volumeAdjustText + " " + nuevoVolumen.toString() + "%.");
 			pl.setVolume(nuevoVolumen);
 		}
 	});
@@ -228,11 +236,11 @@ function agregaControlesAccesibles(pl, iframeId, titulo) {
 		var vActual = pl.getVolume();
 		var nuevoVolumen;
 		if (vActual <= 0) {
-			accessibleAlert("El volumen está al mínimo.");
+			accessibleAlert(volumeMinText);
 		}
 		else {
 			nuevoVolumen = vActual - (vActual - 5 < 0 ? vActual : 5)
-			accessibleAlert("Volumen ajustado al " + nuevoVolumen.toString() + "%.");
+			accessibleAlert(volumeAdjustText + " " + nuevoVolumen.toString() + "%.");
 			pl.setVolume(nuevoVolumen);
 		}
 	});
@@ -240,13 +248,13 @@ function agregaControlesAccesibles(pl, iframeId, titulo) {
 		var pos = pl.getCurrentTime(), duracion = pl.getDuration();
 		var nuevaPos = pos + 30 > duracion ? duracion : pos + 30;
 		pl.seekTo(nuevaPos, true);
-		accessibleAlert("Posición: " + getTiempo(pos + 30) + ".");
+		accessibleAlert(positionText + ": " + getTiempo(pos + 30) + ".");
 	});
 	btnBw30Secs.on("click", function () {
 		var pos = pl.getCurrentTime(), duracion = pl.getDuration();
 		var nuevaPos = (pos - 30 < 0 ? 0 :  pos - 30);
 		pl.seekTo(nuevaPos, true);
-		accessibleAlert("Posición: " + getTiempo(nuevaPos) + ".");
+		accessibleAlert(positionText + ": " + getTiempo(nuevaPos) + ".");
 	});
 }
 

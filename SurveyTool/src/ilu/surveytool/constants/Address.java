@@ -31,6 +31,7 @@ public class Address {
 		public final static String s_JS_CHART_GRAPHICS = "chart";
 		public final static String s_JS_ZERO_CLIPBOARD = "zeroClipboard";
 		public final static String s_JS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesAccesiblesYoutubeIframes";
+		public final static String s_JS_YOUTUBE_IFRAME_API = "youtubeIframe";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";

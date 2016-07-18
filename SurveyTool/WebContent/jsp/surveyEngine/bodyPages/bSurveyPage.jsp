@@ -12,10 +12,33 @@
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 				
-				Language lang = new Language(getServletContext().getRealPath("/")); 
-				lang.loadLanguage(Language.getLanguageRequest(request));
+				Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
 				%>	
-								
+				<script>
+				 var playText = "<%= lang.getContent("file.player.yt.button.play") %>";
+				 var muteText = "<%= lang.getContent("file.player.yt.button.mute") %>";
+				 var volDownText = "<%= lang.getContent("file.player.yt.button.volDown") %>";
+				 var volUpText = "<%= lang.getContent("file.player.yt.button.volUp") %>";
+				 var rewText = "<%= lang.getContent("file.player.yt.button.rew") %>";
+				 var fwdText = "<%= lang.getContent("file.player.yt.button.fwd") %>";
+				 var pauseText = "<%= lang.getContent("file.player.yt.button.pause") %>";
+				 var positionText = "<%= lang.getContent("file.player.yt.dt.position") %>";
+				 var secondsText = "<%= lang.getContent("file.player.yt.dd.seconds") %>";
+				 var durationText = "<%= lang.getContent("file.player.yt.dt.duration") %>";
+				 var unknownText = "<%= lang.getContent("file.player.yt.dd.unknown") %>";
+				 var skipVideoText = "<%= lang.getContent("file.player.yt.a.skip_video") %>";
+				 var watchYtText = "<%= lang.getContent("file.player.yt.a.watch_yt") %>";
+				 var openNewWindowText = "<%= lang.getContent("file.player.yt.a.open_new_window") %>";
+				 var finishedText = "<%= lang.getContent("file.player.yt.alert.video_finished") %>";
+				 var playingText = "<%= lang.getContent("file.player.yt.alert.playing") %>";
+				 var pausedText = "<%= lang.getContent("file.player.yt.alert.paused") %>";
+				 var loadingText = "<%= lang.getContent("file.player.yt.alert.loading") %>";
+				 var soundActivatedText = "<%= lang.getContent("file.player.yt.alert.sound_activated") %>";
+				 var soundDeactivatedText = "<%= lang.getContent("file.player.yt.alert.sound_deactivated") %>";
+				 var volumeMaxText = "<%= lang.getContent("file.player.yt.alert.volume_max") %>";
+				 var volumeAdjustText = "<%= lang.getContent("file.player.yt.alert.volume_adjust") %>";
+				 var volumeMinText = "<%= lang.getContent("file.player.yt.alert.volume_min") %>";
+				</script>
 				<div class="container-fluid">
 	  				<div class="title-content">
 	  					<%

@@ -71,6 +71,7 @@ public class survey extends HttpServlet {
 		
 		List<String> jsFiles = new ArrayList<>();
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
+		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 		request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 
 		List<String> cssFiles = new ArrayList<>();
