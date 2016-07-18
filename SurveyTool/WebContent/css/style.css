@@ -19,6 +19,7 @@ html {position: relative;
   min-height: 100%;}
 body {margin-bottom: 135px !important;}  
   
+.centered {margin: 0 auto;}
 .center {text-align: center;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}

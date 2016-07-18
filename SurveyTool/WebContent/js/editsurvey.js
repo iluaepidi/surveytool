@@ -3,6 +3,7 @@
  */
 var qtypeId;
 var numQuestions = 0;
+var currentElement;
 var currentAddNode;
 var currentQuestion = 0;
 var currentLanguage = "en";
@@ -86,11 +87,31 @@ $(function() {
 	});
 	
 	$('#page-items').on("click", '#editFile', function(){
-		console.log("editfile opening...");
-		$("#updateFile").attr("rid", JSON.parse($(this).attr("data-image")).rId);
-		$("#resourceTitle").val($(this).data("image").tittle);
-		$("#resourceAltText").val($(this).data("image").altText);
-		$("#imageFilePreview").attr("src",$(this).data("image").path);
+		currentElement = JSON.parse($(this).attr("data-image"));
+		console.log("editfile opening... " + JSON.stringify(currentElement));
+		$("#updateFile").attr("rid", currentElement.rId);
+		if(currentElement.rType === 'image')
+		{
+			console.log("Image");
+			$("#previewImage").removeClass("hidden");
+			$("#imageFilePreview").attr("src", currentElement.path);
+			$("#resourceAltText").removeClass("hidden");
+			$("#rAltText").val(currentElement.altText);
+			$("#previewVideo").addClass("hidden");
+			$("#resDescText").addClass("hidden");
+		}
+		else if(currentElement.rType === 'video')
+		{
+			console.log("Video");
+			$("#previewVideo").removeClass("hidden");
+			$("#resDescText").removeClass("hidden");
+			$("#reproductor_preview").attr("src", "https://www.youtube.com/embed/" + currentElement.path + "?enablejsapi=1");
+			$("#reproductor_preview").attr("data-title", currentElement.tittle);
+			$("#rDescText").val(currentElement.descText);
+			$("#previewImage").addClass("hidden");
+			$("#resourceAltText").addClass("hidden");
+		}		
+		$("#rTitle").val(currentElement.tittle);				
 		$("#updateFile").modal("show");
 	});
 	
