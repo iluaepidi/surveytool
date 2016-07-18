@@ -48,7 +48,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  				if(loginResp!=null){ %>
 	  				<ul class="nav navbar-nav navbar-right">
 			            <li class="dropdown">
-			                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<%= lang.getContent("header.hello") %>, <%=loginResp.getUserName()  %> <b class="caret"></b></a>
+			                <a href="#" class="dropdown-toggle paddingUserZone" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<%= lang.getContent("header.hello") %>, <%=loginResp.getUserName()  %> <b class="caret"></b></a>
 			                <ul class="dropdown-menu">
 			                    <li><a href="ProfileServlet?param=1"><%= lang.getContent("header.edit.profile") %></a></li>
 			                    <li class="divider"></li>

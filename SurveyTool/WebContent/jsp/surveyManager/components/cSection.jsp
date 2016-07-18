@@ -18,6 +18,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 
 
+
 							List<Section> sections = survey.getSections();
 							int i = 1;
 							for(Section section : sections)
@@ -42,7 +43,9 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 										</div>
 										</h3>
 										<div class="panel-section-buttons right">
-											<button class="btn-transparent" id="removeSection" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
+											<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+												<button class="btn-transparent" id="removeSection" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
+											<% } %>
 										</div>
 										<!-- <h3 class="panel-title"><%= lang.getContent("survey.edit.section.title") %></h3> -->
 									</div>
@@ -76,8 +79,12 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 						  											  							  					
 											</ul>
 											
-											<jsp:include page="../editQuestions/cAddMenu.jsp" />
-																
+												
+												
+												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+													<jsp:include page='../editQuestions/cAddMenu.jsp' />
+												<% } %>
+															
 										</li>	
 									<%
 									}

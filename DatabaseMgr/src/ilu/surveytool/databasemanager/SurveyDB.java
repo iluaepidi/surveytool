@@ -461,7 +461,8 @@ public class SurveyDB {
 	public int insertSurvey(int author, int project, int contentId, String isoNameDefaultLanguage) {
 		//System.out.println("inserUser");
 		int surveyId = 0;
-		int intLanguageDefault = this.getIdLanguage(isoNameDefaultLanguage);
+		LanguageDB language = new LanguageDB();
+		int intLanguageDefault = language.getIdLanguage(isoNameDefaultLanguage);
 		
 		
 		//int contentId = this.insertContentIndex();
@@ -592,33 +593,7 @@ public class SurveyDB {
 		return publicId;
 	}
 	
-	public int getIdLanguage(String isoLanguage)
-	{
-		int idLanguage = 1;
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		   
-		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_GET_IDLANGUEGE_FROM_ISONAME);			
-	   		pstm.setString(1, isoLanguage);
-	   		
-	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
-	   			idLanguage = rs.getInt("idLanguage");
-	   		}
-	   		
-	   } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, rs);
-		}
-		
-		return idLanguage;
-	}
+	
 	
 	public String getIsoLanguage(int idLanguage)
 	{

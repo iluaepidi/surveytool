@@ -164,6 +164,8 @@ lang.close();
     $(window).load(function() {
     	 $('[name="surveys-table_length"]').val("10");
     	 $('[name="surveys-table_length"]').change();
+    	 
+    	 $('#surveys-table_filter label').prepend("<i class='fa fa-search' aria-hidden='true'></i>&nbsp;");
     });
     
     

@@ -16,7 +16,7 @@
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();
 							  					String title = "";
-							  					if(!contents.isEmpty())
+							  					if(!contents.isEmpty() &&  contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!= null)
 							  					{
 							  						title = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  					}

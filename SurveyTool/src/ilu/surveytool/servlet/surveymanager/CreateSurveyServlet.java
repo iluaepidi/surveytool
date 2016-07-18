@@ -92,6 +92,7 @@ public class CreateSurveyServlet extends HttpServlet {
 				request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
 				request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+				request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
 			}
 			
 		}

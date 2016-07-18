@@ -4,18 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
 
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
-import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
-public class ProfileDB {
+public class LanguageDB {
 
-	public ProfileDB() {
+	public LanguageDB() {
 		super();
 	}
 	
@@ -40,61 +39,21 @@ public class ProfileDB {
 		 }
 	}
 	
-	/*
-	 * update
-	 */
 	
-	public boolean updatePassword(int userid, String username, String password, String email,String isoLanguage) {
-		boolean updated = false;
+	public HashMap<String,String> loadListLanguage(){
 		
-		int idLanguage = this.getIdLanguage(isoLanguage);
-		
-		if(!this.existsEmail(email,username)){
-			
-			//System.out.println("updateState");
-			
-			Connection con = this._openConnection();
-			PreparedStatement pstm = null;
-			   
-			try{
-			   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_USER_PASSWORD_AND_EMAIL);
-				pstm.setString(1, password);
-				pstm.setString(2, email);
-				pstm.setInt(3, idLanguage);
-				pstm.setInt(4, userid);
-			   		
-				int numUpdated = pstm.executeUpdate();
-				
-				if(numUpdated > 0) updated = true;
-						
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				this._closeConnections(con, pstm, null);
-			}
-		}
-		 
-		return updated;
-	}
-	
-	public boolean existsEmail(String email,String username)
-	{
-		boolean existemail = false;
+		HashMap<String,String> listlanguage=new HashMap<String, String>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE);			
-	   		pstm.setString(1, email);
-	   		pstm.setString(2, username);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LIST_LANGUAGES);	
 	   		
 	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
-	   			existemail = true;
+	   		while(rs.next()){
+	   			listlanguage.put(rs.getString(DBFieldNames.s_LANGUAGE_ISONAME), rs.getString(DBFieldNames.s_LANGUAGE_NAME));
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -104,7 +63,8 @@ public class ProfileDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return existemail;
+		return listlanguage;
+		
 	}
 	
 	public int getIdLanguage(String isoLanguage)

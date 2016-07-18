@@ -43,7 +43,8 @@ public class LoginDB {
 	{
 		LoginResponse response = new LoginResponse();
 		//Load list language
-		response.setListLanguage(loadListLanguage());
+		LanguageDB language = new LanguageDB();
+		response.setListLanguage(language.loadListLanguage());
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -81,31 +82,6 @@ public class LoginDB {
 		return response;
 	}
 	
-	public HashMap<String,String> loadListLanguage(){
-		
-		HashMap<String,String> listlanguage=new HashMap<String, String>();
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		   
-		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LIST_LANGUAGES);	
-	   		
-	   		rs = pstm.executeQuery();
-	   		while(rs.next()){
-	   			listlanguage.put(rs.getString(DBFieldNames.s_LANGUAGE_ISONAME), rs.getString(DBFieldNames.s_LANGUAGE_NAME));
-	   		}
-	   		
-	   } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, rs);
-		}
-		
-		return listlanguage;
-		
-	}
+	
 
 }

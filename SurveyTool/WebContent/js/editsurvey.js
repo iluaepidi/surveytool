@@ -225,7 +225,7 @@ $(function() {
 	        	action : "options",
 	        	resourceTitle: $('#resourceTitle').val(),
 	  			resourceAltText: $('#resourceAltText').val(),
-	  			mainVersion: currentLanguage,
+	  			mainVersion: $("#survey-language-version").val(),
 	  			rid: $('#rid').val()
 	  		}, function(res) {
 	  			$('#importFileForm')[0].reset();

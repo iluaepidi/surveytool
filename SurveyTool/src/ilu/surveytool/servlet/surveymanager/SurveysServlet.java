@@ -84,6 +84,12 @@ public class SurveysServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_PAGE_ID, pageId);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+			
+			if(language==null || language.equals(survey.getDefaultLanguage())){
+				request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
+			}else{
+				request.setAttribute(Attribute.s_ADD_QUESTIONS, false);
+			}
 		}
 		else
 		{
