@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Resource;
@@ -79,6 +80,32 @@ public class ResourceHandler {
 	{
 		ResourceDB resourceDB = new ResourceDB();
 		return resourceDB.updateResourceUrlPath(resourceId, urlPath);
+	}
+
+	public boolean updateContent(int resourceId, List<Content> contents)
+	{
+		boolean updated = false;
+				
+		ResourceDB resourceDB = new ResourceDB();
+		Resource resource = resourceDB.getResourceById(resourceId);
+		int contentId = resource.getContentId(); 
+		ContentDB contentDB = new ContentDB();
+		
+		for(Content content : contents)
+		{
+			if(contentDB.existContent(contentId, content.getLanguage(), content.getContentType()))
+			{
+				contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			}
+			else
+			{
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			}
+		}
+		
+		updated = true;
+		
+		return updated;
 	}
 	
 	public boolean removeResource(int resourceId)

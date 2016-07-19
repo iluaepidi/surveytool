@@ -13,6 +13,7 @@ public class Parameter {
 	public final static String s_ACTION = "action";
 	public final static String s_CALL_TEXT = "callText";
 	public final static String s_CID = "cid";
+	public final static String s_CONTENTS = "contents";
 	public final static String s_CONTENT_TYPE = "contentType";
 	public final static String s_DESCRIPTION = "description";
 	public final static String s_EXIST_POLLS = "existPolls";

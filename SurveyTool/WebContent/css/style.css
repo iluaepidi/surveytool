@@ -168,6 +168,7 @@ input[type="color"]:focus,
 .st-styles .btn-primary {background-color: #337AB7 !important;}
 .st-styles .btn-primary:hover,
 .st-styles .btn-primary:focus {background-color: #286090 !important;}
+.st-styles .btn-default {border-color: #737373 !important;}
 
 textarea {resize:none;
 	margin-top: 3px !important;}
@@ -342,6 +343,8 @@ footer {margin-top: 10px;
 	width: 60% !important;}
 .remove-win-dialog {margin: 14% auto !important;
 	width: 30% !important;}
+.import-file-win-dialog {margin: 14% auto !important;
+	width: 40% !important;}
 .remove-frame-buttons {width: 70%;
 	margin: 5px auto;}
 .btn-accept-remove-element {float:right;}
@@ -674,7 +677,7 @@ footer {margin-top: 10px;
 .question-frame-multimedia button {margin-left: 60px;}
 
 .resource-type-select {
-	width: 25% !important;
+	width: 35% !important;
 }
 
 .multimedia-item button {font-size: 1.3em;

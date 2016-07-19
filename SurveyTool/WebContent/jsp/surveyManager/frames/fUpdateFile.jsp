@@ -40,7 +40,7 @@ System.out.println("fUpdateFile opened");
 				</script>
 				
 				<div class="modal fade survey-win" id="updateFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog survey-win-dialog" role="document">
+					<div class="modal-dialog import-file-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -73,7 +73,8 @@ System.out.println("fUpdateFile opened");
 						        </div>
 			  					
 								<div class="center">
-									<button name="upload" id="btnUpdateFile" class="btn btn-primary"><%= lang.getContent("file.edit.change")%></button> 
+									<button name="upload" id="btnCancelUpdateFile" class="btn btn-default"><%= lang.getContent("button.cancel")%></button>
+									<button name="upload" id="btnUpdateFile" class="btn btn-primary"><%= lang.getContent("button.done")%></button> 
 								</div>				    			
 				    		</div>
 				    	</div>

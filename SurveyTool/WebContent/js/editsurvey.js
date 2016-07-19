@@ -443,33 +443,77 @@ $(function() {
 	$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
 		e.stopPropagation();		
 		var req = {};		
-		req.textTitle = $('#resourceTitle').val();
-		req.textDesc = $('#resourceAltText').val();
-		req.lan = currentLanguage;
-		req.rid = currentQuestion;	
-		$.ajax({ 
-			   type: "PUT",
-			   dataType: "text",
-			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/ResourceService/updateContent",
-			   data: JSON.stringify(req),
-			   success: function (data) {
-				   if(data == "true")
-				   {
-					   console.log("Update Resource: " + data);
-					   /*var qNode = $('li[qid=' + currentQuestion + ']');
-					   qNode.find('#question-frame-help').removeClass("hidden");
-					   qNode.find('#question-frame-help-text').html(req.text);
-					   $("#setHelpText").modal("hide");*/
-				   }
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-				   console.log(xhr.status);
-				   console.log(thrownError);
-				   console.log(xhr.responseText);
-				   console.log(xhr);
-			   }
-		});
+		req.contents = [];
+
+		var content = {};
+		
+		var changedTitle = '';
+		if($('#rTitle').val() != currentElement.tittle)
+		{
+			changedTitle = $('#rTitle').val();
+			content.contentType = "title";
+			content.text = changedTitle;
+			content.lan = currentLanguage;
+			currentElement.tittle = content.text;
+			req.contents.push(content);
+		}
+		
+		if(currentElement.rType === "image" && $('#rAltText').val() != currentElement.altText)
+		{
+			content = {};
+			content.contentType = "altText";
+			content.text = $('#rAltText').val();
+			content.lan = currentLanguage;
+			currentElement.altText = content.text
+			req.contents.push(content);
+		}
+		else if(currentElement.rType === "video" && $('#rDescText').val() != currentElement.descText)
+		{
+			content = {};
+			content.contentType = "description";
+			content.text = $('#rDescText').val();
+			content.lan = currentLanguage;
+			currentElement.descText = content.text
+			req.contents.push(content);
+		}
+		
+		if(req.contents.length > 0)
+		{
+			req.type = currentElement.rType;
+			req.rid = currentElement.rId;
+			
+			var serviceUrl = host + "/SurveyTool/api/ResourceService/updateContent";
+			
+			console.log("Resource update content: " + JSON.stringify(req));
+			
+			updateContent(req, serviceUrl);
+			
+			var multimediaElem = $('li[rid=' + currentElement.rId + ']').find('#editFile');
+			multimediaElem.attr('data-image', JSON.stringify(currentElement));
+			
+			if(changedTitle != '')
+			{
+				var fileName = multimediaElem.html().split('-')[1];
+				multimediaElem.html(changedTitle + " - " + fileName);
+			}
+			
+			
+		}		
+		
+		$("#previewVideo").addClass("hidden");
+		$("#resDescText").addClass("hidden");
+		$("#previewImage").addClass("hidden");
+		$("#resourceAltText").addClass("hidden");					
+		$("#updateFile").modal("hide");
+		
+	});
+	
+	$('#updateFilesSection').on("click", "#btnCancelUpdateFile", function(e){
+		$("#previewVideo").addClass("hidden");
+		$("#resDescText").addClass("hidden");
+		$("#previewImage").addClass("hidden");
+		$("#resourceAltText").addClass("hidden");					
+		$("#updateFile").modal("hide");		
 	});
 	
 	/*$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
