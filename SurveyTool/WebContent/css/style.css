@@ -4,10 +4,13 @@
 \*----------------------------------------------*/
 /**
 * GENERAL
+* ERROR
 * HEADER_PAGE
 * BODY_CONTENT
 * FOOTER
+* LOGIN
 * USER_PANEL_SURVEY
+* USER_PANEL_EDIT_SURVEY
 * POLLS
 * 
 */
@@ -194,8 +197,9 @@ h1 span{font-size: 0.6em;
 button span {margin-left: 5px;}
 
 .paddingUserZone{
-	padding: 40px 5px !important;
+	padding: 40px 15px !important;
 }
+.user-profile-list {margin-right: 25px !important;}
 /*----------------------------------------------*\
 		$BODY_CONTENT
 \*----------------------------------------------*/
@@ -303,7 +307,7 @@ footer {margin-top: 10px;
 	margin: 0 12%;
 	/*padding-top: 7%;*/}
 .surveys-create-button {text-align: right;
-	padding: 10px;}
+	padding: 20px 0;}
 .surveys-table {/*text-align: center;*/}
 .btn-pag a {height: 35px;}
 .btn-arrow {padding-top: 9px !important;}
@@ -401,6 +405,24 @@ footer {margin-top: 10px;
     border: 1px solid #B60000;}
 .btn-create-survey {margin-top: 10px;
 	height: 45px;width: 60%;}
+
+/* Search and pagination*/
+.dataTables_length label select,
+.dataTables_filter label input {display: inline-block;
+    width: auto;
+    vertical-align: middle;}
+.dataTables_filter label input {padding-right: 21px;}
+.dataTables_length label,
+.dataTables_filter label {font-weight: normal !important;}
+.dataTables_filter {text-align: right;
+	adding-right: 10px;}
+.dataTables_filter input {margin-left: 5px;}
+.dataTables_filter label i {position: absolute;
+    right: 23px;
+    top: 7px;}
+.dataTables_info {padding: 7px 0;}
+.dataTables_paginate {text-align: right;}
+
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY

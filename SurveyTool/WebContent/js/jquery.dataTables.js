@@ -2881,6 +2881,8 @@
 				400 :
 				0;
 	
+		
+		
 		var jqFilter = $('input', filter)
 			.val( previousSearch.sSearch )
 			.attr( 'placeholder', language.sSearchPlaceholder )

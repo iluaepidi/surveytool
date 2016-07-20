@@ -28,7 +28,26 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  					if(!surveys.isEmpty())
 			  					{
 			  					%>
-			  					<div class="surveys-table">
+			  					<!-- <div class="row">
+			  						<div class="col-sm-6">
+			  							<div class="dataTables_length" id="surveys-table_length">
+			  								<label>Show <select name="surveys-table_length" aria-controls="surveys-table" class="form-control input-sm">
+			  										<option value="10" selected>10</option>
+			  										<option value="25">25</option>
+			  										<option value="50">50</option>
+			  										<option value="100">100</option>
+			  									</select> entries</label>
+			  							</div>
+			  						</div>
+			  						<div class="col-sm-6">
+			  							<div id="surveys-table_filter" class="dataTables_filter">
+			  								<label>Search: <input type="search" id="table-search" class="form-control input-sm" placeholder="" aria-controls="surveys-table">
+			  								<i class='fa fa-search' aria-hidden='true'></i></label>
+			  							</div>
+			  						</div>
+			  					</div> -->
+			  						
+			  					<div class="surveys-table">			  					
 			  						<table class="table table-bordered" sumary="List of surveys where ..." id="surveys-table"  data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
 			  							<thead>
@@ -142,32 +161,24 @@ lang.close();
  
     $(document).ready(function() {
         
-    	//$('#surveys-table').DataTable();
-    	
-        $('#surveys-table').dataTable({
-        	"iDisplayLength": 25,
+    	var table = $('#surveys-table').dataTable({
+        	"iDisplayLength": 10,
         	"pagingType": "full_numbers",
             "scrollCollapse": false,
             "searching": true,
             "ordering": false,
+            "bLengthChange" : true,
             "language": {
             	"url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
             }
             
+        });        
+        
+    	table.on('draw.dt', function () {
+    		$('[name="surveys-table_length"]').val("10");
+    	 	$('#surveys-table_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
         });
-        
-        
        
     });
-    
-    
-    $(window).load(function() {
-    	 $('[name="surveys-table_length"]').val("10");
-    	 $('[name="surveys-table_length"]').change();
-    	 
-    	 $('#surveys-table_filter label').prepend("<i class='fa fa-search' aria-hidden='true'></i>&nbsp;");
-    });
-    
-    
     
 </script> 

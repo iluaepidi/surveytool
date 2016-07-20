@@ -46,7 +46,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  				<% HttpSession sessions = request.getSession(false); 
 	  				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
 	  				if(loginResp!=null){ %>
-	  				<ul class="nav navbar-nav navbar-right">
+	  				<ul class="nav navbar-nav navbar-right user-profile-list">
 			            <li class="dropdown">
 			                <a href="#" class="dropdown-toggle paddingUserZone" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<%= lang.getContent("header.hello") %>, <%=loginResp.getUserName()  %> <b class="caret"></b></a>
 			                <ul class="dropdown-menu">

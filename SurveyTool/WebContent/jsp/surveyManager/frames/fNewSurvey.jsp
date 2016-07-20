@@ -32,7 +32,7 @@ HttpSession sessions = request.getSession(false);
 												<label for="surveyTitle" class="col-sm-5 control-label left"><%= lang.getContent("survey.new.label.survey_title") %></label>
 											   	<div class="form-group" style="margin:0px;">
 													 <div class="col-sm-7">
-											     		<input type="text" class="form-control" id="surveyTitle" name="title" placeholder="<%= lang.getContent("placeholder.type_here") %>"  style="margin-left: 10px;">
+											     		<input type="text" class="form-control" id="surveyTitle" name="title" placeholder="<%= lang.getContent("placeholder.type_here") %>"  style="margin-left: 11px;">
 											     		<span  id='surveyTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
 				  										<span id='surveyTitle-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.title") %></span>
 											   		</div>
