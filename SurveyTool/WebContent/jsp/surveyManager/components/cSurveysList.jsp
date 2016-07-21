@@ -160,7 +160,7 @@ lang.close();
 <script> 
  
     $(document).ready(function() {
-        
+
     	var table = $('#surveys-table').dataTable({
         	"iDisplayLength": 10,
         	"pagingType": "full_numbers",
