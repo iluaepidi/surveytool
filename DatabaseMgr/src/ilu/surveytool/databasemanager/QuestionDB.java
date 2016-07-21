@@ -55,6 +55,7 @@ public class QuestionDB {
 	 * Selects
 	 */
 	
+
 	public List<Question> getQuestionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
@@ -68,6 +69,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, surveyId);
 	   		
 	   		rs = pstm.executeQuery();
+
 	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
@@ -93,6 +95,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, sectionId);
 	   		
 	   		rs = pstm.executeQuery();
+
 	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
@@ -714,6 +717,7 @@ public class QuestionDB {
 	   			question.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
 	   			OptionDB optionDB = new OptionDB();
+
 	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang, langdefault));
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();

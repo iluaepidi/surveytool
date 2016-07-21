@@ -142,7 +142,10 @@ public class ContentDB {
 	   			contents.put(contentType, new Content(contentId, language, 
 	   					rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
 	   					rs.getString(DBFieldNames.s_CONTENT_TEXT)));
+	   			
 	   		}
+	   		
+	   		
 	   		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

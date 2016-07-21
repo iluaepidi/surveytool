@@ -12,9 +12,9 @@ import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
-public class LoginDB {
+public class LanguageDB {
 
-	public LoginDB() {
+	public LanguageDB() {
 		super();
 	}
 	
@@ -39,38 +39,21 @@ public class LoginDB {
 		 }
 	}
 	
-	public LoginResponse login(Credentials credentials)
-	{
-		LoginResponse response = new LoginResponse();
-		//Load list language
-
-		LanguageDB language = new LanguageDB();
-		response.setListLanguage(language.loadListLanguage());
+	
+	public HashMap<String,String> loadListLanguage(){
+		
+		HashMap<String,String> listlanguage=new HashMap<String, String>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LOGIN);			
-	   		pstm.setString(1, credentials.getUsername());
-	   		pstm.setString(2, credentials.getUsername());
-	   		pstm.setString(3, credentials.getPassword());
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LIST_LANGUAGES);	
 	   		
 	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
-	   			response.setValid(true);
-	   			response.setUserId(rs.getInt(DBFieldNames.s_USERID));
-	   			response.setUserName(rs.getString(DBFieldNames.s_USERNAME));
-	   			response.setRol(rs.getString(DBFieldNames.s_ROLNAME));
-	   			response.setPassword(credentials.getPassword());
-	   			response.setEmail(rs.getString(DBFieldNames.s_USER_EMAIL));
-	   			response.setIsoLanguage(rs.getString(DBFieldNames.s_USER_ISO_LANGUAGE));
-	   		}
-	   		else
-	   		{
-	   			response.setErrorMsg("login.invalid");
+	   		while(rs.next()){
+	   			listlanguage.put(rs.getString(DBFieldNames.s_LANGUAGE_ISONAME), rs.getString(DBFieldNames.s_LANGUAGE_NAME));
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -80,7 +63,36 @@ public class LoginDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return response;
+		return listlanguage;
+		
+	}
+	
+	public int getIdLanguage(String isoLanguage)
+	{
+		int idLanguage = 1;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_GET_IDLANGUEGE_FROM_ISONAME);			
+	   		pstm.setString(1, isoLanguage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			idLanguage = rs.getInt("idLanguage");
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return idLanguage;
 	}
 
 }

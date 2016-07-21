@@ -14,6 +14,7 @@ public class Attribute {
 	public final static String s_CREDENTIALS = "credentials";
 	public final static String s_CURRENT_LANGUAGE = "currentLanguage";
 	public final static String s_LOGIN_RESPONSE = "loginResponse";
+	public final static String s_REGISTER_RESPONSE = "registerResponse";
 	public final static String s_POLLS = "polls";
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
 	public final static String s_SURVEYS = "surveys";
@@ -33,5 +34,6 @@ public class Attribute {
 	public final static String s_QUESTION = "question";
 	public final static String s_RESPONSES_INFO = "responsesInfo";
 	public final static String s_RESOURCE = "resource";
+	public final static String s_ADD_QUESTIONS = "addQuestions";
 
 }

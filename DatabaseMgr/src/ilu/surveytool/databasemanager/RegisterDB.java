@@ -44,8 +44,9 @@ public class RegisterDB {
 	{
 		RegisterResponse response = new RegisterResponse();
 		
-		
-		int idLanguage = this.getIdLanguage(registerResponse.getIsoLanguage());
+
+		LanguageDB language = new LanguageDB();
+		int idLanguage = language.getIdLanguage(registerResponse.getIsoLanguage());
 		
 		//comprobar que no existe ese username
 		if(!this.existsUsername(registerResponse.getUserName())){
@@ -153,36 +154,6 @@ public class RegisterDB {
 		}
 		
 		return existemail;
-	}
-	
-	
-	public int getIdLanguage(String isoLanguage)
-	{
-		int idLanguage = 1;
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		   
-		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_GET_IDLANGUEGE_FROM_ISONAME);			
-	   		pstm.setString(1, isoLanguage);
-	   		
-	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
-	   			idLanguage = rs.getInt("idLanguage");
-	   		}
-	   		
-	   } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, rs);
-		}
-		
-		return idLanguage;
-	}
-	
+	}		
 
 }

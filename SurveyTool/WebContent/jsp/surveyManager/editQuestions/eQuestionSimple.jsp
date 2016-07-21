@@ -22,7 +22,7 @@
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
 											<jsp:include page="eqComponents/eqHead.jsp" />
-											
+					
 											<div class="panel-body question-options">
 							  							<div class="col-md-1">
 								  							<label class="type-tittle" for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							

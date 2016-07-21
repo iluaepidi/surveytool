@@ -7,6 +7,7 @@
 		<link href="css/style.css" rel="stylesheet" media="screen">
 		<link href="css/bootstrap-accessibility.css" rel="stylesheet" media="screen">
 		<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+		<link href="css/jquery.dataTables.min.css" rel="stylesheet" media="screen">
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
 		
 		

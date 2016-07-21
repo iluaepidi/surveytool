@@ -1,6 +1,6 @@
 package ilu.userpanel.accesscontrol;
 
-import ilu.surveytool.databasemanager.ProfileDB;
+import ilu.surveytool.databasemanager.UserDB;
 import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 
 /**
@@ -22,7 +22,9 @@ public class Profile {
 	 */
 	public boolean updateUser(RegisterResponse registerResponse)
 	{
-		ProfileDB profileDB = new ProfileDB();
+
+		UserDB profileDB = new UserDB();
+
 		return profileDB.updatePassword(registerResponse.getUserId(),registerResponse.getUserName(),registerResponse.getPassword(),registerResponse.getEmail(),registerResponse.getIsoLanguage());
 		
 	}

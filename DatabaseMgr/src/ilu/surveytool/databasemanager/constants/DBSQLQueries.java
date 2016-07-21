@@ -137,6 +137,8 @@ public class DBSQLQueries {
 		public final static String s_GET_ISOLANGUEGE_FROM_IDLANGUAGE = "SELECT isoName FROM surveytool.language WHERE idLanguage = ?";
 		public final static String s_SELECT_LIST_LANGUAGES = "SELECT name,isoName FROM surveytool.language";
 				
+		//Register
+		
 		//Question
 		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.index, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.questionnaire s "
@@ -194,13 +196,14 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
+
 		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
 				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
-						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
+						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
-						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";		
+						+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? ";
 		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "inner join surveytool.content c on c.idContent = q.idContent "

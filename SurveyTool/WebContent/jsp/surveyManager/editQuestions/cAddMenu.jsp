@@ -4,6 +4,7 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+
 %>
 										<div class="add-menu-frame" id="add-menu-frame">
 				  							<div class="btn-add-element">
@@ -19,5 +20,6 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				  							</div>  							
 				  						</div>
 <%
+
 lang.close();
 %>

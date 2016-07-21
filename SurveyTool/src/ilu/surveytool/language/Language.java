@@ -96,7 +96,7 @@ public class Language {
 		if(langobj == null)
 		{
 			String langReq = request.getHeader("Accept-Language").split(";")[0].split(",")[0];
-			System.out.println("Language: " + langReq);
+			//System.out.println("Language: " + langReq);
 			
 			if(langReq.contains("es")){ language = "es";}
 			else if(langReq.contains("en")){ language = "en";}	

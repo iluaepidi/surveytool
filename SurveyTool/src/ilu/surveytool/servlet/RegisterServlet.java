@@ -22,7 +22,7 @@ import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.userpanel.accesscontrol.Login;
-//Temp import ilu.userpanel.accesscontrol.Register;
+import ilu.userpanel.accesscontrol.Register;
 
 /**
  * Servlet implementation class LoginServlet
@@ -66,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		String langReq = Language.getLanguageRequest(request);
 		
-		/*Temp Register registerHandler = new Register();
+		Register registerHandler = new Register();
 		RegisterResponse registerReponse = new RegisterResponse();
 		registerReponse.setUserName(request.getParameter(Parameter.s_USERNAME));
 		registerReponse.setPassword(request.getParameter(Parameter.s_PASSWORD));
@@ -100,7 +100,7 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_REGISTER_RESPONSE, regResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
-		}*/
+		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		

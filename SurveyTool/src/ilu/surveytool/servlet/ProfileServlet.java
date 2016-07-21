@@ -18,7 +18,7 @@ import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.userpanel.accesscontrol.Login;
 import ilu.userpanel.accesscontrol.Profile;
-//Temp import ilu.userpanel.accesscontrol.Register;
+import ilu.userpanel.accesscontrol.Register;
 
 /**
  * Servlet implementation class ProfileServlet
@@ -87,7 +87,7 @@ public class ProfileServlet extends HttpServlet {
 		
 		
 		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
-		//Temp request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_PROFILE));
+		request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_PROFILE));
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		
 	}

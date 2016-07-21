@@ -14,17 +14,20 @@
     								int questionId = question.getQuestionId();
     								List<Resource> resources = question.getResources();
 
+
     								String title = "";
     								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
     									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
     								}
     								
     								Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
+
     								
     								%>
 										<div class="form-question" id="form-question">
 											<fieldset>
 												<legend>
+
 													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= title %>													
 
 												</legend>
@@ -39,6 +42,7 @@
 	
 												<jsp:include page="fqComponents/fqResources.jsp" />
 												
+
 												<div class="form-question-content">
 													<div class="likert-options">
 													 	<div class="likert-options-frame">

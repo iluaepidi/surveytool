@@ -65,11 +65,13 @@ public class CreateSurveyServlet extends HttpServlet {
 		{
 			Survey survey = new Survey();
 			this.language = request.getParameter(Parameter.s_DEFAULT_LANGUAGE);
+			survey.setDefaultLanguage(this.language);
 			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_TITLE)));
 			survey.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(Parameter.s_DESCRIPTION)));
 			survey.setProject(request.getParameter(Parameter.s_PROJECT));
-			survey.setDefaultLanguage(request.getParameter(Parameter.s_DEFAULT_LANGUAGE));
 			survey.setAuthor(userSessionInfo.getUserId());
+			
+			System.out.println("Survey: " + survey.toString());
 			
 			SurveysHandler surveysHandler = new SurveysHandler();
 			int surveyId = surveysHandler.createSurvey(survey);

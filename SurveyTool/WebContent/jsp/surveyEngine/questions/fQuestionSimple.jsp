@@ -28,6 +28,7 @@
 											<fieldset>
 												<legend>
 
+
 													<%= lang.getContent("survey_engine.question.title") %> <%= index %>. <%= title %>													
 
 												</legend>
@@ -42,6 +43,7 @@
 												
 												<jsp:include page="fqComponents/fqResources.jsp" />
 												
+
 												<div class="form-question-content">
 																			  					
 												<%

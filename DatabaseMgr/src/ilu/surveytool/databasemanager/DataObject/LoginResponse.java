@@ -13,7 +13,7 @@ public class LoginResponse {
 	private String email;
 	private String isoLanguage;
 	private HashMap<String, String> listLanguage;
-	
+
 	public LoginResponse() {
 		super();
 	}
@@ -104,5 +104,5 @@ public class LoginResponse {
 	public void setListLanguage(HashMap<String, String> listLanguage) {
 		this.listLanguage = listLanguage;
 	}
-	
+
 }
