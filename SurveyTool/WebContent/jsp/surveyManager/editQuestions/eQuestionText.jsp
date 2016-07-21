@@ -5,10 +5,17 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="ilu.surveytool.language.Language"%>
     
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
+    								
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage(Language.getLanguageRequest(request));
     								%>
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
@@ -21,12 +28,12 @@
 							  					<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					
 							  					<div class="question-frame">
-							  						<h4>Options</h4>
+							  						<h4><%= lang.getContent("survey.type.options") %></h4>
 							  						<div class="row">
 							  							<div class="col-md-4">
-								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
+								  							<label for="type-question-<%= question.getIndex() %>"><%= lang.getContent("survey.type.type") %></label>
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
-															  	<option value="ls" selected>Text</option>
+															  	<option value="ls" selected><%= lang.getContent("survey.type.text") %></option>
 															  	<!-- <option value="ls">Likert scale</option>
 															    <option value="sim">Simple</option>
 															    <option value="mul">Multiple</option>
@@ -34,8 +41,8 @@
 															</select>
 														</div>
 														<div class="col-md-8">
-															 <label for="example-<%= question.getIndex() %>">Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
-														     <textarea class="form-control" id="example-<%= question.getIndex() %>" rows="5" placeholder="Type here_"></textarea>
+															 <label for="example-<%= question.getIndex() %>"><%= lang.getContent("survey.type.example") %> <%= title %></label>
+														     <textarea class="form-control" id="example-<%= question.getIndex() %>" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 														</div>													 
 							  						</div>						  						
 							  					</div>

@@ -3,6 +3,7 @@ package ilu.surveytool.servlet.surveymanager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -160,11 +161,14 @@ public class ImportFileServlet extends HttpServlet {
 		    System.out.println("RootPath: " + rootPath);
 		    Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
 		    Files.copy(fileContent, fpath);
-		} catch (IOException e) {
+		} catch (FileAlreadyExistsException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			index++;
 			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 		return fileNameFinal;
 	}

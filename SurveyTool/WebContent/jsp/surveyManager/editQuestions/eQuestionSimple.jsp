@@ -5,11 +5,18 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
+<%@page import="ilu.surveytool.language.Language"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     								<%
     								Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-    								String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								String title = "";
+    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+    								}
+    								
+    								Language lang = new Language(getServletContext().getRealPath("/")); 
+    								lang.loadLanguage(Language.getLanguageRequest(request));
     								%>
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
@@ -22,31 +29,31 @@
 							  					<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					
 							  					<div class="question-frame">
-							  						<h4>Options</h4>
+							  						<h4><%= lang.getContent("survey.type.options") %></h4>
 							  						<div class="row">
 							  							<div class="col-md-4">
-								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
+								  							<label for="type-question-<%= question.getIndex() %>"><%= lang.getContent("survey.type.type") %></label>
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<!-- <option value="tx">Text</option>
 															  	<option value="ls">Likert scale</option> -->
-															    <option value="sim" selected>Simple</option>
+															    <option value="sim" selected><%= lang.getContent("survey.type.simple") %></option>
 															    <!-- <option value="mul">Multiple</option>
 																<option value="ma">Matrix</option> -->
 															</select>
 														</div>
 														<fieldset class="col-md-8">
-															 <legend>Example Q.1 <%= question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></legend>
+															 <legend><%= lang.getContent("survey.type.example") %> <%= title %></legend>
 															 <ul>
 															 	<li class="radio">
 																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-1" value="option1" checked>
 																  <label for="example-<%= question.getIndex() %>-1" id="optionRadioLabel1">
-																    Option 1
+																    <%= lang.getContent("survey.type.option") %> 1
 																  </label>
 																</li>
 																<li class="radio">
 																  <input type="radio" name="exampleOptionsRadios" id="example-<%= question.getIndex() %>-2" value="option2">
 																  <label for="example-<%= question.getIndex() %>-2" id="optionRadioLabel2">
-																    Option 2
+																    <%= lang.getContent("survey.type.option") %> 2
 																  </label>
 																</li>
 															 </ul>

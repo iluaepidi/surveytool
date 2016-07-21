@@ -129,6 +129,13 @@ input[type="color"]:focus,
 
 textarea {resize:none;
 	margin-top: 3px !important;}
+	
+.profileLabel{
+	padding-top: 5px;
+	width: 33% !important;
+	text-align: right !important;
+	
+}
 
 
 /*----------------------------------------------*\
@@ -143,7 +150,9 @@ textarea {resize:none;
 	width: 120px;
 	position: absolute;
 	right: -130px;
-    top: 26px;}
+    top: 26px;
+    z-index: 999;}
+
 .error:before{content: '';
 	border-top: 8px solid transparent;
 	border-bottom: 8px solid transparent;
@@ -153,7 +162,15 @@ textarea {resize:none;
 	position: absolute;
 	top: 5px;}
 
-
+.error-profile{background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	width: 120px;
+	position: absolute;
+	right: -130px;
+    top: 0px;}
 /*----------------------------------------------*\
 		$HEADER_PAGE
 \*----------------------------------------------*/
@@ -168,14 +185,14 @@ h1 {float: left;
 	margin-top: 5px;
     margin-bottom: 5px;
     text-align: center;}
-h1 img {width: 125px;
+h1 img {width: 90px;
 	margin-right: 20px;}
 h1 span{font-size: 0.6em;
     position: absolute;
     top: 73px;
     left: 169px;}
 .logo {float:left;}
-.title-header {margin-top: 28px;}
+.title-header {margin-top: 14px;}
 .title-header p {font-size: 0.5em;}
 .header-buttons {float:right;
 	margin-top: 33px;
@@ -183,6 +200,9 @@ h1 span{font-size: 0.6em;
 .header-buttons a {margin-left: 35px;}
 button span {margin-left: 5px;}
 
+.paddingUserZone{
+	padding: 40px 5px !important;
+}
 /*----------------------------------------------*\
 		$BODY_CONTENT
 \*----------------------------------------------*/
@@ -247,6 +267,16 @@ footer {margin-top: 10px;
 .login-frame form h3 {margin: 20px 0px;}
 .form-group label {width: 100%;}
 .login-button {margin-bottom: 6px !important;}
+
+.register-frame {width: 30%;
+    margin-top: 30px;display:none;}
+.register-frame form {min-width: 250px;
+    width: 85%;
+    border: 1px solid #e0e0e0;
+    background-color: #fbfbfb;
+    padding: 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
+.register-frame form h3 {margin: 20px 0px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_SURVEY
@@ -376,8 +406,8 @@ footer {margin-top: 10px;
 .circle-red {background-color: #B60000;
     color: #fff;
     border: 1px solid #B60000;}
-.btn-create-survey {margin-top: 33px;
-	height: 45px;}
+.btn-create-survey {margin-top: 10px;
+	height: 45px;width: 60%;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
@@ -412,7 +442,8 @@ footer {margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    text-align: center;}
+    text-align: center;
+    min-height: 55px;}
 
 .edit-survey-head{margin: 10px auto;
     width: 70%;
@@ -428,7 +459,7 @@ footer {margin-top: 10px;
 .survey-info-title {font-size: 1.5em;
     border: none;
     margin: 0 auto;
-    width: 42%;
+    width: 100%;
     text-align: center;}
     
 .survey-info-project {float:right;
@@ -513,13 +544,17 @@ footer {margin-top: 10px;
     float: left;
     width: 70%;}
 .panel-heading .panel-section-buttons button {margin: 0px 5px;}
-.survey-section-title-unselected {border:none;
+.survey-section-title-unselected {
+	border:none;
 	background-color: transparent;
 	width: 100%;
 	height: 26px;}
 .survey-section-title-selected, 
 .survey-section-title-unselected:hover, 
-.survey-section-title-unselected:focus {border:none;
+.survey-section-title-unselected:focus {
+	border:none;
+	border:2px solid !important;
+	border-color:#23527C !important;
 	background-color: #fff;
 	color: #000;
 	width: 100%;
@@ -679,6 +714,11 @@ footer {margin-top: 10px;
 	margin-bottom: 10px;}
 .previewFileUpliaded img{max-width: 60%}
 
+.widthTitleSurveyCollapsed{
+	float: left;
+	width: 92%;
+}
+
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
 \*----------------------------------------------*/
@@ -728,3 +768,8 @@ footer {margin-top: 10px;
     padding: 15px;
     width: 475px;
     margin: 160px auto;}
+    
+    
+
+
+

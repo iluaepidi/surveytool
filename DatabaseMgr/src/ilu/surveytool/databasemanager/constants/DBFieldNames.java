@@ -26,6 +26,7 @@ public class DBFieldNames {
 		
 	//language
 		public final static String s_LANGUAGE_ISONAME = "isoName";
+		public final static String s_LANGUAGE_NAME = "name";
 		
 	//option
 		public final static String s_OPTIONID = "idOption";
@@ -66,6 +67,7 @@ public class DBFieldNames {
 		public final static String s_DEADLINE_DATE = "deadLineDate";
 		public final static String s_PUBLIC_ID = "publicId";
 		public final static String s_AUTHOR = "author";
+		public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
 		
 	//resources
 		public final static String s_RESOURCEID = "idResoruces";
@@ -83,5 +85,6 @@ public class DBFieldNames {
 		public final static String s_USERID = "idUser";
 		public final static String s_USERNAME = "username";
 		public final static String s_USER_EMAIL = "email";
+		public final static String s_USER_ISO_LANGUAGE = "isoName";
 
 }

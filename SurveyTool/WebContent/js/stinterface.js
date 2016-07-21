@@ -154,7 +154,8 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item">' +
 							//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 							'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-							'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+							//'<input type="text" class="option-title form-control fleft" index="' + index + '" placeholder="Option ' + index + '" autofocus/> ' +
+							'<div class="col-sm-8"><div class="form-group" style="margin:0px;"><input type="text" id="option' + index + '" class="form-control fleft" index="' + index + '" placeholder="'+textOption+' ' + index + '" style="width: 100%; !important;"/><span  id="option' + index + '-feedback" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true" style="color:#A94442;right: 20px;"></span><span  id="option' + index + '-error" class="error hidden" style="top: 0px;right: -180px;">'+textErrorPollOption+'</span></div></div>'+
 							'<div class="option-icons fleft"> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -163,6 +164,8 @@ $(function() {
 						'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+		
+		
 	});
 	
 	$('#option-list').on("click", "#remove-option-poll", function(e){
@@ -193,47 +196,91 @@ $(function() {
 	});
 	
 	$('#btnCreateNewPoll').click(function(){
-		var pollOptions = [];
-		var existPolls = 'false';
-		if($('#poll-table').length)
-		{
-			existPolls = 'true';
-			console.log("Exist polls: " + existPolls);
+		var valid = true;
+		if($('#pollTitle').val() == ""){
+			valid = false;
+			showFieldError($('#pollTitle'));
+		}else{
+			hideFieldError($('#pollTitle'));
 		}
 		
-		$('li[id=option-item]').each(function (i, elem)
-		{
-			var option = {};
-			var input = $(elem).find('input');
-			option.title = input.val();
-			option.index = input.attr('index');
-			pollOptions.push(option);
-		});
+		if($('#pollProject').val() == ""){
+			valid = false;
+			showFieldError($('#pollProject'));
+		}else{
+			hideFieldError($('#pollProject'));
+		}
 		
-		$.post('CreatePollServlet', {
-        	title : $('#pollTitle').val(),
-        	project: $('#pollProject').val(),
-        	qstatement: $('#qstatement').val(),
-  			options: JSON.stringify(pollOptions),
-  			ackText: $('#ackText').val(),
-  			callText: $('#pollCallText').val(),
-  			linkLabel: $('#pollLinkLabel').val(),
-  			linkUrl: $('#pollLinkUrl').val(),
-  			existPolls: existPolls
-  		}, function(res) {
-  			console.log('create poll response: ' + res);
-  			$('#newPollForm')[0].reset();
-  			$("#newPollModal").modal("hide");
-  			if(existPolls === 'false')
-  			{
-  				$('#no-polls-msg').after(res);
-  				$('#no-polls-msg').remove();
-  			}
-  			else
-  			{
-  				$('#poll-table').find('tbody').append(res);
-  			}
-  		});
+		if($('#qstatement').val() == ""){
+			valid = false;
+			showFieldError($('#qstatement'));
+		}else{
+			hideFieldError($('#qstatement'));
+		}
+		
+		
+		var option=1;
+		while($('#option'+option)!="undefined" && $('#option'+option).length>0){
+			
+			if($('#option'+option).val() == ""){
+				valid = false;
+				showFieldError($('#option'+option));
+			}else{
+				hideFieldError($('#option'+option));
+			}
+			
+			option++;
+		}
+		
+		
+		
+		if(valid){
+		
+			var pollOptions = [];
+			var existPolls = 'false';
+			if($('#poll-table').length)
+			{
+				existPolls = 'true';
+				console.log("Exist polls: " + existPolls);
+			}
+			
+			$('li[id=option-item]').each(function (i, elem)
+			{
+				var option = {};
+				var input = $(elem).find('input');
+				option.title = input.val();
+				option.index = input.attr('index');
+				pollOptions.push(option);
+			});
+			
+			$.post('CreatePollServlet', {
+	        	title : $('#pollTitle').val(),
+	        	project: $('#pollProject').val(),
+	        	qstatement: $('#qstatement').val(),
+	  			options: JSON.stringify(pollOptions),
+	  			ackText: $('#ackText').val(),
+	  			callText: $('#pollCallText').val(),
+	  			linkLabel: $('#pollLinkLabel').val(),
+	  			linkUrl: $('#pollLinkUrl').val(),
+	  			existPolls: existPolls
+	  		}, function(res) {
+	  			console.log('create poll response: ' + res);
+	  			$('#newPollForm')[0].reset();
+	  			$("#newPollModal").modal("hide");
+	  			if(existPolls === 'false')
+	  			{
+	  				$('#no-polls-msg').after(res);
+	  				$('#no-polls-msg').remove();
+	  			}
+	  			else
+	  			{
+	  				$('#poll-table').find('tbody').append(res);
+	  			}
+	  		});
+
+		}else{
+			//$('#newPollForm').validator();
+		}
 	});
 	
 });
@@ -252,20 +299,24 @@ function displaySurveyInfo(node)
 	$('.display-default-arrow i').prop("class", "fa fa-caret-down fa-2x");
 	$('.display-default-arrow').css("padding-top", "15px");
 	$('#display-survey-settings').attr('display', 'true');
+	$('#survey-div-title').css('width', '42%');
 	//$('#survey-info').attr('id', 'survey-info-displayed');
 }
 
 function hideSurveyInfo(node)
 {
-	$('.survey-info-title').css("border-bottom", "none");
-	$('.survey-info-project').css("display", "none");
-	$('.survey-info-description').css("display", "none");
-	$('.survey-info-url').css("display", "none");
-	$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
-	$('.display-default-arrow').css("padding-top", "0px");
-	currentFrameActivate = "";
-	$('#display-survey-settings').attr('display', 'false');
-	surveyInfoOpen = false;
+	if($('#surveyProject-error').attr("class")!="error"){
+		$('.survey-info-title').css("border-bottom", "none");
+		$('.survey-info-project').css("display", "none");
+		$('.survey-info-description').css("display", "none");
+		$('.survey-info-url').css("display", "none");
+		$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
+		$('.display-default-arrow').css("padding-top", "0px");
+		currentFrameActivate = "";
+		$('#display-survey-settings').attr('display', 'false');
+		$('#survey-div-title').css('width', '92%');
+		surveyInfoOpen = false;
+	}
 	//$('#survey-info-displayed').attr('id', 'survey-info');
 }
 
@@ -287,8 +338,14 @@ function bodyClick()
 		}
 		else
 		{
-			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected");
-			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-unselected");
+			if($('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title-error').is(":hidden")){
+				$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected");
+			}
+			//if($('#' + currentFrameActivate + ' .panel-heading h3 .error').closest('#survey-question-title').is(":hidden")){
+				//$('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-unselected");
+			//}
+			//alert($('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').closest('#panel-question1').attr('qid'));
+			
 			$('#' + currentFrameActivate + ' .add-menu').css("display", "none");
 			//$('#' + currentFrameActivate + ' .btn-add').prop("class", "btn-add col-sm-12");
 		}
@@ -296,3 +353,19 @@ function bodyClick()
 		currentFrameActivate = "";
 	}
 }
+
+
+function showHideRegister(register){
+	if(register==true){
+		$('#registerDivForm').show();
+		$('#loginDivForm').hide();
+	}else{
+		$('#registerDivForm').hide();
+		$('#loginDivForm').show();
+	}
+	
+	
+	
+}
+
+

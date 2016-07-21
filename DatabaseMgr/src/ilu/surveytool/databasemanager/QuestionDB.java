@@ -53,7 +53,7 @@ public class QuestionDB {
 	 * Selects
 	 */
 	
-	public List<Question> getQuestionsBySurveyId(int surveyId, String lang)
+	public List<Question> getQuestionsBySurveyId(int surveyId, String lang,String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -66,7 +66,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, surveyId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang,langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +78,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public List<Question> getQuestionsBySectionId(int sectionId, String lang)
+	public List<Question> getQuestionsBySectionId(int sectionId, String lang,String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -91,7 +91,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, sectionId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang,langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,7 +103,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public List<Question> getQuestionsByPageId(int pageId, String lang)
+	public List<Question> getQuestionsByPageId(int pageId, String lang,String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -116,7 +116,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionList(rs, lang);
+	   		questions = this._getQuestionList(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -145,7 +145,7 @@ public class QuestionDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -158,7 +158,7 @@ public class QuestionDB {
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
 	   			
 	   			OptionDB optionDB = new OptionDB();
-	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang,null));
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));
@@ -577,7 +577,7 @@ public class QuestionDB {
 		return maxMin;
 	}
 	
-	private List<Question> _getQuestionList(ResultSet rs, String lang)
+	private List<Question> _getQuestionList(ResultSet rs, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -587,7 +587,7 @@ public class QuestionDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();	   			
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,langdefault);
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -602,7 +602,7 @@ public class QuestionDB {
 	   			question.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
 	   			OptionDB optionDB = new OptionDB();
-	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang));
+	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang,langdefault));
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.setResources(resourceDB.getResourcesByQuestionId(question.getQuestionId(), lang));
