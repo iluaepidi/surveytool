@@ -50,7 +50,7 @@
 
 			            <!-- Text input-->
 			            <div class="form-group">
-			                <label class="col-md-4 control-label" for="usernameprofile" style="width: 33%;text-align: right;"><%= lang.getContent("profile.username") %></label>  
+			                <label class="col-md-4 control-label profileLabel" for="usernameprofile"><%= lang.getContent("profile.username") %></label>  
 			                <div class="col-md-4">
 			                    <input id="usernameprofile" name="<%= Parameter.s_USERNAME %>" type="text" placeholder="" readonly="yes" class="form-control input-md" value="<%=loginResp.getUserName() %>">
 			                </div>
@@ -58,7 +58,7 @@
 			            
 			              <!-- Textarea -->
 			            <div class="form-group" style="margin-top: 50px;">
-			                <label class="col-md-4 control-label" for="descripcion" style="width: 33%;text-align: right;"><%= lang.getContent("profile.email") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.email") %></label>
 			                <div class="col-md-4"> 
 			                	<div class="form-group">                    
 			                    	<input id="email" name="<%= Parameter.s_EMAIL %>" type="text" placeholder="" class="form-control" value="<%=loginResp.getEmail() %>">
@@ -71,7 +71,7 @@
 			
 			            <!-- Textarea -->
 			            <div class="form-group" style="margin-top: 100px;">
-			                <label class="col-md-4 control-label" for="descripcion" style="width: 33%;text-align: right;"><%= lang.getContent("profile.password") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.password") %></label>
 			                <div class="col-md-4">
 			                	<div class="form-group">                      
 				                    <input id="password" name="<%= Parameter.s_PASSWORD %>" type="password" placeholder="" class="form-control input-md" value="<%=loginResp.getPassword() %>">
@@ -82,7 +82,7 @@
 			            </div>
 			            
 			           <div class="form-group" style="margin-top: 150px;">
-			                <label class="col-md-4 control-label" for="descripcion" style="width: 33%;text-align: right;"><%= lang.getContent("profile.repeat.password") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.repeat.password") %></label>
 			                <div class="col-md-4">     
 			                	<div class="form-group">                   
 			                    	<input id="repassword" name="<%= Parameter.s_REPASSWORD %>" type="password" placeholder="" class="form-control input-md" value="<%=loginResp.getPassword() %>">
@@ -93,7 +93,7 @@
 			            </div>
 			                
 			           <div class="form-group" style="margin-top: 200px;">
-			                <label class="col-md-4 control-label" for="language" style="width: 33%;text-align: right;"><%= lang.getContent("profile.select.language") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="language"><%= lang.getContent("profile.select.language") %></label>
 			                <div class="col-md-4">     
 			                	<div class="form-group">                   
 			                    	<select id="language" name="language" class="form-control">

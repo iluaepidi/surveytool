@@ -299,12 +299,13 @@ function displaySurveyInfo(node)
 	$('.display-default-arrow i').prop("class", "fa fa-caret-down fa-2x");
 	$('.display-default-arrow').css("padding-top", "15px");
 	$('#display-survey-settings').attr('display', 'true');
+	$('#survey-div-title').css('width', '42%');
 	//$('#survey-info').attr('id', 'survey-info-displayed');
 }
 
 function hideSurveyInfo(node)
 {
-	if($('#surveyProject-error').is(':hidden')){
+	if($('#surveyProject-error').attr("class")!="error"){
 		$('.survey-info-title').css("border-bottom", "none");
 		$('.survey-info-project').css("display", "none");
 		$('.survey-info-description').css("display", "none");
@@ -313,6 +314,7 @@ function hideSurveyInfo(node)
 		$('.display-default-arrow').css("padding-top", "0px");
 		currentFrameActivate = "";
 		$('#display-survey-settings').attr('display', 'false');
+		$('#survey-div-title').css('width', '92%');
 		surveyInfoOpen = false;
 	}
 	//$('#survey-info-displayed').attr('id', 'survey-info');
@@ -336,8 +338,14 @@ function bodyClick()
 		}
 		else
 		{
-			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected");
-			$('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-unselected");
+			if($('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title-error').is(":hidden")){
+				$('#' + currentFrameActivate + ' .panel-heading h3 #survey-section-title').prop("class", "survey-section-title-unselected");
+			}
+			//if($('#' + currentFrameActivate + ' .panel-heading h3 .error').closest('#survey-question-title').is(":hidden")){
+				//$('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').prop("class", "survey-section-title-unselected");
+			//}
+			//alert($('#' + currentFrameActivate + ' .panel-heading h3 #survey-question-title').closest('#panel-question1').attr('qid'));
+			
 			$('#' + currentFrameActivate + ' .add-menu').css("display", "none");
 			//$('#' + currentFrameActivate + ' .btn-add').prop("class", "btn-add col-sm-12");
 		}

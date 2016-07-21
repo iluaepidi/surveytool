@@ -145,7 +145,7 @@ lang.close();
     	//$('#surveys-table').DataTable();
     	
         $('#surveys-table').dataTable({
-        	"iDisplayLength": 25,
+        	"iDisplayLength": 10,
         	"pagingType": "full_numbers",
             "scrollCollapse": false,
             "searching": true,
