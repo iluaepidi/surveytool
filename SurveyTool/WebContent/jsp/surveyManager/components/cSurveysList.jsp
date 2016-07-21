@@ -165,7 +165,7 @@ lang.close();
     $(document).ready(function() {
         
     	var table = $('#surveys-table').dataTable({
-        	"iDisplayLength": 10,
+    		"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         	"pagingType": "full_numbers",
             "scrollCollapse": false,
             "searching": true,
@@ -178,7 +178,7 @@ lang.close();
         });        
         
     	table.on('draw.dt', function () {
-    		$('[name="surveys-table_length"]').val("10");
+    		//$('[name="surveys-table_length"]').val("10");
     	 	$('#surveys-table_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
         });
        
