@@ -100,7 +100,7 @@
 		  							<i class="fa fa-caret-right fa-2x"></i>
 		  						</button>
 
-		  						<div style="float: left;width: 42%;">
+		  						<div class="widthTitleSurveyCollapsed" id="survey-div-title">
 		  							<div class="form-group" style="margin:0px;">
 		  								<input type="text" class="survey-info-title" id="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>" value="<%= title %>" placeholder="<%= titleplaceholder %>"/>
 		  								<span  id='survey-info-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>

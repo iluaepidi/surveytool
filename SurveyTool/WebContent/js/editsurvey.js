@@ -1303,6 +1303,7 @@ $(function() {
 	
 	$('#page-items').on("focusout", "#survey-question-title", function(e){
 		
+		
 		e.stopPropagation();
 		var req = {};		
 		req.text = $(this).val();
@@ -1311,6 +1312,7 @@ $(function() {
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
 		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
+		//alert("focusout");
 		//check de section title
 		var valid = true;
 		if(req.text == ""){
@@ -1318,10 +1320,22 @@ $(function() {
 			//showFieldError($('#survey-question-title'+req.qid));
 			$('#survey-question-title'+req.qid+'-error').removeClass('hidden');
 			$('#survey-question-title'+req.qid+"-feedback").removeClass('hidden');
+			
+			$(this).prop("class", "survey-section-title-selected");
+			
+			//$(this).css({'border':"2px solid !important"});
+			//$(this).css({'border-color':"#23527C !important"});
+			
 		}else{
 			//hideFieldError($('#survey-question-title'+req.qid));
 			$('#survey-question-title'+req.qid+'-error').addClass('hidden');
 			$('#survey-question-title'+req.qid+"-feedback").addClass('hidden');
+			
+			$(this).prop("class", "survey-section-title-unselected");
+			
+			//$(this).css('border','none !important');
+			
+			
 			updateContent(req, serviceUrl);
 		}
 		

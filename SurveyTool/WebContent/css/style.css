@@ -175,6 +175,13 @@ input[type="color"]:focus,
 
 textarea {resize:none;
 	margin-top: 3px !important;}
+	
+.profileLabel{
+	padding-top: 5px;
+	width: 33% !important;
+	text-align: right !important;
+	
+}
 
 /*----------------------------------------------*\
 		$ERROR
@@ -604,13 +611,17 @@ footer {margin-top: 10px;
     float: left;
     width: 70%;}
 .panel-heading .panel-section-buttons button {margin: 0px 5px;}
-.survey-section-title-unselected {border:none;
+.survey-section-title-unselected {
+	border:none;
 	background-color: transparent;
 	width: 100%;
 	height: 26px;}
 .survey-section-title-selected, 
 .survey-section-title-unselected:hover, 
-.survey-section-title-unselected:focus {border:none;
+.survey-section-title-unselected:focus {
+	border:none;
+	border:2px solid !important;
+	border-color:#23527C !important;
 	background-color: #fff;
 	color: #000;
 	width: 100%;
@@ -808,6 +819,11 @@ footer {margin-top: 10px;
 	margin-top: 5px;
 	margin-bottom: 40px;}
 .previewFileUpliaded img{max-width: 60%}
+
+.widthTitleSurveyCollapsed{
+	float: left;
+	width: 92%;
+}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
