@@ -580,6 +580,16 @@ $(function() {
 			   success: function (data) {
 				   console.log(data);
 				   node.attr('active', data);
+				   if(data == 'Multiple')
+				   {			
+					   node.closest('div.question-frame').find('ul').attr('otype', 'checkbox');
+					   //node.closest('div.question-frame').find('#optionsgroupmatrix-list').attr('otype', 'checkbox');
+				   }
+				   else
+				   {
+					   node.closest('div.question-frame').find('ul').attr('otype', 'radio');
+					   //node.closest('div.question-frame').find('#optionsgroupmatrix-list').attr('otype', 'radio');
+				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
 				   console.log(xhr.status);

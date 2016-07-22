@@ -102,6 +102,7 @@ public class CreateQuestionServlet extends HttpServlet {
 			String templateFile = questionHandler.getQuestionTypeTemplateFile(question.getQuestionType());
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
 			request.setAttribute(Attribute.s_QUESTION, question);	
+			request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
 			
 			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}
