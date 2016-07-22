@@ -16,9 +16,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 
 //int pageId = (int) request.getAttribute(Attribute.s_PAGE_ID);
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
-
-
-
+%>
+							<ul class="survey-sections" id="survey-sections">
+								
+			  					<!-- <div class="add-frame">
+		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
+		  						</div> -->
+<%
 							List<Section> sections = survey.getSections();
 							int i = 1;
 							for(Section section : sections)
@@ -49,51 +53,16 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 										</div>
 										<!-- <h3 class="panel-title"><%= lang.getContent("survey.edit.section.title") %></h3> -->
 									</div>
-									
-									<ul class="section-pages" id="section-pages">
-									<%
-									for(Page pag : section.getPages())
-									{
-									%>
-									
-										<li class="page" id="page" pid="<%= pag.getPageId() %>" index="<%= pag.getNumPage() %>">
-											<input type="hidden" id="pageid1" value="<%= pag.getPageId() %>" />
-											<ul class="panel-body" id="page-items">									
-							  										  						
-						  						<%
-						  							String token = "/";
-						  							List<Question> questions = pag.getQuestions();
-						  							if(questions != null && !questions.isEmpty())
-						  							{
-						  								for(Question question : questions)
-						  								{
-						  									request.setAttribute(Attribute.s_QUESTION, question);
-						  									request.setAttribute(Attribute.s_TEMPLATE_FILE, question.getTemplatePage());
-						  						%>
-						  									<jsp:include page="<%= token + Address.s_EDIT_QUESTION_MASTER %>" />
-						  						<%			
-						  								}
-						  							}
-						  						%>
-						  						
-						  											  							  					
-											</ul>
-											
-												
-												
-												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-													<jsp:include page='../editQuestions/cAddMenu.jsp' />
-												<% } %>
-															
-										</li>	
-									<%
-									}
-									%>		
-									</ul>															
+									<% request.setAttribute(Attribute.s_SECTION, section); %>
+									<jsp:include page="cPages.jsp" />
+																								
 								</li>
 						
 <%								
 								i++;
 							}
+%>
+							</ul>						
+<%							
 lang.close();
 %>

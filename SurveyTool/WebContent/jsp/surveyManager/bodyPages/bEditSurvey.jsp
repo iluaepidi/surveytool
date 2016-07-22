@@ -135,16 +135,10 @@
 							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x"></i></button>
 								</div> -->
 		  					</div>	
+		  					  					
 		  					
-		  					<ul class="survey-sections" id="survey-sections">
-		  					
-			  					<!-- <div class="add-frame">
-		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
-		  						</div> -->
-			  					
-			  					<jsp:include page="../components/cSection.jsp" />		
-									
-		  					</ul>	
+			  				<jsp:include page="../components/cSections.jsp" />		
+								
 						</div>
 	  				</div>
 	  			</div>
