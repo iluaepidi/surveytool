@@ -610,6 +610,9 @@ footer {margin-top: 10px;
 .panel-heading h3 {margin: 4px 0px;
     float: left;
     width: 70%;}
+.panel-heading h5 {margin: 4px 0px;
+    float: left;
+    width: 70%;}
 .panel-heading .panel-section-buttons button {margin: 0px 5px;}
 .survey-section-title-unselected {
 	border:none;
@@ -672,9 +675,26 @@ footer {margin-top: 10px;
 
 .section-pages {padding: 0;}
 
+/** Pages **/
+.page {position: relative;
+    border-top: 1px solid #000;
+    margin: 25px auto 0;
+    width: 95%;}
+.page>h4 {background-color: #fff;
+    padding: 0 12px;
+    display: inline-block;
+    position: absolute;
+    right: 40px;
+    top: -20px;}
+.page-display {position: absolute;
+    top: -18px;
+    left: 0px;
+    background-color: #fff;
+    padding: 0px 10px !important;}
+
 /** questions **/
 
-.panel-question {width: 95%;
+.panel-question {width: 100%;
 	margin: 15px auto;
 	text-align: center;
 	background-color: #fff;

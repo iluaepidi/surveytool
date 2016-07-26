@@ -97,6 +97,18 @@ $(function() {
 		$("#newQuestionModal").modal("show");
 	});
 	
+	$('.section-pages .page').on("click", ".btn-page-break", function(){
+		var node = $(this);
+		var req = {};
+		req.scid = node.closest('.panel-section').attr('scid');
+		req.sid = node.closest('div.edit-content-center').find('div.survey-info').attr('sid');
+		
+		$.post('CreatePageServlet', req, function(responseText) {
+			console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
+			node.closest('ul.section-pages').append(responseText);
+		});
+	});
+	
 	$('#page-items').on("click", '#editFile', function(){
 		currentElement = JSON.parse($(this).attr("data-image"));
 		console.log("editfile opening... " + JSON.stringify(currentElement));

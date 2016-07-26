@@ -19,38 +19,9 @@ Section section = (Section) request.getAttribute(Attribute.s_SECTION);
 									<%
 									for(Page pag : section.getPages())
 									{
-									%>
-									
-										<li class="page" id="page" pid="<%= pag.getPageId() %>" index="<%= pag.getNumPage() %>">
-											<input type="hidden" id="pageid1" value="<%= pag.getPageId() %>" />
-											<ul class="panel-body" id="page-items">									
-							  										  						
-						  						<%
-						  							String token = "/";
-						  							List<Question> questions = pag.getQuestions();
-						  							if(questions != null && !questions.isEmpty())
-						  							{
-						  								for(Question question : questions)
-						  								{
-						  									request.setAttribute(Attribute.s_QUESTION, question);
-						  									request.setAttribute(Attribute.s_TEMPLATE_FILE, question.getTemplatePage());
-						  						%>
-						  									<jsp:include page="<%= token + Address.s_EDIT_QUESTION_MASTER %>" />
-						  						<%			
-						  								}
-						  							}
-						  						%>
-						  						
-						  											  							  					
-											</ul>
-											
-												
-												
-												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-													<jsp:include page='../editQuestions/cAddMenu.jsp' />
-												<% } %>
-															
-										</li>	
+										request.setAttribute(Attribute.s_PAGE, pag);
+									%>									
+										<jsp:include page='cPage.jsp'/>
 									<%
 									}
 									%>		

@@ -77,6 +77,12 @@ public class DBSQLQueries {
 		public final static String s_SELECT_PAGES_ID_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage desc";
 		public final static String s_SELECT_PAGE_BY_PAGEID = "SELECT * FROM surveytool.page where idPage = ?";
 		public final static String s_SELECT_NUM_PAGE_BY_SECTIONID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page where idSection = ?";
+		public final static String s_SELECT_MAX_PAGE_BY_SECTIONID = "SELECT MAX(numPage) AS numPage FROM surveytool.page where idSection = ?";
+		public final static String s_SELECT_PAGES_BIGER_THAN_BY_SURVEYID = "SELECT p.* FROM surveytool.page AS p "
+				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
+				+ "WHERE q.idQuestionnaire = ?  and p.numPage > ? order by p.numPage";
 		
 		//poll
 		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title, (SELECT count(*) FROM surveytool.responses where idPoll = p.idPoll) numResp  "
@@ -345,6 +351,8 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 		//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
+		//page
+			public final static String s_UPDATE_PAGE_NUM_PAGE = "UPDATE `surveytool`.`page` SET `numPage`=? WHERE `idPage`=?";
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
 		//questionByPage

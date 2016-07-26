@@ -36,6 +36,7 @@ public class Attribute {
 	public final static String s_RESOURCE = "resource";
 	public final static String s_ADD_QUESTIONS = "addQuestions";
 	public final static String s_SECTION = "section";
+	public final static String s_PAGE = "page";
 	
 
 }

@@ -19,7 +19,7 @@
 											<div class="panel-heading">	
 
 												<button id="panel-heading-display" class="btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
-												<h3 class="panel-title">
+												<h5 class="panel-title">
 													<div class="col-sm-12">
 														<div class="form-group" style="margin:0px;">
 															<input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>
@@ -27,7 +27,7 @@
 						  									<span id='survey-question-title<%= question.getQuestionId() %>-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.question.title") %></span>
 														</div>
 													</div>
-												</h3>
+												</h5>
 												<div class="panel-section-buttons right">
 												<% if(request.getAttribute(Attribute.s_ADD_QUESTIONS)==null || (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 													<button class="btn-transparent btn-remove" id="removeQuestion" aria-label="<%= lang.getContent("button.remove_question") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
