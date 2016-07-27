@@ -72,12 +72,12 @@ $(function() {
 				mandatory: $('#mandatory').val(),
 				helpText: $('#help-text').val(),
 				surveyid: $('#surveyid').val(),
-				pageid: $('#pageid1').val(),
+				pageid: currentElement.attr('pid'),
 				langsurvey : $("#survey-language-version").val()
 			}, function(responseText) {
 				var index = responseText.indexOf("<html");
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
-				else {currentAddNode.closest('li[id=page]').find('#page-items').append(responseText);}
+				else {currentElement.find('#page-items').append(responseText);}
 			});
 			$('#qstatement').val("");
 			//$('#main-version').val("none");
@@ -92,20 +92,25 @@ $(function() {
 		}
 	});
 	
-	$('#page').on("click", '#btn-question', function(){
-		currentAddNode = $(this).parent().parent().parent();
+	$('.survey-sections').on("click", '.btn-question', function(){
+		currentElement = $(this).closest('li.page');
 		$("#newQuestionModal").modal("show");
 	});
 	
-	$('.section-pages .page').on("click", ".btn-page-break", function(){
+	$('.survey-sections').on("click", ".btn-page-break", function(){
 		var node = $(this);
 		var req = {};
 		req.scid = node.closest('.panel-section').attr('scid');
 		req.sid = node.closest('div.edit-content-center').find('div.survey-info').attr('sid');
+		req.numPage = node.closest('li.page').attr('index');
 		
 		$.post('CreatePageServlet', req, function(responseText) {
-			console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
-			node.closest('ul.section-pages').append(responseText);
+			//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
+			node.closest('li.page').after(responseText);
+			node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
+				var cads = $(elemento).find('h4').html().split(' ');
+				$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
+			});
 		});
 	});
 	
@@ -612,6 +617,15 @@ $(function() {
 		});
 	});
 
+	$('.survey-sections').on("click", ".remove-page-break", function(){
+		var item = $(this).closest('li.page');
+		currentQuestion = item.attr('pid');
+		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4').html() + '"');
+		$("#removeElemId").val(currentQuestion + '/' + $('#survey-info').attr('sid'));
+		$("#removeElemService").val('PageService');
+		$("#removeElement").modal("show");
+	});
+	
 	$('#survey-sections').on("click", "#removeSection", function(e){
 		var item = $(this).closest('#panel-section1');
 		currentQuestion = item.attr('scid');

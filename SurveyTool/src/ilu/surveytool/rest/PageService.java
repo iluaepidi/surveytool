@@ -29,7 +29,7 @@ import ilu.surveytool.databasemanager.constants.DBConstants;
 @Path("/PageService")
 public class PageService {
    
-	@POST
+	/*@POST
 	@Path("/createPage")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
@@ -41,14 +41,33 @@ public class PageService {
 			json = new JSONObject(req);
 			int sectionId = json.getInt(Parameter.s_SCID);
 			int surveyId = json.getInt(Parameter.s_SID);
+			int currentNumPage = json.getInt(Parameter.s_NUM_PAGE);
 
 			PageHandler pageHandler = new PageHandler();
-			pageHandler.createPage(sectionId, surveyId);
+			pageHandler.createPage(currentNumPage, sectionId, surveyId);
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	return response;
+    }*/
+
+	@DELETE
+	@Path("/{pid}/{sid}")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String remove(@PathParam("pid") String pid, @PathParam("sid") String sid) {
+    	System.out.println("Remove pageId: " + pid + " - sid: " + sid);
+    	JSONObject json = null;
+    	String response = "";
+	
+		int pageId = Integer.parseInt(pid);
+		int surveyId = Integer.parseInt(sid);
+		
+		PageHandler pageHandler = new PageHandler();
+		response = Boolean.toString(pageHandler.removePage(pageId, surveyId));
+		
     	return response;
     }
 

@@ -74,10 +74,12 @@ public class DBSQLQueries {
 				+ "inner join surveytool.page p on s.idSection = p.idSection "
 				+ "where q.idQuestionnaire = ?";
 		public final static String s_SELECT_PAGES_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage";
+		public final static String s_SELECT_PAGE_BY_NUMPAGE_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? and numPage = ?";
 		public final static String s_SELECT_PAGES_ID_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage desc";
 		public final static String s_SELECT_PAGE_BY_PAGEID = "SELECT * FROM surveytool.page where idPage = ?";
 		public final static String s_SELECT_NUM_PAGE_BY_SECTIONID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page where idSection = ?";
 		public final static String s_SELECT_MAX_PAGE_BY_SECTIONID = "SELECT MAX(numPage) AS numPage FROM surveytool.page where idSection = ?";
+		public final static String s_SELECT_NUM_PAGE_BY_PAGEID = "SELECT numPage FROM surveytool.page where idPage = ?";
 		public final static String s_SELECT_PAGES_BIGER_THAN_BY_SURVEYID = "SELECT p.* FROM surveytool.page AS p "
 				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
 				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
@@ -358,7 +360,8 @@ public class DBSQLQueries {
 		//questionByPage
 			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
 			public final static String s_UPDATE_QUESTIONBYPAGE_OPTIONALANSWER = "UPDATE surveytool.questionbypage SET optionalAnswer=? WHERE idPage=? and idQuestion=?";
-			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX = "UPDATE surveytool.questionbypage SET `index`=? WHERE idPage=? and idQuestion=?";			
+			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX = "UPDATE surveytool.questionbypage SET `index`=? WHERE idPage=? and idQuestion=?";
+			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX_PAGEID = "UPDATE surveytool.questionbypage SET `index`=? and `idPage`=? WHERE idPage=? and idQuestion=?";
 		//ParameterForQuestion
 			public final static String s_UPDATE_PARAMETERFORQUESTION = "UPDATE surveytool.parameterforquestion SET value=? WHERE idPage=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
 		//ParameterForQuestionPoll

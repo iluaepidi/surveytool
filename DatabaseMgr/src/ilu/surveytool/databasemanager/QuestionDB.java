@@ -133,6 +133,41 @@ public class QuestionDB {
 		return questions;
 	}
 
+	public List<Question> getQuestionsIdIndexByPageId(int pageId)
+	{
+		List<Question> questions = new ArrayList<Question>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID);			
+	   		pstm.setInt(1, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		while(rs.next())
+	   		{
+	   			Question question = new Question();
+	   			
+	   			question.setQuestionId(rs.getInt(DBFieldNames.s_QUESTION_ID));
+	   			question.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			
+	   			questions.add(question);
+	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questions;
+	}
+
 	public List<Question> getQuestionsByPollId(int pollId, String lang)
 	{
 		List<Question> questions = new ArrayList<Question>();
@@ -594,6 +629,29 @@ public class QuestionDB {
 			pstm.setInt(1, index);
 			pstm.setInt(2, pageId);
 			pstm.setInt(3, questionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+	}
+
+	public void updateQuestionIndexPageId(int questionId, int pageId, int newPageId, int index) {
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONBYPAGE_INDEX_PAGEID);
+			pstm.setInt(1, index);
+			pstm.setInt(2, newPageId);
+			pstm.setInt(3, pageId);
+			pstm.setInt(4, questionId);
 		   		
 			int numUpdated = pstm.executeUpdate();
 					

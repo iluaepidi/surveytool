@@ -18,7 +18,7 @@
 						  					
 											<div class="panel-heading">	
 
-												<button id="panel-heading-display" class="btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
+												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
 												<h5 class="panel-title">
 													<div class="col-sm-12">
 														<div class="form-group" style="margin:0px;">
@@ -30,7 +30,7 @@
 												</h5>
 												<div class="panel-section-buttons right">
 												<% if(request.getAttribute(Attribute.s_ADD_QUESTIONS)==null || (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-													<button class="btn-transparent btn-remove" id="removeQuestion" aria-label="<%= lang.getContent("button.remove_question") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
+													<button class="btn-transparent btn-remove" id="removeQuestion" aria-label="<%= lang.getContent("button.remove_question") %>: <%= title %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 												<%} %>
 												</div>
 												

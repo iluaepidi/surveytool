@@ -51,7 +51,7 @@ $(function() {
 		$('#panel-section1 .panel-heading h3 #survey-section-title').focus();
 	});
 	
-	$('#page').on("click", "#add-menu-frame div button", function(e){
+	$('.survey-sections').on("click", "#add-menu-frame div button", function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "add-menu-frame";
@@ -116,21 +116,39 @@ $(function() {
 			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
 		}
 	});
-	
-	//abrir cerrar question panel
-	$('#page-items').on('click', '#panel-heading-display', function(e){
+
+	//abrir cerrar page panel
+	$('#survey-sections').on('click', '.display-page-arrow', function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "panel-heading-display";
 		var cl = $(this).children('i').prop("class");
 		if (cl == "fa fa-caret-down fa-2x")
 		{
-			$(this).closest('#panel-question1').children('.panel-body').css("display", "none");
+			$(this).closest('li.page').children('.page-body').css("display", "none");
 			$(this).children('i').prop("class", "fa fa-caret-right fa-2x");
 		}
 		else if(cl == "fa fa-caret-right fa-2x")
 		{
-			$(this).closest('#panel-question1').children('.panel-body').css("display", "inherit");
+			$(this).closest('li.page').children('.page-body').css("display", "inherit");
+			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
+		}
+	});
+	
+	//abrir cerrar question panel
+	$('#survey-sections').on('click', '.display-question-arrow', function(e){
+		e.stopPropagation();
+		bodyClick();
+		currentFrameActivate = "panel-heading-display";
+		var cl = $(this).children('i').prop("class");
+		if (cl == "fa fa-caret-down fa-2x")
+		{
+			$(this).closest('li.panel-question').children('.panel-body').css("display", "none");
+			$(this).children('i').prop("class", "fa fa-caret-right fa-2x");
+		}
+		else if(cl == "fa fa-caret-right fa-2x")
+		{
+			$(this).closest('li.panel-question').children('.panel-body').css("display", "inherit");
 			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
 		}
 	});

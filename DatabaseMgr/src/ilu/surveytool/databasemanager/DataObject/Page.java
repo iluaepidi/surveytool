@@ -7,6 +7,7 @@ import java.util.List;
 public class Page {
 
 	int pageId;
+	int sectionId;
 	List<Question> questions;
 	int numPage;
 	
@@ -28,6 +29,14 @@ public class Page {
 
 	public void setPageId(int pageId) {
 		this.pageId = pageId;
+	}
+
+	public int getSectionId() {
+		return sectionId;
+	}
+
+	public void setSectionId(int sectionId) {
+		this.sectionId = sectionId;
 	}
 
 	public List<Question> getQuestions() {

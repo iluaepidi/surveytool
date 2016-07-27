@@ -57,9 +57,10 @@ public class CreatePageServlet extends HttpServlet {
 		{
 			int sectionId = Integer.parseInt(request.getParameter(Parameter.s_SCID));
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SID));
+			int currentNumPage = Integer.parseInt(request.getParameter(Parameter.s_NUM_PAGE));
 
 			PageHandler pageHandler = new PageHandler();
-			Page page = pageHandler.createPage(sectionId, surveyId);
+			Page page = pageHandler.createPage(currentNumPage, sectionId, surveyId);
 			
 			request.setAttribute(Attribute.s_PAGE, page);
 			request.setAttribute(Attribute.s_ADD_QUESTIONS, true);

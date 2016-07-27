@@ -562,7 +562,7 @@ footer {margin-top: 10px;
     margin-left: 48%;
     text-align: left;
     display: inline-block;
-    margin-bottom: 39px;}
+    /*margin-bottom: 39px;*/}
 .btn-add-element {float: left;}
 .add-menu-points {width: 20px;
     padding: 0 15px;
@@ -673,24 +673,40 @@ footer {margin-top: 10px;
     
 .frame-basic-Settings {display: none;}
 
-.section-pages {padding: 0;}
+.section-pages {padding: 0;
+	padding-bottom: 30px;}
 
 /** Pages **/
-.page {position: relative;
-    border-top: 1px solid #000;
+.page {/*position: relative;
+    border-top: 1px solid #000;*/
     margin: 25px auto 0;
     width: 95%;}
-.page>h4 {background-color: #fff;
+.page-head {background-color: #CFE0EF;
+    color: #404040;
+    border-radius: 4px;}
+.page-head>h4 {text-align: center;
+	margin: 0;
+    padding: 7px 0;
+	/*background-color: #fff;
     padding: 0 12px;
     display: inline-block;
     position: absolute;
     right: 40px;
-    top: -20px;}
-.page-display {position: absolute;
+    top: -20px;*/}
+/*.page-display {position: absolute;
     top: -18px;
     left: 0px;
     background-color: #fff;
-    padding: 0px 10px !important;}
+    padding: 0px 10px !important;}*/
+.remove-page-break {background-color: #CFE0EF;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    margin: 4px 0;}
+.remove-page-break i {font-size: 1.35em;
+	padding-top: 2px;}
+.remove-page-break:hover,
+.remove-page-break:focus {background-color: #404040;
+	color: #CFE0EF;}
 
 /** questions **/
 
