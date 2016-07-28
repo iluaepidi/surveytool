@@ -109,6 +109,7 @@ $(function() {
 			node.closest('li.page').after(responseText);
 			node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
 				var cads = $(elemento).find('h4').html().split(' ');
+				$(elemento).attr('index', indice + 1);
 				$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
 			});
 		});
@@ -619,6 +620,7 @@ $(function() {
 
 	$('.survey-sections').on("click", ".remove-page-break", function(){
 		var item = $(this).closest('li.page');
+		currentElement = item;
 		currentQuestion = item.attr('pid');
 		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4').html() + '"');
 		$("#removeElemId").val(currentQuestion + '/' + $('#survey-info').attr('sid'));
@@ -794,6 +796,28 @@ $(function() {
 						   }
 					   });
 					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title]').val('Section 1');
+				   }
+				   else if(service = "PageService")
+				   {
+					   var pagesList = currentElement.closest('ul.section-pages');
+					   var prevElement = currentElement.prev();
+					   
+					   var currentQuestionList = currentElement.find('ul.page-items');
+					   var prevQuestionList = prevElement.find('ul.page-items');
+					   var index = prevQuestionList.find('li.panel-question').length + 1;
+					   currentQuestionList.find('li.panel-question').each(function(indice, elemento) {
+						   $(elemento).attr('index', index);
+						   prevQuestionList.append($(elemento));
+						   index++;
+						});
+						   
+					   currentElement.remove();
+					   
+					   pagesList.find('li.page').each(function(indice, elemento) {
+							var cads = $(elemento).find('h4').html().split(' ');
+							$(elemento).attr('index', indice + 1);
+							$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
+						});
 				   }
 			   }
 			   else
@@ -1403,8 +1427,8 @@ $(function() {
 	});		
 	
 	//drag and drop
-	$("#page-items").sortable({
-		connectWith:".s1",
+	/*$(".survey-sections .page-items").sortable({
+		connectWith:".connectedSortable",
 		start:function(){
 			console.log("Estas utilizando Drag and Drop: " + $(this).attr('id'));
 		},
@@ -1415,8 +1439,8 @@ $(function() {
 			var req = {};		
 			req.qid = $(ui.item).attr('qid');
 			req.prevId = prevId;
-			req.pid = $(this).closest('li[id=page]').attr('pid');
-			
+			req.pid = $(this).closest('li.page').attr('pid');
+			console.log("Dragged: " + JSON.stringify(req));
 			$.ajax({ 
 				   type: "PUT",
 				   dataType: "text",
@@ -1427,10 +1451,7 @@ $(function() {
 					   if(data == "")
 					   {
 						   console.log("llega");
-						  /* var qNode = $('li[qid=' + currentQuestion + ']');
-						   qNode.find('#question-frame-help').removeClass("hidden");
-						   qNode.find('#question-frame-help-text').html(req.text);
-						   $("#setHelpText").modal("hide");*/
+						  
 					   }
 				   },
 				   error: function (xhr, ajaxOptions, thrownError) {
@@ -1441,7 +1462,7 @@ $(function() {
 				   }
 			});
 		}
-	});
+	});*/
 	
 	/*$('#survey-language-version').change(function(event) {
 		

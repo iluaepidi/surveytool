@@ -31,7 +31,7 @@ Page pag = (Page) request.getAttribute(Attribute.s_PAGE);
 											</div>
 											<div class="page-body">
 												<input type="hidden" id="pageid1" value="<%= pag.getPageId() %>" />
-												<ul class="panel-body" id="page-items">									
+												<ul class="panel-body page-items connectedSortable" id="page-items">									
 								  										  						
 							  						<%
 							  							String token = "/";

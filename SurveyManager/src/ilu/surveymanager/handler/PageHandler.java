@@ -50,7 +50,7 @@ public class PageHandler {
 			int index = prevPage.getQuestions().size() + 1;
 			int currentSize = currentPage.getQuestions().size();
 			QuestionDB questionDB = new QuestionDB();
-			for(int i = 1; i <= currentSize; i++)
+			for(int i = 0; i < currentSize; i++)
 			{
 				questionDB.updateQuestionIndexPageId(currentPage.getQuestions().get(i).getQuestionId(), currentPage.getPageId(), prevPage.getPageId(), index);
 				index++;
@@ -65,7 +65,7 @@ public class PageHandler {
 		{
 			for(Page page : pages)
 			{
-				pageDB.updateNumPage(page.getPageId(), page.getNumPage() + 1);
+				pageDB.updateNumPage(page.getPageId(), page.getNumPage() - 1);
 			}
 		}
 		response = true;

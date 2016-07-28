@@ -44,6 +44,7 @@ public class QuestionHandler {
 			int index = questionDB.getNumQuestionByPage(pageId) + 1;
 			
 			questionDB.insertQuestionByPage(questionId, pageId, question.isMandatory(), question.isOptionalAnswer(), index, question.getParameters());
+			question.setIndex(index);
 		}
 		
 		return questionId;

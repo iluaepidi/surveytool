@@ -361,7 +361,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
 			public final static String s_UPDATE_QUESTIONBYPAGE_OPTIONALANSWER = "UPDATE surveytool.questionbypage SET optionalAnswer=? WHERE idPage=? and idQuestion=?";
 			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX = "UPDATE surveytool.questionbypage SET `index`=? WHERE idPage=? and idQuestion=?";
-			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX_PAGEID = "UPDATE surveytool.questionbypage SET `index`=? and `idPage`=? WHERE idPage=? and idQuestion=?";
+			public final static String s_UPDATE_QUESTIONBYPAGE_INDEX_PAGEID = "UPDATE surveytool.questionbypage SET `index`=?, `idPage`=? WHERE idPage=? and idQuestion=?";
 		//ParameterForQuestion
 			public final static String s_UPDATE_PARAMETERFORQUESTION = "UPDATE surveytool.parameterforquestion SET value=? WHERE idPage=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
 		//ParameterForQuestionPoll
