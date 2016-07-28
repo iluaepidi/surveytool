@@ -44,7 +44,7 @@
 											<div class="panel-body">									
 							  					
 							  					<div class="question-frame">
-							  					<h4><%=lang.getContent("question.edit.statementSetting.title")%></h4>
+							  					<h6><%=lang.getContent("question.edit.statementSetting.title")%></h6>
 							  						<jsp:include page="eqComponents/eqDescription.jsp" />	
 							  					
 							  						<jsp:include page="eqComponents/eqFiles.jsp" />

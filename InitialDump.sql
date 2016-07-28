@@ -191,6 +191,7 @@ CREATE TABLE `dependencetype` (
 
 LOCK TABLES `dependencetype` WRITE;
 /*!40000 ALTER TABLE `dependencetype` DISABLE KEYS */;
+INSERT INTO `dependencetype` VALUES (1,'and'),(2,'or');
 /*!40000 ALTER TABLE `dependencetype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -576,17 +577,14 @@ CREATE TABLE `qdependences` (
   `idQDependences` int(11) NOT NULL AUTO_INCREMENT,
   `idQuestionnaire` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
-  `idQuestionObjetive` int(11) NOT NULL,
-  `idOptionsGroupObjetive` int(11) NOT NULL,
-  `value` varchar(45) NOT NULL,
+  `show` tinyint(1) NOT NULL DEFAULT '1',
+  `idDependenceType` int(11) NOT NULL,
   PRIMARY KEY (`idQDependences`),
   KEY `fk_QDependences_Question1_idx` (`idQuestion`),
-  KEY `fk_QDependences_Question2_idx` (`idQuestionObjetive`),
   KEY `fk_QDependences_Questionnaire1_idx` (`idQuestionnaire`),
-  KEY `fk_QDependences_OptionsGroup1_idx` (`idOptionsGroupObjetive`),
-  CONSTRAINT `fk_QDependences_OptionsGroup1` FOREIGN KEY (`idOptionsGroupObjetive`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_QDependences_DependenceType1_idx` (`idDependenceType`),
+  CONSTRAINT `fk_QDependences_DependenceType1` FOREIGN KEY (`idDependenceType`) REFERENCES `dependencetype` (`idDependenceType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependences_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_QDependences_Question2` FOREIGN KEY (`idQuestionObjetive`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependences_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -598,6 +596,36 @@ CREATE TABLE `qdependences` (
 LOCK TABLES `qdependences` WRITE;
 /*!40000 ALTER TABLE `qdependences` DISABLE KEYS */;
 /*!40000 ALTER TABLE `qdependences` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `qdependencesvalue`
+--
+
+DROP TABLE IF EXISTS `qdependencesvalue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `qdependencesvalue` (
+  `idQDependences` int(11) NOT NULL,
+  `idQuestion` int(11) NOT NULL,
+  `OptionsGroup_idOptionsGroup` int(11) NOT NULL,
+  `optionValue` varchar(45) NOT NULL,
+  PRIMARY KEY (`idQDependences`,`idQuestion`,`OptionsGroup_idOptionsGroup`,`optionValue`),
+  KEY `fk_QDependencesValue_Question1_idx` (`idQuestion`),
+  KEY `fk_QDependencesValue_OptionsGroup1_idx` (`OptionsGroup_idOptionsGroup`),
+  CONSTRAINT `fk_QDependencesValue_OptionsGroup1` FOREIGN KEY (`OptionsGroup_idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QDependencesValue_QDependences1` FOREIGN KEY (`idQDependences`) REFERENCES `qdependences` (`idQDependences`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QDependencesValue_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `qdependencesvalue`
+--
+
+LOCK TABLES `qdependencesvalue` WRITE;
+/*!40000 ALTER TABLE `qdependencesvalue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qdependencesvalue` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -719,6 +747,39 @@ CREATE TABLE `questionbypoll` (
 LOCK TABLES `questionbypoll` WRITE;
 /*!40000 ALTER TABLE `questionbypoll` DISABLE KEYS */;
 /*!40000 ALTER TABLE `questionbypoll` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionlogicgoto`
+--
+
+DROP TABLE IF EXISTS `questionlogicgoto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionlogicgoto` (
+  `idQuestionnaire` int(11) NOT NULL,
+  `idQuestion` int(11) NOT NULL,
+  `idOptionsGroup` int(11) NOT NULL,
+  `optionValue` varchar(45) NOT NULL,
+  `idQuestionDest` int(11) NOT NULL,
+  PRIMARY KEY (`idQuestionnaire`,`idQuestion`,`idOptionsGroup`,`optionValue`),
+  KEY `fk_LogicGoTo_Question1_idx` (`idQuestion`),
+  KEY `fk_QuestionLogicGoTo_OptionsGroup1_idx` (`idOptionsGroup`),
+  KEY `fk_QuestionLogicGoTo_Question1_idx` (`idQuestionDest`),
+  CONSTRAINT `fk_LogicGoTo_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_LogicGoTo_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QuestionLogicGoTo_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QuestionLogicGoTo_Question1` FOREIGN KEY (`idQuestionDest`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionlogicgoto`
+--
+
+LOCK TABLES `questionlogicgoto` WRITE;
+/*!40000 ALTER TABLE `questionlogicgoto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questionlogicgoto` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

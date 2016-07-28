@@ -28,7 +28,7 @@
 							  					<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					
 							  					<div class="question-frame">
-							  						<h4><%= lang.getContent("survey.type.options") %></h4>
+							  						<h6><%= lang.getContent("survey.type.options") %></h6>
 							  						<div class="row">
 							  							<div class="col-md-4">
 								  							<label for="type-question-<%= question.getIndex() %>"><%= lang.getContent("survey.type.type") %></label>

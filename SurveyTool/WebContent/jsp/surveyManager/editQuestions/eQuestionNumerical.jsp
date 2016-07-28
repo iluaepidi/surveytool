@@ -21,7 +21,7 @@
 							  					<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					
 							  					<div class="question-frame">
-							  						<h4>Options</h4>
+							  						<h6>Options</h6>
 							  						<div class="row">
 							  							<div class="col-md-4">
 								  							<label for="type-question-<%= question.getIndex() %>">Type</label>

@@ -47,13 +47,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
  		
  					
  		<div class="question-frame">
- 			<h4><%=lang.getContent("question.edit.statementSetting.title")%></h4>
+ 			<h6><%=lang.getContent("question.edit.statementSetting.title")%></h6>
  			<jsp:include page="eqComponents/eqDescription.jsp" />	
  			<jsp:include page="eqComponents/eqFiles.jsp" />
  		</div>
 																		
 		<div class="question-frame">
-			<h4><%=lang.getContent("question.edit.response_settings.title")%></h4>
+			<h6><%=lang.getContent("question.edit.response_settings.title")%></h6>
 			<%
 			String textLength = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLENGTH);
 			String lines = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_TEXTLINES);

@@ -13,7 +13,7 @@
 							  					%>
 												
 							  					<div class="question-frame">
-							  						<h4><%= lang.getContent("question.edit.response_settings.title") %></h4>
+							  						<h6><%= lang.getContent("question.edit.response_settings.title") %></h6>
 							  						
 							  						<jsp:include page="<%= resp %>" />
 							  							
