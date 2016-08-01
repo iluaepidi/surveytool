@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveymanager.exportdata.ExportData;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
@@ -14,10 +18,12 @@ import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.ResponseSimple;
+import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -172,6 +178,43 @@ public class SurveysHandler {
 		file = exportData.exportSurveyResponses(surveyId, questions, responses);
 		
 		return file;
+	}
+	
+	public JSONArray getQuestionsJson(Survey survey)
+	{
+		JSONArray pagesJson = new JSONArray();
+		
+		try {
+			for(Section section : survey.getSections())
+			{
+				for(Page page : section.getPages())
+				{
+					JSONObject pageJson = new JSONObject();
+					
+					pageJson.put("numPage", page.getNumPage());
+					
+					pageJson.put("pageId", page.getPageId());
+					JSONArray questionsJson = new JSONArray();
+					for(Question question : page.getQuestions())
+					{
+						JSONObject questionJson = new JSONObject();
+						questionJson.put("questionId", question.getQuestionId());
+						questionJson.put("index", question.getIndex());
+						questionJson.put("title", question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+						questionsJson.put(questionJson);
+					}
+					
+					pageJson.put("questions", questionsJson);
+					
+					pagesJson.put(pageJson);
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pagesJson;
 	}
 
 }

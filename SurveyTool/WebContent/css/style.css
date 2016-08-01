@@ -887,6 +887,25 @@ footer {margin-top: 10px;
 .btn-close-logic:focus,
 .btn-close-logic:hover {border: 2px solid #23527C !important;
 	color: #23527C !important;}
+.dependences-list {width: 700px;
+    margin: 0 auto;
+    padding: 0px;}	
+.dependence-item {margin: 5px 0;
+	text-align: center;}
+.dependence-item > fieldset > .dependence-action {margin-bottom: 0 !important;
+    margin-right: 5px;
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+    width: 90px;}
+.dependence-item > fieldset > .dependence-question {margin-bottom: 0 !important;
+    margin: 0 5px;
+    padding-left: 10px !important;
+    width: 200px !important;}
+.dependence-item > fieldset > .dependence-option {margin-bottom: 0 !important;
+    margin: 0 5px;
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+    width: 90px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY

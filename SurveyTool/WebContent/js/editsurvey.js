@@ -1437,6 +1437,18 @@ $(function() {
 		$(this).closest('div.logic-frame').find('div.logic-settings').addClass('hidden');
 		$(this).addClass('hidden');
 	});
+
+	$('.survey-sections').on("click", ".dependences-button > button", function(){
+		$(this).parent().addClass('hidden');
+		$(this).closest('div.dependences-frame').find('div.dependences-settings').removeClass('hidden');
+		$(this).closest('div.dependences-frame').find('button.btn-close-dependences').removeClass('hidden');
+	});
+
+	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
+		$(this).closest('div.dependences-frame').find('div.dependences-button').removeClass('hidden');
+		$(this).closest('div.dependences-frame').find('div.dependences-settings').addClass('hidden');
+		$(this).addClass('hidden');
+	});
 	
 	//drag and drop
 	/*$(".survey-sections .page-items").sortable({
