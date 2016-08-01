@@ -70,6 +70,10 @@ public class ImportFileServlet extends HttpServlet {
 		String rootPath = getServletContext().getRealPath("/");
 		SurveyToolProperties properties = new SurveyToolProperties(rootPath);
 		
+		
+		request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
+		
+		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{						
 			try {
@@ -95,7 +99,12 @@ public class ImportFileServlet extends HttpServlet {
 				    if(action.equals("file"))
 				    {
 					    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
-					    resourceHandler.insertResource(resource, questionId);
+					    int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					    if(questionId>=0){
+					    	resourceHandler.insertResource(resource, questionId,-1);
+					    }else if(optionId>=0){
+					    	resourceHandler.insertResource(resource, -1, optionId);
+					    }
 				    }
 				    else if(action.equals("fileUpdate"))
 				    {
@@ -127,8 +136,15 @@ public class ImportFileServlet extends HttpServlet {
 					resource.setType(request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
 					ResourceHandler resourceHandler = new ResourceHandler();
-					resource = resourceHandler.insertResource(resource, questionId);
+					
+					 if(questionId>=0){
+						 	resource = resourceHandler.insertResource(resource, questionId,-1);
+					 }else if(optionId>=0){
+						 resource = resourceHandler.insertResource(resource, -1, optionId);
+					}
+					
 					
 					resource = this._insertFileContent(request, resource.getResourceId(), resource.getType());
 					

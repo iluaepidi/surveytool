@@ -46,7 +46,7 @@ public class DBSQLQueries {
 		
 		//option
 		public final static String s_SELECT_OPTION_BY_OPTIONID = "SELECT * FROM surveytool.`option` where idOption = ?";
-		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, obg.index FROM surveytool.optionsbygroup obg "
+		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, obg.index FROM surveytool.optionsbygroup obg "
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "where obg.idOptionsGroup = ? "
 				+ "order by obg.index";
@@ -345,6 +345,8 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 		//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
+		//option
+			public final static String s_UPDATE_OPTION_IDRESOURCE = "UPDATE `surveytool`.`option` SET `idResoruces`=? WHERE `idOption`=?";
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
 		//questionByPage

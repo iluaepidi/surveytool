@@ -105,10 +105,12 @@ public class ResourceDB {
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
+	   			
 	   			resource = new Resource(resourceId, 
 	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
 	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
 	   					rs.getInt(DBFieldNames.s_CONTENTID));
+	   			
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -121,6 +123,47 @@ public class ResourceDB {
 		return resource;
 	}
 
+	public Resource getResourceById(int resourceId, String lang,String langdefault)
+	{
+		Resource resource = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		if(lang==null)lang = langdefault;
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_BY_ID);			
+	   		pstm.setInt(1, resourceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			
+	   			/*resource = new Resource(resourceId, 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					rs.getInt(DBFieldNames.s_CONTENTID));*/
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);
+	   				   			
+	   			resource = new Resource(rs.getInt(DBFieldNames.s_RESOURCEID), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					contents);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resource;
+	}
+	
 	public List<ResourceType> getResourceTypes()
 	{
 		List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
@@ -216,6 +259,36 @@ public class ResourceDB {
 	/**
 	 * Update
 	 */
+	
+	public boolean updateOptionWithIdResource(int idOption,int resourceId) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTION_IDRESOURCE);
+			pstm.setInt(1, resourceId);
+			pstm.setInt(2, idOption);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
 	
 	public boolean updateResourceUrlPath(int resourceId, String urlPath) {
 		//System.out.println("updateState");

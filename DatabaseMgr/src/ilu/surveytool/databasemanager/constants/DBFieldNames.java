@@ -20,6 +20,7 @@ public class DBFieldNames {
 	//content
 		public final static String s_CONTENTID = "idContent";
 		public final static String s_CONTENT_TEXT = "text";
+		public final static String s_CONTENT_RESOURCE = "idResoruces";
 	
 	//contenttype
 		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";

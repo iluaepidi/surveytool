@@ -62,8 +62,10 @@
 						  										<div class="option-icons fleft">
 							  										<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  										<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  										<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  										<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item")%> <%= index %></label>
 																	<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  										<% } %>
 							  									</div>
 							  								</li>
 							  						<%							  						
@@ -85,8 +87,10 @@
 					  											<div class="option-icons fleft">
 						  											<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 						  											<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+						  											<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 						  											<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") %> <%= index %></label>
 																	<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
+						  											<% } %>
 						  										</div>
 						  									</li>
 						  							
@@ -95,8 +99,10 @@
 						  							}
 						  							%>
 					  								<li class="center" id="li-add-optionsgroupmatrix<%= question.getQuestionId() %>">
+					  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 					  									<label for="btn-add-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.item") %></label>
 														<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
+					  									<%} %>
 					  								</li>
 					  							</ul>
 					  					<%
@@ -115,8 +121,10 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") +" 1"%></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  							
@@ -128,14 +136,18 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.item") +" 2"%></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="center" id="li-add-optionsgroupmatrix<%= question.getQuestionId() %>">
+							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  								<label for="btn-add-optionsgroupmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.item") %></label>
 															<button class="btn btn-primary btn-sm active" id="btn-add-optionsgroupmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_row") %></span></button>
+							  								<%} %>
 							  							</li>
 							  						</ul>
 							  					<%
@@ -169,8 +181,10 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")%> <%= index %></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  						<%
@@ -191,8 +205,10 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column") %> <%= index %></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  							
@@ -201,8 +217,10 @@
 							  						}
 							  						%>
 							  							<li class="center" id="li-add-optionmatrix<%= question.getQuestionId() %>">
+							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  								<label for="btn-add-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.column") %></label>
 															<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
+							  								<%} %>
 							  							</li>
 							  						</ul>
 							  					<%
@@ -221,8 +239,10 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+" 1" %></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  							
@@ -234,14 +254,18 @@
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
+							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="remove-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.remove.column")+" 2" %></label>
 																<button class="btn btn-transparent fleft red" id="remove-optionmatrix"><i class="fa fa-trash fa-2x"></i></button>
+							  									<%} %>
 							  								</div>
 							  							</li>
 							  							
 							  							<li class="center" id="li-add-optionmatrix<%= question.getQuestionId() %>">
+							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  								<label for="btn-add-optionmatrix" class="visuallyhidden"><%= lang.getContent("accesibility.question.matrix.add.column") %></label>
 															<button class="btn btn-primary btn-sm active" id="btn-add-optionmatrix" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_column") %></span></button>
+							  								<%} %>
 							  							</li>
 							  						</ul>
 							  					<%

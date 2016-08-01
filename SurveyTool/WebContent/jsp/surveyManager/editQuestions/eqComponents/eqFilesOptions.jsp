@@ -3,19 +3,19 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
-<%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
 
-Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-List<Resource> resources = question.getResources();
+Option option = (Option) request.getAttribute(Attribute.s_OPTION);
+List<Resource> resources = option.getResources();
 %>
-<div class="row" type="global" id="multimediaFrame">
-	<label><%= lang.getContent("question.edit.files.title") %></label>
+<div class="row" type="global" id="multimediaFrame" style="margin-top: 40px;">
+	<label><%= lang.getContent("question.edit.files.option.title") %></label>
 	<div id="div_files">
-		<div class="question-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
+		<div class="option-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
 			<ul class="multimedia-list" id="multimediaFilesList">
 				<%							  						
 				for(Resource resource : resources)
@@ -28,11 +28,7 @@ List<Resource> resources = question.getResources();
 				%>
 			</ul>
 		</div>
-		<div>
-			<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-			<button class="btn btn-primary btn-sm active" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o"></i><span><%= lang.getContent("button.add_file") %></span></button>
-			<% } %>
-		</div>
+		
 	</div>
 </div>	
 		

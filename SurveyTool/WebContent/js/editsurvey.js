@@ -6,6 +6,7 @@ var numQuestions = 0;
 var currentElement;
 var currentAddNode;
 var currentQuestion = 0;
+var currentOption = 0;
 var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
 var pending;
@@ -351,15 +352,21 @@ $(function() {
 		console.log( "uploadedFile" );
 		console.log($("#uploadedFile").val());
 		var fileValue = $('uploadedFile').val();
-		 var formData = new FormData(document.getElementById("importFileForm"));
-         formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
+		var formData = new FormData(document.getElementById("importFileForm"));
+        formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
          
+        
+        //check option file or question file
+        
+        
          //alert($('#optionsFile').hasClass('hidden'));
          if($('#optionsFile').hasClass('hidden') == true){
         	 formData.append("qid", currentQuestion);
+        	 formData.append("oid", currentOption);
         	 formData.append("action", "file");
          } else {
         	 formData.append("rid", $('#rid').val());
+        	 formData.append("oid", currentOption);
         	 formData.append("action", "fileUpdate");
          }
          
@@ -412,6 +419,7 @@ $(function() {
 				req.action = "options";
 				req.resourceAltText = $('#resourceAltText').val();
 				req.rid = $('#rid').val();
+				req.oid = currentOption;
 			}
 			else if(type === "video")
 			{
@@ -419,16 +427,26 @@ $(function() {
 				req.resourceDescText = $('#resourceDescText').val();
 				req.resourceUrl = $('#resourceUrl').val();
 				req.qid = currentQuestion;
+				req.oid = currentOption;
 			}
 			
 	        $.post('ImportFileServlet', req, function(res) {
-	  			$('#importFileForm')[0].reset();
-	              $("#importFile").modal("hide");
-	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
-	              multimediaFrame.removeClass("hidden");
-	              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
-	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
-	              $('#optionsFile').empty();
+	        	 $('#importFileForm')[0].reset();
+	             $("#importFile").modal("hide");
+	            if(currentQuestion>=0){
+		  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+		              multimediaFrame.removeClass("hidden");
+		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
+		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+		        }else if(currentOption>=0){
+		        	  var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+		              multimediaFrame.removeClass("hidden");
+		              multimediaFrame.find("div.option-files-frame").removeClass("hidden");
+		              //
+		              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
+		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
+		        }
+	            $('#optionsFile').empty();
 	              $('#optionsFile').addClass('hidden');
 	              $('#selectFile').addClass("hidden");
 	              $('#optionsVideoFile').addClass("hidden");
@@ -559,10 +577,21 @@ $(function() {
 	});*/
 	
 	$('#page-items').on("click", "#btn-question-import-file", function(e){
+		currentOption = -1;
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
+	
+	
+	$('#page-items').on("click", "#add-file-option", function(e){
+		
+		currentQuestion = -1;
+		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
+		currentLanguage = $('#survey-language-version').val();
+		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+	});
+	
 		
 	$('#page-items').on("change", "#type-matrix", function(e){
 		e.stopPropagation();

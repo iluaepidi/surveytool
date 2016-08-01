@@ -23,7 +23,7 @@ public class ResourceHandler {
 		return resourceDB.getResourceTypes();
 	}
 	
-	public Resource insertResource(Resource resource, int questionId)
+	public Resource insertResource(Resource resource, int questionId, int optionid)
 	{
 		int resourceId = 0;
 		
@@ -45,7 +45,9 @@ public class ResourceHandler {
 				resource.getContents().get(key).setContentId(contentId);
 			}*/
 			
-			resourceDB.insertQuestionResource(questionId, resourceId);
+			
+			if(questionId>=0) resourceDB.insertQuestionResource(questionId, resourceId);
+			else if (optionid>=0) resourceDB.updateOptionWithIdResource(optionid, resourceId);
 			resource.setResourceId(resourceId);
 		}
 		
