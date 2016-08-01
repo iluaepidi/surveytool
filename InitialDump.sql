@@ -903,6 +903,37 @@ INSERT INTO `questiontype` VALUES (1,'longText',NULL,'jsp/surveyManager/editQues
 UNLOCK TABLES;
 
 --
+-- Table structure for table `quotas`
+--
+
+DROP TABLE IF EXISTS `quotas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quotas` (
+  `idQuestionnaire` int(11) NOT NULL,
+  `idQuestion` int(11) NOT NULL,
+  `idOptionsGroup` int(11) NOT NULL,
+  `value` varchar(45) NOT NULL,
+  `numResponses` int(11) NOT NULL,
+  PRIMARY KEY (`idQuestionnaire`,`idQuestion`,`idOptionsGroup`,`value`),
+  KEY `fk_Quotas_Question1_idx` (`idQuestion`),
+  KEY `fk_Quotas_OptionsGroup1_idx` (`idOptionsGroup`),
+  CONSTRAINT `fk_Quotas_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Quotas_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Quotas_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quotas`
+--
+
+LOCK TABLES `quotas` WRITE;
+/*!40000 ALTER TABLE `quotas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quotas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `relationtype`
 --
 

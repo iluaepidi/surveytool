@@ -1424,7 +1424,19 @@ $(function() {
 		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
 		
 		updateContent(req, serviceUrl);
-	});		
+	});	
+	
+	$('.survey-sections').on("click", ".logic-button > button", function(){
+		$(this).parent().addClass('hidden');
+		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
+		$(this).closest('div.logic-frame').find('button.btn-close-logic').removeClass('hidden');
+	});
+
+	$('.survey-sections').on("click", "button.btn-close-logic", function(){
+		$(this).closest('div.logic-frame').find('div.logic-button').removeClass('hidden');
+		$(this).closest('div.logic-frame').find('div.logic-settings').addClass('hidden');
+		$(this).addClass('hidden');
+	});
 	
 	//drag and drop
 	/*$(".survey-sections .page-items").sortable({

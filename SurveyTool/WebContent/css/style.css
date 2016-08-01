@@ -861,6 +861,33 @@ footer {margin-top: 10px;
 	width: 92%;
 }
 
+.dependences-frame {position:relative;
+	padding: 10px 0 25px;}
+.logic-frame {position:relative;
+	padding: 25px 0 10px;
+	border-top: 1px solid #000;}
+.logic-option-list {width: 700px;
+    margin: 0 auto;
+    padding: 0px;}
+.logic-option {margin: 5px 0;
+	text-align: center;}
+.logic-option > label > span {margin: 0 5px;
+	width: 150px !important;
+	text-align: left;}
+.logic-option > select {margin-bottom: 0 !important;
+	margin-left: 5px;
+	padding-left: 10px !important;
+	width: 225px !important;}
+.btn-close-logic,
+.btn-close-dependences {position: absolute;
+    right: 0;
+    top: 5px;}
+.btn-close-dependences:focus,
+.btn-close-dependences:hover,
+.btn-close-logic:focus,
+.btn-close-logic:hover {border: 2px solid #23527C !important;
+	color: #23527C !important;}
+
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
 \*----------------------------------------------*/
