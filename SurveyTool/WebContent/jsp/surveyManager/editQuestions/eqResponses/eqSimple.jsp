@@ -37,7 +37,7 @@
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  										<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
-																	<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																	<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  										<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
 							  										<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
@@ -68,7 +68,7 @@
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
-																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  <%= index %></label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
@@ -115,12 +115,21 @@
 							  									boolean addQuestion = (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS);
 							  									if(addQuestion){ %>
 							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 1</label>														
-																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  1</label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 							  								</div>
-							  								
+									  								<div class="row margin-top-40" type="global" id="multimediaFrame">
+																		<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																		<div id="div_files">
+																			<div class="option-files-frame hidden">
+																				<ul class="multimedia-list" id="multimediaFilesList">
+																				</ul>
+																			</div>
+																				
+																		</div>
+																	</div>	
 							  							</li>
 							  							
 							  							<li class="option-item" id="option-item">
@@ -134,12 +143,21 @@
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 2</label>														
-																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  2</label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 							  								</div>
-							  								
+							  								<div class="row margin-top-40" type="global" id="multimediaFrame">
+																		<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																		<div id="div_files">
+																			<div class="option-files-frame hidden">
+																				<ul class="multimedia-list" id="multimediaFilesList">
+																				</ul>
+																			</div>
+																				
+																		</div>
+															</div>	
 							  						</li>
 							  							
 							  							

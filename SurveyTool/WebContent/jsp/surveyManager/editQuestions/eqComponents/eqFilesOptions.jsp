@@ -12,7 +12,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 Option option = (Option) request.getAttribute(Attribute.s_OPTION);
 List<Resource> resources = option.getResources();
 %>
-<div class="row" type="global" id="multimediaFrame" style="margin-top: 40px;">
+<div class="row margin-top-40" type="global" id="multimediaFrame">
 	<label><%= lang.getContent("question.edit.files.option.title") %></label>
 	<div id="div_files">
 		<div class="option-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">

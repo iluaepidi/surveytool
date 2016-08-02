@@ -51,6 +51,7 @@
 		<script>
 		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
 		 var textOption = "<%= lang.getContent("survey.type.option") %>";
+		 var textOptionFile = "<%= lang.getContent("question.edit.files.option.title") %>";
 		 </script>
 
 		<script src="js/bootstrap.min.js"></script>

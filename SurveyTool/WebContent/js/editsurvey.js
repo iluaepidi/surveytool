@@ -300,20 +300,26 @@ $(function() {
 	
 	$('#page-items').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
-		var optionHtml = '<li class="option-item" id="option-item">' +
+		var optionHtml = '<li class="option-item" id="option-item" oid="0">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
+								'<input id="option" type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
-									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
+									//'<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
+									'<button class="btn btn-transparent fleft" id="add-file-option"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
 									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
+								'<div class="row margin-top-40" type="global" id="multimediaFrame"><label>'+textOptionFile+'</label><div id="div_files"><div class="option-files-frame hidden"><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
+	
+	/*$('#add-file-option').click(function(e){
+		
+	});*/
 	
 	$('#page-items').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
@@ -439,7 +445,8 @@ $(function() {
 		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
 		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
 		        }else if(currentOption>=0){
-		        	  var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+		        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+		        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
 		              multimediaFrame.removeClass("hidden");
 		              multimediaFrame.find("div.option-files-frame").removeClass("hidden");
 		              //
@@ -588,8 +595,16 @@ $(function() {
 		
 		currentQuestion = -1;
 		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
-		currentLanguage = $('#survey-language-version').val();
-		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+		
+		if(currentOption>0){
+			currentLanguage = $('#survey-language-version').val();
+			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+			$('#importFile').modal('toggle');
+		}else{
+			alert("First, complete the option");
+			
+			
+		}
 	});
 	
 		
@@ -659,6 +674,7 @@ $(function() {
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		
+		var item = $(this).closest('li');
 		var input = item.find('input');
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(input.attr('oid'));
