@@ -11,6 +11,7 @@ Language lang = new Language(getServletContext().getRealPath("/"));
 lang.loadLanguage(Language.getLanguageRequest(request));
 
 Page pag = (Page) request.getAttribute(Attribute.s_PAGE);
+request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
 %>
 
 

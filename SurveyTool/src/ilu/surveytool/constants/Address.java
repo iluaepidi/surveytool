@@ -28,6 +28,7 @@ public class Address {
 		
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
+		public final static String s_JS_EDIT_SURVEY_DEPENDENCES = "editSurveyDependences";
 		public final static String s_JS_EDIT_POLL = "editPoll";
 		public final static String s_JS_CHART_GRAPHICS = "chart";
 		public final static String s_JS_ZERO_CLIPBOARD = "zeroClipboard";

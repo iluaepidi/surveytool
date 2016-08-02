@@ -37,6 +37,9 @@ public class Attribute {
 	public final static String s_ADD_QUESTIONS = "addQuestions";
 	public final static String s_SECTION = "section";
 	public final static String s_PAGE = "page";
+	public final static String s_NUM_PAGE = "numPage";
+	
+	public final static String s_JSON_PAGES = "jsonPages";
 	
 
 }

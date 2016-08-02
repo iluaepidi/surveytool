@@ -8,6 +8,9 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
 				<%@page import="java.util.Map"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
+				<script type="text/javascript">
+					surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
+				</script>
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 				Survey surveyDefaultLanguage = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO_DEFAULT_LANGUAGE);

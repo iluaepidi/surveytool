@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jettison.json.JSONArray;
+
 import ilu.surveymanager.handler.QuestionHandler;
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
@@ -103,6 +105,12 @@ public class CreateQuestionServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
 			request.setAttribute(Attribute.s_QUESTION, question);	
 			request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
+			
+			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));
+			SurveysHandler surveysHandler = new SurveysHandler();
+			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
+			JSONArray pages = surveysHandler.getQuestionsJson(survey);
+			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
 			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jettison.json.JSONArray;
+
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
@@ -79,6 +81,7 @@ public class SurveysServlet extends HttpServlet {
 			
 			List<String> jsFiles = new ArrayList<>();
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY_DEPENDENCES));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
@@ -91,6 +94,9 @@ public class SurveysServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_PAGE_ID, pageId);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+			
+			JSONArray pages = surveysHandler.getQuestionsJson(survey);
+			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
 			if(language==null || language.equals(survey.getDefaultLanguage())){
 				request.setAttribute(Attribute.s_ADD_QUESTIONS, true);

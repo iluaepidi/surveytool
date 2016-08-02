@@ -878,6 +878,7 @@ footer {margin-top: 10px;
 	margin-left: 5px;
 	padding-left: 10px !important;
 	width: 225px !important;}
+.logic-settings > p {text-align: center;}
 .btn-close-logic,
 .btn-close-dependences {position: absolute;
     right: 0;
@@ -894,18 +895,20 @@ footer {margin-top: 10px;
 	text-align: center;}
 .dependence-item > fieldset > .dependence-action {margin-bottom: 0 !important;
     margin-right: 5px;
-    padding-left: 10px !important;
+    padding-left: 5px !important;
     padding-right: 5px !important;
     width: 90px;}
 .dependence-item > fieldset > .dependence-question {margin-bottom: 0 !important;
     margin: 0 5px;
-    padding-left: 10px !important;
+    padding-left: 5px !important;
+    padding-right: 0px !important;
     width: 200px !important;}
 .dependence-item > fieldset > .dependence-option {margin-bottom: 0 !important;
     margin: 0 5px;
-    padding-left: 10px !important;
+    padding-left: 5px !important;
     padding-right: 5px !important;
     width: 90px;}
+.dependences-add-button {margin-top: 15px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY

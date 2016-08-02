@@ -18,6 +18,8 @@ import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.Option;
+import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
@@ -200,7 +202,35 @@ public class SurveysHandler {
 						JSONObject questionJson = new JSONObject();
 						questionJson.put("questionId", question.getQuestionId());
 						questionJson.put("index", question.getIndex());
+						questionJson.put("type", question.getQuestionType());
 						questionJson.put("title", question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+						JSONArray optionsGroupsJson = new JSONArray();
+												
+						if(question.getOptionsGroups() != null && !question.getOptionsGroups().isEmpty())
+						{
+							for(OptionsGroup optionsGroup : question.getOptionsGroups())
+							{
+								JSONObject optionsGroupJson = new JSONObject();
+								optionsGroupJson.put("optionsGroupId", optionsGroup.getId());
+								JSONArray optionsJson = new JSONArray();
+								if(optionsGroup.getOptions() != null && !optionsGroup.getOptions().isEmpty())
+								{
+									for(Option option : optionsGroup.getOptions())
+									{
+										JSONObject optionJson = new JSONObject();
+										optionJson.put("optionId", option.getId());
+										optionJson.put("index", option.getIndex());
+										optionJson.put("title", option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+										
+										optionsJson.put(optionJson);
+									}
+								}
+								optionsGroupJson.put("options", optionsJson);
+								optionsGroupsJson.put(optionsGroupJson);
+							}
+						}						
+						questionJson.put("optionsGroup", optionsGroupsJson);
+						
 						questionsJson.put(questionJson);
 					}
 					
