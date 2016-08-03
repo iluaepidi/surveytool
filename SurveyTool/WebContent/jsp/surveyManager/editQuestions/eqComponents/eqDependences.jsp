@@ -1,5 +1,6 @@
 							  					
-												<%@page import="org.codehaus.jettison.json.JSONObject"%>
+												<%@page import="ilu.surveytool.constants.Parameter"%>
+<%@page import="org.codehaus.jettison.json.JSONObject"%>
 <%@page import="org.codehaus.jettison.json.JSONArray"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
@@ -35,50 +36,19 @@
 							  							</div>
 							  							<div class="dependences-settings hidden">
 							  								<ul class="dependences-list form-inline">
-							  									<li class="dependence-item">
-							  										<fieldset>
-							  											<legend class="visuallyhidden">Dependence 1 to the question: <%= title %></legend>
-								  										<label for="dependence-action-<%= "1" %>" class="visuallyhidden"><%= lang.getContent("question.edit.dependence.action.label") %></label>
-								  										<select id="dependence-action-<%= "1" %>" class="form-control dependence-action">
-								  											<option value="show" selected><%= lang.getContent("question.edit.dependence.action.option.show") %></option>
-								  											<option value="hide" ><%= lang.getContent("question.edit.dependence.action.option.hide") %></option>
-								  										</select>
-								  										<label for="dependence-question-<%= "1" %>">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
-								  										</label>
-								  										<select id="dependence-question-<%= "1" %>" class="form-control dependence-question">
-								  											<option value="none" selected><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>
-								  										<%
-								  										for(int i = 0; i < numPage - 1; i++)
-								  										{
-								  											JSONObject pageJson = (JSONObject) pagesJson.get(i);
-								  											for(int j = 0; j < pageJson.getJSONArray("questions").length(); j++)
-								  											{
-								  												JSONObject questionJson = (JSONObject) pageJson.getJSONArray("questions").get(j);
-								  												String type = questionJson.getString("type");
-								  												if(type.equals("simple"))
-								  												{
-								  										%>
-								  											<option value="<%= pageJson.getInt("numPage") + "-" + questionJson.getInt("questionId") %>"><%= questionJson.getString("title") %></option>
-								  										<%
-								  												}
-								  											}
-								  										}
-								  										%>								  										
-								  										</select>
-								  										<label for="dependence-option-<%= "1" %>">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.option.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.option.label_shown") %>
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></span>
-								  										</label>
-								  										<select id="dependence-option-<%= "1" %>" class="form-control dependence-option">
-								  											<option value="show" selected><%= lang.getContent("question.edit.dependence.action.option.show") %></option>
-								  											<option value="hide" ><%= lang.getContent("question.edit.dependence.action.option.hide") %></option>
-								  										</select>
-								  									</fieldset>
-							  									</li>
+
+																<jsp:include page="eqDependenceItem.jsp">
+																	<jsp:param value="" name="title"/>
+																	<jsp:param value="" name="index"/>
+																	<jsp:param value="true" name="hidden"/>
+																</jsp:include>
+																
+																<jsp:include page="eqDependenceItem.jsp">
+																	<jsp:param value="<%= title %>" name="title"/>
+																	<jsp:param value="1" name="index"/>
+																	<jsp:param value="false" name="hidden"/>
+																</jsp:include>							  									
+
 							  								</ul>
 							  								<div class="dependences-add-button center">
 								  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_dependence") %></button>

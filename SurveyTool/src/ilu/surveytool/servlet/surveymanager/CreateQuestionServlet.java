@@ -105,13 +105,16 @@ public class CreateQuestionServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
 			request.setAttribute(Attribute.s_QUESTION, question);	
 			request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
-			
+			/*
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));
 			SurveysHandler surveysHandler = new SurveysHandler();
 			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
 			JSONArray pages = surveysHandler.getQuestionsJson(survey);
 			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
+			int numPage = Integer.parseInt(request.getParameter(Parameter.s_NUM_PAGE));
+			request.setAttribute(Attribute.s_NUM_PAGE, numPage);
+			*/
 			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}
 		else

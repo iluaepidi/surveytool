@@ -64,7 +64,7 @@ $(function() {
 			showFieldError($('#qstatement'));
 		}else{
 			hideFieldError($('#qstatement'));
-			
+			console.log("num page: " + currentElement.attr('index'));
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
 			$.post('CreateQuestionServlet', {
 				qtype : $('#qtypevalue').val(),
@@ -73,6 +73,7 @@ $(function() {
 				helpText: $('#help-text').val(),
 				surveyid: $('#surveyid').val(),
 				pageid: currentElement.attr('pid'),
+				numPage: currentElement.attr('index'),
 				langsurvey : $("#survey-language-version").val()
 			}, function(responseText) {
 				var index = responseText.indexOf("<html");
@@ -1361,9 +1362,9 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("focusout", "#survey-question-title", function(e){
+	$('#survey-sections').on("focusout", "#survey-question-title", function(e){
 		
-		
+		console.log("Question update content entra");
 		e.stopPropagation();
 		var req = {};		
 		req.text = $(this).val();

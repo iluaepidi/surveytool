@@ -22,7 +22,7 @@
 												<h5 class="panel-title">
 													<div class="col-sm-12">
 														<div class="form-group" style="margin:0px;">
-															<input type="text" class="survey-section-title-unselected" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>
+															<input type="text" class="survey-section-title-unselected survey-question-title" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>
 															<span id='survey-question-title<%= question.getQuestionId() %>-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
 						  									<span id='survey-question-title<%= question.getQuestionId() %>-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.question.title") %></span>
 														</div>
