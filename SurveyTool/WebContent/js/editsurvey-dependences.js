@@ -6,7 +6,7 @@ var surveyTree;
 
 $(function() {
 
-	//console.log("surveyTree: " + JSON.stringify(surveyTree));
+	console.log("surveyTree: " + JSON.stringify(surveyTree));
 	
 	//Create the question list of the select when focus in select control
 	$(".survey-sections").on("focusin", "select.dependence-question", function(e){

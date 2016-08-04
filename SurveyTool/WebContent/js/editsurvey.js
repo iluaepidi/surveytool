@@ -166,7 +166,7 @@ $(function() {
 		//console.log("Option text field!!!! " + $(this).parent().parent().children("li").size());
 	});
 	
-	$('#page-items').on("focusout", "#option-list #option-item input", function(e){
+	$('.survey-sections').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
