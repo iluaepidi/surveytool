@@ -608,13 +608,13 @@ DROP TABLE IF EXISTS `qdependencesvalue`;
 CREATE TABLE `qdependencesvalue` (
   `idQDependences` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
-  `OptionsGroup_idOptionsGroup` int(11) NOT NULL,
+  `idOptionsGroup` int(11) NOT NULL,
   `optionValue` varchar(45) NOT NULL,
-  PRIMARY KEY (`idQDependences`,`idQuestion`,`OptionsGroup_idOptionsGroup`,`optionValue`),
+  PRIMARY KEY (`idQDependences`,`idQuestion`,`idOptionsGroup`,`optionValue`),
   KEY `fk_QDependencesValue_Question1_idx` (`idQuestion`),
-  KEY `fk_QDependencesValue_OptionsGroup1_idx` (`OptionsGroup_idOptionsGroup`),
-  CONSTRAINT `fk_QDependencesValue_OptionsGroup1` FOREIGN KEY (`OptionsGroup_idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_QDependencesValue_QDependences1` FOREIGN KEY (`idQDependences`) REFERENCES `qdependences` (`idQDependences`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  KEY `fk_QDependencesValue_OptionsGroup1_idx` (`idOptionsGroup`),
+  CONSTRAINT `fk_QDependencesValue_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QDependencesValue_QDependences1` FOREIGN KEY (`idQDependences`) REFERENCES `qdependences` (`idQDependences`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependencesValue_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -800,6 +800,7 @@ CREATE TABLE `questionnaire` (
   `publicId` varchar(45) NOT NULL,
   `author` int(11) NOT NULL,
   `defaultLanguage` int(11) NOT NULL DEFAULT '1',
+  `numResponses` int(11) DEFAULT NULL,
   PRIMARY KEY (`idQuestionnaire`),
   KEY `fk_Questionnaire_ContentIndex1_idx` (`idContent`),
   KEY `fk_Questionnaire_Project1_idx` (`idProject`),
@@ -809,7 +810,7 @@ CREATE TABLE `questionnaire` (
   CONSTRAINT `fk_Questionnaire_Project1` FOREIGN KEY (`idProject`) REFERENCES `project` (`idProject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnaire_User1` FOREIGN KEY (`author`) REFERENCES `user` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnarie_DefaultLang` FOREIGN KEY (`defaultLanguage`) REFERENCES `language` (`idLanguage`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -914,7 +915,8 @@ CREATE TABLE `quotas` (
   `idQuestion` int(11) NOT NULL,
   `idOptionsGroup` int(11) NOT NULL,
   `value` varchar(45) NOT NULL,
-  `numResponses` int(11) NOT NULL,
+  `maxResponses` int(11) NOT NULL,
+  `minResponses` int(11) NOT NULL,
   PRIMARY KEY (`idQuestionnaire`,`idQuestion`,`idOptionsGroup`,`value`),
   KEY `fk_Quotas_Question1_idx` (`idQuestion`),
   KEY `fk_Quotas_OptionsGroup1_idx` (`idOptionsGroup`),
