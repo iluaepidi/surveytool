@@ -35,7 +35,7 @@
 							  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_dependence") %></button>
 							  							</div>
 							  							<div class="dependences-settings hidden">
-							  								<ul class="dependences-list form-inline">
+							  								<ul class="dependences-list form-inline" index = "0">
 
 																<jsp:include page="eqDependenceItem.jsp">
 																	<jsp:param value="" name="title"/>
@@ -45,7 +45,7 @@
 																
 																<jsp:include page="eqDependenceItem.jsp">
 																	<jsp:param value="<%= title %>" name="title"/>
-																	<jsp:param value="1" name="index"/>
+																	<jsp:param value="-1" name="index"/>
 																	<jsp:param value="false" name="hidden"/>
 																</jsp:include>							  									
 
@@ -82,7 +82,7 @@
 							  											<%= lang.getContent("question.edit.logic.option.goto.label") %>
 							  										</label>
 							  										<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
-							  											<option selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
+							  											<option value="none" class="default-option" selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
 							  										</select>
 							  									</li>
 							  									<%

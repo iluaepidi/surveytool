@@ -898,17 +898,25 @@ footer {margin-top: 10px;
     padding-left: 5px !important;
     padding-right: 5px !important;
     width: 90px;}
+.dependence-item > fieldset > .dependence-condition {margin-bottom: 0 !important;
+    margin-right: 5px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 60px;}
 .dependence-item > fieldset > .dependence-question {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 0px !important;
-    width: 200px !important;}
+    width: 180px !important;}
 .dependence-item > fieldset > .dependence-option {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 5px !important;
-    width: 90px;}
+    width: 130px;}
 .dependences-add-button {margin-top: 15px;}
+
+.fieldset-next-dependences{padding-left: 135px;}
+.fieldset-second-dependence{padding-left: 65px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY

@@ -55,6 +55,9 @@
 												    <jsp:param name="response" value="../eqResponses/eqMatrix.jsp" />
 												</jsp:include>
 							  					
-							  							  					
+							  					
+												<jsp:include page="eqComponents/eqDependences.jsp">
+													<jsp:param value="false" name="withLogic"/>
+												</jsp:include>		  					
 											</div>																							
 										</li>

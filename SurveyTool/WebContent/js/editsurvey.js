@@ -80,6 +80,7 @@ $(function() {
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
 				else {currentElement.find('#page-items').append(responseText);}
 			});
+			console.log("after post");
 			$('#qstatement').val("");
 			//$('#main-version').val("none");
 			$('#mandatory').val("false");
