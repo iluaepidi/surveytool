@@ -56,6 +56,7 @@ h2 {width: auto;
 .btn-transparent:hover, .btn-transparent:focus {border-color: inherit !important;}	
 .btn-survey {font-weight: bold !important;}
 .fleft {float:left;}
+.fright {float:right;}
 .error-msg {color: #B60000;
     font-size: 1.1em;
     font-weight: bold;}
@@ -915,8 +916,8 @@ footer {margin-top: 10px;
     width: 130px;}
 .dependences-add-button {margin-top: 15px;}
 
-.fieldset-next-dependences{padding-left: 135px;}
-.fieldset-second-dependence{padding-left: 65px;}
+.fieldset-next-dependences{padding-left: 139px;}
+.fieldset-second-dependence{padding-left: 50px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
@@ -1078,3 +1079,7 @@ footer {margin-top: 10px;
     text-align: right;
     display: inline;
     height: 30px;}
+    
+.trash {
+	margin-right: 30px !important;
+}

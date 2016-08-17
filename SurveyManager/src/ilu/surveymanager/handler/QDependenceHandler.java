@@ -7,7 +7,9 @@ import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveymanager.data.QDependence;
 import ilu.surveymanager.data.QDependenceValue;
+import ilu.surveytool.databasemanager.LogicGoToDB;
 import ilu.surveytool.databasemanager.QDependenceDB;
+import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 
 public class QDependenceHandler {
 
@@ -19,27 +21,32 @@ public class QDependenceHandler {
 	{
 		QDependenceDB qDependenceDB= new QDependenceDB();
 		JSONObject response = new JSONObject();
-		QDependenceValue qdepvale = qdependence.getqdepval().get(0);
+		QDependenceValue qdepvalue = qdependence.getqdepval().get(0);
 		
 		try {
-			
-			if(qdepvale.getOid()>0){
-			
-				if(qdependence.getId() == 0)
+			System.out.println("qdepvalue.getOid(): "+qdepvalue.getOid()+", qdependence.getId(): "+qdependence.getId()+", qdepvalue.getItemId(): "+qdepvalue.getItemId());
+			if(qdepvalue.getOid()>0){
+				System.out.println("Dentro de 'if(qdepvalue.getOid()>0)'");
+				if((qdependence.getId() == 0) || (qDependenceDB.getCountQDependenceValue(qdependence.getId()) == 0))
 				{
+					System.out.println("Dentro de 'if(qdependence.getId() == 0)'");
 					int qdependenceId = qDependenceDB.insertQDependence(qdependence.getQuestionId(), qdependence.getDependenceType());
 					qdependence.setId(qdependenceId);
-					int qDependeceItemId = qDependenceDB.insertQDependenceValue(qdependenceId, qdepvale.getQid(), qdepvale.getOgid(), String.valueOf(qdepvale.getOid()));
+					int qDependeceItemId = qDependenceDB.insertQDependenceValue(qdependenceId, qdepvalue.getQid(), qdepvalue.getOgid(), String.valueOf(qdepvalue.getOid()));
 					response.put("qdependenceId", String.valueOf(qdependenceId));
 					response.put("qDependeceItemId", String.valueOf(qDependeceItemId));
 				}
-				else if(qdepvale.getItemId() >= 0)
+				else if(qdepvalue.getItemId() >= 0)
 				{
-					qDependenceDB.updateQDependence(qdependence.getId(), qdepvale.getQid(), qdepvale.getOgid(), qdepvale.getOid(), qdependence.getDependenceType());
+					System.out.println("Dentro de 'if(qdepvalue.getItemId() >= 0)'");
+					qDependenceDB.updateQDependence(qdependence.getId(), qdepvalue.getQid(), qdepvalue.getOgid(), qdepvalue.getOid(), qdependence.getDependenceType());
 				}
 				else
 				{
-					int qDependeceItemId = qDependenceDB.insertQDependenceValue(qdependence.getId(), qdepvale.getQid(), qdepvale.getOgid(), String.valueOf(qdepvale.getOid()));
+					System.out.println("Dentro del else");
+					int qDependeceItemId = qDependenceDB.insertQDependenceValue(qdependence.getId(), qdepvalue.getQid(), qdepvalue.getOgid(), String.valueOf(qdepvalue.getOid()));
+					if(!qdependence.getDependenceType().equals(""))
+						qDependenceDB.updateQDependenceType(qdependence.getId(), qdependence.getDependenceType());
 					response.put("qDependeceItemId", String.valueOf(qDependeceItemId));
 				}
 			}
@@ -62,25 +69,39 @@ public class QDependenceHandler {
 		}
 	}
 	
-	public void removeQDependence(int qDependenceId)
+	public boolean removeQDependence(int qDependenceId)
 	{
 		QDependenceDB qDependenceDB = new QDependenceDB();
-		qDependenceDB.removeQDependenceValue(qDependenceId);
-		qDependenceDB.removeQDependence(qDependenceId);
+		boolean response = qDependenceDB.removeAllQDependenceValue(qDependenceId);
+		if(response)
+			response = qDependenceDB.removeQDependence(qDependenceId);
+		
+		return response;
 	}
 	
-	public void removeAllQDependences(int questionId)
+	public boolean removeQDependenceValue(int qItemDependenceId)
 	{
+		QDependenceDB qDependenceDB = new QDependenceDB();
+		return qDependenceDB.removeQDependenceValue(qItemDependenceId);
+	}
+	
+	public boolean removeAllQDependences(int questionId)
+	{
+		boolean response = false;
 		try {
 			QDependenceDB qDependenceDB= new QDependenceDB();
-			int qDependenceId = qDependenceDB.getQDependenceByQuestionId(questionId).getId();
-			qDependenceDB.removeQDependenceValue(qDependenceId);
-			qDependenceDB.removeQDependence(qDependenceId);
+			int qDependenceId = qDependenceDB.getQDependenceIdByQuestionId(questionId);
+			response = qDependenceDB.removeQDependenceValue(qDependenceId);
+			if(response)
+				response = qDependenceDB.removeQDependence(qDependenceId);
 		}
 		catch (Exception e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		return response;
+		
 	}
+	
 }

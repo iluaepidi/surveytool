@@ -31,10 +31,12 @@
 								  											<option value="hide" ><%= lang.getContent("question.edit.dependence.action.option.hide") %></option>
 								  										</select>-->
 								  										<label for="dependence-condition-<%= index %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
-								  										<select id="dependence-condition-<%= index %>" class="form-control dependence-condition hidden">
-								  											<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  											<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
-								  										</select>
+								  										<div class="form-group"  style="margin:0px !important;">
+									  										<select id="dependence-condition-<%= index %>" class="form-control dependence-condition hidden">
+									  											<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+									  											<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+									  										</select>
+								  										</div>
 								  										<label for="dependence-question-<%= index %>" class="dependence-question-label">
 								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
 								  											<%= lang.getContent("question.edit.dependence.question.label_shown") %>
@@ -45,16 +47,28 @@
 								  											<%= lang.getContent("question.edit.dependence.question.label_next_shown") %>
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
 								  										</label>
-								  										<select id="dependence-question-<%= index %>" class="form-control dependence-question">
-								  											<option value="none" class="default-option" selected><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>								  																	  										
-								  										</select>
+								  										<div class="form-group"  style="margin:0px !important;">
+									  										<select id="dependence-question-<%= index %>" class="form-control dependence-question">
+									  											<option value="none" class="default-option" selected><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>								  																	  										
+									  										</select>
+								  										</div>
 								  										<label for="dependence-option-<%= index %>" class="dependence-option-label">
 								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.option.label_hidden") %></span>
 								  											<%= lang.getContent("question.edit.dependence.option.label_shown") %>
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.option.label_help_hidden") %>)</span>
 								  										</label>
-								  										<select id="dependence-option-<%= index %>" class="form-control dependence-option">
-								  											<option value="none" class="default-option" selected><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
-								  										</select>
+								  										
+								  										<div class="form-group"  style="margin:0px !important;">
+				    														<select id="dependence-option-<%= index %>" class="form-control dependence-option">
+								  												<option value="none" class="default-option" selected><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
+								  											</select>
+				    														<span id='dependence-option-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  																<span id='dependence-option-error' class='error hidden' style=''><%= lang.getContent("msg.error.dependence-option.text") %></span>	
+																		</div>
+								  										
+								  										<div class="option-icons fright">
+							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= index %></label>
+							  												<button class="btn btn-transparent fright red trash" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
+							  											</div>
 								  									</fieldset>
 							  									</li>

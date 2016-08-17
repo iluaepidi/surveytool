@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,6 +21,7 @@ import ilu.surveymanager.data.Option;
 import ilu.surveymanager.data.QDependence;
 import ilu.surveymanager.data.QDependenceValue;
 import ilu.surveymanager.data.OptionsGroupSurveyManager;
+import ilu.surveymanager.handler.LogicGoToHandler;
 import ilu.surveymanager.handler.OptionHandler;
 import ilu.surveymanager.handler.QDependenceHandler;
 import ilu.surveytool.databasemanager.DataObject.Content;
@@ -152,13 +154,20 @@ public class QuestionCreatorService {
 					Integer.parseInt(json.getString("qid")),
 					Integer.parseInt(json.getString("ogid")),
 					Integer.parseInt(json.getString("oid"))));
-			
-			QDependence qDependence = new QDependence(Integer.parseInt(json.getString("index")),
+			QDependence qDependence;
+			if(json.has("deptype")){
+			qDependence = new QDependence(Integer.parseInt(json.getString("index")),
 					Integer.parseInt(json.getString("questionid")),
    					1,
    					json.getString("deptype"),
    					qDependenceValue);
-			
+			}else{
+				qDependence = new QDependence(Integer.parseInt(json.getString("index")),
+						Integer.parseInt(json.getString("questionid")),
+	   					1,
+	   					"",
+	   					qDependenceValue);
+			}
 			QDependenceHandler qDependenceHandler = new QDependenceHandler();
 			response = qDependenceHandler.saveQDependence(qDependence);
 			
@@ -201,12 +210,55 @@ public class QuestionCreatorService {
     	try {
 			json = new JSONObject(req);
 			QDependenceHandler qDependenceHandler = new QDependenceHandler();
-			qDependenceHandler.removeQDependence(Integer.parseInt(json.getString("itemid")));
+			qDependenceHandler.removeQDependence(Integer.parseInt(json.getString("index")));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return response;
+    }
+	
+	@POST
+	@Path("/removeDependenceValue")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String removeDependenceValue(String req) {
+    	System.out.println("Opción (removeDependence): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			QDependenceHandler qDependenceHandler = new QDependenceHandler();
+			qDependenceHandler.removeQDependenceValue(Integer.parseInt(json.getString("itemindex")));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@DELETE
+	@Path("/{qid}/{param}")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String deleteDependenceValue(@PathParam("qid") int qindex,@PathParam("param") int itemindex) {
+		String response = "";
+		System.out.println("Opción (removeDependence by param): " + itemindex);
+    	QDependenceHandler qDependenceHandler = new QDependenceHandler();
+    	response = String.valueOf(qDependenceHandler.removeQDependenceValue(itemindex));
+		return response;
+    }
+	
+	@DELETE
+	@Path("/All/{qid}/{param}")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String deleteDependences(@PathParam("qid") int qindex,@PathParam("param") int index) {
+		String response = "";
+		System.out.println("Opción (removeAllDependence by param): " + index);
+    	QDependenceHandler qDependenceHandler = new QDependenceHandler();
+    	response = String.valueOf(qDependenceHandler.removeQDependence(index));
+		return response;
     }
 	
 	@POST
@@ -226,5 +278,42 @@ public class QuestionCreatorService {
 			e.printStackTrace();
 		}
     	return response;
+    }
+	
+	@POST
+	@Path("/insertLogic")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String insertLogic(String req) {
+    	System.out.println("insertLogic: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			LogicGoToHandler logicGoToHandler = new LogicGoToHandler();
+			if (json.has("questionid")){
+				System.out.println("Exists questionId");
+				logicGoToHandler.insertLogic(Integer.parseInt(json.getString("qid")),Integer.parseInt(json.getString("ogid")),Integer.parseInt(json.getString("oid")), Integer.parseInt(json.getString("questionid")));
+			}else{
+				System.out.println("Not exist questionId");
+				logicGoToHandler.removeLogicGoTo(Integer.parseInt(json.getString("qid")),Integer.parseInt(json.getString("ogid")),Integer.parseInt(json.getString("oid")));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@DELETE
+	@Path("/AllLogic/{qid}")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String deleteAllLogicGoTo(@PathParam("qid") int qid) {
+		String response = "";
+		System.out.println("deleteAllLogic");
+		LogicGoToHandler logicGoToHandler = new LogicGoToHandler();
+    	response = String.valueOf(logicGoToHandler.removeAllLogicGoTo(qid));
+		return response;
     }
 }

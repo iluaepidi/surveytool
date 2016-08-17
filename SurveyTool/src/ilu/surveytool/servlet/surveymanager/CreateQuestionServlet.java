@@ -105,6 +105,7 @@ public class CreateQuestionServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_TEMPLATE_FILE, templateFile);
 			request.setAttribute(Attribute.s_QUESTION, question);	
 			request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
+			System.out.println("numPage: "+request.getParameter(Parameter.s_NUM_PAGE));
 			/*
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));
 			SurveysHandler surveysHandler = new SurveysHandler();

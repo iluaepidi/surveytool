@@ -57,7 +57,7 @@ public class QDependenceDB {
 	 * Selects
 	 */
 	
-	public QDependence getQDependenceByQuestionId(int questionId)
+	public QDependence getQDependenceByQuestionId(int questionId, String lang)
 	{
 		QDependence qDependence = null;
 		List<QDependenceValue> qDependenceValue = new ArrayList<QDependenceValue>();
@@ -67,8 +67,10 @@ public class QDependenceDB {
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTIONID);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG);			
 	   		pstm.setInt(1, questionId);
+	   		pstm.setString(2, lang);
+	   		pstm.setString(3, lang);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
@@ -87,11 +89,15 @@ public class QDependenceDB {
 	   			qDependenceValue.add(new QDependenceValue(
 	   					rs.getInt(DBFieldNames.s_DEPENDENCEITEM),
 	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
+	   					rs.getInt(DBFieldNames.s_PAGE_ID),
+	   					rs.getString(DBFieldNames.s_QTEXT),
 	   					rs.getInt(DBFieldNames.s_OPTIONSGROUPID),
-	   					rs.getInt(DBFieldNames.s_OPTIONID)));
+	   					rs.getInt(DBFieldNames.s_DEPENDENCEOPTIONID),
+	   					rs.getString(DBFieldNames.s_OTEXT)));
 	   		}
 	   		
-	   		qDependence.setqdepval(qDependenceValue);
+	   		if(qDependence != null)
+	   			qDependence.setqdepval(qDependenceValue);
 	   		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,37 +109,23 @@ public class QDependenceDB {
 		return qDependence;
 	}
 	
-
-	public QDependence getQDependenceByQuestionsIdOption(int questionId, int condquestionID, int ogid, int oid)
+	public int getQDependenceIdByQuestionId(int questionId)
 	{
-		QDependence qDependence = null;
+		int qDependenceId = 0;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTION_CONDQUESTION_AND_OPTION);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCEID_BY_QUESTIONID_LANG);			
 	   		pstm.setInt(1, questionId);
-	   		pstm.setInt(2, condquestionID);
-	   		pstm.setInt(3, ogid);
-	   		pstm.setInt(4, oid);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
-	   			qDependence = new QDependence(rs.getInt(DBFieldNames.s_IDQDEPENDENCE),
-	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
-	   					1,
-	   					rs.getString(DBFieldNames.s_DEPENDENCETYPE),
-	   					new ArrayList<QDependenceValue>());
-	   			
-	   			List<QDependenceValue> qDependenceValue = new ArrayList<QDependenceValue>();
-	   			qDependenceValue.add(new QDependenceValue(rs.getInt(DBFieldNames.s_DEPENDENCEITEM),
-	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
-	   					rs.getInt(DBFieldNames.s_OPTIONSGROUPID),
-	   					rs.getInt(DBFieldNames.s_OPTIONID)));
-	   			qDependence.setqdepval(qDependenceValue);
+	   			qDependenceId = rs.getInt(DBFieldNames.s_IDQDEPENDENCE);
+	   				
 	   		}
 	   		
 		} catch (SQLException e) {
@@ -143,9 +135,66 @@ public class QDependenceDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return qDependence;
+		return qDependenceId;
 	}
 	
+	
+	public int getCountQDependenceValue(int qDependenceId)
+	{
+		int count = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_COUNT_QDEPENDENCESVALUE);			
+	   		pstm.setInt(1, qDependenceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			count = rs.getInt(DBFieldNames.s_COUNT);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+			
+		return count;
+	}
+	
+	public int getIDQDependence(int qDependenceValueItem)
+	{
+		int id = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_IDQDEPENDENCE_FROM_QDEPENDENCESVALUE);			
+			pstm.setInt(1, qDependenceValueItem);
+	   		
+			rs = pstm.executeQuery();
+			if(rs.next())
+			{
+				id = rs.getInt(DBFieldNames.s_IDQDEPENDENCE);
+			}
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+			
+		return id;
+	}
+
 	/**
 	 * Inserts 
 	 */
@@ -159,7 +208,10 @@ public class QDependenceDB {
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QDEPENDENCE, Statement.RETURN_GENERATED_KEYS);
 		   pstm.setInt(1, idQuestion); 
 		   pstm.setInt(2, idQuestion); 
-		   pstm.setString(3, idDependenceType);
+		   if((idDependenceType==null) || (idDependenceType.equals("")))
+			   pstm.setString(3, "And");
+		   else
+			   pstm.setString(3, idDependenceType);
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -263,7 +315,7 @@ public class QDependenceDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QDEPENDENCEVALUE_QUESTION);
 			pstm.setInt(1, idQuestion);
 			pstm.setInt(2, idOptionsGroup);
-			pstm.setInt(2, idOption);
+			pstm.setInt(3, idOption);
 			pstm.setInt(4, idQDependences);
 		   		
 			int numUpdated = pstm.executeUpdate();
@@ -287,16 +339,18 @@ public class QDependenceDB {
 	/**
 	 * Remove
 	 */
-	public void removeQDependence(int idQDependences) {
+	public boolean removeQDependence(int idQDependences) {
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
+		boolean response = false;
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_QDEPENDENCE);
 		   	pstm.setInt(1, idQDependences);
 	   		
 		   	pstm.execute();
+		   	response = true;
 		   	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -305,18 +359,27 @@ public class QDependenceDB {
 			this._closeConnections(con, pstm, null);
 		}
 
+		return response;
 	}
 
-	public void removeQDependenceValue(int idQDependences) {
+	public boolean removeQDependenceValue(int idQDependencesValue) {
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
+		boolean response = false;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTION);
-		   	pstm.setInt(1, idQDependences);
+			int idQDependences = getIDQDependence(idQDependencesValue);
+			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_QDEPENDENCEVALUE);
+		   	pstm.setInt(1, idQDependencesValue);
 	   		
 		   	pstm.execute();
+		   	response = true;
+		   	System.out.println(DBSQLQueries.s_DELETE_QDEPENDENCEVALUE+", 1="+idQDependencesValue +"-->"+response);
+		   			   	
+		   	if(getCountQDependenceValue(idQDependences) == 0)
+		   		removeQDependence(idQDependences);
 		   	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -325,7 +388,35 @@ public class QDependenceDB {
 			this._closeConnections(con, pstm, null);
 		}
 
+		return response;
+
 	}
-	
+
+
+	public boolean removeAllQDependenceValue(int idQDependences) {
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		boolean response = false;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_ALLQDEPENDENCEVALUE);
+		   	pstm.setInt(1, idQDependences);
+	   		
+		   	pstm.execute();
+		   	response = true;
+		   	System.out.println(DBSQLQueries.s_DELETE_ALLQDEPENDENCEVALUE+", 1="+idQDependences +"-->"+response);
+		   	removeQDependence(idQDependences);
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+		return response;
+
+	}
 
 }

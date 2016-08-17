@@ -99,7 +99,15 @@ public class DBFieldNames {
 	//QDependences
 		public final static String s_IDQDEPENDENCE = "idQDependences";
 		public final static String s_SHOW = "show";
-		public final static String s_DEPENDENCETYPE ="name";
+		public final static String s_DEPENDENCETYPE ="depType";
 		public final static String s_DEPENDENCEITEM = "idDependenceItem";
+		public final static String s_DEPENDENCEOPTIONID = "optionValue";
+		public final static String s_QTEXT = "qText";
+		public final static String s_OTEXT = "oText";
+		public final static String s_COUNT = "count";
+		
+	//QDependences
+		public final static String s_QDESTID = "idQuestionDest";
+		public final static String s_OPTIONVALUE = "optionValue";
 
 }

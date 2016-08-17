@@ -21,6 +21,8 @@ public class Question {
 	String formPage = "";
 	List<OptionsGroup> optionsGroups;
 	List<Resource> resources;
+	QDependence qdependence;
+	List<LogicGoTo> logicGoTo;
 	int index = 0;
 	
 	public Question() {
@@ -29,10 +31,11 @@ public class Question {
 		parameters = new HashMap<String, String>();
 		optionsGroups = new ArrayList<OptionsGroup>();
 		resources = new ArrayList<Resource>();
+		logicGoTo = new ArrayList<LogicGoTo>();
 	}
 
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
-			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters) {
+			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters, QDependence qdependence, List<LogicGoTo> logicGoTo) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -44,11 +47,13 @@ public class Question {
 		this.optionalAnswer = optionalAnswer;
 		this.helpText = helpText;
 		this.parameters = parameters;
+		this.qdependence = qdependence;
+		this.logicGoTo= logicGoTo;
 	}
 	
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
 			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters,
-			String templatePage, String formPage) {
+			String templatePage, String formPage, QDependence qdependence, List<LogicGoTo> logicGoTo) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -62,6 +67,8 @@ public class Question {
 		this.parameters = parameters;
 		this.templatePage = templatePage;
 		this.formPage = formPage;
+		this.qdependence = qdependence;
+		this.logicGoTo= logicGoTo;
 	}
 
 	public int getQuestionId() {
@@ -195,6 +202,22 @@ public class Question {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+	
+	public QDependence getQDependence() {
+		return qdependence;
+	}
+
+	public void setQDependence(QDependence qdependence) {
+		this.qdependence = qdependence;
+	}
+	
+	public List<LogicGoTo> getLogicGoTo() {
+		return logicGoTo;
+	}
+
+	public void setLogicGoTo(List<LogicGoTo> logicGoTo) {
+		this.logicGoTo = logicGoTo;
+	}
 
 	@Override
 	public String toString() {
@@ -203,7 +226,7 @@ public class Question {
 				+ ", mandatory=" + mandatory + ", optionalAnswer=" + optionalAnswer
 				+ ", helpText=" + helpText + ", templatePage=" + templatePage
 				+ ", formPage=" + formPage + ", optionsGroups=" + optionsGroups + ", resources=" + resources
-				+ ", index=" + index + "]";
+				+ ", index=" + index + ", qdependence=" + qdependence.toString() + ", logicGoTo=" + logicGoTo.toString() + "]";
 	}
 	
 }

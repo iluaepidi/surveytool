@@ -12,8 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
+import ilu.surveytool.databasemanager.DataObject.QDependence;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
 import ilu.surveytool.databasemanager.DataObject.Resource;
@@ -189,7 +191,11 @@ public class QuestionDB {
 	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterPollByPollIDQuestionID(pollId, rs.getInt(DBFieldNames.s_QUESTION_ID));
-
+	   			QDependenceDB qdependenceDB = new QDependenceDB();
+	   			QDependence qdependence = qdependenceDB.getQDependenceByQuestionId(rs.getInt(DBFieldNames.s_QUESTION_ID), lang);
+	   			LogicGoToDB logicGoToDB = new LogicGoToDB();
+	   			List<LogicGoTo> logicGoTo = logicGoToDB.getLogicGoToByQuestionId(rs.getInt(DBFieldNames.s_QUESTION_ID), lang);
+	   			
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -201,7 +207,9 @@ public class QuestionDB {
 	   					false,
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
+	   					qdependence,
+	   					logicGoTo);
 	   			
 	   			OptionDB optionDB = new OptionDB();
 	   			question.setOptionsGroups(optionDB.getOptionsGroupByQuestionId(question.getQuestionId(), lang,null));
@@ -758,7 +766,11 @@ public class QuestionDB {
 	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID));
-
+	   			QDependenceDB qdependenceDB = new QDependenceDB();
+	   			QDependence qdependence = qdependenceDB.getQDependenceByQuestionId(rs.getInt(DBFieldNames.s_QUESTION_ID), lang);
+	   			LogicGoToDB logicGoToDB = new LogicGoToDB();
+	   			List<LogicGoTo> logicGoTo = logicGoToDB.getLogicGoToByQuestionId(rs.getInt(DBFieldNames.s_QUESTION_ID), lang);
+	   			
 	   			Question question = new Question(rs.getInt(DBFieldNames.s_QUESTION_ID), 
 	   					rs.getString(DBFieldNames.s_QUESTION_TAG), 
 	   					null, 
@@ -770,7 +782,9 @@ public class QuestionDB {
 	   					false,
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
+	   					qdependence,
+	   					logicGoTo);
 	   			
 	   			question.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			

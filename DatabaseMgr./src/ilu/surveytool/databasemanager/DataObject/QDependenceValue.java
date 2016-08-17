@@ -4,20 +4,28 @@ public class QDependenceValue {
 	
 	int itemId;
 	int qid;
+	int pid;
+	String qname;
 	int ogid;
 	int oid; 
+	String oname;
 
 	public QDependenceValue() {
 		super();
 	}
 
-	public QDependenceValue(int itemId, int qid, int ogid, int oid) {
+	public QDependenceValue(int itemId, int qid, int pid, String qname, int ogid, int oid, String oname) {
 		super();
 		this.itemId = itemId;
 		this.qid = qid;
+		this.pid = pid;
+		this.qname = qname;
 		this.ogid = ogid;
 		this.oid = oid;
-	}public int getItemId() {
+		this.oname = oname;
+	}
+	
+	public int getItemId() {
 		return itemId;
 	}
 
@@ -31,6 +39,22 @@ public class QDependenceValue {
 
 	public void setQid(int qid) {
 		this.qid = qid;
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+
+	public String getQName() {
+		return qname;
+	}
+
+	public void setQName(String qname) {
+		this.qname = qname;
 	}
 
 	public int getOgid() {
@@ -49,9 +73,17 @@ public class QDependenceValue {
 		this.oid = oid;
 	}
 
+	public String getOName() {
+		return oname;
+	}
+
+	public void setOName(String oname) {
+		this.oname = oname;
+	}
+
 	@Override
 	public String toString() {
-		return "QDependence [itemId = "+itemId+", qid = "+qid+", ogid = "+ogid+", oid = "+oid + "]";
+		return "QDependence [itemId = "+itemId+", qid = "+qid+", pid = "+pid+", qname = "+qname+", ogid = "+ogid+", oid = "+oid+", oname = "+oname+ "]";
 	}
 
 }
