@@ -58,6 +58,7 @@ public class LogicGoToHandler {
 		LogicGoToDB logicGoToDB = new LogicGoToDB();
 		
 		try {
+			System.out.println("qid: "+qid);
 			response = logicGoToDB.removeAllLogicGoTo(new LogicGoTo(qid, 0, "", 0, 0, ""));
 			
 		} catch (Exception e) {

@@ -224,7 +224,8 @@ $(function() {
 					   success: function (data) {
 						   console.log("Dentro del function: "+data);
 						   var index = root.closest("li.dependence-item").attr("index");
-						   root.closest("li.dependence-item").attr("index", index*(-1));
+						   if(index>0)
+							   root.closest("li.dependence-item").attr("index", index*(-1));
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   console.log(xhr.status);

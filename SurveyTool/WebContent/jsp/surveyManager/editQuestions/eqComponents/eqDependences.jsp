@@ -170,8 +170,8 @@
 								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
 								  												<option value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected> <%= depval.getOName()%> </option>
 								  											</select>
-				    														<span id='dependence-option-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
-			  																<span id='dependence-option-error' class='error hidden' style=''><%= lang.getContent("msg.error.dependence-option.text") %></span>	
+				    														<span id='dependence-option-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:0px;right: 10px'></span>
+			  																<span id='dependence-option-error' class='error hidden' style='top:0px;left: 160px'><%= lang.getContent("msg.error.dependence-option.text") %></span>	
 																		</div>
 																		
 								  										<div class="option-icons fright">

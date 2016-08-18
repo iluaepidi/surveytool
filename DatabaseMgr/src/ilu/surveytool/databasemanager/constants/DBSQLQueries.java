@@ -479,7 +479,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.forma forma on forma.idForma = section.idForma "
 				+ "where question.idQuestion = ?)";
 			
-			public final static String s_DELETE_ALLLOGICGOTTO = "DELETE FROM surveytool.questionlogicgoto WHERE idQuestion = ? AND idOptionsGroup = ? AND idQuestionnaire = (SELECT forma.idQuestionnaire from surveytool.question question "
+			public final static String s_DELETE_ALLLOGICGOTTO = "DELETE FROM surveytool.questionlogicgoto WHERE idQuestion = ? AND idQuestionnaire = (SELECT forma.idQuestionnaire from surveytool.question question "
 					+ "inner join surveytool.questionbypage qbp on qbp.idQuestion = question.idQuestion "
 					+ "inner join surveytool.page page on page.idPage = qbp.idPage "
 					+ "inner join surveytool.section section on section.idSection = page.idSection "

@@ -221,9 +221,8 @@ public class LogicGoToDB {
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_ALLLOGICGOTTO);
-		   	pstm.setInt(1, logicGoTo.getQid()); 
-		    pstm.setInt(2, logicGoTo.getOgid());
-			pstm.setInt(3, logicGoTo.getQid());
+		   	pstm.setInt(1, logicGoTo.getQid());
+		   	pstm.setInt(2, logicGoTo.getQid());
 	   		
 		   	pstm.execute();
 		   	response = true;
