@@ -56,6 +56,7 @@ h2 {width: auto;
 .btn-transparent:hover, .btn-transparent:focus {border-color: inherit !important;}	
 .btn-survey {font-weight: bold !important;}
 .fleft {float:left;}
+.fright {float:right;}
 .error-msg {color: #B60000;
     font-size: 1.1em;
     font-weight: bold;}
@@ -898,17 +899,25 @@ footer {margin-top: 10px;
     padding-left: 5px !important;
     padding-right: 5px !important;
     width: 90px;}
+.dependence-item > fieldset > .dependence-condition {margin-bottom: 0 !important;
+    margin-right: 5px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 60px;}
 .dependence-item > fieldset > .dependence-question {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 0px !important;
-    width: 200px !important;}
+    width: 180px !important;}
 .dependence-item > fieldset > .dependence-option {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 5px !important;
-    width: 90px;}
+    width: 130px;}
 .dependences-add-button {margin-top: 15px;}
+
+.fieldset-next-dependences{padding-left: 139px;}
+.fieldset-second-dependence{padding-left: 50px;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_EDIT_SURVEY
@@ -1070,3 +1079,7 @@ footer {margin-top: 10px;
     text-align: right;
     display: inline;
     height: 30px;}
+    
+.trash {
+	margin-right: 30px !important;
+}

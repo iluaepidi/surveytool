@@ -237,5 +237,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				</div>
 			</div>
 		</div>	
+		
+		<jsp:include page="eqComponents/eqDependences.jsp">
+			<jsp:param value="false" name="withLogic"/>
+		</jsp:include>
 	</div>																					
 </li>

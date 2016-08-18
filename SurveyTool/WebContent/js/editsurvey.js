@@ -80,6 +80,7 @@ $(function() {
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
 				else {currentElement.find('#page-items').append(responseText);}
 			});
+			console.log("after post");
 			$('#qstatement').val("");
 			//$('#main-version').val("none");
 			$('#mandatory').val("false");
@@ -316,7 +317,7 @@ $(function() {
 	});
 	
 	
-	$('#page-items').on("click", "#option-list #btn-add-option", function(e){
+	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="option-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
@@ -333,7 +334,7 @@ $(function() {
 	});
 	
 	
-	$('#page-items').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
+	$('.survey-sections').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="optionmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
@@ -349,7 +350,7 @@ $(function() {
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
-	$('#page-items').on("click", "#optionsgroupmatrix-list #btn-add-optionsgroupmatrix", function(e){
+	$('.survey-sections').on("click", "#optionsgroupmatrix-list #btn-add-optionsgroupmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="optionsgroupmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
@@ -638,7 +639,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#page-items').on("click", "#removeQuestion", function(e){
+	$('.survey-sections').on("click", "#removeQuestion", function(e){
 		var item = $(this).closest('#panel-question1');
 		currentQuestion = item.attr('qid');
 		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-question-title').val() + '"');
@@ -647,7 +648,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#page-items').on("click", "#removeMultimediaFile", function(e){
+	$('.section-pages').on("click", "#removeMultimediaFile", function(e){
 		var item = $(this).closest('li.multimedia-item');
 		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
 		$("#removeElemId").val(item.attr('rid'));
@@ -655,10 +656,10 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#page-items').on("click", "#remove-option", function(e){
+	$('.section-pages').on("click", "#remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
-		
+		var item = $(this).closest('li');
 		var input = item.find('input');
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(input.attr('oid'));
@@ -666,7 +667,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#page-items').on("click", "#remove-optionmatrix", function(e){
+	$('.section-pages').on("click", "#remove-optionmatrix", function(e){
 		console.log("Remove option matrix");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
@@ -677,7 +678,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#page-items').on("click", "#remove-optionsgroupmatrix", function(e){
+	$('.section-pages').on("click", "#remove-optionsgroupmatrix", function(e){
 		console.log("Remove optionsgroup matrix");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
@@ -692,7 +693,7 @@ $(function() {
 		
 		var elementId = $('#removeElemId').val(); 
 		var service = $("#removeElemService").val();
-		console.log("Resource ID: " + elementId);
+		console.log("Resource ID: " + elementId+", service: "+service);
 		
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
 		
@@ -700,7 +701,7 @@ $(function() {
 		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
-			   console.log(data);
+			   console.log("data: "+data+", service: "+service);
 			   if(data == 'true')
 			   {
 				   $("#removeElement").modal("hide");
@@ -798,7 +799,7 @@ $(function() {
 					   });
 					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title]').val('Section 1');
 				   }
-				   else if(service = "PageService")
+				   else if(service == "PageService")
 				   {
 					   var pagesList = currentElement.closest('ul.section-pages');
 					   var prevElement = currentElement.prev();
@@ -819,6 +820,80 @@ $(function() {
 							$(elemento).attr('index', indice + 1);
 							$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
 						});
+				   }
+				   else if (service == "QCService"){
+					   if(elementId.split("/").length==3){
+						   console.log("Close dependences was clicked");
+						   
+						   var question = $('li.panel-question[qid=' + elementId.split("/")[1] + ']');
+						   
+						   var depTemp = question.find('ul.dependences-list').find("li:first-child").clone();
+						   
+						   question.find('ul.dependences-list').empty();						   
+						   question.find('ul.dependences-list').closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
+						   question.find('ul.dependences-list').append(depTemp);
+					   }
+					   else if(elementId.split("/")[0]===("AllLogic")){
+						   console.log("Close logicGotTo was clicked");
+						   var question = $('li.panel-question[qid=' + elementId.split("/")[1] + ']');
+						   console.log("qid="+question.attr("qid"));
+						   
+						   question.find('ul.logic-option-list').find('li.logic-option').each(function() {
+							   var depTemp = $(this).find('select.logic-option-goto').find('option.default-option');
+							   console.log("select: "+depTemp.attr("id")+", this.class="+$(this).attr("class"));
+							   $(this).find('select.logic-option-goto').empty();
+							   $(this).find('select.logic-option-goto').append(depTemp);
+							});
+						   
+						   
+						   question.find('div.logic-frame').find('div.logic-button').removeClass('hidden');
+						   question.find('div.logic-frame').find('div.logic-settings').addClass('hidden');
+						   question.find('div.logic-frame').find('button.btn-close-aspa').addClass('hidden');
+					   }
+					   else{
+						  
+						  var question = $('li.panel-question[qid=' + elementId.split("/")[0] + ']');
+						  var item = question.find('ul.dependences-list').find('[index=' + elementId.split("/")[1] + ']');
+						  var numItems = item.closest("ul.dependences-list").find("li.dependence-item").length;
+						  console.log("Removed:"+question.attr("qid")+", item="+item.attr("index"));
+						  
+						  if(numItems <= 2)
+						  {
+							  console.log("único item a borrar");
+							  item.closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
+							  item.remove();
+						  }
+						  else if (numItems == 3)
+						  {
+							  if(item.closest("ul").find("li:nth-child(2)").attr("index") == elementId.split("/")[1]){
+								  (item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").addClass("hidden");
+								  (item.closest("ul").find("li:nth-child(3)")).find("label.dependence-question-label").removeClass("hidden");							  
+								  (item.closest("ul").find("li:nth-child(3)")).find("label.next-dependence-question-label").addClass("hidden");
+								  (item.closest("ul").find("li:nth-child(3)")).find("#fieldset-dependence").removeClass("fieldset-second-dependence");
+							  }
+							  item.remove();
+						  }
+						  else if (numItems > 3)
+						  {
+							  if(item.closest("ul").find("li:nth-child(2)").attr("index") == elementId.split("/")[1]){
+								  (item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").addClass("hidden");
+								  (item.closest("ul").find("li:nth-child(3)")).find("label.dependence-question-label").removeClass("hidden");
+								  (item.closest("ul").find("li:nth-child(3)")).find("label.next-dependence-question-label").addClass("hidden");
+								  (item.closest("ul").find("li:nth-child(3)")).find("#fieldset-dependence").removeClass("fieldset-second-dependence");	
+								  
+								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
+							  }
+							  else if(item.closest("ul").find("li:nth-child(3)").attr("index") == elementId.split("/")[1]){
+								  console.log("Tercer hijo");
+								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
+							  }
+							  item.remove();
+						  }
+					   }
 				   }
 			   }
 			   else
@@ -1434,9 +1509,22 @@ $(function() {
 	});
 
 	$('.survey-sections').on("click", "button.btn-close-logic", function(){
-		$(this).closest('div.logic-frame').find('div.logic-button').removeClass('hidden');
-		$(this).closest('div.logic-frame').find('div.logic-settings').addClass('hidden');
-		$(this).addClass('hidden');
+		
+		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
+		var questionIndex = $(this).closest('li.panel-question').attr("qid");
+		
+		if($(this).closest("div.logic-frame").find("ul.logic-option-list").length){
+			console.log("Remove logicGoTo list");
+			$("#elementToRemoveText").html('"LogicGoTo for: ' + questionTitle + '"');
+			$("#removeElemId").val("AllLogic" + '/' + questionIndex);
+			$("#removeElemService").val('QCService');
+			$("#removeElement").modal("show");
+		}
+		else{
+			$(this).closest("div.logic-frame").find('div.logic-button').removeClass('hidden');
+			$(this).closest("div.logic-frame").find('div.logic-settings').addClass('hidden');
+			$(this).addClass('hidden');
+		}
 	});
 
 	$('.survey-sections').on("click", ".dependences-button > button", function(){
@@ -1446,9 +1534,15 @@ $(function() {
 	});
 
 	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
-		$(this).closest('div.dependences-frame').find('div.dependences-button').removeClass('hidden');
-		$(this).closest('div.dependences-frame').find('div.dependences-settings').addClass('hidden');
-		$(this).addClass('hidden');
+		var index = $(this).closest('div.dependences-frame').find('ul.dependences-list').attr("index");
+		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
+		var questionIndex = $(this).closest('li.panel-question').attr("qid");
+		
+		console.log("Remove dependence list");
+		$("#elementToRemoveText").html('"Dependences for ' + questionTitle + '"');
+		$("#removeElemId").val("All" + '/' + questionIndex + '/' + index);
+		$("#removeElemService").val('QCService');
+		$("#removeElement").modal("show");
 	});
 	
 	//drag and drop

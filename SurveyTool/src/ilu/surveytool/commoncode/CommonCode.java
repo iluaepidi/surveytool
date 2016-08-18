@@ -27,7 +27,6 @@ public class CommonCode {
 		try {
 			//IE compatibility
 			response.addHeader("X-UA-Compatible", "IE=edge");
-			
 			request.getSession().getServletContext().getRequestDispatcher("/" + dir).forward(request, response);
 		} catch (ServletException e) {
 			try {
