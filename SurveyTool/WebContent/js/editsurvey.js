@@ -1545,6 +1545,42 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('#tab-display-statistics').click('click', function(e){
+		console.log("Click on tab statistic");
+		$('#statistic-tab').addClass('active');
+		console.log("class of #statistic-tab --> "+$('#statistic-tab').attr("class"));
+		console.log("class of #edit-tab --> "+$('#edit-tab').attr("class"));
+		$('#edit-tab').removeClass('active');
+		$('#questions').addClass('hidden');
+		$('#statistics').removeClass('hidden');
+	});
+
+	$('#tab-display-questions').click('click', function(e){
+		console.log("Click on tab questions");
+		$('#statistic-tab').removeClass('active');
+		$('#edit-tab').addClass('active');
+		$('#questions').removeClass('hidden');
+		$('#statistics').addClass('hidden');
+	});
+	
+	$('.main-sidebar').on("click", "#general-menu", function(e){
+		
+		$('.content-statistics').addClass('hidden');
+		
+		var generalInfoDiv = $(this).closest("#statistics").find('div.content-wrapper').find('#general-info');
+		generalInfoDiv.removeClass('hidden');
+	});
+	
+	$('.main-sidebar').on("click", ".tree-item", function(e){
+		console.log("Click on statistics-tree-item:"+$(this).attr('class'));
+		
+		$('.content-statistics').addClass('hidden');
+		var idQuestion = $(this).attr("id").split("-")[1];
+		var questionDiv = $(this).closest("#statistics").find('div.content-wrapper').find('#single-question-'+idQuestion);
+		questionDiv.removeClass('hidden');
+	});
+	
+	
 	//drag and drop
 	/*$(".survey-sections .page-items").sortable({
 		connectWith:".connectedSortable",

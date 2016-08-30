@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jettison.json.JSONArray;
 
 import ilu.surveymanager.handler.SurveysHandler;
+import ilu.surveymanager.statistics.Statistics;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -73,17 +74,19 @@ public class SurveysServlet extends HttpServlet {
 			
 			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
 			Survey surveyDefaultLanguage = surveysHandler.getSurveyDetail(surveyId, survey.getDefaultLanguage());
-			
+			Statistics surveyStatistic = surveysHandler.createStatistics(surveyId, language);
 			//completeTextDefault(survey,surveyDefaultLanguage);
 			
 			request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 			request.setAttribute(Attribute.s_SURVEY_INFO_DEFAULT_LANGUAGE, surveyDefaultLanguage);
+			request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic);
 			
 			List<String> jsFiles = new ArrayList<>();
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_SURVEY_DEPENDENCES));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_CHART_GRAPHICS));
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			
 			List<String> cssFiles = new ArrayList<>();

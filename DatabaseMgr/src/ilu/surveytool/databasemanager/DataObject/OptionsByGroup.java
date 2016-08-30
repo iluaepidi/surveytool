@@ -5,6 +5,7 @@ public class OptionsByGroup {
 	int optionsGroupId;
 	int optionId;
 	int index;
+	int numResponses;
 	
 	public OptionsByGroup() {
 		super();
@@ -15,6 +16,7 @@ public class OptionsByGroup {
 		this.optionsGroupId = optionsGroupId;
 		this.optionId = optionId;
 		this.index = index;
+		numResponses = 0;
 	}
 
 	public int getOptionsGroupId() {
@@ -39,6 +41,14 @@ public class OptionsByGroup {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public void setNumResponses(int numResponses) {
+		this.numResponses = numResponses;
+	}
+
+	public int getNumResponses() {
+		return numResponses;
 	}
 
 	@Override

@@ -14,6 +14,8 @@ import java.util.List;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.Option;
+import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.QDependence;
 import ilu.surveytool.databasemanager.DataObject.Question;
@@ -208,6 +210,7 @@ public class QuestionDB {
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
 	   					qdependence,
 	   					logicGoTo);
 	   			
@@ -324,6 +327,91 @@ public class QuestionDB {
 		
 		return contents;
 	}
+	
+	
+	public int getQuestionTypeByQuestionID (int questionId){
+		int type = -1;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_TYPE_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			type = rs.getInt(DBFieldNames.s_IDQUESTIONTYPE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return type;
+	}
+	
+	public HashMap<Integer,OptionsGroup> getQuestionContentsByQuestionIdLang(int questionId, String lang)
+	{
+		HashMap<Integer,OptionsGroup> contents = new HashMap<Integer,OptionsGroup>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		
+		   
+		try{
+			
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_CONTENTS_QUESTIONID_LANGUAGE);			
+		   		pstm.setInt(1, questionId);
+		   		pstm.setString(2, lang);
+		   		
+		   		rs = pstm.executeQuery();
+		   		int ogID = -1;
+		   		while(rs.next())
+		   		{
+		   			if((contents.isEmpty()) || (!contents.containsKey(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)))){
+		   				HashMap<String, Content> contentsOG = new HashMap<String, Content>();
+		   				Content c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OG));
+		   				contentsOG.put("text", c);
+		   				
+		   				List<Option> options = new ArrayList<Option>();
+		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
+		   				c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				contentsO.put("text", c);
+		   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
+		   				
+		   				OptionsGroup oG = new OptionsGroup(rs.getInt(DBFieldNames.s_OPTIONSGROUPID), contentsOG, "", false, 0, 0, new ArrayList<Option>());
+		   				
+		   				contents.put(rs.getInt(DBFieldNames.s_OPTIONSGROUPID),oG);
+		   			}
+		   			else{
+		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
+		   				Content c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				contentsO.put("text", c);
+		   				contents.get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions().add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
+		   			}
+		   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
+	
 	
 	public int getQuestionContentIdByQuestionId(int questionId)
 	{
@@ -500,6 +588,7 @@ public class QuestionDB {
 		
 		return numQuestions;
 	}
+	
 	
 	/**
 	 * Inserts 
@@ -783,6 +872,7 @@ public class QuestionDB {
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
 	   					qdependence,
 	   					logicGoTo);
 	   			

@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Response;
@@ -55,7 +57,7 @@ public class ResponsesDB {
 	/**
 	 * Selects
 	 */
-	
+	      
 	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId)
 	{
 		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>>();
@@ -103,7 +105,117 @@ public class ResponsesDB {
 		
 		return responses;
 	}
+	
+	public HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> getAnonimousResponseCompleteBySurveyId(int surveyId)
+	{
+		HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses = new HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>>();
 		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{	   			
+	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   			Timestamp createDate = rs.getTimestamp(DBFieldNames.s_ANONYMOUS_USER_DATE);
+	   			Timestamp timestamp = rs.getTimestamp(DBFieldNames.s_RESPONSE_TIMESTAMP);
+	   			
+	   			if(!responses.containsKey(anonymousUserId))
+	   			{
+	   				responses.put(anonymousUserId, new HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>());
+	   				responses.get(anonymousUserId).put(createDate, new HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>());
+	   			}
+	   			
+	   			if(!responses.get(anonymousUserId).get(createDate).containsKey(questionId))
+	   			{
+	   				responses.get(anonymousUserId).get(createDate).put(questionId, new HashMap<Integer, HashMap<String,Timestamp>>());
+	   			}
+	   			
+	   			if(!responses.get(anonymousUserId).get(createDate).get(questionId).containsKey(optionsGroupId))
+	   			{
+	   				responses.get(anonymousUserId).get(createDate).get(questionId).put(optionsGroupId, new HashMap<String,Timestamp>());
+	   			}
+	   			
+	   			responses.get(anonymousUserId).get(createDate).get(questionId).get(optionsGroupId).put(rs.getString(DBFieldNames.s_VALUE), timestamp);
+	   			
+	   		}
+	   			   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return responses;
+	}
+	
+	public int[] getNumQuestionsQuestionnaires(int surveyId){
+		int[] count = new int[2];
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUMQUESTIONS_QUESTIONNAIRE_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			if(rs.getInt(DBFieldNames.s_QUESTION_MANDATORY)==1)
+	   				count[1] = rs.getInt(DBFieldNames.s_COUNT);
+	   			else
+	   				count[0] = rs.getInt(DBFieldNames.s_COUNT);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return count;
+	}
+
+	
+	public HashMap<Integer,Boolean> getQuestionsID_Mandatory_BySurveyId(int surveyId)
+	{
+		HashMap<Integer,Boolean> questions = new HashMap<Integer,Boolean>();
+		System.out.println("Get questions by survey Id="+surveyId);
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next()){
+	   			questions.put(rs.getInt(DBFieldNames.s_QUESTION_ID), rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
+	   			System.out.println(rs.getInt(DBFieldNames.s_QUESTION_ID)+"-->"+rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questions;
+	}	
 
 	public HashMap<Integer, HashMap<Integer, String>> getAnonimousResponseByPollId(int pollId)
 	{
@@ -140,6 +252,37 @@ public class ResponsesDB {
 		}
 		
 		return responses;
+	}
+	
+	public List<String> getValuesByQuestionIdLang(int questionId, String lang)
+	{
+		List<String> contents = new ArrayList<String>();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_OPTIONS_QUESTIONID_LANGUAGE);			
+		   	pstm.setInt(1, questionId);
+		   	pstm.setString(2, lang);
+		   		
+		   	rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			if(contents.isEmpty())
+	   				contents.add(rs.getString(DBFieldNames.s_CONTENT_QUESTION));
+	   			
+	   			contents.add(rs.getString(DBFieldNames.s_VALUE));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
 	}
 		
 	/**

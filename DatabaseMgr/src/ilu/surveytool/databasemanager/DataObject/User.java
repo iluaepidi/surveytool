@@ -1,6 +1,8 @@
 package ilu.surveytool.databasemanager.DataObject;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 	
@@ -10,13 +12,15 @@ public class User {
 	String rol = "";
 	Timestamp registerDate;
 	boolean anonimous = false;
+	List<Response> responses;
 	
 
 	public User() {
 		super();
+		responses = new ArrayList<Response>();
 	}
 
-	public User(int userId, String username, String email, String rol, Timestamp registerDate, boolean anonimous) {
+	public User(int userId, String username, String email, String rol, Timestamp registerDate, boolean anonimous, List<Response> responses) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -24,6 +28,7 @@ public class User {
 		this.rol = rol;
 		this.registerDate = registerDate;
 		this.anonimous = anonimous;
+		this.responses = responses;
 	}
 
 	
@@ -83,6 +88,15 @@ public class User {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+
+	public List<Response> getResponses() {
+		return responses;
+	}
+
+	public void setResponses(List<Response> responses) {
+		this.responses = responses;
 	}
 
 	@Override

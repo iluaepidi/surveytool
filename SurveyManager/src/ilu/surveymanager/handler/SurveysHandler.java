@@ -11,6 +11,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveymanager.exportdata.ExportData;
+import ilu.surveymanager.statistics.Statistics;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
@@ -247,4 +248,10 @@ public class SurveysHandler {
 		return pagesJson;
 	}
 
+	public Statistics createStatistics(int surveyId, String language){
+		Statistics statistics = new Statistics();
+		statistics.loadData(surveyId, language);
+		
+		return statistics;
+	}
 }

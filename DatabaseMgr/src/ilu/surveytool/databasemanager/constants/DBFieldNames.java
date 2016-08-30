@@ -4,6 +4,8 @@ public class DBFieldNames {
 	
 	//anonymousUser
 	 	public final static String s_ANONYMOUS_USER_ID = "idAnonimousUser";
+		public final static String s_ANONYMOUS_USER_DATE = "createDate";
+		public final static String s_RESPONSE_TIMESTAMP = "timestamp";
 	 
 	//generico
 		public final static String s_GENERICO_TITLE = "title";
@@ -20,6 +22,9 @@ public class DBFieldNames {
 	//content
 		public final static String s_CONTENTID = "idContent";
 		public final static String s_CONTENT_TEXT = "text";
+		public final static String s_CONTENT_QUESTION = "question";
+		public final static String s_CONTENT_OG = "optionsGroup";
+		public final static String s_CONTENT_OPTIONS = "options";
 	
 	//contenttype
 		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";
@@ -60,11 +65,13 @@ public class DBFieldNames {
 		public final static String s_QUESTION_MAIN_VERSION = "mainVersion";
 		public final static String s_NUM_QUESTION = "numQuestions";
 		public final static String s_PARAMETER_NAME = "parameterName";
+		public final static String s_IDQUESTIONTYPE = "idQuestionType";
 	
 	//questiontype
 		public final static String s_QUESTIONTYPE_NAME = "questionTypeName";
 		public final static String s_QUESTIONTYPE_TEMPLATE_FILE = "templateFile";
 		public final static String s_QUESTIONTYPE_FORM_FILE = "formFile";
+		public final static String s_QUESTIONTYPE_STATISTICRESULTS_FILE = "statisticResultsFile";
 		
 	//questionnaire
 		public final static String s_QUESTIONNAIREID = "idQuestionnaire";

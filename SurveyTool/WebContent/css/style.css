@@ -1083,3 +1083,206 @@ footer {margin-top: 10px;
 .trash {
 	margin-right: 30px !important;
 }
+
+/*----------------------------------------------*\
+		$STATISTICS
+\*----------------------------------------------*/
+
+.content-statistics {
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+	display: block;
+	min-width: 640px;
+	min-height:250px;
+}
+
+.small-box {
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.small-box>.inner {
+    padding: 10px;
+}
+
+.small-box sup {
+    font-size: 20px;
+}
+
+.small-box h3 {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.bg-aqua {
+    background-color: #007593 !important;
+}
+
+.bg-green {
+    background-color: #00884b !important;
+}
+
+.bg-red {
+    background-color: #d53924 !important;
+}
+
+.bg-yellow {
+    background-color: #9f6308 !important;
+}
+
+.bg-red, .bg-yellow, .bg-aqua, .bg-green {
+    color: #fff !important;
+}
+
+.connectedSortable {
+    min-height: 100px;
+}
+
+.nav-tabs-custom {
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 3px;
+}
+
+.graph-title {
+    margin-up: 0;
+    margin-down: 0;
+    border-bottom-color: #444;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 20px;
+    color: #444;
+    float: left;
+    border-top: 3px solid transparent;
+    margin-bottom: -2px;
+    margin-right: 5px;
+}
+
+.nav-tabs-custom>.tab-content {
+    background: #fff;
+    padding: 10px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.no-padding {
+    padding: 0 !important;
+}
+
+.tab-content>.active {
+    display: block;
+}
+.tab-content>.tab-pane {
+    display: none;
+}
+.chart {
+    position: relative;
+    overflow: hidden;
+    width: 623px;
+    height: 300px;
+}
+
+.chart svg, .chart canvas {
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    width: 623px; 
+}
+
+.chart text {
+	text-anchor: end;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-stretch: normal;
+	font-size: 12px;
+	line-height: normal;
+	font-family: sans-serif;
+	text-anchor: end;
+	stroke: none;
+	fill: #686868;
+}
+
+.text-horizontal{
+	text-anchor: middle;
+	transform: matrix(1,0,0,1,0,7);
+}
+
+.chart tspan {
+	dy: 4px;
+}
+
+.chart-path {
+	fill: none;
+	stroke: #6d6d6d; 
+	stroke-width: 0.5;
+}
+
+.chart-line{
+	fill: none;
+	stroke: #347ca6; 
+	stroke-width: 3;
+}
+
+.chart-area{
+	fill-opacity: 1;
+	fill: #eaf2f5;
+	stroke: none;
+}
+
+.main-sidebar{
+    width: 250px;
+	display:inline-block;
+    vertical-align: up !important;
+    font-family: sans-serif !important;
+}
+
+.sidebar-menu{
+    margin: 0;
+    padding: 0;
+    vertical-align: top !important;
+}
+
+.content-wrapper {
+    min-height:100%;
+    background-color: #ecf0f5;
+    display:inline-block;
+}
+
+.single-questions-row{
+	padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+.bar {
+  fill: red; /* changes the background */
+  height: 21px;
+  transition: fill .3s ease;
+  cursor: pointer;
+  font-family: Helvetica, sans-serif;
+}
+.bar text {
+  color: black;
+}
+.bar:hover,
+.bar:focus {
+  fill: black;
+}
+.bar:hover text,
+.bar:focus text {
+  fill: red;
+}
+
+.enum{
+	margin: 10px;
+}
