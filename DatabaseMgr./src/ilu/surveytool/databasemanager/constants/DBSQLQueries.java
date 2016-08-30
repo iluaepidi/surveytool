@@ -1,10 +1,9 @@
 package ilu.surveytool.databasemanager.constants;
 
 public class DBSQLQueries {
-
 	//Selects
 		//AnonymousResponse
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, r.idQuestion, r.idOptionsGroup, "
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, "
 					+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
 					+ "inner join surveytool.content as c on o.idContent = c.idContent "
@@ -148,7 +147,7 @@ public class DBSQLQueries {
 		//Register
 		
 		//Question
-		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.index, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
+		public final static String s_SELECT_QUESTION_BY_SURVEYID = "SELECT q.*, qp.index, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
@@ -158,7 +157,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
 				+ "where s.idQuestionnaire = ? order by qp.index";
-		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
+		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.section sc "
 				+ "inner join surveytool.page p on sc.idSection = p.idSection "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
@@ -166,7 +165,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
 				+ "where sc.idSection = ? order by qp.`index`";
-		public final static String s_SELECT_QUESTION_BY_PAGEID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
+		public final static String s_SELECT_QUESTION_BY_PAGEID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.page p "
 				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
@@ -184,6 +183,28 @@ public class DBSQLQueries {
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
 				+ "where qbp.idPoll = ?";
+		
+		public final static String s_SELECT_QUESTION_CONTENTS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, oG.idOptionsGroup, cOG.text optionsGroup, o.idOption, cO.text options FROM question q "
+				+ "inner join content cQ on cQ.idContent = q.idContent "
+				+ "inner join optionsgroup oG on oG.idQuestion = q.idQuestion "
+				+ "inner join content cOG on cOG.idContent = oG.idContent "
+				+ "inner join optionsbygroup obg on obg.idOptionsGroup = oG.idOptionsGroup "
+				+ "inner join surveytool.option o on o.idOption = obg.idOption "
+				+ "inner join content cO on cO.idContent = o.idContent "
+				+ "inner join language l on l.idLanguage = cQ.idLanguage "
+				+ "where q.idQuestion = ? and l.isoName = ? and cQ.idContentType=1 and cOG.idContentType=1 and cO.idContentType=1 and cOG.idLanguage=cQ.idLanguage and cO.idLanguage=cQ.idLanguage order by og.idOptionsGroup, o.idOption";
+		
+		public final static String s_SELECT_QUESTION_TYPE_QUESTIONID = "SELECT q.idQuestionType FROM question q "
+				+ "where q.idQuestion = ?";
+		
+		public final static String s_SELECT_QUESTION_OPTIONS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, r.value FROM question q "
+				+ "inner join content cQ on cQ.idContent = q.idContent "
+				+ "inner join responses r on r.idQuestion = q.idQuestion "
+				+ "inner join language l on l.idLanguage = cQ.idLanguage "
+				+ "where q.idQuestion = ? and cQ.idContentType=1 and l.isoName = ? order by r.idResponse";
+
+		
+		
 		
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
@@ -230,6 +251,11 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTIONNAIRE_CONTENTID = "SELECT idContent FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PROJECTID = "SELECT idProject FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRESID_BY_PROJECTID = "SELECT idQuestionnaire FROM surveytool.questionnaire WHERE idProject = ?";
+		public final static String s_SELECT_NUMQUESTIONS_QUESTIONNAIRE_SURVEYID = "SELECT count(*) count, q.mandatory from forma f "
+				+"inner join section s on s.idForma = f.idForma "
+				+"inner join page p on p.idSection = s.idSection "
+				+"inner join questionbypage q on q.idPage = p.idPage "
+				+"where f.idQuestionnaire = ? group by q.mandatory";
 		
 		//QuestionByPage
 		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";
@@ -238,6 +264,8 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTIONBYPAGE_INDEX = "SELECT `index` FROM surveytool.questionbypage where idQuestion = ? and idPage = ?";
 		public final static String s_SELECT_NUMQUESTION_BY_PAGE = "SELECT COUNT(*) numQuestions FROM surveytool.questionbypage where idPage = ?";
 		public final static String s_SELECT_QUESTIONBYPAGE_QUESTIONID_BY_PAGEID_INDEX = "SELECT idQuestion FROM surveytool.questionbypage where idPage = ? and `index` = ?";
+		
+		
 		
 		//QuestionParameter
 		public final static String s_SELECT_QUESTIONPARAMETER_BY_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
@@ -323,6 +351,7 @@ public class DBSQLQueries {
 		//User Questionnaire
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID_FINISHED = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ? and state = ?";
+		
 		
 	//inserts
 		//User

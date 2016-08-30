@@ -1,5 +1,7 @@
 package ilu.surveytool.databasemanager.DataObject;
 
+import java.sql.Timestamp;
+
 public class Response {
 	
 	int questionId;

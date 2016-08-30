@@ -19,6 +19,7 @@ public class Question {
 	boolean helpText = false;
 	String templatePage = "";
 	String formPage = "";
+	String statisticsPage = "";
 	List<OptionsGroup> optionsGroups;
 	List<Resource> resources;
 	QDependence qdependence;
@@ -53,7 +54,7 @@ public class Question {
 	
 	public Question(int questionId, String tag, Timestamp creationDate, String questionType,
 			HashMap<String, Content> contents, String category, boolean mandatory, boolean optionalAnswer, boolean helpText, HashMap<String, String> parameters,
-			String templatePage, String formPage, QDependence qdependence, List<LogicGoTo> logicGoTo) {
+			String templatePage, String formPage, String statisticsPage, QDependence qdependence, List<LogicGoTo> logicGoTo) {
 		super();
 		this.questionId = questionId;
 		this.tag = tag;
@@ -67,6 +68,7 @@ public class Question {
 		this.parameters = parameters;
 		this.templatePage = templatePage;
 		this.formPage = formPage;
+		this.statisticsPage = statisticsPage;
 		this.qdependence = qdependence;
 		this.logicGoTo= logicGoTo;
 	}
@@ -177,6 +179,14 @@ public class Question {
 
 	public void setFormPage(String formPage) {
 		this.formPage = formPage;
+	}
+
+	public String getStatisticsPage() {
+		return statisticsPage;
+	}
+
+	public void setStatisticsPage(String statisticsPage) {
+		this.statisticsPage = statisticsPage;
 	}
 	
 	public List<OptionsGroup> getOptionsGroups() {
