@@ -1187,15 +1187,14 @@ footer {margin-top: 10px;
 .chart {
     position: relative;
     overflow: hidden;
-    width: 623px;
+    width: 600px;
     height: 300px;
 }
 
 .chart svg, .chart canvas {
     overflow: hidden;
     position: relative;
-    height: 300px;
-    width: 623px; 
+    margin: 10px 10px 5px 30px;
 }
 
 .chart text {

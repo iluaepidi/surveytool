@@ -39,31 +39,63 @@ StatisticsQuestion sQ = surveyStatistic.getStatisticsByQuestion(index);
 	            	<!-- Tabs within a box -->
 	            	<p class="graph-title"><i class="fa fa-inbox"></i> Sales</p>
 	            	<div class="tab-content no-padding">
-		              <div class="chart tab-pane active" id="visits-chart">
+	            	
+	            	
+	            	<!--<div id="canvas-holder" class="canvas-holder">
+						<canvas id="chart-area" width="100%" height="100%"/>		                
+			  		</div>
+	            	<script>
+	  		<%
+	  		String[] grafColors = {"#576C99", "#885f00", "#d6090c", "#686868", "#926b4d", "#5a7f51", "#2676af", "#8360ad", "#151C25"};
+	  		String[] highlight = {"#4A5C82", "#805b03", "#a8272a", "#494949", "#836652", "#657b5f", "#407aa4", "#746783", "#12181F"};
+			index = 0;
+			String graf = "";
+			for(int i=0;i<9;i++)
+			{
+				graf += "{value: " + i + ", " +
+						"color: \"" + grafColors[i] + "\", " +
+						"highlight: \"" +highlight[i] + "\", " +
+						"label: \"" + i + "\"}";
+			}
+			
+			%>
+				var pieData = [
+					     <%= graf %>   	
+					];
+		
+					window.onload = function(){
+						var ctx = document.getElementById("chart-area").getContext("2d");
+						window.myPie = new Chart(ctx).Pie(pieData);
+					};
+		
+		
+		
+			</script>-->
+		               <div class="chart tab-pane active" id="visits-chart">
 		              	
-<canvas id="myChart" width="740" height="200" style="width: 740px; height: 200px;"></canvas>
+<canvas id="myChart" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
 <script>
   var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
       {
         label: "My First dataset",
-        fillColor: "rgba(220,220,220,0.2)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(220,220,220,1)",
+        fillColor: "rgba(0,0,0,0)",
+        strokeColor: "#00884b",
+        pointColor: "#00884b",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
+        pointHighlightStroke: "#00884b",
         data: [65, 59, 80, 81, 56, 55, 40]
       },
       {
         label: "My Second dataset",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
+        fillColor: "rgba(0,0,0,0)",
+        strokeColor: "#B60000",
+        pointColor: "#B60000",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
+        pointHighlightStroke: "#B60000",
         data: [28, 48, 40, 19, 86, 27, 90]
       }
     ]
