@@ -156,11 +156,11 @@ function createnewfee(){
 											                	</div>
 											                	<div class="form-group col-md-4">
 											                		<label class="col-md-4 control-label profileLabel" for="language">Max</label>
-											                		<input id="max" name="max" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
+											                		<input id="max<%= option.getId() %>" name="max" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
 											                	</div>
 											               		<div class="form-group col-md-4">
 											                		<label class="col-md-4 control-label profileLabel" for="language">Min</label>
-											                		<input id=""min" name="min" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
+											                		<input id="min<%= option.getId() %>" name="min" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
 											                	</div>
 													</div>
 												<%}%>

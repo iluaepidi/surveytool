@@ -137,12 +137,12 @@ public class QuotasDB {
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUOTAS); 
-			pstm.setInt(1, value); 
-			pstm.setInt(2, maxResponses); 
-			pstm.setInt(3, minResponses);
-		    pstm.setInt(4, idQuestionnaire); 
-			pstm.setInt(5, idQuestion); 
-			pstm.setInt(6, idOptionGroup); 
+			pstm.setInt(1, maxResponses); 
+			pstm.setInt(2, minResponses);
+		    pstm.setInt(3, idQuestionnaire); 
+			pstm.setInt(4, idQuestion); 
+			pstm.setInt(5, idOptionGroup); 
+			pstm.setInt(6, value); 
 		   		
 			int numUpdated = pstm.executeUpdate();
 			

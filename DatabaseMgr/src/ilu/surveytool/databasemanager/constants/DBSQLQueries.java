@@ -368,7 +368,7 @@ public class DBSQLQueries {
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
 		//quotas
-			public final static String s_UPDATE_QUOTAS = "UPDATE surveytool.quotas SET value=?,maxResponses=?,minResponses=? WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=?";
+			public final static String s_UPDATE_QUOTAS = "UPDATE surveytool.quotas SET maxResponses=?,minResponses=? WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=? AND value=?";
 			
 	//delete
 		//contentIndex

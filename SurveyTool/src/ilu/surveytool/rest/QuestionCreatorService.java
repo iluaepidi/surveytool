@@ -150,6 +150,9 @@ public class QuestionCreatorService {
 					null,
 					null);
 			int max=0,min=0;
+			
+			if(json.getString("max")!=null && !json.getString("max").equals(""))max=Integer.parseInt(json.getString("max"));
+			if(json.getString("min")!=null && !json.getString("min").equals(""))min=Integer.parseInt(json.getString("min"));;
 			int idSurvey = Integer.parseInt(json.getString("sid"));
 			System.out.println("Opción: " + option.toString());
 			QuotaHandler quotaHandler = new QuotaHandler();

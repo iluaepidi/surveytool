@@ -213,8 +213,8 @@ $(function() {
 			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
 			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
 			req.ogid = currentNode.closest('.optionsfees').attr('ogid');
-			req.max = 0;
-			req.min = 0;
+			req.max = $("#max"+req.oid).val();
+			req.min = $("#min"+req.oid).val();
 			
 			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
 			alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
