@@ -200,7 +200,61 @@ $(function() {
 		}
 	});
 	
-
+	$('#survey-div-title-fees').on("focusout", "#optionquota input", function(e){
+		e.stopPropagation();
+		if($(this).val() != "")
+		{
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.attr('oid');
+			req.index = currentNode.attr('index');
+			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
+			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
+			req.ogid = currentNode.closest('.optionsfees').attr('ogid');
+			req.max = 0;
+			req.min = 0;
+			
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QCService/insertQuota",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var json = JSON.parse(data);
+					   if(json.hasOwnProperty('oid'))
+					   {
+						   console.log("hello oid: " + json.oid);
+						   currentNode.attr('oid', json.oid);
+					   }
+					   
+					   if(json.hasOwnProperty('ogid'))
+					   {
+						   console.log("hello ogid: " + json.ogid);
+						   currentNode.closest('ul').attr('ogid', json.ogid);
+					   }
+					   
+					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		}
+	});
 	
 	$('#page-items').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
@@ -599,7 +653,7 @@ $(function() {
 		if(currentOption>0){
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
-			$('#importFile').modal('toggle');
+			$('#importFile').modal();
 		}else{
 			alert("First, complete the option");
 			
@@ -1462,13 +1516,9 @@ $(function() {
 		}
 	});
 	
-	/*$('#survey-language-version').change(function(event) {
-		
-		var loc = location.href;
-		if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
-		
-		 window.location=loc+"&langsurvey="+$("#survey-language-version").val();
-	});*/
+	
+	
+	
 	
 });
 
@@ -1511,3 +1561,5 @@ console.log(max_chars);
         element.value = element.value.substr(0, max_chars);
     }
 }
+
+

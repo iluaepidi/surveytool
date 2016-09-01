@@ -18,6 +18,7 @@ import org.codehaus.jettison.json.JSONObject;
 import ilu.surveymanager.data.Option;
 import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveytool.databasemanager.DataObject.Content;
 
 @Path("/QCService")
@@ -124,6 +125,35 @@ public class QuestionCreatorService {
 			OptionHandler optionHandler = new OptionHandler();
 			response = optionHandler.saveOptionsGroupMatrix(option);
 			System.out.println("Opción (insertOptionsGroupMatrix-response): " + response);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@POST
+	@Path("/insertQuota")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String insertQuota(String req) {
+    	System.out.println("Opción (insertQuota): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			Option option = new Option(json.getString("text"), 
+					Integer.parseInt(json.getString("index")), 
+					Integer.parseInt(json.getString("qid")), 
+					Integer.parseInt(json.getString("ogid")),
+					Integer.parseInt(json.getString("oid")),
+					null,
+					null);
+			int max=0,min=0;
+			int idSurvey = Integer.parseInt(json.getString("sid"));
+			System.out.println("Opción: " + option.toString());
+			QuotaHandler quotaHandler = new QuotaHandler();
+			response = quotaHandler.saveQuotaOption(idSurvey, option,max,min);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

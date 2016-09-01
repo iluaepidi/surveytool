@@ -21,6 +21,7 @@ public class Address {
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
+		public final static String s_BODY_EDIT_FEES = "editFees";
 		public final static String s_BODY_PROFILE = "profile";
 	
 	//cssFiles

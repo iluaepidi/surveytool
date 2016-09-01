@@ -231,6 +231,9 @@ public class DBSQLQueries {
 		public final static String s_SELECT_NUMQUESTION_BY_PAGE = "SELECT COUNT(*) numQuestions FROM surveytool.questionbypage where idPage = ?";
 		public final static String s_SELECT_QUESTIONBYPAGE_QUESTIONID_BY_PAGEID_INDEX = "SELECT idQuestion FROM surveytool.questionbypage where idPage = ? and `index` = ?";
 		
+		//Quotas
+		public final static String s_SELECT_CHECK_EXISTS_QUOTAS = "SELECT * FROM surveytool.quotas WHERE idQuestionnaire=? AND idQuestion=? AND idOptionsGroup=? AND value=?";
+		
 		//QuestionParameter
 		public final static String s_SELECT_QUESTIONPARAMETER_BY_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
 				+ "inner join surveytool.questionparameter qp on qp.idParameter = pfq.idParameter "
@@ -333,7 +336,8 @@ public class DBSQLQueries {
 			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
 		//Section
 			public final static String s_INSERT_SECTION = "INSERT INTO `surveytool`.`section` (`index`, `idForma`, `idContent`) VALUES (?, ?, ?)";
-			
+		//Quota	
+			public final static String s_INSERT_QUOTA = "INSERT INTO `surveytool`.`quotas` (`idQuestionnaire`, `idQuestion`, `idOptionsGroup`,`value`,`maxResponses`,`minResponses`) VALUES (?, ?, ?, ?, ?, ?)";
 	//updates
 		//content
 			public final static String s_UPDATE_CONTENT_TEXT = "UPDATE `surveytool`.`content` SET `text`= ? "
@@ -363,6 +367,8 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_RESOURCE_URLPATH = "UPDATE `surveytool`.`resoruces` SET `urlPath`=? WHERE `idResoruces`=?";
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
+		//quotas
+			public final static String s_UPDATE_QUOTAS = "UPDATE surveytool.quotas SET value=?,maxResponses=?,minResponses=? WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=?";
 			
 	//delete
 		//contentIndex

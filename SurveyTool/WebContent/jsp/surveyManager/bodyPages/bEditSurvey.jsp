@@ -40,7 +40,7 @@
 	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.edit.title") %></h2>
 	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">						  	
 						  	<li role="presentation" class="statistic-tab"><a href="#" aria-label="go to survey statistics" title="go to survey statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-						  	<li role="presentation" class="share-tab"><a href="#" title="go to share survey"><i class="fa fa-share-alt fa-2x"></i></a></li>
+						  	<li role="presentation" class="share-tab"><a href="SurveysFees?surveyid=<%=survey.getSurveyId() %>" title="go to share survey"><i class="fa fa-share-alt fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab active"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
