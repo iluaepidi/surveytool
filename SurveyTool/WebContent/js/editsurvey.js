@@ -207,6 +207,8 @@ $(function() {
 					   }
 					   
 					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+					   
+					   currentNode.trigger("goto");
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -658,11 +660,15 @@ $(function() {
 	
 	$('.section-pages').on("click", "#remove-option", function(e){
 		console.log("Remove option");
-		currentQuestion = $(this).closest('#panel-question1').attr('qid');
+		currentQuestion = $(this).closest('#panel-question1').attr('qid');		
 		var item = $(this).closest('li');
+		var ogid = item.closest('ul').attr('ogid');
 		var input = item.find('input');
+		var oid = input.attr('oid');
+		var result = currentQuestion + "/" + ogid + "/" + oid;
+		console.log("result: " + result);
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
-		$("#removeElemId").val(input.attr('oid'));
+		$("#removeElemId").val(result);
 		$("#removeElemService").val('OptionService');
 		$("#removeElement").modal("show");
 	});
@@ -720,7 +726,9 @@ $(function() {
 				   }
 				   else if(service == "OptionService")
 				   {
-					   var input = $('input[oid=' + elementId + ']'); 					   
+					   var ids = elementId.split('/');
+					   var oid = ids[2];
+					   var input = $('input[oid=' + oid + ']'); 					   
 					   var numItems = input.closest("ul").find("li").size();
 					   console.log("Items: " + numItems);
 					   if(numItems > 3)
@@ -738,7 +746,11 @@ $(function() {
 					   else
 					   {
 						   input.val("");
+						   input.attr('oid', '0');
 					   }
+					   
+					   var logicOptionElement = $('#logic-option-' + oid);
+					   removeLogicElement(logicOptionElement);
 				   }
 				   else if(service == "OptionMatrixService")
 				   {
@@ -830,7 +842,7 @@ $(function() {
 						   var depTemp = question.find('ul.dependences-list').find("li:first-child").clone();
 						   
 						   question.find('ul.dependences-list').empty();						   
-						   question.find('ul.dependences-list').closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
+						   //question.find('ul.dependences-list').closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
 						   question.find('ul.dependences-list').append(depTemp);
 					   }
 					   else if(elementId.split("/")[0]===("AllLogic")){
@@ -860,7 +872,7 @@ $(function() {
 						  if(numItems <= 2)
 						  {
 							  console.log("único item a borrar");
-							  item.closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
+							  //item.closest("div.dependences-frame").find("button.btn-close-dependences").addClass("hidden");
 							  item.remove();
 						  }
 						  else if (numItems == 3)
@@ -1502,7 +1514,7 @@ $(function() {
 		updateContent(req, serviceUrl);
 	});	
 	
-	$('.survey-sections').on("click", ".logic-button > button", function(){
+	/*$('.survey-sections').on("click", ".logic-button > button", function(){
 		$(this).parent().addClass('hidden');
 		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
 		$(this).closest('div.logic-frame').find('button.btn-close-logic').removeClass('hidden');
@@ -1543,7 +1555,7 @@ $(function() {
 		$("#removeElemId").val("All" + '/' + questionIndex + '/' + index);
 		$("#removeElemService").val('QCService');
 		$("#removeElement").modal("show");
-	});
+	});*/
 	
 	$('#tab-display-statistics').click('click', function(e){
 		console.log("Click on tab statistic");

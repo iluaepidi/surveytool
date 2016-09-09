@@ -64,7 +64,7 @@
 															}
 															else{
 																%>
-														<button class="btn-transparent btn-close-aspa btn-close-dependences"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
+														<button class="btn-transparent btn-close-aspa btn-close-dependences hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  							
 							  							<div class="dependences-settings">
 															<ul class="dependences-list form-inline" index = "<%= qdependence.getId() %>">
@@ -207,7 +207,7 @@
 							  							if(!question.getOptionsGroups().isEmpty())
 					  									{
 							  							
-							  									if(question.getLogicGoTo().isEmpty()){
+							  									
 							  										%>
 							  										<button class="btn-transparent btn-close-aspa btn-close-logic hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  											<div class="logic-button center">
@@ -218,15 +218,37 @@
 										  									<%
 							  										for(Option option : question.getOptionsGroups().get(0).getOptions())
 							  										{
+							  											LogicGoTo logicGoTo = null;
+							  											if(!question.getLogicGoTo().isEmpty())
+							  											{
+							  												for(LogicGoTo lgt : question.getLogicGoTo())
+									  										{
+							  													if(option.getId() == lgt.getOid()) logicGoTo = lgt;
+									  										}
+							  											}
 							  									%>
 							  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
 							  												<label for="logic-option-goto-<%= option.getId() %>">
 							  													<%= lang.getContent("question.edit.logic.option.label") %>
-							  													<span class="form-control"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></span>
+							  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></span>
 							  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
 							  												</label>
 							  												<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
+							  									<%
+							  													if(logicGoTo == null)
+							  													{
+							  									%>
 							  													<option value="none" class="default-option" selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
+							  									<%
+							  													}
+							  													else
+							  													{
+							  									%>
+							  													<option value="none" class="default-option"><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
+							  													<option value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
+							  									<%					
+							  													}
+							  									%>
 							  												</select>
 							  											</li>
 							  									<%
@@ -234,41 +256,8 @@
 										  									%>
 											  								</ul>
 											  							</div>
-											  							<%
-					  											}
-							  									else{
-							  										%>
-							  										<button class="btn-transparent btn-close-aspa btn-close-logic"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-												  							<div class="logic-button center hidden">
-												  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
-												  							</div>
-												  							
-										  							<div class="logic-settings">
-										  								<ul class="logic-option-list form-inline">
-										  									<%
-							  										for(LogicGoTo logicGoTo : question.getLogicGoTo())
-							  										{
-							  											%>
-							  											<li class="logic-option"  ogid="<%= logicGoTo.getOgid()%>" oid="<%= logicGoTo.getOid() %>">
-							  												<label for="logic-option-goto-<%= logicGoTo.getOid() %>">
-							  													<%= lang.getContent("question.edit.logic.option.label") %>
-							  													<span class="form-control"><%= logicGoTo.getOption() %></span>
-							  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
-							  												</label>
-							  												<select id="logic-option-goto-<%= logicGoTo.getOid() %>" class="form-control logic-option-goto">
-							  													<option value="none" class="default-option"><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
-							  													<option value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
-							  												</select>
-							  											</li>
-							  									<%		
-							  										}
-										  									%>
-											  								</ul>
-											  							</div>
-											  							
-										  									
-										  									
-							  									<%}
+											  																  									
+							  									<%
 					  									}
 					  									else
 					  									{

@@ -218,7 +218,7 @@ public class OptionHandler {
 		}
 	}
 	
-	public boolean removeOption(int optionId)
+	public boolean removeOption(int questionId, int optionGroupId, int optionId)
 	{
 		boolean removed = false;
 		
@@ -238,6 +238,10 @@ public class OptionHandler {
 				index++;
 			}
 		}
+		
+		LogicGoToHandler logicGoToHandler = new LogicGoToHandler();
+		logicGoToHandler.removeLogicGoTo(questionId, optionGroupId, optionId);
+		
 		removed = true;
 		
 		return removed;

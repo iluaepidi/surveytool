@@ -50,7 +50,6 @@
 	  				
 	  				<div class="content-box-tabs edit-content">
 	  					<jsp:include page="../bodyPages/bEditSurveyQuestions.jsp" />
-	  					<jsp:include page="../bodyPages/bEditSurveyStatistics.jsp" />
 	  				</div>
 	  			</div>
 <%

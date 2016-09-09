@@ -197,11 +197,11 @@ $(function() {
 			
 			for (var i=1;i<=list.find("li").length;i++){
 				if(myIndex != list.find("li:nth-child("+i+")").attr("index")){
-				console.log("mio:"+value+", otro:"+list.find("li:nth-child("+i+")").find("select.dependence-option").children(':selected').val());
-				if(value === list.find("li:nth-child("+i+")").find("select.dependence-option").children(':selected').val()){
-					valid=false;
-					i=list.find("li").length+1;
-				}
+					console.log("mio:"+value+", otro:"+list.find("li:nth-child("+i+")").find("select.dependence-option").children(':selected').val());
+					if(value === list.find("li:nth-child("+i+")").find("select.dependence-option").children(':selected').val()){
+						valid=false;
+						i=list.find("li").length+1;
+					}
 				}
 			}
 			
@@ -400,7 +400,7 @@ $(function() {
 
 		console.log(numElem);
 		if(numElem===1){
-			$(this).closest("div.dependences-frame").find("button.btn-close-dependences").removeClass("hidden");
+			//$(this).closest("div.dependences-frame").find("button.btn-close-dependences").removeClass("hidden");
 		}
 		if(numElem===2){
 			//Only one dependence, the new one needs to have the condition selector
@@ -455,6 +455,62 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('.survey-sections').on("click", ".logic-button > button", function(){
+		$(this).parent().addClass('hidden');
+		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
+		$(this).closest('div.logic-frame').find('button.btn-close-logic').removeClass('hidden');
+	});
+
+	$('.survey-sections').on("click", "button.btn-close-logic", function(){
+		$(this).closest('div.logic-frame').find('div.logic-button').removeClass('hidden');
+		$(this).closest('div.logic-frame').find('div.logic-settings').addClass('hidden');
+		$(this).addClass('hidden');
+	});
+
+	$('.survey-sections').on("click", ".dependences-button > button", function(){
+		$(this).parent().addClass('hidden');
+		$(this).closest('div.dependences-frame').find('div.dependences-settings').removeClass('hidden');
+		//$(this).closest('div.dependences-frame').find('button.btn-close-dependences').removeClass('hidden');
+	});
+
+	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
+		$(this).closest('div.dependences-frame').find('div.dependences-button').removeClass('hidden');
+		$(this).closest('div.dependences-frame').find('div.dependences-settings').addClass('hidden');
+		$(this).addClass('hidden');
+	});
+	
+	$('.survey-sections').on("goto", "#option-list #option-item input", function(e){
+		var optionId = $(this).attr('oid');
+		console.log("Option goto: " + $(this).val() + " - oid: " + optionId);
+		var logicElem = $('#logic-option-' + optionId);
+		if(logicElem.length)
+		{
+			logicElem.html($(this).val());
+		}
+		else
+		{
+			var logicList = $(this).closest("div.panel-body").find("ul.logic-option-list");
+			if(logicList.hasClass('hidden'))
+			{
+				logicList.removeClass("hidden");
+				var elem = logicList.find('span');
+				elem.attr("id", "logic-option-" + optionId);
+			}
+			else
+			{
+				var ulLogic = $(this).closest("div.question-frame").next().find("ul.logic-option-list");
+				var clonElem = ulLogic.find("li").first().clone();
+				clonElem.attr("oid", optionId);
+				var clonSpan = clonElem.find("span");
+				clonSpan.attr("id", "logic-option-" + optionId);
+				clonSpan.html($(this).val());
+				clonElem.find("option.default-option").val('none');
+				ulLogic.append(clonElem);
+			}
+		}
+		
+	});
+	
 });
 
 
@@ -494,4 +550,19 @@ function setLogic(root)
 		console.log("The value for questionId is:"+root.find("select.logic-option-goto").val()+" and it is detected as none");
 	
 	console.log("Logic request: " + JSON.stringify(req));
+}
+
+function removeLogicElement(elem)
+{
+	var root = elem.closest("ul");
+	
+	var numItems = root.find("li").size();
+	if(numItems == 1)
+	{
+		root.addClass('hidden');
+	}
+	else
+	{
+		elem.closest("li").remove();
+	}
 }
