@@ -37,20 +37,18 @@
 				HttpSession sessions = request.getSession(false); 
   				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
 				%>
-				
 				<div class="container-fluid">
 	  				<div class="title-content-no-underline">
-	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.edit.title") %></h2>
+	  					<h2 id="title-header-edit"><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.edit.title") %></h2>
 	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">						  	
-						  	<li role="presentation" class="statistic-tab" id="statistic-tab"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-						  	<li role="presentation" class="share-tab" id="share-tab"><a href="#" title="go to share survey"><i class="fa fa-share-alt fa-2x"></i></a></li>
+						  	<li role="presentation" class="statistic-tab" id="statistic-tab"><a href="SurveyStatisticServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
+						  	<li role="presentation" class="share-tab" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-share-alt fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab active" id="edit-tab"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
 	  				
 	  				<div class="content-box-tabs edit-content">
 	  					<jsp:include page="../bodyPages/bEditSurveyQuestions.jsp" />
-	  					<jsp:include page="../bodyPages/bEditSurveyStatistics.jsp" />
 	  				</div>
 	  			</div>
 <%

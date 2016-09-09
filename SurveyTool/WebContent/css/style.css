@@ -1090,7 +1090,6 @@ footer {margin-top: 10px;
 
 .content-statistics {
     padding: 15px;
-    margin-right: auto;
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
@@ -1130,7 +1129,7 @@ footer {margin-top: 10px;
 }
 
 .bg-red {
-    background-color: #d53924 !important;
+    background-color: #B60000 !important;
 }
 
 .bg-yellow {
@@ -1143,6 +1142,7 @@ footer {margin-top: 10px;
 
 .connectedSortable {
     min-height: 100px;
+    width: 100%;
 }
 
 .nav-tabs-custom {
@@ -1150,6 +1150,7 @@ footer {margin-top: 10px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     border-radius: 3px;
+    width: 100%;    
 }
 
 .graph-title {
@@ -1166,6 +1167,32 @@ footer {margin-top: 10px;
     border-top: 3px solid transparent;
     margin-bottom: -2px;
     margin-right: 5px;
+}
+
+.no-block{
+	float:left !important;
+	clear:left;
+}
+
+.subgraph-title {
+    margin-up: 15px;
+    margin-down: 0;
+    border-bottom-color: #444;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 18px;
+    color: #444;
+    float: left;
+    border-top: 3px solid transparent;
+    margin-bottom: -2px;
+    margin-right: 5px;
+}
+
+.treeview a, .treeview span{
+	font-weight: bold;
+	margin-bottom: 10px !important;
 }
 
 .nav-tabs-custom>.tab-content {
@@ -1187,14 +1214,14 @@ footer {margin-top: 10px;
 .chart {
     position: relative;
     overflow: hidden;
-    width: 600px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
 }
 
 .chart svg, .chart canvas {
     overflow: hidden;
     position: relative;
-    margin: 10px 10px 5px 30px;
+    margin: 10px 10px 10px 30px;
 }
 
 .chart text {
@@ -1241,8 +1268,9 @@ footer {margin-top: 10px;
 .main-sidebar{
     width: 250px;
 	display:inline-block;
-    vertical-align: up !important;
+    vertical-align: top !important;
     font-family: sans-serif !important;
+    margin: 10px;
 }
 
 .sidebar-menu{
@@ -1253,6 +1281,7 @@ footer {margin-top: 10px;
 
 .content-wrapper {
     min-height:100%;
+    min-width: 80%;
     background-color: #ecf0f5;
     display:inline-block;
 }
@@ -1262,6 +1291,9 @@ footer {margin-top: 10px;
     padding-left: 15px;
 }
 
+.text{
+	min-width:610px;
+}
 
 .bar {
   fill: red; /* changes the background */

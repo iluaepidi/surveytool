@@ -2,41 +2,62 @@
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Timestamp"%>
-<%@page import="java.sql.Date"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.concurrent.TimeUnit"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.databasemanager.ResponsesDB"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Page"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Section"%>
 <%@page import="ilu.surveymanager.statistics.Statistics"%>
 <%@page import="ilu.surveymanager.statistics.StatisticsQuestion"%>
+<%@page import="ilu.surveymanager.handler.SurveysHandler"%>
+
 <script type="text/javascript">
 	surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
 </script>
-<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script><!-- Esto es para obtener la IP y la localización -->
+<!--<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script> Esto es para obtener la IP y la localización -->
 <%
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
+SurveysHandler surveysHandler = new SurveysHandler();
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
-lang.loadLanguage(Language.getLanguageRequest(request));
-System.out.println(lang);
+String languageId = Language.getLanguageRequest(request);
+lang.loadLanguage(languageId);
+//System.out.println("String language default: "+survey.getDefaultLanguage());
 
-Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
+Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(), languageId, survey.getDefaultLanguage());
 %>
-				
-<div class="hidden" id="statistics">
+<div class="container-fluid">
+	  				<div class="title-content-no-underline">
+	  					<h2 id="title-header-edit"><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.statistic.title") %></h2>
+	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">						  	
+						  	<li role="presentation" class="statistic-tab active" id="statistic-tab"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
+						  	<li role="presentation" class="share-tab" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-share-alt fa-2x"></i></a></li>
+						  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="SurveysServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
+						</ul>
+	  				</div>
+	  				
+	  				<div class="content-box-tabs edit-content">
+	  								
+<div id="statistics">
 	<div class="main-sidebar">
 		<ul class="sidebar-menu">
         	<li class="treeview active" id="general-menu"><a href="#"><%= lang.getContent("statistics.menu.general")%></a></li>
         	<li class="treeview">
           		<span><%= lang.getContent("statistics.menu.questions")%></span>
-          		<ul class="treeview-menu">
-          		<% boolean first= true;
+          		
+          		<select class="form-control" id="statistics-questions-menu">
+          			<option value="question-0" selected><%= lang.getContent("statistics.menu.default")%></option>
+          		<%
           		for(Section section : survey.getSections()){
 					for(Page pag : section.getPages()){
 						for(Question question : pag.getQuestions()){
@@ -44,25 +65,14 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 							if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 								title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							}
-							if(first){
-								%>
-								<li class="tree-item" id="<%= "question-"+question.getQuestionId() %>"><a href="#"><%= title %></a></li>
-								<%
-								first=false;
+							%>
+							<option value="<%= "question-"+question.getQuestionId() %>"><%= title %></option>
+							<%
 							}
-							else{
-								%>
-								<li class="tree-item" id="<%= "question-"+question.getQuestionId() %>"><a href="#"><%= title %></a></li>
-								<%
-							}
-						%>
-            		
-            		<%
 						}
 					}
-          		}
           		%>
-          		</ul>
+				</select>
         	</li> 
       	</ul>
   	</div>
@@ -74,36 +84,16 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 	          <div class="small-box bg-aqua">
 	            <div class="inner">
 	              <h3><%= surveyStatistic.getNumVisits()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numVisits")%></p>
+	              <p><%= lang.getContent("statistics.boxes.numStarted")%></p>
 	            </div>
 	          </div>
 	        </div>
 	        
-	        <!-- <div class="col-lg-3 col-xs-6">
-	          <div class="small-box bg-yellow">
-	            <div class="inner">
-	              <h3><%= 4%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
-	            </div>
-	          </div>
-	        </div>-->
-	        
 	        <div class="col-md-4">
 	          <div class="small-box bg-green">
 	            <div class="inner">
-	            <%
-	            if(surveyStatistic.getNumVisits()>0){
-	            	System.out.println(surveyStatistic.getNumCompleteResponses());
-	            %>
-	              <h3><%=(int)((surveyStatistic.getNumCompleteResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
-	            <%
-	            } else{
-	            %>
-	              <h3> - <sup>%</sup></h3>
-	            <%
-	            }
-	            %>
-	              <p><%= lang.getContent("statistics.boxes.bounceRate")%></p>
+	            	<h3><%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
 	            </div>
 	          </div>
 	        </div>
@@ -113,7 +103,7 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 	            <div class="inner">
 	               <%
 	            if(surveyStatistic.getNumVisits()>0){
-	            	System.out.println(surveyStatistic.getNumCompleteMandatoryResponses());
+	            	//System.out.println(surveyStatistic.getNumCompleteMandatoryResponses());
 	            %>
 	              <h3><%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
 	            <%
@@ -123,7 +113,7 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 	            <%
 	            }
 	            %>
-	              <p><%= lang.getContent("statistics.boxes.bounceRateMandatory")%></p>
+	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p>
 	            </div>
 	          </div>
 	        </div>
@@ -131,126 +121,113 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 	      </div>
 	      
 	      <div class="row">
-	      	<section class="col-lg-6 connectedSortable ui-sortable">
-	      		<div class="nav-tabs-custom">
+	      	<section class="col-md-6 connectedSortable ui-sortable">
+	      		<div class="nav-tabs-custom no-block">
 	            	<!-- Tabs within a box -->
-	            	<p class="graph-title"><i class="fa fa-inbox"></i> Sales</p>
-	            	<div class="tab-content no-padding">
-	            		
-		              <div class="chart tab-pane active" id="visits-chart">
-		              	 <svg xmlns="http://www.w3.org/2000/svg">
-		              	 <polyline
-     fill="none"
-     stroke="#0074d9"
-     stroke-width="3"
-     points="
-		              	 <%
-		              	Map<Date, Integer> visits = surveyStatistic.getVisitsByDay();
-		              	
-		              	int maxY = 0;
-		              	long maxX = 0;
-		              	int	height = 300;
-		              	long width = 623;
-		              	
-		              	Iterator it = visits.entrySet().iterator();
-		        		while (it.hasNext()) {
-		        		    Map.Entry pair = (Map.Entry)it.next();
-		        		    
-		        		    if(((Integer)(pair.getValue())).intValue()>maxY)
-		        		    	maxY=((Integer)(pair.getValue())).intValue();
-		        		    
-		        		    if(((Date)(pair.getKey())).getTime()>maxX)
-		        		    	maxX=((Date)(pair.getKey())).getTime();
-		        		    
-		        		}
-		        		
-		        		it = visits.entrySet().iterator();
-		        		while (it.hasNext()) {
-		        		    Map.Entry pair = (Map.Entry)it.next();
-		        		    
-		        		    double y = ((((Integer)(pair.getValue())).intValue())*1.0)*((height*1.0)/(maxY*1.0));		        		    
-		        		    long x = (((Date)(pair.getKey())).getTime())*width/maxX;
-		        		    %>
-		        		    <%= x%>,<%= y%>
-		        		    <%
-		        		    
-		        		}
-		              	 %>"/>
-		              		<!--  <text x="50.5" y="261">
-		              			<tspan>0</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,261H598"></path>
-		              		<text x="50.5" y="202">
-		              			<tspan>7,500</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,202H598"></path>
-		              		<text x="50.5" y="143">
-		              			<tspan>15,000</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,143H598"></path>
-		              		<text x="50.5" y="84">
-		              			<tspan>22,500</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,84.00000000000003H598"></path>
-		              		<text x="50.5" y="25">
-		              			<tspan>30,000</tspan>
-		              		</text>
-		              		
-		              		<path class="chart-path" d="M63,25.00000000000003H598"></path>
-		              		<text class="text-horizontal" x="499.86294364842286" y="273.5" >
-		              			<tspan>2013</tspan>
-		              		</text>
-		              		<text class="text-horizontal" x="261.9286618399068" y="273.5">
-		              			<tspan>2012</tspan>
-		              		</text>
-		              		
-		              		<path class="chart-area" d="M63,219.05493333333334C77.94538251227786,219.56626666666668,107.83614753683358,222.6231049981125,122.78153004911144,221.10026666666667C137.73368437041162,219.57673833144582,167.637993013012,209.1350666666667,182.59014733431218,206.86946666666668C197.38655004809883,204.6274666666667,226.9793554756721,204.88256480506598,241.77575818945874,203.06986666666666C256.56538909422306,201.2579981383993,286.1446509037517,194.91349669779092,300.934281808516,192.3712C315.87966432079384,189.80213003112425,345.7704293453496,182.51724094375237,360.71581185762744,182.6244C375.6679661789276,182.73160761041905,405.572274821528,204.17807818499128,420.5244291428282,193.22866666666667C435.32083185661486,182.3933115183246,464.9136372841881,101.94542370540854,479.7100399979748,95.48533333333336C494.3371474862032,89.09915703874188,523.5913624626601,135.1364875658347,538.2184699508884,141.8436C553.1638524631663,148.69665423250134,583.0546174877221,147.7554,598,149.726L598,261L63,261Z"></path>
-		              		<path class="chart-line" d="M63,219.05493333333334C77.94538251227786,219.56626666666668,107.83614753683358,222.6231049981125,122.78153004911144,221.10026666666667C137.73368437041162,219.57673833144582,167.637993013012,209.1350666666667,182.59014733431218,206.86946666666668C197.38655004809883,204.6274666666667,226.9793554756721,204.88256480506598,241.77575818945874,203.06986666666666C256.56538909422306,201.2579981383993,286.1446509037517,194.91349669779092,300.934281808516,192.3712C315.87966432079384,189.80213003112425,345.7704293453496,182.51724094375237,360.71581185762744,182.6244C375.6679661789276,182.73160761041905,405.572274821528,204.17807818499128,420.5244291428282,193.22866666666667C435.32083185661486,182.3933115183246,464.9136372841881,101.94542370540854,479.7100399979748,95.48533333333336C494.3371474862032,89.09915703874188,523.5913624626601,135.1364875658347,538.2184699508884,141.8436C553.1638524631663,148.69665423250134,583.0546174877221,147.7554,598,149.726"></path>
-		              	--></svg>
+	            	<p class="graph-title  no-block"><%= lang.getContent("statistics.boxes.numStarted")%></p>
+	            	<div class="tab-content no-padding  no-block">
+						<div class="chart tab-pane active" id="visits-chart">
+		              		<canvas id="visits" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+							<script>
+							
+								var labels = [];
+								var data = [];
+							<%
+							
+							String[][] data = surveyStatistic.groupVisitsByDay(10);
+							for(int i = 0; i<data.length;i++){
+								//System.out.println(i);
+								%>
+		        		    	labels.push("<%=data[i][0]%>");
+		        		    	data.push(<%=data[i][1]%>);
+		        		    	<%
+							}
+							%>
+								  var data = {
+								    labels: labels,
+								    datasets: [
+								      {
+								        fillColor: "rgba(0,0,0,0)",
+								        strokeColor: "#007593",
+								        pointColor: "#007593",
+								        pointStrokeColor: "#fff",
+								        pointHighlightFill: "#fff",
+								        pointHighlightStroke: "#007593",
+								        data: data
+								      }
+								    ]
+								  };
+								
+								  var ctx = document.getElementById("visits").getContext("2d");
+								
+								  var myChart = new Chart(ctx).Line(data, {
+									  tooltipCaretSize: 0
+									  });
+								  
+							</script>
+						</div>	            	
+	            	
+		             
 		              </div>
 	            	</div>
-	          	</div>
 	      	</section>
-	      	<section class="col-lg-6 connectedSortable ui-sortable">
-	      		<div class="nav-tabs-custom">
+	      	<section class="col-md-6 connectedSortable ui-sortable">
+	      		<div class="nav-tabs-custom no-block">
 	            	<!-- Tabs within a box -->
-	            	<p class="graph-title"><i class="fa fa-inbox"></i> Sales</p>
-	            	<div class="tab-content no-padding">
-		              <div class="chart tab-pane active" id="responses-chart">
-		              	<svg xmlns="http://www.w3.org/2000/svg">
-		              		<text x="50.5" y="261">
-		              			<tspan>0</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,261H598"></path>
-		              		<text x="50.5" y="202">
-		              			<tspan>7,500</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,202H598"></path>
-		              		<text x="50.5" y="143">
-		              			<tspan>15,000</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,143H598"></path>
-		              		<text x="50.5" y="84">
-		              			<tspan>22,500</tspan>
-		              		</text>
-		              		<path class="chart-path" d="M63,84.00000000000003H598"></path>
-		              		<text x="50.5" y="25">
-		              			<tspan>30,000</tspan>
-		              		</text>
-		              		
-		              		<path class="chart-path" d="M63,25.00000000000003H598"></path>
-		              		<text class="text-horizontal" x="499.86294364842286" y="273.5" >
-		              			<tspan>2013</tspan>
-		              		</text>
-		              		<text class="text-horizontal" x="261.9286618399068" y="273.5">
-		              			<tspan>2012</tspan>
-		              		</text>
-		              		
-		              		<path class="chart-area" d="M63,219.05493333333334C77.94538251227786,219.56626666666668,107.83614753683358,222.6231049981125,122.78153004911144,221.10026666666667C137.73368437041162,219.57673833144582,167.637993013012,209.1350666666667,182.59014733431218,206.86946666666668C197.38655004809883,204.6274666666667,226.9793554756721,204.88256480506598,241.77575818945874,203.06986666666666C256.56538909422306,201.2579981383993,286.1446509037517,194.91349669779092,300.934281808516,192.3712C315.87966432079384,189.80213003112425,345.7704293453496,182.51724094375237,360.71581185762744,182.6244C375.6679661789276,182.73160761041905,405.572274821528,204.17807818499128,420.5244291428282,193.22866666666667C435.32083185661486,182.3933115183246,464.9136372841881,101.94542370540854,479.7100399979748,95.48533333333336C494.3371474862032,89.09915703874188,523.5913624626601,135.1364875658347,538.2184699508884,141.8436C553.1638524631663,148.69665423250134,583.0546174877221,147.7554,598,149.726L598,261L63,261Z"></path>
-		              		<path class="chart-line" d="M63,219.05493333333334C77.94538251227786,219.56626666666668,107.83614753683358,222.6231049981125,122.78153004911144,221.10026666666667C137.73368437041162,219.57673833144582,167.637993013012,209.1350666666667,182.59014733431218,206.86946666666668C197.38655004809883,204.6274666666667,226.9793554756721,204.88256480506598,241.77575818945874,203.06986666666666C256.56538909422306,201.2579981383993,286.1446509037517,194.91349669779092,300.934281808516,192.3712C315.87966432079384,189.80213003112425,345.7704293453496,182.51724094375237,360.71581185762744,182.6244C375.6679661789276,182.73160761041905,405.572274821528,204.17807818499128,420.5244291428282,193.22866666666667C435.32083185661486,182.3933115183246,464.9136372841881,101.94542370540854,479.7100399979748,95.48533333333336C494.3371474862032,89.09915703874188,523.5913624626601,135.1364875658347,538.2184699508884,141.8436C553.1638524631663,148.69665423250134,583.0546174877221,147.7554,598,149.726"></path>
-		              	</svg>
+	            	<p class="graph-title no-block"><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	            	<div class="tab-content no-padding no-block">
+						<div class="chart tab-pane active" id="responses-chart">
+		              		<canvas id="responses" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+							<script>
+							
+								var labels = [];
+								var dataMandatory = [];
+							<%
+							
+							data = surveyStatistic.groupCompletedByDay(10);
+							for(int i = 0; i<data.length;i++){
+								//System.out.println(i);
+								%>
+		        		    	labels.push("<%=data[i][0]%>");
+		        		    	dataMandatory.push(<%=data[i][1]%>);
+		        		    	<%
+							}
+							%>
+							
+							
+							
+							
+							 var data = {
+									    labels: labels,
+									    datasets: [
+									      {
+									        label: "<%= lang.getContent("statistics.boxes.numAnswersMand")%>",
+									        showInLegend: true,
+									        fillColor: "rgba(0,0,0,0)",
+									        strokeColor: "#00884b",
+									        pointColor: "#00884b",
+									        pointStrokeColor: "#fff",
+									        pointHighlightFill: "#fff",
+									        pointHighlightStroke: "#00884b",
+									        data: dataMandatory
+									      }
+									    ]
+									  };
+
+							 // Get the context of the canvas element we want to select
+									var ctx = document.getElementById("responses").getContext("2d");
+								  
+								  //don't forget to pass options in when creating new Chart
+								  var lineChart = new Chart(ctx).Line(data, {
+									  tooltipCaretSize: 0
+								  });
+									  
+									  
+							</script>
+						</div>	            	
+	            	
+		             
 		              </div>
-	            		</div>
 	          		</div>
 	      		</section>
 	    	</div>
@@ -262,6 +239,8 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
 					for(Page pag : section.getPages()){
 						for(Question question : pag.getQuestions()){
 							request.setAttribute(Attribute.s_QUESTION, question);
+							request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
+							//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
 	  							%>
 								<div class="content-statistics hidden" id="single-question-<%= question.getQuestionId() %>">
 	  								<jsp:include page="<%= token + question.getStatisticsPage() %>">
@@ -277,8 +256,17 @@ Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVE
     
 	</div>
 </div>
-
+	</div>
+	  			</div>
 <%
 lang.close();
 %>
 	  			
+	  			<jsp:include page="../frames/fNewQuestion.jsp" />
+	  			
+	  			<jsp:include page="../frames/fImportFile.jsp" />
+	  			
+	  			<jsp:include page="../frames/fUpdateFile.jsp" />
+	  			
+	  			<jsp:include page="../frames/fDeleteElement.jsp" />
+	  			  			

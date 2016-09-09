@@ -1,5 +1,7 @@
 package ilu.surveytool.databasemanager.DataObject;
 
+
+
 public class OptionsByGroup {
 
 	int optionsGroupId;

@@ -248,9 +248,9 @@ public class SurveysHandler {
 		return pagesJson;
 	}
 
-	public Statistics createStatistics(int surveyId, String language){
+	public Statistics createStatistics(int surveyId, String language, String languageDefault){
 		Statistics statistics = new Statistics();
-		statistics.loadData(surveyId, language);
+		statistics.loadData(surveyId, language, languageDefault);
 		
 		return statistics;
 	}

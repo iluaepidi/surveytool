@@ -3,27 +3,47 @@
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Content"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.OptionsByGroup"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveymanager.statistics.Statistics"%>
 <%@page import="ilu.surveymanager.statistics.StatisticsQuestion"%>
+<%@page import="ilu.surveymanager.statistics.Statistics"%>
+<%@page import="ilu.surveymanager.statistics.StatisticsQuestion"%>
+<%@page import="ilu.surveymanager.handler.SurveysHandler"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
 <%
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-//String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+if(title==null)
+	title = "";
+String description = "";
+if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
+{
+	description = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText(); 
+} else
+	description="";
+
+int index = Integer.parseInt(request.getParameter("index"));
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+//System.out.println(lang);
 
-Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
-int index = Integer.parseInt(request.getParameter("index"));
-System.out.println(index);
-StatisticsQuestion sQ = surveyStatistic.getStatisticsByQuestion(index);
-
+StatisticsQuestion sQ = (StatisticsQuestion) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
+List<OptionsByGroup> obg = sQ.getOptionsByGroup();
+List<Option> o = sQ.getOptions();
 %>
 
 
+
+<h3><%= title%></h2>
+<h4><%= description%></h3>
 
 		<div class="row single-questions-row">
 	        <div class="small-box bg-aqua">
@@ -34,81 +54,60 @@ StatisticsQuestion sQ = surveyStatistic.getStatisticsByQuestion(index);
 	          </div>
 	      </div>
 	      
-	      <div class="row connectedSortable ui-sortable single-questions-row ">
-	      		<div class="nav-tabs-custom">
+	      <div class="row single-questions-row">
+	      		<div class="nav-tabs-custom no-block text">
 	            	<!-- Tabs within a box -->
-	            	<p class="graph-title"><i class="fa fa-inbox"></i> Sales</p>
+	            	<p class="graph-title"> <%= lang.getContent("statistics.boxes.numAnswersByOption")%></p>
 	            	<div class="tab-content no-padding">
-	            	
-	            	
-	            	<!--<div id="canvas-holder" class="canvas-holder">
-						<canvas id="chart-area" width="100%" height="100%"/>		                
-			  		</div>
-	            	<script>
-	  		<%
-	  		String[] grafColors = {"#576C99", "#885f00", "#d6090c", "#686868", "#926b4d", "#5a7f51", "#2676af", "#8360ad", "#151C25"};
-	  		String[] highlight = {"#4A5C82", "#805b03", "#a8272a", "#494949", "#836652", "#657b5f", "#407aa4", "#746783", "#12181F"};
-			index = 0;
-			String graf = "";
-			for(int i=0;i<9;i++)
-			{
-				graf += "{value: " + i + ", " +
-						"color: \"" + grafColors[i] + "\", " +
-						"highlight: \"" +highlight[i] + "\", " +
-						"label: \"" + i + "\"}";
-			}
-			
-			%>
-				var pieData = [
-					     <%= graf %>   	
-					];
-		
-					window.onload = function(){
-						var ctx = document.getElementById("chart-area").getContext("2d");
-						window.myPie = new Chart(ctx).Pie(pieData);
-					};
-		
-		
-		
-			</script>-->
-		               <div class="chart tab-pane active" id="visits-chart">
-		              	
-<canvas id="myChart" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
-<script>
-  var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "My First dataset",
-        fillColor: "rgba(0,0,0,0)",
-        strokeColor: "#00884b",
-        pointColor: "#00884b",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "#00884b",
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: "My Second dataset",
-        fillColor: "rgba(0,0,0,0)",
-        strokeColor: "#B60000",
-        pointColor: "#B60000",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "#B60000",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  };
-
-  // Get the context of the canvas element we want to select
-  var ctx = document.getElementById("myChart").getContext("2d");
-
-  // Instantiate a new chart using 'data'
-  var myChart = new Chart(ctx).Line(data);
-</script>
-
-		              </div>
+	            		<div class="chart tab-pane active" id="visits-chart">
+		              		<canvas id="myChartSingle" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+							<script>
+							
+							var labels = [];
+							var bars = [];
+							<%
+							//System.out.println("Size of options:"+o.size());
+							int numResponsesExtra = sQ.getNumResponses();
+							for(int i = 0; i<o.size();i++){
+								int idoption = ((Option)(o.get(i))).getId();
+    		    				//System.out.println("New push de labels");
+							%>
+								labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>");
+	        		    		
+	        		    		<%
+	        		    		for(int j=0;j<obg.size();j++){
+	        		    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
+	        		    				//System.out.println("New push de bars");
+	        		    				numResponsesExtra = numResponsesExtra - ((OptionsByGroup)(obg.get(j))).getNumResponses();
+	        		    				%>
+	        		    				bars.push(<%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>);
+	        		    			<%}
+	        		    			}
+								}
+							
+							
+							%>
+							
+								  var data = {
+								    labels: labels,
+								    datasets: [
+								      {
+								    	  label: "My First dataset",
+									        fillColor: "#00884b",
+									        strokeColor: "#00884b",
+									        highlightFill: "#fff",
+									        highlightStroke: "#00884b",
+								        data: bars
+								      }
+								    ]
+								  };
+								
+								  // Get the context of the canvas element we want to select
+								  var ctx = document.getElementById("myChartSingle").getContext("2d");
+								
+								  var myChartSingle = new Chart(ctx).Bar(data);
+							</script>
+						</div>
 	            	</div>
 	          	</div>	      	
 	    	</div>
