@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jettison.json.JSONArray;
+
+import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.Quota;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.surveytool.sessioncontrol.SessionHandler;
@@ -65,6 +69,12 @@ public class SurveysFees extends HttpServlet {
    			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
    			Survey surveyDefaultLanguage = surveysHandler.getSurveyDetail(surveyId, survey.getDefaultLanguage());
    			
+   			JSONArray pages = surveysHandler.getQuestionsJson(survey);
+            request.setAttribute(Attribute.s_JSON_QUOTAS, pages);
+            
+            QuotaHandler qHandler = new QuotaHandler();
+            List<Quota> listQuotas = qHandler.getListQuotas(survey.getSurveyId());
+            request.setAttribute(Attribute.s_LIST_QUOTAS, listQuotas);
    			//completeTextDefault(survey,surveyDefaultLanguage);
    			
    			request.setAttribute(Attribute.s_SURVEY_INFO, survey);

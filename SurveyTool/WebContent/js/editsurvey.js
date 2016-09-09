@@ -10,6 +10,7 @@ var currentOption = 0;
 var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
 var pending;
+var jsonquotas;
 
 $(function() {
 	
@@ -93,9 +94,23 @@ $(function() {
 		}
 	});
 	
+	$('#create-quota').click(function(event) {
+		
+			$('#newQuotaModal').modal('toggle');
+			//Copy survey-quota-new
+			var newQuota=$('#survey-quota-new').clone();
+			newQuota.css("display","block");
+			newQuota.prependTo("#listcompletequotas");
+	});
+	
 	$('#page').on("click", '#btn-question', function(){
 		currentAddNode = $(this).parent().parent().parent();
 		$("#newQuestionModal").modal("show");
+	});
+	
+	$('#listcompletequotas').on("click", '#btn-add-quota', function(){
+		currentAddNode = $(this).parent().parent().parent();
+		$("#newQuotaModal").modal("show");
 	});
 	
 	$('#page-items').on("click", '#editFile', function(){
@@ -200,7 +215,7 @@ $(function() {
 		}
 	});
 	
-	$('#survey-div-title-fees').on("focusout", "#optionquota input", function(e){
+	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
 		e.stopPropagation();
 		if($(this).val() != "")
 		{
@@ -212,12 +227,12 @@ $(function() {
 			req.index = currentNode.attr('index');
 			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
 			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
-			req.ogid = currentNode.closest('.optionsfees').attr('ogid');
+			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
 			req.max = $("#max"+req.oid).val();
 			req.min = $("#min"+req.oid).val();
 			
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
-			alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
+			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
 			
 			
 			$.ajax({ 
@@ -230,20 +245,27 @@ $(function() {
 				   console.log(data);
 				   if(data != '')
 				   {
-					   var json = JSON.parse(data);
-					   if(json.hasOwnProperty('oid'))
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('oid'))
 					   {
-						   console.log("hello oid: " + json.oid);
-						   currentNode.attr('oid', json.oid);
+						   console.log("hello oid: " + jsonresponse.oid);
+						   //update jsonquotas
+						   var json = jQuery.parseJSON(jsonquotas);
+						   for (var i=0;i<json[0].questions.length;++i)
+						    {
+									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+											jsonquotas = JSON.stringify(json);
+										}
+									}
+						   }
+							
+						   
 					   }
 					   
-					   if(json.hasOwnProperty('ogid'))
-					   {
-						   console.log("hello ogid: " + json.ogid);
-						   currentNode.closest('ul').attr('ogid', json.ogid);
-					   }
-					   
-					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+					  
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -255,6 +277,51 @@ $(function() {
 			});
 		}
 	});
+	
+	$("#objetivesurveys").focusout(function() {
+		if($(this).val() != "")
+		{
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.sid = currentNode.attr('sid');
+			req.objetive = currentNode.val();
+			
+			console.log("sid: " + req.sid + " - objetive: " + req.objetive);
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QCService/updateObjetive",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('sid'))
+					   {
+						   
+							
+						   
+					   }
+					   
+					  
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		}
+	});
+	
+	
 	
 	$('#page-items').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
@@ -758,6 +825,19 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	var quotaid;
+	$('.survey-sections').on("click", "#removeQuota", function(e){
+		var item = $(this).parents(".edit-fees-frame");
+		quotaid = item.attr('quota');
+		currentQuestion = item.find(".widthTitleSurveyCollapsed");
+		sid = currentQuestion.attr('sid');
+		qid = currentQuestion.attr('qid');
+		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
+		$("#removeElemId").val(sid + '/' +qid +"/111");
+		$("#removeElemService").val('QuotaService');
+		$("#removeElement").modal("show");
+	});
+	
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
 		
 		var elementId = $('#removeElemId').val(); 
@@ -867,6 +947,11 @@ $(function() {
 						   }
 					   });
 					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title]').val('Section 1');
+				   }
+				   else if(service == "QuotaService")
+				   {
+					   
+					   $('#survey-quota-'+quotaid).remove();
 				   }
 			   }
 			   else
@@ -1523,6 +1608,50 @@ $(function() {
 });
 
 
+function loadquotas(json){
+	jsonquotas = json;
+	
+	
+	
+	
+	//var currentNode = $(this);
+	//currentNode.closest('.widthTitleSurveyCollapsed').attr('qid',$('#selquestionforfees1').val());
+	
+	
+}
+
+function loadvaluequestion(id){
+	$("#selquestionforfees"+id).change(function(){
+		var currentNode = $(this);
+		currentNode.closest('.widthTitleSurveyCollapsed').attr('qid',$('#selquestionforfees'+id).val());
+	});
+	
+	$('#selquestionforfees'+id).trigger("change");
+	$('#selquestionforfees'+id).prop("disabled", true);
+}
+
+function changeoptionsfees(id){
+	var valuesel = $("#selquestionforfees"+id).val();
+	//$('.optionsfees').css('display','none');
+	//$('#optionsfees'+valuesel).css('display','');
+	
+	$('#optionsquota'+id).empty();
+	
+	var json = jQuery.parseJSON(jsonquotas);
+	for (var i=0;i<json[0].questions.length;++i)
+    {
+		if(json[0].questions[i].questionId == valuesel){
+			$('#optionsquota'+id).attr("ogid", json[0].questions[i].optionsGroup[0].optionsGroupId);
+			for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+				$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='text' placeholder='' class='form-control-small col-md-8' value='"+json[0].questions[i].optionsGroup[0].options[j].max+"' index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' ></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='text' placeholder='' class='form-control-small col-md-8' value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' ></div></div>");
+			}
+			
+		}
+		
+    }
+	
+	
+}
 
 function updateContent(req, serviceUrl)
 {

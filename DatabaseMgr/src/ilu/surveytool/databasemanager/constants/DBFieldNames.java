@@ -75,6 +75,7 @@ public class DBFieldNames {
 		public final static String s_PUBLIC_ID = "publicId";
 		public final static String s_AUTHOR = "author";
 		public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
+		public final static String s_OBJETIVE = "objetive";
 		
 	//resources
 		public final static String s_RESOURCEID = "idResoruces";
@@ -96,5 +97,9 @@ public class DBFieldNames {
 		public final static String s_USERNAME = "username";
 		public final static String s_USER_EMAIL = "email";
 		public final static String s_USER_ISO_LANGUAGE = "isoName";
+		
+	//quota
+		public final static String s_MAX_RESPONSES = "maxResponses";
+		public final static String s_MIN_RESPONSES = "minResponses";
 
 }

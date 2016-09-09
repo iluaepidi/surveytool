@@ -22,6 +22,7 @@ import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
+import ilu.surveytool.databasemanager.DataObject.Quota;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.ResponseSimple;
 import ilu.surveytool.databasemanager.DataObject.Survey;
@@ -48,7 +49,65 @@ public class QuotaHandler {
 			//insert
 			quotaDB.insertQuota(idSurvey,option.getQid(), option.getOgid(), option.getOid(), max, min);
 		}
+		
+		try {
+			response.put("oid", String.valueOf(option.getOid()));
+			response.put("max", String.valueOf(max));
+			response.put("min", String.valueOf(min));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return response.toString();
+	}
+	
+	
+	public String updateObjetive(int idSurvey, int objetive){
+		QuotasDB quotaDB = new QuotasDB();
+		JSONObject response = new JSONObject();
+		
+		//Update
+		boolean r=	quotaDB.updateObjetive(idSurvey,objetive);
+		
+		try {
+			response.put("result", r);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return response.toString();
+	}
+	
+	public boolean deteleQuotaQuestion(int idSurvey, int idQuestion){
+		QuotasDB quotaDB = new QuotasDB();
+		JSONObject response = new JSONObject();
+		boolean removed = false;
+		
+		//Delete
+		quotaDB.removeQuota(idSurvey,idQuestion);
+		
+		try {
+			response.put("result", true);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		removed = true;
+		return removed;
+	}
+	
+	public List<Quota> getListQuotas(int idQuestionnarie){
+		
+		List<Quota> listQuotas = new ArrayList<Quota>();
+		QuotasDB quotaDB = new QuotasDB();
+		
+		listQuotas = quotaDB.getListQuotasByQuestionnarie(idQuestionnarie);
+		
+		
+		return listQuotas;
+		
 	}
 
 }

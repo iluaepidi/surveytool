@@ -163,4 +163,26 @@ public class QuestionCreatorService {
 		}
     	return response;
     }
+	
+	@POST
+	@Path("/updateObjetive")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateObjetive(String req) {
+    	System.out.println("updateObjetive: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			
+			int idSurvey = Integer.parseInt(json.getString("sid"));
+			int objetive = Integer.parseInt(json.getString("objetive"));
+			QuotaHandler quotaHandler = new QuotaHandler();
+			response = quotaHandler.updateObjetive(idSurvey, objetive);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
 }

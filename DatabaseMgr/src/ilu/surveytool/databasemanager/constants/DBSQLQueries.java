@@ -204,13 +204,13 @@ public class DBSQLQueries {
 						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? ";
-		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage FROM surveytool.questionnaire q "
+		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage, q.objetive FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "inner join surveytool.content c on c.idContent = q.idContent "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on l.idLanguage = c.idLanguage "
 				+ "where q.idQuestionnaire = ?";
-		public final static String s_SELECT_QUESTIONNAIRE_BY_ID_AND_LANG = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage FROM surveytool.questionnaire q "
+		public final static String s_SELECT_QUESTIONNAIRE_BY_ID_AND_LANG = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage, q.objetive FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "inner join surveytool.content c on c.idContent = q.idContent "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
@@ -233,6 +233,9 @@ public class DBSQLQueries {
 		
 		//Quotas
 		public final static String s_SELECT_CHECK_EXISTS_QUOTAS = "SELECT * FROM surveytool.quotas WHERE idQuestionnaire=? AND idQuestion=? AND idOptionsGroup=? AND value=?";
+		public final static String s_SELECT_QUOTAS_BY_IDQUESTIONNARIE = "SELECT idQuestion,idOptionsGroup, value, maxResponses,minResponses FROM surveytool.quotas WHERE idQuestionnaire=? ORDER BY idQuestion,value";
+		public final static String s_SELECT_QUOTA_MAX = "SELECT maxResponses FROM surveytool.quotas WHERE value=?";
+		public final static String s_SELECT_QUOTA_MIN = "SELECT minResponses FROM surveytool.quotas WHERE value=?";
 		
 		//QuestionParameter
 		public final static String s_SELECT_QUESTIONPARAMETER_BY_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
@@ -369,6 +372,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
 		//quotas
 			public final static String s_UPDATE_QUOTAS = "UPDATE surveytool.quotas SET maxResponses=?,minResponses=? WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=? AND value=?";
+			public final static String s_UPDATE_OBJETIVE_SURVEY = "UPDATE surveytool.questionnaire SET objetive=? WHERE idQuestionnaire=?";
 			
 	//delete
 		//contentIndex
@@ -405,5 +409,8 @@ public class DBSQLQueries {
 
 		//section
 			public final static String s_DELETE_SECTION = "DELETE FROM surveytool.section WHERE idSection = ?";
+			
+		//quota
+			public final static String s_DELETE_QUOTA = "DELETE FROM surveytool.quotas WHERE idQuestionnaire = ? AND idQuestion=?";
 		
 }

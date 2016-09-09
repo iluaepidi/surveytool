@@ -14,6 +14,7 @@ public class Survey {
 	List<Section> sections = null;
 	String publicId = "";
 	String defaultLanguage;
+	int objetive;
 	
 
 	public Survey() {
@@ -116,6 +117,16 @@ public class Survey {
 
 	public void setDefaultLanguage(String defaultLanguage) {
 		this.defaultLanguage = defaultLanguage;
+	}
+
+
+	public int getObjetive() {
+		return objetive;
+	}
+
+
+	public void setObjetive(int objetive) {
+		this.objetive = objetive;
 	}
 	
 }

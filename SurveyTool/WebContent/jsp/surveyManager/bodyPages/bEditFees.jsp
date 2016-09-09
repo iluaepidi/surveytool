@@ -17,19 +17,10 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.OptionsGroup"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Quota"%>
+<%@page import="java.util.HashMap"%>
 
-<script type="text/javascript">
-function changeoptionsfees(){
-	var valuesel = $("#selquestionforfees1").val();
-	$('.optionsfees').css('display','none');
-	$('#optionsfees'+valuesel).css('display','');
-}
 
-function createnewfee(){
-	var $button = $('#survey-fees-1').clone();
-	$('#listcompletefees').appendTo($button);
-}
-</script>
 
 
 				<%
@@ -57,6 +48,8 @@ function createnewfee(){
 				
 				HttpSession sessions = request.getSession(false); 
   				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
+  				HashMap<Integer, Integer> listIdQuestion = new HashMap();
+  				int indexquestion = 0;
 				%>
 				
 				<div class="container-fluid">
@@ -68,19 +61,17 @@ function createnewfee(){
 						  	<li role="presentation" class="edit-tab"><a href="SurveysServlet?surveyid=<%=survey.getSurveyId() %>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
-	  				<div class="content-box-tabs edit-content" id="listcompletefees">
+	  				<div class="content-box-tabs edit-content" id="listcompletequotas">
 	  					<div class="browser-left">Hello</div>	  						  		
 	  						<div class="edit-survey-head">
 		  						<div class="survey-preview">
 		  							
 		  						</div>
 		  							
-		  						<div class="survey-language" id="survey-language">
-		  							<form class="" id="survey-language-form">
+		  						<div class="survey-objetive" id="survey-objetive">
 		  								<label for="survey-language-version" class="" ><i class="fa fa-sliders fa-2x"></i><span><%= lang.getContent("survey.fees.label.objective") %></span></label>
-										<input id="email" name="email" type="text" placeholder="" class="form-control-small" value="">
+										<input id="objetivesurveys" name="objetivesurveys" type="text" placeholder="" class="form-control-small" value="<%=survey.getObjetive() %>" sid="<%=survey.getSurveyId() %>">
 										<%= lang.getContent("survey.fees.label.surveys") %>
-		  							</form>
 		  						</div>
 		  					</div>
 		  					
@@ -116,70 +107,51 @@ function createnewfee(){
 									i++;
 								}
 							 %>
-		  						<div class="edit-fees-frame survey-info" id="survey-fees-1" sid="1">
-		  							<ul class="survey-sections" id="survey-sections" style="overflow: hidden;">
-			  						<li style="display:block;">
-	
-			  						<div class="widthTitleSurveyCollapsed" id="survey-div-title-fees" style="width: 90%;" qid="50" sid="<%=survey.getSurveyId()%>">
-			  							<div class="form-group" style="margin:0px;">
-			  								<div class="form-group">
-								                <label class="col-md-4 control-label profileLabel" for="language">Selecciona una pregunta</label>
-								                <div class="col-md-8">     
-								                	<div class="form-group">                   
-								                    	<select id="selquestionforfees1" name="selquestionforfees1" class="form-control" onchange="changeoptionsfees();">
-								                    		<% for(Question question : listQuestionFees){
-								                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-			    													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-					    										}
-					    									%>
-								                    		<option value="<%=question.getQuestionId() %>"><%=titleQuestion %></option>
-								                    		<%} %>
-								                    	</select>
-								                	</div>
-								                </div>
-								            </div>
-				  						</div>
-				  						<% for(Question question : listQuestionFees){
-				                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-   													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-	    										}%>
-				                    			<% for(OptionsGroup optionsGroup : question.getOptionsGroups()){%>
-				                    				<div id="optionsfees<%=question.getQuestionId()%>" style="display:none;" class="optionsfees"  ogid="<%= optionsGroup.getId() %>">
-					                    			
-				                    				<% 
-				                    				for(Option option : optionsGroup.getOptions()){
-				                    					int index = i + 1;
-					    							%>
-							  						<div class="form-group" style="margin:0px;display: inline-flex;" id="optionquota">
-							  									<div class="form-group">
-							  							     		<label class="col-md-4 control-label profileLabel" for="language"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></label>
-											                	</div>
-											                	<div class="form-group col-md-4">
-											                		<label class="col-md-4 control-label profileLabel" for="language">Max</label>
-											                		<input id="max<%= option.getId() %>" name="max" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
-											                	</div>
-											               		<div class="form-group col-md-4">
-											                		<label class="col-md-4 control-label profileLabel" for="language">Min</label>
-											                		<input id="min<%= option.getId() %>" name="min" type="text" placeholder="" class="form-control-small col-md-8" value="" index="<%= index %>" oid="<%= option.getId() %>" >
-											                	</div>
-													</div>
-												<%}%>
-				                    				
-				                    		</div>
-												<%}%>
-				                    	<%}%>
-										
-				  					</div>
-				  					<div class="panel-section-buttons right" style="margin-top:10px;">
-										<button class="btn-transparent btn-remove" id="removeQuestion" aria-label="Remove question: question typo formField"><i class="fa fa-trash fa-2x"></i></button>
-									</div>					
-									</li>
-								</ul>
-		  					</div>	
+							 
+							 	<%  List<Quota> listQuotas = (List<Quota>) request.getAttribute(Attribute.s_LIST_QUOTAS);
+							 	Quota quotaold=null,quota=null;
+							 	
+
+						 		request.setAttribute("listQuestionFees",listQuestionFees);
+						 		
+							 	for(int index=1;index<=listQuotas.size();index++){
+							 		quota  = (Quota) listQuotas.get(index-1);
+							 		
+							 		if(index==1){
+							 			indexquestion++;
+							 			request.setAttribute("index",indexquestion);
+							 			
+							 			listIdQuestion.put(indexquestion, quota.getIdQuestion());
+							 			%>
+							 			<jsp:include page="../components/cQuota.jsp" />
+							 			<script type="text/javascript">
+							 				loadvaluequestion(<%=indexquestion%>);
+							 			</script>
+							 		<% }else{ %>
+							 			<% if(quota.getIdQuestion()!=quotaold.getIdQuestion()){
+							 				indexquestion++;
+							 				request.setAttribute("index",indexquestion);
+							 				listIdQuestion.put(indexquestion, quota.getIdQuestion());
+							 			%>
+							 			
+							 			<jsp:include page="../components/cQuota.jsp" />
+							 			<script type="text/javascript">
+							 				loadvaluequestion(<%=indexquestion%>);
+							 			</script>
+							 			<%} 
+							 		}
+							 		quotaold = (Quota) listQuotas.get(index-1);
+							 		
+							 		%>
+		  						
+		  					<%} %>
+		  					
+		  					
+		  					<jsp:include page="../components/cQuotaNew.jsp" />
 							
 							<div class="center" id="add-fees">											
-								<label for="btn-add-option" class="visuallyhidden">Añadir Cuota</label>
-								<button class="btn btn-primary btn-sm active" id="btn-add-option" onclick="createnewfee();"><i class="fa fa-plus-square"></i><span>Añadir Cuota</span></button>
+								<label for="btn-add-quota" class="visuallyhidden">Añadir Cuota</label>
+								<button class="btn btn-primary btn-sm active" id="btn-add-quota"><i class="fa fa-plus-square"></i><span>Añadir Cuota</span></button>
 							</div>
 		  					
 						</div>
@@ -187,11 +159,15 @@ function createnewfee(){
 	  				</div>
 	  				
 					<script type="text/javascript">
-						$('#selquestionforfees1').trigger("change");
-						
-						$("#selquestionforfees1").change(function(){
-							var currentNode = $(this);
-							currentNode.closest('.widthTitleSurveyCollapsed').attr('qid',$('#selquestionforfees1').val());
+						loadquotas('<%=request.getAttribute(Attribute.s_JSON_QUOTAS)%>');
+						$(document).ready(function() {
+							<%for(int id=1;id<=indexquestion;id++){%>
+								
+								$('#selquestionforfees<%=id%>').val(<%=listIdQuestion.get(id)%>);
+								loadvaluequestion(<%=id%>);
+							<%}%>
+							
+							
 						});
 					</script>
 	  				
@@ -200,4 +176,7 @@ function createnewfee(){
 <%
 lang.close();
 %>
+
+<jsp:include page="../frames/fDeleteElement.jsp" />
+<jsp:include page="../frames/fNewQuota.jsp" />
 	  			

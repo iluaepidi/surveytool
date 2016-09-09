@@ -36,5 +36,7 @@ public class Attribute {
 	public final static String s_RESOURCE = "resource";
 	public final static String s_ADD_QUESTIONS = "addQuestions";
 	public final static String s_OPTION = "option";
+	public final static String s_JSON_QUOTAS = "jsonquotas";
+	public final static String s_LIST_QUOTAS = "listquotas";
 
 }
