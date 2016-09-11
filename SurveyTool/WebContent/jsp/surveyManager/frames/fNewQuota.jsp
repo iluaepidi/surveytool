@@ -34,7 +34,7 @@ String titleQuestion="";
 				    						<div class="col-md-7">
 				    							<div class="form-group" style="margin:0px;">
 				    								<label for="qstatement"><%= lang.getContent("quota.select") %></label>
-										     		<select id="selquestionforfees" name="selquestionforfees" class="selquestionforfees form-control">
+										     		<select id="selquestionnewquota" name="selquestionnewquota" class="selquestionforfees form-control">
 								                    		<% for(Question question : listQuestionFees){
 								                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 			    													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();

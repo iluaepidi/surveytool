@@ -29,7 +29,7 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 								                <label class="col-md-4 control-label profileLabel" for="language">Selecciona una pregunta</label>
 								                <div class="col-md-8">     
 								                	<div class="form-group">                   
-								                    	<select id="selquestionforfees<%=index%>" name="selquestionforfees<%=index%>" class="selquestionforfees form-control" onchange="changeoptionsfees(<%=index%>);">
+								                    	<select id="selquestionforfees-new" name="selquestionforfees-new" class="selquestionforfees form-control" onchange="changeoptionsfees();">
 								                    		<% for(Question question : listQuestionFees){
 								                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 			    													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
@@ -43,7 +43,7 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 								            </div>
 				  						</div>
 				  						
-				                    				<div id="optionsquota<%=index%>" class="optionsquota" ogid="">
+				                    				<div id="optionsquotanew" class="optionsquota" ogid="">
 					                    			
 				                    					<div class="form-group" style="margin:0px;display: inline-flex;" id="optionquota">
 							  									<div class="form-group">

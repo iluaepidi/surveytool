@@ -94,13 +94,33 @@ $(function() {
 		}
 	});
 	
+	var newquota = 1000;
 	$('#create-quota').click(function(event) {
 		
 			$('#newQuotaModal').modal('toggle');
 			//Copy survey-quota-new
 			var newQuota=$('#survey-quota-new').clone();
 			newQuota.css("display","block");
+			newquota = $("#selquestionnewquota").val();
+			newQuota.attr("quota",newquota);
+			newQuota.attr("sid",newquota);
+			newQuota.attr("id","survey-quota-"+newquota);
+			var selectQuota = newQuota.find('select');
+			selectQuota.attr("id","selquestionforfees"+newquota);
+			selectQuota.attr("name","selquestionforfees"+newquota);
+			selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
+			
+			var divoptions = newQuota.find('#optionsquotanew');
+			divoptions.attr("id","optionsquota"+newquota);
+			
+			//newQuota.attr("sid",);
+			//newQuota.attr("quota",);
+			
 			newQuota.prependTo("#listcompletequotas");
+			$('#selquestionforfees'+newquota).val(newquota);
+			loadvaluequestion(newquota);
+			
+			
 	});
 	
 	$('#page').on("click", '#btn-question', function(){
@@ -1628,7 +1648,74 @@ function loadvaluequestion(id){
 	
 	$('#selquestionforfees'+id).trigger("change");
 	$('#selquestionforfees'+id).prop("disabled", true);
+	
+	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+		e.stopPropagation();
+		if($(this).val() != "")
+		{
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.attr('oid');
+			req.index = currentNode.attr('index');
+			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
+			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
+			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
+			req.max = $("#max"+req.oid).val();
+			req.min = $("#min"+req.oid).val();
+			
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
+			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			var host = "http://" + window.location.host;
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QCService/insertQuota",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('oid'))
+					   {
+						   console.log("hello oid: " + jsonresponse.oid);
+						   //update jsonquotas
+						   var json = jQuery.parseJSON(jsonquotas);
+						   for (var i=0;i<json[0].questions.length;++i)
+						    {
+									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+											jsonquotas = JSON.stringify(json);
+										}
+									}
+						   }
+							
+						   
+					   }
+					   
+					  
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		}
+	});
+	
+	
 }
+
+
 
 function changeoptionsfees(id){
 	var valuesel = $("#selquestionforfees"+id).val();
