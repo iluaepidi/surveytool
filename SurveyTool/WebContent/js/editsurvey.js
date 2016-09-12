@@ -66,19 +66,26 @@ $(function() {
 			hideFieldError($('#qstatement'));
 			console.log("num page: " + currentElement.attr('index'));
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
-			$.post('CreateQuestionServlet', {
-				qtype : $('#qtypevalue').val(),
-				qstatement: $('#qstatement').val(),
-				mandatory: $('#mandatory').val(),
-				helpText: $('#help-text').val(),
-				surveyid: $('#surveyid').val(),
-				pageid: currentElement.attr('pid'),
-				numPage: currentElement.attr('index'),
-				langsurvey : $("#survey-language-version").val()
-			}, function(responseText) {
+			var request = {
+					qtype : $('#qtypevalue').val(),
+					qstatement: $('#qstatement').val(),
+					mandatory: $('#mandatory').val(),
+					helpText: $('#help-text').val(),
+					surveyid: $('#surveyid').val(),
+					pageid: currentElement.attr('pid'),
+					numPage: currentElement.attr('index'),
+					langsurvey : $("#survey-language-version").val()
+				};
+			$.post('CreateQuestionServlet', request, function(responseText) {
 				var index = responseText.indexOf("<html");
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
-				else {currentElement.find('#page-items').append(responseText);}
+				else {
+					var pageItems = currentElement.find('ul.page-items'); 
+					pageItems.append(responseText);
+					var question = pageItems.find('li.panel-question').last()
+					//console.log("Question created: " + pageItems.find('li.panel-question').last().attr('index'));
+					question.find('input.survey-question-title').trigger("createQuestionJson", [request.qtype, request.pageid, request.qstatement, question.attr('qid'), question.attr('index')]);
+				}
 			});
 			console.log("after post");
 			$('#qstatement').val("");
@@ -209,6 +216,7 @@ $(function() {
 					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
 					   
 					   currentNode.trigger("goto");
+					   currentNode.trigger("setJson");
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -670,7 +678,7 @@ $(function() {
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(result);
 		$("#removeElemService").val('OptionService');
-		$("#removeElement").modal("show");
+		$("#removeElement").modal("show");		
 	});
 	
 	$('.section-pages').on("click", "#remove-optionmatrix", function(e){
@@ -722,14 +730,18 @@ $(function() {
 				   }
 				   else if(service == "QuestionService")
 				   {
+					   $('li[qid="' + currentQuestion + '"]').trigger('rmvQuestionJson');
 					   $('li[qid="' + currentQuestion + '"]').remove();
 				   }
 				   else if(service == "OptionService")
-				   {
+				   {   
 					   var ids = elementId.split('/');
 					   var oid = ids[2];
 					   var input = $('input[oid=' + oid + ']'); 					   
 					   var numItems = input.closest("ul").find("li").size();
+					   
+					   input.trigger("rmvOptJson");
+						
 					   console.log("Items: " + numItems);
 					   if(numItems > 3)
 					   {
@@ -750,7 +762,7 @@ $(function() {
 					   }
 					   
 					   var logicOptionElement = $('#logic-option-' + oid);
-					   removeLogicElement(logicOptionElement);
+					   removeLogicElement(logicOptionElement);					   
 				   }
 				   else if(service == "OptionMatrixService")
 				   {
@@ -1449,7 +1461,7 @@ $(function() {
 		});
 	});
 	
-	$('#survey-sections').on("focusout", "#survey-question-title", function(e){
+	$('.survey-sections').on("focusout", "input#survey-question-title", function(e){
 		
 		console.log("Question update content entra");
 		e.stopPropagation();
@@ -1481,12 +1493,11 @@ $(function() {
 			
 			$(this).prop("class", "survey-section-title-unselected");
 			
-			//$(this).css('border','none !important');
+			//$(this).css('border','none !important');			
 			
-			
-			updateContent(req, serviceUrl);
+			updateContent(req, serviceUrl, $(this));
 		}
-		
+				
 		
 	});
 
@@ -1643,9 +1654,9 @@ $(function() {
 
 
 
-function updateContent(req, serviceUrl)
+function updateContent(req, serviceUrl, node)
 {
-	
+	console.log("updae content - node: " + node.val());
 	$.ajax({ 
 	   type: "PUT",
 	   dataType: "text",
@@ -1653,7 +1664,9 @@ function updateContent(req, serviceUrl)
 	   url: serviceUrl,
 	   data: JSON.stringify(req),
 	   success: function (data) {
-		   console.log(data);		   
+		   console.log("update content response: " + data);	
+
+			node.trigger("setQuestionJson");
 	   },
 	   error: function (xhr, ajaxOptions, thrownError) {
 		   console.log(xhr.status);

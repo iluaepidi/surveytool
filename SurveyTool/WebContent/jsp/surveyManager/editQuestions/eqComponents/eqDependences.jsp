@@ -245,7 +245,7 @@
 							  													{
 							  									%>
 							  													<option value="none" class="default-option"><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
-							  													<option value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
+							  													<option  id="option-goto-<%= logicGoTo.getQDestId() %>" value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
 							  									<%					
 							  													}
 							  									%>
