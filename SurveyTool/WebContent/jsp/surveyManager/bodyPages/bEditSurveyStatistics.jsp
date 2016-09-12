@@ -34,9 +34,19 @@ String languageId = Language.getLanguageRequest(request);
 lang.loadLanguage(languageId);
 //System.out.println("String language default: "+survey.getDefaultLanguage());
 
+String titlesurvey = "";
+if(survey!=null && survey.getContents()!=null && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().equals("")){
+	titlesurvey = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+}
+
 Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(), languageId, survey.getDefaultLanguage());
 %>
+
 <div class="container-fluid">
+
+
+
+
 	  				<div class="title-content-no-underline">
 	  					<h2 id="title-header-edit"><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.statistic.title") %></h2>
 	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">						  	
@@ -47,6 +57,13 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	  				</div>
 	  				
 	  				<div class="content-box-tabs edit-content">
+	  						
+	  						<div class="edit-survey-frame survey-info">
+		  						<div class="widthTitleSurveyCollapsed">
+		  							<p class="survey-info-title" aria-label="<%= lang.getContent("survey.edit.info.aria_label.title") %>"> <%= titlesurvey %></p>
+			  					</div>	
+		  					</div>	
+	  						
 	  								
 <div id="statistics">
 	<div class="main-sidebar">

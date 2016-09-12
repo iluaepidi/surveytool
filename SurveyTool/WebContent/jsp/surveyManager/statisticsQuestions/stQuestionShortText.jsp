@@ -58,7 +58,7 @@ StatisticsQuestion sQ = (StatisticsQuestion) request.getAttribute(Attribute.s_SU
 		            	  String text = list.get(i).getContents().get("text").getText();
 		            	  if (!text.equals("")){
 		            	  %>
-		            	  <li><i class="enum fa fa-circle-o"></i><%= text %></li>
+		            	  <li><i class="enum fa fa-caret-right"></i><%= text %></li>
 		            	  <%
 		            	  }
 		              }
