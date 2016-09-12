@@ -25,6 +25,7 @@ public class StatisticsQuestion {
 
 	public StatisticsQuestion() {
 		super();
+		numResponses=0;
 		optionsGroup = new ArrayList<OptionsGroup>();
 		options = new ArrayList<Option>();
 		optionsByOptionsGroup = new ArrayList<OptionsByGroup>();
@@ -43,6 +44,7 @@ public class StatisticsQuestion {
 	}
 	
 	public int getNumResponses(){
+		//System.out.println("getnumresponses");
 		return numResponses;
 	}
 	

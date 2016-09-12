@@ -63,6 +63,7 @@ List<Option> o = sQ.getOptions();
 	            		<%
 	            		
 	            		for(int j=0;j<og.size();j++){
+	            			//System.out.println("En bucle de og");
 	            			%>
 	            			<p class="subgraph-title no-block"> <%= ((Content)(((OptionsGroup)(og.get(j))).getContents().get("text"))).getText()%></p>
 	            			<div class="chart tab-pane active no-block" id="visits-chart<%= ((OptionsGroup)(og.get(j))).getId() %>">
@@ -72,6 +73,7 @@ List<Option> o = sQ.getOptions();
 									var labels = [];
 									var bars = [];
 	            					<%
+	            					int numTotalAnswers = 0;
 	            					for(int i = 0; i<obg.size();i++){
 										if((((OptionsByGroup)obg.get(i)).getOptionsGroupId())==((OptionsGroup)(og.get(j))).getId()){
 											int idoption = ((OptionsByGroup)obg.get(i)).getOptionId();
@@ -87,7 +89,30 @@ List<Option> o = sQ.getOptions();
 											labels.push("<%=label%>");
 				        		    		bars.push(<%= (Math.round(((numResponses*1.0)/(sQ.getNumResponses()*1.0))*10000.0))/100.0 %>);
 				        		    		<%
+				        		    		numTotalAnswers =numTotalAnswers + numResponses; 
 										}
+	            					}
+	            					
+	            					
+	            					
+	            					if(obg.size()==0){
+	            						for(int k=0;k<o.size();k++){
+	            							System.out.println("options:"+((Content)(((Option)(o.get(k))).getContents().get("text"))).getText());
+	            							%>
+											labels.push("<%=((Content)(((Option)(o.get(k))).getContents().get("text"))).getText()%>");
+				        		    		bars.push(0);
+				        		    		<%
+										}
+	            						%>
+										labels.push("<%= lang.getContent("statistics.matrix.none")%>");
+				        		    	bars.push(0);
+				        		    	<%
+	            					}
+	            					else{
+	            						%>
+										labels.push("<%= lang.getContent("statistics.matrix.none")%>");
+				        		    	bars.push(<%= (Math.round((((sQ.getNumResponses()-numTotalAnswers)*1.0)/(sQ.getNumResponses()*1.0))*10000.0))/100.0 %>);
+				        		    	<%
 	            					}
 	            					%>
 							  		var data = {

@@ -31,6 +31,12 @@ public class Statistics {
 	public Statistics() {
 		super();
 		// TODO Auto-generated constructor stub
+		
+		numVisits=0;
+		numCompleteMandatoryResponses=0;//
+		visitsByDay = new TreeMap<Date, Integer>();//
+		completedQuestionnairesByDay = new TreeMap<Date, Integer>();//day,[notmandatory, mandatory]
+		statisticsByQuestion = new HashMap<Integer, StatisticsQuestion>();
 	}
 
 	public int getNumVisits(){
@@ -47,7 +53,10 @@ public class Statistics {
 	
 	public StatisticsQuestion getStatisticsByQuestion(int idQuestion){
 		StatisticsQuestion question = statisticsByQuestion.get(idQuestion);
-		
+		if (question==null){
+			question = new StatisticsQuestion();
+			question.setQuestionId(idQuestion);
+		}
 		return question;
 	}
 	
@@ -108,16 +117,20 @@ public class Statistics {
 	}
 	
 	public String[][] groupVisitsByDay(int numMaxLabels){
-		String[][] data;
+		String[][] dataArray;	
+		
+		List<Integer> labelY = new ArrayList<Integer>();
+		List<Date> dates = new ArrayList<Date>();
 		
 		long minX = Long.MAX_VALUE;
       	long maxX = 0;
       	
       	if(!visitsByDay.isEmpty()){
+      		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
       		
       		//System.out.println("visits is not empty");
           	Iterator it = visitsByDay.entrySet().iterator();
-    		while (it.hasNext()) {
+          	while (it.hasNext()) {
     		    Map.Entry pair = (Map.Entry)it.next();
     		    
     		    if(((Date)(pair.getKey())).getTime()>maxX)
@@ -125,48 +138,53 @@ public class Statistics {
     		    if(((Date)(pair.getKey())).getTime()<minX)
     		    	minX=((Date)(pair.getKey())).getTime(); 
 
-          		//System.out.println("min="+minX+", max="+maxX);
+          		System.out.println("min="+df.format(minX)+", max="+df.format(maxX));
     		}
     		
-    		Date[] dates;
+    		
     		double interval;
-    		int[] labelY;
+    		
     		int numDays = (int)Math.ceil(((maxX-minX)*1.0)/(1000.0*60.0*60.0*24.0));
     		if((numDays+1)>numMaxLabels){	
-    			//System.out.println("numDays>numMaxLabels");
-    			data = new String[numMaxLabels][2];
+    			System.out.println("numDays>numMaxLabels");
+    			//data = new String[numMaxLabels][2];
     			if(numMaxLabels>1)
-    				interval = ((maxX-minX)*1.0)/((numMaxLabels-1)*1.0);
+    				interval = Math.floor((((maxX-minX)*1.0)/((numMaxLabels-1)*1.0))/(1000.0*60.0*60.0*24.0))*(1000*60*60*24);
     			else
     				interval = Integer.MAX_VALUE;
     			
-        		dates = new Date[numMaxLabels];
-        		labelY = new int[numMaxLabels];
+    			System.out.println("Intervalo: "+interval*1.0/(1000.0*60.0*60.0*24.0));
+        		//dates = new Date[numMaxLabels];
+        		//labelY = new int[numMaxLabels];
     		}
     		else{
-    			data = new String[numDays+1][2];
-    			dates = new Date[numDays+1];
-        		labelY = new int[numDays+1];
+    			//data = new String[numDays+1][2];
+    			//dates = new Date[numDays+1];
+        		//labelY = new int[numDays+1];
         		interval = ((maxX-minX)*1.0)/(numDays*1.0);
     		}
     			
     		
     		long labelX = minX;
-    		int indexDate = 0;
-    		dates[indexDate] = new Date((long)((labelX)));
-			//System.out.println(labelX);
+    		//int indexDate = 0;
+    		//dates[indexDate] = new Date((long)((labelX)));
+    		dates.add(new Date((long)((labelX))));
+    		labelY.add(0);
+			System.out.println(df.format(labelX));
     		while((labelX+interval)<=maxX){
-    			indexDate++;
-    			dates[indexDate] = new Date((long)((labelX+interval)));
+    			//indexDate++;
+    			//dates[indexDate] = new Date((long)((labelX+interval)));
+    			dates.add(new Date((long)((labelX+interval))));
+    			labelY.add(0);
     			labelX = (labelX + (long)interval);					        			
-    			//System.out.println(labelX);
+    			System.out.println("label X="+new Date(labelX));
     		}
     		
     		int index = 0;
     		it = visitsByDay.entrySet().iterator();
     		int previous = 0;
     		boolean accumulated = false;
-    		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    		
     		
     		while (it.hasNext()) {
     		    Map.Entry pair = (Map.Entry)it.next();
@@ -174,29 +192,29 @@ public class Statistics {
     		    
     		    String label = "";
     		    
-    		    if(index<labelY.length){
+    		    if(index<labelY.size()){
 	    		    if(accumulated){
 	    		    	
-	    		    	if (x==dates[index].getTime()){
+	    		    	if (x==dates.get(index).getTime()){
 		    		    	//System.out.println(df.format(dates[index]));
 		    		    	previous = previous+((Integer)(pair.getValue())).intValue();
-		    		    	labelY[index]=previous;
+		    		    	labelY.set(index, previous);
 		    		    	accumulated=false;
 		    		    	index++;
 		    		    }
-		    		    else if(x>dates[index].getTime()){
-		    		    	labelY[index]=previous;
+		    		    else if(x>dates.get(index).getTime()){
+		    		    	labelY.set(index, previous);
 	        		    	index++; 
 	        		    	
-		    		    	while (x>dates[index].getTime()){
+		    		    	while (x>dates.get(index).getTime()){
 		        		    	//System.out.println(df.format(dates[index]));	        		    	
-		        		    	labelY[index]=0;
+		    		    		labelY.set(index, 0);
 		        		    	index++; 
 		        		    }
 		        		    
 		        		    //System.out.println(df.format(x));
 		        		    previous = ((Integer)(pair.getValue())).intValue();
-		        		    labelY[index]=previous;
+		        		    labelY.set(index, previous);
 		    		    	accumulated=false;
 		    		    	index++;
 		    		    }
@@ -204,21 +222,21 @@ public class Statistics {
 		    		    	previous = previous+((Integer)(pair.getValue())).intValue();
 	    		    }
 	    		    else{
-		    		    if (x==dates[index].getTime()){
+		    		    if (x==dates.get(index).getTime()){
 		    		    	//System.out.println(df.format(dates[index]));
 		    		    	previous = ((Integer)(pair.getValue())).intValue();
-		    		    	labelY[index]=previous;	    		    	
+		    		    	labelY.set(index, previous);	    		    	
 		    		    	index++;
 		    		    }
-		    		    else if(x>dates[index].getTime()){
-		    		    	while (x>dates[index].getTime()){
+		    		    else if(x>dates.get(index).getTime()){
+		    		    	while (x>dates.get(index).getTime()){
 		        		    	//System.out.println(df.format(dates[index]));
-		        		    	labelY[index]=0;
+		    		    		labelY.set(index, 0);
 		        		    	index++; 
 		        		    }
 		        		    previous =((Integer)(pair.getValue())).intValue();
 		        		    //System.out.println(df.format(x));
-		        		    labelY[index]=previous;
+		        		    labelY.set(index, previous);
 		        		    index++;
 		    		    }
 		    		    else{
@@ -229,20 +247,20 @@ public class Statistics {
 	    		}
     		}
     		
-    		
-    		for (int i=0;i<labelY.length;i++){
-    			data[i][0]=df.format(dates[i]);
-    			data[i][1]=""+labelY[i];
+    		dataArray = new String[labelY.size()][2];
+    		for (int i=0;i<labelY.size();i++){
+    			dataArray[i][0]=df.format(dates.get(i));
+    			dataArray[i][1]=""+labelY.get(i);
     		}
       	}
       	else{
       		//System.out.println("visits is empty");
-      		data = new String[1][2];
-      		data[0][0] = "-";
-      		data[0][1] = "0";      		
+      		dataArray = new String[1][2];
+      		dataArray[0][0] = "-";
+      		dataArray[0][1] = "0";      		
       	}
 		
-		return data;
+		return dataArray;
 	}
 	
 	/*public void loadDataOfCompleted(HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses, int[] questions, HashMap<Integer,Boolean> questionMandatories){
@@ -358,14 +376,14 @@ public class Statistics {
 			    	}
 			    }
 			    
-			    //System.out.println("Mandatories "+numMandatories+", not mandatory "+numNotMandatories+", questions[1] "+questions[1]+", questions[0]"+questions[0]);
-			    if(numMandatories==questions[0]){
+			    //System.out.println("Mandatories "+numMandatories+", questions[1] "+questions[1]+", questions[0]"+questions[0]);
+			    if(numMandatories==questions[1]){
 			    	countMandatory++;
 			    	numCompleteMandatoryResponses++;
 			    	//System.out.println("Incremento numCompleteMandatoryResponses "+numCompleteMandatoryResponses);
 			    }
 			    
-			  //System.out.println("Lo que inserto en el array ("+cal.getTime()+"): countMandatory= "+ countMandatory);
+			  System.out.println("Lo que inserto en el array ("+cal.getTime()+"): countMandatory= "+ countMandatory);
 			  completedQuestionnairesByDay2.put(cal.getTime(), countMandatory);
 			    
 		    }
@@ -554,14 +572,16 @@ public class Statistics {
 	}*/
 	
 	public String[][] groupCompletedByDay(int numMaxLabels){
-		String[][] data;
-		int[] labelY;
+		String[][] dataArray;	
+		
+		List<Integer> labelY = new ArrayList<Integer>();
+		List<Date> dates = new ArrayList<Date>();
 		
 		long minX = Long.MAX_VALUE;
       	long maxX = 0;
       	
       	if(!completedQuestionnairesByDay.isEmpty()){
-      		
+      		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
       		//System.out.println("completedQuestionnairesByDay is not empty");
           	Iterator it = completedQuestionnairesByDay.entrySet().iterator();
     		while (it.hasNext()) {
@@ -572,41 +592,46 @@ public class Statistics {
     		    if(((Date)(pair.getKey())).getTime()<minX)
     		    	minX=((Date)(pair.getKey())).getTime(); 
 
-          		//System.out.println("min="+minX+", max="+maxX);
+          		System.out.println("min="+df.format(minX)+", max="+df.format(maxX));
     		}
     		
-    		Date[] dates;
+    		
     		double interval;
     		
     		int numDays = (int)Math.ceil(((maxX-minX)*1.0)/(1000.0*60.0*60.0*24.0));
     		if((numDays+1)>numMaxLabels){	
-    			//System.out.println("numDays>numMaxLabels");
-    			data = new String[numMaxLabels][2];
+    			System.out.println("numDays>numMaxLabels");
+    			//data = new String[numMaxLabels][2];
     			if(numMaxLabels>1)
-    				interval = ((maxX-minX)*1.0)/((numMaxLabels-1)*1.0);
+    				interval = Math.floor((((maxX-minX)*1.0)/((numMaxLabels-1)*1.0))/(1000.0*60.0*60.0*24.0))*(1000*60*60*24);
     			else
     				interval = Integer.MAX_VALUE;
     			
-        		dates = new Date[numMaxLabels];
-        		labelY = new int[numMaxLabels];
+    			System.out.println("Intervalo: "+interval*1.0/(1000.0*60.0*60.0*24.0));
+        		//dates = new Date[numMaxLabels];
+        		//labelY = new int[numMaxLabels];
     		}
     		else{
-    			data = new String[numDays+1][2];
-    			dates = new Date[numDays+1];
-        		labelY = new int[numDays+1];
+    			//data = new String[numDays+1][2];
+    			//dates = new Date[numDays+1];
+        		//labelY = new int[numDays+1];
         		interval = ((maxX-minX)*1.0)/(numDays*1.0);
     		}
     			
     		
     		long labelX = minX;
-    		int indexDate = 0;
-    		dates[indexDate] = new Date((long)((labelX)));
-			//System.out.println(labelX);
+    		//int indexDate = 0;
+    		//dates[indexDate] = new Date((long)((labelX)));
+    		dates.add(new Date((long)((labelX))));
+    		labelY.add(0);
+			System.out.println(df.format(labelX));
     		while((labelX+interval)<=maxX){
-    			indexDate++;
-    			dates[indexDate] = new Date((long)((labelX+interval)));
+    			//indexDate++;
+    			//dates[indexDate] = new Date((long)((labelX+interval)));
+    			dates.add(new Date((long)((labelX+interval))));
+    			labelY.add(0);
     			labelX = (labelX + (long)interval);					        			
-    			//System.out.println("label X="+labelX);
+    			System.out.println("label X="+new Date(labelX));
     		}
     		
     		int index = 0;
@@ -614,69 +639,69 @@ public class Statistics {
     		int previousMandatory = 0;
     		int previousNotMandatory = 0;
     		boolean accumulated = false;
-    		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    		
     		
     		while (it.hasNext()) {
     		    Map.Entry pair = (Map.Entry)it.next();
     		    long x = ((Date)(pair.getKey())).getTime();
-    		    //System.out.println("Lo que obtengo de eje X="+(Date)(pair.getKey())+", y="+((Integer)(pair.getValue())).intValue());
+    		    System.out.println("Lo que obtengo de eje X="+(Date)(pair.getKey())+", y="+((Integer)(pair.getValue())).intValue());
     		    String label = "";
     		    
-    		    if(index<labelY.length){
+    		    if(index<dates.size()){//if(index<labelY.length){
     		    	int value = ((Integer)(pair.getValue())).intValue();
-    		    	
+    		    	System.out.println("index:"+index);
     		    	
 	    		    if(accumulated){
-	    		    	if (x==dates[index].getTime()){
+	    		    	if (x==dates.get(index).getTime()){//if (x==dates[index].getTime()){
 		    		    	previousMandatory = previousMandatory+value;
-		    		    	labelY[index]=previousMandatory;
+		    		    	labelY.set(index, previousMandatory);
 		    		    	accumulated=false;
-		    		    	//System.out.println("Acumulado y x ("+x+") igual a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
+		    		    	System.out.println("Acumulado y x ("+df.format(x)+") igual a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
 		    		    	index++;
 		    		    }
-		    		    else if(x>dates[index].getTime()){
-		    		    	labelY[index]=previousMandatory;
+		    		    else if(x>dates.get(index).getTime()){
+		    		    	labelY.set(index, previousMandatory);
 		    		    	
 	        		    	index++;
 	        		    	
-		    		    	while (x>dates[index].getTime()){
-		        		    	//System.out.println(df.format(dates[index]));
-		    		    		//System.out.println("Acumulado y x ("+x+") > a fecha del label ("+dates[index].getTime()+"): y=0");
-			    		    	labelY[index]=0;
+		    		    	while (x>dates.get(index).getTime()){
+		        		    	System.out.println(df.format(dates.get(index)));
+		    		    		System.out.println("Acumulado y x ("+df.format(x)+") > a fecha del label ("+dates.get(index)+"): y=0");
+		    		    		labelY.set(index, 0);
 		        		    	index++; 
 		        		    }
 		        		    
-		        		    //System.out.println(df.format(x));
+		        		    System.out.println(df.format(x));
 		        		    previousMandatory = value;
-		    		    	labelY[index]=previousMandatory;
-		    		    	//System.out.println("Acumulado y x ("+x+") > a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
+		        		    labelY.set(index, previousMandatory);
+		    		    	System.out.println("Acumulado y x ("+df.format(x)+") > a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
 		    		    	accumulated=false;
 		    		    	index++;
 		    		    }
 		    		    else{
 		    		    	previousMandatory = previousMandatory+value;
-		    		    	//System.out.println("Acumulado y x ("+x+") < a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
+		    		    	System.out.println("Acumulado y x ("+df.format(x)+") < a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
 		    		    	
 		    		    }
 	    		    }
 	    		    else{
-		    		    if (x==dates[index].getTime()){
+		    		    if (x==dates.get(index).getTime()){
 		    		    	previousMandatory = value;
-		    		    	labelY[index]=previousMandatory;    		    	
-		    		    	//System.out.println("No acumulado y x ("+x+") igual a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
+		    		    	labelY.set(index, previousMandatory);    		    	
+		    		    	System.out.println("No acumulado y x ("+df.format(x)+") igual a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
 		    		    	index++;
 		    		    }
-		    		    else if(x>dates[index].getTime()){
-		    		    	while (x>dates[index].getTime()){
-		    		    		//System.out.println("No acumulado y x ("+x+") > a fecha del label ("+dates[index].getTime()+"): y=0");
-			    		    	//System.out.println(df.format(dates[index]));
-			    		    	labelY[index]=0;
+		    		    else if(x>dates.get(index).getTime()){
+		    		    	while (x>dates.get(index).getTime()){
+		    		    		System.out.println("No acumulado y x ("+df.format(x)+") > a fecha del label ("+dates.get(index)+"): y=0");
+			    		    	System.out.println(df.format(dates.get(index)));
+			    		    	labelY.set(index, 0);
 		        		    	index++; 
 		        		    }
 		    		    	previousMandatory = value;
-		    		    	labelY[index]=previousMandatory;
-		    		    	//System.out.println("No acumulado y x ("+x+") = a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
-		    		    	//System.out.println(df.format(x));
+		    		    	labelY.set(index, previousMandatory);
+		    		    	System.out.println("No acumulado y x ("+df.format(x)+") = a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
+		    		    	System.out.println(df.format(x));
 		    		    	index++;
 		    		    }
 		    		    else{
@@ -684,27 +709,27 @@ public class Statistics {
 		    		    	accumulated = true;
 		    		    	previousMandatory = value;
 
-		    		    	//System.out.println("No acumulado y x ("+x+") < a fecha del label ("+dates[index].getTime()+"): y="+previousMandatory);
+		    		    	System.out.println("No acumulado y x ("+df.format(x)+") < a fecha del label ("+dates.get(index)+"): y="+previousMandatory);
 		    		    }
 	    		    }
 	    		}
     		}
     		
-    		
-    		for (int i=0;i<labelY.length;i++){
-    			data[i][0]=df.format(dates[i]);
-    			data[i][1]=""+labelY[i];
-    			//System.out.println("Relleno ejes: x="+data[i][0]+", y="+data[i][1]);
+    		dataArray = new String[labelY.size()][2];
+    		for (int i=0;i<labelY.size();i++){
+    			dataArray[i][0]=df.format(dates.get(i));
+    			dataArray[i][1]=""+labelY.get(i);
+    			System.out.println("Relleno ejes: x="+dataArray[i][0]+", y="+dataArray[i][1]);
     		}
       	}
       	else{
-      		//System.out.println("completedQuestionnairesByDay is empty");
-      		data = new String[1][2];
-      		data[0][0] = "-";
-      		data[0][1] = "0";
+      		System.out.println("completedQuestionnairesByDay is empty");
+      		dataArray = new String[1][2];
+      		dataArray[0][0] = "-";
+      		dataArray[0][1] = "0";
       	}
 		
-		return data;
+		return dataArray;
 	}
 
 	

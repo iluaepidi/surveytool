@@ -28,9 +28,10 @@ int index = Integer.parseInt(request.getParameter("index"));
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
-//System.out.println(lang);
+
 
 StatisticsQuestion sQ = (StatisticsQuestion) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
+
 %>
 
 
