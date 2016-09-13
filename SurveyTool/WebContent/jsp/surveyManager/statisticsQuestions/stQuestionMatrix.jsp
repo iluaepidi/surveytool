@@ -49,8 +49,8 @@ List<Option> o = sQ.getOptions();
 		<div class="row single-questions-row">
 	        <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3><%= sQ.getNumResponses()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	              <h3 aria-hidden="true"><%= sQ.getNumResponses()%></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%= sQ.getNumResponses()%></span>
 	            </div>
 	          </div>
 	      </div>
@@ -66,8 +66,28 @@ List<Option> o = sQ.getOptions();
 	            			//System.out.println("En bucle de og");
 	            			%>
 	            			<p class="subgraph-title no-block"> <%= ((Content)(((OptionsGroup)(og.get(j))).getContents().get("text"))).getText()%></p>
+	            			<span class="visuallyhidden">
+					<%
+					for(int i = 0; i<obg.size();i++){
+						if((((OptionsByGroup)obg.get(i)).getOptionsGroupId())==((OptionsGroup)(og.get(j))).getId()){
+							int idoption = ((OptionsByGroup)obg.get(i)).getOptionId();
+							int numResponses = ((OptionsByGroup)obg.get(i)).getNumResponses();
+							String label = "";
+							for(int k=0;k<o.size();k++){
+								if((((Option)(o.get(k))).getId())==idoption){
+									label = ((Content)(((Option)(o.get(k))).getContents().get("text"))).getText();
+									k=o.size();
+								}
+							}
+							%>
+							<%=label%>, <%=(Math.round(((numResponses*1.0)/(sQ.getNumResponses()*1.0))*10000.0))/100.0%><%="\n"%>
+							<%
+						}
+					}
+							%>
+					</span>
 	            			<div class="chart tab-pane active no-block" id="visits-chart<%= ((OptionsGroup)(og.get(j))).getId() %>">
-		              			<canvas id="myChartMatrix<%= ((OptionsGroup)(og.get(j))).getId() %>" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+		              			<canvas id="myChartMatrix<%= question.getQuestionId() %>-<%= ((OptionsGroup)(og.get(j))).getId() %>" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
 								<script>
 							
 									var labels = [];
@@ -130,7 +150,7 @@ List<Option> o = sQ.getOptions();
 							  		};
 							
 							  		// Get the context of the canvas element we want to select
-							  		var ctx = document.getElementById("myChartMatrix<%= ((OptionsGroup)(og.get(j))).getId() %>").getContext("2d");
+							  		var ctx = document.getElementById("myChartMatrix<%= question.getQuestionId() %>-<%= ((OptionsGroup)(og.get(j))).getId() %>").getContext("2d");
 							
 							  		var myChartMatrix<%= ((OptionsGroup)(og.get(j))).getId() %> = new Chart(ctx).Bar(data);
 						</script>

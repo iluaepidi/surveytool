@@ -48,6 +48,47 @@ h2 {width: auto;
     margin-right: -7px;}
 .red {color: #B60000;
 	border-color: #B60000 !important;}
+	
+.cian {
+	color: #576C99;
+	border-color: #576C99 !important;
+}
+
+.yellow {
+	color: #FFB506;
+	border-color: #FFB506 !important;
+}
+
+.gray{
+	color: #c5c5c5;
+	border-color: #c5c5c5 !important;
+}
+
+.brown{
+	color: #B28B6E;
+	border-color: #B28B6E !important;
+}
+
+.green{
+	color: #ADC6A6;
+	border-color: #ADC6A6 !important;
+}
+
+.blue{
+	color: #57A4DA;
+	border-color: #57A4DA !important;
+}
+
+.purple{
+	color: #E3DBEC;
+	border-color: #E3DBEC !important;
+}
+
+.black{
+	color: #151C25 !important;
+	border-color: #151C25 !important;
+}
+
 .btn-transparent {background: transparent;
     border: 2px solid transparent !important;
 	border-radius: 5px;
@@ -1153,6 +1194,30 @@ footer {margin-top: 10px;
     width: 100%;    
 }
 
+.canvasPie {
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    width: 100%;  
+	display:inline-block;  
+}
+
+.canvasPie>.tab-content {
+    background: #fff;
+    padding: 10px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+	display:inline-block;  
+}
+
+.legendSurvey{
+	display:inline-block;
+	vertical-align: top !important;
+	margin-top: 50px !important;
+	margin-bottom: 50px !important;
+}
+
 .graph-title {
     margin-up: 0;
     margin-down: 0;
@@ -1172,6 +1237,10 @@ footer {margin-top: 10px;
 .no-block{
 	float:left !important;
 	clear:left;
+}
+
+.in-block{
+	display:inline-block;
 }
 
 .subgraph-title {

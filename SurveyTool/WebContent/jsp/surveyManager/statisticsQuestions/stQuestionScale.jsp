@@ -44,8 +44,8 @@ List<OptionsByGroup> obg = sQ.getOptionsByGroup();
 		<div class="row single-questions-row">
 	        <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3><%= sQ.getNumResponses()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	              <h3 aria-hidden="true"><%= sQ.getNumResponses()%></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%= sQ.getNumResponses()%></span>
 	            </div>
 	          </div>
 	      </div>
@@ -54,9 +54,18 @@ List<OptionsByGroup> obg = sQ.getOptionsByGroup();
 	      		<div class="nav-tabs-custom no-block text">
 	            	<!-- Tabs within a box -->
 	            	<p class="graph-title"> <%= lang.getContent("statistics.boxes.numAnswersByOption")%></p>
+	            	<span class="visuallyhidden">
+					<% 
+					for(int i = 0; i<obg.size();i++){
+						int numResponses = ((OptionsByGroup)(obg.get(i))).getNumResponses();
+						%>
+						<%=i+1%>, <%= Math.round(((((numResponses)*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>
+    		    		<%
+					}%>
+					</span>
 	            	<div class="tab-content no-padding">
 	            		<div class="chart tab-pane active" id="visits-chart">
-		              		<canvas id="myChartScale" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+		              		<canvas id="myChartScale<%= question.getQuestionId() %>" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
 							<script>
 							
 							var bars = [];
@@ -88,7 +97,7 @@ List<OptionsByGroup> obg = sQ.getOptionsByGroup();
 								  };
 								
 								  // Get the context of the canvas element we want to select
-								  var ctx = document.getElementById("myChartScale").getContext("2d");
+								  var ctx = document.getElementById("myChartScale<%= question.getQuestionId() %>").getContext("2d");
 								
 								  var myChartScale = new Chart(ctx).Bar(data);
 							</script>

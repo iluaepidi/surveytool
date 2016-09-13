@@ -100,8 +100,8 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	        <div class="col-md-4">
 	          <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3><%= surveyStatistic.getNumVisits()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numStarted")%></p>
+	              <h3 aria-hidden="true"><%= surveyStatistic.getNumVisits()%></h3>
+	              <p><%= lang.getContent("statistics.boxes.numStarted")%></p><span class="visuallyhidden">: <%= surveyStatistic.getNumVisits()%></span>
 	            </div>
 	          </div>
 	        </div>
@@ -109,8 +109,8 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	        <div class="col-md-4">
 	          <div class="small-box bg-green">
 	            <div class="inner">
-	            	<h3><%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	            	<h3 aria-hidden="true"><%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></span>
 	            </div>
 	          </div>
 	        </div>
@@ -122,15 +122,17 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	            if(surveyStatistic.getNumVisits()>0){
 	            	//System.out.println(surveyStatistic.getNumCompleteMandatoryResponses());
 	            %>
-	              <h3><%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
+	              <h3 aria-hidden="true"><%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
+	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: <%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></span>
 	            <%
 	            } else{
 	            %>
-	              <h3> - <sup>%</sup></h3>
+	              <h3 aria-hidden="true"> - <sup>%</sup></h3>
+	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: 0%</span>
 	            <%
 	            }
 	            %>
-	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p>
+	              
 	            </div>
 	          </div>
 	        </div>
@@ -142,6 +144,18 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	      		<div class="nav-tabs-custom no-block">
 	            	<!-- Tabs within a box -->
 	            	<p class="graph-title  no-block"><%= lang.getContent("statistics.boxes.numStarted")%></p>
+	            	<span class="visuallyhidden">
+					<%
+							
+							String[][] data = surveyStatistic.groupVisitsByDay(10);
+							for(int i = 0; i<data.length;i++){
+								//System.out.println(i);
+								%>
+		        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numStarted")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
+		        		    	<%
+							}
+							%>
+					</span>
 	            	<div class="tab-content no-padding  no-block">
 						<div class="chart tab-pane active" id="visits-chart">
 		              		<canvas id="visits" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
@@ -151,7 +165,6 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 								var data = [];
 							<%
 							
-							String[][] data = surveyStatistic.groupVisitsByDay(10);
 							for(int i = 0; i<data.length;i++){
 								//System.out.println(i);
 								%>
@@ -192,6 +205,17 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 	      		<div class="nav-tabs-custom no-block">
 	            	<!-- Tabs within a box -->
 	            	<p class="graph-title no-block"><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	            	<span class="visuallyhidden">
+					<%
+					data = surveyStatistic.groupCompletedByDay(10);
+							for(int i = 0; i<data.length;i++){
+								//System.out.println(i);
+								%>
+		        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numAnswers")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
+		        		    	<%
+							}
+							%>
+					</span>
 	            	<div class="tab-content no-padding no-block">
 						<div class="chart tab-pane active" id="responses-chart">
 		              		<canvas id="responses" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
@@ -201,7 +225,7 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 								var dataMandatory = [];
 							<%
 							
-							data = surveyStatistic.groupCompletedByDay(10);
+							
 							for(int i = 0; i<data.length;i++){
 								//System.out.println(i);
 								%>

@@ -40,8 +40,8 @@ StatisticsQuestion sQ = (StatisticsQuestion) request.getAttribute(Attribute.s_SU
 		<div class="row single-questions-row">
 	        <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3><%= sQ.getNumResponses()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	              <h3 aria-hidden="true"><%= sQ.getNumResponses()%></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%= sQ.getNumResponses()%></span>
 	            </div>
 	          </div>
 	      </div>
