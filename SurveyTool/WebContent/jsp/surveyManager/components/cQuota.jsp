@@ -28,8 +28,9 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 			  								<div class="form-group">
 								                <label class="col-md-4 control-label profileLabel" for="language">Selecciona una pregunta</label>
 								                <div class="col-md-8">     
-								                	<div class="form-group">                   
-								                    	<select id="selquestionforfees<%=index%>" name="selquestionforfees<%=index%>" class="selquestionforfees form-control" onchange="changeoptionsfees(<%=index%>);">
+								                	<div class="form-group">
+								                		<h3 id="questionquotaname<%=index%>"></h3>
+								                		<select id="selquestionforfees<%=index%>" name="selquestionforfees<%=index%>" class="selquestionforfees form-control" onchange="changeoptionsfees(<%=index%>);" style="display:none;">
 								                    		<% for(Question question : listQuestionFees){
 								                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 			    													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
@@ -49,13 +50,13 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 							  									<div class="form-group">
 							  							     		<label class="col-md-4 control-label profileLabel" for="language"></label>
 											                	</div>
-											                	<div class="form-group col-md-4">
-											                		<label class="col-md-4 control-label profileLabel" for="language">Max</label>
-											                		<input id="max" name="max" type="text" placeholder="" class="form-control-small col-md-8" value="" index="" oid="" >
-											                	</div>
 											               		<div class="form-group col-md-4">
 											                		<label class="col-md-4 control-label profileLabel" for="language">Min</label>
 											                		<input id="min" name="min" type="text" placeholder="" class="form-control-small col-md-8" value="" index="" oid="" >
+											                	</div>
+											                	<div class="form-group col-md-4">
+											                		<label class="col-md-4 control-label profileLabel" for="language">Max</label>
+											                		<input id="max" name="max" type="text" placeholder="" class="form-control-small col-md-8" value="" index="" oid="" >
 											                	</div>
 														</div>
 				                    				

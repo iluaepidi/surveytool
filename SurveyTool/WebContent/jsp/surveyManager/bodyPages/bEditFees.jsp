@@ -52,32 +52,50 @@
   				int indexquestion = 0;
 				%>
 				
+				<script type="text/javascript">
+						loadquotas('<%=request.getAttribute(Attribute.s_JSON_QUOTAS)%>');
+				</script>
+					
 				<div class="container-fluid">
 	  				<div class="title-content-no-underline">
-	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("survey.edit.title") %></h2>
+	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("quota.edit.title") %></h2>
 	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">						  	
 						  	<li role="presentation" class="statistic-tab"><a href="#" aria-label="go to survey statistics" title="go to survey statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
 						  	<li role="presentation" class="share-tab active"><a href="#" title="go to share survey"><i class="fa fa-share-alt fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab"><a href="SurveysServlet?surveyid=<%=survey.getSurveyId() %>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
-	  				<div class="content-box-tabs edit-content" id="listcompletequotas">
-	  					<div class="browser-left">Hello</div>	  						  		
+	  				<div class="content-box-tabs edit-content">
+	  					<div class="browser-left">Hello</div>	
+	  					<div class="edit-survey-frame survey-info" id="survey-name-title" sid="<%= survey.getSurveyId() %>">
+		  						
+		  						<div class="widthTitleSurveyCollapsed" id="survey-name-title-div">
+		  							<div class="form-group" style="margin:0px;">
+		  								<h3><%= title %></h3>
+		  							</div>
+			  					</div>					
+
+		  					</div>	
+	  						<div class="content edit-fees-frame">
+									<p>Please, specify the limits of responses received for this survey. You can set a minimum of responses expected, so dissemination efforts will continue until you reach this limit. You can also set a maximum, so the access to the survey will be disabled when you reach this number. These limits will also be used to monitor your advances in the dissemination and completion of the survey.</p>
+							</div>  						  		
 	  						<div class="edit-survey-head">
-		  						<div class="survey-preview">
 		  							
-		  						</div>
-		  							
-		  						<div class="survey-objetive" id="survey-objetive">
-		  								<label for="survey-language-version" class="" ><i class="fa fa-sliders fa-2x"></i><span><%= lang.getContent("survey.fees.label.objective") %></span></label>
-										<input id="objetivesurveys" name="objetivesurveys" type="text" placeholder="" class="form-control-small" value="<%=survey.getObjetive() %>" sid="<%=survey.getSurveyId() %>">
+		  						<div class="survey-objetive" id="survey-objetive" style="float: right !important;">
+		  								<label for="survey-language-version" class="" ><i class="fa fa-sliders fa-2x"></i>&nbsp;&nbsp;<span><%= lang.getContent("survey.fees.label.objective") %></span></label>
+		  								<% String valueobjetive="";
+		  									if(survey.getObjetive()>0){
+		  										valueobjetive = (String.valueOf(survey.getObjetive()));
+		  									} %>
+										<input id="objetivesurveys" name="objetivesurveys" type="number" placeholder="none" class="form-control-small" value="<%=valueobjetive %>" sid="<%=survey.getSurveyId() %>" min="1" style="width:100px;">
 										<%= lang.getContent("survey.fees.label.surveys") %>
 		  						</div>
 		  					</div>
 		  					
+		  					<div id="listcompletequotas">
 		  					
 		  					<%
-		  						List<Question> listQuestionFees = new ArrayList();
+		  						List<Question> listQuestionAvaibles = new ArrayList();
 		  						String titleQuestion="";
 		  						List<Section> sections = survey.getSections();
 								int i = 1;
@@ -95,7 +113,8 @@
 			  							if(questions != null && !questions.isEmpty()){
 			  								for(Question question : questions){
 			  									if(question.getQuestionType().equals("simple")||question.getQuestionType().equals("multiple")){
-			  										listQuestionFees.add(question);
+			  										if(question.getOptionsGroups()!=null && question.getOptionsGroups().size()>0)
+			  										listQuestionAvaibles.add(question);
 			  									}
 			  									
 			  									
@@ -109,68 +128,54 @@
 							 %>
 							 
 							 	<%  List<Quota> listQuotas = (List<Quota>) request.getAttribute(Attribute.s_LIST_QUOTAS);
-							 	Quota quotaold=null,quota=null;
+							 	Quota quotaold=null;
 							 	
 
-						 		request.setAttribute("listQuestionFees",listQuestionFees);
+							 	request.setAttribute("listQuestionFees",listQuestionAvaibles);
 						 		
-							 	for(int index=1;index<=listQuotas.size();index++){
-							 		quota  = (Quota) listQuotas.get(index-1);
-							 		
-							 		if(index==1){
-							 			indexquestion++;
-							 			request.setAttribute("index",indexquestion);
-							 			
-							 			listIdQuestion.put(indexquestion, quota.getIdQuestion());
-							 			%>
-							 			<jsp:include page="../components/cQuota.jsp" />
-							 			<script type="text/javascript">
-							 				loadvaluequestion(<%=indexquestion%>);
-							 			</script>
-							 		<% }else{ %>
-							 			<% if(quota.getIdQuestion()!=quotaold.getIdQuestion()){
-							 				indexquestion++;
-							 				request.setAttribute("index",indexquestion);
-							 				listIdQuestion.put(indexquestion, quota.getIdQuestion());
-							 			%>
-							 			
-							 			<jsp:include page="../components/cQuota.jsp" />
-							 			<script type="text/javascript">
-							 				loadvaluequestion(<%=indexquestion%>);
-							 			</script>
-							 			<%} 
+							 	List<Integer> listQuestionAvaiblesNoVisible = new ArrayList();
+							 	
+							 	for(Quota quota:listQuotas){
+							 		if(quotaold==null || (quota.getIdQuestion()!=quotaold.getIdQuestion())){
+							 				request.setAttribute("index",quota.getIdQuestion());
+							 				listIdQuestion.put(quota.getIdQuestion(), quota.getIdQuestion());
+							 				listQuestionAvaiblesNoVisible.add(Integer.valueOf(quota.getIdQuestion()));%>
+							 				<jsp:include page="../components/cQuota.jsp" />
+								 			<script type="text/javascript">
+								 				loadvaluequestion(<%=quota.getIdQuestion()%>);
+								 			</script>
+							 	<%
 							 		}
-							 		quotaold = (Quota) listQuotas.get(index-1);
-							 		
-							 		%>
-		  						
-		  					<%} %>
+							 		quotaold=quota;
+							 	}%>
+							 	
+							 	<% request.setAttribute("listQuestionNoVisible",listQuestionAvaiblesNoVisible);%>
+							 	
 		  					
 		  					
 		  					<jsp:include page="../components/cQuotaNew.jsp" />
 							
+							
 							<div class="center" id="add-fees">											
-								<label for="btn-add-quota" class="visuallyhidden">Añadir Cuota</label>
-								<button class="btn btn-primary btn-sm active" id="btn-add-quota"><i class="fa fa-plus-square"></i><span>Añadir Cuota</span></button>
+								<label for="btn-add-quota" class="visuallyhidden"><%= lang.getContent("quota.add.new") %></label>
+								<button class="btn btn-primary btn-sm active" id="btn-add-quota"><i class="fa fa-plus-square"></i><span><%= lang.getContent("quota.add.new") %></span></button>
+							</div>
+							
 							</div>
 		  					
 						</div>
 						
 	  				</div>
 	  				
-					<script type="text/javascript">
-						loadquotas('<%=request.getAttribute(Attribute.s_JSON_QUOTAS)%>');
-						$(document).ready(function() {
-							<%for(int id=1;id<=indexquestion;id++){%>
-								
-								$('#selquestionforfees<%=id%>').val(<%=listIdQuestion.get(id)%>);
-								loadvaluequestion(<%=id%>);
+	  				<script type="text/javascript">
+					$(document).ready(function() {
+							<%for (Integer key : listIdQuestion.keySet()) {%>
+								$('#selquestionforfees<%=key%>').val(<%=listIdQuestion.get(key)%>);
+								loadvaluequestion(<%=key%>);
 							<%}%>
 							
-							
-						});
-					</script>
-	  				
+					});
+	  				</script>
 	  				
 	  				
 <%

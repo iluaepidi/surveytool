@@ -29,7 +29,59 @@ import ilu.surveytool.databasemanager.constants.DBConstants;
 @Path("/QuotaService")
 public class QuotaService {
    
+	@POST
+	@Path("/insertQuota")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String insertQuota(String req) {
+    	System.out.println("Opción (insertQuota): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			Option option = new Option(json.getString("text"), 
+					Integer.parseInt(json.getString("index")), 
+					Integer.parseInt(json.getString("qid")), 
+					Integer.parseInt(json.getString("ogid")),
+					Integer.parseInt(json.getString("oid")),
+					null,
+					null);
+			int max=0,min=0;
+			
+			if(json.getString("max")!=null && !json.getString("max").equals(""))max=Integer.parseInt(json.getString("max"));
+			if(json.getString("min")!=null && !json.getString("min").equals(""))min=Integer.parseInt(json.getString("min"));;
+			int idSurvey = Integer.parseInt(json.getString("sid"));
+			System.out.println("Opción: " + option.toString());
+			QuotaHandler quotaHandler = new QuotaHandler();
+			response = quotaHandler.saveQuotaOption(idSurvey, option,max,min);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
 	
+	@POST
+	@Path("/updateObjetive")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateObjetive(String req) {
+    	System.out.println("updateObjetive: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			
+			int idSurvey = Integer.parseInt(json.getString("sid"));
+			String objetive = json.getString("objetive");
+			QuotaHandler quotaHandler = new QuotaHandler();
+			response = quotaHandler.updateObjetive(idSurvey, objetive);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
 	
 	@DELETE
 	@Path("/{sid}/{qid}/{r}")

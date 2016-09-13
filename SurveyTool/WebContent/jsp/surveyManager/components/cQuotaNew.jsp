@@ -16,8 +16,14 @@
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 String titleQuestion="";
 List<Question> listQuestionFees = (ArrayList<Question>) request.getAttribute("listQuestionFees");
+List<Integer> listQuestionAvaiblesNoVisible = (ArrayList<Integer>) request.getAttribute("listQuestionNoVisible");
 
-Integer quotaid = (Integer)request.getAttribute("quotaid");%>
+Integer quotaid = (Integer)request.getAttribute("quotaid");
+
+Language lang = new Language(getServletContext().getRealPath("/")); 
+lang.loadLanguage(Language.getLanguageRequest(request));
+				
+				%>
 
 <div class="edit-fees-frame survey-info" id="survey-quota-new" sid="survey-quota-new" quota="survey-quota-new" style="display:none;">
 		  							<ul class="survey-sections" id="survey-sections" style="overflow: hidden;">
@@ -26,16 +32,18 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 			  						<div class="widthTitleSurveyCollapsed" id="survey-div-title-fees" style="width: 90%;" qid="" sid="<%=survey.getSurveyId()%>">
 			  							<div class="form-group" style="margin:0px;">
 			  								<div class="form-group">
-								                <label class="col-md-4 control-label profileLabel" for="language">Selecciona una pregunta</label>
+								                <label class="col-md-4 control-label profileLabel" for="language"><%= lang.getContent("quota.select.question") %></label>
 								                <div class="col-md-8">     
-								                	<div class="form-group">                   
-								                    	<select id="selquestionforfees-new" name="selquestionforfees-new" class="selquestionforfees form-control" onchange="changeoptionsfees();">
+								                	<div class="form-group">  
+								                		<h3 id="questionquotaname<%=index%>"></h3>                 
+								                    	<select id="selquestionforfees-new" name="selquestionforfees-new" class="selquestionforfees form-control" onchange="changeoptionsfees();" style="display:none;">
 								                    		<% for(Question question : listQuestionFees){
 								                    			if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 			    													titleQuestion = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 					    										}
+								                    			
 					    									%>
-								                    		<option value="<%=question.getQuestionId() %>"><%=titleQuestion %></option>
+								                    			<option value="<%=question.getQuestionId() %>"><%=titleQuestion %></option>
 								                    		<%} %>
 								                    	</select>
 								                	</div>

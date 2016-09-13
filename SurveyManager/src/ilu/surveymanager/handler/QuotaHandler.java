@@ -63,7 +63,7 @@ public class QuotaHandler {
 	}
 	
 	
-	public String updateObjetive(int idSurvey, int objetive){
+	public String updateObjetive(int idSurvey, String objetive){
 		QuotasDB quotaDB = new QuotasDB();
 		JSONObject response = new JSONObject();
 		

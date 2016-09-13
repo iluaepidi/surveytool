@@ -11,7 +11,7 @@ var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
 var pending;
 var jsonquotas;
-
+var quotaid;
 $(function() {
 	
 	var host = "http://" + window.location.host;
@@ -96,30 +96,38 @@ $(function() {
 	
 	var newquota = 1000;
 	$('#create-quota').click(function(event) {
-		
+			
 			$('#newQuotaModal').modal('toggle');
-			//Copy survey-quota-new
-			var newQuota=$('#survey-quota-new').clone();
-			newQuota.css("display","block");
 			newquota = $("#selquestionnewquota").val();
-			newQuota.attr("quota",newquota);
-			newQuota.attr("sid",newquota);
-			newQuota.attr("id","survey-quota-"+newquota);
-			var selectQuota = newQuota.find('select');
-			selectQuota.attr("id","selquestionforfees"+newquota);
-			selectQuota.attr("name","selquestionforfees"+newquota);
-			selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
 			
-			var divoptions = newQuota.find('#optionsquotanew');
-			divoptions.attr("id","optionsquota"+newquota);
-			
-			//newQuota.attr("sid",);
-			//newQuota.attr("quota",);
-			
-			newQuota.prependTo("#listcompletequotas");
-			$('#selquestionforfees'+newquota).val(newquota);
-			loadvaluequestion(newquota);
-			
+			//Copy survey-quota-new
+			if($("#survey-quota-"+newquota).length > 0){
+				alert("Error:there is a quota for that question.");
+			}else{
+				var newQuota=$('#survey-quota-new').clone();
+				newQuota.css("display","block");
+				newQuota.attr("quota",newquota);
+				newQuota.attr("sid",newquota);
+				newQuota.attr("id","survey-quota-"+newquota);
+				var selectQuota = newQuota.find('select');
+				selectQuota.attr("id","selquestionforfees"+newquota);
+				selectQuota.attr("name","selquestionforfees"+newquota);
+				selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
+				
+				var h3title =  newQuota.find('h3');
+				h3title.attr("id","questionquotaname"+newquota);
+				
+				var divoptions = newQuota.find('#optionsquotanew');
+				divoptions.attr("id","optionsquota"+newquota);
+				
+				
+				newQuota.prependTo("#listcompletequotas");
+				$('#selquestionforfees'+newquota).val(newquota);
+				loadvaluequestion(newquota);
+				//eliminar opcion del combo
+				//$("#selquestionnewquota").find('[value="'+newquota+'"]').remove();
+				$('#questionquotaname'+newquota).html($("#selquestionforfees"+newquota +" option:selected").text());
+			}
 			
 	});
 	
@@ -235,72 +243,10 @@ $(function() {
 		}
 	});
 	
-	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
-		e.stopPropagation();
-		if($(this).val() != "")
-		{
-			
-			var req = {};
-			var currentNode = $(this);
-			req.text = currentNode.val();
-			req.oid = currentNode.attr('oid');
-			req.index = currentNode.attr('index');
-			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
-			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
-			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
-			req.max = $("#max"+req.oid).val();
-			req.min = $("#min"+req.oid).val();
-			
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
-			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
-			
-			
-			$.ajax({ 
-			   type: "POST",
-			   dataType: "text",
-			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertQuota",
-			   data: JSON.stringify(req),
-			   success: function (data) {
-				   console.log(data);
-				   if(data != '')
-				   {
-					   var jsonresponse = JSON.parse(data);
-					   if(jsonresponse.hasOwnProperty('oid'))
-					   {
-						   console.log("hello oid: " + jsonresponse.oid);
-						   //update jsonquotas
-						   var json = jQuery.parseJSON(jsonquotas);
-						   for (var i=0;i<json[0].questions.length;++i)
-						    {
-									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
-										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
-											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
-											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
-											jsonquotas = JSON.stringify(json);
-										}
-									}
-						   }
-							
-						   
-					   }
-					   
-					  
-				   }
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-				   console.log(xhr.status);
-				   console.log(thrownError);
-				   console.log(xhr.responseText);
-				   console.log(xhr);
-			   }
-			});
-		}
-	});
+	insertValueQuota();
 	
 	$("#objetivesurveys").focusout(function() {
-		if($(this).val() != "")
-		{
+		//if($(this).val() != ""){
 			
 			var req = {};
 			var currentNode = $(this);
@@ -314,7 +260,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/updateObjetive",
+			   url: host + "/SurveyTool/api/QuotaService/updateObjetive",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -338,7 +284,7 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
-		}
+		//}
 	});
 	
 	
@@ -845,18 +791,8 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	var quotaid;
-	$('.survey-sections').on("click", "#removeQuota", function(e){
-		var item = $(this).parents(".edit-fees-frame");
-		quotaid = item.attr('quota');
-		currentQuestion = item.find(".widthTitleSurveyCollapsed");
-		sid = currentQuestion.attr('sid');
-		qid = currentQuestion.attr('qid');
-		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
-		$("#removeElemId").val(sid + '/' +qid +"/111");
-		$("#removeElemService").val('QuotaService');
-		$("#removeElement").modal("show");
-	});
+	
+	deleteQuote();
 	
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
 		
@@ -1630,14 +1566,6 @@ $(function() {
 
 function loadquotas(json){
 	jsonquotas = json;
-	
-	
-	
-	
-	//var currentNode = $(this);
-	//currentNode.closest('.widthTitleSurveyCollapsed').attr('qid',$('#selquestionforfees1').val());
-	
-	
 }
 
 function loadvaluequestion(id){
@@ -1649,69 +1577,10 @@ function loadvaluequestion(id){
 	$('#selquestionforfees'+id).trigger("change");
 	$('#selquestionforfees'+id).prop("disabled", true);
 	
-	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
-		e.stopPropagation();
-		if($(this).val() != "")
-		{
-			
-			var req = {};
-			var currentNode = $(this);
-			req.text = currentNode.val();
-			req.oid = currentNode.attr('oid');
-			req.index = currentNode.attr('index');
-			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
-			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
-			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
-			req.max = $("#max"+req.oid).val();
-			req.min = $("#min"+req.oid).val();
-			
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
-			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
-			var host = "http://" + window.location.host;
-			
-			$.ajax({ 
-			   type: "POST",
-			   dataType: "text",
-			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertQuota",
-			   data: JSON.stringify(req),
-			   success: function (data) {
-				   console.log(data);
-				   if(data != '')
-				   {
-					   var jsonresponse = JSON.parse(data);
-					   if(jsonresponse.hasOwnProperty('oid'))
-					   {
-						   console.log("hello oid: " + jsonresponse.oid);
-						   //update jsonquotas
-						   var json = jQuery.parseJSON(jsonquotas);
-						   for (var i=0;i<json[0].questions.length;++i)
-						    {
-									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
-										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
-											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
-											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
-											jsonquotas = JSON.stringify(json);
-										}
-									}
-						   }
-							
-						   
-					   }
-					   
-					  
-				   }
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-				   console.log(xhr.status);
-				   console.log(thrownError);
-				   console.log(xhr.responseText);
-				   console.log(xhr);
-			   }
-			});
-		}
-	});
 	
+	
+	insertValueQuota();
+	deleteQuote();
 	
 }
 
@@ -1719,24 +1588,37 @@ function loadvaluequestion(id){
 
 function changeoptionsfees(id){
 	var valuesel = $("#selquestionforfees"+id).val();
-	//$('.optionsfees').css('display','none');
-	//$('#optionsfees'+valuesel).css('display','');
 	
 	$('#optionsquota'+id).empty();
 	
-	var json = jQuery.parseJSON(jsonquotas);
-	for (var i=0;i<json[0].questions.length;++i)
-    {
-		if(json[0].questions[i].questionId == valuesel){
-			$('#optionsquota'+id).attr("ogid", json[0].questions[i].optionsGroup[0].optionsGroupId);
-			for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
-				$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='text' placeholder='' class='form-control-small col-md-8' value='"+json[0].questions[i].optionsGroup[0].options[j].max+"' index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' ></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='text' placeholder='' class='form-control-small col-md-8' value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' ></div></div>");
+	//if(jsonquotas === "undefined"){
+		var json = jQuery.parseJSON(jsonquotas);
+		for (var i=0;i<json[0].questions.length;++i)
+	    {
+			if(json[0].questions[i].questionId == valuesel){
+				$('#optionsquota'+id).attr("ogid", json[0].questions[i].optionsGroup[0].optionsGroupId);
+				for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+					var placeholdermax="none";
+					var placeholdermin="none";
+					var max=json[0].questions[i].optionsGroup[0].options[j].max;
+					var min=json[0].questions[i].optionsGroup[0].options[j].min;
+					
+					if(max>0){
+						max = "value='"+json[0].questions[i].optionsGroup[0].options[j].max+"' ";
+					}
+					
+					if(min>0){
+						min = "value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' ";
+					}
+					
+					$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
+				}
+				
 			}
 			
-		}
-		
-    }
-	
+	    }
+	//}
+		$('#questionquotaname'+id).html($("#selquestionforfees"+id +" option:selected").text());
 	
 }
 
@@ -1776,6 +1658,92 @@ console.log(max_chars);
     if(element.value.length >= max_chars) {
         element.value = element.value.substr(0, max_chars);
     }
+}
+
+function insertValueQuota(){
+	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+		e.stopPropagation();
+		//if($(this).val() != ""){
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.attr('oid');
+			req.index = currentNode.attr('index');
+			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
+			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
+			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
+			
+			var max = $("#max"+req.oid).val();
+			var min = $("#min"+req.oid).val();
+			
+			if(max=="")max=0;
+			if(min=="")min=0;
+			
+			req.max = max;
+			req.min = min;
+			
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
+			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			var host = "http://" + window.location.host;
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuotaService/insertQuota",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('oid'))
+					   {
+						   console.log("hello oid: " + jsonresponse.oid);
+						   //update jsonquotas
+						   var json = jQuery.parseJSON(jsonquotas);
+						   for (var i=0;i<json[0].questions.length;++i)
+						    {
+									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+											jsonquotas = JSON.stringify(json);
+										}
+									}
+						   }
+							
+						   
+					   }
+					   
+					  
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		//}
+	});
+}
+
+function deleteQuote(){
+	$('.survey-sections').on("click", "#removeQuota", function(e){
+		var item = $(this).parents(".edit-fees-frame");
+		quotaid = item.attr('quota');
+		currentQuestion = item.find(".widthTitleSurveyCollapsed");
+		sid = currentQuestion.attr('sid');
+		qid = currentQuestion.attr('qid');
+		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
+		$("#removeElemId").val(sid + '/' +qid +"/111");
+		$("#removeElemService").val('QuotaService');
+		$("#removeElement").modal("show");
+	});
+	
 }
 
 

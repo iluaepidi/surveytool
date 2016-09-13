@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,7 +250,7 @@ public class QuotasDB {
 	}
 	
 	
-	public boolean updateObjetive(int idQuestionnaire, int objetive) {
+	public boolean updateObjetive(int idQuestionnaire, String objetive) {
 		//System.out.println("updateState");
 		boolean updated = false;
 		Connection con = this._openConnection();
@@ -257,7 +258,12 @@ public class QuotasDB {
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OBJETIVE_SURVEY); 
-			pstm.setInt(1, objetive); 
+		   	if(objetive==null || objetive.equals("")){
+		   		pstm.setNull(1, Types.INTEGER);
+		   	}else{
+		   		pstm.setInt(1, Integer.parseInt(objetive)); 
+		   	}
+			
 			pstm.setInt(2, idQuestionnaire);
 			int numUpdated = pstm.executeUpdate();
 			
