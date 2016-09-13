@@ -28,7 +28,7 @@ $(function() {
 			console.log("Page number: "+i+", page="+pageJson+", surveyTree="+surveyTree);
 			
 			if(pageJson.pageId == pageId){
-				currentValue = pageJson.numPage+"-"+qId;
+				currentValue = pageJson.pageId+"-"+qId;
 			}
 			
 			for(var j = 0; j < pageJson.questions.length; j++)
@@ -37,7 +37,7 @@ $(function() {
 				var type = questionJson.type;
 				if(type === "simple")
 				{
-					var optionHtml = '<option value="' + pageJson.numPage + '-' + questionJson.questionId + '">' + questionJson.title + '</option>';
+					var optionHtml = '<option id="question-dependence-' + pageJson.pageId + '-' + questionJson.questionId + '" value="' + pageJson.pageId + '-' + questionJson.questionId + '">' + questionJson.title + '</option>';
 					$(this).append(optionHtml);
 				}
 			}
@@ -60,7 +60,7 @@ $(function() {
 		
 		var question = $(this).closest("fieldset").find("select.dependence-question").val(); 
 		console.log(question);
-			
+
 		if(question != 'none')
 		{	
 			var questionParamAux = question.split("-");
@@ -75,13 +75,14 @@ $(function() {
 					i=numPage;
 				}
 			}
-			
+
+			console.log("surveyTree focusin question: " + JSON.stringify(question));
 			var questionParam = question.split("-");
 			
-			var question = $.grep(surveyTree[parseInt(questionParam[0]) - 1].questions, function( n, i ) {
+			question = $.grep(surveyTree[parseInt(questionParam[0]) - 1].questions, function( n, i ) {
 				return n.questionId===parseInt(questionParam[1]);
 			})[0];
-			
+			console.log("surveyTree focusin option depend: " + JSON.stringify(surveyTree));
 			if(question.optionsGroup != null && question.optionsGroup.length > 0)
 			{
 				for(var i = 0; i < question.optionsGroup.length; i++)
@@ -90,7 +91,7 @@ $(function() {
 					for(var j = 0; j < optionsGroup.options.length; j++)
 					{
 						var option = optionsGroup.options[j];
-						var optionHtml = '<option value="' + optionsGroup.optionsGroupId + '-' + option.optionId + '">' + option.title + '</option>';
+						var optionHtml = '<option id="option-dependence-' + optionsGroup.optionsGroupId + '-' + option.optionId + '" value="' + optionsGroup.optionsGroupId + '-' + option.optionId + '">' + option.title + '</option>';
 						$(this).append(optionHtml);
 					}
 				}
@@ -455,6 +456,20 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('.section-pages').on("rmvNoConfirm", "#remove-dependence", function(e){
+		console.log("Remove dependence item");
+		var root = $(this).closest("fieldset");
+		var itemindex = root.closest("li.dependence-item").attr("index");
+		var question = (root.find("select.dependence-question")).children(':selected').text();
+		var option = (root.find("select.dependence-option")).children(':selected').text();
+		var questionIndex = $(this).closest('li.panel-question').attr("qid");
+		$("#elementToRemoveText").html('"Dependence: question-' + question + ', option-'+option+'"');
+		$("#removeElemId").val(questionIndex + '/' + itemindex);
+		$("#removeElemService").val('QCService');
+		
+		$('#acceptRemoveElement').trigger("click")
+	});
+	
 	$('.survey-sections').on("click", ".logic-button > button", function(){
 		$(this).parent().addClass('hidden');
 		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
@@ -516,22 +531,23 @@ $(function() {
 		var pageId = $(this).closest("li.page").attr("pid");
 		var questionId = $(this).closest("li.panel-question").attr("qid");
 		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var index = $(this).attr("index");
 		var text = $(this).val();
 		console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
 		var existOg = false;
 		var existOpt = false;
-		
-		$(surveyTree).each(function(index, pageElem){
+		console.log("index: " + index);
+		$(surveyTree).each(function(ind, pageElem){
 		    if(pageElem.pageId == pageId)
 		    {
-		    	$(pageElem.questions).each(function(index, questionElem){
+		    	$(pageElem.questions).each(function(ind2, questionElem){
 		    		if(questionElem.questionId == questionId)
 		    		{
-		    			$(questionElem.optionsGroup).each(function(index, ogElem){
+		    			$(questionElem.optionsGroup).each(function(ind3, ogElem){
 				    		if(ogElem.optionsGroupId == optionGroupId)
 				    		{
 				    			existOg = true;
-				    			$(ogElem.options).each(function(index, optionElem){
+				    			$(ogElem.options).each(function(ind4, optionElem){
 						    		if(optionElem.optionId == optionId)
 						    		{
 						    			existOpt = true;
@@ -539,15 +555,17 @@ $(function() {
 						    		}
 						    	});
 				    			
-				    			if(!existOpt) ogElem.options.push({"optionId":optionId,"index":$(this).attr("intex"),"title": text});
+				    			if(!existOpt) ogElem.options.push({"optionId":parseInt(optionId),"index":parseInt(index),"title": text});
 				    		}
 				    	});
 		    			
-		    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":optionGroupId,"options":[{"optionId":optionId,"index":$(this).attr("intex"),"title": text}]});
+		    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":parseInt(optionGroupId),"options":[{"optionId":parseInt(optionId),"index":parseInt($(this).attr("index")),"title": text}]});
 		    		}
 		    	});
 		    }		    
 		});
+		
+		$(this).trigger("setOptionDepend");
 
 		console.log("surveyTree changed: " + JSON.stringify(surveyTree));
 	});
@@ -578,6 +596,8 @@ $(function() {
 		    	});
 		    }		    
 		});
+		
+		$(this).trigger('rmvOptionDepend');
 		//console.log("surveyTree removed: " + JSON.stringify(surveyTree));
 	});
 	
@@ -586,7 +606,7 @@ $(function() {
 		$(surveyTree).each(function(index, pageElem){
 		    if(pageElem.pageId == pageId)
 		    {
-				var questionJson = {"questionId":qid,"index":qIndex,"type":qType,"title":text,"optionsGroup":[]};
+				var questionJson = {"questionId":parseInt(qid),"index":parseInt(qIndex),"type":qType,"title":text,"optionsGroup":[]};
 		    	pageElem.questions.push(questionJson);
 		    }		    
 		});
@@ -612,6 +632,7 @@ $(function() {
 		});
 		
 		$(this).trigger("setQuestionGoto");
+		$(this).trigger("setQuestionDepend");
 		console.log("surveyTree question changed: " + JSON.stringify(surveyTree));
 	});
 	
@@ -631,6 +652,7 @@ $(function() {
 		});
 
 		$(this).trigger("rmvQuestionGoto");
+		$(this).trigger("rmvQuestionDepend");
 		console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
 	
@@ -648,8 +670,7 @@ $(function() {
 	});
 
 	$('.survey-sections').on("rmvQuestionGoto", "li.panel-question", function(e){
-		var questionId = $(this).closest('li.panel-question').attr('qid');
-		var text = $(this).val();
+		var questionId = $(this).attr('qid');
 		
 		$('.logic-option-goto').each(function(index, selectGoto){
 			console.log("Select index: " + index + " - val: " + $(selectGoto).val());
@@ -657,6 +678,79 @@ $(function() {
 			{
 				$(selectGoto).val('none');
 				$(selectGoto).trigger("change");
+			}
+		});
+	});
+
+	$('.survey-sections').on("setQuestionDepend", "input#survey-question-title", function(e){
+		var pageId = $(this).closest('li.page').attr('pid');
+		var questionId = $(this).closest('li.panel-question').attr('qid');
+		var text = $(this).val();
+
+		var valor = pageId + "-" + questionId;
+				
+		$('.dependence-question').each(function(index, selectDepend){
+			console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			console.log("Select index: " + index + " - valor: " + valor);
+			if($(selectDepend).val() == valor)
+			{	
+				console.log("setQuestionDepend entra if");
+				$(selectDepend).find('#question-dependence-' + valor).html(text);
+			}
+		});
+	});
+
+	$('.survey-sections').on("rmvQuestionDepend", "li.panel-question", function(e){
+		var pageId = $(this).closest('li.page').attr('pid');
+		var questionId = $(this).attr('qid');
+		
+		var valor = pageId + "-" + questionId;
+		
+		console.log("rmvQuestionDepend value: " + valor);
+		
+		$('.dependence-question').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{
+				console.log("entra");
+				var trashButton = $(selectDepend).closest("fieldset").find("button.trash");
+				trashButton.trigger("rmvNoConfirm");
+			}
+		});
+	});
+	
+	$('.survey-sections').on("setOptionDepend", "#option-list #option-item input", function(e){
+		var optionId = $(this).attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var text = $(this).val();
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				$(selectDepend).find('#option-dependence-' + valor).html(text);
+			}
+		});
+	});
+
+	$('.survey-sections').on("rmvOptionDepend", "#option-list #option-item input", function(e){
+		var optionId = $(this).attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				var trashButton = $(selectDepend).closest("fieldset").find("button.trash");
+				trashButton.trigger("rmvNoConfirm");
 			}
 		});
 	});

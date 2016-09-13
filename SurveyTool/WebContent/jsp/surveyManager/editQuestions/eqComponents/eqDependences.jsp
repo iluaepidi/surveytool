@@ -156,7 +156,7 @@
 																		<div class="form-group"  style="margin:0px !important;">
 																			<select id="dependence-question-<%= i %>" class="form-control dependence-question">
 								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>								  																	  										
-																				<option value="<%= depval.getPid() + "-" + depval.getQid() %>" selected> <%= depval.getQName()%> </option>
+																				<option id="question-dependence-<%= depval.getPid() + "-" + depval.getQid() %>" value="<%= depval.getPid() + "-" + depval.getQid() %>" selected> <%= depval.getQName()%> </option>
 								  											</select>
 								  										</div>
 								  										<label for="dependence-option-<%= i %>" class="dependence-option-label">
@@ -168,7 +168,7 @@
 								  										<div class="form-group"  style="margin:0px !important;">
 				    														<select id="dependence-option-<%= i %>" class="form-control dependence-option">
 								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
-								  												<option value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected> <%= depval.getOName()%> </option>
+								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected> <%= depval.getOName()%> </option>
 								  											</select>
 				    														<span id='dependence-option-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:0px;right: 10px'></span>
 			  																<span id='dependence-option-error' class='error hidden' style='top:0px;left: 160px'><%= lang.getContent("msg.error.dependence-option.text") %></span>	
