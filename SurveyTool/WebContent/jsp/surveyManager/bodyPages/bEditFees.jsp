@@ -67,33 +67,37 @@
 	  				</div>
 	  				<div class="content-box-tabs edit-content">
 	  					<div class="browser-left">Hello</div>	
-	  					<div class="edit-survey-frame survey-info" id="survey-name-title" sid="<%= survey.getSurveyId() %>">
+	  					<div class="edit-survey-frame survey-info" id="survey-name-title" sid="<%= survey.getSurveyId() %>" style="border:0;">
 		  						
 		  						<div class="widthTitleSurveyCollapsed" id="survey-name-title-div">
 		  							<div class="form-group" style="margin:0px;">
-		  								<h3><%= title %></h3>
+		  								<h3 style="text-align: left;"><%= title %></h3>
 		  							</div>
 			  					</div>					
 
 		  					</div>	
-	  						<div class="content edit-fees-frame">
-									<p>Please, specify the limits of responses received for this survey. You can set a minimum of responses expected, so dissemination efforts will continue until you reach this limit. You can also set a maximum, so the access to the survey will be disabled when you reach this number. These limits will also be used to monitor your advances in the dissemination and completion of the survey.</p>
-							</div>  						  		
-	  						<div class="edit-survey-head">
-		  							
-		  						<div class="survey-objetive" id="survey-objetive" style="float: right !important;">
-		  								<label for="survey-language-version" class="" ><i class="fa fa-sliders fa-2x"></i>&nbsp;&nbsp;<span><%= lang.getContent("survey.fees.label.objective") %></span></label>
+	  						<div class="content edit-fees-frame" style="padding-bottom: 50px;">
+	  								<h4 style="text-align: left;">Overall response quota</h4>
+									<p style="text-align: left;">Please, specify the limits of responses received for this survey. You can set a minimum of responses expected, so dissemination efforts will continue until you reach this limit. You can also set a maximum, so the access to the survey will be disabled when you reach this number. These limits will also be used to monitor your advances in the dissemination and completion of the survey.</p>
+									<div class="survey-objetive" id="survey-objetive" style="float: left !important;margin-left: 33%;">
+		  								<label for="survey-language-version" class="" ><span><%= lang.getContent("survey.fees.label.objective") %></span></label>
 		  								<% String valueobjetive="";
 		  									if(survey.getObjetive()>0){
 		  										valueobjetive = (String.valueOf(survey.getObjetive()));
 		  									} %>
 										<input id="objetivesurveys" name="objetivesurveys" type="number" placeholder="none" class="form-control-small" value="<%=valueobjetive %>" sid="<%=survey.getSurveyId() %>" min="1" style="width:100px;">
 										<%= lang.getContent("survey.fees.label.surveys") %>
-		  						</div>
+		  							</div>
+							</div>  						  		
+	  						<div class="edit-survey-head">
+		  							
+		  						
 		  					</div>
 		  					
-		  					<div id="listcompletequotas">
-		  					
+		  					<div id="listcompletequotas" class="edit-fees-frame">
+		  						<h4 style="text-align: left;">Segmentation (question-based quotas)</h4>
+									<p style="text-align: left;">You can use the responses to key question to define quotas for certain user profiles. For example, if you have a question on "Gender" and you have two options (female / male) you can define a minimum and maximum of female or male participants. These limits will be used to monitor your advances in the dissemination and completion of the survey.</p>
+									
 		  					<%
 		  						List<Question> listQuestionAvaibles = new ArrayList();
 		  						String titleQuestion="";
@@ -156,7 +160,7 @@
 		  					<jsp:include page="../components/cQuotaNew.jsp" />
 							
 							
-							<div class="center" id="add-fees">											
+							<div class="center" id="add-fees" style="margin-top: 10px;">											
 								<label for="btn-add-quota" class="visuallyhidden"><%= lang.getContent("quota.add.new") %></label>
 								<button class="btn btn-primary btn-sm active" id="btn-add-quota"><i class="fa fa-plus-square"></i><span><%= lang.getContent("quota.add.new") %></span></button>
 							</div>

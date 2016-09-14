@@ -114,8 +114,8 @@ $(function() {
 				selectQuota.attr("name","selquestionforfees"+newquota);
 				selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
 				
-				var h3title =  newQuota.find('h3');
-				h3title.attr("id","questionquotaname"+newquota);
+				var h5title =  newQuota.find('h5');
+				h5title.attr("id","questionquotaname"+newquota);
 				
 				var divoptions = newQuota.find('#optionsquotanew');
 				divoptions.attr("id","optionsquota"+newquota);
@@ -1611,7 +1611,8 @@ function changeoptionsfees(id){
 						min = "value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' ";
 					}
 					
-					$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
+					//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
+					$('#optionsquota'+id).prepend("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 				}
 				
 			}
@@ -1733,7 +1734,7 @@ function insertValueQuota(){
 
 function deleteQuote(){
 	$('.survey-sections').on("click", "#removeQuota", function(e){
-		var item = $(this).parents(".edit-fees-frame");
+		var item = $(this).parents(".survey-info");
 		quotaid = item.attr('quota');
 		currentQuestion = item.find(".widthTitleSurveyCollapsed");
 		sid = currentQuestion.attr('sid');
