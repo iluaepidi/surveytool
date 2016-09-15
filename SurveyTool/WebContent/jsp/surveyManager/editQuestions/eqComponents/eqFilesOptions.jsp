@@ -13,9 +13,10 @@ Option option = (Option) request.getAttribute(Attribute.s_OPTION);
 List<Resource> resources = option.getResources();
 %>
 <div class="row margin-top-40" type="global" id="multimediaFrame">
-	<label><%= lang.getContent("question.edit.files.option.title") %></label>
 	<div id="div_files">
 		<div class="option-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
+			<label><%= lang.getContent("question.edit.files.option.title") %></label>
+	
 			<ul class="multimedia-list" id="multimediaFilesList">
 				<%							  						
 				for(Resource resource : resources)

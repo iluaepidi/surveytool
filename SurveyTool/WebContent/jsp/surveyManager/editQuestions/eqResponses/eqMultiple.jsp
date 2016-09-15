@@ -75,9 +75,10 @@
 							  									<% } %>
 							  								</div>
 							  								<div class="row margin-top-40" type="global" id="multimediaFrame">
-																		<label><%= lang.getContent("question.edit.files.option.title") %></label>
 																		<div id="div_files">
 																			<div class="option-files-frame hidden">
+																				<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																		
 																				<ul class="multimedia-list" id="multimediaFilesList">
 																				</ul>
 																			</div>
@@ -122,9 +123,10 @@
 							  									<% } %>
 							  								</div>
 							  								<div class="row margin-top-40" type="global" id="multimediaFrame">
-																		<label><%= lang.getContent("question.edit.files.option.title") %></label>
 																		<div id="div_files">
 																			<div class="option-files-frame hidden">
+																			<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																		
 																				<ul class="multimedia-list" id="multimediaFilesList">
 																				</ul>
 																			</div>
@@ -150,9 +152,10 @@
 							  									<% } %>
 							  								</div>
 							  								<div class="row margin-top-40" type="global" id="multimediaFrame">
-																		<label><%= lang.getContent("question.edit.files.option.title") %></label>
 																		<div id="div_files">
 																			<div class="option-files-frame hidden">
+																			<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																		
 																				<ul class="multimedia-list" id="multimediaFilesList">
 																				</ul>
 																			</div>
