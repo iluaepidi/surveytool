@@ -7,37 +7,50 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveymanager.statistics.Statistics"%>
 <%@page import="ilu.surveymanager.statistics.StatisticsQuestion"%>
+<%@page import="ilu.surveymanager.handler.SurveysHandler"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
 <%
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
-//String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+String title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+if(title==null)
+	title = "";
+String description = "";
+if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION))
+{
+	description = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText(); 
+} else
+	description="";
+
+int index = Integer.parseInt(request.getParameter("index"));
 
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
 
-Statistics surveyStatistic = (Statistics) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
-int index = Integer.parseInt(request.getParameter("index"));
-System.out.println(index);
-StatisticsQuestion sQ = surveyStatistic.getStatisticsByQuestion(index);
+
+StatisticsQuestion sQ = (StatisticsQuestion) request.getAttribute(Attribute.s_SURVEY_STATISTIC);
 
 %>
 
+
+<h3><%= title%></h2>
+<h4><%= description%></h3>
 		<div class="row single-questions-row">
 	        <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3><%= sQ.getNumResponses()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+	              <h3 aria-hidden="true"><%= sQ.getNumResponses()%></h3>
+	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%= sQ.getNumResponses()%></span>
 	            </div>
 	          </div>
 	      </div>
 	      
-	      <div class="row connectedSortable ui-sortable single-questions-row ">
-	      		<div class="nav-tabs-custom">
+	      <div class="row single-questions-row">
+	      		<div class="nav-tabs-custom no-block text">
 	            	<!-- Tabs within a box -->
-	            	<p class="graph-title"> <%= lang.getContent("statistics.single.title")%></p>
-	            	<div class="tab-content no-padding">
+	            	<p class="graph-title no-block"> <%= lang.getContent("statistics.single.title")%></p>
+	            	<div class="tab-content no-padding no-block">
 		              <ul>
 		              <%
 		              List<OptionsGroup> list = sQ.getOptionsGroup();
@@ -45,7 +58,7 @@ StatisticsQuestion sQ = surveyStatistic.getStatisticsByQuestion(index);
 		            	  String text = list.get(i).getContents().get("text").getText();
 		            	  if (!text.equals("")){
 		            	  %>
-		            	  <li><i class="enum fa fa-circle-o"></i><%= text %></li>
+		            	  <li><i class="enum fa fa-caret-right"></i><%= text %></li>
 		            	  <%
 		            	  }
 		              }

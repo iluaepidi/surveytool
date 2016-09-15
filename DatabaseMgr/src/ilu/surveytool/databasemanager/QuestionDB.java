@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
@@ -63,7 +64,7 @@ public class QuestionDB {
 	public List<Question> getQuestionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Question> questions = new ArrayList<Question>();
-		System.out.println("Get questions by survey Id="+surveyId);
+		//System.out.println("Get questions by survey Id="+surveyId);
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -210,7 +211,8 @@ public class QuestionDB {
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
-	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
+	   					//rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
+	   					null,
 	   					qdependence,
 	   					logicGoTo);
 	   			
@@ -355,7 +357,7 @@ public class QuestionDB {
 		return type;
 	}
 	
-	public HashMap<Integer,OptionsGroup> getQuestionContentsByQuestionIdLang(int questionId, String lang)
+	public HashMap<Integer,OptionsGroup> getQuestionContentsByQuestionIdLang(int questionId, String defaultLanguage)
 	{
 		HashMap<Integer,OptionsGroup> contents = new HashMap<Integer,OptionsGroup>();
 		
@@ -369,10 +371,10 @@ public class QuestionDB {
 			
 			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_CONTENTS_QUESTIONID_LANGUAGE);			
 		   		pstm.setInt(1, questionId);
-		   		pstm.setString(2, lang);
-		   		
+		   		pstm.setString(2, defaultLanguage);
 		   		rs = pstm.executeQuery();
 		   		int ogID = -1;
+		   		
 		   		while(rs.next())
 		   		{
 		   			if((contents.isEmpty()) || (!contents.containsKey(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)))){
@@ -401,6 +403,116 @@ public class QuestionDB {
 		   			}
 		   		}
 	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
+	public HashMap<Integer,HashMap<Integer,OptionsGroup>> getSurveyQuestionsContentsLang(int questionnaireId, String defaultLanguage)
+	{
+		HashMap<Integer,HashMap<Integer,OptionsGroup>> contents = new HashMap<Integer,HashMap<Integer,OptionsGroup>>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE);			
+	   		pstm.setInt(1, questionnaireId);
+	   		pstm.setString(2, defaultLanguage);
+	   		rs = pstm.executeQuery();
+	   		int ogID = -1;
+	   		
+	   		while(rs.next())
+	   		{
+	   			if((contents.isEmpty()) || (!contents.containsKey(rs.getInt(DBFieldNames.s_QUESTION_ID)))){
+	   				HashMap<String, Content> contentsOG = new HashMap<String, Content>();
+	   				Content c = new Content();
+	   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OG));
+	   				contentsOG.put("text", c);
+	   				
+	   				List<Option> options = new ArrayList<Option>();
+	   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
+	   				c = new Content();
+	  				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+	   				contentsO.put("text", c);
+	   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
+		   				
+	   				OptionsGroup oG = new OptionsGroup(rs.getInt(DBFieldNames.s_OPTIONSGROUPID), contentsOG, "", false, 0, 0, options);
+		   				
+	   				HashMap<Integer,OptionsGroup> contentsQuestion = new HashMap<Integer,OptionsGroup>();
+	   				contentsQuestion.put(rs.getInt(DBFieldNames.s_OPTIONSGROUPID),oG);
+		   				
+	   				contents.put(rs.getInt(DBFieldNames.s_QUESTION_ID),contentsQuestion);
+	   				//System.out.println("No existía el questionId. He insertado: qId="+rs.getInt(DBFieldNames.s_QUESTION_ID)+", ogId="+rs.getInt(DBFieldNames.s_OPTIONSGROUPID)+", oId="+rs.getInt(DBFieldNames.s_OPTIONID));
+	   			}
+	   			else{
+	   				//System.out.println("Ya existía el questionId");
+	   				if((!(contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID))).containsKey(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)))){
+		   				HashMap<String, Content> contentsOG = new HashMap<String, Content>();
+		   				Content c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OG));
+		   				contentsOG.put("text", c);
+		   				
+		   				List<Option> options = new ArrayList<Option>();
+		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
+		   				c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				contentsO.put("text", c);
+		   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
+			   				
+		   				OptionsGroup oG = new OptionsGroup(rs.getInt(DBFieldNames.s_OPTIONSGROUPID), contentsOG, "", false, 0, 0, options);
+			   				
+		   				contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).put(rs.getInt(DBFieldNames.s_OPTIONSGROUPID),oG);
+		   				//System.out.println("No existía el optionsgroup. He insertado: qId="+rs.getInt(DBFieldNames.s_QUESTION_ID)+", ogId="+rs.getInt(DBFieldNames.s_OPTIONSGROUPID)+", oId="+rs.getInt(DBFieldNames.s_OPTIONID));
+		   			}
+		   			else{
+		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
+		   				Content c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				contentsO.put("text", c);
+		   				List<Option> options = contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions();
+		   				//System.out.println(options.size());
+		   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
+		   				//System.out.println(options.size());
+		   				
+		   				HashMap<String, Content> contentsOG = new HashMap<String, Content>();
+		   				c = new Content();
+		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OG));
+		   				contentsOG.put("text", c);
+		   				
+		   				OptionsGroup oG = new OptionsGroup(rs.getInt(DBFieldNames.s_OPTIONSGROUPID), contentsOG, "", false, 0, 0, options);
+		   				//System.out.println(oG.getOptions().size());
+		   				
+		   				//System.out.println(contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions().size());
+		   				contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).put(rs.getInt(DBFieldNames.s_OPTIONSGROUPID),oG);
+		   				
+		   				//System.out.println("Ya existía el optionsgroup. He insertado("+contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions().size()+"): qId="+rs.getInt(DBFieldNames.s_QUESTION_ID)+", ogId="+rs.getInt(DBFieldNames.s_OPTIONSGROUPID)+", oId="+rs.getInt(DBFieldNames.s_OPTIONID));
+		   			}
+	   			}
+	   		}
+	   		
+	   		/*Iterator it = contents.entrySet().iterator();
+			while (it.hasNext()) {
+			    Map.Entry pair = (Map.Entry)it.next();
+			    HashMap<Integer,OptionsGroup> contents2 = (HashMap<Integer,OptionsGroup>)pair.getValue();
+			    
+			    Iterator it2 = contents2.entrySet().iterator();
+				while (it2.hasNext()) {
+				    Map.Entry pair2 = (Map.Entry)it2.next();
+				    OptionsGroup contents3 = (OptionsGroup)pair2.getValue();
+				    List<Option> options = contents3.getOptions();
+				    for (int i=0;i<options.size();i++)
+				    	System.out.println("qID:"+((Integer)pair.getKey()).intValue()+", optionsGroup:"+contents3.getId()+", option:"+options.get(i).getId());
+				}
+			}*/
+			
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -772,13 +884,13 @@ public class QuestionDB {
 			pstm.setString(1, type);
 			pstm.setInt(2, questionId);
 		   		
-			System.out.println(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE +": qID: " +questionId+", type: "+type);
+			//System.out.println(DBSQLQueries.s_UPDATE_OPTIONSGROUP_TYPE +": qID: " +questionId+", type: "+type);
 			int numUpdated = pstm.executeUpdate();
 			
 			if(numUpdated > 0)
 			{
 				updated = true;
-				System.out.println("numUpdated: "+numUpdated);
+				//System.out.println("numUpdated: "+numUpdated);
 			}
 					
 		} catch (SQLException e) {

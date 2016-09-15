@@ -15,6 +15,15 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
 				+ "where idQuestionnaire = ? order by idAnonimousUser";
+		
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
+			+ "FROM surveytool.anonimoususer as au "
+			+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+			+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+			+ "where idQuestionnaire = ? order by idAnonimousUser";
+		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
 					+ "if(qt.name = 'simple', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
@@ -184,15 +193,30 @@ public class DBSQLQueries {
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
 				+ "where qbp.idPoll = ?";
 		
-		public final static String s_SELECT_QUESTION_CONTENTS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, oG.idOptionsGroup, cOG.text optionsGroup, o.idOption, cO.text options FROM question q "
+		public final static String s_SELECT_QUESTION_CONTENTS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, oG.idOptionsGroup, if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cQ.idLanguage),\"\") as optionsGroup, o.idOption, cO.text options FROM question q "
 				+ "inner join content cQ on cQ.idContent = q.idContent "
 				+ "inner join optionsgroup oG on oG.idQuestion = q.idQuestion "
-				+ "inner join content cOG on cOG.idContent = oG.idContent "
 				+ "inner join optionsbygroup obg on obg.idOptionsGroup = oG.idOptionsGroup "
 				+ "inner join surveytool.option o on o.idOption = obg.idOption "
 				+ "inner join content cO on cO.idContent = o.idContent "
 				+ "inner join language l on l.idLanguage = cQ.idLanguage "
-				+ "where q.idQuestion = ? and l.isoName = ? and cQ.idContentType=1 and cOG.idContentType=1 and cO.idContentType=1 and cOG.idLanguage=cQ.idLanguage and cO.idLanguage=cQ.idLanguage order by og.idOptionsGroup, o.idOption";
+				+ "where q.idQuestion = ? and l.isoName = ? and cQ.idContentType=1 and cO.idContentType=1 and cO.idLanguage=cQ.idLanguage order by og.idOptionsGroup, o.idOption";
+		
+		public final static String s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE = "SELECT q.idQuestion, q.idQuestionType, oG.idOptionsGroup, if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cO.idLanguage),\"\") as optionsGroup, o.idOption, cO.text options FROM " 
+				+ "(select ques.* from question ques "
+				+ "inner join surveytool.questionbypage AS qbp  on qbp.idQuestion = ques.idQuestion "
+				+ "inner join surveytool.page AS p  on p.idPage = qbp.idPage "
+				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
+				+ "WHERE q.idQuestionnaire = ?) as q "
+				+ "inner join optionsgroup oG on oG.idQuestion = q.idQuestion "
+				+ "inner join optionsbygroup obg on obg.idOptionsGroup = oG.idOptionsGroup "
+				+ "inner join surveytool.option o on o.idOption = obg.idOption "
+				+ "inner join content cO on cO.idContent = o.idContent "
+				+ "inner join language l on l.idLanguage = cO.idLanguage "
+				+ "where l.isoName = ? and cO.idContentType=1 order by og.idOptionsGroup, o.idOption";
+		
 		
 		public final static String s_SELECT_QUESTION_TYPE_QUESTIONID = "SELECT q.idQuestionType FROM question q "
 				+ "where q.idQuestion = ?";

@@ -1,5 +1,6 @@
 package ilu.surveytool.constants;
 
+
 /**
  * 
  * @author JAgutierrez
@@ -10,7 +11,6 @@ package ilu.surveytool.constants;
  */
 
 public class Address {
-	
 	//BodypPagesNames
 		public final static String s_BODY_LOGIN = "login";
 		public final static String s_BODY_POLL_EXAMPLE_CODE = "pollExampleCode";
@@ -21,6 +21,7 @@ public class Address {
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
+		public final static String s_BODY_EDIT_STATISTICS = "surveyStatistics";
 		public final static String s_BODY_PROFILE = "profile";
 	
 	//cssFiles

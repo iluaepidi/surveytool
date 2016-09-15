@@ -157,6 +157,58 @@ public class ResponsesDB {
 		return responses;
 	}
 	
+	public HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> getAnonimousResponseCompleteWithoptionIdBySurveyId(int surveyId)
+	{
+		HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses = new HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID);			
+	   		pstm.setInt(1, surveyId);
+	   		//System.out.println(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID+": "+surveyId);
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{	   			
+	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   			Timestamp createDate = rs.getTimestamp(DBFieldNames.s_ANONYMOUS_USER_DATE);
+	   			Timestamp timestamp = rs.getTimestamp(DBFieldNames.s_RESPONSE_TIMESTAMP);
+	   			String option = rs.getString(DBFieldNames.s_VALUE);
+	   			
+	   			if(!responses.containsKey(anonymousUserId))
+	   			{
+	   				responses.put(anonymousUserId, new HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>());
+	   				responses.get(anonymousUserId).put(createDate, new HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>());
+	   			}
+	   			
+	   			if(!responses.get(anonymousUserId).get(createDate).containsKey(questionId))
+	   			{
+	   				responses.get(anonymousUserId).get(createDate).put(questionId, new HashMap<Integer, HashMap<String,Timestamp>>());
+	   			}
+	   			
+	   			if(!responses.get(anonymousUserId).get(createDate).get(questionId).containsKey(optionsGroupId))
+	   			{
+	   				responses.get(anonymousUserId).get(createDate).get(questionId).put(optionsGroupId, new HashMap<String,Timestamp>());
+	   			}
+	   			
+	   			responses.get(anonymousUserId).get(createDate).get(questionId).get(optionsGroupId).put(rs.getString(DBFieldNames.s_VALUE), timestamp);
+	   			//System.out.println("[ResponsesDB/getAnonimousResponseCompleteWithoptionIdBySurveyId] anonymousUserId:"+anonymousUserId+", questionId:"+questionId+", optionsGroupId:"+optionsGroupId+", option:"+option);
+	   		}
+	   			   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return responses;
+	}
+	
 	public int[] getNumQuestionsQuestionnaires(int surveyId){
 		int[] count = new int[2];
 		
@@ -192,7 +244,7 @@ public class ResponsesDB {
 	public HashMap<Integer,Boolean> getQuestionsID_Mandatory_BySurveyId(int surveyId)
 	{
 		HashMap<Integer,Boolean> questions = new HashMap<Integer,Boolean>();
-		System.out.println("Get questions by survey Id="+surveyId);
+		//System.out.println("Get questions by survey Id="+surveyId);
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -204,7 +256,7 @@ public class ResponsesDB {
 	   		rs = pstm.executeQuery();
 	   		while(rs.next()){
 	   			questions.put(rs.getInt(DBFieldNames.s_QUESTION_ID), rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
-	   			System.out.println(rs.getInt(DBFieldNames.s_QUESTION_ID)+"-->"+rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
+	   			//System.out.println(rs.getInt(DBFieldNames.s_QUESTION_ID)+"-->"+rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
 	   		}
 	   		
 	   } catch (SQLException e) {

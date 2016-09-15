@@ -48,6 +48,47 @@ h2 {width: auto;
     margin-right: -7px;}
 .red {color: #B60000;
 	border-color: #B60000 !important;}
+	
+.cian {
+	color: #576C99;
+	border-color: #576C99 !important;
+}
+
+.yellow {
+	color: #FFB506;
+	border-color: #FFB506 !important;
+}
+
+.gray{
+	color: #c5c5c5;
+	border-color: #c5c5c5 !important;
+}
+
+.brown{
+	color: #B28B6E;
+	border-color: #B28B6E !important;
+}
+
+.green{
+	color: #ADC6A6;
+	border-color: #ADC6A6 !important;
+}
+
+.blue{
+	color: #57A4DA;
+	border-color: #57A4DA !important;
+}
+
+.purple{
+	color: #E3DBEC;
+	border-color: #E3DBEC !important;
+}
+
+.black{
+	color: #151C25 !important;
+	border-color: #151C25 !important;
+}
+
 .btn-transparent {background: transparent;
     border: 2px solid transparent !important;
 	border-radius: 5px;
@@ -787,6 +828,15 @@ footer {margin-top: 10px;
     font-weight: bold;
     border: none;
     margin-bottom: 5px;}
+    
+.question-type-aux {
+	background-color: #f5f5f5 !important;
+    margin-top: 6px !important;
+    margin-bottom: 0px !important;
+    border-color: #4a4a4a !important;
+    border: 1px solid;
+    border-radius: 4px;
+}
 
 .likert-options {display: inline-flex;
     width: 100%;
@@ -1090,7 +1140,6 @@ footer {margin-top: 10px;
 
 .content-statistics {
     padding: 15px;
-    margin-right: auto;
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
@@ -1130,7 +1179,7 @@ footer {margin-top: 10px;
 }
 
 .bg-red {
-    background-color: #d53924 !important;
+    background-color: #B60000 !important;
 }
 
 .bg-yellow {
@@ -1143,6 +1192,7 @@ footer {margin-top: 10px;
 
 .connectedSortable {
     min-height: 100px;
+    width: 100%;
 }
 
 .nav-tabs-custom {
@@ -1150,6 +1200,31 @@ footer {margin-top: 10px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     border-radius: 3px;
+    width: 100%;    
+}
+
+.canvasPie {
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    width: 100%;  
+	display:inline-block;  
+}
+
+.canvasPie>.tab-content {
+    background: #fff;
+    padding: 10px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+	display:inline-block;  
+}
+
+.legendSurvey{
+	display:inline-block;
+	vertical-align: top !important;
+	margin-top: 50px !important;
+	margin-bottom: 50px !important;
 }
 
 .graph-title {
@@ -1166,6 +1241,36 @@ footer {margin-top: 10px;
     border-top: 3px solid transparent;
     margin-bottom: -2px;
     margin-right: 5px;
+}
+
+.no-block{
+	float:left !important;
+	clear:left;
+}
+
+.in-block{
+	display:inline-block;
+}
+
+.subgraph-title {
+    margin-up: 15px;
+    margin-down: 0;
+    border-bottom-color: #444;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 18px;
+    color: #444;
+    float: left;
+    border-top: 3px solid transparent;
+    margin-bottom: -2px;
+    margin-right: 5px;
+}
+
+.treeview a, .treeview span{
+	font-weight: bold;
+	margin-bottom: 10px !important;
 }
 
 .nav-tabs-custom>.tab-content {
@@ -1187,14 +1292,14 @@ footer {margin-top: 10px;
 .chart {
     position: relative;
     overflow: hidden;
-    width: 600px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
 }
 
 .chart svg, .chart canvas {
     overflow: hidden;
     position: relative;
-    margin: 10px 10px 5px 30px;
+    margin: 10px 10px 10px 30px;
 }
 
 .chart text {
@@ -1241,8 +1346,9 @@ footer {margin-top: 10px;
 .main-sidebar{
     width: 250px;
 	display:inline-block;
-    vertical-align: up !important;
+    vertical-align: top !important;
     font-family: sans-serif !important;
+    margin: 10px;
 }
 
 .sidebar-menu{
@@ -1253,6 +1359,7 @@ footer {margin-top: 10px;
 
 .content-wrapper {
     min-height:100%;
+    min-width: 80%;
     background-color: #ecf0f5;
     display:inline-block;
 }
@@ -1262,6 +1369,9 @@ footer {margin-top: 10px;
     padding-left: 15px;
 }
 
+.text{
+	min-width:610px;
+}
 
 .bar {
   fill: red; /* changes the background */
