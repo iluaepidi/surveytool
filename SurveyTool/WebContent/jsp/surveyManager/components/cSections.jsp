@@ -27,7 +27,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 							int i = 1;
 							for(Section section : sections)
 							{					
-								String title = "Section " + i;
+								String title = lang.getContent("survey.edit.section.list") + " " + i;
 								if(section.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))
 								{
 									title = section.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
@@ -39,10 +39,11 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 										<button id="panel-heading-display" class="section-head btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_section") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
 										<h3 class="panel-title">
 										<div class="col-sm-12">
-											<div class="form-group" style="margin:0px;">
-												<input type="text" class="survey-section-title-unselected" id="survey-section-title" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
+										 <div class="form-group" style="margin:0px;">
+												<span style="float: left;"><%=lang.getContent("survey.edit.section.listQuestions")%></span>
+												<!-- <input type="text" class="survey-section-title-unselected" id="survey-section-title" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
 												<span  id='survey-section-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
-				  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span>
+				  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span> -->
 											</div>
 										</div>
 										</h3>
