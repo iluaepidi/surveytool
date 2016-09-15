@@ -102,7 +102,7 @@ $(function() {
 			
 			//Copy survey-quota-new
 			if($("#survey-quota-"+newquota).length > 0){
-				alert("Error:there is a quota for that question.");
+				alertNotQuota();
 			}else{
 				var newQuota=$('#survey-quota-new').clone();
 				newQuota.css("display","block");
@@ -121,7 +121,8 @@ $(function() {
 				divoptions.attr("id","optionsquota"+newquota);
 				
 				
-				newQuota.prependTo("#listcompletequotas");
+				//newQuota.prependTo("#listcompletequotas");
+				newQuota.insertBefore("#survey-quota-new");
 				$('#selquestionforfees'+newquota).val(newquota);
 				loadvaluequestion(newquota);
 				//eliminar opcion del combo
@@ -1704,15 +1705,18 @@ function insertValueQuota(){
 						   console.log("hello oid: " + jsonresponse.oid);
 						   //update jsonquotas
 						   var json = jQuery.parseJSON(jsonquotas);
-						   for (var i=0;i<json[0].questions.length;++i)
+						   for (var i=0;i<json[0].questions.length;i++)
 						    {
-									for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
-										if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
-											json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
-											json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
-											jsonquotas = JSON.stringify(json);
+							   		if(json[0].questions[i].optionsGroup.length==0 || json[0].questions[i].optionsGroup[0]==='undefined' || json[0].questions[i].optionsGroup[0].options==='undefined'){
+							   		}else{
+										for (var j=0; j < json[0].questions[i].optionsGroup[0].options.length;j++){
+											if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+												json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+												json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+												jsonquotas = JSON.stringify(json);
+											}
 										}
-									}
+							   		}
 						   }
 							
 						   
@@ -1747,4 +1751,21 @@ function deleteQuote(){
 	
 }
 
+
+function alertNotQuota(){
+    bootbox.dialog({
+		message: textQuotaAlert,
+		title: textQuotaTitleAlert,
+		buttons: {
+			success: {
+			label: textQuotaAlertBtn,
+			className: "btn-success",
+				callback: function() {
+				   
+				
+				}
+			}
+		}
+    });
+}
 

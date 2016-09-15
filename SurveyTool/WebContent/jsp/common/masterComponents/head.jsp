@@ -52,6 +52,11 @@
 		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
 		 var textOption = "<%= lang.getContent("survey.type.option") %>";
 		 var textOptionFile = "<%= lang.getContent("question.edit.files.option.title") %>";
+		 
+		 var textQuotaTitleAlert = "<%= lang.getContent("quota.add.warning.title") %>";
+		 var textQuotaAlert = "<%= lang.getContent("quota.add.warning.text") %>";
+		 var textQuotaAlertBtn = "<%= lang.getContent("quota.add.warning.button") %>";
+		 
 		 </script>
 
 		<script src="js/bootstrap.min.js"></script>

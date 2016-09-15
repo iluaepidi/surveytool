@@ -994,3 +994,67 @@ footer {margin-top: 10px;
     text-align: right;
     display: inline;
     height: 30px;}
+    
+/*----------------------------------------------*\
+		$Quota
+\*----------------------------------------------*/
+.noborder{
+	border:0 !important;
+}
+
+.nomargin{
+	margin:0px !important;
+}
+
+.textalignleft{
+	text-align: left !important;
+}
+
+.paddingbotton50{
+	padding-bottom: 50px !important;
+}
+
+.marginbotton10px{
+	margin-top: 10px !important;
+}
+
+.with100px{
+	width:100px !important;
+}
+
+.overflowhidden{
+	overflow: hidden;
+}
+
+.displayblock{
+	display:block;
+}
+
+.with90percent{
+	width: 90%;
+}
+
+.margintop10{
+	margin-top:10px;
+}
+
+.quotaobjetivesurvey{
+	float: left !important;
+	margin-left: 33%;
+}
+
+.quotadiv{
+	border-bottom: 1px solid #ccc !important;
+}
+
+.quotaname{
+	text-align: left;font-size: 18px;
+}
+
+.quoteoption{
+	margin:0px;display: inline-flex;
+}
+
+.quotaremovebtn{
+	color: #B60000 !important;
+}
