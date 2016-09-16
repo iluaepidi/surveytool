@@ -37,8 +37,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			</div>
 			
 			<div class="right col-md-7">
+				<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+				<%} %>
 			</div>
 		</div>
 				
@@ -47,7 +49,8 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			<jsp:include page="eqComponents/eqDescription.jsp" />	
 			<jsp:include page="eqComponents/eqFiles.jsp" />
 		</div>
-																
+										
+		<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>																
 		<div class="question-frame">
 			<h6><%=lang.getContent("question.edit.response_settings.title")%></h6>
 			<%
@@ -131,10 +134,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				</div>
 			</div>	
 		</div>	
-		
 							  							
 		<jsp:include page="eqComponents/eqDependences.jsp">
 			<jsp:param value="false" name="withLogic"/>
 		</jsp:include>
+
+		<%} %>
+
 	</div>																					
 </li>

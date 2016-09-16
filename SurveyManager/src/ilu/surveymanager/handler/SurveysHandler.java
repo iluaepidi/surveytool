@@ -10,11 +10,13 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+//import ilu.surveymanager.data.Option;
 import ilu.surveymanager.exportdata.ExportData;
 import ilu.surveymanager.statistics.Statistics;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.QuotasDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
@@ -247,6 +249,82 @@ public class SurveysHandler {
 		
 		return pagesJson;
 	}
+
+	public JSONArray getQuestionsFeesJson(Survey survey)
+	{
+          JSONArray pagesJson = new JSONArray();
+          QuotasDB quotaDB = new QuotasDB(); 
+         
+          try {
+                 for(Section section : survey.getSections())
+                 {
+                        for(Page page : section.getPages())
+                        {
+                               JSONObject pageJson = new JSONObject();
+                              
+                               //pageJson.put("numPage", page.getNumPage());
+                              
+                               //pageJson.put("pageId", page.getPageId());
+                               JSONArray questionsJson = new JSONArray();
+                               for(Question question : page.getQuestions())
+                               {
+                            	   if(question.getQuestionType().equals("multiple")||question.getQuestionType().equals("simple")){
+                                     JSONObject questionJson = new JSONObject();
+                                     questionJson.put("questionId", question.getQuestionId());
+                                     questionJson.put("index", question.getIndex());
+                                     questionJson.put("type", question.getQuestionType());
+                                     questionJson.put("title", question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+                                     JSONArray optionsGroupsJson = new JSONArray();
+                                                                             
+                                     if(question.getOptionsGroups() != null && !question.getOptionsGroups().isEmpty())
+                                     {
+                                            for(OptionsGroup optionsGroup : question.getOptionsGroups())
+                                            {
+                                                   JSONObject optionsGroupJson = new JSONObject();
+                                                   optionsGroupJson.put("optionsGroupId", optionsGroup.getId());
+                                                   JSONArray optionsJson = new JSONArray();
+                                                   if(optionsGroup.getOptions() != null && !optionsGroup.getOptions().isEmpty())
+                                                   {
+                                                         for(ilu.surveytool.databasemanager.DataObject.Option option : optionsGroup.getOptions())
+                                                         {
+                                                        	 	//buscar cuota max y min quote
+                                                        	 	int max = quotaDB.getQuotasMax(option.getId());
+                                                        	 	int min = quotaDB.getQuotasMin(option.getId());
+                                                        	 
+                                                                JSONObject optionJson = new JSONObject();
+                                                                optionJson.put("optionId", option.getId());
+                                                                optionJson.put("index", option.getIndex());
+                                                                optionJson.put("title", option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+                                                                optionJson.put("max", max);
+                                                                optionJson.put("min", min);
+                                                               
+                                                                optionsJson.put(optionJson);
+                                                         }
+                                                   }
+                                                   optionsGroupJson.put("options", optionsJson);
+                                                   optionsGroupsJson.put(optionsGroupJson);
+                                            }
+                                     }                                      
+                                     questionJson.put("optionsGroup", optionsGroupsJson);
+                                    
+                                     questionsJson.put(questionJson);
+                               }
+                            }
+                              
+                               pageJson.put("questions", questionsJson);
+                              
+                               pagesJson.put(pageJson);
+                               
+                        }
+                 }
+          } catch (JSONException e) {
+                 // TODO Auto-generated catch block
+                 e.printStackTrace();
+          }
+         
+          return pagesJson;
+    }
+
 
 	public Statistics createStatistics(int surveyId, String language, String languageDefault){
 		Statistics statistics = new Statistics();

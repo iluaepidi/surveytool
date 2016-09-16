@@ -8,7 +8,7 @@
 											<%
 											Language lang = new Language(getServletContext().getRealPath("/")); 
 											lang.loadLanguage(Language.getLanguageRequest(request));
-
+ 
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 											String title = "";
 		    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){

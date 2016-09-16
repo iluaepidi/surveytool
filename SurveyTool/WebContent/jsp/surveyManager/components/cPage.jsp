@@ -1,7 +1,7 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.constants.Address"%>
-<%@page import="ilu.surveytool.language.Language"%>
+<%@page import="ilu.surveytool.language.Language"%> 
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Page"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

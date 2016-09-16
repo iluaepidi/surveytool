@@ -29,17 +29,23 @@
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
+						  									<label for="option" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
+							  								<input id="option" type="text" maxlength="10000" class="option-title form-control fleft" style="padding-left:10px !important;padding-right:10px !important" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+							  										<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
+																	<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  										<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
 							  										<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 							  								</div>
+							  								<%
+								  							request.setAttribute(Attribute.s_OPTION, option);
+															%>
+															<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
 							  							</li>
 							  						<%
 							  						}
@@ -54,18 +60,24 @@
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft"><%= index %></div>
-						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
+						  									<label for="option" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
+							  								<input id="option" type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  <%= index %></label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 
 							  								</div>
+							  								<%
+								  							request.setAttribute(Attribute.s_OPTION, optionsGroup.getOptions().get(index));
+															%>
+															<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
 							  							</li>
 							  							
 							  						<%
@@ -93,8 +105,8 @@
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">1</div>
-						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  1</label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" />
+						  									<label for="option" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  1</label>
+							  								<input id="option" type="text" maxlength="10000" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" />
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
@@ -102,27 +114,51 @@
 							  									<% 
 							  									boolean addQuestion = (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS);
 							  									if(addQuestion){ %>
+							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 1</label>														
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  1</label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 							  								</div>
+									  								<div class="row margin-top-40" type="global" id="multimediaFrame">
+																		<div id="div_files">
+																			<div class="option-files-frame hidden">
+																				<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																				<ul class="multimedia-list" id="multimediaFilesList">
+																				</ul>
+																			</div>
+																				
+																		</div>
+																	</div>	
 							  							</li>
 							  							
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
 						  									<div class="circle-info circle-grey fleft">2</div>
-						  									<label for="inputOption" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  2</label>
-							  								<input id="inputOption" type="text" maxlength="10000" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
+						  									<label for="option" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  2</label>
+							  								<input id="option" type="text" maxlength="10000" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2"/>
 						  									<div class="option-icons fleft">
 							  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
 							  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+							  									<label for="add-file-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 2</label>														
+																<button class="btn btn-transparent fleft" id="add-file-option"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 							  									<label for="remove-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  2</label>
 							  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
 							  									<% } %>
 							  								</div>
-							  							</li>
+							  								<div class="row margin-top-40" type="global" id="multimediaFrame">
+																		<div id="div_files">
+																			<div class="option-files-frame hidden">
+																				<label><%= lang.getContent("question.edit.files.option.title") %></label>
+																				<ul class="multimedia-list" id="multimediaFilesList">
+																				</ul>
+																			</div>
+																				
+																		</div>
+															</div>	
+							  						</li>
 							  							
 							  							
 							  							

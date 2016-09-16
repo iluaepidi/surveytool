@@ -28,6 +28,7 @@ body {margin-bottom: 135px !important;}
 .right {text-align: right !important;}
 .hidden {display:none;}
 .margin-bottom-10 {margin-bottom: 10px;}
+.margin-top-40{margin-top: 40px;}
 .icon-small i {font-size: 1.4em;}
 .nav-tabs-right {padding-right: 20px;
 	margin-top: -40px;}
@@ -554,6 +555,14 @@ footer {margin-top: 10px;
     text-align: center;
     min-height: 55px;}
 
+.edit-fees-frame {width: 70%;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    min-height: 75px;}
+    
 .edit-survey-head{margin: 10px auto;
     width: 70%;
     display: flex;
@@ -1129,7 +1138,7 @@ footer {margin-top: 10px;
     text-align: right;
     display: inline;
     height: 30px;}
-    
+
 .trash {
 	margin-right: 30px !important;
 }
@@ -1394,4 +1403,67 @@ footer {margin-top: 10px;
 
 .enum{
 	margin: 10px;
+
+/*----------------------------------------------*\
+		$Quota
+\*----------------------------------------------*/
+.noborder{
+	border:0 !important;
+}
+
+.nomargin{
+	margin:0px !important;
+}
+
+.textalignleft{
+	text-align: left !important;
+}
+
+.paddingbotton50{
+	padding-bottom: 50px !important;
+}
+
+.marginbotton10px{
+	margin-top: 10px !important;
+}
+
+.with100px{
+	width:100px !important;
+}
+
+.overflowhidden{
+	overflow: hidden;
+}
+
+.displayblock{
+	display:block;
+}
+
+.with90percent{
+	width: 90%;
+}
+
+.margintop10{
+	margin-top:10px;
+}
+
+.quotaobjetivesurvey{
+	float: left !important;
+	margin-left: 33%;
+}
+
+.quotadiv{
+	border-bottom: 1px solid #ccc !important;
+}
+
+.quotaname{
+	text-align: left;font-size: 18px;
+}
+
+.quoteoption{
+	margin:0px;display: inline-flex;
+}
+
+.quotaremovebtn{
+	color: #B60000 !important;
 }

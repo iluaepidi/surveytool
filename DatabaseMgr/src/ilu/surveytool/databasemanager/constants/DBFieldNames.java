@@ -25,6 +25,7 @@ public class DBFieldNames {
 		public final static String s_CONTENT_QUESTION = "question";
 		public final static String s_CONTENT_OG = "optionsGroup";
 		public final static String s_CONTENT_OPTIONS = "options";
+		public final static String s_CONTENT_RESOURCE = "idResoruces";
 	
 	//contenttype
 		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";
@@ -81,6 +82,7 @@ public class DBFieldNames {
 		public final static String s_PUBLIC_ID = "publicId";
 		public final static String s_AUTHOR = "author";
 		public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
+		public final static String s_OBJETIVE = "objetive";
 		
 	//resources
 		public final static String s_RESOURCEID = "idResoruces";
@@ -116,5 +118,10 @@ public class DBFieldNames {
 	//QDependences
 		public final static String s_QDESTID = "idQuestionDest";
 		public final static String s_OPTIONVALUE = "optionValue";
+
+	//quota
+		public final static String s_MAX_RESPONSES = "maxResponses";
+		public final static String s_MIN_RESPONSES = "minResponses";
+
 
 }

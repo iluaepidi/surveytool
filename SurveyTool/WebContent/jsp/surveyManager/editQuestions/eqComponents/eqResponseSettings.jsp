@@ -8,7 +8,7 @@
 												<%
 												Language lang = new Language(getServletContext().getRealPath("/")); 
 												lang.loadLanguage(Language.getLanguageRequest(request));
-												
+												 
 												String resp = request.getParameter("response");
 							  					%>
 												

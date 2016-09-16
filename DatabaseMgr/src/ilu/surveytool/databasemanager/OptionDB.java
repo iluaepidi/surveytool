@@ -199,6 +199,12 @@ public class OptionDB {
 	   			option.setId(rs.getInt(DBFieldNames.s_OPTIONID));
 	   			option.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
+	   			int resource = rs.getInt(DBFieldNames.s_CONTENT_RESOURCE);
+	   			if(resource>0){
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				option.getResources().add(resourceDB.getResourceById(resource,lang,langdefault));
+	   			}
+	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));

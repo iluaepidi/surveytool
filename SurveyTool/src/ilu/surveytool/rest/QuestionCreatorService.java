@@ -24,6 +24,7 @@ import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveymanager.handler.LogicGoToHandler;
 import ilu.surveymanager.handler.OptionHandler;
 import ilu.surveymanager.handler.QDependenceHandler;
+import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 
@@ -316,4 +317,5 @@ public class QuestionCreatorService {
     	response = String.valueOf(logicGoToHandler.removeAllLogicGoTo(qid));
 		return response;
     }
+
 }

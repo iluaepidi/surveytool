@@ -6,10 +6,12 @@ var numQuestions = 0;
 var currentElement;
 var currentAddNode;
 var currentQuestion = 0;
+var currentOption = 0;
 var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
 var pending;
-
+var jsonquotas;
+var quotaid;
 $(function() {
 	
 	var host = "http://" + window.location.host;
@@ -123,6 +125,49 @@ $(function() {
 			});
 		});
 	});
+
+	var newquota = 1000;
+	$('#create-quota').click(function(event) {
+			
+			$('#newQuotaModal').modal('toggle');
+			newquota = $("#selquestionnewquota").val();
+			
+			//Copy survey-quota-new
+			if($("#survey-quota-"+newquota).length > 0){
+				alertNotQuota();
+			}else{
+				var newQuota=$('#survey-quota-new').clone();
+				newQuota.css("display","block");
+				newQuota.attr("quota",newquota);
+				newQuota.attr("sid",newquota);
+				newQuota.attr("id","survey-quota-"+newquota);
+				var selectQuota = newQuota.find('select');
+				selectQuota.attr("id","selquestionforfees"+newquota);
+				selectQuota.attr("name","selquestionforfees"+newquota);
+				selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
+				
+				var h5title =  newQuota.find('h5');
+				h5title.attr("id","questionquotaname"+newquota);
+				
+				var divoptions = newQuota.find('#optionsquotanew');
+				divoptions.attr("id","optionsquota"+newquota);
+				
+				
+				//newQuota.prependTo("#listcompletequotas");
+				newQuota.insertBefore("#survey-quota-new");
+				$('#selquestionforfees'+newquota).val(newquota);
+				loadvaluequestion(newquota);
+				//eliminar opcion del combo
+				//$("#selquestionnewquota").find('[value="'+newquota+'"]').remove();
+				$('#questionquotaname'+newquota).html($("#selquestionforfees"+newquota +" option:selected").text());
+			}
+			
+	});
+	
+	$('#listcompletequotas').on("click", '#btn-add-quota', function(){
+		currentAddNode = $(this).parent().parent().parent();
+		$("#newQuotaModal").modal("show");
+	});
 	
 	$('#page-items').on("click", '#editFile', function(){
 		currentElement = JSON.parse($(this).attr("data-image"));
@@ -229,7 +274,51 @@ $(function() {
 		}
 	});
 	
-
+	insertValueQuota();
+	
+	$("#objetivesurveys").focusout(function() {
+		//if($(this).val() != ""){
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.sid = currentNode.attr('sid');
+			req.objetive = currentNode.val();
+			
+			console.log("sid: " + req.sid + " - objetive: " + req.objetive);
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuotaService/updateObjetive",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('sid'))
+					   {
+						   
+							
+						   
+					   }
+					   
+					  
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		//}
+	});
+	
+	
 	
 	$('.survey-sections').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
@@ -329,15 +418,17 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
-		var optionHtml = '<li class="option-item" id="option-item">' +
+		var optionHtml = '<li class="option-item" id="option-item" oid="0">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
+								'<input id="option" type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
-									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
+									//'<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
+									'<button class="btn btn-transparent fleft" id="add-file-option"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
 									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
+								'<div class="row margin-top-40" type="global" id="multimediaFrame"><label>'+textOptionFile+'</label><div id="div_files"><div class="option-files-frame hidden"><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
@@ -381,15 +472,21 @@ $(function() {
 		console.log( "uploadedFile" );
 		console.log($("#uploadedFile").val());
 		var fileValue = $('uploadedFile').val();
-		 var formData = new FormData(document.getElementById("importFileForm"));
-         formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
+		var formData = new FormData(document.getElementById("importFileForm"));
+        formData.append("uploadedFile", document.getElementById('uploadedFile').files[0]);
          
+        
+        //check option file or question file
+        
+        
          //alert($('#optionsFile').hasClass('hidden'));
          if($('#optionsFile').hasClass('hidden') == true){
         	 formData.append("qid", currentQuestion);
+        	 formData.append("oid", currentOption);
         	 formData.append("action", "file");
          } else {
         	 formData.append("rid", $('#rid').val());
+        	 formData.append("oid", currentOption);
         	 formData.append("action", "fileUpdate");
          }
          
@@ -442,6 +539,7 @@ $(function() {
 				req.action = "options";
 				req.resourceAltText = $('#resourceAltText').val();
 				req.rid = $('#rid').val();
+				req.oid = currentOption;
 			}
 			else if(type === "video")
 			{
@@ -449,16 +547,27 @@ $(function() {
 				req.resourceDescText = $('#resourceDescText').val();
 				req.resourceUrl = $('#resourceUrl').val();
 				req.qid = currentQuestion;
+				req.oid = currentOption;
 			}
 			
 	        $.post('ImportFileServlet', req, function(res) {
-	  			$('#importFileForm')[0].reset();
-	              $("#importFile").modal("hide");
-	              var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
-	              multimediaFrame.removeClass("hidden");
-	              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
-	              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
-	              $('#optionsFile').empty();
+	        	 $('#importFileForm')[0].reset();
+	             $("#importFile").modal("hide");
+	            if(currentQuestion>=0){
+		  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+		              multimediaFrame.removeClass("hidden");
+		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
+		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+		        }else if(currentOption>=0){
+		        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+		        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
+		              multimediaFrame.removeClass("hidden");
+		              multimediaFrame.find("div.option-files-frame").removeClass("hidden");
+		              //
+		              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
+		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
+		        }
+	            $('#optionsFile').empty();
 	              $('#optionsFile').addClass('hidden');
 	              $('#selectFile').addClass("hidden");
 	              $('#optionsVideoFile').addClass("hidden");
@@ -589,10 +698,29 @@ $(function() {
 	});*/
 	
 	$('#page-items').on("click", "#btn-question-import-file", function(e){
+		currentOption = -1;
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 	});
+	
+	
+	$('#page-items').on("click", "#add-file-option", function(e){
+		
+		currentQuestion = -1;
+		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
+		
+		if(currentOption>0){
+			currentLanguage = $('#survey-language-version').val();
+			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+			$('#importFile').modal();
+		}else{
+			alert("First, complete the option");
+			
+			
+		}
+	});
+	
 		
 	$('#page-items').on("change", "#type-matrix", function(e){
 		e.stopPropagation();
@@ -702,6 +830,9 @@ $(function() {
 		$("#removeElemService").val('OptionsGroupMatrixService');
 		$("#removeElement").modal("show");
 	});
+	
+	
+	deleteQuote();
 	
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
 		
@@ -918,6 +1049,11 @@ $(function() {
 							  item.remove();
 						  }
 					   }
+				   }
+				   else if(service == "QuotaService")
+				   {
+					   
+					   $('#survey-quota-'+quotaid).remove();
 				   }
 			   }
 			   else
@@ -1634,17 +1770,71 @@ $(function() {
 		}
 	});*/
 	
-	/*$('#survey-language-version').change(function(event) {
-		
-		var loc = location.href;
-		if(location.href.indexOf("&") !=-1)loc=loc.substring(0,loc.indexOf('&'));
-		
-		 window.location=loc+"&langsurvey="+$("#survey-language-version").val();
-	});*/
+	
+	
+	
 	
 });
 
 
+function loadquotas(json){
+	jsonquotas = json;
+}
+
+function loadvaluequestion(id){
+	$("#selquestionforfees"+id).change(function(){
+		var currentNode = $(this);
+		currentNode.closest('.widthTitleSurveyCollapsed').attr('qid',$('#selquestionforfees'+id).val());
+	});
+	
+	$('#selquestionforfees'+id).trigger("change");
+	$('#selquestionforfees'+id).prop("disabled", true);
+	
+	
+	
+	insertValueQuota();
+	deleteQuote();
+	
+}
+
+
+
+function changeoptionsfees(id){
+	var valuesel = $("#selquestionforfees"+id).val();
+	
+	$('#optionsquota'+id).empty();
+	
+	//if(jsonquotas === "undefined"){
+		var json = jQuery.parseJSON(jsonquotas);
+		for (var i=0;i<json[0].questions.length;++i)
+	    {
+			if(json[0].questions[i].questionId == valuesel){
+				$('#optionsquota'+id).attr("ogid", json[0].questions[i].optionsGroup[0].optionsGroupId);
+				for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
+					var placeholdermax="none";
+					var placeholdermin="none";
+					var max=json[0].questions[i].optionsGroup[0].options[j].max;
+					var min=json[0].questions[i].optionsGroup[0].options[j].min;
+					
+					if(max>0){
+						max = "value='"+json[0].questions[i].optionsGroup[0].options[j].max+"' ";
+					}
+					
+					if(min>0){
+						min = "value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' ";
+					}
+					
+					//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
+					$('#optionsquota'+id).prepend("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
+				}
+				
+			}
+			
+	    }
+	//}
+		$('#questionquotaname'+id).html($("#selquestionforfees"+id +" option:selected").text());
+	
+}
 
 function updateContent(req, serviceUrl, node)
 {
@@ -1685,3 +1875,111 @@ console.log(max_chars);
         element.value = element.value.substr(0, max_chars);
     }
 }
+
+function insertValueQuota(){
+	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+		e.stopPropagation();
+		//if($(this).val() != ""){
+			
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.attr('oid');
+			req.index = currentNode.attr('index');
+			req.qid = currentNode.closest('.widthTitleSurveyCollapsed').attr('qid');
+			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
+			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
+			
+			var max = $("#max"+req.oid).val();
+			var min = $("#min"+req.oid).val();
+			
+			if(max=="")max=0;
+			if(min=="")min=0;
+			
+			req.max = max;
+			req.min = min;
+			
+			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - : " + req.qid + " - ogid: " + req.oid);
+			//alert("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + req.qid + " - ogid: " + req.oid);
+			var host = "http://" + window.location.host;
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuotaService/insertQuota",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   var jsonresponse = JSON.parse(data);
+					   if(jsonresponse.hasOwnProperty('oid'))
+					   {
+						   console.log("hello oid: " + jsonresponse.oid);
+						   //update jsonquotas
+						   var json = jQuery.parseJSON(jsonquotas);
+						   for (var i=0;i<json[0].questions.length;i++)
+						    {
+							   		if(json[0].questions[i].optionsGroup.length==0 || json[0].questions[i].optionsGroup[0]==='undefined' || json[0].questions[i].optionsGroup[0].options==='undefined'){
+							   		}else{
+										for (var j=0; j < json[0].questions[i].optionsGroup[0].options.length;j++){
+											if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+												json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+												json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+												jsonquotas = JSON.stringify(json);
+											}
+										}
+							   		}
+						   }
+							
+						   
+					   }
+					   
+					  
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		//}
+	});
+}
+
+function deleteQuote(){
+	$('.survey-sections').on("click", "#removeQuota", function(e){
+		var item = $(this).parents(".survey-info");
+		quotaid = item.attr('quota');
+		currentQuestion = item.find(".widthTitleSurveyCollapsed");
+		sid = currentQuestion.attr('sid');
+		qid = currentQuestion.attr('qid');
+		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
+		$("#removeElemId").val(sid + '/' +qid +"/111");
+		$("#removeElemService").val('QuotaService');
+		$("#removeElement").modal("show");
+	});
+	
+}
+
+
+function alertNotQuota(){
+    bootbox.dialog({
+		message: textQuotaAlert,
+		title: textQuotaTitleAlert,
+		buttons: {
+			success: {
+			label: textQuotaAlertBtn,
+			className: "btn-success",
+				callback: function() {
+				   
+				
+				}
+			}
+		}
+    });
+}
+

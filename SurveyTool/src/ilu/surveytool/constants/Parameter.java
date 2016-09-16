@@ -57,6 +57,7 @@ public class Parameter {
 	public final static String s_LOGOUT = "logout";
 	public final static String s_LANGUAGE_SURVEY = "langsurvey";
 	public final static String s_NUM_PAGE = "numPage";
+	public final static String s_OID = "oid";
 	
 
 }

@@ -417,6 +417,7 @@ CREATE TABLE `page` (
 
 LOCK TABLES `page` WRITE;
 /*!40000 ALTER TABLE `page` DISABLE KEYS */;
+INSERT INTO `page` VALUES (24,'2016-08-31 12:22:43',1,NULL,22),(25,'2016-09-01 07:20:53',2,NULL,22),(27,'2016-09-05 12:24:02',1,NULL,23),(29,'2016-09-15 12:20:33',3,NULL,22);
 /*!40000 ALTER TABLE `page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -803,6 +804,7 @@ CREATE TABLE `questionnaire` (
   `author` int(11) NOT NULL,
   `defaultLanguage` int(11) NOT NULL DEFAULT '1',
   `numResponses` int(11) DEFAULT NULL,
+  `objetive` int(11) DEFAULT NULL,
   PRIMARY KEY (`idQuestionnaire`),
   KEY `fk_Questionnaire_ContentIndex1_idx` (`idContent`),
   KEY `fk_Questionnaire_Project1_idx` (`idProject`),
@@ -917,7 +919,7 @@ CREATE TABLE `quotas` (
   `idQuestionnaire` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
   `idOptionsGroup` int(11) NOT NULL,
-  `value` varchar(45) NOT NULL,
+  `value` int(11) NOT NULL,
   `maxResponses` int(11) NOT NULL,
   `minResponses` int(11) NOT NULL,
   PRIMARY KEY (`idQuestionnaire`,`idQuestion`,`idOptionsGroup`,`value`),
@@ -1132,7 +1134,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'guti','fasdf111@fasdf.com','lalalala','2016-07-21 11:54:42',0,1,1,'1'),(2,'piticli','icarmona@consultoria.ilunion.com','Tele1234','2016-07-04 12:57:40',0,1,1,'1'),(3,'ilunion','iluaepidi@gmail.com','Tele1234','2016-07-04 12:57:40',0,1,1,'1');
+INSERT INTO `user` VALUES (1,'guti','fasdf111@fasdf.com','lalalala','2016-09-08 15:27:29',0,1,1,'1'),(2,'piticli','icarmona@consultoria.ilunion.com','Tele1234','2016-07-04 12:57:40',0,1,1,'1'),(3,'ilunion','iluaepidi@gmail.com','Tele1234','2016-07-04 12:57:40',0,1,1,'1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

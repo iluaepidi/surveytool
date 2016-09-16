@@ -29,7 +29,9 @@ List<Resource> resources = question.getResources();
 			</ul>
 		</div>
 		<div>
+			<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 			<button class="btn btn-primary btn-sm active" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o"></i><span><%= lang.getContent("button.add_file") %></span></button>
+			<% } %>
 		</div>
 	</div>
 </div>	

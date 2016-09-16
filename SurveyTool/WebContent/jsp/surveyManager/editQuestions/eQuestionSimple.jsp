@@ -41,12 +41,14 @@
 													    <option value="c"><%=lang.getContent("question.new.code")%></option>
 													</select> -->
 												</div>
-
 												<div class="right col-md-7">
+													<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 													<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
 													<button class="btn btn-question-head btn-sm active mandatory-button" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+													<%} %>
 												</div>
-							  				</div>
+
+						  					</div>
 											
 											<div class="panel-body">							  					
 							  					<div class="question-frame">
