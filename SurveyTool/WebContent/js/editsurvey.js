@@ -1806,31 +1806,34 @@ function changeoptionsfees(id){
 	
 	//if(jsonquotas === "undefined"){
 		var json = jQuery.parseJSON(jsonquotas);
-		for (var i=0;i<json[0].questions.length;++i)
-	    {
-			if(json[0].questions[i].questionId == valuesel){
-				$('#optionsquota'+id).attr("ogid", json[0].questions[i].optionsGroup[0].optionsGroupId);
-				for (var j=0;j< json[0].questions[i].optionsGroup[0].options.length;++j){
-					var placeholdermax="none";
-					var placeholdermin="none";
-					var max=json[0].questions[i].optionsGroup[0].options[j].max;
-					var min=json[0].questions[i].optionsGroup[0].options[j].min;
-					
-					if(max>0){
-						max = "value='"+json[0].questions[i].optionsGroup[0].options[j].max+"' ";
+		for (var k=0;k<json.length;++k)
+		{
+			for (var i=0;i<json[k].questions.length;++i)
+		    {
+				if(json[k].questions[i].questionId == valuesel){
+					$('#optionsquota'+id).attr("ogid", json[k].questions[i].optionsGroup[0].optionsGroupId);
+					for (var j=0;j< json[k].questions[i].optionsGroup[0].options.length;++j){
+						var placeholdermax="none";
+						var placeholdermin="none";
+						var max=json[k].questions[i].optionsGroup[0].options[j].max;
+						var min=json[k].questions[i].optionsGroup[0].options[j].min;
+						
+						if(max>0){
+							max = "value='"+json[k].questions[i].optionsGroup[0].options[j].max+"' ";
+						}
+						
+						if(min>0){
+							min = "value='"+json[k].questions[i].optionsGroup[0].options[j].min+"' ";
+						}
+						
+						//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
+						$('#optionsquota'+id).prepend("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 					}
 					
-					if(min>0){
-						min = "value='"+json[0].questions[i].optionsGroup[0].options[j].min+"' ";
-					}
-					
-					//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
-					$('#optionsquota'+id).prepend("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 				}
 				
-			}
-			
-	    }
+		    }
+		}
 	//}
 		$('#questionquotaname'+id).html($("#selquestionforfees"+id +" option:selected").text());
 	
@@ -1919,20 +1922,22 @@ function insertValueQuota(){
 						   console.log("hello oid: " + jsonresponse.oid);
 						   //update jsonquotas
 						   var json = jQuery.parseJSON(jsonquotas);
-						   for (var i=0;i<json[0].questions.length;i++)
-						    {
-							   		if(json[0].questions[i].optionsGroup.length==0 || json[0].questions[i].optionsGroup[0]==='undefined' || json[0].questions[i].optionsGroup[0].options==='undefined'){
-							   		}else{
-										for (var j=0; j < json[0].questions[i].optionsGroup[0].options.length;j++){
-											if(json[0].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
-												json[0].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
-												json[0].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
-												jsonquotas = JSON.stringify(json);
+						   for (var k=0;k<json.length;k++)
+						   {
+							   for (var i=0;i<json[k].questions.length;i++)
+							    {
+								   		if(json[k].questions[i].optionsGroup.length==0 || json[k].questions[i].optionsGroup[0]==='undefined' || json[k].questions[i].optionsGroup[0].options==='undefined'){
+								   		}else{
+											for (var j=0; j < json[k].questions[i].optionsGroup[0].options.length;j++){
+												if(json[k].questions[i].optionsGroup[0].options[j].optionId == jsonresponse.oid){
+													json[k].questions[i].optionsGroup[0].options[j].max = jsonresponse.max;
+													json[k].questions[i].optionsGroup[0].options[j].min = jsonresponse.min;
+													jsonquotas = JSON.stringify(json);
+												}
 											}
-										}
-							   		}
+								   		}
+							   }
 						   }
-							
 						   
 					   }
 					   
