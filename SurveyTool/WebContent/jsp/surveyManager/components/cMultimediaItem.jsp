@@ -36,7 +36,7 @@
 							  								<i class="fa fa-file-image-o" aria-hidden="true"></i>
 							  								<a class="active" active="false" id="editFile" data-image='{"rId":"<%= resource.getResourceId()%>","tittle":"<%=title %>","altText":"<%=altText %>","path":"<%=path %>", "rType":"<%= resource.getType() %>"}' href="#"><%= title + " - " + path %></a>
 							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-							  								<button id="removeMultimediaFile" class="btn btn-transparent fright red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
+							  								<button id="removeMultimediaFile" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  								<%} %>
 							  								
 							  							</li>

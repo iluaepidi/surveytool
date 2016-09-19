@@ -169,7 +169,7 @@ $(function() {
 		$("#newQuotaModal").modal("show");
 	});
 	
-	$('#page-items').on("click", '#editFile', function(){
+	$('.survey-sections').on("click", '#editFile', function(){
 		currentElement = JSON.parse($(this).attr("data-image"));
 		console.log("editfile opening... " + JSON.stringify(currentElement));
 		$("#updateFile").attr("rid", currentElement.rId);
@@ -697,7 +697,7 @@ $(function() {
 	  		});
 	});*/
 	
-	$('#page-items').on("click", "#btn-question-import-file", function(e){
+	$('.survey-sections').on("click", "#btn-question-import-file", function(e){
 		currentOption = -1;
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
@@ -705,7 +705,7 @@ $(function() {
 	});
 	
 	
-	$('#page-items').on("click", "#add-file-option", function(e){
+	$('.survey-sections').on("click", "#add-file-option", function(e){
 		
 		currentQuestion = -1;
 		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
@@ -722,7 +722,7 @@ $(function() {
 	});
 	
 		
-	$('#page-items').on("change", "#type-matrix", function(e){
+	$('.survey-sections').on("change", "#type-matrix", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -768,7 +768,7 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
-	$('#survey-sections').on("click", "#removeSection", function(e){
+	$('.survey-sections').on("click", "#removeSection", function(e){
 		var item = $(this).closest('#panel-section1');
 		currentQuestion = item.attr('scid');
 		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-section-title').val() + '"');
@@ -1128,7 +1128,7 @@ $(function() {
 		
 	});
 	
-	$('#survey-sections').on("focusout", "#survey-section-title", function(e){
+	$('.survey-sections').on("focusout", "#survey-section-title", function(e){
 		e.stopPropagation();	
 		var req = {};		
 		req.text = $(this).val();
@@ -1148,7 +1148,7 @@ $(function() {
 		}
 	});
 	
-	$('#page-items').on("click", "#helpTextButton", function(e){
+	$('.survey-sections').on("click", "#helpTextButton", function(e){
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
@@ -1185,7 +1185,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("click", "#mandatoryButton", function(e){
+	$('.survey-sections').on("click", "#mandatoryButton", function(e){
 		console.log("mandatory");
 		e.stopPropagation();
 		var node = $(this); 
@@ -1211,7 +1211,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("click", "#askAlwaysButton", function(e){
+	$('.survey-sections').on("click", "#askAlwaysButton", function(e){
 		console.log("ask always");
 		e.stopPropagation();
 		var node = $(this); 
@@ -1237,7 +1237,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("focusout", "#survey-question-max-chars", function(e){
+	$('.survey-sections').on("focusout", "#survey-question-max-chars", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1263,7 +1263,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("focusout", "#survey-question-decimals", function(e){
+	$('.survey-sections').on("focusout", "#survey-question-decimals", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1289,7 +1289,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#isLimitedChars", function(e){
+	$('.survey-sections').on("change", "#isLimitedChars", function(e){
 		e.stopPropagation();
 		console.log("isLimitedChars");
 		var node = $(this); 
@@ -1325,7 +1325,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#range", function(e){
+	$('.survey-sections').on("change", "#range", function(e){
 		e.stopPropagation();
 		console.log("range");
 		var node = $(this); 
@@ -1380,7 +1380,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#allowDecimals", function(e){
+	$('.survey-sections').on("change", "#allowDecimals", function(e){
 		e.stopPropagation();
 		console.log("allowDecimals");
 		var node = $(this); 
@@ -1416,7 +1416,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#input-type", function(e){
+	$('.survey-sections').on("change", "#input-type", function(e){
 		e.stopPropagation();
 		console.log("change in input type");
 		var node = $(this);
@@ -1458,7 +1458,7 @@ $(function() {
 		
 	});
 	
-	$('#page-items').on("focusout", "#survey-question-max-lines", function(e){
+	$('.survey-sections').on("focusout", "#survey-question-max-lines", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1484,7 +1484,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#adjust-lines-adjust", function(e){
+	$('.survey-sections').on("change", "#adjust-lines-adjust", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1514,7 +1514,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("change", "#adjust-lines-set", function(e){
+	$('.survey-sections').on("change", "#adjust-lines-set", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1545,7 +1545,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("focusout", "#survey-minValue", function(e){
+	$('.survey-sections').on("focusout", "#survey-minValue", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1571,7 +1571,7 @@ $(function() {
 		});
 	});
 	
-	$('#page-items').on("focusout", "#survey-maxValue", function(e){
+	$('.survey-sections').on("focusout", "#survey-maxValue", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};

@@ -1157,6 +1157,10 @@ footer {margin-top: 10px;
 	min-height:250px;
 }
 
+.survey-statistics-title {width: 100%;
+    margin-bottom: 10px;
+    display: inline-block;}
+
 .small-box {
     border-radius: 2px;
     position: relative;
