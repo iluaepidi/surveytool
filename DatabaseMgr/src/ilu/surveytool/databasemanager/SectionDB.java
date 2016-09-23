@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
@@ -46,6 +49,89 @@ public class SectionDB {
 	 */
 	
 	public List<Section> getSectionsBySurveyId(int surveyId, String lang, String langdefault)
+	{
+		List<Section> sections = new ArrayList<Section>();
+		
+		//if(lang==null)lang = langdefault;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTIONS_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			Section section = new Section();
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));	   			
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang,langdefault));
+	   			
+	   			sections.add(section);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return sections;
+	}
+
+	public JSONObject getSectionJsonBySurveyId(int surveyId, int numSection, int numPage, String lang, String langdefault)
+	{
+		JSONObject section = new JSONObject();
+		
+		//if(lang==null)lang = langdefault;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_INDEX);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, numSection);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			int sectionId = rs.getInt(DBFieldNames.s_SECTIONID);
+	   			section.put("sectionId", sectionId);
+	   			section.put("formaId", rs.getInt(DBFieldNames.s_FORMAID));	   			
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+		   		section.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			section.put("page", pageDB.getPageJsonBySectionId(sectionId, numPage, lang, langdefault));
+	   			
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+
+	public List<Section> getSectionByIndexNumPage(int surveyId, String lang, String langdefault, int numSection, int numPage)
 	{
 		List<Section> sections = new ArrayList<Section>();
 		

@@ -50,6 +50,8 @@
 	  				<div class="content">
 	  					<form action="<%= Address.s_SERVLET_SURVEY_PROCESS %>" method="POST">
 	  						<input type="hidden" name="sid" value="<%= survey.getSurveyId() %>" />
+	  						<input type="hidden" name="secid" value="<%= survey.getSections().get(0).getSectionId() %>" />
+	  						<input type="hidden" name="numPag" value="<%= survey.getSections().get(0).getPages().get(0).getNumPage() %>" />
 	  						<div class="survey-form" >
 	  							<%
 	  							String surveyDesc = "";

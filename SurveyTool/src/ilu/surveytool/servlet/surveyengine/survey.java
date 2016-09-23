@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ilu.surveymanager.handler.SurveysHandler;
+import ilu.surveyengine.handler.SurveyProcessHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
-import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.language.Language;
@@ -60,8 +59,8 @@ public class survey extends HttpServlet {
 		lang.loadLanguage(language); 
 		request.setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
 		
-		SurveysHandler surveyHandler = new SurveysHandler();
-		Survey survey = surveyHandler.getSurveyDetailByPublicId(sid, language);
+		SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();
+		Survey survey = surveyProcessHandler.getSurveyDetailByPublicId(sid, language);
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 		String surveyTitle = "";
 		if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();

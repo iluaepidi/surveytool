@@ -9,11 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
+import jdk.nashorn.api.scripting.JSObject;
 
 public class PageDB {
 
@@ -81,6 +85,46 @@ public class PageDB {
 		}
 		
 		return pages;
+	}
+
+	public JSONObject getPageJsonBySectionId(int sectionId, int numPage, String lang, String langdefault)
+	{
+		JSONObject page = new JSONObject();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		if(lang==null)lang = langdefault;
+		
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGE_BY_NUMPAGE_SECTIONID);			
+	   		pstm.setInt(1, sectionId);
+	   		pstm.setInt(2, numPage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			int pageId = rs.getInt(DBFieldNames.s_PAGE_ID);
+	   			page.put("pageId", pageId);
+	   			page.put("numPage", rs.getInt(DBFieldNames.s_NUM_PAGE));
+	   			
+	   			QuestionDB questionDB = new QuestionDB();
+	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault));
+	   			
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return page;
 	}
 	
 	public List<Integer> getPagesIdBySectionId(int sectionId)

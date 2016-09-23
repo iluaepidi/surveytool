@@ -104,14 +104,6 @@ public class SurveysHandler {
 		return survey;
 	}
 	
-	public Survey getSurveyDetailByPublicId(String publicId, String lang)
-	{
-		SurveyDB surveyDB = new SurveyDB();
-		if(lang == null || lang.isEmpty()) lang = "en";
-		Survey survey = surveyDB.getQuestionnairesByPublicId(publicId, lang);
-		return survey;
-	}
-	
 	public int getPageIdBySurveyId(int surveyId)
 	{
 		PageDB pageDB = new PageDB();

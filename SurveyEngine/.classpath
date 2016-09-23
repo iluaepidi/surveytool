@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/ExternalLibs/mail.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DatabaseMgr"/>
+	<classpathentry kind="lib" path="/ExternalLibs/jettison-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

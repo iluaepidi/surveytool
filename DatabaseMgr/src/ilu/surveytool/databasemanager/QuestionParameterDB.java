@@ -10,6 +10,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
@@ -132,6 +136,41 @@ public class QuestionParameterDB {
 	   		}
 	   		
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return parameters;
+	}
+
+	public JSONArray getQuestionParameterJSONByPageIDQuestionID(int pageId, int questionId)
+	{
+		JSONArray parameters = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONPARAMETER_BY_QUESTIONID_PAGEID);			
+	   		pstm.setInt(1, questionId);
+	   		pstm.setInt(2, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			JSONObject parameter = new JSONObject();
+	   			parameter.put("name", rs.getString(DBFieldNames.s_PARAMETER_NAME));
+	   			parameter.put("value", rs.getString(DBFieldNames.s_VALUE));
+	   			parameters.put(parameter);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

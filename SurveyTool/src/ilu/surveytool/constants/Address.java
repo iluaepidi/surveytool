@@ -18,6 +18,7 @@ public class Address {
 		public final static String s_BODY_POLL_RESULT = "pollResult";
 		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";
 		public final static String s_BODY_SURVEY_PAGE = "surveyPage";
+		public final static String s_BODY_SURVEY_PAGE_AJS = "surveyPageAJS";
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
@@ -36,6 +37,14 @@ public class Address {
 		public final static String s_JS_ZERO_CLIPBOARD = "zeroClipboard";
 		public final static String s_JS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesAccesiblesYoutubeIframes";
 		public final static String s_JS_YOUTUBE_IFRAME_API = "youtubeIframe";
+		public final static String s_JS_ANGULAR = "angular";
+		public final static String s_JS_ANGULAR_ROUTER = "angularRouter";
+		public final static String s_JS_YOUTUBE_IFRAME_ANGULAR_API = "youtubeIframeApi";
+		public final static String s_JS_YOUTUBE_ANGULAR_EMBED = "youtubeAlgunar";
+		
+		public final static String s_NG_SERVICE_SURVEY = "ngSurveyService";
+		
+		public final static String s_NG_CONTROLLER_SURVEY = "ngSurveyController";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
@@ -48,6 +57,7 @@ public class Address {
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";
 		public final static String s_MASTER_PAGE = "master.jsp";
+		public final static String s_SURVEY_MASTER_PAGE = "surveyMaster.jsp";
 		public final static String s_MASTER_POLL = "masterPoll.jsp";
 		public final static String s_EDIT_QUESTION_MASTER= "EditQuestionMaster.jsp";
 		public final static String s_PAGE= "jsp/surveyManager/components/cPage.jsp";

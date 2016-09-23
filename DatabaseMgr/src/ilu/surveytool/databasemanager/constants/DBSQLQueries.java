@@ -82,6 +82,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.page p on s.idSection = p.idSection "
 				+ "where q.idQuestionnaire = ?";
 		public final static String s_SELECT_PAGES_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage";
+		public final static String s_SELECT_PAGE_BY_SECTIONID_NUMPAGE = "SELECT * FROM surveytool.page where idSection = ? and numPage = ?";
 		public final static String s_SELECT_PAGE_BY_NUMPAGE_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? and numPage = ?";
 		public final static String s_SELECT_PAGES_ID_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage desc";
 		public final static String s_SELECT_PAGE_BY_PAGEID = "SELECT * FROM surveytool.page where idPage = ?";
@@ -370,6 +371,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
 				+ "where s.idQuestionnaire = ? order by sc.`index`";
+		public final static String s_SELECT_SECTION_BY_SURVEYID_INDEX = "SELECT sc.* FROM surveytool.questionnaire s "
+				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "where s.idQuestionnaire = ? and  sc.index = ?";
 		public final static String s_SELECT_SECTION_COTENTID_BY_ID = "SELECT idContent FROM surveytool.section where idSection = ?";
 		public final static String s_SELECT_SECTION_NUM_ROWS_BY_SURVEYID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "

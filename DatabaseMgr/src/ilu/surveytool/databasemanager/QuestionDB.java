@@ -12,6 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -127,6 +131,31 @@ public class QuestionDB {
 	   		
 	   		rs = pstm.executeQuery();
 	   		questions = this._getQuestionList(rs, lang, langdefault);
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questions;
+	}
+
+	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault)
+	{
+		JSONArray questions = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID);			
+	   		pstm.setInt(1, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		questions = this._getQuestionJsonArray(rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1001,6 +1030,54 @@ public class QuestionDB {
 	   			
 	   		}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return questions;
+	}
+	
+
+	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault)
+	{
+		JSONArray questions = new JSONArray();
+		
+		try
+		{
+			while(rs.next())
+	   		{
+				JSONObject question = new JSONObject();
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();	   			
+	   			question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+				
+	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+	   			question.put("parameters", questionParameterDB.getQuestionParameterJSONByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID)));
+	   			
+	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   			question.put("questionId", questionId); 
+	   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
+	   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+	   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
+	   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
+	   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+	   			
+	   			question.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			
+	   			OptionDB optionDB = new OptionDB();
+
+	   			question.put("optionsGroups", optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault));
+	   			
+	   			ResourceDB resourceDB = new ResourceDB();
+	   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));
+	   			
+	   			questions.put(question);
+	   			
+	   		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

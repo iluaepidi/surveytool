@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
@@ -117,6 +121,70 @@ public class ContentDB {
 	}
 	
 
+	public JSONArray getContentJsonByIdAndLanguage(int contentId, String lang, String langdefault)
+	{
+		JSONArray contents = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null, pstm2 = null;
+		ResultSet rs = null,rs2 = null;
+		
+		if(lang==null)lang = langdefault;
+				   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
+	   		pstm.setInt(1, contentId);
+	   		pstm.setString(2, lang);
+	   		
+	   		String text = "";
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+	   			
+	   			if(text!=null && !text.equals("")){	
+	   				JSONObject content = new JSONObject();
+		   			content.put("contentId", contentId);
+		   			content.put("lang", lang);
+		   			content.put("contentType", rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME));
+		   			content.put("text", text);
+		   			contents.put(content);
+	   			}
+	   		}
+	   		
+	   		
+	   		if((text==null || text.equals(""))&&langdefault!=null){
+	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
+		   		pstm2.setInt(1, contentId);
+		   		pstm2.setString(2, langdefault);
+		   		
+		   		rs2 = pstm2.executeQuery();
+		   		while(rs2.next())
+		   		{
+		   			JSONObject content = new JSONObject();
+		   			content.put("contentId", contentId);
+		   			content.put("lang", lang);
+		   			content.put("contentType", rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME));
+		   			content.put("text", rs2.getString(DBFieldNames.s_CONTENT_TEXT));
+		   			contents.put(content);
+		   		}
+	   		}
+	   		
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
 	
 	/*
 	 * selects

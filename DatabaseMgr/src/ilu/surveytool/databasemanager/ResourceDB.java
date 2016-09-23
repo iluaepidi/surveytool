@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -89,6 +93,46 @@ public class ResourceDB {
 		
 		return resources;
 	}
+
+	public JSONArray getResourcesJsonByQuestionId(int questionId, String lang)
+	{
+		JSONArray resources = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCES_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			JSONObject resource = new JSONObject();
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			resource.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   				   			
+	   			resource.put("resourceId", rs.getInt(DBFieldNames.s_RESOURCEID)); 
+	   			resource.put("resourceType", rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME)); 
+	   			resource.put("urlPath", rs.getString(DBFieldNames.s_RESOURCE_URL_PATH));
+	   			
+	   			resources.put(resource);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resources;
+	}
 	
 	public Resource getResourceById(int resourceId)
 	{
@@ -158,6 +202,45 @@ public class ResourceDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resource;
+	}
+
+	public JSONObject getResourceJSONById(int resourceId, String lang,String langdefault)
+	{
+		JSONObject resource = new JSONObject();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		if(lang==null)lang = langdefault;
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_BY_ID);			
+	   		pstm.setInt(1, resourceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			resource.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   				   			
+	   			resource.put("resourceId", rs.getInt(DBFieldNames.s_RESOURCEID)); 
+	   			resource.put("resourceType", rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME)); 
+	   			resource.put("urlPath", rs.getString(DBFieldNames.s_RESOURCE_URL_PATH));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
 			this._closeConnections(con, pstm, rs);
 		}
 		

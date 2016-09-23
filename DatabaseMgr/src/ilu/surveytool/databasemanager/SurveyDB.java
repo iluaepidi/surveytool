@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -207,6 +210,86 @@ public class SurveyDB {
 	
 	
 	public Survey getQuestionnairesByPublicId(String publicId, String lang)
+	{
+		Survey response = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = new Survey();
+	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			
+	   			ContentDB contentDB = new ContentDB();
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
+		   		
+		   		SectionDB sectionDB = new SectionDB();
+				response.setSections(sectionDB.getSectionsBySurveyId(response.getSurveyId(), lang,null));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public JSONObject getQuestionnaireJson(String publicId, int numSection, int numPage, String lang)
+	{
+		JSONObject response = new JSONObject();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			//response = new JSONObject();
+	   			response.put("project", rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.put("publicId", publicId);
+	   				   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			int surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+	   			
+	   			ContentDB contentDB = new ContentDB();
+		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+		   		
+		   		SectionDB sectionDB = new SectionDB();
+				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, numPage, lang, null));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public Survey getQuestionnaireByPublicIdNumSectionPage(String publicId, int numSection, int numPage, String lang)
 	{
 		Survey response = null;
 		
