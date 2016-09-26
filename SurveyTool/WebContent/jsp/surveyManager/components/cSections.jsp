@@ -40,7 +40,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 										<h3 class="panel-title">
 										<div class="col-sm-12">
 										 <div class="form-group" style="margin:0px;">
-												<span style="float: left;"><%=lang.getContent("survey.edit.section.listQuestions")%></span>
+												<span  class="noEditingTitle"><%=lang.getContent("survey.edit.section.listQuestions")%></span>
 												<!-- <input type="text" class="survey-section-title-unselected" id="survey-section-title" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
 												<span  id='survey-section-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
 				  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span> -->

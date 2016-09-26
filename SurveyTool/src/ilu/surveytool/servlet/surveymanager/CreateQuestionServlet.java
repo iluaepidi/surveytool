@@ -89,12 +89,20 @@ public class CreateQuestionServlet extends HttpServlet {
 				question.setParameters(shorttext);
 			}
 			
-			question.setCategory("generic");
-			question.setTag("generic");
-			question.setHelpText(Boolean.parseBoolean(request.getParameter(Parameter.s_HELP_TEXT)));
-			question.setMandatory(Boolean.parseBoolean(request.getParameter(Parameter.s_MANDATORY)));
-			question.setOptionalAnswer(Boolean.parseBoolean(request.getParameter(Parameter.s_OPTIONALANSWER)));
-			question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
+			if (request.getParameter(Parameter.s_QTYPE).equals("bcontent")){
+				question.setCategory("generic");
+				question.setTag("generic");
+				question.setHelpText(false);
+				question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
+			}
+			else{
+				question.setCategory("generic");
+				question.setTag("generic");
+				question.setHelpText(Boolean.parseBoolean(request.getParameter(Parameter.s_HELP_TEXT)));
+				question.setMandatory(Boolean.parseBoolean(request.getParameter(Parameter.s_MANDATORY)));
+				question.setOptionalAnswer(Boolean.parseBoolean(request.getParameter(Parameter.s_OPTIONALANSWER)));
+				question.getContents().put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, new Content(0, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_QSTATEMENT)));
+			}
 			
 			int pageId = Integer.parseInt(request.getParameter(Parameter.s_PAGE_ID));
 			
