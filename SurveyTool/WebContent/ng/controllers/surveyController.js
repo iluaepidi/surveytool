@@ -52,6 +52,39 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		}
 	};
 
+	$scope.getMinValue = function(minValue) {
+		if(minValue == null || minValue.value == null || minValue.value == "")
+		{
+			return "0";
+		}
+		else
+		{
+			return minValue.value;
+		}
+	};
+
+	$scope.getMaxValue = function(maxValue) {
+		if(maxValue == null || maxValue.value == null || maxValue.value == "")
+		{
+			return "9999";
+		}
+		else
+		{
+			return maxValue.value;
+		}
+	};
+
+	$scope.getDecimals = function(decimals) {
+		if(decimals == null || decimals.value == null || decimals.value == "")
+		{
+			return "0.01";
+		}
+		else
+		{
+			return decimals.value;
+		}
+	};
+
 	$scope.getMatrixOptionType = function(matrixType) {
 		if(matrixType != null && matrixType.value != null && matrixType.value == "Multiple")
 		{
