@@ -191,7 +191,7 @@ public class QuestionDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);	   			
+	   			HashMap<String, Content> contents = contentDB.getLongContentByIdAndLanguage(contentId, lang,null);	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterPollByPollIDQuestionID(pollId, rs.getInt(DBFieldNames.s_QUESTION_ID));
 	   			QDependenceDB qdependenceDB = new QDependenceDB();
@@ -963,7 +963,7 @@ public class QuestionDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();	   			
 
-				HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang, langdefault);
+				HashMap<String, Content> contents = contentDB.getLongContentByIdAndLanguage(contentId, lang, langdefault);
 	   			
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			HashMap<String, String> parameters = questionParameterDB.getQuestionParameterByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID));
