@@ -985,7 +985,7 @@ footer {margin-top: 10px;
 
 .editor {
 	overflow:scroll;
-	min-height:100px;
+	height:400px;
 	margin-top:5px;
 	}
 
