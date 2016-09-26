@@ -39,6 +39,7 @@ public class Address {
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
+		public final static String s_SERVLET_CREATE_BCONTENT = "CreateBContentServlet";
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";

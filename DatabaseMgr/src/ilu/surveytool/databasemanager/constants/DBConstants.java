@@ -12,6 +12,8 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT = "ackText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_CALL_TEXT = "callText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
+		//ContentLength
+			public final static int s_MAX_CONTENT_LENGTH = 1000;
 		//OptionType	
 			public final static String s_VALUE_OPTIONTYPE_CHECKBOX = "checkbox";
 			public final static String s_VALUE_OPTIONTYPE_RADIO = "radio";		
@@ -28,6 +30,9 @@ public class DBConstants {
 			public final static String s_VALUE_QUESTIONTYPE_CODE = "code";
 			public final static String s_VALUE_QUESTIONTYPE_MULTIPLE = "multiple";
 			public final static String s_VALUE_QUESTIONTYPE_SIMPLE = "simple";
+			public final static String s_VALUE_QUESTIONTYPE_LONGTEXT = "longText";
+			public final static String s_VALUE_QUESTIONTYPE_SHORTTEXT = "shortText";			
+			public final static String s_VALUE_QUESTIONTYPE_BCONTENT = "bcontent";
 			
 			public final static String s_VALUE_QUESTIONPARAMETER_MATRIXTYPE = "matrixType";
 			public final static String s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE = "Simple";

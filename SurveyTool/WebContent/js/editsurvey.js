@@ -12,6 +12,8 @@ var addMenuFrameCad = "add-menu-frame-";
 var pending;
 var jsonquotas;
 var quotaid;
+var placeholderBContent = "";
+
 $(function() {
 	
 	var host = "http://" + window.location.host;
@@ -126,6 +128,34 @@ $(function() {
 		});
 	});
 
+	$('.survey-sections').on("click", ".btn-bcontent", function(){
+		var node = $(this);
+		var req = {};
+		req.scid = node.closest('.panel-section').attr('scid');
+		req.sid = node.closest('div.edit-content-center').find('div.survey-info').attr('sid');
+		req.numPage = node.closest('li.page').attr('index');
+		var request = {
+				qtype : "bcontent",
+				qstatement: "body content",
+				surveyid: $('#surveyid').val(),
+				pageid: node.closest('li.page').attr('pid'),
+				numPage: node.closest('li.page').attr('index'),
+				langsurvey : $("#survey-language-version").val()
+			};
+		$.post('CreateQuestionServlet', request, function(responseText) {
+			var index = responseText.indexOf("<html");
+			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			else {
+				var pageItems = node.closest('li.page').find('ul.page-items'); 
+				pageItems.append(responseText);
+				var question = pageItems.find('li.panel-question').last()
+				//console.log("Question created: " + pageItems.find('li.panel-question').last().attr('index'));
+				question.find('input.survey-question-title').trigger("createQuestionJson", [request.qtype, request.pageid, request.qstatement, question.attr('qid'), question.attr('index')]);
+			}
+		});
+		console.log("after post");
+	});
+	
 	var newquota = 1000;
 	$('#create-quota').click(function(event) {
 			
@@ -440,7 +470,7 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="optionmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Option ' + index + '" autofocus/> ' +
+								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Column ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -456,7 +486,7 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="optionsgroupmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="Option ' + index + '" autofocus/> ' +
+								'<input type="text" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="Item ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -1648,6 +1678,32 @@ $(function() {
 		
 		updateContent(req, serviceUrl);
 	});	
+
+	$('.survey-sections').on("focusout", ".editor", function(e){
+		e.stopPropagation();
+		var req = {};		
+		req.text = $(this).html();
+		if(($(this).html()===placeholderBContent)||($(this).html()==="")){
+			console.log("Empty field");
+			$(this).html(placeholderBContent);
+		}else{
+			console.log("valor del editor:"+$(this).html());
+			req.contentType = "description";
+			req.lan = $("#survey-language-version").val();
+			req.qid = $(this).closest('#panel-question1').attr('qid');		
+			var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+			
+			updateContent(req, serviceUrl);
+		}
+	});	
+	
+	$('.survey-sections').on("focusin", ".editor", function(e){
+		e.stopPropagation();
+		console.log($(this).html()+" --> and placeholder: "+placeholderBContent);
+		if(($(this).html()===placeholderBContent)||($(this).html()==="")){
+			$(this).html("");
+		}
+	});	
 	
 	$('.survey-sections').on("focusout", "#survey-question-other-text", function(e){
 		e.stopPropagation();
@@ -1953,7 +2009,18 @@ function insertValueQuota(){
 			});
 		//}
 	});
+	
+
 }
+
+$.getScript('http://mindmup.github.io/bootstrap-wysiwyg/external/jquery.hotkeys.js',function(){
+	$.getScript('http://mindmup.github.io/bootstrap-wysiwyg/bootstrap-wysiwyg.js',function(){
+
+	  $('#editor').wysiwyg();
+	  $('#editor').cleanHtml();
+
+	});
+	});
 
 function deleteQuote(){
 	$('.survey-sections').on("click", "#removeQuota", function(e){

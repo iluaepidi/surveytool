@@ -43,10 +43,21 @@ public class DBSQLQueries {
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "where c.idContent = ? and l.isoName = ?";
 		
+		public final static String s_SELECT_LONG_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, c.index, l.isoName, c.text FROM surveytool.content c "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
+				+ "where c.idContent = ? and l.isoName = ? order by ct.name, c.index";
+		
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "where c.idContent = ? and l.isoName = ? and ct.name = ?";
+		
+		public final static String s_SELECT_LONG_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE = "SELECT c.idContent, c.index, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
+				+ "where c.idContent = ? and l.isoName = ? and ct.name = ? order by c.index";
+		
 		public final static String s_SELECT_CONTENT_BY_LANGUAGE_CONTENTTYPE = "SELECT c.text FROM surveytool.content c "
 				+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 				+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
@@ -389,9 +400,9 @@ public class DBSQLQueries {
 		//AnonimousResponse
 			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idResponse`) VALUES (?, ?)";
 		//content
-			public final static String s_INSERT_CONTENT = "INSERT INTO `surveytool`.`content` (`idContent`, `idLanguage`, `idContentType`, `text`) VALUES (?, "
+			public final static String s_INSERT_CONTENT = "INSERT INTO `surveytool`.`content` (`idContent`, `idLanguage`, `idContentType`, `index`, `text`) VALUES (?, "
 					+ "(SELECT idLanguage FROM surveytool.language WHERE isoName = ?), "
-					+ "(SELECT idContentType FROM surveytool.contenttype WHERE name = ?), ?)";
+					+ "(SELECT idContentType FROM surveytool.contenttype WHERE name = ?), ?, ?)";
 		//contentIndex
 			public final static String s_INSERT_CONTENT_INDEX = "INSERT INTO `surveytool`.`contentindex` (`idContent`) VALUES (null);";
 		//forma
