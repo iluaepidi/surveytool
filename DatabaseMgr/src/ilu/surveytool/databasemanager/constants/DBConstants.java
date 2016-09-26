@@ -30,6 +30,9 @@ public class DBConstants {
 			public final static String s_VALUE_QUESTIONTYPE_CODE = "code";
 			public final static String s_VALUE_QUESTIONTYPE_MULTIPLE = "multiple";
 			public final static String s_VALUE_QUESTIONTYPE_SIMPLE = "simple";
+			public final static String s_VALUE_QUESTIONTYPE_LONGTEXT = "longText";
+			public final static String s_VALUE_QUESTIONTYPE_SHORTTEXT = "shortText";			
+			public final static String s_VALUE_QUESTIONTYPE_BCONTENT = "bcontent";
 			
 			public final static String s_VALUE_QUESTIONPARAMETER_MATRIXTYPE = "matrixType";
 			public final static String s_VALUE_QUESTIONPARAMETER_MATRIXTYPE_VALUE_SIMPLE = "Simple";

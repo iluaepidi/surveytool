@@ -34,7 +34,6 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
   			<div class="rowPlus">
   
     		<label><%= lang.getContent("bcontent.statement") %></label>
-    		
     		<div class="btn-toolbar" data-role="editor-<%=question.getQuestionId()%>-toolbar" data-target="#editor-<%=question.getQuestionId()%>">
       				<div class="btn-group">
         				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="<%= lang.getContent("bcontent.font")%>" data-original-title="<%= lang.getContent("bcontent.font")%>"><i class="fa fa-font"></i><b class="caret"></b></a>
