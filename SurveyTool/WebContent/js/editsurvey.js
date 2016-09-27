@@ -862,6 +862,12 @@ $(function() {
 	});
 	
 	
+	$('.section-pages').on("click", "#accesibilityHelp", function(e){
+		console.log("Show shortcuts for editor");
+		$("#accesibilityHelpWin").modal("show");
+	});
+	
+	
 	deleteQuote();
 	
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){

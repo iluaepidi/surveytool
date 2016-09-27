@@ -61,5 +61,9 @@ lang.close();
 	  			
 	  			<jsp:include page="../frames/fUpdateFile.jsp" />
 	  			
+	  			
+	  			<jsp:include page="../frames/fAccesibilityEditor.jsp" />
+	  			
 	  			<jsp:include page="../frames/fDeleteElement.jsp" />
+	  			
 	  			

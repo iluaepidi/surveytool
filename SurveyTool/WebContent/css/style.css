@@ -421,6 +421,8 @@ footer {margin-top: 10px;
 	width: 60% !important;}
 .remove-win-dialog {margin: 14% auto !important;
 	width: 30% !important;}
+.accesibility-win-dialog {margin: 14% auto !important;
+	width: 30% !important;}
 .import-file-win-dialog {margin: 14% auto !important;
 	width: 40% !important;}
 .remove-frame-buttons {width: 70%;
@@ -1000,6 +1002,11 @@ footer {margin-top: 10px;
 
 .editor ol li{
 	list-style-type:decimal !important;
+}
+
+.accesibility ul li{
+	list-style: initial !important;
+	margin-top: 5px;
 }
 
 .btn-primary {background-color: #337AB7 !important;}
