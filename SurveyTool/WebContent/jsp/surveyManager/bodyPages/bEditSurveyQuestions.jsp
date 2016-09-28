@@ -99,7 +99,7 @@
 	  						
 	  						<% if(request.getAttribute(Attribute.s_ADD_QUESTIONS)!=null && !(boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							<div class="no-default-survey-frame">
-								<p class="no-default-info-title"><%= lang.getContent("survey_manager.surveys.no_default_language") %></p>
+								<p class="no-default-info-title"><span><b><%= lang.getContent("survey_manager.surveys.notice") %></b></span> <%= lang.getContent("survey_manager.surveys.no_default_language") %></p>
 							</div>
 							<%} %>
 	  						
