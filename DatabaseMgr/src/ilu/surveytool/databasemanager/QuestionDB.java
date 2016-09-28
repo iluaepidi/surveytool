@@ -1065,8 +1065,11 @@ public class QuestionDB {
 	   			question.put("index", rs.getInt(DBFieldNames.s_INDEX));
 	   			
 	   			OptionDB optionDB = new OptionDB();
-
-	   			question.put("optionsGroups", optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault));
+	   			
+	   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault);
+	   			question.put("optionsGroups", optionsGroups);
+	   			
+	   			if(optionsGroups.length() == 0) question.put("response", "");  
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));

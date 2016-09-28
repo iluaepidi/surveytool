@@ -61,8 +61,9 @@
 	  							</ul>
 	  							
 	  						</div>
-	  						<div class="center">
-	  							<input type="submit" class="btn btn-primary btn-submit-page" Value="<%= lang.getContent("button.submit") %>"/>
+	  						<div class="btn-submit-page">
+	  							<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
+	  							<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
 	  						</div>
 	  					</form>
 	  				</div>

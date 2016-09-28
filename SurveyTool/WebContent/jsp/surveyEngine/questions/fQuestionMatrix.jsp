@@ -29,7 +29,10 @@
 									                    	<tr ng-repeat="optionsGroup in question.optionsGroups">
 									                    		<td class="matrix-title">{{getJsonArrayElement(optionsGroup.contents, "contentType", "title").text}}</td>
 									                    		
-									                    		<th class="matrix-title" ng-repeat="option in optionsGroup.options"><input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" value="{{option.optionId}}"></th>
+									                    		<th class="matrix-title" ng-repeat="option in optionsGroup.options">
+									                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" value="{{option.optionId}}" ng-if="optionsGroup.optionType == 'radio'" ng-model="optionsGroup.response">
+									                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" ng-if="optionsGroup.optionType != 'radio'" ng-model="option.response">
+									                    		</th>
 									                    	</tr>
 										                    
 										            	</tbody>

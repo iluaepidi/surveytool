@@ -22,7 +22,7 @@
 												
 													<ul class="form-options">
 													 	<li class="checkbox" ng-repeat="option in question.optionsGroups[0].options">
-														  <input type="checkbox" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}-{{option.optionId}}" id="optionsChecks{{option.optionId}}" value="{{option.optionId}}">
+														  <input type="checkbox" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}-{{option.optionId}}" id="optionsChecks{{option.optionId}}" ng-model="option.response">
 														  <label for="optionsChecks{{option.optionId}}">
 														    {{getJsonArrayElement(option.contents, "contentType", "title").text}}
 														  </label>

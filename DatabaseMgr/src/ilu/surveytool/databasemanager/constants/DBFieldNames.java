@@ -6,6 +6,7 @@ public class DBFieldNames {
 	 	public final static String s_ANONYMOUS_USER_ID = "idAnonimousUser";
 		public final static String s_ANONYMOUS_USER_DATE = "createDate";
 		public final static String s_RESPONSE_TIMESTAMP = "timestamp";
+		public final static String s_CURRENT_PAGE = "currentPage";
 	 
 	//generico
 		public final static String s_GENERICO_TITLE = "title";

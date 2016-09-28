@@ -15,6 +15,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
 				+ "where idQuestionnaire = ? order by idAnonimousUser";
+		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS = "SELECT * FROM surveytool.anonimoususer where ipAddres = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
 			+ "FROM surveytool.anonimoususer as au "
@@ -402,6 +403,7 @@ public class DBSQLQueries {
 			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`) VALUES (?,?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
+			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`) VALUES (?, ?, ?)";
 		//AnonimousResponse
 			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idResponse`) VALUES (?, ?)";
 		//content
@@ -465,6 +467,8 @@ public class DBSQLQueries {
 			public final static String s_INSERT_QUOTA = "INSERT INTO `surveytool`.`quotas` (`idQuestionnaire`, `idQuestion`, `idOptionsGroup`,`value`,`maxResponses`,`minResponses`) VALUES (?, ?, ?, ?, ?, ?)";
 
 	//updates
+		//optionsGroup
+			public final static String s_UPDATE_ANONIMOUSUSER_CURRET_PAGE = "UPDATE `surveytool`.`anonimoususer` SET `currentPage`=? WHERE `idAnonimousUser`=?";
 		//content
 			public final static String s_UPDATE_CONTENT_TEXT = "UPDATE `surveytool`.`content` SET `text`= ? "
 					+ "WHERE `idContent`= ? "

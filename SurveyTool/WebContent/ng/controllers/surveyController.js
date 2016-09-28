@@ -19,7 +19,6 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	/** Initial load **/
 
 	$scope.getJsonArrayElement = function(array, attribute, value) {
-		console.log("Entra");
 		for(var i = 0; i < array.length; i++)
 		{
 			if( array[i][attribute] == value) return array[i];
@@ -94,6 +93,10 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		{
 			return "radio";
 		}
+	};
+	
+	$scope.nextPage = function(action) {
+		$scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
 	};
 
 }]);

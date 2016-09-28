@@ -1057,7 +1057,10 @@ footer {margin-top: 10px;
 .form-question-content .likert-options .likert-options-frame {background-color: #fff;}
 /*.form-options {display: inline-block;
     text-align: left;}*/
-.btn-submit-page {margin-top: 20px;}
+.btn-submit-page {margin-top: 20px;
+	padding: 0 1.5%;}
+.btn-submit-page button {min-width: 100px;}
+.btn-submit-page-continue {float: right;}
 
 .survey-finish-content {width: 50%;
 	margin: 280px auto;

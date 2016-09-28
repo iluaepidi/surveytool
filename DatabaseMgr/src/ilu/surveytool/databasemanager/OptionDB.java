@@ -174,14 +174,16 @@ public class OptionDB {
 	   			JSONObject optionsGroup = new JSONObject();
 	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
 	   			optionsGroup.put("optionGroupId", optionsGroupId);
-	   			optionsGroup.put("optionType", rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME));
+	   			String optionType = rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME);
+	   			optionsGroup.put("optionType", optionType);
 	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) optionsGroup.put("response", "");
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			optionsGroup.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
 	   			
-	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(optionsGroupId, lang, langdefault));
+	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(optionsGroupId, lang, langdefault, optionType));
 	   			
 	   			optionsGroups.put(optionsGroup);
 	   		}
@@ -269,7 +271,7 @@ public class OptionDB {
 		return options;
 	}
 
-	public JSONArray getOptionsJSONByOptionsGroupId(int optionsGroupId, String lang, String langdefault)
+	public JSONArray getOptionsJSONByOptionsGroupId(int optionsGroupId, String lang, String langdefault, String optionType)
 	{
 		JSONArray options = new JSONArray();
 		
@@ -287,6 +289,7 @@ public class OptionDB {
 	   			JSONObject option = new JSONObject();
 	   			option.put("optionId", rs.getInt(DBFieldNames.s_OPTIONID));
 	   			option.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) option.put("response", "");
 	   			
 	   			int resource = rs.getInt(DBFieldNames.s_CONTENT_RESOURCE);
 	   			if(resource>0){

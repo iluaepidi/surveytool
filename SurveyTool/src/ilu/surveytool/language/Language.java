@@ -23,6 +23,7 @@ public class Language {
 	String rootPath = "";
 	InputStream input = null;
 	Properties prop = null;
+	String currentLanguage = "en";
 
 	/**
 	 * rootPath is the root path of the project in the local system.
@@ -31,7 +32,11 @@ public class Language {
 	public Language(String rootPath) {
 		this.rootPath = rootPath;
 	}
-	
+		
+	public String getCurrentLanguage() {
+		return currentLanguage;
+	}
+
 	/**
 	 * This method load the web contents file corresponding to the language specified.
 	 * @param lang
@@ -40,6 +45,8 @@ public class Language {
 	public Properties loadLanguage(String lang) {
 
 		this.prop = new Properties();
+		
+		this.currentLanguage = lang;
 
 		try {
 			

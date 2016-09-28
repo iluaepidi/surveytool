@@ -268,6 +268,8 @@ public class SurveyDB {
 	   				   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			int surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+
+	   			response.put("surveyId", surveyId);
 	   			
 	   			ContentDB contentDB = new ContentDB();
 		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
