@@ -13,7 +13,7 @@ int index = (Integer) request.getAttribute(Attribute.s_OPTION);
 %>
 <div class="row" type="global" id="multimediaFrame" style="margin-top: 40px;">
 	<div id="div_files">
-		<div class="option-files-frame hidden">
+		<div class="question-files-frame hidden">
 			<label><%= lang.getContent("question.edit.files.option.title") %></label>
 	
 			<ul class="multimedia-list" id="multimediaFilesList">
