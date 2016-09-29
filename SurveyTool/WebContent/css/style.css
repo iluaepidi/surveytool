@@ -421,6 +421,8 @@ footer {margin-top: 10px;
 	width: 60% !important;}
 .remove-win-dialog {margin: 14% auto !important;
 	width: 30% !important;}
+.accesibility-win-dialog {margin: 14% auto !important;
+	width: 30% !important;}
 .import-file-win-dialog {margin: 14% auto !important;
 	width: 40% !important;}
 .remove-frame-buttons {width: 70%;
@@ -556,6 +558,19 @@ footer {margin-top: 10px;
     text-align: center;
     min-height: 55px;}
 
+.no-default-survey-frame {
+    width: 70%;
+    margin: 10px auto;
+    background: #dadada;
+    border: 3px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    min-height: 55px;
+    color: #000;
+}
+
+
 .edit-fees-frame {width: 70%;
     margin: 10px auto;
     border: 1px solid #ccc;
@@ -581,6 +596,12 @@ footer {margin-top: 10px;
     width: 100%;
     text-align: center;}
     
+.no-default-info-title {font-size: 1.3em;
+    border: none;
+    margin: 0 auto;
+    width: 100%;
+    text-align: justify;}
+
 .survey-info-project {float:right;
 	width: 50%;
     display: none;}
@@ -1000,6 +1021,11 @@ footer {margin-top: 10px;
 
 .editor ol li{
 	list-style-type:decimal !important;
+}
+
+.accesibility ul li{
+	list-style: initial !important;
+	margin-top: 5px;
 }
 
 .btn-primary {background-color: #337AB7 !important;}

@@ -12,7 +12,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 List<Resource> resources = question.getResources();
 %>
-<div class="row" type="global" id="multimediaFrame">
+<div class="row" type="global" id="multimediaFrameQuestion">
 	<label><%= lang.getContent("question.edit.files.title") %></label>
 	<div id="div_files">
 		<div class="question-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">

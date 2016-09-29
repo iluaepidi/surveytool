@@ -34,6 +34,7 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
   			<div class="rowPlus">
   
     		<label><%= lang.getContent("bcontent.statement") %></label>
+    		
     		<div class="btn-toolbar" data-role="editor-<%=question.getQuestionId()%>-toolbar" data-target="#editor-<%=question.getQuestionId()%>">
       				<div class="btn-group">
         				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="<%= lang.getContent("bcontent.font")%>" data-original-title="<%= lang.getContent("bcontent.font")%>"><i class="fa fa-font"></i><b class="caret"></b></a>
@@ -95,7 +96,8 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
       				</div>
     			</div>
     			
-		    	<label for="editor-<%=question.getQuestionId()%>" class="visuallyhidden"><%= lang.getContent("accesibility.bcontent") %></label>														
+		    	<!-- <label for="editor-<%=question.getQuestionId()%>" class="visuallyhidden"><%= lang.getContent("accesibility.bcontent") %></label> -->														
+				<button class="btn visuallyhidden" id="accesibilityHelp" aria-label="<%= lang.getContent("button.accesibility_help") %>"></button>
 				<div id="editor-<%=question.getQuestionId()%>" class="wellBContent col-md-9 editor" contenteditable="true"><%if(descriptionText.equals("")){%><%=lang.getContent("placeholder.type_here")%><%}else{%><%= descriptionText %><%}%></div>
 		    <script>
 		    $.getScript('http://mindmup.github.io/bootstrap-wysiwyg/external/jquery.hotkeys.js',function(){
