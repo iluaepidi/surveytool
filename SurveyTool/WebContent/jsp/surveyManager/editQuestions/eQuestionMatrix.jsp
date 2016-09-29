@@ -60,9 +60,10 @@
 												    <jsp:param name="response" value="../eqResponses/eqMatrix.jsp" />
 												</jsp:include>
 							  					
-							  					
+							  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 												<jsp:include page="eqComponents/eqDependences.jsp">
 													<jsp:param value="false" name="withLogic"/>
-												</jsp:include>		  					
+												</jsp:include>	
+												<%} %>	  					
 											</div>																							
 										</li>
