@@ -36,7 +36,7 @@ public class SurveyProcessService {
 	@Path("/responseProcess")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    public String insertOption(String req, @Context HttpServletRequest request) {
+    public String responseProcess(String req, @Context HttpServletRequest request) {
     	System.out.println("SurveyProcess (responseProcess): " + req);
     	JSONObject json = null;
     	JSONObject response = new JSONObject();
