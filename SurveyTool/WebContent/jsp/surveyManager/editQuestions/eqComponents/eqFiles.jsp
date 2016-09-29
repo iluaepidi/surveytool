@@ -13,9 +13,11 @@ Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 List<Resource> resources = question.getResources();
 %>
 <div class="row" type="global" id="multimediaFrameQuestion">
-	<label><%= lang.getContent("question.edit.files.title") %></label>
+	
 	<div id="div_files">
 		<div class="question-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
+			<label><%= lang.getContent("question.edit.files.title") %></label>
+		
 			<ul class="multimedia-list" id="multimediaFilesList">
 				<%							  						
 				for(Resource resource : resources)

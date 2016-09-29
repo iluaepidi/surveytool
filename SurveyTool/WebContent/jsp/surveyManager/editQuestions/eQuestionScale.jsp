@@ -66,9 +66,10 @@
 							  						<jsp:include page="eqComponents/eqFiles.jsp" />
 							  					</div>
 							  					
-							  							
+							  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>			
 							  					<jsp:include page="eqComponents/eqDependences.jsp">
 													<jsp:param value="false" name="withLogic"/>
-												</jsp:include>		  					
+												</jsp:include>	
+												<%} %>	  					
 											</div>																							
 										</li>
