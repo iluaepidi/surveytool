@@ -121,7 +121,7 @@ public class SurveyProcessHandler {
 										int optionId = option.getInt("optionId");
 										if(option.has("response"))
 										{
-											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, option.getString("response"), 0), anonymousUserId);
+											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, Integer.toString(optionId), 0), anonymousUserId);
 										}
 									}
 								}
