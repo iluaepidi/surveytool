@@ -294,6 +294,9 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUOTAS_BY_IDQUESTIONNARIE = "SELECT idQuestion,idOptionsGroup, value, maxResponses,minResponses FROM surveytool.quotas WHERE idQuestionnaire=? ORDER BY idQuestion,value";
 		public final static String s_SELECT_QUOTA_MAX = "SELECT maxResponses FROM surveytool.quotas WHERE value=?";
 		public final static String s_SELECT_QUOTA_MIN = "SELECT minResponses FROM surveytool.quotas WHERE value=?";
+		public final static String s_SELECT_OPTION_NAME_IDOPTION = "SELECT text FROM surveytool.option o INNER JOIN content c ON o.idContent = c.idContent INNER JOIN language l ON c.idLanguage = l.idLanguage WHERE l.isoname=? AND idOption=? ORDER BY o.idOption";
+		public final static String s_SELECT_QUESTION_NAME_IDOPTION = "SELECT text FROM surveytool.question q INNER JOIN content c ON q.idContent = c.idContent INNER JOIN language l ON c.idLanguage = l.idLanguage WHERE l.isoname=? AND q.idQuestion=? ORDER BY q.idQuestion";
+		public final static String s_SELECT_NUMBER_RESPONSES_QUOTA = "SELECT count(*) FROM responses WHERE idQuestion=? AND idOptionsGroup=? AND value=?";
 		
 		//QuestionParameter
 		public final static String s_SELECT_QUESTIONPARAMETER_BY_PAGEID = "SELECT qp.parameterName, pfq.value FROM surveytool.parameterforquestion pfq "
@@ -559,6 +562,7 @@ public class DBSQLQueries {
 			
 		//quota
 			public final static String s_DELETE_QUOTA = "DELETE FROM surveytool.quotas WHERE idQuestionnaire = ? AND idQuestion=?";
+			public final static String s_DELETE_QUOTA_OPTION = "DELETE FROM surveytool.quotas WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=? AND value=?";
 		
 
 }

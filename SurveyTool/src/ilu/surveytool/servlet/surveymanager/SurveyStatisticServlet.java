@@ -2,6 +2,7 @@ package ilu.surveytool.servlet.surveymanager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jettison.json.JSONArray;
 
+import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.DataObject.Quota;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.surveytool.sessioncontrol.SessionHandler;
@@ -91,6 +94,16 @@ public class SurveyStatisticServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_STATISTICS));
 			
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Statistics");
+			
+			//QUotas Result
+			JSONArray pages = surveysHandler.getQuestionsFeesJson(survey);
+            request.setAttribute(Attribute.s_JSON_QUOTAS, pages);
+            
+            QuotaHandler qHandler = new QuotaHandler();
+            HashMap<Integer,ArrayList<Quota>> listQuotas = qHandler.getListQuotasResults(survey);
+            request.setAttribute(Attribute.s_LIST_QUOTAS_RESULTS, listQuotas);
+			
+			
 		}
 		else
 		{

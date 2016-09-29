@@ -176,6 +176,95 @@ public class QuotasDB {
 	}
 	
 	
+	public String getNameOptionForIDOption(String lang, int idoption)
+	{
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTION_NAME_IDOPTION);			
+		    pstm.setString(1, lang); 
+		    pstm.setInt(2, idoption); 
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			return rs.getString(1);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return null;
+	}
+	
+	public String getNameQuestionForIDQuestion(String lang, int idquestion)
+	{
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_NAME_IDOPTION);			
+		    pstm.setString(1, lang); 
+		    pstm.setInt(2, idquestion); 
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			return rs.getString(1);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return null;
+	}
+	
+	public int getCountResponses(int idQuestion, int idOptionsGroup, int idOption)
+	{
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUMBER_RESPONSES_QUOTA);			
+		    pstm.setInt(1, idQuestion); 
+		    pstm.setInt(2, idOptionsGroup); 
+		    pstm.setInt(3, idOption); 
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			return rs.getInt(1);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return 0;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Inserts 
 	 */
@@ -279,6 +368,29 @@ public class QuotasDB {
 		return updated;
 	}
 	
+	//idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=? AND value=?
+	public void removeQuota(int idQuestionnaire, int idQuestion, int idOptionGroup, int value) {
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_QUOTA_OPTION);
+		   	pstm.setInt(1, idQuestionnaire);
+		   	pstm.setInt(2, idQuestion);
+		   	pstm.setInt(3, idOptionGroup);
+		   	pstm.setInt(4, value);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
 	public void removeQuota(int idQuestionnaire, int idQuestion) {
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -298,6 +410,8 @@ public class QuotasDB {
 		}
 
 	}
+	
+	
 	
 	public String getIsoLanguage(int idLanguage)
 	{

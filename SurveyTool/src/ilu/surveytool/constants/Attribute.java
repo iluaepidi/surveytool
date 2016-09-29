@@ -45,6 +45,8 @@ public class Attribute {
 	public final static String s_OPTION = "option";
 	public final static String s_JSON_QUOTAS = "jsonquotas";
 	public final static String s_LIST_QUOTAS = "listquotas";
+	public final static String s_LIST_QUOTAS_RESULTS = "listquotasresults";
+
 
 
 }

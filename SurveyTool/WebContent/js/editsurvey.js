@@ -1715,6 +1715,15 @@ $(function() {
 		var option = $(this).closest("ul.sidebar-menu").find("#statistics-questions-menu").val(noneText);
 	});
 	
+	$('.main-sidebar').on("click", "#quotas-menu", function(e){
+		
+		$('.content-statistics').addClass('hidden');
+		
+		var generalInfoDiv = $(this).closest("#statistics").find('div.content-wrapper').find('#quotas-info');
+		generalInfoDiv.removeClass('hidden');
+		
+	});
+	
 	$('.main-sidebar').on("change", "#statistics-questions-menu", function(e){
 		console.log("Change on statistics-questions-menu:"+$(this).val());
 		
@@ -1873,7 +1882,7 @@ function limit(element)
 
 function limitInput(element, max_chars)
 {
-console.log(max_chars);
+	console.log(max_chars);
     if(element.value.length >= max_chars) {
         element.value = element.value.substr(0, max_chars);
     }
@@ -1893,8 +1902,14 @@ function insertValueQuota(){
 			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
 			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
 			
-			var max = $("#max"+req.oid).val();
-			var min = $("#min"+req.oid).val();
+			var max = Number($("#max"+req.oid).val());
+			var min = Number($("#min"+req.oid).val());
+			
+			if(min>max){
+				max = $("#min"+req.oid).val();
+				$("#max"+req.oid).val(max);
+			}
+			
 			
 			if(max=="")max=0;
 			if(min=="")min=0;

@@ -130,6 +130,9 @@
 								}
 							 %>
 							 
+							 <ul class="survey-sections overflowhidden" id="survey-sections">
+			  						
+							 
 							 	<%  List<Quota> listQuotas = (List<Quota>) request.getAttribute(Attribute.s_LIST_QUOTAS);
 							 	Quota quotaold=null;
 							 	
@@ -155,6 +158,7 @@
 							 	<% request.setAttribute("listQuestionNoVisible",listQuestionAvaiblesNoVisible);%>
 							 	
 		  					
+								</ul>
 		  					
 		  					<jsp:include page="../components/cQuotaNew.jsp" />
 							
