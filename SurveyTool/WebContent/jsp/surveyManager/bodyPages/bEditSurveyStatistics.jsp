@@ -54,7 +54,7 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 						  	<li role="presentation" class="share-tab" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-share-alt fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="SurveysServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li> -->
 						  	<li role="presentation" class="statistic-tab active" id="statistic-tab"><a href="SurveyStatisticServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-						  	<li role="presentation" class="share-tab" id="share-tab"><a href="SurveysFees?surveyid=<%=survey.getSurveyId() %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-share-alt fa-2x"></i></a></li>
+						  	<li role="presentation" class="share-tab" id="share-tab"><a href="SurveysFees?surveyid=<%=survey.getSurveyId() %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-users fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="SurveysServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
