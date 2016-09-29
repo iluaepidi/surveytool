@@ -52,10 +52,17 @@
 		  								<label for="survey-language-version" class="" ><i class="fa fa-language fa-2x"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
 										<select class="form-control-small" id="survey-language-version">
 											<%
-					                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
-					                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
-					                    		
-					                    	<%}%>
+					                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {
+					                    		if(entry.getKey().equals(surveyDefaultLanguage.getDefaultLanguage())){
+						                    	%>
+						                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %> (<%=lang.getContent("survey_manager.surveys.default")%>)</option>
+						                    	<%
+						                    	} else {%>
+						                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+						                    		
+						                    	<%
+						                    	}
+					                    	}%>
 										    
 										</select>
 		  							</form>
@@ -89,6 +96,12 @@
 			            		
 			            	</script>
 			                
+	  						
+	  						<% if(request.getAttribute(Attribute.s_ADD_QUESTIONS)!=null && !(boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+							<div class="no-default-survey-frame">
+								<p class="no-default-info-title"><span><b><%= lang.getContent("survey_manager.surveys.notice") %></b></span> <%= lang.getContent("survey_manager.surveys.no_default_language") %></p>
+							</div>
+							<%} %>
 	  						
 		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">

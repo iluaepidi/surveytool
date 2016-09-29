@@ -257,9 +257,10 @@ public class ContentDB {
 		   		rs2 = pstm2.executeQuery();
 		   		while(rs2.next())
 		   		{
-		   			System.out.println("In second while");
-		   			if(contentType.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME))){
-		   				System.out.println("In if(contentType.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
+
+		   			//System.out.println("In second while");
+		   			if(contentType.equals(rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME))){
+		   				//System.out.println("In if(contentType.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
 		   				text = text+rs2.getString(DBFieldNames.s_CONTENT_TEXT);
 		   				index = rs2.getInt(DBFieldNames.s_INDEX);
 		   			}
@@ -274,7 +275,7 @@ public class ContentDB {
 		   				}
 		   					System.out.println("In second else");
 				   			contentType = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
-				   			index = rs.getInt(DBFieldNames.s_INDEX);
+				   			index = rs2.getInt(DBFieldNames.s_INDEX);
 				   			text = rs2.getString(DBFieldNames.s_CONTENT_TEXT);
 		   				
 		   			}

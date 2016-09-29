@@ -13,6 +13,13 @@ var pending;
 var jsonquotas;
 var quotaid;
 var placeholderBContent = "";
+var accesibilityTextItem = "";
+var accesibilityTextColumn = "";
+var accesibilityTextOption = "";
+
+var phOption = "";
+var phItem = "";
+var phColumn = "";
 
 $(function() {
 	
@@ -451,6 +458,7 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="option-item" oid="0">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
+								'<label for="option" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
 								'<input id="option" type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
@@ -458,7 +466,7 @@ $(function() {
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
 									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
-								'<div class="row margin-top-40" type="global" id="multimediaFrame"><label>'+textOptionFile+'</label><div id="div_files"><div class="option-files-frame hidden"><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
+								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="question-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
@@ -468,9 +476,10 @@ $(function() {
 	$('.survey-sections').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
 		var optionHtml = '<li class="option-item" id="optionmatrix-item">' +
-								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
+								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +	
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="Column ' + index + '" autofocus/> ' +
+								'<label for="inputCol" class="visuallyhidden">'+accesibilityTextColumn+' '+index+'</label>' +
+								'<input type="text" id="inputCol" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+phColumn + ' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -486,7 +495,8 @@ $(function() {
 		var optionHtml = '<li class="option-item" id="optionsgroupmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<input type="text" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="Item ' + index + '" autofocus/> ' +
+								'<label for="inputRow" class="visuallyhidden">'+accesibilityTextItem+' '+index+'</label>' +
+								'<input type="text" id="inputRow" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="'+phItem + ' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -584,15 +594,17 @@ $(function() {
 	        	 $('#importFileForm')[0].reset();
 	             $("#importFile").modal("hide");
 	            if(currentQuestion>=0){
-		  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrame]");
+	            	console.log("En currentquestion");
+		  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrameQuestion]");
 		              multimediaFrame.removeClass("hidden");
 		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
 		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
 		        }else if(currentOption>=0){
+		        	console.log("En currentoption");
 		        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
 		        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
 		              multimediaFrame.removeClass("hidden");
-		              multimediaFrame.find("div.option-files-frame").removeClass("hidden");
+		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
 		              //
 		              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
 		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
@@ -862,6 +874,12 @@ $(function() {
 	});
 	
 	
+	$('.section-pages').on("click", "#accesibilityHelp", function(e){
+		console.log("Show shortcuts for editor");
+		$("#accesibilityHelpWin").modal("show");
+	});
+	
+	
 	deleteQuote();
 	
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
@@ -882,8 +900,10 @@ $(function() {
 				   $("#removeElement").modal("hide");
 				   if(service == "ResourceService")
 				   {
-					   if($('#multimediaFilesList li').length<2){
-						   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden'); 
+					   if($(this).closest('#option-item').find('#multimediaFilesList li').length<2){
+						   console.log("hidden a class");
+						   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
+						   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
 					   }
 					   $('li[rid=' + elementId + ']').remove();
 					   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
