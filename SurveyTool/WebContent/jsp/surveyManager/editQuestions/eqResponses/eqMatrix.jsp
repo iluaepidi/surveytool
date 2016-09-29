@@ -31,6 +31,8 @@
 							  				phItem = "<%= lang.getContent("question.edit.matrix.placeholder.item") %>";
 							  				phColumn = "<%= lang.getContent("question.edit.matrix.placeholder.column") %>";
 							  				</script>
+							  				
+							  				<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 											<div class="row">	
 												<div class="col-md-4">
 													<label><%=lang.getContent("question.form.responsesettings") %></label>
@@ -45,7 +47,7 @@
 							  				</div>
 							  				
 							  				<hr>			
-											
+											<%} %>
 											<div class="row" type="global">
 												<label for="matrix-row-<%= question.getIndex() %>"><%=lang.getContent("question.matrix.rowoption") %></label>
 							  					<%

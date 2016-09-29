@@ -73,11 +73,11 @@
 															<label for="other-option-<%= question.getIndex() %>"><%=lang.getContent("question.form.options.other")%></label>																															  							
 								  							<textarea class="form-control" id="survey-question-other-text" rows="1" placeholder="<%= lang.getContent("placeholder.type_label") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000"><%= otherText %></textarea>
 							  							</div> -->
-							  					
+							  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 												<jsp:include page="eqComponents/eqDependences.jsp">
 													<jsp:param value="true" name="withLogic"/>
 												</jsp:include>
-																			  							  					
+												<%} %>						  							  					
 											</div>
 																																		
 										</li>

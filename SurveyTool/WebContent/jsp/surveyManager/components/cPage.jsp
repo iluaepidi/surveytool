@@ -21,6 +21,7 @@ request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
 													<button id="page-display-<%= pag.getPageId() %>" class="page-display btn-transparent panel-heading-display-arrow display-page-arrow"><span class="visuallyhidden">Hide page: Page <%= pag.getNumPage() %></span><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
 												</div>
 												<h4 class="col-md-6"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></h4>
+												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>	
 												<div class="col-md-3 right">
 													<% if(pag.getNumPage() > 1) { %>
 													<button class="remove-page-break">
@@ -29,6 +30,7 @@ request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
 													</button>
 													<% } %>
 												</div>
+												<% } %>
 											</div>
 											<div class="page-body">
 												<input type="hidden" id="pageid1" value="<%= pag.getPageId() %>" />
