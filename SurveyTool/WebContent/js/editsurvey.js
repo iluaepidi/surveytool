@@ -1905,7 +1905,7 @@ function insertValueQuota(){
 			var max = Number($("#max"+req.oid).val());
 			var min = Number($("#min"+req.oid).val());
 			
-			if(min>max){
+			if($("#max"+req.oid).val()!="" && min>max){
 				max = $("#min"+req.oid).val();
 				$("#max"+req.oid).val(max);
 			}

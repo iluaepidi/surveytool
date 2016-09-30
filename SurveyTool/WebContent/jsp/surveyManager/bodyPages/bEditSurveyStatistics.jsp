@@ -279,7 +279,54 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 						    	</div>
 					      	</div>
 					      <div class="content-statistics hidden" id="quotas-info">
-					       
+					       		<div id="objetivequota" class="edit-quote-frame">
+					       			<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees">
+														<div class="form-group nomargin">
+															<div class="form-group">
+												                <div class="col-md-8">     
+												                	<div class="form-group">
+												                		<h5 id="questionquotaname" class="quotaname">General Objetive</h5>
+												                	</div>
+												                </div>
+											            	</div>
+														</div>
+														<!-- <div id="optionsquota" class="optionsquota">
+															<div class="form-group col-md-12" style="margin:0px;" id="optionquota">
+										                			<fieldset class="form-group col-md-12" style="width:100%">
+										                				<div class="form-group col-md-8">
+										                					<div style="width: 100%;">
+										                						<div style="width: 100%;float: left;text-align: right;"><span style="position: relative;top: 8px;left: 24px;">max 30</span> <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" style="position: relative;top: 25px;left:6px;"></span></div>
+										                						<div style="width: 0%;">&nbsp;</div>
+										                					</div>
+										                					<div style="width: 100%;">
+										                						<span class="pull-left">0</span>
+										                						<span class="pull-right"></span>
+										                					</div>
+										                 					<div class="progress" style="width: 100%;margin-bottom:0px !important;">
+										                 						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+																    			34 surveys
+																    			</div>
+																			</div>
+																			<div style="width: 100%;display: inline-block;height: 12px;">
+										                						<div style="width:30%;float: left;text-align: right;">
+										                							<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+										                							</div>
+										                						<div style="width:70%;float: left;display: inline-flex;">&nbsp;</div>
+										                					</div>
+										                					<div style="width: 100%;display: inline-block;">
+										                						<div style="width: 100%;text-align: left;padding-left: 30%;position: relative;left: -12px;"> 
+										                							<span style="display: inline-block;width: 120px;text-align: left;">min 30</span>
+										                						</div>
+										                					</div>
+										                 				</div>
+										                 			
+										                			</fieldset>
+										                		</div>
+										                		
+														</div> -->
+									</div>
+					       		</div>
+					       		
 						       <div id="listcompletequotas" class="edit-quote-frame">
 			  						<ul class="survey-sections overflowhidden" id="survey-sections">
 			  								
