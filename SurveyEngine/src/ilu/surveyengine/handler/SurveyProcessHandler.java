@@ -29,11 +29,13 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 
-	public JSONObject getCurrentPageJson(String publicId, int numSection, int numPage, String lang)
+	public JSONObject getCurrentPageJson(String publicId, int numSection, Object anonimousUser, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		if(lang == null || lang.isEmpty()) lang = "en";
-		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, numPage, lang);
+		
+		
+		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, anonimousUser, lang);
 		return survey;
 	}
 	
@@ -59,7 +61,7 @@ public class SurveyProcessHandler {
 		if(anonymousUserId != 0)
 		{
 			for(Response response : responses)
-			{
+			{				
 				int responseId = responsesDB.insertResponse(response);
 				stored = stored && anonimousDB.insertAnonimousResponse(anonymousUserId, responseId);	
 			}
@@ -85,6 +87,7 @@ public class SurveyProcessHandler {
 		
 		try
 		{
+			int surveyId = responses.getInt("surveyId");
 			JSONObject page = responses.getJSONObject("page");
 			int anonymousUserId = anonimousUser.getId();
 			if(anonymousUserId == 0) anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"));
@@ -97,7 +100,8 @@ public class SurveyProcessHandler {
 					int questionId = question.getInt("questionId");
 					if(question.has("response"))
 					{
-						stored = stored && this._storeAnonymousResponse(new Response(questionId, 0, question.getString("response"), 0), anonymousUserId);
+						responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, null);
+						stored = stored && this._storeAnonymousResponse(new Response(questionId, 0, question.getString("response"), 0), anonymousUserId, surveyId);
 					}
 					else
 					{					
@@ -109,11 +113,13 @@ public class SurveyProcessHandler {
 								JSONObject optionsGroup = optionsGroups.getJSONObject(og);
 								int optionsGroupId = optionsGroup.getInt("optionGroupId");
 								if(optionsGroup.has("response"))
-								{
-									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, optionsGroup.getString("response"), 0), anonymousUserId);
+								{									
+									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
+									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, optionsGroup.getString("response"), 0), anonymousUserId, surveyId);
 								}
 								else
-								{
+								{									
+									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
 									JSONArray options = optionsGroup.getJSONArray("options");
 									for(int o = 0; o < options.length(); o++)
 									{
@@ -121,7 +127,7 @@ public class SurveyProcessHandler {
 										int optionId = option.getInt("optionId");
 										if(option.has("response"))
 										{
-											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, Integer.toString(optionId), 0), anonymousUserId);
+											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, Integer.toString(optionId), 0), anonymousUserId, surveyId);
 										}
 									}
 								}
@@ -151,12 +157,12 @@ public class SurveyProcessHandler {
 		return anonymousDB.updateAnonimousUserCurrentPage(anonimousUserId, currentPage);
 	}
 	
-	private boolean _storeAnonymousResponse(Response response, int anonymousUserId)
+	private boolean _storeAnonymousResponse(Response response, int anonymousUserId, int surveyId)
 	{
 		boolean stored = false;
 		ResponsesDB responsesDB = new ResponsesDB();
 		AnonimousDB anonymousDB = new AnonimousDB();
-		
+				
 		int responseId = responsesDB.insertResponse(response);
 		stored = anonymousDB.insertAnonimousResponse(anonymousUserId, responseId);
 		

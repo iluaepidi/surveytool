@@ -16,6 +16,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -142,7 +143,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault)
+	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault, Object anonimousUser)
 	{
 		JSONArray questions = new JSONArray();
 		
@@ -155,7 +156,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionJsonArray(rs, lang, langdefault);
+	   		questions = this._getQuestionJsonArray(rs, lang, langdefault, anonimousUser);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1038,7 +1039,7 @@ public class QuestionDB {
 	}
 	
 
-	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault)
+	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object anonimousUser)
 	{
 		JSONArray questions = new JSONArray();
 		
@@ -1066,10 +1067,30 @@ public class QuestionDB {
 	   			
 	   			OptionDB optionDB = new OptionDB();
 	   			
-	   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault);
+	   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault, anonimousUser);
 	   			question.put("optionsGroups", optionsGroups);
 	   			
-	   			if(optionsGroups.length() == 0) question.put("response", "");  
+	   			if(optionsGroups.length() == 0)
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					String value = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, null);
+	   					try
+	   					{
+	   						Float valFloat = Float.valueOf(value);
+	   						question.put("response", valFloat);
+	   					}catch(NumberFormatException e){
+	   						question.put("response", value);
+	   					}
+	   					
+	   				}
+	   				else
+	   				{
+	   					question.put("response", "");
+	   				}
+	   			}
 	   			
 	   			ResourceDB resourceDB = new ResourceDB();
 	   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));

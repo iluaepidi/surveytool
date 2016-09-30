@@ -88,7 +88,7 @@ public class SectionDB {
 		return sections;
 	}
 
-	public JSONObject getSectionJsonBySurveyId(int surveyId, int numSection, int numPage, String lang, String langdefault)
+	public JSONObject getSectionJsonBySurveyId(int surveyId, int numSection, Object anonimousUser, String lang, String langdefault)
 	{
 		JSONObject section = new JSONObject();
 		
@@ -114,7 +114,7 @@ public class SectionDB {
 		   		section.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
 	   			
 	   			PageDB pageDB = new PageDB();
-	   			section.put("page", pageDB.getPageJsonBySectionId(sectionId, numPage, lang, langdefault));
+	   			section.put("page", pageDB.getPageJsonBySectionId(sectionId, anonimousUser, lang, langdefault));
 	   			
 	   		}
 	   		

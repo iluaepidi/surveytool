@@ -60,6 +60,7 @@ public class surveyajs extends HttpServlet {
 		
 		AnonimousUser anonimousUser = new AnonimousUser();
 		anonimousUser.setIpAddress(request.getRemoteAddr());
+		anonimousUser.setCurrentPage(1);
 		anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
 		request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 		
@@ -68,8 +69,8 @@ public class surveyajs extends HttpServlet {
 		lang.loadLanguage(language); 
 		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
 		
-		int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
-		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, 1, currentPage, language);
+		//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
+		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, 1, anonimousUser, language);
 		System.out.println("Json: " + survey.toString());
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 		String surveyTitle = "";

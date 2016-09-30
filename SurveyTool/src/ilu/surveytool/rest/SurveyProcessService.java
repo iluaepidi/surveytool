@@ -73,7 +73,7 @@ public class SurveyProcessService {
 				anonimousUser.setCurrentPage(numPage);
 				surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
 				
-				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), 1, anonimousUser.getCurrentPage(), lang.getCurrentLanguage());
+				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), 1, anonimousUser, lang.getCurrentLanguage());
 				response.put("page", survey);
 				
 				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);

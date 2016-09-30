@@ -247,7 +247,7 @@ public class SurveyDB {
 		return response;
 	}
 
-	public JSONObject getQuestionnaireJson(String publicId, int numSection, int numPage, String lang)
+	public JSONObject getQuestionnaireJson(String publicId, int numSection, Object anonimousUser, String lang)
 	{
 		JSONObject response = new JSONObject();
 		
@@ -275,7 +275,7 @@ public class SurveyDB {
 		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
 		   		
 		   		SectionDB sectionDB = new SectionDB();
-				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, numPage, lang, null));
+				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, anonimousUser, lang, null));
 	   		}
 	   		
 	   } catch (SQLException e) {

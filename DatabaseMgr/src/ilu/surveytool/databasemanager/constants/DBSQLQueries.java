@@ -37,6 +37,16 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
 				+ "where r.idPoll = ? order by au.idAnonimousUser";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
+				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
+		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL = " and r.idOptionsGroup = ?";
+		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL = " and isnull(r.idOptionsGroup)";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
+				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
 	
 		//Content
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
@@ -553,6 +563,12 @@ public class DBSQLQueries {
 		
 		//resources
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";
+			
+		//responses
+			public final static String s_DELETE_RESPONSES = "DELETE r.* FROM surveytool.responses as r "
+					+ "inner join surveytool.anonimousresponse as ar on ar.idResponse = r.idResponse "
+					+ "inner join surveytool.anonimoususer as au on ar.idAnonimousUser = au.idAnonimousUser "
+					+ "WHERE au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
 
 		//section
 			public final static String s_DELETE_SECTION = "DELETE FROM surveytool.section WHERE idSection = ?";

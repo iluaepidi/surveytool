@@ -12,6 +12,7 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
@@ -87,7 +88,7 @@ public class PageDB {
 		return pages;
 	}
 
-	public JSONObject getPageJsonBySectionId(int sectionId, int numPage, String lang, String langdefault)
+	public JSONObject getPageJsonBySectionId(int sectionId, Object anonimousUser, String lang, String langdefault)
 	{
 		JSONObject page = new JSONObject();
 		
@@ -96,6 +97,9 @@ public class PageDB {
 		ResultSet rs = null;
 		
 		if(lang==null)lang = langdefault;
+		
+		int numPage = 1;
+		if(anonimousUser instanceof AnonimousUser) numPage = ((AnonimousUser) anonimousUser).getCurrentPage();
 		
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGE_BY_NUMPAGE_SECTIONID);			
@@ -110,7 +114,7 @@ public class PageDB {
 	   			page.put("numPage", rs.getInt(DBFieldNames.s_NUM_PAGE));
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
-	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault));
+	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault, anonimousUser));
 	   			
 	   		}
 	   		

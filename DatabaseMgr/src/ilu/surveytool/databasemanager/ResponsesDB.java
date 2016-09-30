@@ -336,6 +336,73 @@ public class ResponsesDB {
 		
 		return contents;
 	}
+
+	public String getAnonymousResponseValue(int anonymousUserId, int surveyId, int questionId, Integer optionsGroupId)
+	{
+		String response = "";
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		String query = "";
+		if(optionsGroupId == null)
+	   		query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
+	   	else
+	   		query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
+		   
+		try{
+			pstm = con.prepareStatement(query);			
+		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(2, surveyId);
+		   	pstm.setInt(3, questionId);
+		   	if(optionsGroupId != null) pstm.setInt(4, optionsGroupId);
+		   		
+		   	rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_VALUE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public boolean existAnonymousResponseValue(int anonymousUserId, int suveyId, int questionId, int optionsGroupId, String value)
+	{
+		boolean response = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE);			
+		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(2, suveyId);
+		   	pstm.setInt(3, questionId);
+		   	pstm.setInt(4, optionsGroupId);
+		   	pstm.setString(5, value);
+		   		
+		   	rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = true;
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 		
 	/**
 	 * Inserts 
@@ -383,6 +450,40 @@ public class ResponsesDB {
 		}
 		
 		return responseId;
+	}
+
+	/**
+	 * Remove
+	 */
+	
+	public void removeAnonymousResponse(int anonymousUserId, int surveyId, int questionId, Integer optionsGroupId) {
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		
+		String query = "";
+		if(optionsGroupId == null)
+	   		query = DBSQLQueries.s_DELETE_RESPONSES + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
+	   	else
+	   		query = DBSQLQueries.s_DELETE_RESPONSES + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
+		
+		   
+		try{
+		   	pstm = con.prepareStatement(query);
+		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(2, surveyId);
+		   	pstm.setInt(3, questionId);
+		   	if(optionsGroupId != null) pstm.setInt(4, optionsGroupId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
 	}
 	
 }

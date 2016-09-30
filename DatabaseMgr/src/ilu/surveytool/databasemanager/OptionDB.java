@@ -13,6 +13,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
@@ -156,7 +157,7 @@ public class OptionDB {
 		return optionsGroups;
 	}
 
-	public JSONArray getOptionsGroupJSONByQuestionId(int questionId, String lang, String langdefault)
+	public JSONArray getOptionsGroupJSONByQuestionId(int questionId, String lang, String langdefault, Object anonimousUser)
 	{
 		JSONArray optionsGroups = new JSONArray();
 		
@@ -178,12 +179,24 @@ public class OptionDB {
 	   			optionsGroup.put("optionType", optionType);
 	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
-	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) optionsGroup.put("response", "");
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) 
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					optionsGroup.put("response", responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId)); 
+	   				}
+	   				else
+	   				{
+	   					optionsGroup.put("response", "");
+	   				}
+	   			}
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			optionsGroup.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
 	   			
-	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(optionsGroupId, lang, langdefault, optionType));
+	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(questionId, optionsGroupId, lang, langdefault, optionType, anonimousUser));
 	   			
 	   			optionsGroups.put(optionsGroup);
 	   		}
@@ -271,7 +284,7 @@ public class OptionDB {
 		return options;
 	}
 
-	public JSONArray getOptionsJSONByOptionsGroupId(int optionsGroupId, String lang, String langdefault, String optionType)
+	public JSONArray getOptionsJSONByOptionsGroupId(int questionId, int optionsGroupId, String lang, String langdefault, String optionType, Object anonimousUser)
 	{
 		JSONArray options = new JSONArray();
 		
@@ -287,9 +300,22 @@ public class OptionDB {
 	   		while(rs.next())
 	   		{
 	   			JSONObject option = new JSONObject();
-	   			option.put("optionId", rs.getInt(DBFieldNames.s_OPTIONID));
+	   			int optionId = rs.getInt(DBFieldNames.s_OPTIONID);
+	   			option.put("optionId", optionId);
 	   			option.put("index", rs.getInt(DBFieldNames.s_INDEX));
-	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) option.put("response", "");
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) 
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					option.put("response", responsesDB.existAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId))); 
+	   				}
+	   				else
+	   				{
+	   					option.put("response", false);
+	   				}
+	   			}
 	   			
 	   			int resource = rs.getInt(DBFieldNames.s_CONTENT_RESOURCE);
 	   			if(resource>0){
