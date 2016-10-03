@@ -279,7 +279,7 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 						    	</div>
 					      	</div>
 					      <div class="content-statistics hidden" id="quotas-info">
-					       		<div id="objetivequota" class="edit-quote-frame">
+					       		<div id="objetivequota" class="edit-quote-frame height200px">
 					       			<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees">
 														<div class="form-group nomargin">
 															<div class="form-group">
@@ -290,48 +290,53 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 												                </div>
 											            	</div>
 														</div>
-														<!-- <div id="optionsquota" class="optionsquota">
-															<div class="form-group col-md-12" style="margin:0px;" id="optionquota">
-										                			<fieldset class="form-group col-md-12" style="width:100%">
-										                				<div class="form-group col-md-8">
-										                					<div style="width: 100%;">
-										                						<div style="width: 100%;float: left;text-align: right;"><span style="position: relative;top: 8px;left: 24px;">max 30</span> <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" style="position: relative;top: 25px;left:6px;"></span></div>
-										                						<div style="width: 0%;">&nbsp;</div>
-										                					</div>
-										                					<div style="width: 100%;">
-										                						<span class="pull-left">0</span>
-										                						<span class="pull-right"></span>
-										                					</div>
-										                 					<div class="progress" style="width: 100%;margin-bottom:0px !important;">
-										                 						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-																    			34 surveys
-																    			</div>
-																			</div>
-																			<div style="width: 100%;display: inline-block;height: 12px;">
-										                						<div style="width:30%;float: left;text-align: right;">
-										                							<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
-										                							</div>
-										                						<div style="width:70%;float: left;display: inline-flex;">&nbsp;</div>
-										                					</div>
-										                					<div style="width: 100%;display: inline-block;">
-										                						<div style="width: 100%;text-align: left;padding-left: 30%;position: relative;left: -12px;"> 
-										                							<span style="display: inline-block;width: 120px;text-align: left;">min 30</span>
-										                						</div>
-										                					</div>
-										                 				</div>
+														
+														<%
+														int quotaTotalSurvey = (int)request.getAttribute(Attribute.s_TOTAL_SURVEY_COMPETE);
+														int quotaprogress = 100;
+														if(survey.getObjetive()>0){
+															quotaprogress = (int)(((double)(((double)quotaTotalSurvey) / ((double)survey.getObjetive())))*100.00);
+														}
+														
+														if(quotaprogress>100)quotaprogress=100;
+														
+														String colorProgressgeneral = "";
+														
+														if(quotaTotalSurvey==survey.getObjetive()){
+															colorProgressgeneral="progress-bar-success";
+														}
+
+														%>
+														<div class="form-group col-md-8 quotaresultobjetiveajust">
+															<% if(survey.getObjetive()>0){ %>
+							                					<div class="with100pc">
+							                						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1">max <%=survey.getObjetive()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>
+							                					</div>
+						                					<% } %>
+						                					<div class="with100pc">
+						                						<span class="pull-left">0</span>
+						                						<span class="pull-right"></span>
+						                					</div>
+						                 					<div class="progress quotaresultprogressdiv">
+						                 						<div class="progress-bar <%=colorProgressgeneral%>" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
+												    			<%=quotaTotalSurvey %> surveys
+												    			</div>
+															</div>
+						                 				</div>
 										                 			
-										                			</fieldset>
-										                		</div>
-										                		
-														</div> -->
+										                	
 									</div>
 					       		</div>
 					       		
+					       		
+					       		<%
+					       		HashMap<Integer,ArrayList<Quota>> listQuotas = (HashMap<Integer,ArrayList<Quota>>) request.getAttribute(Attribute.s_LIST_QUOTAS_RESULTS);
+							 	Quota quota=null;
+					       		if(listQuotas.size()>0){ %>
 						       <div id="listcompletequotas" class="edit-quote-frame">
 			  						<ul class="survey-sections overflowhidden" id="survey-sections">
 			  								
-								 	<%  HashMap<Integer,ArrayList<Quota>> listQuotas = (HashMap<Integer,ArrayList<Quota>>) request.getAttribute(Attribute.s_LIST_QUOTAS_RESULTS);
-								 	Quota quota=null;
+								 	<%  
 								 								 	
 								 	for (Integer key : listQuotas.keySet()) {
 								 	  	ArrayList<Quota> listQ = listQuotas.get(key);%>
@@ -368,6 +373,8 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 								 			
 									</ul>
 			  					</div>
+			  					
+			  					<%} %>
 					       </div>
 					 		<% 
 					 		String token = "/";

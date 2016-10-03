@@ -102,6 +102,10 @@ public class SurveyStatisticServlet extends HttpServlet {
             QuotaHandler qHandler = new QuotaHandler();
             HashMap<Integer,ArrayList<Quota>> listQuotas = qHandler.getListQuotasResults(survey);
             request.setAttribute(Attribute.s_LIST_QUOTAS_RESULTS, listQuotas);
+            
+            int quotaTotalSurvey = qHandler.getQuotasCompleteSurvey(survey.getSurveyId());
+            request.setAttribute(Attribute.s_TOTAL_SURVEY_COMPETE, quotaTotalSurvey);
+            
 			
 			
 		}

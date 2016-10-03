@@ -261,6 +261,36 @@ public class QuotasDB {
 		return 0;
 	}
 	
+	public int getCountSurveyCompletesAnonymous(int idSurvey)
+	{
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUMBER_RESPONSES_SURVEY);			
+		    pstm.setInt(1, idSurvey); 
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			return rs.getInt(1);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return 0;
+	}
+	
+	
+	
+	
 	
 	
 	

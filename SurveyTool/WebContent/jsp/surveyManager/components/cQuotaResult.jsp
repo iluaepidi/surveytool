@@ -22,6 +22,10 @@ int quotaMinPercent = 0;
 int quotaMinPercetRestant = 0;
 int quotaprogress = 0;
 
+Language lang = new Language(getServletContext().getRealPath("/")); 
+String languageId = Language.getLanguageRequest(request);
+lang.loadLanguage(languageId);
+
 
 //// Si existe un min y un max, esta bien este sistema.
 
@@ -59,7 +63,7 @@ quotaprogress2=75
 */
 
 if(quotaprogress>=quotaMinPercent){
-	colorProgress="progress-bar-info";
+	colorProgress="";
 }
 
 if(quota.getMaxResponses()>0 && quota.getValueProgress()>=quota.getMaxResponses()){
@@ -70,38 +74,34 @@ if(quota.getMaxResponses()>0 && quota.getValueProgress()>=quota.getMaxResponses(
 %>
 
 
-
-
-                		<div class="form-group col-md-12" style="margin:0px;" id="optionquota">
-                			<fieldset class="form-group col-md-12" style="width:100%">
-                				<legend class="col-md-4" style="border:0px;font-size:16px;"><%=quota.getNameOption()%></legend>
+                		<div class="form-group col-md-12 nomargin" id="optionquota">
+                			<fieldset class="form-group col-md-12 with100pc">
+                				<legend class="col-md-4 quotaresultoption"><%=quota.getNameOption()%></legend>
                 				<div class="form-group col-md-8">
                 					<%if(quota.getMaxResponses()>0){ %>
-                					<div style="width: 100%;">
-                						<div style="width: 100%;float: left;text-align: right;"><span style="position: relative;top: 8px;left: 24px;">max <%=quota.getMaxResponses()%></span> <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" style="position: relative;top: 25px;left:6px;"></span></div>
-                						<div style="width: 0%;">&nbsp;</div>
-                					</div>
+                					<div class="with100pc">
+                						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1"><%= lang.getContent("quota.result.max")%> <%=quota.getMaxResponses()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>
+                						</div>
                 					<%} %>
-                					<div style="width: 100%;">
+                					<div class="with100pc">
                 						<span class="pull-left">0</span>
                 						<span class="pull-right"></span>
                 					</div>
-                 					<div class="progress" style="width: 100%;margin-bottom:0px !important;">
-                 						<div class="progress-bar <%=colorProgress%>" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
-						    				<%=quota.getValueProgress()%> surveys
+                 					<div class="progress quotaresultprogressdiv">
+                 						<div class="progress-bar <%=colorProgress%>" role="progressbar" aria-valuenow="<%=quotaprogress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
+						    				<%=quota.getValueProgress()%> <%= lang.getContent("quota.result.surveys")%>
 						    			</div>
 						    			
 									</div>
-									<div style="width: 100%;display: inline-block;height: 12px;">
-                						<div style="width:<%=quotaMinPercent%>%;float: left;text-align: right;">
+									<div class="quotaresultoptiondivmin">
+                						<div class="quotaresultoptiondivmin2" style="width:<%=quotaMinPercent%>%;">
                 							<span class="glyphicon glyphicon-triangle-top" aria-hidden="true" style="<%=styleMin%>"></span>
-                							<!-- <span style="position: relative;top: 15px;left: 18px;">min </%=quota.getMinResponses()%></span>  -->
                 						</div>
-                						<div style="width:<%=quotaMinPercetRestant%>%;float: left;display: inline-flex;">&nbsp;</div>
+                						<div style="width:<%=quotaMinPercetRestant%>%;" class="quotaresultoptiondivmin3">&nbsp;</div>
                 					</div>
-                					<div style="width: 100%;display: inline-block;">
-                						<div style="width: 100%;text-align: left;padding-left: <%=quotaMinPercent%>%;position: relative;left: -12px;"> 
-                							<span style="display: inline-block;width: 120px;text-align: left;">min <%=quota.getMinResponses()%></span>
+                					<div class="quotaresultoptiondivmintext">
+                						<div style="padding-left: <%=quotaMinPercent%>%;" class="quotaresultoptiondivmintext2"> 
+                							<span class="quotaresultoptiondivmintext3"><%= lang.getContent("quota.result.min")%> <%=quota.getMinResponses()%></span>
                 						</div>
                 					</div>
                  				</div>

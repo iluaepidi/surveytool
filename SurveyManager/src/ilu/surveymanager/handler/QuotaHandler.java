@@ -137,40 +137,53 @@ public class QuotaHandler {
 	}
 	
 	
-public HashMap<Integer,ArrayList<Quota>> getListQuotasResults(Survey survey){
-	
-		int idQuestionnarie = survey.getSurveyId();
+	public HashMap<Integer,ArrayList<Quota>> getListQuotasResults(Survey survey){
 		
-		HashMap<Integer,ArrayList<Quota>> response = new HashMap<Integer, ArrayList<Quota>>();
-		
-		List<Quota> listQuotas = new ArrayList<Quota>();
-		QuotasDB quotaDB = new QuotasDB();
-		OptionDB optionDB = new OptionDB();
-		
-		listQuotas = quotaDB.getListQuotasByQuestionnarie(idQuestionnarie);
-		
-		Quota quotaOld=null;
-		ArrayList<Quota> arrayQuotas = null;
-		for (Quota temp : listQuotas) {
-			temp.setValueProgress(quotaDB.getCountResponses(temp.getIdQuestion(),temp.getIdOptionsGroup(),temp.getIdOption()));
-			temp.setNameOption(quotaDB.getNameOptionForIDOption(survey.getDefaultLanguage(),temp.getIdOption()));
-			temp.setNameQuestion(quotaDB.getNameQuestionForIDQuestion(survey.getDefaultLanguage(),temp.getIdQuestion()));
+			int idQuestionnarie = survey.getSurveyId();
 			
-			if(quotaOld==null || (temp.getIdQuestion()!=quotaOld.getIdQuestion())){
-				arrayQuotas = new ArrayList<Quota>();
-				arrayQuotas.add(temp);
-				response.put(temp.getIdQuestion(), arrayQuotas);
-			}else{
-				arrayQuotas.add(temp);
+			HashMap<Integer,ArrayList<Quota>> response = new HashMap<Integer, ArrayList<Quota>>();
+			
+			List<Quota> listQuotas = new ArrayList<Quota>();
+			QuotasDB quotaDB = new QuotasDB();
+			OptionDB optionDB = new OptionDB();
+			
+			listQuotas = quotaDB.getListQuotasByQuestionnarie(idQuestionnarie);
+			
+			Quota quotaOld=null;
+			ArrayList<Quota> arrayQuotas = null;
+			for (Quota temp : listQuotas) {
+				temp.setValueProgress(quotaDB.getCountResponses(temp.getIdQuestion(),temp.getIdOptionsGroup(),temp.getIdOption()));
+				temp.setNameOption(quotaDB.getNameOptionForIDOption(survey.getDefaultLanguage(),temp.getIdOption()));
+				temp.setNameQuestion(quotaDB.getNameQuestionForIDQuestion(survey.getDefaultLanguage(),temp.getIdQuestion()));
+				
+				if(quotaOld==null || (temp.getIdQuestion()!=quotaOld.getIdQuestion())){
+					arrayQuotas = new ArrayList<Quota>();
+					arrayQuotas.add(temp);
+					response.put(temp.getIdQuestion(), arrayQuotas);
+				}else{
+					arrayQuotas.add(temp);
+				}
+				
+				quotaOld = temp;
 			}
 			
-			quotaOld = temp;
+			
+			
+			return response;
+			
 		}
+	
+	public int getQuotasCompleteSurvey(int idQuestionnarie){
+		
+		int quotaCompleteSurvey = 0;
+		QuotasDB quotaDB = new QuotasDB();
+		
+		quotaCompleteSurvey = quotaDB.getCountSurveyCompletesAnonymous(idQuestionnarie);
 		
 		
-		
-		return response;
+		return quotaCompleteSurvey;
 		
 	}
+	
 
 }
