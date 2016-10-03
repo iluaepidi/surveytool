@@ -9,14 +9,19 @@ import org.codehaus.jettison.json.JSONObject;
 
 //import ilu.surveyengine.emailSender.EmailsToSend;
 import ilu.surveytool.databasemanager.AnonimousDB;
+import ilu.surveytool.databasemanager.LogicGoToDB;
+import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
+import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Response;
+import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class SurveyProcessHandler {
-
+	
 	public SurveyProcessHandler() {
 		// TODO Auto-generated constructor stub
 	}
@@ -27,6 +32,71 @@ public class SurveyProcessHandler {
 		if(lang == null || lang.isEmpty()) lang = "en";
 		Survey survey = surveyDB.getQuestionnairesByPublicId(publicId, lang);
 		return survey;
+	}
+
+	public int getPageNumber(int surveyId, int numPage, String action, JSONObject json, int anonimousUser, String lang)
+	{
+		//System.out.println("In getPageNumber ("+numPage+"): "+json);
+		int page = -1;
+		
+		SectionDB sectionDB = new SectionDB();
+		int numSection = 0;
+		List<Section> sections = sectionDB.getSectionsBySurveyId(surveyId, lang, null);
+		if (sections!=null && !sections.isEmpty())
+			numSection = sections.get(0).getSectionId();
+		
+		ResponsesDB responsesDB = new ResponsesDB();
+		responsesDB.insertNewPage(numPage, anonimousUser, numSection);
+		
+		
+		
+		
+		if (action.equals("next")){
+			//Select the goTos related to the questions/responses in the current page
+			try{
+				JSONArray questions = json.getJSONObject("page").getJSONArray("questions");
+				int questionId = 0;
+				int ogid = 0;
+				int oid = 0;
+				
+				
+				
+				for (int i = 0; i < questions.length(); i++) {
+					//System.out.println(i+","+((questions.getJSONObject(i)).getString("questionType")));
+					if (((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)){
+						questionId = (questions.getJSONObject(i)).getInt("questionId");
+						JSONArray optionsGroup = (questions.getJSONObject(i)).getJSONArray("optionsGroups");
+						ogid = optionsGroup.getJSONObject(0).getInt("optionGroupId");
+						oid = Integer.parseInt(((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).getString("response")));
+						LogicGoToDB logicGoToDB = new LogicGoToDB();
+						int pageAux = logicGoToDB.getLogicGoToByQuestionId_OgId_OId(questionId, ogid, oid); 
+						if((page<0) || (page>=0 && pageAux<page))
+							page = pageAux;
+					}
+				 }
+				
+				if(page==-1){
+					//System.out.println("In page = -1");
+					page = numPage+1;
+				}
+				
+				return page;
+			}
+			catch(Exception e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				page = -1;
+			}
+		}
+		else{
+			List<Integer> previousPages = responsesDB.getVisitedPages(anonimousUser);
+			int index = 1;
+			while((previousPages.get(previousPages.size()-index) >= numPage))
+				index++;
+			page = previousPages.get(previousPages.size()-index);
+		}
+		
+		return page;
 	}
 
 	public JSONObject getCurrentPageJson(String publicId, int numSection, int numPage, String lang)
@@ -52,7 +122,6 @@ public class SurveyProcessHandler {
 	public boolean storeAnonimousResponse(int surveyId, List<Response> responses)
 	{
 		boolean stored = true;
-		
 		AnonimousDB anonimousDB = new AnonimousDB();
 		ResponsesDB responsesDB = new ResponsesDB();
 		int anonymousUserId = anonimousDB.insertAnonimousUser(surveyId);
@@ -69,6 +138,8 @@ public class SurveyProcessHandler {
 				/*EmailsToSend emailToSend = new EmailsToSend("en");
 				emailToSend.sendUserResponse(surveyId, anonymousUserId, responses);*/
 			}
+						
+			
 		}
 		
 		return stored;

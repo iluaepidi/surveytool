@@ -258,7 +258,7 @@ public class SurveyDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
 	   		pstm.setString(1, publicId);
-	   		
+	   		System.out.println("[SurveyDB-getQuestionnaireJson] "+DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID+", "+publicId);
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{

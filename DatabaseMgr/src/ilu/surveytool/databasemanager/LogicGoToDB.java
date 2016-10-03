@@ -117,7 +117,37 @@ public class LogicGoToDB {
 		
 		return exist;
 	}
-
+	
+	public int getLogicGoToByQuestionId_OgId_OId(int questionId, int ogid, int oid)
+	{
+		int pIdDest = -1;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LOGICGOTTO_BY_IDQUESTION_OGID_OID);			
+	   		pstm.setInt(1, questionId);
+	   		pstm.setInt(2, ogid);
+	   		pstm.setString(3, Integer.toString(oid));
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			pIdDest = rs.getInt(DBFieldNames.s_NUM_PAGE);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pIdDest;
+	}
+	
 	/**
 	 * Inserts 
 	 */

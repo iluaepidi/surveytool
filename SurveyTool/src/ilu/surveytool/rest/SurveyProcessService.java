@@ -24,6 +24,7 @@ import ilu.surveymanager.handler.OptionHandler;
 import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -40,7 +41,7 @@ public class SurveyProcessService {
     	System.out.println("SurveyProcess (responseProcess): " + req);
     	JSONObject json = null;
     	JSONObject response = new JSONObject();
-    	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);   	
+    	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE); 
     	
 		SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();
     	
@@ -67,9 +68,14 @@ public class SurveyProcessService {
 				int numPage = json.getJSONObject("page").getInt("numPage");	
 				String action = json.getString("action");
 				
-				if(action.equals("next")) numPage++;
-				else numPage--;
-				
+				//System.out.println("surveyid:"+json.getInt("surveyId"));
+				//System.out.println(" numPAge:"+ numPage);
+				//System.out.println(" action:"+ action);
+				//System.out.println(" json:"+json);
+				//System.out.println(" userId:"+ anonimousUser.getId());
+				//System.out.println(" lang:"+ lang.getCurrentLanguage());
+				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json, anonimousUser.getId(), lang.getCurrentLanguage());
+											
 				anonimousUser.setCurrentPage(numPage);
 				surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
 				

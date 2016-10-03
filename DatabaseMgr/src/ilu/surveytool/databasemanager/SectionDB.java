@@ -101,7 +101,7 @@ public class SectionDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_INDEX);			
 	   		pstm.setInt(1, surveyId);
 	   		pstm.setInt(2, numSection);
-	   		
+	   		//System.out.println("[SectionDB-getSectionJsonBySurveyId] "+DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_INDEX+", "+surveyId+" - "+numSection);
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
