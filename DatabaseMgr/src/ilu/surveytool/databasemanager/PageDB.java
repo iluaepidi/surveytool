@@ -87,7 +87,7 @@ public class PageDB {
 		return pages;
 	}
 
-	public JSONObject getPageJsonBySectionId(int sectionId, int numPage, String lang, String langdefault)
+	public JSONObject getPageJsonBySectionId(int userId, int sectionId, int numPage, String lang, String langdefault)
 	{
 		JSONObject page = new JSONObject();
 		
@@ -110,7 +110,7 @@ public class PageDB {
 	   			page.put("numPage", rs.getInt(DBFieldNames.s_NUM_PAGE));
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
-	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault));
+	   			page.put("questions", questionDB.getQuestionsJsonByPageId(userId, pageId, lang, langdefault));
 	   			
 	   		}
 	   		

@@ -247,7 +247,7 @@ public class SurveyDB {
 		return response;
 	}
 
-	public JSONObject getQuestionnaireJson(String publicId, int numSection, int numPage, String lang)
+	public JSONObject getQuestionnaireJson(int userId, String publicId, int numSection, int numPage, String lang)
 	{
 		JSONObject response = new JSONObject();
 		
@@ -258,7 +258,7 @@ public class SurveyDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
 	   		pstm.setString(1, publicId);
-	   		System.out.println("[SurveyDB-getQuestionnaireJson] "+DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID+", "+publicId);
+	   		//System.out.println("[SurveyDB-getQuestionnaireJson] "+DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID+", "+publicId);
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
@@ -275,7 +275,7 @@ public class SurveyDB {
 		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
 		   		
 		   		SectionDB sectionDB = new SectionDB();
-				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, numPage, lang, null));
+				response.put("section", sectionDB.getSectionJsonBySurveyId(userId, surveyId, numSection, numPage, lang, null));
 	   		}
 	   		
 	   } catch (SQLException e) {

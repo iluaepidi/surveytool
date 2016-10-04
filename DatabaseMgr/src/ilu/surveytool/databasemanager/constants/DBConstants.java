@@ -70,4 +70,8 @@ public class DBConstants {
 			public final static String s_VALUE_ROLNAME_USER = "user";	
 		//state
 			public final static String s_VALUE_SURVEY_STATE_STOP = "stop";
+			
+		//Dependence
+			public final static String s_VALUE_DEPENDENCETYPE_AND = "And";
+			public final static String s_VALUE_DEPENDENCETYPE_OR = "Or";
 }

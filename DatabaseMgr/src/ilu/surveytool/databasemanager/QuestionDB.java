@@ -23,6 +23,7 @@ import ilu.surveytool.databasemanager.DataObject.Option;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.QDependence;
+import ilu.surveytool.databasemanager.DataObject.QDependenceValue;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
 import ilu.surveytool.databasemanager.DataObject.Resource;
@@ -142,7 +143,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault)
+	public JSONArray getQuestionsJsonByPageId(int userId, int pageId, String lang, String langdefault)
 	{
 		JSONArray questions = new JSONArray();
 		
@@ -153,9 +154,9 @@ public class QuestionDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID);			
 	   		pstm.setInt(1, pageId);
-	   		
+	   		System.out.println("[QuestionDB-getQuestionsJsonByPageId] "+DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID+", pageId:"+pageId);
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionJsonArray(rs, lang, langdefault);
+	   		questions = this._getQuestionJsonArray(userId, rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1038,44 +1039,79 @@ public class QuestionDB {
 	}
 	
 
-	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault)
+	private JSONArray _getQuestionJsonArray(int userId, ResultSet rs, String lang, String langdefault)
 	{
 		JSONArray questions = new JSONArray();
 		
 		try
 		{
+			
 			while(rs.next())
 	   		{
-				JSONObject question = new JSONObject();
-	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
-	   			ContentDB contentDB = new ContentDB();	   			
-	   			question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+userId+", lang:"+lang+", langdefault:"+langdefault);
+				int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+				boolean hidden = false;
 				
-	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
-	   			question.put("parameters", questionParameterDB.getQuestionParameterJSONByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID)));
-	   			
-	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
-	   			question.put("questionId", questionId); 
-	   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
-	   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
-	   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
-	   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
-	   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
-	   			
-	   			question.put("index", rs.getInt(DBFieldNames.s_INDEX));
-	   			
-	   			OptionDB optionDB = new OptionDB();
-	   			
-	   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault);
-	   			question.put("optionsGroups", optionsGroups);
-	   			
-	   			if(optionsGroups.length() == 0) question.put("response", "");  
-	   			
-	   			ResourceDB resourceDB = new ResourceDB();
-	   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));
-	   			
-	   			questions.put(question);
-	   			
+				QDependenceDB qDependeceDB = new QDependenceDB();
+				QDependence qdependence = qDependeceDB.getQDependenceByQuestionIdWithoutTexts(questionId);
+				
+				if(qdependence!=null && !qdependence.getqdepval().isEmpty()){
+					System.out.println("There are dependences realted to this question: "+questionId);
+					ResponsesDB responsesDB = new ResponsesDB();
+					
+					if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){
+						hidden = true;
+					}
+					else{
+						hidden = false;
+					}
+						
+					System.out.println("The dependence type is: "+qdependence.getDependenceType()+", so hidden="+hidden);
+					for(QDependenceValue qdepval:qdependence.getqdepval()){
+						System.out.println("Check the answer:"+qdepval.getQid()+", "+qdepval.getOgid()+", "+Integer.toString(qdepval.getOid()));
+						if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){
+							hidden = hidden && responsesDB.haveExpectedAnswer(userId, qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()));
+						}
+						else{
+							hidden = hidden || responsesDB.haveExpectedAnswer(userId, qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()));
+						}
+					}
+					System.out.println("Final value of hidden:"+hidden);
+				}
+
+				if(!hidden){
+					
+					JSONObject question = new JSONObject();
+		   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+		   			ContentDB contentDB = new ContentDB();	   			
+		   			question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+					
+		   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+		   			question.put("parameters", questionParameterDB.getQuestionParameterJSONByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID)));
+		   			
+		   			
+		   			question.put("questionId", questionId); 
+		   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
+		   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+		   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
+		   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
+		   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
+		   			
+		   			question.put("index", rs.getInt(DBFieldNames.s_INDEX));
+		   			
+		   			OptionDB optionDB = new OptionDB();
+		   			
+		   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault);
+		   			question.put("optionsGroups", optionsGroups);
+		   			
+		   			if(optionsGroups.length() == 0) question.put("response", "");  
+		   			
+		   			ResourceDB resourceDB = new ResourceDB();
+		   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));
+		   			System.out.print("Add the question: "+questions.length());
+		   			questions.put(question);
+		   			System.out.print(" --> "+questions.length());
+				}
 	   		}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

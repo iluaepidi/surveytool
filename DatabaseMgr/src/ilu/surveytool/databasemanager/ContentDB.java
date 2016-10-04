@@ -191,7 +191,7 @@ public class ContentDB {
 	public HashMap<String, Content> getLongContentByIdAndLanguage(int contentId, String lang, String langdefault)
 	{
 		HashMap<String, Content> contents = new HashMap<String, Content>();
-		System.out.println("new question");
+		//System.out.println("new question");
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null, pstm2 = null;
 		ResultSet rs = null,rs2 = null;

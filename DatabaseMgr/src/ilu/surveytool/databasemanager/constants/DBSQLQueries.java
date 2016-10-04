@@ -26,11 +26,11 @@ public class DBSQLQueries {
 			+ "where idQuestionnaire = ? order by idAnonimousUser";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
-					+ "if(qt.name = 'simple', "
-					+ "(SELECT c.text FROM surveytool.`option` as o "
-					+ "inner join surveytool.content as c on o.idContent = c.idContent "
-					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
-					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "if(qt.name = 'simple', "
+				+ "(SELECT c.text FROM surveytool.`option` as o "
+				+ "inner join surveytool.content as c on o.idContent = c.idContent "
+				+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+				+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
 				+ "FROM surveytool.anonimoususer as au "
 				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
@@ -44,6 +44,10 @@ public class DBSQLQueries {
 				+"inner join surveytool.page p on p.idPage = q.idPage where ar.idAnonimousUser = ? order by r.timestamp";
 	
 		public final static String s_SELECT_VISITED_PAGES = "SELECT p.numPage, ap.timestamp FROM surveytool.anonimouspages ap inner join surveytool.page p on p.idPage = ap.idPage where ap.idAnonimousUser = ? order by ap.timestamp";
+		
+		public final static String s_SELECT_EXPECTED_ANSWER = "select r.idResponse from surveytool.anonimousresponse ar "
+				+"inner join surveytool.responses r on r.idResponse = ar.idResponse "
+				+"where ar.idAnonimousUser = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
 		
 		//Content
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
@@ -373,7 +377,12 @@ public class DBSQLQueries {
 				+"inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
 				+"inner join surveytool.content contentOption on opt.idContent=contentoption.idContent "
 				+"where qd.idQuestion = ? and contentQuestion.idContentType = 1 and contentOption.idContentType = 1  and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)  and contentOption.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)";
-						
+			
+		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_NOTEXT = "select qd.idQDependences, dt.name depType, qdv.idQuestion, qdv.idOptionsGroup, qdv.optionValue from surveytool.qdependences qd "
+				+"inner join surveytool.qdependencesvalue qdv on qdv.idQDependences = qd.idQDependences "
+				+"inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
+				+"where qd.idQuestion = ?";
+		
 		public final static String s_SELECT_QDEPENDENCEID_BY_QUESTIONID_LANG = "SELECT qd.idQDependences FROM surveytool.qdependences qd where qd.idQuestion = ?";
 		
 		public final static String s_SELECT_COUNT_QDEPENDENCESVALUE = "SELECT count(*) count FROM surveytool.qdependencesvalue "
@@ -381,7 +390,7 @@ public class DBSQLQueries {
 		
 		public final static String s_SELECT_IDQDEPENDENCE_FROM_QDEPENDENCESVALUE = "SELECT idQDependences FROM surveytool.qdependencesvalue "
 				+"where idDependenceItem = ?";
-
+		
 		//LogicGoTo
 		public final static String s_SELECT_LOGICGOTTO_BY_IDQUESTION = "SELECT goto.idOptionsGroup, goto.optionValue, contentOption.text oText, goto.idQuestionDest, contentQuestion.text qText FROM surveytool.questionlogicgoto goto "
 				+"inner join surveytool.option opt on opt.idOption = CAST(goto.optionValue AS UNSIGNED) "

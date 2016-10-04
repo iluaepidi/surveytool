@@ -63,7 +63,7 @@ public class SurveyProcessHandler {
 				
 				for (int i = 0; i < questions.length(); i++) {
 					//System.out.println(i+","+((questions.getJSONObject(i)).getString("questionType")));
-					if (((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)){
+					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
 						questionId = (questions.getJSONObject(i)).getInt("questionId");
 						JSONArray optionsGroup = (questions.getJSONObject(i)).getJSONArray("optionsGroups");
 						ogid = optionsGroup.getJSONObject(0).getInt("optionGroupId");
@@ -99,11 +99,11 @@ public class SurveyProcessHandler {
 		return page;
 	}
 
-	public JSONObject getCurrentPageJson(String publicId, int numSection, int numPage, String lang)
+	public JSONObject getCurrentPageJson(int userId, String publicId, int numSection, int numPage, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		if(lang == null || lang.isEmpty()) lang = "en";
-		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, numPage, lang);
+		JSONObject survey = surveyDB.getQuestionnaireJson(userId, publicId, numSection, numPage, lang);
 		return survey;
 	}
 	
