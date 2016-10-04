@@ -258,7 +258,7 @@ public class SurveyDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
 	   		pstm.setString(1, publicId);
-	   		
+	   		//System.out.println("[SurveyDB-getQuestionnaireJson] "+DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID+", "+publicId);
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
@@ -464,8 +464,36 @@ public class SurveyDB {
 		
 		return projectId;
 	}
+
+	public List<Integer> getQuestionnairesIdByProjectId(int projectId)
+	{
+		List<Integer> surveysId = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_ID_BY_PUBLICID);			
+	   		pstm.setInt(1, projectId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			surveysId.add(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return surveysId;
+	}
 	
-	public Integer getQuestionnairesIdByProjectId(String publicId)
+	public Integer getQuestionnaireIdByPublicId(String publicId)
 	{
 		Integer surveyId = null;
 		

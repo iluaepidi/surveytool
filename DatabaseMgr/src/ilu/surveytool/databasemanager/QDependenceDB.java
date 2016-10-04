@@ -138,6 +138,55 @@ public class QDependenceDB {
 		return qDependenceId;
 	}
 	
+	public QDependence getQDependenceByQuestionIdWithoutTexts(int questionId)
+	{
+		QDependence qDependence = null;
+		List<QDependenceValue> qDependenceValue = new ArrayList<QDependenceValue>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTIONID_NOTEXT);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			if(qDependence == null){
+	   				qDependence = new QDependence(
+	   						rs.getInt(DBFieldNames.s_IDQDEPENDENCE),
+		   					0,
+		   					0,
+		   					rs.getString(DBFieldNames.s_DEPENDENCETYPE),
+		   					new ArrayList<QDependenceValue>()
+		   					);
+	   				
+	   			}
+	   			
+	   			qDependenceValue.add(new QDependenceValue(
+	   					0,
+	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
+	   					0,
+	   					"",
+	   					rs.getInt(DBFieldNames.s_OPTIONSGROUPID),
+	   					rs.getInt(DBFieldNames.s_DEPENDENCEOPTIONID),
+	   					""));
+	   		}
+	   		
+	   		if(qDependence != null)
+	   			qDependence.setqdepval(qDependenceValue);
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return qDependence;
+	}
 	
 	public int getCountQDependenceValue(int qDependenceId)
 	{

@@ -136,7 +136,8 @@ public class ContentDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
 	   		pstm.setInt(1, contentId);
 	   		pstm.setString(2, lang);
-	   		
+
+	   		//System.out.println("[ContentDB-getContentJsonByIdAndLanguage] "+DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE+", "+contentId+" - "+lang);
 	   		String text = "";
 	   		
 	   		rs = pstm.executeQuery();
@@ -159,7 +160,7 @@ public class ContentDB {
 	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
 		   		pstm2.setInt(1, contentId);
 		   		pstm2.setString(2, langdefault);
-		   		
+		   		//System.out.println("[ContentDB-getContentJsonByIdAndLanguage] default - "+DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE+", "+contentId+" - "+langdefault);
 		   		rs2 = pstm2.executeQuery();
 		   		while(rs2.next())
 		   		{
@@ -215,7 +216,7 @@ public class ContentDB {
 	public HashMap<String, Content> getLongContentByIdAndLanguage(int contentId, String lang, String langdefault)
 	{
 		HashMap<String, Content> contents = new HashMap<String, Content>();
-		System.out.println("new question");
+		//System.out.println("new question");
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null, pstm2 = null;
 		ResultSet rs = null,rs2 = null;
@@ -236,23 +237,23 @@ public class ContentDB {
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
-	   			System.out.println("Recorriendo los contents (contentID:"+contentId+"): contentName-"+rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)+", index-"+rs.getInt(DBFieldNames.s_INDEX)+", text-" + rs.getString(DBFieldNames.s_CONTENT_TEXT));
-	   			System.out.println("Previous: typename-"+typename+", contentType-"+contentType+", text-"+text);
+	   			//System.out.println("Recorriendo los contents (contentID:"+contentId+"): contentName-"+rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)+", index-"+rs.getInt(DBFieldNames.s_INDEX)+", text-" + rs.getString(DBFieldNames.s_CONTENT_TEXT));
+	   			//System.out.println("Previous: typename-"+typename+", contentType-"+contentType+", text-"+text);
 	   			if(typename.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME))){
-	   				System.out.println("In if(typename.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
+	   				//System.out.println("In if(typename.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
 	   				if(text!=null && !text.equals("")){
-	   					System.out.println("In if(text!=null && !text.equals(empty))");
+	   					//System.out.println("In if(text!=null && !text.equals(empty))");
 	   					contenttext = contenttext + rs.getString(DBFieldNames.s_CONTENT_TEXT);
 	   					text = text + rs.getString(DBFieldNames.s_CONTENT_TEXT);
 		   			}
 	   				index = rs.getInt(DBFieldNames.s_INDEX);
 	   			}
 	   			else{
-	   				System.out.println("In else");
+	   				//System.out.println("In else");
 	   				if(!contentType.equals("")){
-	   					System.out.println("In if(!contentType.equals(empty))");
+	   					//System.out.println("In if(!contentType.equals(empty))");
 	   					if(text!=null && !text.equals("")){
-	   						System.out.println("In if(text!=null && !text.equals(empty))");
+	   						//System.out.println("In if(text!=null && !text.equals(empty))");
 		   					contents.put(contentType, new Content(contentId, lang, 
 				   					typename, 
 				   					contenttext));
@@ -260,7 +261,7 @@ public class ContentDB {
 	   					contentType = "";
 	   				}
 	   				
-	   					System.out.println("In second else");
+	   					//System.out.println("In second else");
 	   					contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 			   			text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
 			   			typename = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
@@ -271,7 +272,7 @@ public class ContentDB {
 	   		}
 
 	   		if((text==null || text.equals(""))&&langdefault!=null){
-	   			System.out.println("In language by default");
+	   			//System.out.println("In language by default");
 	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_LONG_CONTENT_BY_ID_LANGUAGE);			
 		   		pstm2.setInt(1, contentId);
 		   		pstm2.setString(2, langdefault);
@@ -290,15 +291,15 @@ public class ContentDB {
 		   				index = rs2.getInt(DBFieldNames.s_INDEX);
 		   			}
 		   			else{
-		   				System.out.println("In else");
+		   				//System.out.println("In else");
 		   				if(!contentType.equals("")){
-		   					System.out.println("In if(!contentType.equals(empty))");
+		   					//System.out.println("In if(!contentType.equals(empty))");
 			   				contents.put(contentType, new Content(contentId, lang, 
 			   						contentType, 
 				   					text));
 			   				contentType = "";
 		   				}
-		   					System.out.println("In second else");
+		   					//System.out.println("In second else");
 				   			contentType = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 				   			index = rs2.getInt(DBFieldNames.s_INDEX);
 				   			text = rs2.getString(DBFieldNames.s_CONTENT_TEXT);
@@ -306,21 +307,21 @@ public class ContentDB {
 		   			}
 		   		}
 		   		if(!contentType.equals("")){
-		   			System.out.println("In if(!contentType.equals(empty))");
+		   			//System.out.println("In if(!contentType.equals(empty))");
 		   			contents.put(contentType, new Content(contentId, lang, 
 	   						contentType, 
 		   					text));
 		   		}
 	   		}else{
-	   			System.out.println("In final else: contents.put(contentType-"+contentType+", new Content(contentId-"+contentId+", lang-"+lang+", typename-"+typename+",	contenttext-"+contenttext+")");
-	   			System.out.println("contents length before:"+contents.size());
+	   			//System.out.println("In final else: contents.put(contentType-"+contentType+", new Content(contentId-"+contentId+", lang-"+lang+", typename-"+typename+",	contenttext-"+contenttext+")");
+	   			//System.out.println("contents length before:"+contents.size());
 	   			contents.put(contentType, new Content(contentId, lang, 
 	   					typename, 
 	   					contenttext));
-	   			System.out.println("contents length after:"+contents.size());
+	   			//System.out.println("contents length after:"+contents.size());
 	   		}
 	   		
-	   		System.out.println("Out of all at the end of the method");
+	   		//System.out.println("Out of all at the end of the method");
 	   		/*for(int i=0;i<contents.size();i++)
 	   			System.out.println(contents.get(i));
 	   		*/

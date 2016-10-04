@@ -239,7 +239,6 @@ public class ResponsesDB {
 		
 		return count;
 	}
-
 	
 	public HashMap<Integer,Boolean> getQuestionsID_Mandatory_BySurveyId(int surveyId)
 	{
@@ -394,7 +393,7 @@ public class ResponsesDB {
 	   			response = true;
 	   		}
 	   		
-	   } catch (SQLException e) {
+	    } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -403,7 +402,95 @@ public class ResponsesDB {
 		
 		return response;
 	}
+	
+	public boolean haveExpectedAnswer(int userId, int questionId, int optionsGroupId, String value){
+		boolean expectedAnswer = false;
 		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_EXPECTED_ANSWER);			
+			pstm.setInt(1, userId);
+			pstm.setInt(2, questionId);
+		   	pstm.setInt(3, optionsGroupId);
+		   	pstm.setString(4, value);
+		   	
+		   	rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			expectedAnswer = true;
+	   		}
+	   	 	   		
+ 	    } catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} finally {
+ 			this._closeConnections(con, pstm, rs);
+ 		}
+ 		
+ 		return expectedAnswer;
+ 	}
+
+	public List<Integer> getAnsweredPages(int anonimousUserId)
+	{
+		List<Integer> numPages = new ArrayList<Integer>();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANSWERED_PAGES);			
+		   	pstm.setInt(1, anonimousUserId);
+		   		
+		   	rs = pstm.executeQuery();
+		   	int previousNum = -1;
+	  		while(rs.next())
+	   		{
+	   			if (rs.getInt(DBFieldNames.s_NUM_PAGE)!=previousNum)
+	   				numPages.add(rs.getInt(DBFieldNames.s_NUM_PAGE));
+	   		}
+	   		
+	    } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return numPages;
+	}
+	
+	public List<Integer> getVisitedPages(int anonimousUserId)
+	{
+		List<Integer> numPages = new ArrayList<Integer>();
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_VISITED_PAGES);			
+		   	pstm.setInt(1, anonimousUserId);
+		   		
+		   	rs = pstm.executeQuery();
+		   	int previousNum = -1;
+	   		while(rs.next())
+	   		{
+	   			if (rs.getInt(DBFieldNames.s_NUM_PAGE)!=previousNum)
+	   				numPages.add(rs.getInt(DBFieldNames.s_NUM_PAGE));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return numPages;
+	}
+	
 	/**
 	 * Inserts 
 	 */
@@ -486,4 +573,55 @@ public class ResponsesDB {
 
 	}
 	
+	
+	public int insertContentIndex() {
+		//System.out.println("inserUser");
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_CONTENT_INDEX, Statement.RETURN_GENERATED_KEYS);
+		   
+		   boolean notInserted = pstm.execute();
+		   
+		   if(!notInserted)
+		   {
+			   ResultSet rs = pstm.getGeneratedKeys();
+			   if(rs.next())
+				   contentId = rs.getInt(1);
+		   }
+		  		  	   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return contentId;
+	}
+	
+	public void insertNewPage(int numPage, int idAnonimousUser, int sectionId){
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_RESPONSE_PAGES_ANONIMOUS);
+		   PageDB pageDB = new PageDB();
+		   int idPage = pageDB.getPageIdBySectionIdNumPage(sectionId, numPage);
+		   System.out.println("idPage: "+ idPage +", sectionId: "+ sectionId +", numPage: "+ numPage);
+		   pstm.setInt(1, idPage);
+		   pstm.setInt(2, idAnonimousUser);
+		   
+		   
+		   pstm.execute();
+			  		  	   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+	}
 }

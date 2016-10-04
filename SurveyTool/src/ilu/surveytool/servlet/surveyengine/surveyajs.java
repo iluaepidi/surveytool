@@ -18,6 +18,7 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.SurveyDB;
+import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -62,12 +63,12 @@ public class surveyajs extends HttpServlet {
 		
 		AnonimousUser anonimousUser = new AnonimousUser();
 		anonimousUser.setIpAddress(request.getRemoteAddr());
-		anonimousUser.setSurveyId(surveyDB.getQuestionnairesIdByProjectId(sid));
+		anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
 		anonimousUser.setCurrentPage(1);
 		anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
 		request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 		
-		System.out.println("SID: " + sid + " - Language: " + language);
+		//System.out.println("SID: " + sid + " - Language: " + language);
 		Language lang = new Language(getServletContext().getRealPath("/")); 
 		lang.loadLanguage(language); 
 		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
@@ -75,6 +76,7 @@ public class surveyajs extends HttpServlet {
 		//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
 		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, 1, anonimousUser, language);
 		System.out.println("Json: " + survey.toString());
+
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
 		String surveyTitle = "";
 		//if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
