@@ -1049,8 +1049,16 @@ public class QuestionDB {
 	   		{
 				JSONObject question = new JSONObject();
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
-	   			ContentDB contentDB = new ContentDB();	   			
-	   			question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   			ContentDB contentDB = new ContentDB();	
+	   			String questionType = rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME);
+	   			if(questionType.equals("bcontent"))
+	   			{
+	   				question.put("contents", contentDB.getLongContentJsonByIdAndLanguage(contentId, lang, null));
+	   			}
+	   			else
+	   			{
+	   				question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   			}
 				
 	   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
 	   			question.put("parameters", questionParameterDB.getQuestionParameterJSONByPageIDQuestionID(rs.getInt(DBFieldNames.s_PAGE_ID), rs.getInt(DBFieldNames.s_QUESTION_ID)));
@@ -1058,7 +1066,7 @@ public class QuestionDB {
 	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
 	   			question.put("questionId", questionId); 
 	   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
-	   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+	   			question.put("questionType", questionType);
 	   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
 	   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
 	   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));

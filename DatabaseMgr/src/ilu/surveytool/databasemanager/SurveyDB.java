@@ -265,11 +265,15 @@ public class SurveyDB {
 	   			//response = new JSONObject();
 	   			response.put("project", rs.getString(DBFieldNames.s_PROJECT_NAME));
 	   			response.put("publicId", publicId);
+	   			response.put("lang", lang);
 	   				   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			int surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
 
 	   			response.put("surveyId", surveyId);
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			response.put("numPages", pageDB.getNumPagesBySurveyId(surveyId));
 	   			
 	   			ContentDB contentDB = new ContentDB();
 		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
@@ -282,9 +286,9 @@ public class SurveyDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} finally {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			this._closeConnections(con, pstm, rs);
 		}
 		
@@ -461,24 +465,23 @@ public class SurveyDB {
 		return projectId;
 	}
 	
-	public List<Integer> getQuestionnairesIdByProjectId(int projectId)
+	public Integer getQuestionnairesIdByProjectId(String publicId)
 	{
-		List<Integer> projectsId = new ArrayList<Integer>();
+		Integer surveyId = null;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_PROJECTID);			
-	   		pstm.setInt(1, projectId);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_ID_BY_PUBLICID);			
+	   		pstm.setString(1, publicId);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
-	   			projectsId.add(rs.getInt(DBFieldNames.s_PROJECTID));
-	   		}
-	   		
+	   			surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+	   		}	   		
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -487,7 +490,7 @@ public class SurveyDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return projectsId;
+		return surveyId;
 	}
 	
 	public Project getProjectByName(String name)

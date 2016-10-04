@@ -56,11 +56,12 @@ CREATE TABLE `anonimoususer` (
   `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idQuestionnaire` int(11) DEFAULT NULL,
   `ipAddres` varchar(45) NOT NULL DEFAULT '0',
-  `currentPage` int(11) DEFAULT '1',
+  `currentPage` int(11) NOT NULL DEFAULT '1',
+  `finished` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAnonimousUser`),
   KEY `fk_AnonimousUser_Questionnaire1_idx` (`idQuestionnaire`),
   CONSTRAINT `fk_AnonimousUser_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

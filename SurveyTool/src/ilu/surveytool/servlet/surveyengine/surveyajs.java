@@ -17,6 +17,7 @@ import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -54,12 +55,14 @@ public class surveyajs extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		SurveyDB surveyDB = new SurveyDB();
 		String sid = request.getParameter(Parameter.s_SID);
 		String language = request.getParameter(Parameter.s_LANGUAGE_SURVEY);
 		SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();
 		
 		AnonimousUser anonimousUser = new AnonimousUser();
 		anonimousUser.setIpAddress(request.getRemoteAddr());
+		anonimousUser.setSurveyId(surveyDB.getQuestionnairesIdByProjectId(sid));
 		anonimousUser.setCurrentPage(1);
 		anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
 		request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
@@ -83,6 +86,7 @@ public class surveyajs extends HttpServlet {
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
+		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
 		jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
 		jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));

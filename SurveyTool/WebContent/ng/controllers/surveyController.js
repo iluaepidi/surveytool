@@ -1,4 +1,4 @@
-var app = angular.module('survey', ['surveyService', 'youtube-embed']);
+var app = angular.module('survey', ['surveyService', 'youtube-embed', 'ngSanitize']);
 
 app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'survey', function($scope, $http, $window, $filter, survey) {
 	
@@ -97,6 +97,38 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	
 	$scope.nextPage = function(action) {
 		$scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
+	};
+
+	$scope.showStartButton = function() {
+		if($scope.currentSurvey.info.section.page.numPage == 1)
+		{
+			var show = true;
+			$scope.currentSurvey.info.section.page.questions.forEach(function(q){
+				show = show && (q.questionType === 'bcontent');
+			});
+			console.log("ShowStartButton: " + show);
+			return show;
+		}
+		else
+		{
+			return false;
+		}
+	};
+
+	$scope.showEndButton = function() {
+		if($scope.currentSurvey.info.section.page.numPage == $scope.currentSurvey.info.numPages)
+		{
+			var show = true;
+			$scope.currentSurvey.info.section.page.questions.forEach(function(q){
+				show = show && (q.questionType === 'bcontent');
+			});
+			console.log("ShowEndButton: " + show + " - numPage: " + $scope.currentSurvey.info.section.page.numPage + " - numPages: " + $scope.currentSurvey.info.numPages);
+			return show;
+		}
+		else
+		{
+			return false;
+		}
 	};
 
 }]);

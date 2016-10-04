@@ -44,6 +44,8 @@ function getResponseJson(currentSurvey, action)
 	var response = {};
 	response.publicId = currentSurvey.info.publicId;
 	response.surveyId = currentSurvey.info.surveyId;
+	response.lang = currentSurvey.info.lang;
+	response.numPages = currentSurvey.info.numPages;
 	response.action = action;
 	response.page = {};
 	response.page.numPage = currentSurvey.info.section.page.numPage;

@@ -1553,3 +1553,6 @@ footer {margin-top: 10px;
 .quotaremovebtn{
 	color: #B60000 !important;
 }
+
+.num-pages {text-align: center;
+    font-size: 1.3em;}

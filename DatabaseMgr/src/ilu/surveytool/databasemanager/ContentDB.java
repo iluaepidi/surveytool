@@ -186,6 +186,31 @@ public class ContentDB {
 		
 		return contents;
 	}
+	public JSONArray getLongContentJsonByIdAndLanguage(int contentId, String lang, String langdefault)
+	{
+		JSONArray contentsJson = new JSONArray();
+		
+		try
+		{
+			HashMap<String, Content> contents = this.getLongContentByIdAndLanguage(contentId, lang, langdefault);
+			for(String contentType : contents.keySet())
+			{
+				JSONObject contentJson = new JSONObject();
+				Content content = contents.get(contentType);
+				contentJson.put("contentId", content.getContentId());
+				contentJson.put("lang", content.getLanguage());
+				contentJson.put("contentType", content.getContentType());
+				contentJson.put("text", content.getText());
+				contentsJson.put(contentJson);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		
+		return contentsJson;
+	}
 	
 	public HashMap<String, Content> getLongContentByIdAndLanguage(int contentId, String lang, String langdefault)
 	{

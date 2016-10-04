@@ -42,7 +42,7 @@ public class SurveyProcessHandler {
 	public AnonimousUser existAnonimousUser(AnonimousUser anonimousUser)
 	{		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		AnonimousUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(anonimousUser.getIpAddress());
+		AnonimousUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(anonimousUser.getSurveyId(), anonimousUser.getIpAddress());
 		if(anonimousUser2 != null)
 		{
 			anonimousUser = anonimousUser2;

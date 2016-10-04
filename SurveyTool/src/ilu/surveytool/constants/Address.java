@@ -38,6 +38,7 @@ public class Address {
 		public final static String s_JS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesAccesiblesYoutubeIframes";
 		public final static String s_JS_YOUTUBE_IFRAME_API = "youtubeIframe";
 		public final static String s_JS_ANGULAR = "angular";
+		public final static String s_JS_ANGULAR_SANITIZE = "angularSanitize";
 		public final static String s_JS_ANGULAR_ROUTER = "angularRouter";
 		public final static String s_JS_YOUTUBE_IFRAME_ANGULAR_API = "youtubeIframeApi";
 		public final static String s_JS_YOUTUBE_ANGULAR_EMBED = "youtubeAlgunar";

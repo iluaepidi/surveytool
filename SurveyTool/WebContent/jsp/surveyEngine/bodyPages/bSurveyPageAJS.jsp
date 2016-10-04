@@ -62,8 +62,15 @@
 	  							
 	  						</div>
 	  						<div class="btn-submit-page">
-	  							<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
-	  							<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
+	  							<div class="col-md-3">
+	  								<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
+	  							</div>
+	  							<div class="col-md-6 num-pages"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</div>
+	  							<div class="col-md-3">
+	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="!showStartButton() && !showEndButton()" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
+	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="showStartButton()" ng-click='nextPage("next")'><%= lang.getContent("button.start") %></button>
+	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="showEndButton()" ng-click='nextPage("next")'><%= lang.getContent("button.end") %></button>
+	  							</div>
 	  						</div>
 	  					</form>
 	  				</div>

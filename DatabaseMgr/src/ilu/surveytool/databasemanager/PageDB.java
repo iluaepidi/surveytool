@@ -316,7 +316,63 @@ public class PageDB {
 		
 		return pages;
 	}
-	
+
+	public int getNumPagesBySectionId(int sectionId)
+	{
+		int numPages = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUM_PAGE_BY_SECTIONID);			
+	   		pstm.setInt(1, sectionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			numPages = rs.getInt(DBFieldNames.s_NUM_ELEMENTS);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return numPages;
+	}
+
+	public int getNumPagesBySurveyId(int surveyId)
+	{
+		int numPages = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUM_PAGES_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			numPages = rs.getInt(DBFieldNames.s_NUM_ELEMENTS);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return numPages;
+	}
+
 	/**
 	 * Inserts 
 	 */
@@ -349,34 +405,6 @@ public class PageDB {
 		}
 		
 		return pageId;
-	}
-
-	public int getNumPagesBySectionId(int sectionId)
-	{
-		int numPages = 0;
-		
-		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		   
-		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUM_PAGE_BY_SECTIONID);			
-	   		pstm.setInt(1, sectionId);
-	   		
-	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
-	   			numPages = rs.getInt(DBFieldNames.s_NUM_ELEMENTS);	   			
-	   		}
-	   		
-	   } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this._closeConnections(con, pstm, rs);
-		}
-		
-		return numPages;
 	}
 
 	/**

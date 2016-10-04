@@ -15,7 +15,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
 				+ "where idQuestionnaire = ? order by idAnonimousUser";
-		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS = "SELECT * FROM surveytool.anonimoususer where ipAddres = ?";
+		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
 			+ "FROM surveytool.anonimoususer as au "
@@ -116,6 +116,11 @@ public class DBSQLQueries {
 				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
 				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
 				+ "WHERE q.idQuestionnaire = ?  and p.numPage > ? order by p.numPage";
+		public final static String s_SELECT_NUM_PAGES_BY_SURVEYID = "SELECT DISTINCT COUNT(p.idPage) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page AS p "
+				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
+				+ "WHERE q.idQuestionnaire = ? order by p.numPage";
 		
 		//poll
 		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title, (SELECT count(*) FROM surveytool.responses where idPoll = p.idPoll) numResp  "
@@ -297,6 +302,7 @@ public class DBSQLQueries {
 				+ "where publicId = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_CONTENTID = "SELECT idContent FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PROJECTID = "SELECT idProject FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
+		public final static String s_SELECT_QUESTIONNAIRE_ID_BY_PUBLICID = "SELECT idQuestionnaire FROM surveytool.questionnaire WHERE publicId = ?";
 		public final static String s_SELECT_QUESTIONNAIRESID_BY_PROJECTID = "SELECT idQuestionnaire FROM surveytool.questionnaire WHERE idProject = ?";
 		public final static String s_SELECT_NUMQUESTIONS_QUESTIONNAIRE_SURVEYID = "SELECT count(*) count, q.mandatory from forma f "
 				+"inner join section s on s.idForma = f.idForma "

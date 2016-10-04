@@ -60,7 +60,7 @@ public class AnonimousDB {
 	 */
 	
 
-	public AnonimousUser getAnonimousUserByIpAddress(String ipAddress)
+	public AnonimousUser getAnonimousUserByIpAddress(int surveyId, String ipAddress)
 	{
 		AnonimousUser anonimousUser = null;
 		
@@ -69,8 +69,9 @@ public class AnonimousDB {
 		ResultSet rs = null;
 		
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID);			
 	   		pstm.setString(1, ipAddress);
+	   		pstm.setInt(2, surveyId);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())

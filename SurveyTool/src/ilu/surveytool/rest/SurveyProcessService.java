@@ -2,6 +2,7 @@ package ilu.surveytool.rest;
 
 import java.io.File;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -36,19 +37,28 @@ public class SurveyProcessService {
 	@Path("/responseProcess")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    public String responseProcess(String req, @Context HttpServletRequest request) {
+    public String responseProcess(String req, @Context HttpServletRequest request, @Context ServletContext context) {
     	System.out.println("SurveyProcess (responseProcess): " + req);
+    	System.out.println("Request (responseProcess): " + request.getRequestURL());
     	JSONObject json = null;
     	JSONObject response = new JSONObject();
-    	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);   	
-    	
-		SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();
     	
     	try {
+        	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
+			SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();    	    	
 			json = new JSONObject(req);
+			
+	    	if(lang ==  null)
+	    	{
+	    		lang = new Language(context.getRealPath("/")); 
+	    		lang.loadLanguage(json.getString("lang")); 
+	    		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
+	    	}    	   	
+	    	
 			AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
 			if(anonimousUser == null)
 			{
+				anonimousUser = new AnonimousUser();
 				anonimousUser.setIpAddress(request.getRemoteAddr());
 				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
 			}
