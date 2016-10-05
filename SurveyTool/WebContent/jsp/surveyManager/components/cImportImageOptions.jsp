@@ -28,14 +28,19 @@
 								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>
 								        </div>
-										<div class="form-group">
+								        
+								        <div class="form-group">
 								            <label for="resourceTitle"><%= lang.getContent("file.import.label.title") %></label>
 								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
-								        </div>
+								        	<span  id='resourceTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  								<span id='resourceTitle-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+										</div>
 								        <div class="form-group">									            
 								            <label for="resourceAltText"><%= lang.getContent("file.import.label.alt") %></label>
 								            <textarea rows="2" id="resourceAltText" name="resourceAltText" class="form-control" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
-								        </div>
+								        	<span  id='resourceAltText-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  								<span id='resourceAltText-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+										</div>
 					  					
 										<div class="center">
 											<button name="upload" id="btnImportFile" class="btn btn-primary"><%= lang.getContent("button.import") %></button> 

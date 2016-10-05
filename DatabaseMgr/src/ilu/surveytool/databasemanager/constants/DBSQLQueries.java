@@ -139,7 +139,8 @@ public class DBSQLQueries {
 				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
 				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
 				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
-				+ "WHERE q.idQuestionnaire = ? order by p.numPage";
+				+ "WHERE q.idQuestionnaire = ? order by p.numPage";		
+		public final static String s_SELECT_NUM_QUESTIONS_BY_PAGEID = "select count(*) count from surveytool.questionbypage where idPage=?";
 		
 		//poll
 		public final static String s_SELECT_POLL_TABLE_INFO = "SELECT p.idPoll, p.deadLineDate, p.publicId, c.text title, (SELECT count(*) FROM surveytool.responses where idPoll = p.idPoll) numResp  "
@@ -550,7 +551,7 @@ public class DBSQLQueries {
 		//QDependences
 			public final static String s_UPDATE_QDEPENDENCE_SHOW = "UPDATE `surveytool`.`qdependences` SET show=? WHERE idQDependences = ?";
 			public final static String s_UPDATE_QDEPENDENCE_DEPENDENCETYPE = "UPDATE `surveytool`.`qdependences` SET idDependenceType=(SELECT idDependenceType FROM surveytool.dependencetype where name = ?) WHERE idQDependences = ?";
-			public final static String s_UPDATE_QDEPENDENCEVALUE_QUESTION = "UPDATE `surveytool`.`qdependencesvalue` SET idQuestion=?, `idOptionsGroup`=?, `optionValue`=? WHERE idQDependences = ?";
+			public final static String s_UPDATE_QDEPENDENCEVALUE_QUESTION = "UPDATE `surveytool`.`qdependencesvalue` SET idQuestion=?, `idOptionsGroup`=?, `optionValue`=? WHERE idDependenceItem = ?";
 		//LogicGoTo
 			public final static String s_UPDATE_LOGICGOTTO = "UPDATE surveytool.questionlogicgoto SET idQuestionDest = ? WHERE idQuestion = ? AND idOptionsGroup = ? AND optionValue = ? AND idQuestionnaire = (SELECT forma.idQuestionnaire from surveytool.question question "
 				+ "inner join surveytool.questionbypage qbp on qbp.idQuestion = question.idQuestion "

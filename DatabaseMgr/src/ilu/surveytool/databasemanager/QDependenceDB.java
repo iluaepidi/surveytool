@@ -317,10 +317,14 @@ public class QDependenceDB {
 	 * Update
 	 */
 	
-	public boolean updateQDependence(int idQDependences, int idQuestion, int idOptionsGroup, int idOption, String type) {
-		boolean result = updateQDependenceType(idQDependences, type);
+	public boolean updateQDependence(int idQDependences, int idDependenceItem, int idQuestion, int idOptionsGroup, int idOption, String type) {
+		boolean result = true;
+		
+		if(!type.equals(""))
+			result = updateQDependenceType(idQDependences, type);
+		
 		if(result)
-			result = updateQDependenceQuestion(idQDependences, idQuestion, idOptionsGroup, idOption);
+			result = updateQDependenceQuestion(idDependenceItem, idQuestion, idOptionsGroup, idOption);
 		
 		return result;
 	}
@@ -354,8 +358,8 @@ public class QDependenceDB {
 		   
 	}
 	
-	public boolean updateQDependenceQuestion(int idQDependences, int idQuestion, int idOptionsGroup, int idOption) {
-		//System.out.println("updateState");
+	public boolean updateQDependenceQuestion(int idDependenceItem, int idQuestion, int idOptionsGroup, int idOption) {
+		System.out.println("updateState: idDependenceItem"+idDependenceItem+", idQuestion"+idQuestion+", idOptionsGroup"+idOptionsGroup+", idOption"+idOption);
 		boolean updated = false;
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -365,7 +369,7 @@ public class QDependenceDB {
 			pstm.setInt(1, idQuestion);
 			pstm.setInt(2, idOptionsGroup);
 			pstm.setInt(3, idOption);
-			pstm.setInt(4, idQDependences);
+			pstm.setInt(4, idDependenceItem);
 		   		
 			int numUpdated = pstm.executeUpdate();
 			

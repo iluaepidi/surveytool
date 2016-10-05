@@ -3,6 +3,7 @@
 <%@page import="org.codehaus.jettison.json.JSONObject"%>
 <%@page import="org.codehaus.jettison.json.JSONArray"%> 
 <%@page import="ilu.surveytool.databasemanager.DataObject.Option"%>
+<%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.LogicGoTo"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.QDependence"%>
@@ -89,8 +90,13 @@
 							  											<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
 								  										<div class="form-group"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition hidden">
+								  												<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
 								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
 								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%} else{%>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%}%>
 								  											</select>
 								  										</div>
 																		<label for="dependence-question-<%= i %>" class="dependence-question-label">
@@ -112,8 +118,13 @@
 																		<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
 								  										<div class="form-group"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition">
-								  												<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%} else{%>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%}%>
 								  											</select>
 								  										</div>
 								  										<label for="dependence-question-<%= i %>" class="dependence-question-label hidden">
@@ -136,8 +147,13 @@
 							  											<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
 								  										<div class="form-group"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition hidden">
-								  												<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%} else{%>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  											<%}%>
 								  											</select>
 								  										</div>
 								  										<label for="dependence-question-<%= i %>" class="dependence-question-label hidden">

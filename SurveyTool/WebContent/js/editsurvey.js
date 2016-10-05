@@ -575,7 +575,7 @@ $(function() {
 			req.resourceType = type;
 			
 			if(type === "image")
-			{
+			{				
 				req.action = "options";
 				req.resourceAltText = $('#resourceAltText').val();
 				req.rid = $('#rid').val();
@@ -1087,12 +1087,14 @@ $(function() {
 								  (item.closest("ul").find("li:nth-child(3)")).find("#fieldset-dependence").removeClass("fieldset-second-dependence");	
 								  
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
+								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").val((item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").val());
 								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
 								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
 							  }
 							  else if(item.closest("ul").find("li:nth-child(3)").attr("index") == elementId.split("/")[1]){
 								  console.log("Tercer hijo");
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
+								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").val((item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").val());
 								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
 								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
 							  }

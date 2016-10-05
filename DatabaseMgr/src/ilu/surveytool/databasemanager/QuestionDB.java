@@ -1042,11 +1042,11 @@ public class QuestionDB {
 
 	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object anonimousUser)
 	{
-		JSONArray questions = new JSONArray();
+		JSONArray questions = new JSONArray();		
 		
 		try
 		{
-			
+			int numBodyContents = 0;
 			while(rs.next())
 	   		{
 				
@@ -1106,7 +1106,9 @@ public class QuestionDB {
 		   			//int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
 		   			question.put("questionId", questionId); 
 		   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
-		   			question.put("questionType", questionType);
+		   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+		   			if(rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME).equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT))
+		   				numBodyContents=numBodyContents+1;
 		   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
 		   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
 		   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
@@ -1147,6 +1149,14 @@ public class QuestionDB {
 		   			
 				}
 	   		}
+			
+			System.out.println(questions);
+			int numQuestions = getNumQuestionByPage(((AnonimousUser) anonimousUser).getId());
+			if((numBodyContents==questions.length()) && (questions.length()<numQuestions)){
+				System.out.println("All hidden minus bodyContent");
+				questions = new JSONArray();
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
