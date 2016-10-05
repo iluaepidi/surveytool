@@ -115,19 +115,19 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		}
 	};
 
-	$scope.showEndButton = function() {
+	$scope.showButtonLastPage = function() {
 		if($scope.currentSurvey.info.section.page.numPage == $scope.currentSurvey.info.numPages)
 		{
 			var show = true;
 			$scope.currentSurvey.info.section.page.questions.forEach(function(q){
 				show = show && (q.questionType === 'bcontent');
 			});
-			console.log("ShowEndButton: " + show + " - numPage: " + $scope.currentSurvey.info.section.page.numPage + " - numPages: " + $scope.currentSurvey.info.numPages);
-			return show;
+			//console.log("ShowEndButton: " + show + " - numPage: " + $scope.currentSurvey.info.section.page.numPage + " - numPages: " + $scope.currentSurvey.info.numPages);
+			return !show;
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	};
 

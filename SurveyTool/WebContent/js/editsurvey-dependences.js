@@ -138,8 +138,13 @@ $(function() {
 		if(value != 'none')
 		{
 			console.log("Tranatndo de cambiar el options");
-			var questionParam = value.split("-");			
-			var question = $.grep(surveyTree[parseInt(questionParam[0]) - 1].questions, function( n, i ) {
+			var questionParam = value.split("-");	
+			
+			var page = $.grep(surveyTree, function( n, i ) {
+				return n.pageId === parseInt(questionParam[0]);
+			})[0];
+			
+			var question = $.grep(page.questions, function( n, i ) {
 				return n.questionId===parseInt(questionParam[1]);
 			})[0];
 			

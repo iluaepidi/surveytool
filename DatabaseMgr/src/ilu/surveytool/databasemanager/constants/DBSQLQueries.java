@@ -510,8 +510,9 @@ public class DBSQLQueries {
 			public final static String s_INSERT_QUOTA = "INSERT INTO `surveytool`.`quotas` (`idQuestionnaire`, `idQuestion`, `idOptionsGroup`,`value`,`maxResponses`,`minResponses`) VALUES (?, ?, ?, ?, ?, ?)";
 
 	//updates
-		//optionsGroup
+		//anonymous user
 			public final static String s_UPDATE_ANONIMOUSUSER_CURRET_PAGE = "UPDATE `surveytool`.`anonimoususer` SET `currentPage`=? WHERE `idAnonimousUser`=?";
+			public final static String s_UPDATE_ANONIMOUSUSER_FINISHED = "UPDATE `surveytool`.`anonimoususer` SET `finished`=? WHERE `idAnonimousUser`=?";
 		//content
 			public final static String s_UPDATE_CONTENT_TEXT = "UPDATE `surveytool`.`content` SET `text`= ? "
 					+ "WHERE `idContent`= ? "

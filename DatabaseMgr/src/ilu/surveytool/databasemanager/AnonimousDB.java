@@ -124,6 +124,35 @@ public class AnonimousDB {
 		return updated;
 		   
 	}
+
+	public boolean updateAnonimousUserFinished(int anonimousUserId, boolean finished) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_ANONIMOUSUSER_FINISHED);
+			pstm.setBoolean(1, finished);
+			pstm.setInt(2, anonimousUserId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
 	
 	
 	/**

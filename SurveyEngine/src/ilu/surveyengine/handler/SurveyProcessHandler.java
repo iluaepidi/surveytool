@@ -228,6 +228,12 @@ public class SurveyProcessHandler {
 		AnonimousDB anonymousDB = new AnonimousDB();
 		return anonymousDB.updateAnonimousUserCurrentPage(anonimousUserId, currentPage);
 	}
+
+	public boolean updateAnonimousUserFinished(int anonimousUserId, boolean finished)
+	{
+		AnonimousDB anonymousDB = new AnonimousDB();
+		return anonymousDB.updateAnonimousUserFinished(anonimousUserId, finished);
+	}
 	
 	private boolean _storeAnonymousResponse(Response response, int anonymousUserId, int surveyId)
 	{

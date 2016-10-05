@@ -48,9 +48,9 @@
 	  					<h2>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h2>	  					
 	  				</div>	  				
 	  				<div class="content">
-	  					<form name="survey" role="form">
+	  					<form name="survey" role="form" ng-show="currentSurvey.info.section.page.questions">
 	  						
-	  						<div class="survey-form" >	  							
+	  						<div class="survey-form">	  							
 	  							<p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p>
 	  							
 	  							
@@ -63,16 +63,21 @@
 	  						</div>
 	  						<div class="btn-submit-page">
 	  							<div class="col-md-3">
-	  								<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
+	  								<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1 && showButtonLastPage()" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
 	  							</div>
-	  							<div class="col-md-6 num-pages"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</div>
+	  							<div class="col-md-6 num-pages"><div ng-show="showButtonLastPage()"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</div></div>
 	  							<div class="col-md-3">
-	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="!showStartButton() && !showEndButton()" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
+	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="!showStartButton() && showButtonLastPage()" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
 	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="showStartButton()" ng-click='nextPage("next")'><%= lang.getContent("button.start") %></button>
-	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="showEndButton()" ng-click='nextPage("next")'><%= lang.getContent("button.end") %></button>
+	  								
 	  							</div>
 	  						</div>
 	  					</form>
+	  					
+	  					<div ng-show="currentSurvey.info.isFinishPage">
+	  						<ng-include src="'jsp/surveyEngine/bodyPages/bSurveyFinishPage.jsp'"></ng-include>
+	  					</div>
+	  					
 	  				</div>
 	  			</div>
 	  			

@@ -78,14 +78,8 @@ public class SurveyProcessService {
 				int numPage = json.getJSONObject("page").getInt("numPage");	
 				String action = json.getString("action");
 				
-				//System.out.println("surveyid:"+json.getInt("surveyId"));
-				//System.out.println(" numPAge:"+ numPage);
-				//System.out.println(" action:"+ action);
-				//System.out.println(" json:"+json);
-				//System.out.println(" userId:"+ anonimousUser.getId());
-				//System.out.println(" lang:"+ lang.getCurrentLanguage());
 				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json, anonimousUser.getId(), lang.getCurrentLanguage());
-											
+				
 				anonimousUser.setCurrentPage(numPage);
 				surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
 				
@@ -93,6 +87,11 @@ public class SurveyProcessService {
 				response.put("page", survey);
 				
 				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+
+				if(numPage > json.getInt("numPages"))
+				{
+					surveyProcessHandler.updateAnonimousUserFinished(anonimousUser.getId(), true);
+				}
 			}
 						
 		} catch (JSONException e) {
