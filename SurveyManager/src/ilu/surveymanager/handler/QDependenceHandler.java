@@ -39,7 +39,7 @@ public class QDependenceHandler {
 				else if(qdepvalue.getItemId() >= 0)
 				{
 					System.out.println("Dentro de 'if(qdepvalue.getItemId() >= 0)'");
-					qDependenceDB.updateQDependence(qdependence.getId(), qdepvalue.getQid(), qdepvalue.getOgid(), qdepvalue.getOid(), qdependence.getDependenceType());
+					qDependenceDB.updateQDependence(qdependence.getId(), qdepvalue.getItemId(), qdepvalue.getQid(), qdepvalue.getOgid(), qdepvalue.getOid(), qdependence.getDependenceType());
 				}
 				else
 				{
@@ -65,6 +65,7 @@ public class QDependenceHandler {
 
 		if(id > 0)
 		{
+			System.out.println(id+", "+dependenceType);
 			qDependenceDB.updateQDependenceType(id, dependenceType);
 		}
 	}

@@ -78,12 +78,25 @@ public class SurveyProcessService {
 				int numPage = json.getJSONObject("page").getInt("numPage");	
 				String action = json.getString("action");
 				
-				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json, anonimousUser.getId(), lang.getCurrentLanguage());
-				
+				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json.getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage());
+											
 				anonimousUser.setCurrentPage(numPage);
 				surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
 				
 				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), 1, anonimousUser, lang.getCurrentLanguage());
+				System.out.println(survey);
+				
+				//The body content is a question, so this while considers that the final page contains one question (the body content with the thanks message)
+				while((survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){
+					numPage = survey.getJSONObject("section").getJSONObject("page").getInt("numPage");	
+					numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage());
+												
+					anonimousUser.setCurrentPage(numPage);
+					surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
+					
+					survey = surveyProcessHandler.getCurrentPageJson(survey.getString("publicId"), 1, anonimousUser, lang.getCurrentLanguage());
+					System.out.println("In while: "+survey);
+				}
 				response.put("page", survey);
 				
 				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
