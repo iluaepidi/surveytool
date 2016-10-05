@@ -17,9 +17,10 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Page"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Section"%>
-<%@page import="ilu.surveymanager.statistics.Statistics"%>
+<%@page import="ilu.surveymanager.statistics.Statistics"%> 
 <%@page import="ilu.surveymanager.statistics.StatisticsQuestion"%>
 <%@page import="ilu.surveymanager.handler.SurveysHandler"%>
+<%@page import="ilu.surveytool.databasemanager.DataObject.Quota"%>
 
 <script type="text/javascript">
 	surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
@@ -59,253 +60,348 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 						</ul>
 	  				</div>
 	  				
-	  				<div class="content-box-tabs edit-content">
-	  						
-	  						<div class="survey-statistics-title">
-		  						<div class="col-md-10 col-md-offset-2">
-		  							<h3> <%= titlesurvey %></h3>
-			  					</div>	
-		  					</div>	
+		<div class="content-box-tabs edit-content">
+				
+				<div class="survey-statistics-title">
+					<div class="col-md-10 col-md-offset-2">
+						<h3> <%= titlesurvey %></h3>
+					</div>	
+				</div>	
 	  						
 	  								
-<div id="statistics">
-	<div class="main-sidebar">
-		<ul class="sidebar-menu">
-        	<li class="treeview active" id="general-menu"><a href="#"><%= lang.getContent("statistics.menu.general")%></a></li>
-        	<li class="treeview">
-          		<span><%= lang.getContent("statistics.menu.questions")%></span>
-          		
-          		<select class="form-control" id="statistics-questions-menu">
-          			<option value="question-0" selected><%= lang.getContent("statistics.menu.default")%></option>
-          		<%
-          		for(Section section : survey.getSections()){
-					for(Page pag : section.getPages()){
-						for(Question question : pag.getQuestions()){
-							if(!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT)){
-								String title = "";
-								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-								}
-								%>
-								<option value="<%= "question-"+question.getQuestionId() %>"><%= title %></option>
-								<%
-							}
-						}
-					}
-				}
-          		%>
-				</select>
-        	</li> 
-      	</ul>
-  	</div>
-  	
-  <div class="content-wrapper">
-      <div class="content-statistics" id="general-info">
-	      <div class="row">
-	        <div class="col-md-4">
-	          <div class="small-box bg-aqua">
-	            <div class="inner">
-	              <h3 aria-hidden="true"><%= surveyStatistic.getNumVisits()%></h3>
-	              <p><%= lang.getContent("statistics.boxes.numStarted")%></p><span class="visuallyhidden">: <%= surveyStatistic.getNumVisits()%></span>
-	            </div>
-	          </div>
-	        </div>
-	        
-	        <div class="col-md-4">
-	          <div class="small-box bg-green">
-	            <div class="inner">
-	            	<h3 aria-hidden="true"><%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></h3>
-	              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></span>
-	            </div>
-	          </div>
-	        </div>
-	         
-	        <div class="col-md-4">
-	          <div class="small-box bg-red">
-	            <div class="inner">
-	               <%
-	            if(surveyStatistic.getNumVisits()>0){
-	            	//System.out.println(surveyStatistic.getNumCompleteMandatoryResponses());
-	            %>
-	              <h3 aria-hidden="true"><%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
-	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: <%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></span>
-	            <%
-	            } else{
-	            %>
-	              <h3 aria-hidden="true"> - <sup>%</sup></h3>
-	              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: 0%</span>
-	            <%
-	            }
-	            %>
-	              
-	            </div>
-	          </div>
-	        </div>
-	          
-	      </div>
-	      
-	      <div class="row">
-	      	<section class="col-md-6 connectedSortable ui-sortable">
-	      		<div class="nav-tabs-custom no-block">
-	            	<!-- Tabs within a box -->
-	            	<p class="graph-title  no-block"><%= lang.getContent("statistics.boxes.numStarted")%></p>
-	            	<span class="visuallyhidden">
-					<%
-							
-							String[][] data = surveyStatistic.groupVisitsByDay(10);
-							for(int i = 0; i<data.length;i++){
-								//System.out.println(i);
-								%>
-		        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numStarted")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
-		        		    	<%
-							}
-							%>
-					</span>
-	            	<div class="tab-content no-padding  no-block">
-						<div class="chart tab-pane active" id="visits-chart">
-		              		<canvas id="visits" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
-							<script>
-							
-								var labels = [];
-								var data = [];
-							<%
-							
-							for(int i = 0; i<data.length;i++){
-								//System.out.println(i);
-								%>
-		        		    	labels.push("<%=data[i][0]%>");
-		        		    	data.push(<%=data[i][1]%>);
-		        		    	<%
-							}
-							%>
-								  var data = {
-								    labels: labels,
-								    datasets: [
-								      {
-								        fillColor: "rgba(0,0,0,0)",
-								        strokeColor: "#007593",
-								        pointColor: "#007593",
-								        pointStrokeColor: "#fff",
-								        pointHighlightFill: "#fff",
-								        pointHighlightStroke: "#007593",
-								        data: data
-								      }
-								    ]
-								  };
-								
-								  var ctx = document.getElementById("visits").getContext("2d");
-								
-								  var myChart = new Chart(ctx).Line(data, {
-									  tooltipCaretSize: 0
-									  });
-								  
-							</script>
-						</div>	            	
-	            	
-		             
-		              </div>
-	            	</div>
-	      	</section>
-	      	<section class="col-md-6 connectedSortable ui-sortable">
-	      		<div class="nav-tabs-custom no-block">
-	            	<!-- Tabs within a box -->
-	            	<p class="graph-title no-block"><%= lang.getContent("statistics.boxes.numAnswers")%></p>
-	            	<span class="visuallyhidden">
-					<%
-					data = surveyStatistic.groupCompletedByDay(10);
-							for(int i = 0; i<data.length;i++){
-								//System.out.println(i);
-								%>
-		        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numAnswers")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
-		        		    	<%
-							}
-							%>
-					</span>
-	            	<div class="tab-content no-padding no-block">
-						<div class="chart tab-pane active" id="responses-chart">
-		              		<canvas id="responses" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
-							<script>
-							
-								var labels = [];
-								var dataMandatory = [];
-							<%
-							
-							
-							for(int i = 0; i<data.length;i++){
-								//System.out.println(i);
-								%>
-		        		    	labels.push("<%=data[i][0]%>");
-		        		    	dataMandatory.push(<%=data[i][1]%>);
-		        		    	<%
-							}
-							%>
-							
-							
-							
-							
-							 var data = {
-									    labels: labels,
-									    datasets: [
-									      {
-									        label: "<%= lang.getContent("statistics.boxes.numAnswersMand")%>",
-									        showInLegend: true,
-									        fillColor: "rgba(0,0,0,0)",
-									        strokeColor: "#00884b",
-									        pointColor: "#00884b",
-									        pointStrokeColor: "#fff",
-									        pointHighlightFill: "#fff",
-									        pointHighlightStroke: "#00884b",
-									        data: dataMandatory
-									      }
-									    ]
-									  };
 
-							 // Get the context of the canvas element we want to select
-									var ctx = document.getElementById("responses").getContext("2d");
-								  
-								  //don't forget to pass options in when creating new Chart
-								  var lineChart = new Chart(ctx).Line(data, {
-									  tooltipCaretSize: 0
-								  });
-									  
-									  
-							</script>
-						</div>	            	
-	            	
-		             
-		              </div>
-	          		</div>
-	      		</section>
-	    	</div>
-      	</div>
-      
- 		<% 
- 		String token = "/";
- 		for(Section section : survey.getSections()){
-					for(Page pag : section.getPages()){
-						for(Question question : pag.getQuestions()){
-							if(!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT)){
-								request.setAttribute(Attribute.s_QUESTION, question);
-								request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
-								//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
-	  							%>
-								<div class="content-statistics hidden" id="single-question-<%= question.getQuestionId() %>">
-	  								<jsp:include page="<%= token + question.getStatisticsPage() %>">
-										<jsp:param name="index" value="<%= question.getQuestionId() %>" />
-									</jsp:include>
-    							</div>
-								<%
-							}
-						}
-					}
-          		}
-          		%>     
-      	
-    
+				<div id="statistics">
+					<div class="main-sidebar">
+						<ul class="sidebar-menu">
+				        	<li class="treeview active" id="general-menu"><a href="#"><%= lang.getContent("statistics.menu.general")%></a></li>
+				        	<li class="treeview" id="quotas-menu"><a href="#"><%= lang.getContent("quotas.menu.general")%></a></li>
+				        	<li class="treeview">
+				          		<span><%= lang.getContent("statistics.menu.questions")%></span>
+				          		
+				          		<select class="form-control" id="statistics-questions-menu">
+				          			<option value="question-0" selected><%= lang.getContent("statistics.menu.default")%></option>
+				          		<%
+				          		for(Section section : survey.getSections()){
+									for(Page pag : section.getPages()){
+										for(Question question : pag.getQuestions()){
+											String title = "";
+											if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+												title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+											}
+											%>
+											<option value="<%= "question-"+question.getQuestionId() %>"><%= title %></option>
+											<%
+											}
+										}
+									}
+				          		%>
+								</select>
+				        	</li> 
+				      	</ul>
+				  	</div>
+				  	
+					  <div class="content-wrapper">
+					      <div class="content-statistics" id="general-info">
+						      <div class="row">
+						        <div class="col-md-4">
+						          <div class="small-box bg-aqua">
+						            <div class="inner">
+						              <h3 aria-hidden="true"><%= surveyStatistic.getNumVisits()%></h3>
+						              <p><%= lang.getContent("statistics.boxes.numStarted")%></p><span class="visuallyhidden">: <%= surveyStatistic.getNumVisits()%></span>
+						            </div>
+						          </div>
+						        </div>
+						        
+						        <div class="col-md-4">
+						          <div class="small-box bg-green">
+						            <div class="inner">
+						            	<h3 aria-hidden="true"><%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></h3>
+						              <p><%= lang.getContent("statistics.boxes.numAnswers")%></p><span class="visuallyhidden">: <%=(int)(surveyStatistic.getNumCompleteMandatoryResponses()) %></span>
+						            </div>
+						          </div>
+						        </div>
+						         
+						        <div class="col-md-4">
+						          <div class="small-box bg-red">
+						            <div class="inner">
+						               <%
+						            if(surveyStatistic.getNumVisits()>0){
+						            	//System.out.println(surveyStatistic.getNumCompleteMandatoryResponses());
+						            %>
+						              <h3 aria-hidden="true"><%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></h3>
+						              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: <%= (int)((surveyStatistic.getNumCompleteMandatoryResponses()*1.0/surveyStatistic.getNumVisits()*1.0)*100) %><sup>%</sup></span>
+						            <%
+						            } else{
+						            %>
+						              <h3 aria-hidden="true"> - <sup>%</sup></h3>
+						              <p><%= lang.getContent("statistics.boxes.bounceRateStarted")%></p><span class="visuallyhidden">: 0%</span>
+						            <%
+						            }
+						            %>
+						              
+						            </div>
+						          </div>
+						        </div>
+						          
+						      </div>
+						      
+						      <div class="row">
+						      	<section class="col-md-6 connectedSortable ui-sortable">
+						      		<div class="nav-tabs-custom no-block">
+						            	<!-- Tabs within a box -->
+						            	<p class="graph-title  no-block"><%= lang.getContent("statistics.boxes.numStarted")%></p>
+						            	<span class="visuallyhidden">
+										<%
+												
+												String[][] data = surveyStatistic.groupVisitsByDay(10);
+												for(int i = 0; i<data.length;i++){
+													//System.out.println(i);
+													%>
+							        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numStarted")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
+							        		    	<%
+												}
+												%>
+										</span>
+						            	<div class="tab-content no-padding  no-block">
+											<div class="chart tab-pane active" id="visits-chart">
+							              		<canvas id="visits" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+												<script>
+												
+													var labels = [];
+													var data = [];
+												<%
+												
+												for(int i = 0; i<data.length;i++){
+													//System.out.println(i);
+													%>
+							        		    	labels.push("<%=data[i][0]%>");
+							        		    	data.push(<%=data[i][1]%>);
+							        		    	<%
+												}
+												%>
+													  var data = {
+													    labels: labels,
+													    datasets: [
+													      {
+													        fillColor: "rgba(0,0,0,0)",
+													        strokeColor: "#007593",
+													        pointColor: "#007593",
+													        pointStrokeColor: "#fff",
+													        pointHighlightFill: "#fff",
+													        pointHighlightStroke: "#007593",
+													        data: data
+													      }
+													    ]
+													  };
+													
+													  var ctx = document.getElementById("visits").getContext("2d");
+													
+													  var myChart = new Chart(ctx).Line(data, {
+														  tooltipCaretSize: 0
+														  });
+													  
+												</script>
+											</div>	            	
+						            	
+							             
+							              </div>
+						            	</div>
+						      	</section>
+						      	<section class="col-md-6 connectedSortable ui-sortable">
+						      		<div class="nav-tabs-custom no-block">
+						            	<!-- Tabs within a box -->
+						            	<p class="graph-title no-block"><%= lang.getContent("statistics.boxes.numAnswers")%></p>
+						            	<span class="visuallyhidden">
+										<%
+										data = surveyStatistic.groupCompletedByDay(10);
+												for(int i = 0; i<data.length;i++){
+													//System.out.println(i);
+													%>
+							        		    	<%=data[i][0]%>, <%= lang.getContent("statistics.boxes.numAnswers")%>: <%=data[i][1]%><%if(i<data.length-1){%><%="\n"%><%}%>
+							        		    	<%
+												}
+												%>
+										</span>
+						            	<div class="tab-content no-padding no-block">
+											<div class="chart tab-pane active" id="responses-chart">
+							              		<canvas id="responses" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
+												<script>
+												
+													var labels = [];
+													var dataMandatory = [];
+												<%
+												
+												
+												for(int i = 0; i<data.length;i++){
+													//System.out.println(i);
+													%>
+							        		    	labels.push("<%=data[i][0]%>");
+							        		    	dataMandatory.push(<%=data[i][1]%>);
+							        		    	<%
+												}
+												%>
+												
+												
+												
+												
+												 var data = {
+														    labels: labels,
+														    datasets: [
+														      {
+														        label: "<%= lang.getContent("statistics.boxes.numAnswersMand")%>",
+														        showInLegend: true,
+														        fillColor: "rgba(0,0,0,0)",
+														        strokeColor: "#00884b",
+														        pointColor: "#00884b",
+														        pointStrokeColor: "#fff",
+														        pointHighlightFill: "#fff",
+														        pointHighlightStroke: "#00884b",
+														        data: dataMandatory
+														      }
+														    ]
+														  };
+					
+												 // Get the context of the canvas element we want to select
+														var ctx = document.getElementById("responses").getContext("2d");
+													  
+													  //don't forget to pass options in when creating new Chart
+													  var lineChart = new Chart(ctx).Line(data, {
+														  tooltipCaretSize: 0
+													  });
+														  
+														  
+												</script>
+											</div>	            	
+						            	
+							             
+							              </div>
+						          		</div>
+						      		</section>
+						    	</div>
+					      	</div>
+					      <div class="content-statistics hidden" id="quotas-info">
+					       		<div id="objetivequota" class="edit-quote-frame height200px">
+					       			<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees">
+														<div class="form-group nomargin">
+															<div class="form-group">
+												                <div class="col-md-8">     
+												                	<div class="form-group">
+												                		<h5 id="questionquotaname" class="quotaname">General Objetive</h5>
+												                	</div>
+												                </div>
+											            	</div>
+														</div>
+														
+														<%
+														int quotaTotalSurvey = (int)request.getAttribute(Attribute.s_TOTAL_SURVEY_COMPETE);
+														int quotaprogress = 100;
+														if(survey.getObjetive()>0){
+															quotaprogress = (int)(((double)(((double)quotaTotalSurvey) / ((double)survey.getObjetive())))*100.00);
+														}
+														
+														if(quotaprogress>100)quotaprogress=100;
+														
+														String colorProgressgeneral = "";
+														
+														if(quotaTotalSurvey==survey.getObjetive()){
+															colorProgressgeneral="progress-bar-success";
+														}
+
+														%>
+														<div class="form-group col-md-8 quotaresultobjetiveajust">
+															<% if(survey.getObjetive()>0){ %>
+							                					<div class="with100pc">
+							                						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1">max <%=survey.getObjetive()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>
+							                					</div>
+						                					<% } %>
+						                					<div class="with100pc">
+						                						<span class="pull-left">0</span>
+						                						<span class="pull-right"></span>
+						                					</div>
+						                 					<div class="progress quotaresultprogressdiv">
+						                 						<div class="progress-bar <%=colorProgressgeneral%>" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
+												    			<%=quotaTotalSurvey %> surveys
+												    			</div>
+															</div>
+						                 				</div>
+										                 			
+										                	
+									</div>
+					       		</div>
+					       		
+					       		
+					       		<%
+					       		HashMap<Integer,ArrayList<Quota>> listQuotas = (HashMap<Integer,ArrayList<Quota>>) request.getAttribute(Attribute.s_LIST_QUOTAS_RESULTS);
+							 	Quota quota=null;
+					       		if(listQuotas.size()>0){ %>
+						       <div id="listcompletequotas" class="edit-quote-frame">
+			  						<ul class="survey-sections overflowhidden" id="survey-sections">
+			  								
+								 	<%  
+								 								 	
+								 	for (Integer key : listQuotas.keySet()) {
+								 	  	ArrayList<Quota> listQ = listQuotas.get(key);%>
+								 			<div class="survey-info quotadiv" id="survey-quota-<%=listQ.get(0).getIdQuestion() %>" sid="<%=listQ.get(0).getIdQuestionnaire() %>" quota="<%=listQ.get(0).getIdQuestion() %>">
+													<li class="displayblock">
+										
+													<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees" qid="<%=listQ.get(0).getIdQuestion() %>" sid="<%=listQ.get(0).getIdQuestionnaire() %>">
+														<div class="form-group nomargin">
+															<div class="form-group">
+												                <div class="col-md-8">     
+												                	<div class="form-group">
+												                		<h5 id="questionquotaname<%=listQ.get(0).getIdQuestion() %>" class="quotaname"><%=listQ.get(0).getNameQuestion() %></h5>
+												                	</div>
+												                </div>
+											            	</div>
+														</div>
+														<div id="optionsquota<%=listQ.get(0).getIdQuestion() %>" class="optionsquota" ogid="<%=listQ.get(0).getIdOptionsGroup() %>">
+															<%for(Quota q : listQ){%>
+																<% request.setAttribute("quota",q);%>
+																<jsp:include page='../components/cQuotaResult.jsp'/>
+															
+															<%}%>
+														</div>
+													</div>					
+												</li>
+											</div>	
+								 		
+								 		<% } %>
+								 			
+								 				
+							 			
+								 	
+								 			
+								 			
+									</ul>
+			  					</div>
+			  					
+			  					<%} %>
+					       </div>
+					 		<% 
+					 		String token = "/";
+					 		for(Section section : survey.getSections()){
+										for(Page pag : section.getPages()){
+											for(Question question : pag.getQuestions()){
+												request.setAttribute(Attribute.s_QUESTION, question);
+												request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
+												//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
+						  							%>
+													<div class="content-statistics hidden" id="single-question-<%= question.getQuestionId() %>">
+						  								<jsp:include page="<%= token + question.getStatisticsPage() %>">
+															<jsp:param name="index" value="<%= question.getQuestionId() %>" />
+														</jsp:include>
+					    							</div>
+													<%
+											}
+										}
+					          		}
+					          		%>     
+					      	
+					    
+						</div>
+					</div>
 	</div>
-</div>
 	</div>
-	  			</div>
 <%
 lang.close();
 %>

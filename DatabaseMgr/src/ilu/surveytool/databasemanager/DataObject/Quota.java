@@ -8,6 +8,10 @@ public class Quota {
 	private int idOption;
 	private int maxResponses;
 	private int minResponses;
+	//result quota
+	private int valueProgress;
+	private String nameQuestion;
+	private String nameOption;
 	
 	public int getIdQuestionnaire() {
 		return idQuestionnaire;
@@ -50,5 +54,23 @@ public class Quota {
 	public String toString() {
 		return "Quota [idQuestionnaire=" + idQuestionnaire + ", idQuestion=" + idQuestion + ", idOptionsGroup=" + idOptionsGroup + ", idOption="
 				+ idOption + ", maxResponses="+ maxResponses + ", minResponses="+ minResponses + "]";
+	}
+	public int getValueProgress() {
+		return valueProgress;
+	}
+	public void setValueProgress(int valueProgress) {
+		this.valueProgress = valueProgress;
+	}
+	public String getNameQuestion() {
+		return nameQuestion;
+	}
+	public void setNameQuestion(String nameQuestion) {
+		this.nameQuestion = nameQuestion;
+	}
+	public String getNameOption() {
+		return nameOption;
+	}
+	public void setNameOption(String nameOption) {
+		this.nameOption = nameOption;
 	}
 }

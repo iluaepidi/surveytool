@@ -26,8 +26,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				%>
 
 <div class="survey-info quotadiv" id="survey-quota-new" sid="survey-quota-new" quota="survey-quota-new" style="display:none;">
-		  							<ul class="survey-sections overflowhidden" id="survey-sections">
-			  						<li class="displayblock">
+		  							<li class="displayblock">
 			  						<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees" qid="" sid="<%=survey.getSurveyId()%>">
 			  							<div class="form-group nomargin">
 			  								<div class="form-group">
@@ -62,5 +61,4 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<button class="btn-transparent btn-remove quotaremovebtn" id="removeQuota" aria-label="Remove question: question typo formField"><i class="fa fa-trash fa-2x"></i></button>
 									</div>					
 									</li>
-								</ul>
 		  					</div>	

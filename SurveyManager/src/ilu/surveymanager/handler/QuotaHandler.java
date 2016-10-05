@@ -98,6 +98,32 @@ public class QuotaHandler {
 		return removed;
 	}
 	
+	public String deteleQuota(int idSurvey, Option option){
+		QuotasDB quotaDB = new QuotasDB();
+		JSONObject response = new JSONObject();
+		boolean removed = false;
+		
+		//Delete
+		quotaDB.removeQuota(idSurvey,option.getQid(), option.getOgid(), option.getOid());
+		
+		try {
+			response.put("result", true);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			response.put("oid", String.valueOf(option.getOid()));
+			response.put("max", 0);
+			response.put("min", 0);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return response.toString();
+	}
+	
 	public List<Quota> getListQuotas(int idQuestionnarie){
 		
 		List<Quota> listQuotas = new ArrayList<Quota>();
@@ -109,5 +135,55 @@ public class QuotaHandler {
 		return listQuotas;
 		
 	}
+	
+	
+	public HashMap<Integer,ArrayList<Quota>> getListQuotasResults(Survey survey){
+		
+			int idQuestionnarie = survey.getSurveyId();
+			
+			HashMap<Integer,ArrayList<Quota>> response = new HashMap<Integer, ArrayList<Quota>>();
+			
+			List<Quota> listQuotas = new ArrayList<Quota>();
+			QuotasDB quotaDB = new QuotasDB();
+			OptionDB optionDB = new OptionDB();
+			
+			listQuotas = quotaDB.getListQuotasByQuestionnarie(idQuestionnarie);
+			
+			Quota quotaOld=null;
+			ArrayList<Quota> arrayQuotas = null;
+			for (Quota temp : listQuotas) {
+				temp.setValueProgress(quotaDB.getCountResponses(temp.getIdQuestion(),temp.getIdOptionsGroup(),temp.getIdOption()));
+				temp.setNameOption(quotaDB.getNameOptionForIDOption(survey.getDefaultLanguage(),temp.getIdOption()));
+				temp.setNameQuestion(quotaDB.getNameQuestionForIDQuestion(survey.getDefaultLanguage(),temp.getIdQuestion()));
+				
+				if(quotaOld==null || (temp.getIdQuestion()!=quotaOld.getIdQuestion())){
+					arrayQuotas = new ArrayList<Quota>();
+					arrayQuotas.add(temp);
+					response.put(temp.getIdQuestion(), arrayQuotas);
+				}else{
+					arrayQuotas.add(temp);
+				}
+				
+				quotaOld = temp;
+			}
+			
+			
+			
+			return response;
+			
+		}
+	
+	public int getQuotasCompleteSurvey(int idQuestionnarie){
+		
+		int quotaCompleteSurvey = 0;
+		QuotasDB quotaDB = new QuotasDB();
+		
+		quotaCompleteSurvey = quotaDB.getCountSurveyCompletesAnonymous(idQuestionnarie);
+		
+		
+		return quotaCompleteSurvey;
+		
+	}
+	
 
 }

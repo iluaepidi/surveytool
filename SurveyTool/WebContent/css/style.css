@@ -579,6 +579,14 @@ footer {margin-top: 10px;
     text-align: center;
     min-height: 75px;}
     
+.edit-quote-frame {width: 100%;
+    margin: 10px auto;
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align: center;
+    min-height: 75px;
+    background-color: #ffffff;}
+    
 .edit-survey-head{margin: 10px auto;
     width: 70%;
     display: flex;
@@ -1517,6 +1525,14 @@ footer {margin-top: 10px;
 	width:100px !important;
 }
 
+.with100pc{
+	width:100% !important;
+}
+
+.height200px{
+	height: 200px !important;
+}
+
 .overflowhidden{
 	overflow: hidden;
 }
@@ -1539,7 +1555,7 @@ footer {margin-top: 10px;
 }
 
 .quotadiv{
-	border-bottom: 1px solid #ccc !important;
+	/*border-bottom: 1px solid #ccc !important;*/
 }
 
 .quotaname{
@@ -1556,3 +1572,68 @@ footer {margin-top: 10px;
 
 .num-pages {text-align: center;
     font-size: 1.3em;}
+
+.quotaresultoption{
+	border:0px;
+	font-size:16px;
+}
+
+.quotaresultoptiondiv1{
+	width: 100%  !important;
+	float: left  !important;
+	text-align: right  !important;
+}
+
+.quotaresultoptionspan1{
+	position: relative !important;
+	top: 8px !important;
+	left: 24px !important;
+}
+
+.quotaresultoptionspanmax{
+	position: relative !important;
+	top: 25px !important;
+	left:6px !important;
+}
+
+.quotaresultprogressdiv{
+	width: 100% !important;
+	margin-bottom:0px !important;
+}
+
+.quotaresultoptiondivmin{
+	width: 100% !important;
+	display: inline-block !important;
+	height: 12px !important;
+}
+.quotaresultoptiondivmin2{
+	float:left !important;
+	text-align: right !important;
+}
+.quotaresultoptiondivmin3{
+	float:left !important;
+	display:inline-flex !important;
+}
+
+.quotaresultoptiondivmintext{
+	width: 100% !important;
+	display: inline-block !important;
+}
+
+.quotaresultoptiondivmintext2{
+	width: 100% !important;
+	text-align: left !important;
+	position: relative !important;
+	left: -12px !important;
+}
+
+.quotaresultoptiondivmintext3{
+	display: inline-block !important;
+	width: 120px !important;
+	text-align: left !important;
+}
+
+.quotaresultobjetiveajust{
+	left:34% !important;
+	padding-right: 5% !important;
+}

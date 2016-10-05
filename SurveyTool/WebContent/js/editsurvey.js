@@ -259,8 +259,7 @@ $(function() {
 	$('.survey-sections').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
-		if($(this).val() != "")
-		{
+		//if($(this).val() != ""){
 			//console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
 			var currentNode = $(this);
@@ -308,7 +307,7 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
-		}
+		//}
 	});
 	
 	insertValueQuota();
@@ -470,6 +469,9 @@ $(function() {
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+		
+		
+		$(this).closest('ul').find('input[index=' + index + ']').trigger('focusout');
 	});
 	
 	
@@ -517,7 +519,6 @@ $(function() {
          
         
         //check option file or question file
-        
         
          //alert($('#optionsFile').hasClass('hidden'));
          if($('#optionsFile').hasClass('hidden') == true){
@@ -752,15 +753,15 @@ $(function() {
 		currentQuestion = -1;
 		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
 		
-		if(currentOption>0){
+		//if(currentOption>0){
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 			$('#importFile').modal();
-		}else{
-			alert("First, complete the option");
+		//}else{
+		//	alert("First, complete the option");
 			
 			
-		}
+		//}
 	});
 	
 		
@@ -1793,6 +1794,15 @@ $(function() {
 		var option = $(this).closest("ul.sidebar-menu").find("#statistics-questions-menu").val(noneText);
 	});
 	
+	$('.main-sidebar').on("click", "#quotas-menu", function(e){
+		
+		$('.content-statistics').addClass('hidden');
+		
+		var generalInfoDiv = $(this).closest("#statistics").find('div.content-wrapper').find('#quotas-info');
+		generalInfoDiv.removeClass('hidden');
+		
+	});
+	
 	$('.main-sidebar').on("change", "#statistics-questions-menu", function(e){
 		console.log("Change on statistics-questions-menu:"+$(this).val());
 		
@@ -1951,7 +1961,7 @@ function limit(element)
 
 function limitInput(element, max_chars)
 {
-console.log(max_chars);
+	console.log(max_chars);
     if(element.value.length >= max_chars) {
         element.value = element.value.substr(0, max_chars);
     }
@@ -1971,8 +1981,14 @@ function insertValueQuota(){
 			req.sid = currentNode.closest('.widthTitleSurveyCollapsed').attr('sid');
 			req.ogid = currentNode.closest('.optionsquota').attr('ogid');
 			
-			var max = $("#max"+req.oid).val();
-			var min = $("#min"+req.oid).val();
+			var max = Number($("#max"+req.oid).val());
+			var min = Number($("#min"+req.oid).val());
+			
+			if($("#max"+req.oid).val()!="" && min>max){
+				max = $("#min"+req.oid).val();
+				$("#max"+req.oid).val(max);
+			}
+			
 			
 			if(max=="")max=0;
 			if(min=="")min=0;
