@@ -34,7 +34,7 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 
-	public int getPageNumber(int surveyId, int numPage, String action, JSONObject json, int anonimousUser, String lang)
+	public int getPageNumber(int surveyId, int numPage, String action, JSONArray questions, int anonimousUser, String lang)
 	{
 		//System.out.println("In getPageNumber ("+numPage+"): "+json);
 		int page = -1;
@@ -54,7 +54,6 @@ public class SurveyProcessHandler {
 		if (action.equals("next")){
 			//Select the goTos related to the questions/responses in the current page
 			try{
-				JSONArray questions = json.getJSONObject("page").getJSONArray("questions");
 				int questionId = 0;
 				int ogid = 0;
 				int oid = 0;

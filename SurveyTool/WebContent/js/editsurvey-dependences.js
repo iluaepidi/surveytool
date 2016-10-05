@@ -137,11 +137,42 @@ $(function() {
 		
 		if(value != 'none')
 		{
-			console.log("Tranatndo de cambiar el options");
-			var questionParam = value.split("-");			
-			var question = $.grep(surveyTree[parseInt(questionParam[0]) - 1].questions, function( n, i ) {
+			console.log("Value not none");
+			
+			if($(this).closest("li.dependence-item").attr("index")>=0){
+				var root = $(this).closest("fieldset");
+				setDependence(root);
+				
+				$.ajax({ 
+					type: "POST",
+					dataType: "text",
+					contentType: "text/plain",
+					url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+					data: JSON.stringify(req),
+					success: function (data) {
+						console.log("Dentro del function: "+data);
+						var index = root.closest("li.dependence-item").attr("index");
+						root.closest("li.dependence-item").attr("index", index*(-1));
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						console.log(xhr.status);
+						console.log(thrownError);
+						console.log(xhr.responseText);
+						console.log(xhr);
+					}
+				});
+			}
+			
+			var questionParam = value.split("-");	
+			
+			var page = $.grep(surveyTree, function( n, i ) {
+				return n.pageId === parseInt(questionParam[0]);
+			})[0];
+			
+			var question = $.grep(page.questions, function( n, i ) {
 				return n.questionId===parseInt(questionParam[1]);
 			})[0];
+
 			
 			if(question.optionsGroup != null && question.optionsGroup.length > 0)
 			{
@@ -161,6 +192,7 @@ $(function() {
 		}
 		else
 		{
+			console.log("Value = none");
 			var root = $(this).closest("fieldset");
 			setDependence(root);
 		
@@ -187,7 +219,7 @@ $(function() {
 	
 	$(".survey-sections").on("change", "select.dependence-option", function(e){
 		var value = $(this).val();
-				
+		console.log("in on change");		
 		if(value != 'none')
 		{
 			

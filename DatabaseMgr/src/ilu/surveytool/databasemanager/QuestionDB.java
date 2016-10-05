@@ -156,7 +156,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		System.out.println("[QuestionDB-getQuestionsJsonByPageId] "+DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID+", pageId:"+pageId);
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionJsonArray(userId, rs, lang, langdefault);
+	   		questions = this._getQuestionJsonArray(pageId, userId, rs, lang, langdefault);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1039,13 +1039,13 @@ public class QuestionDB {
 	}
 	
 
-	private JSONArray _getQuestionJsonArray(int userId, ResultSet rs, String lang, String langdefault)
+	private JSONArray _getQuestionJsonArray(int pageId, int userId, ResultSet rs, String lang, String langdefault)
 	{
-		JSONArray questions = new JSONArray();
+		JSONArray questions = new JSONArray();		
 		
 		try
 		{
-			
+			int numBodyContents = 0;
 			while(rs.next())
 	   		{
 				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+userId+", lang:"+lang+", langdefault:"+langdefault);
@@ -1093,6 +1093,8 @@ public class QuestionDB {
 		   			question.put("questionId", questionId); 
 		   			question.put("tag", rs.getString(DBFieldNames.s_QUESTION_TAG));
 		   			question.put("questionType", rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+		   			if(rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME).equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT))
+		   				numBodyContents=numBodyContents+1;
 		   			question.put("mandatory", rs.getBoolean(DBFieldNames.s_QUESTION_MANDATORY));
 		   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
 		   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
@@ -1108,11 +1110,19 @@ public class QuestionDB {
 		   			
 		   			ResourceDB resourceDB = new ResourceDB();
 		   			question.put("resources", resourceDB.getResourcesJsonByQuestionId(questionId, lang));
-		   			System.out.print("Add the question: "+questions.length());
+		   			//System.out.print("Add the question: "+questions.length());
 		   			questions.put(question);
-		   			System.out.print(" --> "+questions.length());
+		   			//System.out.print(" --> "+questions.length());
 				}
 	   		}
+			
+			System.out.println(questions);
+			int numQuestions = getNumQuestionByPage(pageId);
+			if((numBodyContents==questions.length()) && (questions.length()<numQuestions)){
+				System.out.println("All hidden minus bodyContent");
+				questions = new JSONArray();
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
