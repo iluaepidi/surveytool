@@ -35,16 +35,16 @@ public class OptionService {
     }
 	
 	@DELETE
-	@Path("/{param}")
+	@Path("/{qid}/{ogid}/{oid}")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-    public String deleteOption(@PathParam("param") String optionId) {
-    	System.out.println("Opción: " + optionId);
+    public String deleteOption(@PathParam("qid") String questionId, @PathParam("ogid") String optionGroupId, @PathParam("oid") String optionId) {
+    	System.out.println("Opción: " + optionId + " - optionGroup: " + optionGroupId + " - quetion: " + questionId);
     	
     	String response = "false";
     	
     	OptionHandler optionHandler = new OptionHandler();
-    	response = String.valueOf(optionHandler.removeOption(Integer.parseInt(optionId)));
+    	response = String.valueOf(optionHandler.removeOption(Integer.parseInt(questionId), Integer.parseInt(optionGroupId), Integer.parseInt(optionId)));
     	
     	return response;
     }

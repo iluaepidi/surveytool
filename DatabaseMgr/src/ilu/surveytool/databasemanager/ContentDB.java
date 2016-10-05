@@ -49,7 +49,78 @@ public class ContentDB {
 	 * selects
 	 */
 	
-	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String language)
+	public HashMap<String, Content> getContentByIdAndLanguage(int contentId, String lang, String langdefault)
+	{
+		HashMap<String, Content> contents = new HashMap<String, Content>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null, pstm2 = null;
+		ResultSet rs = null,rs2 = null;
+		
+		if(lang==null)lang = langdefault;
+		
+		String text = "";
+		String typename = "";
+		String contenttext = "";
+		String contentType = "";
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
+	   		pstm.setInt(1, contentId);
+	   		pstm.setString(2, lang);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+	   			text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+	   			typename = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+	   			contenttext = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+	   			if(text!=null && !text.equals("")){
+		   			contents.put(contentType, new Content(contentId,lang,typename,contenttext));
+	   			}
+	   		}
+	   		
+	   		
+	   		if((text==null || text.equals(""))&&langdefault!=null){
+	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
+		   		pstm2.setInt(1, contentId);
+		   		pstm2.setString(2, langdefault);
+		   		
+		   		rs2 = pstm2.executeQuery();
+		   		while(rs2.next())
+		   		{
+		   			contentType = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+		   			text = rs2.getString(DBFieldNames.s_CONTENT_TEXT);
+		   				contents.put(contentType, new Content(contentId, lang, 
+			   					rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
+			   					rs2.getString(DBFieldNames.s_CONTENT_TEXT)));
+		   			
+		   		}
+	   		}else{
+	   			contents.put(contentType, new Content(contentId, lang, 
+	   					typename, 
+	   					contenttext));
+	   		}
+	   		
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contents;
+	}
+	
+
+	
+	/*
+	 * selects
+	 */
+	
+	public HashMap<String, Content> getContentByIdLanguageContentType(int contentId, String language, String contentType)
 	{
 		HashMap<String, Content> contents = new HashMap<String, Content>();
 		
@@ -58,18 +129,21 @@ public class ContentDB {
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
-	   		pstm.setInt(1, contentId);
-	   		pstm.setString(2, language);
-	   		
+			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE);
+	    	pstm.setInt(1, contentId);
+			pstm.setString(2, language); 
+			pstm.setString(3, contentType);
+			   
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
-	   			String contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 	   			contents.put(contentType, new Content(contentId, language, 
 	   					rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME), 
 	   					rs.getString(DBFieldNames.s_CONTENT_TEXT)));
+	   			
 	   		}
+	   		
+	   		
 	   		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -148,20 +222,25 @@ public class ContentDB {
 	}
 	
 	public boolean insertContent(int contentId, String language, String contentType, String text) {
-		//System.out.println("inserUser");
+		System.out.println("insertContent: [contentId: "+ contentId+", language: "+language+", contentType: "+contentType+", text: "+text+"]");
 		boolean inserted = false;
+		boolean notInserted = false;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
+	    if(getContentByIdLanguageContentType(contentId, language, contentType).isEmpty()){
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_CONTENT);
 		   pstm.setInt(1, contentId);
 		   pstm.setString(2, language); 
 		   pstm.setString(3, contentType); 
 		   pstm.setString(4, text);
 		   
-		   boolean notInserted = pstm.execute();
-		   
+		   notInserted = pstm.execute();
+	    }
+	    else
+	    	updateContentText(contentId, language, contentType, text);
+	    
 		   if(!notInserted)
 		   {
 			   inserted = true;
@@ -184,7 +263,7 @@ public class ContentDB {
 	public void updateContentText(int contentId, String language, String contentType, String text) {
 		//System.out.println("updateState");
 		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
+		PreparedStatement pstm = null,pstm2 = null;;
 		   
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_CONTENT_TEXT);
@@ -194,6 +273,12 @@ public class ContentDB {
 			pstm.setString(4, contentType);
 		   		
 			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated<1){
+				//es necesario insertarlo
+				this.insertContent(contentId, language, contentType, text);
+				
+			}
 					
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -217,6 +302,29 @@ public class ContentDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT);
 		   	pstm.setInt(1, contentId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeContentByTypeLang(int contentId, String language, String contentType) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT_BY_ID_TYPE_LANG);
+		   	pstm.setInt(1, contentId);
+			pstm.setString(2, language);
+			pstm.setString(3, contentType);
 	   		
 		   	pstm.execute();
 		   	

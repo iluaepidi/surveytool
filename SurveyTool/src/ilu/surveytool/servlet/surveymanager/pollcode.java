@@ -1,6 +1,9 @@
 package ilu.surveytool.servlet.surveymanager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +56,9 @@ public class pollcode extends HttpServlet {
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
 			String pid = request.getParameter(Parameter.s_PID);
+			List<String> jsFiles = new ArrayList<>();
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_EDIT_POLL));
+			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			request.setAttribute(Attribute.s_POLL_ID, pid);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_EXAMPLE_CODE));
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Poll example and code");

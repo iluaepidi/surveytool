@@ -13,6 +13,7 @@ public class Parameter {
 	public final static String s_ACTION = "action";
 	public final static String s_CALL_TEXT = "callText";
 	public final static String s_CID = "cid";
+	public final static String s_CONTENTS = "contents";
 	public final static String s_CONTENT_TYPE = "contentType";
 	public final static String s_DESCRIPTION = "description";
 	public final static String s_EXIST_POLLS = "existPolls";
@@ -23,6 +24,7 @@ public class Parameter {
 	public final static String s_LINK_URL = "linkUrl";
 	public final static String s_MAIN_VERSION = "mainVersion";
 	public final static String s_MANDATORY = "mandatory";
+	public final static String s_OPTIONALANSWER = "mandatory";
 	public final static String s_OPTIONS = "options";
 	public final static String s_PASSWORD = "password";
 	public final static String s_PROJECT = "project";
@@ -35,15 +37,27 @@ public class Parameter {
 	public final static String s_QSTATEMENT = "qstatement";
 	public final static String s_RESOURCE_TITLE = "resourceTitle";
 	public final static String s_RESOURCE_ALTERNTIVE_TEXT = "resourceAltText";
+	public final static String s_RESOURCE_DESCRIPTION_TEXT = "resourceDescText";
 	public final static String s_RESOURCE_UPLOADED_FILE = "uploadedFile";
+	public final static String s_RESOURCE_URL = "resourceUrl";
+	public final static String s_RESOURCE_TYPE = "resourceType";
 	public final static String s_RID = "rid";
 	public final static String s_SEND_POLL_BUTTON = "sendPoll";
 	public final static String s_SID = "sid";
 	public final static String s_SCID = "scid";
 	public final static String s_TITLE = "title";
+	public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
 	public final static String s_TEXT = "text";
 	public final static String s_USERNAME = "username";
+	public final static String s_EMAIL = "email";
+	public final static String s_LANGUAGE = "language";
+	public final static String s_REPASSWORD = "repassword";
 	public final static String s_UPOPTION = "upoption";
+	public final static String s_INPUTMODE = "inputMode";
+	public final static String s_LOGOUT = "logout";
+	public final static String s_LANGUAGE_SURVEY = "langsurvey";
+	public final static String s_NUM_PAGE = "numPage";
+	public final static String s_OID = "oid";
 	
 
 }

@@ -75,6 +75,7 @@ public class PollDB {
 	   			poll.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
 	   			poll.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
 	   			poll.setPublicUrl(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			poll.setNumResponses(rs.getInt(DBFieldNames.s_RESPONSES_NUMBER));
 	   			response.add(poll);
 	   		}	   		
 	   		
@@ -155,7 +156,7 @@ public class PollDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			
 	   			ContentDB contentDB = new ContentDB();
-		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 		   		
 		   		QuestionDB questionDB = new QuestionDB();
 		   		List<Question> questions = questionDB.getQuestionsByPollId(response.getPollId(), lang);
@@ -206,7 +207,7 @@ public class PollDB {
 		   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 		   			
 		   			ContentDB contentDB = new ContentDB();
-			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 	   			}
 		   		
 		   		QuestionDB questionDB = new QuestionDB();

@@ -3,6 +3,7 @@ package ilu.surveytool.servlet.surveymanager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -69,11 +70,15 @@ public class ImportFileServlet extends HttpServlet {
 		String rootPath = getServletContext().getRealPath("/");
 		SurveyToolProperties properties = new SurveyToolProperties(rootPath);
 		
+		
+		request.setAttribute(Attribute.s_ADD_QUESTIONS, true);
+		
+		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{						
 			try {
 				String action = request.getParameter(Parameter.s_ACTION);
-				
+				System.out.println("action: " + request.getParameter(Parameter.s_ACTION));;
 				if(action.equals("file") || action.equals("fileUpdate"))
 				{
 				    Part filePart;
@@ -87,14 +92,19 @@ public class ImportFileServlet extends HttpServlet {
 					resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
 					
 					resource.setType("image");
-				    System.out.print("Resource: " + resource);
+				    //System.out.print("Resource: " + resource);
 
 			    	ResourceHandler resourceHandler = new ResourceHandler();
 				    
 				    if(action.equals("file"))
 				    {
 					    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
-					    resourceHandler.insertResource(resource, questionId);
+					    int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					    if(questionId>=0){
+					    	resourceHandler.insertResource(resource, questionId,-1);
+					    }else if(optionId>=0){
+					    	resourceHandler.insertResource(resource, -1, optionId);
+					    }
 				    }
 				    else if(action.equals("fileUpdate"))
 				    {
@@ -110,20 +120,38 @@ public class ImportFileServlet extends HttpServlet {
 				else if(action.equals("options"))
 				{
 					int resourceId = Integer.parseInt(request.getParameter(Parameter.s_RID));
-					this.language = request.getParameter(Parameter.s_MAIN_VERSION);
-					HashMap<String, Content> contents = new HashMap<String, Content>();
-					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
-							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
-					contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,
-							new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT)));
 					
-					ResourceHandler resourceHandler = new ResourceHandler();
-					Resource resource = resourceHandler.insertImageContent(resourceId, contents);
+					Resource resource = this._insertFileContent(request, resourceId, request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					request.setAttribute(Attribute.s_RESOURCE, resource);
 				    
 				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
-				}				
+				}
+				else if(action.equals("video"))
+				{
+					Resource resource = new Resource();
+					
+					String idVideo = this._getIdVideoFromURL(request.getParameter(Parameter.s_RESOURCE_URL));
+					resource.setPathFile(idVideo);					
+					resource.setType(request.getParameter(Parameter.s_RESOURCE_TYPE));
+					
+					int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					ResourceHandler resourceHandler = new ResourceHandler();
+					
+					 if(questionId>=0){
+						 	resource = resourceHandler.insertResource(resource, questionId,-1);
+					 }else if(optionId>=0){
+						 resource = resourceHandler.insertResource(resource, -1, optionId);
+					}
+					
+					
+					resource = this._insertFileContent(request, resource.getResourceId(), resource.getType());
+					
+					request.setAttribute(Attribute.s_RESOURCE, resource);
+				    
+				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
+				}
 			    
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -160,11 +188,14 @@ public class ImportFileServlet extends HttpServlet {
 		    System.out.println("RootPath: " + rootPath);
 		    Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
 		    Files.copy(fileContent, fpath);
-		} catch (IOException e) {
+		} catch (FileAlreadyExistsException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			index++;
 			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return fileNameFinal;
 	}
@@ -181,4 +212,64 @@ public class ImportFileServlet extends HttpServlet {
 		return response;
 	}
 
+	private Resource _insertFileContent(HttpServletRequest request, int resourceId, String type)
+	{
+		this.language = request.getParameter(Parameter.s_MAIN_VERSION);
+		HashMap<String, Content> contents = new HashMap<String, Content>();
+		contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
+				new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
+		if(type.equals("image"))
+		{
+			contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,
+					new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT, request.getParameter(Parameter.s_RESOURCE_ALTERNTIVE_TEXT)));
+		}
+		else if(type.equals("video"))
+		{
+			contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION,
+					new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION, request.getParameter(Parameter.s_RESOURCE_DESCRIPTION_TEXT)));
+		}
+		
+		ResourceHandler resourceHandler = new ResourceHandler();
+		return resourceHandler.insertContent(resourceId, contents);
+	}
+	
+	private String _getIdVideoFromURL(String url)
+	{
+		String idVideo = "";
+		boolean indexOfSol = false;
+		
+		String[] cads = url.split("v=");
+		if(cads.length > 1)
+		{
+			indexOfSol = true;
+		}
+		else
+		{
+			cads = url.split("youtu.be/");
+			if(cads.length > 1)
+			{
+				indexOfSol = true;
+			}
+			else
+			{
+				idVideo = url;
+			}
+		}
+		
+		if(indexOfSol)
+		{
+			int endId = cads[1].indexOf("&");
+			if(endId > -1)
+			{
+				idVideo = cads[1].substring(endId);
+			}
+			else
+			{
+				idVideo = cads[1];
+			}	
+		}
+		
+		return idVideo;
+	}
+	
 }

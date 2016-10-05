@@ -55,7 +55,7 @@ public class PollProcessHandler {
 		int contentId = pollDB.getPollContentId(pollId);
 		
 		ContentDB contentDB = new ContentDB();
-		title = contentDB.getContentByIdAndLanguage(contentId, language).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+		title = contentDB.getContentByIdAndLanguage(contentId, language,null).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 		
 		return title;
 	}

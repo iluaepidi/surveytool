@@ -1,5 +1,7 @@
 package ilu.surveytool.databasemanager.DataObject;
 
+import java.util.HashMap;
+
 public class LoginResponse {
 	
 	int userId;
@@ -7,6 +9,10 @@ public class LoginResponse {
 	String rol = "";
 	boolean isValid = false;
 	String errorMsg = "";
+	private String password;
+	private String email;
+	private String isoLanguage;
+	private HashMap<String, String> listLanguage;
 
 	public LoginResponse() {
 		super();
@@ -65,6 +71,38 @@ public class LoginResponse {
 	public String toString() {
 		return "LoginResponse [userId=" + userId + ", userName=" + userName + ", isValid=" + isValid + ", errorMsg="
 				+ errorMsg + "]";
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getIsoLanguage() {
+		return isoLanguage;
+	}
+
+	public void setIsoLanguage(String isoLanguage) {
+		this.isoLanguage = isoLanguage;
+	}
+
+	public HashMap<String, String> getListLanguage() {
+		return listLanguage;
+	}
+
+	public void setListLanguage(HashMap<String, String> listLanguage) {
+		this.listLanguage = listLanguage;
 	}
 
 }

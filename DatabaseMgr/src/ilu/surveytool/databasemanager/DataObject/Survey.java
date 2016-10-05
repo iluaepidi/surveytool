@@ -13,6 +13,8 @@ public class Survey {
 	int author;
 	List<Section> sections = null;
 	String publicId = "";
+	String defaultLanguage;
+	int objetive;
 	
 
 	public Survey() {
@@ -105,6 +107,26 @@ public class Survey {
 	public String toString() {
 		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author
 				+ ", sections=" + sections + ", publicId=" + publicId + "]";
+	}
+
+
+	public String getDefaultLanguage() {
+		return defaultLanguage;
+	}
+
+
+	public void setDefaultLanguage(String defaultLanguage) {
+		this.defaultLanguage = defaultLanguage;
+	}
+
+
+	public int getObjetive() {
+		return objetive;
+	}
+
+
+	public void setObjetive(int objetive) {
+		this.objetive = objetive;
 	}
 	
 }
