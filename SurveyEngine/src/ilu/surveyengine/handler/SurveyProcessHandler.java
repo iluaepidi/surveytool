@@ -19,6 +19,7 @@ import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.databasemanager.constants.DBFieldNames;
 
 public class SurveyProcessHandler {
 	
@@ -232,6 +233,25 @@ public class SurveyProcessHandler {
 	{
 		AnonimousDB anonymousDB = new AnonimousDB();
 		return anonymousDB.updateAnonimousUserFinished(anonimousUserId, finished);
+	}
+	
+	public boolean isOnlyTextPage(JSONArray questions)
+	{
+		boolean isOnlyTextPage = true;
+		
+		for(int i = 0; i < questions.length(); i++)
+		{
+			try {
+				String questionType = questions.getJSONObject(i).getString("questionType");
+				isOnlyTextPage = isOnlyTextPage && (questionType.equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT));
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return isOnlyTextPage;
 	}
 	
 	private boolean _storeAnonymousResponse(Response response, int anonymousUserId, int surveyId)

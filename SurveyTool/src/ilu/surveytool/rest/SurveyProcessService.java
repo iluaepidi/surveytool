@@ -100,8 +100,8 @@ public class SurveyProcessService {
 				response.put("page", survey);
 				
 				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
-
-				if(numPage > json.getInt("numPages"))
+				int numPages = json.getInt("numPages");
+				if(numPage > numPages || (numPage == numPages && surveyProcessHandler.isOnlyTextPage(survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"))))
 				{
 					surveyProcessHandler.updateAnonimousUserFinished(anonimousUser.getId(), true);
 				}
