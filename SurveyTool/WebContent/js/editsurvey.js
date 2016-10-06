@@ -30,11 +30,9 @@ $(function() {
 	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
 	    debug: false
 	} );
-
 	clientTarget.on( "load", function(clientTarget)
 	{
 	    $('#flash-loaded').fadeIn();
-
 	    clientTarget.on( "complete", function(clientTarget, args) {
 	        clientTarget.setText( args.text );
 	        $('#target-to-copy-text').fadeIn();
@@ -755,6 +753,7 @@ $(function() {
 		if(currentOption>0){
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+			$("#divType").val('Option');
 			$('#importFile').modal();
 		}else{
 			alert("First, complete the option");
@@ -836,6 +835,14 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('.section-pages').on("click", "#removeMultimediaFileQuestion", function(e){
+		var item = $(this).closest('li.multimedia-item');
+		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
+		$("#removeElemId").val(item.attr('rid'));
+		$("#removeElemService").val('ResourceServiceQuestion');
+		$("#removeElement").modal("show");
+	});
+	
 	$('.section-pages').on("click", "#remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');		
@@ -886,28 +893,45 @@ $(function() {
 		
 		var elementId = $('#removeElemId').val(); 
 		var service = $("#removeElemService").val();
-		//console.log("Resource ID: " + elementId+", service: "+service);
-		
+		console.log("Resource ID: " + elementId+", service: "+service);
+		console.log(host + "/SurveyTool/api/" + service + "/" + elementId);
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
-		
+		var removeFileQuestion = false;
+		if (service == "ResourceServiceQuestion"){
+			removeFileQuestion = true;
+			service = "ResourceService";
+		}
+		console.log("Resource ID: " + elementId+", service: "+service);	
 		$.ajax({ 
 		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
-			   //console.log("data: "+data+", service: "+service);
+			   console.log("data: "+data+", service: "+service);
 			   if(data == 'true')
 			   {
 				   $("#removeElement").modal("hide");
 				   if(service == "ResourceService")
 				   {
-					   if($(this).closest('#option-item').find('#multimediaFilesList li').length<2){
-						   console.log("hidden a class");
+					   console.log("ResourceService");
+					   if(removeFileQuestion){
+						   console.log("It is a question");
+						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
+						   if($('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length<2){
+							   console.log("hidden a class");
+							   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
+							   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
+						   }
+						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
+						  
+						   $('li[rid=' + elementId + ']').remove();
+					   } else{
+						   console.log("It is an option");
 						   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
-						   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
+						   $('li[rid=' + elementId + ']').closest('div.options-files-frame').addClass('hidden');
+						   
+						   $('li[rid=' + elementId + ']').remove();
+						   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
 					   }
-					   $('li[rid=' + elementId + ']').remove();
-					   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
-					   
 				   }
 				   else if(service == "QuestionService")
 				   {
@@ -1744,7 +1768,6 @@ $(function() {
 		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
 		$(this).closest('div.logic-frame').find('button.btn-close-logic').removeClass('hidden');
 	});
-
 	$('.survey-sections').on("click", "button.btn-close-logic", function(){
 		
 		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
@@ -1763,13 +1786,11 @@ $(function() {
 			$(this).addClass('hidden');
 		}
 	});
-
 	$('.survey-sections').on("click", ".dependences-button > button", function(){
 		$(this).parent().addClass('hidden');
 		$(this).closest('div.dependences-frame').find('div.dependences-settings').removeClass('hidden');
 		$(this).closest('div.dependences-frame').find('button.btn-close-dependences').removeClass('hidden');
 	});
-
 	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
 		var index = $(this).closest('div.dependences-frame').find('ul.dependences-list').attr("index");
 		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
@@ -2076,4 +2097,3 @@ function alertNotQuota(){
 		}
     });
 }
-

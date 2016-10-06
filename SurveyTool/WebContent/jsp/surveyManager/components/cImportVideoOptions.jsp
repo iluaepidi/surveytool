@@ -16,13 +16,13 @@
 								            <label for="resourceTitle"><%= lang.getContent("file.import.label.title") %></label>
 								            <input type="text" id="resourceTitle" class="form-control" name="resourceTitle" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
 								        	<span  id='resourceTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
-			  								<span id='resourceTitle-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+			  								<span id='resourceTitle-error' class='error hidden' style=''><%= lang.getContent("msg.error.title.text") %></span>	
 										</div>
 								        <div class="form-group">									            
 								            <label for="resourceDescText"><%= lang.getContent("file.import.label.description") %></label>
 								            <textarea rows="2" id="resourceDescText" name="resourceDescText" class="form-control" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 								        	<span  id='resourceDescText-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
-			  								<span id='resourceDescText-error' class='error hidden' style=''><%= lang.getContent("msg.error.qstatement.text") %></span>	
+			  								<span id='resourceDescText-error' class='error hidden' style=''><%= lang.getContent("msg.error.desc.text") %></span>	
 										</div>
 								        <div class="form-group">									            
 								            <label for="resourceUrl"><%= lang.getContent("file.import.label.video_url") %></label>

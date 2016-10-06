@@ -24,7 +24,10 @@ List<Resource> resources = question.getResources();
 				{
 					request.setAttribute(Attribute.s_RESOURCE, resource);
 				%>
-				<jsp:include page="../../components/cMultimediaItem.jsp" />
+				
+				<jsp:include page="../../components/cMultimediaItem.jsp">
+					<jsp:param value="false" name="option"/>
+				</jsp:include>
 				<%
 				}
 				%>
