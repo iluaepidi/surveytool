@@ -84,13 +84,15 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 				          		for(Section section : survey.getSections()){
 									for(Page pag : section.getPages()){
 										for(Question question : pag.getQuestions()){
-											String title = "";
-											if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-												title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-											}
-											%>
-											<option value="<%= "question-"+question.getQuestionId() %>"><%= title %></option>
-											<%
+											if(!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT)){
+												String title = "";
+												if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+													title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+												}
+												%>
+												<option value="<%= "question-"+question.getQuestionId() %>"><%= title %></option>
+												<%
+												}
 											}
 										}
 									}
@@ -382,9 +384,10 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 					 		for(Section section : survey.getSections()){
 										for(Page pag : section.getPages()){
 											for(Question question : pag.getQuestions()){
-												request.setAttribute(Attribute.s_QUESTION, question);
-												request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
-												//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
+												if(!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT)){
+													request.setAttribute(Attribute.s_QUESTION, question);
+													request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
+													//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
 						  							%>
 													<div class="content-statistics hidden" id="single-question-<%= question.getQuestionId() %>">
 						  								<jsp:include page="<%= token + question.getStatisticsPage() %>">
@@ -392,6 +395,7 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 														</jsp:include>
 					    							</div>
 													<%
+												}
 											}
 										}
 					          		}
