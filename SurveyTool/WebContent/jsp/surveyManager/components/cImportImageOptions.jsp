@@ -14,7 +14,7 @@
 					  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 					  					String action = (String) request.getAttribute(Attribute.s_ACTION);
 					  					
-					  					System.out.println("En cImportImageOptions");
+					  					System.out.println("En cImportImageOptions: "+action+", "+resource.getPathFile());
 					  					
 					  					if(action.equals("file"))
 					  					{
@@ -24,8 +24,8 @@
 					  					
 								        <div class="form-group">
 								        	<label><%= lang.getContent("file.import.label.img_selected") %></label>
-								            <div class="previewFileUpliaded" id="previewFileUploaded">
-								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
+								            <div class="previewFileUpliaded" id="previewFileUploaded" urlValue= "<%= resource.getPathFile() %>">
+								            	<img id ="imagePreviewFile" src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>
 								        </div>
 								        

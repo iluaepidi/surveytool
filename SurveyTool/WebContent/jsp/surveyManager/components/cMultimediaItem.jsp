@@ -58,7 +58,7 @@
 							  								<i class="fa fa-file-video-o" aria-hidden="true"></i>
 							  								<a class="active" active="false" id="editFile" data-image='{"rId":"<%= resource.getResourceId()%>","tittle":"<%=title %>","descText":"<%=descText %>","path":"<%=path %>", "rType":"<%= resource.getType() %>"}' href="#"><%= title + " - " + path %></a>
 							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-							  								<button id="<%if(option){ %>removeMultimediaFile<%}else{ %>removeMultimediaFileQuestion<%}%>" class="btn btn-transparent fright red" aria-label="<%= lang.getContent("button.remove_video") %>: <%= title %>"><i class="fa fa-trash"></i></button>
+							  								<button id="<%if(option){ %>removeMultimediaFile<%}else{ %>removeMultimediaFileQuestion<%}%>" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_video") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  								<%} %>
 							  								
 							  							</li>

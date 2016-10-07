@@ -26,7 +26,9 @@
 										</div>
 								        <div class="form-group">									            
 								            <label for="resourceUrl"><%= lang.getContent("file.import.label.video_url") %></label>
-								            <input type="url" id="resourceUrl" class="form-control" name="resourceUrl" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
+								            <input type="text" id="resourceUrl" class="form-control" name="resourceUrl" placeholder="<%= lang.getContent("placeholder.type_here") %>"/>
+								       		<span  id='resourceUrl-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  								<span id='resourceUrl-error' class='error hidden' style=''><%= lang.getContent("msg.error.url.text") %></span>										
 								        </div>
 					  					
 										<div class="center">
