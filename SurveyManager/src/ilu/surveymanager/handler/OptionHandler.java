@@ -39,7 +39,7 @@ public class OptionHandler {
 			
 			if(option.getOid() == 0)
 			{
-				//if(!option.getText().equals("")){
+				if(!option.getText().equals("")){
 					int contentId = contentDB.insertContentIndex();
 					if(contentId != 0)
 					{
@@ -51,7 +51,7 @@ public class OptionHandler {
 						}
 					}
 					response.put("oid", String.valueOf(option.getOid()));
-				//}
+				}
 			}
 			else
 			{

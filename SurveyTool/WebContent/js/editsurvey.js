@@ -259,7 +259,8 @@ $(function() {
 	$('.survey-sections').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
-		//if($(this).val() != ""){
+		if($(this).val() != "")
+		{
 			//console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
 			var currentNode = $(this);
@@ -307,7 +308,7 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
-		//}
+		}
 	});
 	
 	insertValueQuota();
@@ -469,9 +470,6 @@ $(function() {
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
-		
-		
-		$(this).closest('ul').find('input[index=' + index + ']').trigger('focusout');
 	});
 	
 	
@@ -753,15 +751,13 @@ $(function() {
 		currentQuestion = -1;
 		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
 		
-		//if(currentOption>0){
+		if(currentOption>0){
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 			$('#importFile').modal();
-		//}else{
-		//	alert("First, complete the option");
-			
-			
-		//}
+		}else{
+			alert("First, complete the option");
+		}
 	});
 	
 		
