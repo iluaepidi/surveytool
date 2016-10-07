@@ -528,6 +528,7 @@ $(function() {
 	
 	$('.survey-sections').on("goto", "#option-list #option-item input", function(e){
 		var optionId = $(this).attr('oid');
+		var optionGroupId = $(this).closest('ul').attr('ogid');
 		console.log("Option goto: " + $(this).val() + " - oid: " + optionId);
 		var logicElem = $('#logic-option-' + optionId);
 		if(logicElem.length)
@@ -542,12 +543,19 @@ $(function() {
 				logicList.removeClass("hidden");
 				var elem = logicList.find('span');
 				elem.attr("id", "logic-option-" + optionId);
+				elem.html($(this).val());
+				var logicOption = logicList.find(".logic-option");
+				logicOption.find("select.logic-option-goto").val('none');
+				logicOption.attr("oid", optionId);
+				logicOption.attr("ogid", optionGroupId);
+				logicList.closest(".logic-settings").find("p").addClass("hidden");
 			}
 			else
 			{
 				var ulLogic = $(this).closest("div.question-frame").next().find("ul.logic-option-list");
 				var clonElem = ulLogic.find("li").first().clone();
 				clonElem.attr("oid", optionId);
+				clonElem.attr("ogid", optionGroupId);
 				var clonSpan = clonElem.find("span");
 				clonSpan.attr("id", "logic-option-" + optionId);
 				clonSpan.html($(this).val());
@@ -836,6 +844,7 @@ function removeLogicElement(elem)
 	if(numItems == 1)
 	{
 		root.addClass('hidden');
+		root.closest(".logic-settings").find("p").removeClass("hidden");
 	}
 	else
 	{

@@ -6,7 +6,7 @@
     								<%
     								Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
     								%>
-										<div class="form-question" id="form-question">
+										<div class="form-question" id="form-question-{{question.questionId}}">
 											<fieldset>
 												<legend>
 
@@ -25,7 +25,7 @@
 							  							<input type="number" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}' pattern="[0-9]+([\,|\.][0-9]+)?" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="{{question.questionId}}" min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' ng-model="question.response"></input>
 							  						
 							  							<input type="text" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></input>
-							  						
+							  							<div class="char-counter" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber" && getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'><span ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'><%= lang.getContent("survey.process.charLimit") %></span> {{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
 												</div>	
 												
 											</fieldset>																						

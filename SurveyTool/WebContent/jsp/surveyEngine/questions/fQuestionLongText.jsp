@@ -7,7 +7,7 @@
     								<%
     								Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
     								%>
-										<div class="form-question" id="form-question">
+										<div class="form-question" id="form-question-{{question.questionId}}">
 											<fieldset>
 												<legend>
 													{{question.index}}. {{getJsonArrayElement(question.contents, "contentType", "title").text}}													
@@ -20,6 +20,7 @@
 												<div class="form-question-content">
 													<label for="{{question.questionId}}" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
 							  						<textarea class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" rows='{{getLines(getJsonArrayElement(question.parameters, "name", "textLines"), getJsonArrayElement(question.parameters, "name", "textLength"))}}' placeholder='<%= lang.getContent("placeholder.type_here")%>' maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></textarea>
+							  						<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'><span ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'><%= lang.getContent("survey.process.charLimit") %></span> {{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
 												</div>	
 												
 											</fieldset>																						

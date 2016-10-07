@@ -14,7 +14,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	}*/	
 	console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
 	$scope.currentSurvey.initialLoad();
-	console.log("Json survey info: " + JSON.stringify($scope.currentSurvey.info.contents));
+	console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
 
 	/** Initial load **/
 

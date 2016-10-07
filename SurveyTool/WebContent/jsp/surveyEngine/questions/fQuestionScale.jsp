@@ -7,7 +7,7 @@
     								<%
     								Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);    								
     								%>
-										<div class="form-question" id="form-question">
+										<div class="form-question" id="form-question-{{question.questionId}}">
 											<fieldset>
 												<legend>
 

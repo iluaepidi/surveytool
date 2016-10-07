@@ -220,16 +220,18 @@
 							  							
 							  							
 							  							<%
-							  							if(!question.getOptionsGroups().isEmpty())
+							  							if(!question.getOptionsGroups().isEmpty() && !question.getOptionsGroups().get(0).getOptions().isEmpty())
 					  									{
-							  							
 							  									
 							  										%>
 							  										<button class="btn-transparent btn-close-aspa btn-close-logic hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-							  											<div class="logic-button center">
-							  												<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
+							  										<div class="logic-button center">
+							  											<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
 							  										</div>
 										  							<div class="logic-settings hidden">
+										  							
+										  								<p class="hidden"><%= lang.getContent("question.edit.logic.no_option") %></p>
+										  								
 										  								<ul class="logic-option-list form-inline">
 										  									<%
 							  										for(Option option : question.getOptionsGroups().get(0).getOptions())
@@ -243,30 +245,30 @@
 									  										}
 							  											}
 							  									%>
-							  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
-							  												<label for="logic-option-goto-<%= option.getId() %>">
-							  													<%= lang.getContent("question.edit.logic.option.label") %>
-							  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></span>
-							  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
-							  												</label>
-							  												<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
-							  									<%
-							  													if(logicGoTo == null)
-							  													{
-							  									%>
-							  													<option value="none" class="default-option" selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
-							  									<%
-							  													}
-							  													else
-							  													{
-							  									%>
-							  													<option value="none" class="default-option"><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
-							  													<option  id="option-goto-<%= logicGoTo.getQDestId() %>" value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
-							  									<%					
-							  													}
-							  									%>
-							  												</select>
-							  											</li>
+								  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
+								  												<label for="logic-option-goto-<%= option.getId() %>">
+								  													<%= lang.getContent("question.edit.logic.option.label") %>
+								  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></span>
+								  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
+								  												</label>
+								  												<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
+								  									<%
+								  													if(logicGoTo == null)
+								  													{
+								  									%>
+								  													<option value="none" class="default-option" selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
+								  									<%
+								  													}
+								  													else
+								  													{
+								  									%>
+								  													<option value="none" class="default-option"><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>
+								  													<option  id="option-goto-<%= logicGoTo.getQDestId() %>" value="<%= logicGoTo.getQDestId() %>" selected><%= logicGoTo.getQDest() %></option>
+								  									<%					
+								  													}
+								  									%>
+								  												</select>
+								  											</li>
 							  									<%
 								  									}
 										  									%>
@@ -282,11 +284,24 @@
 												  							
 					  									<div class="logic-settings hidden">
 					  										<p><%= lang.getContent("question.edit.logic.no_option") %></p>
+					  										
+					  										<ul class="logic-option-list form-inline hidden">
+					  											<li class="logic-option"  ogid="0">
+					  												<label for="logic-option-goto-">
+					  													<%= lang.getContent("question.edit.logic.option.label") %>
+					  													<span class="form-control" id="logic-option-"></span>
+					  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
+					  												</label>
+					  												<select id="logic-option-goto-" class="form-control logic-option-goto">
+					  													<option value="none" class="default-option" selected><%= lang.getContent("question.edit.logic.option.goto.continue") %></option>					  									
+					  												</select>
+					  											</li>
+					  										</ul>
 					  									</div>
 					  									
 					  									<div class="logic-button center">
-												  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
-												  							</div>
+							  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
+							  							</div>
 					  									<%	
 					  									}					  									
 							  							%>

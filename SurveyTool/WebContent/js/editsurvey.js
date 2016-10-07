@@ -943,7 +943,8 @@ $(function() {
 					   }
 					   
 					   var logicOptionElement = $('#logic-option-' + oid);
-					   removeLogicElement(logicOptionElement);					   
+					   removeLogicElement(logicOptionElement);	
+					   
 				   }
 				   else if(service == "OptionMatrixService")
 				   {
