@@ -88,7 +88,7 @@ public class ImportFileServlet extends HttpServlet {
 					
 				    fileName = this._importFile(filePart, fileName, rootPath, 0);
 	
-					Resource resource = new Resource();
+				    Resource resource = new Resource();
 					resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
 					
 					resource.setType("image");
@@ -98,13 +98,14 @@ public class ImportFileServlet extends HttpServlet {
 				    
 				    if(action.equals("file"))
 				    {
-					    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+				    	resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
+					    /*int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
 					    int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
 					    if(questionId>=0){
 					    	resourceHandler.insertResource(resource, questionId,-1);
 					    }else if(optionId>=0){
 					    	resourceHandler.insertResource(resource, -1, optionId);
-					    }
+					    }*/
 				    }
 				    else if(action.equals("fileUpdate"))
 				    {
@@ -119,9 +120,28 @@ public class ImportFileServlet extends HttpServlet {
 				}
 				else if(action.equals("options"))
 				{
-					int resourceId = Integer.parseInt(request.getParameter(Parameter.s_RID));
+					Resource resource = new Resource();
+					resource.setPathFile(request.getParameter(Parameter.s_RESOURCE_URL));
+					resource.setType("image");
+
+					System.out.println(request.getParameter(Parameter.s_RESOURCE_URL));
+					System.out.println(resource.getPathFile());
 					
-					Resource resource = this._insertFileContent(request, resourceId, request.getParameter(Parameter.s_RESOURCE_TYPE));
+			    	ResourceHandler resourceHandler = new ResourceHandler();
+				    
+				    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					if(questionId>=0){
+					    resourceHandler.insertResource(resource, questionId,-1);
+					}else if(optionId>=0){
+					    resourceHandler.insertResource(resource, -1, optionId);
+					}
+					System.out.println(resource.toString());
+					
+				    request.setAttribute(Attribute.s_RESOURCE, resource);
+				    request.setAttribute(Attribute.s_ACTION, action);
+					
+					resource = this._insertFileContent(request, resource.getResourceId(), request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					request.setAttribute(Attribute.s_RESOURCE, resource);
 				    
@@ -214,10 +234,13 @@ public class ImportFileServlet extends HttpServlet {
 
 	private Resource _insertFileContent(HttpServletRequest request, int resourceId, String type)
 	{
+		
 		this.language = request.getParameter(Parameter.s_MAIN_VERSION);
+		
 		HashMap<String, Content> contents = new HashMap<String, Content>();
 		contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE,
 				new Content(0, this.language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, request.getParameter(Parameter.s_RESOURCE_TITLE)));
+		
 		if(type.equals("image"))
 		{
 			contents.put(DBConstants.s_VALUE_CONTENTTYPE_NAME_ALT_TEXT,

@@ -32,6 +32,7 @@ public class ResourceHandler {
 		
 		int contentId = contentDB.insertContentIndex();
 		resourceId = resourceDB.insertResource(resource, contentId);
+		System.out.println(resourceId);
 		//resource.setContentId(contentId);
 		
 		if(resourceId > 0)
@@ -48,7 +49,9 @@ public class ResourceHandler {
 			
 			if(questionId>=0) resourceDB.insertQuestionResource(questionId, resourceId);
 			else if (optionid>=0) resourceDB.updateOptionWithIdResource(optionid, resourceId);
+			System.out.println(resourceId);
 			resource.setResourceId(resourceId);
+			System.out.println(resource.getResourceId());
 		}
 		
 		return resource;
@@ -60,6 +63,7 @@ public class ResourceHandler {
 		
 		ContentDB contentDB = new ContentDB();
 		ResourceDB resourceDB = new ResourceDB();
+		System.out.println("ResourceHnadler: "+resourceId);
 		resource = resourceDB.getResourceById(resourceId);
 		
 		if(resource != null)
@@ -69,6 +73,7 @@ public class ResourceHandler {
 			{
 				String key = iter.next();
 				Content content = contents.get(key);
+				System.out.println("ResourceHnadler: "+key+", "+resource.getContentId()+", "+content.getLanguage()+", "+content.getContentType()+", "+content.getText());
 				contentDB.insertContent(resource.getContentId(), content.getLanguage(), content.getContentType(), content.getText());
 				contents.get(key).setContentId(resource.getContentId());
 			}

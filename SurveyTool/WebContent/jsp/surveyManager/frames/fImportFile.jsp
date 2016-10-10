@@ -16,6 +16,7 @@ System.out.println("fImportFile opened");
 %>		
 				<!-- Modal -->
 			
+			
 				<div class="modal fade survey-win" id="importFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog import-file-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 

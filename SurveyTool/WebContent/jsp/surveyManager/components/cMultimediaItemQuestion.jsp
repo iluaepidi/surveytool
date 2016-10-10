@@ -8,11 +8,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     								
+							  					
 							  					<%
 							  					Language lang = new Language(getServletContext().getRealPath("/")); 
 							  					lang.loadLanguage(Language.getLanguageRequest(request));
-							  					
-							  					boolean option = Boolean.parseBoolean(request.getParameter("option"));
 							  					
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();
@@ -33,13 +32,11 @@
 								  					}
 							  					
 							  					%>
-							  					
-							  					
 							  							<li class="multimedia-item" rid="<%= resource.getResourceId() %>">
 							  								<i class="fa fa-file-image-o" aria-hidden="true"></i>
 							  								<a class="active" active="false" id="editFile" data-image='{"rId":"<%= resource.getResourceId()%>","tittle":"<%=title %>","altText":"<%=altText %>","path":"<%=path %>", "rType":"<%= resource.getType() %>"}' href="#"><%= title + " - " + path %></a>
 							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-							  								<button id="<%if(option){ %>removeMultimediaFile<%}else{ %>removeMultimediaFileQuestion<%}%>" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
+							  								<button id="removeMultimediaFile" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_file") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  								<%} %>
 							  								
 							  							</li>
@@ -58,7 +55,7 @@
 							  								<i class="fa fa-file-video-o" aria-hidden="true"></i>
 							  								<a class="active" active="false" id="editFile" data-image='{"rId":"<%= resource.getResourceId()%>","tittle":"<%=title %>","descText":"<%=descText %>","path":"<%=path %>", "rType":"<%= resource.getType() %>"}' href="#"><%= title + " - " + path %></a>
 							  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-							  								<button id="<%if(option){ %>removeMultimediaFile<%}else{ %>removeMultimediaFileQuestion<%}%>" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_video") %>: <%= title %>"><i class="fa fa-trash"></i></button>
+							  								<button id="removeMultimediaFileQuestion" class="btn btn-transparent red" aria-label="<%= lang.getContent("button.remove_video") %>: <%= title %>"><i class="fa fa-trash"></i></button>
 							  								<%} %>
 							  								
 							  							</li>
