@@ -81,9 +81,7 @@ public class ContentDB {
 	   			typename = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 	   			contenttext = rs.getString(DBFieldNames.s_CONTENT_TEXT);
 	   			if(text!=null && !text.equals("")){
-		   			contents.put(contentType, new Content(contentId, lang, 
-		   					typename, 
-		   					contenttext));
+		   			contents.put(contentType, new Content(contentId,lang,typename,contenttext));
 	   			}
 	   		}
 	   		

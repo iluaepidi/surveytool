@@ -49,11 +49,20 @@ public class QuotaService {
 			int max=0,min=0;
 			
 			if(json.getString("max")!=null && !json.getString("max").equals(""))max=Integer.parseInt(json.getString("max"));
-			if(json.getString("min")!=null && !json.getString("min").equals(""))min=Integer.parseInt(json.getString("min"));;
+			if(json.getString("min")!=null && !json.getString("min").equals(""))min=Integer.parseInt(json.getString("min"));
+			
+			
+			
 			int idSurvey = Integer.parseInt(json.getString("sid"));
 			System.out.println("Opción: " + option.toString());
 			QuotaHandler quotaHandler = new QuotaHandler();
-			response = quotaHandler.saveQuotaOption(idSurvey, option,max,min);
+			if(max==0 && min==0){
+				//eliminar la cuota
+				response = quotaHandler.deteleQuota(idSurvey, option);
+				
+			}else{
+				response = quotaHandler.saveQuotaOption(idSurvey, option,max,min);
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

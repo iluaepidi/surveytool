@@ -579,6 +579,14 @@ footer {margin-top: 10px;
     text-align: center;
     min-height: 75px;}
     
+.edit-quote-frame {width: 100%;
+    margin: 10px auto;
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align: center;
+    min-height: 75px;
+    background-color: #ffffff;}
+    
 .edit-survey-head{margin: 10px auto;
     width: 70%;
     display: flex;
@@ -1228,101 +1236,54 @@ footer {margin-top: 10px;
 		$STATISTICS
 \*----------------------------------------------*/
 
-.content-statistics {
-    padding: 15px;
+.content-statistics {padding: 15px;
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
 	display: block;
 	min-width: 640px;
-	min-height:250px;
-}
-
+	min-height:250px;}
 .survey-statistics-title {width: 100%;
     margin-bottom: 10px;
     display: inline-block;}
-
-.small-box {
-    border-radius: 2px;
+.small-box {border-radius: 2px;
     position: relative;
     display: block;
-    margin-bottom: 20px;
-}
-
-.small-box>.inner {
-    padding: 10px;
-}
-
-.small-box sup {
-    font-size: 20px;
-}
-
-.small-box h3 {
-    font-size: 38px;
+    margin-bottom: 20px;}
+.small-box>.inner {padding: 10px;}
+.small-box sup {font-size: 20px;}
+.small-box h3 {font-size: 38px;
     font-weight: bold;
     margin: 0 0 10px 0;
-    padding: 0;
-}
-
-.bg-aqua {
-    background-color: #007593 !important;
-}
-
-.bg-green {
-    background-color: #00884b !important;
-}
-
-.bg-red {
-    background-color: #B60000 !important;
-}
-
-.bg-yellow {
-    background-color: #9f6308 !important;
-}
-
-.bg-red, .bg-yellow, .bg-aqua, .bg-green {
-    color: #fff !important;
-}
-
-.connectedSortable {
-    min-height: 100px;
-    width: 100%;
-}
-
-.nav-tabs-custom {
-    margin-bottom: 20px;
+    padding: 0;}
+.bg-aqua {background-color: #007593 !important;}
+.bg-green {background-color: #00884b !important;}
+.bg-red {background-color: #B60000 !important;}
+.bg-yellow {background-color: #9f6308 !important;}
+.bg-red, .bg-yellow, .bg-aqua, .bg-green {color: #fff !important;}
+.connectedSortable {min-height: 100px;
+    width: 100%;}
+.nav-tabs-custom {margin-bottom: 20px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     border-radius: 3px;
-    width: 100%;    
-}
-
-.canvasPie {
-    margin-bottom: 20px;
+    width: 100%;}
+.canvasPie {margin-bottom: 20px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     border-radius: 3px;
     width: 100%;  
-	display:inline-block;  
-}
-
-.canvasPie>.tab-content {
-    background: #fff;
+	display:inline-block;}
+.canvasPie>.tab-content {background: #fff;
     padding: 10px;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-	display:inline-block;  
-}
-
-.legendSurvey{
-	display:inline-block;
+	display:inline-block;}
+.legendSurvey{display:inline-block;
 	vertical-align: top !important;
 	margin-top: 50px !important;
-	margin-bottom: 50px !important;
-}
-
-.graph-title {
-    margin-up: 0;
+	margin-bottom: 50px !important;}
+.graph-title {margin-up: 0;
     margin-down: 0;
     border-bottom-color: #444;
     border-top-right-radius: 3px;
@@ -1334,20 +1295,11 @@ footer {margin-top: 10px;
     float: left;
     border-top: 3px solid transparent;
     margin-bottom: -2px;
-    margin-right: 5px;
-}
-
-.no-block{
-	float:left !important;
-	clear:left;
-}
-
-.in-block{
-	display:inline-block;
-}
-
-.subgraph-title {
-    margin-up: 15px;
+    margin-right: 5px;}
+.no-block{float:left !important;
+	clear:left;}
+.in-block{display:inline-block;}
+.subgraph-title {margin-up: 15px;
     margin-down: 0;
     border-bottom-color: #444;
     border-top-right-radius: 3px;
@@ -1359,23 +1311,14 @@ footer {margin-top: 10px;
     float: left;
     border-top: 3px solid transparent;
     margin-bottom: -2px;
-    margin-right: 5px;
-}
-
-.treeview a, .treeview span{
-	font-weight: bold;
-	margin-bottom: 10px !important;
-}
-
-.nav-tabs-custom>.tab-content {
-    background: #fff;
+    margin-right: 5px;}
+.treeview a, .treeview span{font-weight: bold;
+	margin-bottom: 10px !important;}
+.nav-tabs-custom>.tab-content {background: #fff;
     padding: 10px;
     border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-}
-.no-padding {
-    padding: 0 !important;
-}
+    border-bottom-left-radius: 3px;}
+.no-padding {padding: 0 !important;}
 
 .tab-content>.active {
     display: block;
@@ -1496,67 +1439,114 @@ footer {margin-top: 10px;
 .noborder{
 	border:0 !important;
 }
-
 .nomargin{
 	margin:0px !important;
 }
-
 .textalignleft{
 	text-align: left !important;
 }
-
 .paddingbotton50{
 	padding-bottom: 50px !important;
 }
-
 .marginbotton10px{
 	margin-top: 10px !important;
 }
-
 .with100px{
 	width:100px !important;
 }
-
+.with100pc{
+	width:100% !important;
+}
+.height200px{
+	height: 200px !important;
+}
 .overflowhidden{
 	overflow: hidden;
 }
-
 .displayblock{
 	display:block;
 }
-
 .with90percent{
 	width: 90%;
 }
-
 .margintop10{
 	margin-top:10px;
 }
-
 .quotaobjetivesurvey{
 	float: left !important;
 	margin-left: 33%;
 }
-
 .quotadiv{
-	border-bottom: 1px solid #ccc !important;
+	/*border-bottom: 1px solid #ccc !important;*/
 }
-
 .quotaname{
 	text-align: left;font-size: 18px;
 }
-
 .quoteoption{
 	margin:0px;display: inline-flex;
 }
-
 .quotaremovebtn{
 	color: #B60000 !important;
 }
-
 .num-pages {text-align: center;
     font-size: 1.3em;}
-    
+.quotaresultoption{
+	border:0px;
+	font-size:16px;
+	padding: 40px 0 !important;
+    margin: 0 !important;
+}
+.quotaresultoptiondiv1{
+	width: 100%  !important;
+	float: left  !important;
+	text-align: right  !important;
+}
+.quotaresultoptionspan1{
+	position: relative !important;
+	top: 8px !important;
+	left: 24px !important;
+}
+.quotaresultoptionspanmax{
+	position: relative !important;
+	top: 25px !important;
+	left:6px !important;
+}
+.quotaresultprogressdiv{
+	width: 100% !important;
+	margin-bottom:0px !important;
+}
+.quotaresultoptiondivmin{
+	width: 100% !important;
+	display: inline-block !important;
+	height: 12px !important;
+}
+.quotaresultoptiondivmin2{
+	float:left !important;
+	text-align: right !important;
+}
+.quotaresultoptiondivmin3{
+	float:left !important;
+	display:inline-flex !important;
+}
+.quotaresultoptiondivmintext{
+	width: 100% !important;
+	display: inline-block !important;
+}
+.quotaresultoptiondivmintext2{
+	width: 100% !important;
+	text-align: left !important;
+	position: relative !important;
+	left: -12px !important;
+}
+.quotaresultoptiondivmintext3{
+	display: inline-block !important;
+	width: 120px !important;
+	text-align: left !important;
+}
+.quotaresultobjetiveajust{
+	left:34% !important;
+	padding-right: 5% !important;
+}
 
 /*----------------------------------------------*\
 		$Survey
