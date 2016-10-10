@@ -30,11 +30,9 @@ $(function() {
 	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
 	    debug: false
 	} );
-
 	clientTarget.on( "load", function(clientTarget)
 	{
 	    $('#flash-loaded').fadeIn();
-
 	    clientTarget.on( "complete", function(clientTarget, args) {
 	        clientTarget.setText( args.text );
 	        $('#target-to-copy-text').fadeIn();
@@ -553,13 +551,109 @@ $(function() {
          });
 	});
 	
+	
+	$('#importFile').on("focusout", "#resourceTitle", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.resourceTitle-"+$('#resourceTitle').val());
+		
+		if($('#resourceTitle').val() === ""){
+			showFieldError($('#resourceTitle'));
+		}else{
+			hideFieldError($('#resourceTitle'));
+		}
+		
+	});
+	
+	
+	$('#importFile').on("focusout", "#resourceAltText", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.resourceAltText-"+$("#resourceAltText").val());
+		
+		if($("#resourceAltText").val() === ""){
+			showFieldError($('#resourceAltText'));
+		}else{
+			hideFieldError($('#resourceAltText'));
+		}
+		
+	});
+	
+	
+	$('#importFile').on("focusout", "#resourceDescText", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.resourceDescText-"+$("#resourceDescText").val());
+		
+		if($("#resourceDescText").val() === ""){
+			showFieldError($('#resourceDescText'));
+		}else{
+			hideFieldError($('#resourceDescText'));
+		}
+		
+	});
+	
+	
+	$('#importFile').on("focusout", "#resourceUrl", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.resourceUrl-"+$("#resourceUrl").val());
+		
+		if(!($("#resourceUrl").val() === "") && (($("#resourceUrl").val().startsWith("http://")) || ($("#resourceUrl").val().startsWith("https://")))){
+			console.log("($(#resourceUrl).val() === empty) "+($("#resourceUrl").val() === ""));
+			console.log("(!$(#resourceUrl).val().startsWith(http://)) "+(!$("#resourceUrl").val().startsWith("http://")));
+			console.log("(!$(#resourceUrl).val().startsWith(https://)) "+(!$("#resourceUrl").val().startsWith("https://")));
+			
+			hideFieldError($('#resourceUrl'));
+		}else{
+			showFieldError($('#resourceUrl'));
+		}
+		
+	});
+	
+	
+	$('#importFile').on("focusin", "#resourceTitle", function(e){
+		e.stopPropagation();
+		console.log("focusin resourceTitle");
+		hideFieldError($('#resourceTitle'));
+		
+	});
+	
+	
+	$('#importFile').on("focusin", "#resourceAltText", function(e){
+		e.stopPropagation();
+		console.log("focusin resourceAltText");	
+		
+		hideFieldError($('#resourceAltText'));
+		
+	});
+	
+	
+	$('#importFile').on("focusin", "#resourceDescText", function(e){
+		e.stopPropagation();
+		console.log("focusin resourceDescText");	
+		
+		hideFieldError($('#resourceDescText'));
+		
+	});
+	
+	
+	$('#importFile').on("focusin", "#resourceUrl", function(e){
+		e.stopPropagation();
+		console.log("focusin resourceUrl");
+		
+		hideFieldError($('#resourceUrl'));
+		
+	});
+	
+	
 	$('#importFile').on('hidden.bs.modal', function () {
 	    //alert("close");
 	})
 	
 	$('#importFileForm').on("click", "#btnImportFile", function(e){
 		$('#importFileForm').on("submit", function(e){
-			console.log("en on(click, #btnImportFile");
+			console.log("en on(click, #btnImportFile)");
 			e.preventDefault();
 			if(pending)
 			{
@@ -577,7 +671,10 @@ $(function() {
 			if(type === "image")
 			{				
 				req.action = "options";
+				req.resourceUrl = $('#previewFileUploaded').attr("urlValue");
+				console.log(req.resourceUrl);
 				req.resourceAltText = $('#resourceAltText').val();
+				req.qid = currentQuestion;
 				req.rid = $('#rid').val();
 				req.oid = currentOption;
 			}
@@ -590,31 +687,77 @@ $(function() {
 				req.oid = currentOption;
 			}
 			
-	        $.post('ImportFileServlet', req, function(res) {
-	        	 $('#importFileForm')[0].reset();
-	             $("#importFile").modal("hide");
-	            if(currentQuestion>=0){
-	            	console.log("En currentquestion");
-		  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrameQuestion]");
-		              multimediaFrame.removeClass("hidden");
-		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
-		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
-		        }else if(currentOption>=0){
-		        	console.log("En currentoption");
-		        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
-		        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
-		              multimediaFrame.removeClass("hidden");
-		              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
-		              //
-		              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
-		              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
-		        }
-	            $('#optionsFile').empty();
-	              $('#optionsFile').addClass('hidden');
-	              $('#selectFile').addClass("hidden");
-	              $('#optionsVideoFile').addClass("hidden");
-	              pending = false;
-	  		});
+			console.log("req.resourceTitle-"+req.resourceTitle);
+			console.log("req.resourceAltText-"+req.resourceAltText);
+			console.log("req.resourceDescText-"+req.resourceDescText);
+			console.log("req.resourceUrl-"+req.resourceUrl);
+			console.log("type-"+type);
+			
+			if(((type === "image") && ((req.resourceTitle==="") || (req.resourceAltText===""))) || ((type === "video") && ((req.resourceTitle==="") || (req.resourceDescText==="") || ((req.resourceUrl === "") || ((!req.resourceUrl.startsWith("http://")) && (!req.resourceUrl.startsWith("https://"))))))){
+				
+				if(type === "image"){
+					hideFieldError($('#resourceDescText'));
+					hideFieldError($('#resourceUrl'));
+					
+					if (req.resourceTitle==="")
+						showFieldError($('#resourceTitle'));
+					else
+						hideFieldError($('#resourceTitle'));
+					
+					if (req.resourceAltText==="")
+						showFieldError($('#resourceAltText'));
+					else
+						hideFieldError($('#resourceAltText'));					
+				} 
+				
+				if(type === "video"){
+					hideFieldError($('#resourceAltText'));
+					
+					if (req.resourceTitle==="")
+						showFieldError($('#resourceTitle'));
+					else
+						hideFieldError($('#resourceTitle'));
+					
+					if (req.resourceDescText==="")
+						showFieldError($('#resourceDescText'));
+					else
+						hideFieldError($('#resourceDescText'));
+					
+					if ((req.resourceUrl==="") || ((!req.resourceUrl.startsWith("http://")) && (!req.resourceUrl.startsWith("https://"))))
+						showFieldError($('#resourceUrl'));
+					else
+						hideFieldError($('#resourceUrl'));
+				}
+				
+				pending = false;
+			}
+			else{
+		        $.post('ImportFileServlet', req, function(res) {
+		        	 $('#importFileForm')[0].reset();
+		             $("#importFile").modal("hide");
+		            if(currentQuestion>=0){
+		            	console.log("En currentquestion");
+			  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrameQuestion]");
+			              multimediaFrame.removeClass("hidden");
+			              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
+			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+			        }else if(currentOption>=0){
+			        	console.log("En currentoption");
+			        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+			        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
+			              multimediaFrame.removeClass("hidden");
+			              multimediaFrame.find("div.options-files-frame").removeClass("hidden");
+			              //
+			              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
+			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
+			        }
+		            $('#optionsFile').empty();
+		              $('#optionsFile').addClass('hidden');
+		              $('#selectFile').addClass("hidden");
+		              $('#optionsVideoFile').addClass("hidden");
+		              pending = false;
+		  		});
+			}
 		});
 	});
 	
@@ -623,6 +766,8 @@ $(function() {
 		if(type === "video")
 		{
 			$('#selectFile').addClass("hidden");
+			$('#optionsFile').empty();
+			$('#optionsFile').addClass("hidden");
 			$('#optionsVideoFile').removeClass("hidden");
 		}
 		else
@@ -640,64 +785,87 @@ $(function() {
 		var content = {};
 		
 		var changedTitle = '';
-		if($('#rTitle').val() != currentElement.tittle)
-		{
-			changedTitle = $('#rTitle').val();
-			content.contentType = "title";
-			content.text = changedTitle;
-			content.lan = currentLanguage;
-			currentElement.tittle = content.text;
-			req.contents.push(content);
-		}
 		
-		if(currentElement.rType === "image" && $('#rAltText').val() != currentElement.altText)
-		{
-			content = {};
-			content.contentType = "altText";
-			content.text = $('#rAltText').val();
-			content.lan = currentLanguage;
-			currentElement.altText = content.text
-			req.contents.push(content);
-		}
-		else if(currentElement.rType === "video" && $('#rDescText').val() != currentElement.descText)
-		{
-			content = {};
-			content.contentType = "description";
-			content.text = $('#rDescText').val();
-			content.lan = currentLanguage;
-			currentElement.descText = content.text
-			req.contents.push(content);
-		}
+		if(($('#rTitle').val()!="") && ((currentElement.rType === "image" && $('#rAltText').val() != "") || (currentElement.rType === "video" && $('#rDescText').val() != ""))){
+			hideFieldError($('#rTitle'));
+			hideFieldError($('#rAltText'));
+			hideFieldError($('#rDescText'));
 		
-		if(req.contents.length > 0)
-		{
-			req.type = currentElement.rType;
-			req.rid = currentElement.rId;
-			
-			var serviceUrl = host + "/SurveyTool/api/ResourceService/updateContent";
-			
-			console.log("Resource update content: " + JSON.stringify(req));
-			
-			updateContent(req, serviceUrl);
-			
-			var multimediaElem = $('li[rid=' + currentElement.rId + ']').find('#editFile');
-			multimediaElem.attr('data-image', JSON.stringify(currentElement));
-			
-			if(changedTitle != '')
+			if($('#rTitle').val() != currentElement.tittle)
 			{
-				var fileName = multimediaElem.html().split('-')[1];
-				multimediaElem.html(changedTitle + " - " + fileName);
+				changedTitle = $('#rTitle').val();
+				content.contentType = "title";
+				content.text = changedTitle;
+				content.lan = currentLanguage;
+				currentElement.tittle = content.text;
+				req.contents.push(content);
+				
 			}
 			
+			if(currentElement.rType === "image" && $('#rAltText').val() != currentElement.altText)
+			{
+				content = {};
+				content.contentType = "altText";
+				content.text = $('#rAltText').val();
+				content.lan = currentLanguage;
+				currentElement.altText = content.text
+				req.contents.push(content);
+			}
+			else if(currentElement.rType === "video" && $('#rDescText').val() != currentElement.descText)
+			{
+				content = {};
+				content.contentType = "description";
+				content.text = $('#rDescText').val();
+				content.lan = currentLanguage;
+				currentElement.descText = content.text
+				req.contents.push(content);
+			}
 			
-		}		
-		
-		$("#previewVideo").addClass("hidden");
-		$("#resDescText").addClass("hidden");
-		$("#previewImage").addClass("hidden");
-		$("#resourceAltText").addClass("hidden");					
-		$("#updateFile").modal("hide");
-		
+			if(req.contents.length > 0)
+			{
+				req.type = currentElement.rType;
+				req.rid = currentElement.rId;
+				
+				var serviceUrl = host + "/SurveyTool/api/ResourceService/updateContent";
+				
+				console.log("Resource update content: " + JSON.stringify(req));
+				
+				updateContent(req, serviceUrl);
+				
+				var multimediaElem = $('li[rid=' + currentElement.rId + ']').find('#editFile');
+				multimediaElem.attr('data-image', JSON.stringify(currentElement));
+				
+				if(changedTitle != '')
+				{
+					var fileName = multimediaElem.html().split('-')[1];
+					multimediaElem.html(changedTitle + " - " + fileName);
+				}
+				
+				
+			}		
+			
+			$("#previewVideo").addClass("hidden");
+			$("#resDescText").addClass("hidden");
+			$("#previewImage").addClass("hidden");
+			$("#resourceAltText").addClass("hidden");					
+			$("#updateFile").modal("hide");
+		}
+		else{
+			if($('#rTitle').val() === "")
+				showFieldError($('#rTitle'));
+			else
+				hideFieldError($('#rTitle'));			
+			
+			if(currentElement.rType === "image" && $('#rAltText').val() === "")
+				showFieldError($('#rAltText'));
+			else
+				hideFieldError($('#rAltText'));
+			
+			if(currentElement.rType === "video" && $('#rDescText').val() === "")
+				showFieldError($('#rDescText'));
+			else
+				hideFieldError($('#rDescText'));
+		}
 	});
 	
 	$('#updateFilesSection').on("click", "#btnCancelUpdateFile", function(e){
@@ -706,6 +874,73 @@ $(function() {
 		$("#previewImage").addClass("hidden");
 		$("#resourceAltText").addClass("hidden");					
 		$("#updateFile").modal("hide");		
+	});
+	
+	$('#updateFilesSection').on("focusout", "#rTitle", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.rTitle-"+$('#rTitle').val());
+		
+		if($('#rTitle').val() === ""){
+			showFieldError($('#rTitle'));
+		}else{
+			hideFieldError($('#rTitle'));
+		}
+		
+	});
+	
+	
+	$('#updateFilesSection').on("focusout", "#rAltText", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.rAltText-"+$("#rAltText").val());
+		
+		if($("#rAltText").val() === ""){
+			showFieldError($('#rAltText'));
+		}else{
+			hideFieldError($('#rAltText'));
+		}
+		
+	});
+	
+	
+	$('#updateFilesSection').on("focusout", "#rDescText", function(e){
+		e.stopPropagation();		
+		
+		console.log("focusout req.rDescText-"+$("#rDescText").val());
+		
+		if($("#rDescText").val() === ""){
+			showFieldError($('#rDescText'));
+		}else{
+			hideFieldError($('#rDescText'));
+		}
+		
+	});
+	
+	
+	$('#updateFilesSection').on("focusin", "#rTitle", function(e){
+		e.stopPropagation();
+		console.log("focusin rTitle");
+		hideFieldError($('#rTitle'));
+		
+	});
+	
+	
+	$('#updateFilesSection').on("focusin", "#rAltText", function(e){
+		e.stopPropagation();
+		console.log("focusin rAltText");	
+		
+		hideFieldError($('#rAltText'));
+		
+	});
+	
+	
+	$('#updateFilesSection').on("focusin", "#rDescText", function(e){
+		e.stopPropagation();
+		console.log("focusin rDescText");	
+		
+		hideFieldError($('#rDescText'));
+		
 	});
 	
 	/*$('#updateFilesSection').on("click", "#btnUpdateFile", function(e){
@@ -755,6 +990,7 @@ $(function() {
 		if(currentOption>0){
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
+			$("#divType").val('Option');
 			$('#importFile').modal();
 		}else{
 			alert("First, complete the option");
@@ -836,6 +1072,14 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('.section-pages').on("click", "#removeMultimediaFileQuestion", function(e){
+		var item = $(this).closest('li.multimedia-item');
+		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
+		$("#removeElemId").val(item.attr('rid'));
+		$("#removeElemService").val('ResourceServiceQuestion');
+		$("#removeElement").modal("show");
+	});
+	
 	$('.section-pages').on("click", "#remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');		
@@ -886,28 +1130,45 @@ $(function() {
 		
 		var elementId = $('#removeElemId').val(); 
 		var service = $("#removeElemService").val();
-		//console.log("Resource ID: " + elementId+", service: "+service);
-		
+		console.log("Resource ID: " + elementId+", service: "+service);
+		console.log(host + "/SurveyTool/api/" + service + "/" + elementId);
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
-		
+		var removeFileQuestion = false;
+		if (service == "ResourceServiceQuestion"){
+			removeFileQuestion = true;
+			service = "ResourceService";
+		}
+		console.log("Resource ID: " + elementId+", service: "+service);	
 		$.ajax({ 
 		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
-			   //console.log("data: "+data+", service: "+service);
+			   console.log("data: "+data+", service: "+service);
 			   if(data == 'true')
 			   {
 				   $("#removeElement").modal("hide");
 				   if(service == "ResourceService")
 				   {
-					   if($(this).closest('#option-item').find('#multimediaFilesList li').length<2){
-						   console.log("hidden a class");
+					   console.log("ResourceService");
+					   if(removeFileQuestion){
+						   console.log("It is a question");
+						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
+						   if($('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length<2){
+							   console.log("hidden a class");
+							   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
+							   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
+						   }
+						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
+						  
+						   $('li[rid=' + elementId + ']').remove();
+					   } else{
+						   console.log("It is an option");
 						   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
-						   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
+						   $('li[rid=' + elementId + ']').closest('div.options-files-frame').addClass('hidden');
+						   
+						   $('li[rid=' + elementId + ']').remove();
+						   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
 					   }
-					   $('li[rid=' + elementId + ']').remove();
-					   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
-					   
 				   }
 				   else if(service == "QuestionService")
 				   {
@@ -1744,7 +2005,6 @@ $(function() {
 		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
 		$(this).closest('div.logic-frame').find('button.btn-close-logic').removeClass('hidden');
 	});
-
 	$('.survey-sections').on("click", "button.btn-close-logic", function(){
 		
 		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
@@ -1763,13 +2023,11 @@ $(function() {
 			$(this).addClass('hidden');
 		}
 	});
-
 	$('.survey-sections').on("click", ".dependences-button > button", function(){
 		$(this).parent().addClass('hidden');
 		$(this).closest('div.dependences-frame').find('div.dependences-settings').removeClass('hidden');
 		$(this).closest('div.dependences-frame').find('button.btn-close-dependences').removeClass('hidden');
 	});
-
 	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
 		var index = $(this).closest('div.dependences-frame').find('ul.dependences-list').attr("index");
 		var questionTitle = $(this).closest('li.panel-question').find('input.survey-question-title').val();
@@ -2076,4 +2334,3 @@ function alertNotQuota(){
 		}
     });
 }
-

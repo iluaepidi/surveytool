@@ -62,15 +62,21 @@ System.out.println("fUpdateFile opened");
 								<div class="form-group">
 						            <label for="rTitle"><%= lang.getContent("file.edit.titleImagen")%></label>
 						            <input type="text" id="rTitle" class="form-control" name="resourceTitle" placeholder="Type here_" value=""/>
-						        </div>
+						        	<span  id='rTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  						<span id='rTitle-error' class='error hidden' style=''><%= lang.getContent("msg.error.title.text") %></span>	
+								</div>
 						        <div id="resourceAltText" class="form-group hidden">									            
 						            <label for="rAltText"><%= lang.getContent("file.edit.altTextImage")%></label>
 						            <textarea rows="2" id="rAltText" name="resourceAltText" class="form-control" placeholder="Type here_"></textarea>
-						        </div>
+						        	<span  id='rAltText-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  						<span id='rAltText-error' class='error hidden' style=''><%= lang.getContent("msg.error.alttext.text") %></span>	
+								</div>
 						        <div id="resDescText" class="form-group hidden">									            
 						            <label for="rDescText"><%= lang.getContent("file.edit.descTextVideo")%></label>
 						            <textarea rows="2" id="rDescText" name="resourceDescText" class="form-control" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
-						        </div>
+						        	<span  id='rDescText-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:30px;right: 20px'></span>
+			  						<span id='rDescText-error' class='error hidden' style=''><%= lang.getContent("msg.error.desc.text") %></span>	
+								</div>
 			  					
 								<div class="center">
 									<button name="upload" id="btnCancelUpdateFile" class="btn btn-default"><%= lang.getContent("button.cancel")%></button>

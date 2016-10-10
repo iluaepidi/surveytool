@@ -127,7 +127,7 @@
 							  								</div>
 									  								<div class="row margin-top-40 hidden" type="global" id="multimediaFrame">
 																		<div id="div_files">
-																			<div class="question-files-frame hidden">
+																			<div class="options-files-frame hidden">
 																				<label><%= lang.getContent("question.edit.files.option.title") %></label>
 																				<ul class="multimedia-list" id="multimediaFilesList">
 																				</ul>
@@ -155,7 +155,7 @@
 							  								</div>
 							  								<div class="row margin-top-40 hidden" type="global" id="multimediaFrame">
 																		<div id="div_files">
-																			<div class="question-files-frame hidden">
+																			<div class="options-files-frame hidden">
 																				<label><%= lang.getContent("question.edit.files.option.title") %></label>
 																				<ul class="multimedia-list" id="multimediaFilesList">
 																				</ul>
