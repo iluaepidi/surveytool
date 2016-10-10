@@ -5,8 +5,10 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	/** Initial load **/
 	$scope.currentSurvey = survey;
 	$scope.warning = false;
+	$scope.mandatoryError = false;
 	$scope.error = true;	
 	$scope.text = "hello world";
+	var mandatoryErrorQuestions = [];
 
 	/*if(!$scope.user.name)
 	{		
@@ -96,9 +98,58 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	};
 	
 	$scope.nextPage = function(action) {
-		$scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
+		mandatoryErrorQuestions = [];
+		if(action === 'next')
+		{
+			$scope.currentSurvey.info.section.page.questions.forEach(function(q){
+				if(q.mandatory && q.questionType != 'bcontent')
+				{
+					if(!q.response)
+					{
+						if(q.optionsGroups && q.optionsGroups.length > 0)
+						{
+							q.optionsGroups.forEach(function(og){
+								if(!og.response)
+								{
+									if(og.options && og.options.length > 0)
+									{
+										og.options.forEach(function(o){
+											if(!o.response)
+											{
+												mandatoryErrorQuestions.push(q.questionId);
+											}
+										});
+									}
+									else
+									{
+										mandatoryErrorQuestions.push(q.questionId);
+									}
+								}
+									
+							});
+						}
+						else
+						{
+							mandatoryErrorQuestions.push(q.questionId);
+						}
+					}
+				}
+			});
+		}//$scope.mandatoryError = true;
+		if(mandatoryErrorQuestions.length == 0) $scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
 	};
 
+	$scope.showMandatoryErrorMsg = function(question) {
+		var show = false;
+		if(mandatoryErrorQuestions.length > 0)
+		{
+			mandatoryErrorQuestions.forEach(function(id){
+				if(id == question.questionId) show = true;
+			});
+		}
+		return show;
+	};
+	
 	$scope.showStartButton = function() {
 		if($scope.currentSurvey.info.section.page.numPage == 1)
 		{

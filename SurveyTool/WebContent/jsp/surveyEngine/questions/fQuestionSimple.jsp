@@ -5,11 +5,8 @@
     
 										<div class="form-question" id="form-question-{{question.questionId}}">
 											<fieldset>
-												<legend>
-
-													{{question.index}}. {{getJsonArrayElement(question.contents, "contentType", "title").text}}													
-
-												</legend>
+												
+												<jsp:include page="fqComponents/fqHeader.jsp" />
 												
 							  					<p>{{getJsonArrayElement(question.contents, "contentType", "description").text}}</p>
 							  					

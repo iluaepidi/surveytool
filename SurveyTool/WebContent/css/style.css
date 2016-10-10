@@ -1080,7 +1080,8 @@ footer {margin-top: 10px;
 .form-question label {font-size: 1.3em !important;
 	width: 95%;}
 .form-question legend {font-size: 1.3em !important;
-    width: 95%;
+    width: 100%;
+    display: flex;
     font-weight: bold;
     border: none;
     margin-bottom: 5px;}
@@ -1553,3 +1554,7 @@ footer {margin-top: 10px;
 \*----------------------------------------------*/
 
 .char-counter {text-align: right;}
+.form-question-title {max-width: 95%;
+    display: inline-block;}
+.form-question-mandatory {float:right;
+	padding: 0px 5px;}
