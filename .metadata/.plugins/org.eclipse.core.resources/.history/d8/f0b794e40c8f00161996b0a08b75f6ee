@@ -1,0 +1,326 @@
+/*----------------------------------------------*\
+		$GENERIC
+\*----------------------------------------------*/
+.body-content > .container-fluid{
+	padding:0px;
+}
+
+.body-content{
+	background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;
+	padding-bottom:2em;
+}
+.body-content .content{
+	background:url(../img/content-bg-top.gif) left top  repeat-x;
+	min-height:35em;/*TEST*/
+	clear:both;
+	border-top:3px solid #BBCAD3;
+	padding-top:1em;
+}
+.survey-form > ul{
+	list-style-type:none;
+	padding:0px;
+}
+.survey-form > ul > li{
+	list-style-type:none;
+	/*overflow:hidden;*/
+}
+
+/*----------------------------------------------*\
+		$HEADER
+\*----------------------------------------------*/
+.title-content{
+	bakcground-color:#fff;
+}
+.title-content h1{
+	font-size:2em;
+	color:#016FB8;
+}
+.title-content h2{
+	font-size:1.214em;
+	color:#016FB8;
+	font-weight:bold;
+	text-transform:uppercase;
+	margin-top:2em;
+	margin-bottom:1em;
+}
+.progress {
+    background-color: #CED9DF;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(58, 80, 92, 0.5) inset;
+    height: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.progress-bar {
+    background-color: #016FB8;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    color: #fff;
+    float: left;
+    font-size: 10px;
+    height: 100%;
+    line-height: 10px;
+    text-align: center;
+    transition: width 0.6s ease 0s;
+    width: 0;
+}
+/*----------------------------------------------*\
+		$QUESTIONS
+\*----------------------------------------------*/
+#form-question{
+	margin:2em 0em 4em 0em;/* margin collapse */
+}
+#form-question .form-question-content{
+
+}
+#form-question legend{
+	/*
+	color:#016FB8;
+	border:none;
+	font-weight:bold;
+	font-size:1.786em;
+	overflow:hidden;
+	*/
+	position:relative;
+	font-size:1.786em;
+}
+#form-question legend span{
+	/*
+	background-color:#016FB8;
+	color:#fff;
+	padding:.2em 0em;
+	display:block;
+	float:left;
+	width:33%;
+	*/
+	font-weight:bold;
+}
+#form-question legend span.number{
+	position:absolute;
+	width:2em;
+	left:-2.2em;
+	color:#016FB8;
+	text-align:right;
+}
+#form-question legend span.text{
+	background-color:#016FB8;
+	color:#fff;
+	padding:.2em .4em;
+	display:block;
+}
+#form-question legend span.mandatory{
+	position:absolute;
+	width:2em;
+	right:-2.2em;
+	top:0px;
+	color:#f00;
+	text-align:left;
+	font-size:3em;
+	line-height:1;
+}
+
+/* InputText Textarea*/
+#form-question .form-control{
+	border-color:#016FB8;
+	border-radius:0px;
+}
+/* Multiple */
+#form-question .checkbox input{
+	opacity:0;
+}
+#form-question .checkbox label{
+	background:url(../img/checkbox-off.png) left center no-repeat;
+	padding-left:30px;
+}
+#form-question .checkbox input[type=checkbox]:checked + label{
+	background:#016FB8 url(../img/checkbox-on.png) left center no-repeat;
+	color:#fff;
+}
+#form-question .checkbox label span{
+	display:inline-block;
+	padding:4px;
+}
+#form-question .checkbox label:hover span,
+#form-question .checkbox input:focus + label span{
+	color:#fff;
+	background-color:#016FB8 !important;
+}
+/* Simple */
+#form-question .radio input{
+	opacity:0;
+}
+#form-question .radio label{
+	background:url(../img/radio-off.png) left center no-repeat;
+	padding-left:30px;
+}
+#form-question .radio input[type=radio]:checked + label{
+	background:#016FB8 url(../img/radio-on.png) left center no-repeat;
+	color:#fff;
+}
+#form-question .radio label span{
+	display:inline-block;
+	padding:4px;
+}
+#form-question .radio label:hover span,
+#form-question .radio input:focus + label span{
+	color:#fff;
+	background-color:#016FB8 !important;
+}
+
+#form-question .radio.img label{
+	background:url(../img/radio-off.png) center bottom no-repeat;
+	padding-left:0px;
+	padding-bottom:30px;
+}
+#form-question .radio.img input[type=radio]:checked + label{
+	background: url(../img/radio-on.png) center bottom no-repeat;
+	color:#fff;
+}
+#form-question .radio.img label span{
+	display:block;
+	padding:4px;
+	text-align:center;
+}
+#form-question .radio.img label:hover span,
+#form-question .radio.img input:focus + label span{
+	background-color:transparent !important;
+}
+
+/* Matrix */
+#form-question table{
+	width:100%;
+}
+#form-question table tr{
+	background-color:#fff;
+}
+#form-question table tbody tr:nth-child(odd){
+	background-color:#E8EEF1;
+}
+
+#form-question table tr th{
+	padding:1em;
+	color:#016FB8;
+	text-align:center;
+}
+#form-question table tr th.matrix-title{
+	text-align:left;
+}
+#form-question table tr td{
+	padding:1em;
+	position:relative;
+	text-align:center;
+	border-left:1px solid #fff;
+}
+#form-question table tr:nth-child(even) td{
+	border-left:1px solid #E8EEF1;
+}
+#form-question table tr td label{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	background:url(../img/radio-off.png) center center no-repeat;
+}
+#form-question table tr td label:hover,
+#form-question table tr td input[type=radio]:focus + label{
+	background-color:#016FB8;
+}
+
+#form-question table tr td input[type=radio]:checked + label{
+	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
+}
+/* Scale */
+/*
+#form-question .likert-options{
+	overflow:hidden;
+}
+#form-question .likert-options div{
+	float:left;
+}
+#form-question .likert-options div label{
+	display:block;
+	margin:0px;
+	padding:0px;
+}
+#form-question .likert-options div input{
+	opacity:0;
+	margin:0px;
+	padding:0px;
+}
+*/
+#form-question.scale .form-question-content{
+	max-width:300px;
+	margin-top:2em;
+}
+#form-question .likert-options label{
+	background:url(../img/radio-off.png) center top no-repeat;
+	padding-top:30px;
+	display:inline-block;
+	min-width:20px;
+	text-align:center;
+}
+#form-question .likert-options input[type=radio]:checked + label{
+	background:url(../img/radio-on.png) center top no-repeat;
+}
+#form-question .likert-options input{
+	opacity:0;
+	margin:0px;
+	padding:0px;
+}
+
+#form-question .likert-legend{
+	overflow:hidden;
+	border-top:3px solid #7191A4;
+}
+#form-question .likert-legend div{
+	float:left;
+	width:33%;
+	text-align:center;
+	font-size:.75em;
+	text-transform:uppercase;
+	color:#016FB8;
+	padding-top:1em;
+}
+
+/* Buttons */
+.btn-submit-page .btn-submit-page-back{
+	border:none;
+	background:transparent url(../img/back.png) left center no-repeat;
+	padding-left:35px;
+	color:#4A555F;
+	font-size:1.428em;
+}
+.btn-submit-page .btn-submit-page-continue{
+	border-radius:0px;
+	font-size:1.786em;
+}
+
+/* Messages */
+.msg-error{
+	font-size:1.072em;
+	background:url(../img/msg-bg.png) bottom right no-repeat;
+	padding-bottom:25px;
+	margin-right:-3em;
+}
+.msg-error > div{
+	padding-left:70px;
+	margin-left:-2em;
+}
+.msg-error > div.required{
+	background:url(../img/asterisk.png) left top no-repeat;
+}
+.msg-error > div.error{
+	background:url(../img/exclamation.png) left top no-repeat;
+}
+.msg-error .msg-title{
+	text-transform:uppercase;
+	color:#016FB8;
+	margin-bottom:.4em;
+}
+/*----------------------------------------------*\
+		$FOOTER
+\*----------------------------------------------*/
+#powered{
+	text-align:right;
+	padding:2em 0em;
+}

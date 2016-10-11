@@ -1,0 +1,6 @@
+#Tomcat publish data
+#Tue Oct 11 10:10:02 CEST 2016
+org.eclipse.jst.j2ee.server\:UserPanel=WEB-INF/lib/UserPanel.jar
+org.eclipse.jst.j2ee.server\:DatabaseMgr=WEB-INF/lib/DatabaseMgr.jar
+org.eclipse.jst.j2ee.server\:SurveyManager=WEB-INF/lib/SurveyManager.jar
+org.eclipse.jst.j2ee.server\:SurveyEngine=WEB-INF/lib/SurveyEngine.jar
