@@ -8,6 +8,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.mandatoryError = false;
 	$scope.error = true;	
 	$scope.text = "hello world";
+	$scope.decimalRegex = '^[0-9]+(.([0-9]{1,2}))?$';
 	var mandatoryErrorQuestions = [];
 
 	/*if(!$scope.user.name)
@@ -25,6 +26,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		{
 			if( array[i][attribute] == value) return array[i];
 		}
+		return {};
 	};
 
 	$scope.getLines = function(numLines, maxLength) {
@@ -84,6 +86,23 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		{
 			return decimals.value;
 		}
+	};
+	
+	$scope.decimalRegex = function(decimals) {
+		//'^[0-9]+(.([0-9]{1,2}))?$'
+		console.log("decimals: " + JSON.stringify(decimals));
+		var regex = '^[0-9]+';
+		if(decimals.name && decimals.value)
+		{
+			regex = regex + '(.([0-9]{1,' + decimals.value + '}))?';
+		}
+		/*else if(decimals.name && !decimals.value)
+		{
+			regex = regex + '(.([0-9]+))?';
+		}*/		
+		regex = regex + '$';
+		
+		return regex;
 	};
 
 	$scope.getMatrixOptionType = function(matrixType) {
@@ -183,6 +202,41 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	};
 
 }]);
+
+/*app.directive('decimalLimit',function(){
+    return {
+        link:function(scope,ele,attrs){
+            ele.bind('keypress',function(e){
+            	console.log('Entra en keypress val: ' + $(this).val())
+                var newChar = (e.charCode!==0?String.fromCharCode(e.charCode):'');
+            	var currentVal = $(this).attr('currentVal');
+                var newVal=$(this).val();
+                
+                if(currentVal[currentVal.length-1] === '.') newVal = newVal + '.' +newChar;
+                else newVal = newVal+newChar;
+                console.log('Entra en keypress newVal: ' + newVal);
+                console.log('Entra en keypress newVal.substring: ' + newVal.substring(0, newVal.length-1));
+                if(currentVal >= newVal) currentVal = newVal.substring(0, newVal.length-1);
+                
+                
+            	console.log('Entra en keypress newChar: ' + newChar);
+            	console.log('Entra en keypress currentVal before: ' + currentVal + " - " + currentVal.includes("."));
+                
+                if(($(this).val().search(/(.*)\.[0-9][0-9]/)===0)
+                		|| (currentVal.includes(".") && newChar === '.')
+                		|| newChar === 'e'){
+                	
+                    e.preventDefault();
+                }
+                else
+                {
+                	$(this).attr('currentVal', newVal);
+                }
+                console.log('Entra en keypress currentVal after: ' + $(this).attr('currentVal'));
+            });
+        }
+    };
+});*/
 
 /*
 var compareTo = function() {
