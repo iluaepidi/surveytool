@@ -1,9 +1,0 @@
-INDEX VERSION 1.3+C:\Users\psuarez\Documents\Eclipse Workspace\surveytool\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2642896006.index
-3323197927.index
-300298722.index
-2463282335.index
-749615618.index
-1332111583.index
-46420448.index
-2102523050.index
