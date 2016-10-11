@@ -141,10 +141,9 @@ h2 {width: auto;
     top: -99999px;} 
 
 input[type="number"] {
-   width:60px;
+   width:100px;
    text-align:center;
    rows:1;
-   cols:4;
 }
 
 /*focus*/
@@ -195,6 +194,10 @@ input[type="color"]:focus,
   	/*border-color: rgba(128, 0, 0, 0.8) !important;*/
   	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(128, 0, 0, 0.6) !important;
   	outline: 0 none !important;
+}
+
+.error-label{
+	color:#B60000;
 }
 	
 /*tablas*/
@@ -1063,7 +1066,7 @@ footer {margin-top: 10px;
 .survey-form {border: 2px solid #337ab7;
     border-radius: 10px;
     padding: 15px 1.5%;}
-.form-question {background-color: #C8C8C8;
+.form-question {background-color: #DEDEDE;
 	border-radius: 10px;
     padding: 1.5%;
     margin-bottom: 2%;

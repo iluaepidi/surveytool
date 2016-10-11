@@ -14,16 +14,24 @@ public class DBSQLQueries {
 				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+		        + "inner join surveytool.section as s on s.idSection = p.idSection "
+		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
 				+ "where idQuestionnaire = ? order by idAnonimousUser";
 		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS = "SELECT * FROM surveytool.anonimoususer where ipAddres = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
-			+ "FROM surveytool.anonimoususer as au "
-			+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
-			+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
-			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
-			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
-			+ "where idQuestionnaire = ? order by idAnonimousUser";
+		+ "FROM surveytool.anonimoususer as au "
+		+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+		+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+		+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+		+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+        + "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+        + "inner join surveytool.page as p on p.idPage = qbp.idPage "
+        + "inner join surveytool.section as s on s.idSection = p.idSection "
+        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
+		+ "where au.idQuestionnaire = ? order by idAnonimousUser";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
 				+ "if(qt.name = 'simple', "

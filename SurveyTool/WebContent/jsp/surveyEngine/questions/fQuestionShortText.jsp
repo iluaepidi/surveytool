@@ -19,10 +19,13 @@
 	
 												<jsp:include page="fqComponents/fqResources.jsp" />
 												
-												<div class="form-question-content">
+												<div class="form-question-content" >
 													<label for="{{question.questionId}}" class="visuallyhidden"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
 													
-							  							<input type="number" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}' pattern="[0-9]+([\,|\.][0-9]+)?" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="{{question.questionId}}" min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' ng-model="question.response"></input>
+							  							<input type="number" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' decimals='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}' name="numeric" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="{{question.questionId}}" min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' ng-model="question.response" limit-decimal></input>
+							  							<div ng-show="survey.$submitted || survey.numeric.$touched">
+							  							<span id="inputError2Status" class="error-label" role="alert" ng-show="survey.numeric.$error.min || survey.numeric.$error.max"><%= lang.getContent("msg.error.minmax1")%> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("msg.error.minmax2")%> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}</span>							  							
+							  							</div>
 							  						
 							  							<input type="text" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></input>
 							  						

@@ -30,6 +30,7 @@
 									                    		<td class="matrix-title">{{getJsonArrayElement(optionsGroup.contents, "contentType", "title").text}}</td>
 									                    		
 									                    		<th class="matrix-title" ng-repeat="option in optionsGroup.options">
+									                    			<label for="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" class="visuallyhidden">{{getJsonArrayElement(optionsGroup.contents, "contentType", "title").text}} - {{getJsonArrayElement(option.contents, "contentType", "title").text}}</label>
 									                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" value="{{option.optionId}}" ng-if="optionsGroup.optionType == 'radio'" ng-model="optionsGroup.response">
 									                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" ng-if="optionsGroup.optionType != 'radio'" ng-model="option.response">
 									                    		</th>
