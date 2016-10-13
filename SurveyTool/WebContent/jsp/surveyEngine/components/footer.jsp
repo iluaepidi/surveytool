@@ -4,23 +4,9 @@
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>
-				<div class="container-fluid">
-		  			<div class="footer-links">
-		  				<ul class="row row-footer">
-		  					<li class="col-md-3 center"><a href="#"><%= lang.getContent("master.footer.link.about") %></a></li>
-		  					<li class="col-md-2 center"><a href="#"><%= lang.getContent("master.footer.link.legal") %></a></li>
-		  					<li class="col-md-2 center"><a href="#"><%= lang.getContent("master.footer.link.accessibility") %></a></li>
-		  					<li class="col-md-2 center"><a href="#"><%= lang.getContent("master.footer.link.cookies") %></a></li>
-		  					<li class="col-md-3 center"><a href="#"><%= lang.getContent("master.footer.link.contact") %></a></li>
-		  				</ul>	  			
-		  			</div>
-		  			<div class="content footer-logos">
-		  				<div class="footer-logo-content">
-			  				<img src="img/euroflag.jpg" />
-			  				<p><%= lang.getContent("master.footer.content") %></p>
-			  			</div>
-		  			</div>
-		  		</div>
+		<div class="col-md-10 col-md-push-1">
+			<p id="powered"><img src="img/powered.png" alt="Powered by ILUNION"/></p>
+  		</div>
 <%
 lang.close();
 %>

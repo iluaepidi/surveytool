@@ -10,12 +10,9 @@
     								  
    												<legend>
 
-													<div class="form-question-title">{{question.index}}. {{getJsonArrayElement(question.contents, "contentType", "title").text}} </div>
-													<div class="form-question-mandatory" ng-show="question.mandatory">
-														<span class="visuallyhidden"><%= lang.getContent("survey.question.label.mandatory") %></span>
-														<i class="fa fa-asterisk red" aria-hidden="true"></i>
-														<span role="alert" class="red" ng-show="showMandatoryErrorMsg(question)"><%= lang.getContent("survey.question.error.mandatory") %></span>
-													</div>
+													<span class="number">{{question.index}}</span> 
+													<span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> 
+													<span class="mandatory" ng-show="question.mandatory">*<span class="sr-only"><%= lang.getContent("survey.question.label.mandatory") %></span></span>
 											
 												</legend>		
 <%
