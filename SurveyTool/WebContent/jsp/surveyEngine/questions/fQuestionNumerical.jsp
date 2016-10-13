@@ -23,10 +23,11 @@ Language lang = (Language) request.getAttribute(Attribute.s_SURVEY_LANGUAGE);
 	
 	%>
 	<div class="form-question" id="form-question">
+		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
+	
 		<fieldset>
-			<legend>
-				<%= lang.getContent("survey_engine.question.title") %> <%= index %> <span><%= title %></span>													
-			</legend>
+		
+			<jsp:include page="fqComponents/fqHeader.jsp" />
 			<%
 					if(question!=null && question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION)!=null)
 					{

@@ -123,6 +123,9 @@
 	border-color:#016FB8;
 	border-radius:0px;
 }
+.char-counter {text-align: right;
+	color:#484848;
+	text-transform: uppercase;}
 /* Multiple */
 #form-question .checkbox input{
 	opacity:0;

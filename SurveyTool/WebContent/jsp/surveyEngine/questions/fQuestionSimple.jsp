@@ -6,12 +6,7 @@
 	%>
 	<div class="form-question" id="form-question">
 		
-		<div class="msg-error" ng-show="showMandatoryErrorMsg(question)">
-			<div class="required">
-				<p class="msg-title">This question is mandatory.</p>
-				<p>Please select an option before to continue.</p>
-			</div>
-		</div>
+		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
 	
 		<fieldset>
 		

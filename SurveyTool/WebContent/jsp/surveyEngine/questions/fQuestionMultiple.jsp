@@ -6,10 +6,11 @@
 	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 	%>
 	<div class="form-question" id="form-question">
+		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
+	
 		<fieldset>
-			<legend>
-				<span class="number">{{question.index}}</span> <span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> <span class="mandatory">*<span class="sr-only"><%= lang.getContent("question.mandatory") %></span></span>
-			</legend>
+		
+			<jsp:include page="fqComponents/fqHeader.jsp" />
 			
 			<p>{{getJsonArrayElement(question.contents, "contentType", "description").text}}</p>
 					

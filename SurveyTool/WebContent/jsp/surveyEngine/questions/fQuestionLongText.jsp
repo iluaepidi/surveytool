@@ -7,24 +7,27 @@
 Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 %>
 	<div class="form-question" id="form-question">
+		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
+	
 		<fieldset>
-			<legend>
-				<span class="number">{{question.index}}</span> <span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> <span class="mandatory">*<span class="sr-only"><%= lang.getContent("question.mandatory") %></span></span>
-			</legend>
+		
+			<jsp:include page="fqComponents/fqHeader.jsp" />
 			
 			<p>{{getJsonArrayElement(question.contents, "contentType", "description").text}}</p>
 
 			<jsp:include page="fqComponents/fqResources.jsp" />
 			
 			<div class="form-question-content">
-				<div class="msg-error">
+				<div class="msg-error" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
 					<div class="error">
-						<p class="msg-title">1000 characters max.</p>
-						<p>Please select an option before to continue.</p>
+						<p class="msg-title">{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}} <%= lang.getContent("survey.process.title.charLimit") %></p>
+						<p role="alert"><%= lang.getContent("survey.process.desc.charLimit") %></p>
 					</div>
 				</div>
-				<label for="{{question.questionId}}" class="visuallyhidden"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>
+				<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'>{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
+				<label for="{{question.questionId}}" class="sr-only"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>				
 				<textarea class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" rows='{{getLines(getJsonArrayElement(question.parameters, "name", "textLines"), getJsonArrayElement(question.parameters, "name", "textLength"))}}' placeholder='<%= lang.getContent("placeholder.type_here")%>' maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></textarea>
+				
 			</div>	
 			
 		</fieldset>																						

@@ -88,6 +88,16 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		}
 	};
 	
+	$scope.isOutOfRange = function(num, min, max) {
+		if(!isNaN(parseFloat(num)) && isFinite(num))
+		{
+			var f = parseFloat(num);
+			if(f < min || f > max) return true;
+		}
+		
+		return false;
+	};
+	
 	$scope.decimalRegex = function(decimals) {
 		//'^[0-9]+(.([0-9]{1,2}))?$'
 		console.log("decimals: " + JSON.stringify(decimals));

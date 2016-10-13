@@ -1170,7 +1170,14 @@ $(function() {
 				   else if(service == "QuestionService")
 				   {
 					   $('li[qid="' + currentQuestion + '"]').trigger('rmvQuestionJson');
+					   var questionList = $('li[qid="' + currentQuestion + '"]').closest('ul');
 					   $('li[qid="' + currentQuestion + '"]').remove();
+					   questionList.find('li[qid]').each(function(i, elem)
+					   {
+						   console.log("Option Index li: " + i + " - elem: " + $(elem).find('input').val());
+						   var index = i + 1;
+						   $(elem).attr('index', index);
+					   });
 				   }
 				   else if(service == "OptionService")
 				   {   

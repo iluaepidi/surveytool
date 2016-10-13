@@ -170,6 +170,23 @@ public class QuestionHandler {
 		
 		return updated;
 	}
+
+	public boolean updateIndexRemove(int pageId)
+	{
+		boolean updated = false;
+		QuestionDB questionDB = new QuestionDB();
+				
+		List<Question> questions = questionDB.getQuestionsIdIndexByPageId(pageId);	
+		int index = 1;
+		
+		for(Question question : questions)
+		{
+			questionDB.updateQuestionIndex(question.getQuestionId(), pageId, index);
+			index++;
+		}
+		
+		return updated;
+	}
 	
 	public boolean updateOptionsGroupType(int questionId, String optionType){
 		boolean updated = false;
@@ -190,8 +207,8 @@ public class QuestionHandler {
 		QuestionDB questionDB = new QuestionDB();
 		int numQuestions = questionDB.getNumQuestionByPage(pageId);
 		int prevQuestionId = questionDB.getQuestionByPageIdIndex(numQuestions, pageId);
-		this.updateIndex(questionId, prevQuestionId, pageId);
 		questionDB.removeQuestionByPage(questionId, pageId);
+		this.updateIndexRemove(pageId);
 		removed = true;
 		return removed;
 	}
