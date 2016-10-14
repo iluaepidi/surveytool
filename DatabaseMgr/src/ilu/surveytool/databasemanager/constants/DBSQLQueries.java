@@ -449,6 +449,7 @@ public class DBSQLQueries {
 			public final static String s_INSERT_FORMA = "INSERT INTO `surveytool`.`forma` (`idQuestionnaire`) VALUES (?)";
 		//Option
 			public final static String s_INSERT_OPTION = "INSERT INTO `surveytool`.`option` (`idContent`) VALUES (?)";
+			public final static String s_INSERT_OPTION_WITHOUTCONTENT = "INSERT INTO `surveytool`.`option` (`idContent`) VALUES (?)";
 		//OptionByGroup
 			public final static String s_INSERT_OPTIONS_BY_GROUP = "INSERT INTO `surveytool`.`optionsbygroup` (`idOptionsGroup`, `idOption`, `index`) VALUES ( ?, ?, ?)";
 		//OptionGroup

@@ -58,6 +58,10 @@ public class Parameter {
 	public final static String s_LANGUAGE_SURVEY = "langsurvey";
 	public final static String s_NUM_PAGE = "numPage";
 	public final static String s_OID = "oid";
-	
+	public final static String s_OGID = "ogid";
+	public final static String s_NEWOID = "newoid";
+	public final static String s_NEWOGID = "newogid";
+	public final static String s_OTYPE = "otype";
+	public final static String s_LANG = "lang";
 
 }

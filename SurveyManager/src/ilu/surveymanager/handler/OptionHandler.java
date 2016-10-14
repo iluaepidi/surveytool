@@ -76,6 +76,44 @@ public class OptionHandler {
 		return response.toString();
 	}
 	
+	public String saveOptionWithoutContent(Option option)
+	{
+		ContentDB contentDB = new ContentDB();
+		OptionDB optionDB = new OptionDB();
+		JSONObject response = new JSONObject();
+		
+		try {
+			
+			if(option.getOgid() == 0)
+			{
+				int contentId = contentDB.insertContentIndex();
+				option.setOgid(optionDB.insertOptionsGroup(option.getQid(), option.getOtype(), contentId, 1));
+				response.put("ogid", String.valueOf(option.getOgid()));
+			}
+			
+			if(option.getOid() == 0)
+			{
+				int contentId = contentDB.insertContentIndex();
+				if(contentId != 0)
+				{
+					option.setOid(optionDB.insertOption(contentId));
+					contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+					if(option.getOid() != 0 && option.getOgid() != 0)
+					{
+						optionDB.insertOptionsByGroup(option.getOgid(), option.getOid(), option.getIndex());
+					}
+				}
+				response.put("oid", String.valueOf(option.getOid()));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return response.toString();
+	}
+	
+	
 	public String saveOptionMatrix(Option option)
 	{
 		ContentDB contentDB = new ContentDB();

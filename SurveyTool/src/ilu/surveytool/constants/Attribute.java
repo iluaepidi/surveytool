@@ -47,5 +47,9 @@ public class Attribute {
 	public final static String s_LIST_QUOTAS = "listquotas";
 	public final static String s_ANONIMOUS_USER = "anonimousUser";
 
-
+	public final static String s_OGID = "ogid";
+	public final static String s_OID = "oid";
+	public final static String s_QID = "qid";
+	public final static String s_NEWOGID = "newogid";
+	public final static String s_NEWOID = "newoid";
 }

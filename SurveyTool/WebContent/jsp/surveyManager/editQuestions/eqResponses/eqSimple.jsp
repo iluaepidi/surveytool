@@ -26,9 +26,21 @@
 							  						{
 							  							int index = option.getIndex();
 							  							String text = "";
+							  							//System.out.println("S1");
+							  							//try{
 							  							if(option!=null && option.getContents()!=null && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+							  								//System.out.println("S2");
+							  								//System.out.println(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE));
+							  								//System.out.println(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
 							  								text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  								//System.out.println(text);
 							  							}
+							  							//System.out.println("S3");
+							  							//}catch(Exception e){
+							  								//System.out.println("Error");
+							  								//e.printStackTrace();
+							  								
+							  							//}
 							  							
 							  						%>
 							  							<li class="option-item" id="option-item">
@@ -55,12 +67,17 @@
 							  						<%
 							  						}
 							  						
+							  						//try{
+							  							//System.out.println(optionsGroup.toString());
 							  						int size = optionsGroup.getOptions().size();
 							  						if(size < 2)
 							  						{
+							  							//System.out.println(size);
 							  							for(int i = size; i < 2; i++)
 							  							{
+							  								//System.out.println(i);
 							  								int index = i + 1;
+							  								//System.out.println(index);
 							  						%>
 							  							<li class="option-item" id="option-item">
 						  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
@@ -80,7 +97,9 @@
 
 							  								</div>
 							  								<%
-								  							request.setAttribute(Attribute.s_OPTION, optionsGroup.getOptions().get(index));
+							  								//System.out.println("Before set attribute");
+								  							request.setAttribute(Attribute.s_OPTION, null);
+							  								//System.out.println("after set attribute");
 															%>
 															<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
 							  							</li>
@@ -88,6 +107,11 @@
 							  						<%
 							  							}
 							  						}
+							  						//}
+							  						//catch(Exception e){
+							  						//	System.out.println("Hola");
+							  						//	e.printStackTrace();
+							  						//}
 							  						%>
 							  						
 							  							
