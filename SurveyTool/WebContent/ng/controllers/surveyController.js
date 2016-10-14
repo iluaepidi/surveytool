@@ -103,7 +103,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.getDecimals = function(decimals) {
 		if(decimals == null || decimals.value == null || decimals.value == "")
 		{
-			return "0.01";
+			return "0";
 		}
 		else
 		{
@@ -152,7 +152,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 			return "radio";
 		}
 	};
-	
+		
 	$scope.nextPage = function(action) {
 		console.log("Next page error: " + $scope.survey.$valid);
 		mandatoryErrorQuestions = [];
@@ -242,7 +242,6 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 			return true;
 		}
 	};
-
 }]);
 
 /*app.directive('decimalLimit',function(){
