@@ -6,10 +6,11 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.currentSurvey = survey;
 	$scope.warning = false;
 	$scope.mandatoryError = false;
-	$scope.error = true;	
+	$scope.error = true;
 	$scope.text = "hello world";
 	$scope.decimalRegex = '^[0-9]+(.([0-9]{1,2}))?$';
 	var mandatoryErrorQuestions = [];
+	var surveyError = false;
 
 	/*if(!$scope.user.name)
 	{		
@@ -21,6 +22,28 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 
 	/** Initial load **/
 
+	$scope.getProgressPercent = function() {
+		console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
+		console.log("Survey Json: " + JSON.stringify($scope.currentSurvey.info));
+		if($scope.currentSurvey.info.section.page.numPage == 1)
+		{
+			return 0;
+		}
+		else if($scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
+		{
+			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages - 1)) * 100;
+		}
+		else  if($scope.currentSurvey.info.section.page.numPage)
+		{
+			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages)) * 100;
+		}
+		else
+		{
+			return 100;
+		}
+		
+	};
+	
 	$scope.getJsonArrayElement = function(array, attribute, value) {
 		for(var i = 0; i < array.length; i++)
 		{
@@ -92,9 +115,13 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		if(!isNaN(parseFloat(num)) && isFinite(num))
 		{
 			var f = parseFloat(num);
-			if(f < min || f > max) return true;
+			if(f < min || f > max)
+			{
+				surveyError = true;
+				return true;
+			}
 		}
-		
+		surveyError = false;
 		return false;
 	};
 	
@@ -127,6 +154,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	};
 	
 	$scope.nextPage = function(action) {
+		console.log("Next page error: " + $scope.survey.$valid);
 		mandatoryErrorQuestions = [];
 		if(action === 'next')
 		{
@@ -164,8 +192,12 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 					}
 				}
 			});
-		}//$scope.mandatoryError = true;
-		if(mandatoryErrorQuestions.length == 0) $scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
+			
+
+			surveyError = surveyError || !$scope.survey.$valid || mandatoryErrorQuestions.length != 0;
+		}
+		
+		if(action != 'next' || !surveyError) $scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
 	};
 
 	$scope.showMandatoryErrorMsg = function(question) {

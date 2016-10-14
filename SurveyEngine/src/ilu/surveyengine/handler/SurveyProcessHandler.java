@@ -11,6 +11,7 @@ import org.codehaus.jettison.json.JSONObject;
 import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.LogicGoToDB;
 import ilu.surveytool.databasemanager.PageDB;
+import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
@@ -41,6 +42,12 @@ public class SurveyProcessHandler {
 		if(lang == null || lang.isEmpty()) lang = "en";		
 		
 		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, anonimousUser, lang);
+		try {
+			survey.put("hasFinishPage", this.isFinishPage(survey.getInt("surveyId"), survey.getInt("numPages")));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return survey;
 	}
@@ -253,6 +260,23 @@ public class SurveyProcessHandler {
 		
 		return isOnlyTextPage;
 	}
+	
+
+	public boolean isFinishPage(int surveyId, int numPage)
+	{
+		boolean isOnlyTextPage = true;
+		
+		QuestionDB questionDB = new QuestionDB();
+		List<String> questionTypes = questionDB.getQuestionSTypeBySurveyPublicIdAndPageId(surveyId, numPage);
+		
+		for(String questionType : questionTypes)
+		{
+			isOnlyTextPage = isOnlyTextPage && (questionType.equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT));			
+		}
+		
+		return isOnlyTextPage;
+	}
+	
 	
 	private boolean _storeAnonymousResponse(Response response, int anonymousUserId, int surveyId)
 	{

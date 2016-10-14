@@ -732,6 +732,36 @@ public class QuestionDB {
 		return numQuestions;
 	}
 	
+
+	public List<String> getQuestionSTypeBySurveyPublicIdAndPageId(int surveyId, int numPage)
+	{
+		List<String> response = new ArrayList<String>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONS_TYPES_BY_SURVEY_PUBLICID_PAGEID);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, numPage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			response.add(rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+	
 	
 	/**
 	 * Inserts 

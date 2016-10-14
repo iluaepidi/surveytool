@@ -264,6 +264,14 @@ public class DBSQLQueries {
 				+ "inner join content cO on cO.idContent = o.idContent "
 				+ "inner join language l on l.idLanguage = cO.idLanguage "
 				+ "where l.isoName = ? and cO.idContentType=1 order by og.idOptionsGroup, o.idOption";
+		public final static String s_SELECT_QUESTIONS_TYPES_BY_SURVEY_PUBLICID_PAGEID = "SELECT qt.name questionTypeName FROM surveytool.questionnaire s "
+				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "inner join surveytool.page p on sc.idSection = p.idSection "
+				+ "inner join surveytool.questionbypage qp on qp.idPage = p.idPage "
+				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "where s.idQuestionnaire = ? and p.numPage = ?";		
 		
 		
 		public final static String s_SELECT_QUESTION_TYPE_QUESTIONID = "SELECT q.idQuestionType FROM question q "
