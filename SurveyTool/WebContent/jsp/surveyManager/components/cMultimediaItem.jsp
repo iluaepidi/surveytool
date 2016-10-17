@@ -25,7 +25,7 @@
 							  						System.out.println("option= true ebcause exist attribute oid");
 							  					}
 							  						
-							  					System.out.println("DEspués de los ifs: "+request.getParameter("option")+", "+request.getAttribute("oid"));
+							  					System.out.println("Después de los ifs: "+request.getParameter("option")+", "+request.getAttribute("oid"));
 							  					Resource resource = (Resource) request.getAttribute(Attribute.s_RESOURCE);
 							  					HashMap<String, Content> contents = resource.getContents();
 							  					String title = "";
