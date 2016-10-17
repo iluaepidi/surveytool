@@ -260,7 +260,7 @@ $(function() {
 		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
+			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
@@ -307,6 +307,58 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
+		}
+		else if ($(this).attr('oid')>0){
+			if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
+				$(this).closest('li.option-item').find("#remove-option").trigger("click");
+			}else{
+				var req = {};
+				var currentNode = $(this);
+				req.text = currentNode.val();
+				req.oid = currentNode.attr('oid');
+				req.index = currentNode.attr('index');
+				req.qid = currentNode.closest('li[id=panel-question1]').attr('qid');
+				req.ogid = currentNode.closest('ul').attr('ogid');
+				req.lang = $('#survey-language-version').val();
+				req.otype = currentNode.closest('ul').attr('otype');
+				
+				$.ajax({ 
+				   type: "POST",
+				   dataType: "text",
+				   contentType: "text/plain",
+				   url: host + "/SurveyTool/api/QCService/updateTextOption",
+				   data: JSON.stringify(req),
+				   success: function (data) {
+					   console.log(data);
+					   if(data != '')
+					   {
+						   var json = JSON.parse(data);
+						   if(json.hasOwnProperty('oid'))
+						   {
+							   console.log("hello oid: " + json.oid);
+							   currentNode.attr('oid', json.oid);
+						   }
+						   
+						   if(json.hasOwnProperty('ogid'))
+						   {
+							   console.log("hello ogid: " + json.ogid);
+							   currentNode.closest('ul').attr('ogid', json.ogid);
+						   }
+						   
+						   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+						   
+						   currentNode.trigger("goto");
+						   currentNode.trigger("setJson");
+					   }
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   console.log(xhr.status);
+					   console.log(thrownError);
+					   console.log(xhr.responseText);
+					   console.log(xhr);
+				   }
+				});
+			}
 		}
 	});
 	
@@ -361,7 +413,7 @@ $(function() {
 		//console.log("option matrix language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
+			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
