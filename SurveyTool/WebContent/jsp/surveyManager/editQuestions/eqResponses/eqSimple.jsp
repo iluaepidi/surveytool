@@ -84,7 +84,7 @@
 
 							  								</div>
 							  								<%
-								  							//request.setAttribute(Attribute.s_OPTION, optionsGroup.getOptions().get(index));
+								  							request.setAttribute(Attribute.s_OPTION, null);
 															%>
 															<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
 							  							</li>
@@ -151,7 +151,6 @@
 																		</div>
 																			
 																	</div>
-																</div>	
 						  							</li>
 						  							
 						  							<li class="option-item" id="option-item">
@@ -181,7 +180,6 @@
 																		</div>
 																			
 																	</div>
-														</div>	
 						  						</li>
 						  							
 						  							

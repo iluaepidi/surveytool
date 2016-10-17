@@ -19,15 +19,26 @@
 												
 												Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 												String title = "";
+												//System.out.println("D1");
 			    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+
+													//System.out.println("D1.1");
 			    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 			    								}
+												//System.out.println("D2");
+			    								
 												QDependence qdependence = question.getQDependence();
-												
+
+												//System.out.println("D3");
 												boolean withLogic = Boolean.parseBoolean(request.getParameter("withLogic"));
-												
+
+												//System.out.println("D4");
 												int numPage = (int) request.getAttribute(Attribute.s_NUM_PAGE);
+
+												//System.out.println("D5");
 												JSONArray pagesJson = (JSONArray) request.getAttribute(Attribute.s_JSON_PAGES);
+
+												//System.out.println("D6");
 							  					%>
 												
 							  					<div class="question-frame">

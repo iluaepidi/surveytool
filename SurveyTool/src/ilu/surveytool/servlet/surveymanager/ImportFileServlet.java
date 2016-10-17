@@ -7,8 +7,10 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -19,6 +21,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import ilu.surveymanager.data.Option;
+import ilu.surveymanager.data.QDependence;
+import ilu.surveymanager.data.QDependenceValue;
+import ilu.surveymanager.handler.OptionHandler;
+import ilu.surveymanager.handler.QDependenceHandler;
 import ilu.surveymanager.handler.ResourceHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
@@ -65,6 +75,13 @@ public class ImportFileServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println("Llega la petición a ImportFileServlet");
+		int oId=0;
+		
+		/*Enumeration params = request.getParameterNames(); 
+		while(params.hasMoreElements()){
+		 String paramName = (String)params.nextElement();
+		 System.out.println("Parameter Name - "+paramName+", Value - "+request.getParameter(paramName));
+		}*/
 		
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		String rootPath = getServletContext().getRealPath("/");
@@ -78,7 +95,7 @@ public class ImportFileServlet extends HttpServlet {
 		{						
 			try {
 				String action = request.getParameter(Parameter.s_ACTION);
-				System.out.println("action: " + request.getParameter(Parameter.s_ACTION));;
+				//System.out.println("action: " + request.getParameter(Parameter.s_ACTION));;
 				if(action.equals("file") || action.equals("fileUpdate"))
 				{
 				    Part filePart;
@@ -115,7 +132,11 @@ public class ImportFileServlet extends HttpServlet {
 				    
 				    request.setAttribute(Attribute.s_RESOURCE, resource);
 				    request.setAttribute(Attribute.s_ACTION, action);
-				    
+				    /*Enumeration params2 = request.getParameterNames(); 
+					while(params2.hasMoreElements()){
+					 String paramName = (String)params2.nextElement();
+					 System.out.println("Parameter Name 2 - "+paramName+", Value - "+request.getParameter(paramName));
+					}*/
 				    CommonCode.redirect(request, response, Address.s_IMPORT_IMAGE_OPTION);
 				}
 				else if(action.equals("options"))
@@ -124,27 +145,76 @@ public class ImportFileServlet extends HttpServlet {
 					resource.setPathFile(request.getParameter(Parameter.s_RESOURCE_URL));
 					resource.setType("image");
 
-					System.out.println(request.getParameter(Parameter.s_RESOURCE_URL));
-					System.out.println(resource.getPathFile());
+					//System.out.println(request.getParameter(Parameter.s_RESOURCE_URL));
+					//System.out.println(resource.getPathFile());
 					
 			    	ResourceHandler resourceHandler = new ResourceHandler();
-				    
+				    //System.out.println("Request: "+request.getParameter(Parameter.s_QID));
 				    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
 					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					oId=optionId;
+					
+					if((optionId==0) && (questionId<0)){
+						Option option = new Option("", 
+								Integer.parseInt(request.getParameter(Parameter.s_INDEX)), 
+								Integer.parseInt(request.getParameter(Parameter.s_QID))*(-1), 
+								Integer.parseInt(request.getParameter(Parameter.s_OGID)),
+								Integer.parseInt(request.getParameter(Parameter.s_OID)),
+								request.getParameter(Parameter.s_OTYPE),
+								request.getParameter(Parameter.s_LANG));
+						
+						//System.out.println("Opción: " + option.toString());
+						OptionHandler optionHandler = new OptionHandler();
+						String resp = optionHandler.saveOptionWithoutContent(option);
+						
+						//System.out.println(resp);
+						JSONObject json = null;
+				    	
+				    	try {
+							json = new JSONObject(resp);
+							
+							if(json.has(Parameter.s_OID)){
+							   request.setAttribute(Attribute.s_OID, json.getInt(Parameter.s_OID));
+							   oId=Integer.parseInt((String)json.get(Parameter.s_OID));
+							   //System.out.println("Parameter Name oid - "+json.get(Parameter.s_OID));
+							} else{
+								request.setAttribute(Attribute.s_OID, request.getParameter(Parameter.s_OID));
+							}
+							if(json.has(Parameter.s_OGID)){
+							   request.setAttribute(Attribute.s_OGID, json.getInt(Parameter.s_OGID));
+							   //System.out.println("Parameter Name ogid - "+json.get(Parameter.s_OGID));
+							} else{
+								request.setAttribute(Attribute.s_OGID, request.getParameter(Parameter.s_OGID));
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
 					if(questionId>=0){
 					    resourceHandler.insertResource(resource, questionId,-1);
+					    //System.out.println("Resource inserted for question");
 					}else if(optionId>=0){
-					    resourceHandler.insertResource(resource, -1, optionId);
+					    resourceHandler.insertResource(resource, -1, oId);
+					    request.setAttribute(Attribute.s_OPTION, true);
+					    //System.out.println("Resource inserted for option");
 					}
-					System.out.println(resource.toString());
+					
+					//System.out.println(resource.toString());
 					
 				    request.setAttribute(Attribute.s_RESOURCE, resource);
 				    request.setAttribute(Attribute.s_ACTION, action);
+				    
 					
 					resource = this._insertFileContent(request, resource.getResourceId(), request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
 					request.setAttribute(Attribute.s_RESOURCE, resource);
-				    
+					/*Enumeration params2 = request.getAttributeNames(); 
+					while(params2.hasMoreElements()){
+					 String paramName = (String)params2.nextElement();
+					 System.out.println("Parameter Name 2 - "+paramName+", Value - "+request.getAttribute(paramName));
+					}*/
 				    CommonCode.redirect(request, response, Address.s_MULTIMEDIA_ITEM);
 				}
 				else if(action.equals("video"))
@@ -155,16 +225,65 @@ public class ImportFileServlet extends HttpServlet {
 					resource.setPathFile(idVideo);					
 					resource.setType(request.getParameter(Parameter.s_RESOURCE_TYPE));
 					
-					int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
-					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
-					ResourceHandler resourceHandler = new ResourceHandler();
 					
-					 if(questionId>=0){
-						 	resource = resourceHandler.insertResource(resource, questionId,-1);
-					 }else if(optionId>=0){
-						 resource = resourceHandler.insertResource(resource, -1, optionId);
+					
+					ResourceHandler resourceHandler = new ResourceHandler();
+				    //System.out.println("Request: "+request.getParameter(Parameter.s_QID));
+				    int questionId = Integer.parseInt(request.getParameter(Parameter.s_QID));
+					int optionId = Integer.parseInt(request.getParameter(Parameter.s_OID));
+					oId=optionId;
+					
+					if((optionId==0) && (questionId<0)){
+						System.out.println("Option group:"+request.getParameter(Parameter.s_OGID));
+						Option option = new Option("", 
+								Integer.parseInt(request.getParameter(Parameter.s_INDEX)), 
+								Integer.parseInt(request.getParameter(Parameter.s_QID))*(-1), 
+								Integer.parseInt(request.getParameter(Parameter.s_OGID)),
+								Integer.parseInt(request.getParameter(Parameter.s_OID)),
+								request.getParameter(Parameter.s_OTYPE),
+								request.getParameter(Parameter.s_LANG));
+						
+						//System.out.println("Opción: " + option.toString());
+						OptionHandler optionHandler = new OptionHandler();
+						String resp = optionHandler.saveOptionWithoutContent(option);
+						
+						//System.out.println(resp);
+						JSONObject json = null;
+				    	
+				    	try {
+							json = new JSONObject(resp);
+							
+							if(json.has(Parameter.s_OID)){
+							   request.setAttribute(Attribute.s_OID, json.getInt(Parameter.s_OID));
+							   oId=Integer.parseInt((String)json.get(Parameter.s_OID));
+							   //System.out.println("Parameter Name oid - "+json.get(Parameter.s_OID));
+							} else{
+								request.setAttribute(Attribute.s_OID, request.getParameter(Parameter.s_OID));
+							}
+							if(json.has(Parameter.s_OGID)){
+							   request.setAttribute(Attribute.s_OGID, json.getInt(Parameter.s_OGID));
+							   //System.out.println("Parameter Name ogid - "+json.get(Parameter.s_OGID));
+							} else{
+								request.setAttribute(Attribute.s_OGID, request.getParameter(Parameter.s_OGID));
+							}
+							
+							
+							
+							
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					
+					if(questionId>=0){
+						resource = resourceHandler.insertResource(resource, questionId,-1);
+					   // System.out.println("Resource inserted for question");
+					}else if(optionId>=0){
+						resource = resourceHandler.insertResource(resource, -1, oId);
+						request.setAttribute(Attribute.s_OPTION, true);
+					    // System.out.println("Resource inserted for option");
+					}					
 					
 					resource = this._insertFileContent(request, resource.getResourceId(), resource.getType());
 					

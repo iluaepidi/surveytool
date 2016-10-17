@@ -49,5 +49,9 @@ public class Attribute {
 	public final static String s_LIST_QUOTAS_RESULTS = "listquotasresults";
 	public final static String s_TOTAL_SURVEY_COMPETE = "totalsurveycomplete";
 
-
+	public final static String s_OGID = "ogid";
+	public final static String s_OID = "oid";
+	public final static String s_QID = "qid";
+	public final static String s_NEWOGID = "newogid";
+	public final static String s_NEWOID = "newoid";
 }

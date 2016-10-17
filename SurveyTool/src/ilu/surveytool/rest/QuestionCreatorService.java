@@ -86,6 +86,33 @@ public class QuestionCreatorService {
     }
 	
 	@POST
+	@Path("/updateTextOption")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateTextOption(String req) {
+    	System.out.println("Opción (updateTextOption): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			Option option = new Option(json.getString("text"), 
+					Integer.parseInt(json.getString("index")), 
+					Integer.parseInt(json.getString("qid")), 
+					Integer.parseInt(json.getString("ogid")),
+					Integer.parseInt(json.getString("oid")),
+					json.getString("otype"),
+					json.getString("lang"));
+			System.out.println("Opción: " + option.toString());
+			OptionHandler optionHandler = new OptionHandler();
+			response = optionHandler.updateTextOption(option);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@POST
 	@Path("/insertOptionMatrix")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)

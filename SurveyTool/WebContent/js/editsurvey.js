@@ -7,6 +7,7 @@ var currentElement;
 var currentAddNode;
 var currentQuestion = 0;
 var currentOption = 0;
+var currentOptionGroup = 0;
 var currentLanguage = "en";
 var addMenuFrameCad = "add-menu-frame-";
 var pending;
@@ -259,7 +260,7 @@ $(function() {
 		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
-			//console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
+			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
@@ -306,6 +307,58 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
+		}
+		else if ($(this).attr('oid')>0){
+			if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
+				$(this).closest('li.option-item').find("#remove-option").trigger("click");
+			}else{
+				var req = {};
+				var currentNode = $(this);
+				req.text = currentNode.val();
+				req.oid = currentNode.attr('oid');
+				req.index = currentNode.attr('index');
+				req.qid = currentNode.closest('li[id=panel-question1]').attr('qid');
+				req.ogid = currentNode.closest('ul').attr('ogid');
+				req.lang = $('#survey-language-version').val();
+				req.otype = currentNode.closest('ul').attr('otype');
+				
+				$.ajax({ 
+				   type: "POST",
+				   dataType: "text",
+				   contentType: "text/plain",
+				   url: host + "/SurveyTool/api/QCService/updateTextOption",
+				   data: JSON.stringify(req),
+				   success: function (data) {
+					   console.log(data);
+					   if(data != '')
+					   {
+						   var json = JSON.parse(data);
+						   if(json.hasOwnProperty('oid'))
+						   {
+							   console.log("hello oid: " + json.oid);
+							   currentNode.attr('oid', json.oid);
+						   }
+						   
+						   if(json.hasOwnProperty('ogid'))
+						   {
+							   console.log("hello ogid: " + json.ogid);
+							   currentNode.closest('ul').attr('ogid', json.ogid);
+						   }
+						   
+						   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+						   
+						   currentNode.trigger("goto");
+						   currentNode.trigger("setJson");
+					   }
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   console.log(xhr.status);
+					   console.log(thrownError);
+					   console.log(xhr.responseText);
+					   console.log(xhr);
+				   }
+				});
+			}
 		}
 	});
 	
@@ -360,7 +413,7 @@ $(function() {
 		//console.log("option matrix language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
-			console.log("TExt: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
+			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
@@ -453,7 +506,7 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
-		var optionHtml = '<li class="option-item" id="option-item" oid="0">' +
+		var optionHtml = '<li class="option-item" id="option-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
 								'<label for="option" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
@@ -464,7 +517,7 @@ $(function() {
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
 									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
-								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="question-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
+								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
@@ -666,24 +719,33 @@ $(function() {
 			req.resourceTitle = $('#resourceTitle').val();
 			req.mainVersion= currentLanguage;
 			req.resourceType = type;
+			req.qid = currentQuestion;
+			req.oid = currentOption;
+			req.ogid = currentOptionGroup;
+			console.log("currentQuestion "+currentQuestion);
+			console.log("currentOption "+currentOption);
+			if((currentQuestion<0) && (currentOption==0)){
+				req.index = currentElement.attr('index');
+				req.lang = $('#survey-language-version').val();
+				req.otype = currentElement.closest('ul').attr('otype');
+				console.log("req.index"+req.index);
+				console.log("req.lang"+req.lang);
+				console.log("req.otype"+req.otype);
+			}
 			
 			if(type === "image")
 			{				
 				req.action = "options";
 				req.resourceUrl = $('#previewFileUploaded').attr("urlValue");
 				console.log(req.resourceUrl);
-				req.resourceAltText = $('#resourceAltText').val();
-				req.qid = currentQuestion;
+				req.resourceAltText = $('#resourceAltText').val();				
 				req.rid = $('#rid').val();
-				req.oid = currentOption;
 			}
 			else if(type === "video")
 			{
 				req.action = type;
 				req.resourceDescText = $('#resourceDescText').val();
 				req.resourceUrl = $('#resourceUrl').val();
-				req.qid = currentQuestion;
-				req.oid = currentOption;
 			}
 			
 			console.log("req.resourceTitle-"+req.resourceTitle);
@@ -693,7 +755,7 @@ $(function() {
 			console.log("type-"+type);
 			
 			if(((type === "image") && ((req.resourceTitle==="") || (req.resourceAltText===""))) || ((type === "video") && ((req.resourceTitle==="") || (req.resourceDescText==="") || ((req.resourceUrl === "") || ((!req.resourceUrl.startsWith("http://")) && (!req.resourceUrl.startsWith("https://"))))))){
-				
+				console.log("Show errors");
 				if(type === "image"){
 					hideFieldError($('#resourceDescText'));
 					hideFieldError($('#resourceUrl'));
@@ -731,7 +793,7 @@ $(function() {
 				pending = false;
 			}
 			else{
-		        $.post('ImportFileServlet', req, function(res) {
+				$.post('ImportFileServlet', req, function(res) {
 		        	 $('#importFileForm')[0].reset();
 		             $("#importFile").modal("hide");
 		            if(currentQuestion>=0){
@@ -740,15 +802,30 @@ $(function() {
 			              multimediaFrame.removeClass("hidden");
 			              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
 			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
-			        }else if(currentOption>=0){
+			        }else if(currentOption>0){
 			        	console.log("En currentoption");
 			        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
 			        	  var multimediaFrame = $("input[oid=" + currentOption + "]").parent("li").find("div[id=multimediaFrame]");
 			              multimediaFrame.removeClass("hidden");
 			              multimediaFrame.find("div.options-files-frame").removeClass("hidden");
-			              //
 			              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
 			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
+			        }
+			        else{
+			        	var oid = $(res).attr('oid');
+			        	var ogid = $(res).attr('ogid');
+			        	currentElement.attr('oid', oid);
+			        	currentElement.closest('ul').attr('ogid', ogid);
+			        	
+						
+			        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
+			        	  var multimediaFrame = $("input[oid=" + oid + "]").parent("li").find("div[id=multimediaFrame]");
+			              multimediaFrame.removeClass("hidden");
+			              multimediaFrame.find("div.options-files-frame").removeClass("hidden");
+			              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
+			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);
+			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[oid]").removeAttr('oid');
+			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[ogid]").removeAttr('ogid');
 			        }
 		            $('#optionsFile').empty();
 		              $('#optionsFile').addClass('hidden');
@@ -975,6 +1052,7 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#btn-question-import-file", function(e){
 		currentOption = -1;
+		currentOptionGroup = -1;
 		currentQuestion = $(this).closest('li[id=panel-question1]').attr('qid');
 		currentLanguage = $('#survey-language-version').val();
 		console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
@@ -983,17 +1061,19 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#add-file-option", function(e){
 		
-		currentQuestion = -1;
+		currentQuestion = -1*$(this).closest('li[id=panel-question1]').attr('qid');
 		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
+		currentOptionGroup = $(this).closest('ul').attr('ogid');
+		currentElement = $(this).closest('li').find('input[id=option]');
 		
-		if(currentOption>0){
+		/*if(currentOption>0){*/
 			currentLanguage = $('#survey-language-version').val();
 			console.log("current question: " + currentQuestion + " - language: " + currentLanguage);
 			$("#divType").val('Option');
 			$('#importFile').modal();
-		}else{
+		/*}else{
 			alert("First, complete the option");
-		}
+		}*/
 	});
 	
 		
@@ -1063,10 +1143,15 @@ $(function() {
 	
 	$('.section-pages').on("click", "#removeMultimediaFile", function(e){
 		var item = $(this).closest('li.multimedia-item');
-		$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
-		$("#removeElemId").val(item.attr('rid'));
-		$("#removeElemService").val('ResourceService');
-		$("#removeElement").modal("show");
+		if($(this).closest('li.option-item').find("#option").val()==""){
+			$(this).closest('li.option-item').find("#remove-option").trigger("click");
+		}
+		else{		
+			$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
+			$("#removeElemId").val(item.attr('rid'));
+			$("#removeElemService").val('ResourceService');
+			$("#removeElement").modal("show");
+		}
 	});
 	
 	$('.section-pages').on("click", "#removeMultimediaFileQuestion", function(e){
@@ -1086,6 +1171,7 @@ $(function() {
 		var oid = input.attr('oid');
 		var result = currentQuestion + "/" + ogid + "/" + oid;
 		console.log("result: " + result);
+		
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(result);
 		$("#removeElemService").val('OptionService');
@@ -1164,6 +1250,8 @@ $(function() {
 						   $('li[rid=' + elementId + ']').closest('div.options-files-frame').addClass('hidden');
 						   
 						   $('li[rid=' + elementId + ']').remove();
+						   
+						   
 						   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
 					   }
 				   }

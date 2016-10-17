@@ -504,7 +504,10 @@ public class OptionDB {
 		PreparedStatement pstm = null;
 	    try {
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_OPTION, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setInt(1, contentId); 
+		   if(contentId<0)
+			   pstm.setString(1, null); 
+		   else
+			   pstm.setInt(1, contentId); 
 		   
 		   boolean notInserted = pstm.execute();
 		   
