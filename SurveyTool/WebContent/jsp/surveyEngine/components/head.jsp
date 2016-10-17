@@ -43,6 +43,7 @@
 		
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>
+		<script src="js/survey.js"></script>
 	<%
 	List<String> jsFiles = (List<String>) request.getAttribute(Attribute.s_JS_FILES);
 	if(jsFiles != null)
