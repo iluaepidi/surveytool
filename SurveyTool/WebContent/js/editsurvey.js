@@ -410,7 +410,7 @@ $(function() {
 	
 	$('.survey-sections').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
-		//console.log("option matrix language: " + $('#survey-language-version').val());
+		console.log("option matrix language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
 		{
 			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
@@ -452,6 +452,10 @@ $(function() {
 			   }
 			});
 		}
+		else if($(this).attr('oid')>0){
+			$(this).closest('li[id=optionmatrix-item]').find("#remove-optionmatrix").trigger("click");
+		}
+		
 	});
 	
 
@@ -459,7 +463,7 @@ $(function() {
 	$('.survey-sections').on("focusout", "#optionsgroupmatrix-list #optionsgroupmatrix-item input", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
-		//console.log("options group matrix lalala valor: " + $(this).val());
+		console.log("options group matrix lalala valor: " + $(this).val());
 		if($(this).val() != "")
 		{
 			console.log("TExt (optionsGroupMatrix): " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).attr('ogid'));
@@ -500,6 +504,11 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
+		}
+		else if($(this).attr('ogid')>0){
+			console.log("empty value, ogid:"+$(this).attr('ogid'));
+			console.log($(this).closest('li[id=optionsgroupmatrix-item]').attr("class"));
+			$(this).closest('li[id=optionsgroupmatrix-item]').find("#remove-optionsgroupmatrix").trigger("click");
 		}
 	});
 	
