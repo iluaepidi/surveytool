@@ -186,12 +186,6 @@ public class ImportFileServlet extends HttpServlet {
 							} else{
 								request.setAttribute(Attribute.s_OGID, request.getParameter(Parameter.s_OGID));
 							}
-								
-								
-							
-							
-							
-							
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
