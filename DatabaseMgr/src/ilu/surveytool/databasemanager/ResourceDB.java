@@ -275,6 +275,34 @@ public class ResourceDB {
 		
 		return resourceTypes;
 	}
+
+	public int getContentIdByResourceId(int resourceId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENTID_BY_RESOURCEID);
+		   	pstm.setInt(1, resourceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
 	
 	/**
 	 * Inserts 
@@ -408,7 +436,8 @@ public class ResourceDB {
 	
 	public void removeResource(int resourceId) {
 		//System.out.println("removeUserOptionValues");
-		
+		int contentId = this.getContentIdByResourceId(resourceId);		
+				
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		   
@@ -417,6 +446,9 @@ public class ResourceDB {
 		   	pstm.setInt(1, resourceId);
 	   		
 		   	pstm.execute();
+		   	
+		   	ContentDB contentDB = new ContentDB();
+		   	contentDB.removeContent(contentId);
 		   	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -95,6 +95,7 @@ public class DBSQLQueries {
 		
 		//option
 		public final static String s_SELECT_OPTION_BY_OPTIONID = "SELECT * FROM surveytool.`option` where idOption = ?";
+		public final static String s_SELECT_RESOURCEID_BY_OPTIONID = "SELECT idResoruces FROM surveytool.`option` where idOption = ?";
 		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, obg.index FROM surveytool.optionsbygroup obg "
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "where obg.idOptionsGroup = ? "
@@ -198,6 +199,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.resourcetype rt on r.idResourceType = rt.idResourceType "
 				+ "where idResoruces = ?";
 		public final static String s_SELECT_RESOURCE_TYPES = "SELECT idResourceType, name as resourceTypeName FROM surveytool.resourcetype";
+		public final static String s_SELECT_CONTENTID_BY_RESOURCEID = "select idContent from surveytool.resoruces where idResoruces = ?";
 		
 		//User
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol inner join surveytool.language l on l.idLanguage = u.idLanguage WHERE (userName = ? or email = ?) and password = ?";

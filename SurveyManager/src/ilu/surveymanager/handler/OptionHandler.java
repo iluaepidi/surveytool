@@ -9,6 +9,7 @@ import ilu.surveymanager.data.Option;
 import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
@@ -315,7 +316,17 @@ public class OptionHandler {
 		
 		OptionDB optionDB = new OptionDB();
 		List<Integer> optionsGroupId = optionDB.getOptionByGroupIdByOptionId(optionId);
+		int contentId = optionDB.getContentIdByOptionId(optionId);
+		int resourceId = optionDB.getResourceIdByOptionId(optionId);
 		optionDB.removeOption(optionId);
+		ContentDB contentDB = new ContentDB();
+		contentDB.removeContent(contentId);
+		
+		if(resourceId != 0)
+		{
+			ResourceDB resourceDB = new ResourceDB();
+			resourceDB.removeResource(resourceId);
+		}
 		
 		if(optionsGroupId.size()>0){
 			List<OptionsByGroup> optionsByGroup = optionDB.getOptionsByGroupById(optionsGroupId.get(0));

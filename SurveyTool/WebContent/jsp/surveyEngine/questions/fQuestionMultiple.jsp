@@ -21,9 +21,10 @@
 			<div class="form-question-content">
 			
 				<ul class="form-options">
-				 	<li class="checkbox" ng-repeat="option in question.optionsGroups[0].options">
+				 	<li class="checkbox" ng-class="{img: option.resource}" ng-repeat="option in question.optionsGroups[0].options">
 					  <input type="checkbox" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}-{{option.optionId}}" id="optionsChecks{{option.optionId}}" ng-model="option.response">
 					  <label for="optionsChecks{{option.optionId}}">
+					  	<img src="{{option.resource.urlPath}}" alt='{{getJsonArrayElement(option.resource.contents, "contentType", "altText").text}}' ng-if="option.resource"/>
 					    <span>{{getJsonArrayElement(option.contents, "contentType", "title").text}}</span>
 					  </label>
 					</li>

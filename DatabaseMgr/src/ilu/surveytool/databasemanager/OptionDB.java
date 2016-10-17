@@ -459,6 +459,36 @@ public class OptionDB {
 		
 		return optionsByGroup;
 	}
+
+	public int getResourceIdByOptionId(int optionId)
+	{
+		Integer resourceId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCEID_BY_OPTIONID);			
+	   		pstm.setInt(1, optionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		if(rs.next())
+	   		{
+	   			resourceId = rs.getInt(DBFieldNames.s_RESOURCEID);
+	   			if(resourceId == null) resourceId = 0;
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resourceId;
+	}
 	
 	/**
 	 * Inserts 

@@ -1272,12 +1272,12 @@ $(function() {
 					   var ids = elementId.split('/');
 					   var oid = ids[2];
 					   var input = $('input[oid=' + oid + ']'); 					   
-					   var numItems = input.closest("ul").find("li").size();
+					   var numItems = input.closest("ul").find("li[oid]").size();
 					   
 					   input.trigger("rmvOptJson");
 						
 					   console.log("Items: " + numItems);
-					   if(numItems > 3)
+					   if(numItems > 2)
 					   {
 						   input.closest("li").remove();
 						   $('li[qid=' + currentQuestion + '] ul[id=option-list] li[id=option-item]').each(function(i, elem)
@@ -1293,6 +1293,13 @@ $(function() {
 					   {
 						   input.val("");
 						   input.attr('oid', '0');
+						   var multimediaDiv = input.closest('li').find('div.options-files-frame');
+						   if(!multimediaDiv.hasClass('hidden'))
+						   {
+							   multimediaDiv.find('li.multimedia-item').remove();
+							   multimediaDiv.addClass('hidden');
+							   //multimediaDiv.find('ul#multimediaFilesList').addClass('hidden');
+						   }
 					   }
 					   
 					   var logicOptionElement = $('#logic-option-' + oid);
