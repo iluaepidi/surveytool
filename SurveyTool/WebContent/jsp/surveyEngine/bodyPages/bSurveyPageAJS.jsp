@@ -56,25 +56,30 @@
 	  				<div class="content">
 	  					<form name="survey" role="form" ng-show="currentSurvey.info.section.page.questions" class="">
 	  						
-	  						<div class="survey-form col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">	  							
+	  						<div class="survey-form col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">
+	  						
+								<div class="error-summary">
+									<p class="msg-title">There are errors in submitted form.</p>
+									<p>Please correct them before continuing</p>
+								</div>
+									
 	  							<p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p>
 	  							
 	  							
-	  							<ul>
-	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" >
+	  							<ul id="question-list">
+	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question">
 	  									<ng-include src="question.questionJspPath"></ng-include>
 	  								</li>
 	  							</ul>
 	  							
 	  						</div>
 	  						<div class="btn-submit-page clearfix col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">
-	  							<div class="col-xs-6">
+	  							<div class="col-xs-5">
 	  								<button class="btn btn-default btn-submit-page-back" ng-show="currentSurvey.info.section.page.numPage > 1 && showButtonLastPage()" ng-click='nextPage("back")'><%= lang.getContent("button.back") %></button>
 	  							</div>
-	  							<div class="col-xs-6">
-	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="!showStartButton() && showButtonLastPage()" ng-click='nextPage("next", survey.$error)'><%= lang.getContent("button.continue") %></button>
+	  							<div class="col-xs-2">
+	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="!showStartButton() && showButtonLastPage()" ng-click='nextPage("next")'><%= lang.getContent("button.continue") %></button>
 	  								<button type="submit" class="btn btn-primary btn-submit-page-continue" ng-show="showStartButton()" ng-click='nextPage("next")'><%= lang.getContent("button.start") %></button>
-	  								
 	  							</div>
 	  						</div>
 	  					</form>

@@ -52,10 +52,10 @@
 				 		</span>
 				 	</div>
 				 </div>	
-				 <div class="likert-legend">
-				 	<div><%= lang.getContent("question.form.scale.liker_legend.t_disgree") %></div>
+				 <div class="likert-legend clearfix">
+				 	<div class="disagree"><%= lang.getContent("question.form.scale.liker_legend.t_disgree") %></div>
 				 	<div><%= lang.getContent("question.form.scale.liker_legend.indiferent") %></div>
-				 	<div><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
+				 	<div class="agree"><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
 				 </div>
 			</div>	
 		</fieldset>																						

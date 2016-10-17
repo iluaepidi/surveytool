@@ -47,7 +47,7 @@
     background-color: #CED9DF;
     border-radius: 5px;
     box-shadow: 0 1px 2px rgba(58, 80, 92, 0.5) inset;
-    height: 10px;
+    height:8px;
     margin-bottom: 20px;
     overflow: hidden;
 }
@@ -69,8 +69,8 @@
 #form-question{
 	margin:2em 0em 4em 0em;/* margin collapse */
 }
-#form-question .form-question-content{
-
+#form-question fieldset > *:not(legend){
+	padding-left:2.6em;
 }
 #form-question legend{
 	/*
@@ -82,6 +82,7 @@
 	*/
 	position:relative;
 	font-size:1.786em;
+	border:none;
 }
 #form-question legend span{
 	/*
@@ -93,19 +94,21 @@
 	width:33%;
 	*/
 	font-weight:bold;
+	line-height:1.2;
 }
 #form-question legend span.number{
 	position:absolute;
-	width:2em;
-	left:-2.2em;
+	width:1.5em;
+	left:-.5em;
 	color:#016FB8;
 	text-align:right;
 }
 #form-question legend span.text{
 	background-color:#016FB8;
 	color:#fff;
-	padding:.2em .4em;
+	padding:0em .4em;
 	display:block;
+	margin-left:1.5em;
 }
 #form-question legend span.mandatory{
 	position:absolute;
@@ -115,12 +118,13 @@
 	color:#f00;
 	text-align:left;
 	font-size:3em;
-	line-height:1;
+	line-height:.9;
 }
 
 /* InputText Textarea*/
-#form-question .form-control{
-	border-color:#016FB8;
+#form-question .form-control,
+#form-question input[type=number]{
+	border:1px solid #016FB8;
 	border-radius:0px;
 }
 .char-counter {text-align: right;
@@ -135,17 +139,22 @@
 	padding-left:30px;
 }
 #form-question .checkbox input[type=checkbox]:checked + label{
-	background:#016FB8 url(../img/checkbox-on.png) left center no-repeat;
+	background: url(../img/checkbox-on.png) left center no-repeat;
+}
+#form-question .checkbox input[type=checkbox]:checked + label span{
+	background-color:#016FB8;
 	color:#fff;
 }
 #form-question .checkbox label span{
 	display:inline-block;
 	padding:4px;
+	color:#016FB8;
+	min-width:20em;
 }
 #form-question .checkbox label:hover span,
 #form-question .checkbox input:focus + label span{
 	color:#fff;
-	background-color:#016FB8 !important;
+	background-color:#016FB8;
 }
 
 #form-question .checkbox.img{
@@ -153,6 +162,7 @@
 	width:33%;
 	text-align:center;
 	margin:0px;
+	min-width:200px;
 }
 #form-question .checkbox.img label{
 	background:url(../img/checkbox-off.png) center bottom no-repeat;
@@ -170,11 +180,14 @@
 	display:block;
 	padding:4px;
 	text-align:center;
+	min-width:auto;
 }
 #form-question .checkbox.img label img,
 #form-question .checkbox.img input + label img{
 	border:3px solid #fff;
 	padding:2px;
+	width:185px;
+	height:195px;
 }
 #form-question .checkbox.img label:hover span,
 #form-question .checkbox.img input:focus + label span{
@@ -195,12 +208,17 @@
 	padding-left:30px;
 }
 #form-question .radio input[type=radio]:checked + label{
-	background:#016FB8 url(../img/radio-on.png) left center no-repeat;
+	background: url(../img/radio-on.png) left center no-repeat;
+}
+#form-question .radio input[type=radio]:checked + label span{
+	background-color:#016FB8;
 	color:#fff;
 }
 #form-question .radio label span{
 	display:inline-block;
 	padding:4px;
+	color:#016FB8;
+	min-width:20em;
 }
 #form-question .radio label:hover span,
 #form-question .radio input:focus + label span{
@@ -213,6 +231,7 @@
 	width:33%;
 	text-align:center;
 	margin:0px;
+	min-width:200px;
 }
 #form-question .radio.img label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
@@ -230,11 +249,14 @@
 	display:block;
 	padding:4px;
 	text-align:center;
+	min-width:auto;
 }
 #form-question .radio.img label img,
 #form-question .radio.img input + label img{
 	border:3px solid #fff;
 	padding:2px;
+	width:185px;
+	height:195px;
 }
 #form-question .radio.img label:hover span,
 #form-question .radio.img input:focus + label span{
@@ -312,25 +334,34 @@
 #form-question.scale .form-question-content{
 	max-width:300px;
 	margin:2em auto;
+	padding:0px;
 }
 #form-question .likert-options label{
-	background:url(../img/radio-off.png) center top no-repeat;
-	padding-top:30px;
+	background:url(../img/radio-off.png) center bottom no-repeat;
+	padding-bottom:30px;
 	display:inline-block;
 	min-width:20px;
 	text-align:center;
+	margin:0px 11px 10px;
+	color:#016FB8;
+}
+#form-question .likert-options .likert-options-frame span:first-child label{
+	margin-left:0px;
+}
+#form-question .likert-options .likert-options-frame span:last-child label{
+	margin-right:0px;
 }
 #form-question .likert-options input[type=radio]:checked + label{
-	background:url(../img/radio-on.png) center top no-repeat;
+	background:url(../img/radio-on.png) center bottom no-repeat;
 }
 #form-question .likert-options input{
 	opacity:0;
 	margin:0px;
 	padding:0px;
+	position:absolute;
 }
 
 #form-question .likert-legend{
-	overflow:hidden;
 	border-top:3px solid #7191A4;
 }
 #form-question .likert-legend div{
@@ -340,7 +371,15 @@
 	font-size:.75em;
 	text-transform:uppercase;
 	color:#016FB8;
-	padding-top:1em;
+	padding:1em 5% 0em 5%;
+}
+#form-question .likert-legend div.disagree{
+	margin-left:-50px;
+	margin-right:50px;
+}
+#form-question .likert-legend div.agree{
+	margin-left:50px;
+	margin-right:-50px;
 }
 
 /* Buttons */
@@ -351,9 +390,13 @@
 	color:#4A555F;
 	font-size:1.428em;
 }
+.btn-submit-page .col-xs-2{
+	text-align:center;
+}
 .btn-submit-page .btn-submit-page-continue{
 	border-radius:0px;
 	font-size:1.786em;
+	padding:0px 12px;
 }
 
 /* Messages */
@@ -362,6 +405,19 @@
 	background:url(../img/msg-bg.png) bottom right no-repeat;
 	padding-bottom:25px;
 	margin-right:-3em;
+	margin-left:2.5em;
+}
+.error-summary{
+	border:2px solid #f00;
+	padding:1em 2em 1em 45px;
+	background:#fff url(../img/exclamation.png) left center no-repeat;
+	margin-bottom:1em;
+}
+.form-question-content .msg-error{
+	margin-left:0em;
+	background:url(../img/msg-bg-exc.png) bottom right no-repeat;
+	margin-bottom:-35px;
+	padding-bottom:45px;
 }
 .msg-error > div{
 	padding-left:70px;
@@ -373,10 +429,43 @@
 .msg-error > div.error{
 	background:url(../img/exclamation.png) left top no-repeat;
 }
-.msg-error .msg-title{
+.msg-error .msg-title,
+.error-summary .msg-title{
 	text-transform:uppercase;
 	color:#016FB8;
 	margin-bottom:.4em;
+}
+
+/*----------------------------------------------*\
+		$NAVIGATION
+\*----------------------------------------------*/
+.survey-form button.navigation{
+	height:41px;
+	width:100%;
+	border:none;
+	padding:0px;
+	margin:0px;
+	text-indent:-32000px;
+}
+#question-list button.up{
+	background:transparent url(../img/up.png) center center no-repeat;
+}
+#question-list button.down{
+	background:transparent url(../img/down.png) center center no-repeat;
+}
+#question-list .inactive{
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray; /* IE 6-9 */
+  opacity:.4;
+}
+.inactive #form-question legend span.text{
+	background-color:transparent;
+	color:#333;
+	border-top:1px solid #666;
 }
 /*----------------------------------------------*\
 		$FOOTER
