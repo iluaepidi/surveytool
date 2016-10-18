@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: surveytool
+-- Host: localhost    Database: surveytool
 -- ------------------------------------------------------
--- Server version	5.7.13-log
+-- Server version	5.7.8-rc-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,7 +32,7 @@ CREATE TABLE `anonimouspages` (
   PRIMARY KEY (`idAnonimousUser`,`idPage`,`timestamp`),
   KEY `page_idx` (`idPage`),
   CONSTRAINT `page` FOREIGN KEY (`idPage`) REFERENCES `page` (`idPage`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user` FOREIGN KEY (`idAnonimousUser`) REFERENCES `anonimoususer` (`idAnonimousUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `user` FOREIGN KEY (`idAnonimousUser`) REFERENCES `anonimoususer` (`idAnonimousUser`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -88,7 +88,7 @@ CREATE TABLE `anonimoususer` (
   PRIMARY KEY (`idAnonimousUser`),
   KEY `fk_AnonimousUser_Questionnaire1_idx` (`idQuestionnaire`),
   CONSTRAINT `fk_AnonimousUser_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `contentindex`;
 CREATE TABLE `contentindex` (
   `idContent` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idContent`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `forma` (
   PRIMARY KEY (`idForma`),
   KEY `fk_Forma_Questionnaire1_idx` (`idQuestionnaire`),
   CONSTRAINT `fk_Forma_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +322,7 @@ CREATE TABLE `option` (
   KEY `fk_Option_Resoruces1_idx` (`idResoruces`),
   CONSTRAINT `fk_Option_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Option_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +384,7 @@ CREATE TABLE `optionsgroup` (
   CONSTRAINT `fk_OptionsGroup_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_OptionsGroup_OptionType1` FOREIGN KEY (`idOptionType`) REFERENCES `optiontype` (`idOptionType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_OptionsGroup_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +438,7 @@ CREATE TABLE `page` (
   KEY `fk_Page_Section1_idx` (`idSection`),
   CONSTRAINT `fk_Page_Resoruces1` FOREIGN KEY (`idResoruces`) REFERENCES `resoruces` (`idResoruces`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Page_Section1` FOREIGN KEY (`idSection`) REFERENCES `section` (`idSection`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -584,7 +584,7 @@ CREATE TABLE `project` (
   `projectName` varchar(100) NOT NULL,
   `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idProject`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -593,7 +593,6 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (49,'7i','2016-10-03 10:15:08'),(50,'ert','2016-10-03 10:32:19');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -617,7 +616,7 @@ CREATE TABLE `qdependences` (
   CONSTRAINT `fk_QDependences_DependenceType1` FOREIGN KEY (`idDependenceType`) REFERENCES `dependencetype` (`idDependenceType`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependences_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependences_Questionnaire1` FOREIGN KEY (`idQuestionnaire`) REFERENCES `questionnaire` (`idQuestionnaire`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -649,7 +648,7 @@ CREATE TABLE `qdependencesvalue` (
   CONSTRAINT `fk_QDependencesValue_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependencesValue_QDependences1` FOREIGN KEY (`idQDependences`) REFERENCES `qdependences` (`idQDependences`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_QDependencesValue_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -714,7 +713,7 @@ CREATE TABLE `question` (
   CONSTRAINT `fk_Question_Category1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`idQuestionType`) REFERENCES `questiontype` (`idQuestionType`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -844,7 +843,7 @@ CREATE TABLE `questionnaire` (
   CONSTRAINT `fk_Questionnaire_Project1` FOREIGN KEY (`idProject`) REFERENCES `project` (`idProject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnaire_User1` FOREIGN KEY (`author`) REFERENCES `user` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questionnarie_DefaultLang` FOREIGN KEY (`defaultLanguage`) REFERENCES `language` (`idLanguage`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1010,7 +1009,7 @@ CREATE TABLE `resoruces` (
   KEY `fk_Resoruces_ContentIndex1_idx` (`idContent`),
   CONSTRAINT `fk_Resoruces_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Resoruces_ResourceType1` FOREIGN KEY (`idResourceType`) REFERENCES `resourcetype` (`idResourceType`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1067,7 +1066,7 @@ CREATE TABLE `responses` (
   CONSTRAINT `fk_Responses_OptionsGroup1` FOREIGN KEY (`idOptionsGroup`) REFERENCES `optionsgroup` (`idOptionsGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Responses_Poll1` FOREIGN KEY (`idPoll`) REFERENCES `poll` (`idPoll`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `fk_Responses_Question1` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`idQuestion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=519 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1122,7 +1121,7 @@ CREATE TABLE `section` (
   KEY `fk_Section_ContentIndex1_idx` (`idContent`),
   CONSTRAINT `fk_Section_ContentIndex1` FOREIGN KEY (`idContent`) REFERENCES `contentindex` (`idContent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Section_Forma1` FOREIGN KEY (`idForma`) REFERENCES `forma` (`idForma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1266,4 +1265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-03 15:31:43
+-- Dump completed on 2016-10-18 17:53:20
