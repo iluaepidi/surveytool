@@ -1,23 +1,25 @@
-
-<%@page import="ilu.surveytool.constants.Attribute"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="ilu.surveytool.language.Language"%>
+<%@ page import="ilu.surveytool.constants.Attribute"%>
+<%@ page import="ilu.surveytool.language.Language"%>
 
-	<%
-	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);    								
-	%>
-	<div class="form-question scale" id="form-question">
-		<fieldset>
-			<legend>
-				<span class="number">{{question.index}}</span> <span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> <span class="mandatory">*<span class="sr-only"><%= lang.getContent("question.mandatory") %></span></span>
-			</legend>
-			
+<%
+Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);    								
+%>
+<div class="form-question scale" id="form-question">
+	<fieldset>
+		<legend>
+			<span class="number">{{question.index}}</span> <span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> <span class="mandatory">*<span class="sr-only"><%= lang.getContent("question.mandatory") %></span></span>
+		</legend>
+		<!-- If image -->
+		<div class="scale-img">
+			<img src="img/tmp/question.jpg" alt=""/>
+		</div>
+		<!-- end if -->
+		<div class="scale-content">
 			<p>{{getJsonArrayElement(question.contents, "contentType", "description").text}}</p>
 					
-			
 			<jsp:include page="fqComponents/fqResources.jsp" />
 			
-
 			<div class="form-question-content">
 				<div class="likert-options">
 				 	<div class="likert-options-frame">
@@ -56,9 +58,10 @@
 				 	<div><%= lang.getContent("question.form.scale.liker_legend.indiferent") %></div>
 				 	<div class="agree"><%= lang.getContent("question.form.scale.liker_legend.t_agree") %></div>
 				 </div>
-			</div>	
-		</fieldset>																						
-	</div>
+			</div>
+		</div>
+	</fieldset>																						
+</div>
 <%
 lang.close();
 %>
