@@ -24,7 +24,6 @@
 	list-style-type:none;
 	/*overflow:hidden;*/
 }
-
 /*----------------------------------------------*\
 		$HEADER
 \*----------------------------------------------*/
@@ -34,6 +33,7 @@
 .title-content h1{
 	font-size:2em;
 	color:#016FB8;
+    padding: 2px 0;
 }
 .title-content h2{
 	font-size:1.214em;
@@ -97,18 +97,20 @@
 	line-height:1.2;
 }
 #form-question legend span.number{
-	position:absolute;
-	width:1.5em;
-	left:-.5em;
-	color:#016FB8;
-	text-align:right;
+	position: absolute;
+    width: 1.5em;
+    left: -0.6em;
+    color: #016FB8;
+    text-align: right;
+    font-size: 1.6em;
+    top: -0.2em;
 }
 #form-question legend span.text{
 	background-color:#016FB8;
 	color:#fff;
 	padding:0em .4em;
 	display:block;
-	margin-left:1.5em;
+	margin-left:1.6em;
 }
 #form-question legend span.mandatory{
 	position:absolute;
@@ -256,7 +258,7 @@
 	border:3px solid #fff;
 	padding:2px;
 	width:185px;
-	height:195px;
+	/*height:195px;*/
 }
 #form-question .radio.img label:hover span,
 #form-question .radio.img input:focus + label span{
@@ -434,6 +436,10 @@
 	text-transform:uppercase;
 	color:#016FB8;
 	margin-bottom:.4em;
+}
+
+.msg-body{
+	margin: 0 !important;
 }
 
 /*----------------------------------------------*\

@@ -6,7 +6,7 @@
 <%
 Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 %>
-	<div class="form-question" id="form-question">
+	<div class="form-question" id="form-question" ng-click="setIndexQuestion(question.index)">
 		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
 	
 		<fieldset>
@@ -26,7 +26,7 @@ Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_
 				</div>
 				<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'>{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
 				<label for="{{question.questionId}}" class="sr-only"><%= lang.getContent("accesibility.question.longtextAnswer") %></label>				
-				<textarea class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" rows='{{getLines(getJsonArrayElement(question.parameters, "name", "textLines"), getJsonArrayElement(question.parameters, "name", "textLength"))}}' placeholder='<%= lang.getContent("placeholder.type_here")%>' maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></textarea>
+				<textarea class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" rows='{{getLines(getJsonArrayElement(question.parameters, "name", "textLines"), getJsonArrayElement(question.parameters, "name", "textLength"))}}' placeholder='<%= lang.getContent("placeholder.type_here")%>' maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response" ng-focus="setIndexQuestion(question.index)"></textarea>
 				
 			</div>	
 			

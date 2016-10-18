@@ -124,13 +124,17 @@ $(function() {
 		req.numPage = node.closest('li.page').attr('index');
 		
 		$.post('CreatePageServlet', req, function(responseText) {
-			//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
-			node.closest('li.page').after(responseText);
-			node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
-				var cads = $(elemento).find('h4').html().split(' ');
-				$(elemento).attr('index', indice + 1);
-				$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
-			});
+			var index = responseText.indexOf("<html");
+			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			else {
+				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
+				node.closest('li.page').after(responseText);
+				node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
+					var cads = $(elemento).find('h4').html().split(' ');
+					$(elemento).attr('index', indice + 1);
+					$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
+				});
+			}
 		});
 	});
 
@@ -207,6 +211,7 @@ $(function() {
 	
 	$('.survey-sections').on("click", '#editFile', function(){
 		currentElement = JSON.parse($(this).attr("data-image"));
+		currentAddNode = $(this).closest('li.option-item').find('input#option');
 		console.log("editfile opening... " + JSON.stringify(currentElement));
 		$("#updateFile").attr("rid", currentElement.rId);
 		if(currentElement.rType === 'image')
@@ -835,6 +840,12 @@ $(function() {
 			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);
 			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[oid]").removeAttr('oid');
 			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[ogid]").removeAttr('ogid');
+			              
+			              if(currentElement.val() === "")
+			              {
+			            	  currentElement.trigger("goto");
+			            	  currentElement.trigger("setJson");
+			              }
 			        }
 		            $('#optionsFile').empty();
 		              $('#optionsFile').addClass('hidden');
@@ -924,6 +935,9 @@ $(function() {
 				{
 					var fileName = multimediaElem.html().split('-')[1];
 					multimediaElem.html(changedTitle + " - " + fileName);
+					
+					currentAddNode.trigger("goto");
+					currentAddNode.trigger("setJson");
 				}
 				
 				
@@ -2305,7 +2319,10 @@ function updateContent(req, serviceUrl, node)
 	   success: function (data) {
 		   console.log("update content response: " + data);	
 
-		   if(node != null) node.trigger("setQuestionJson");
+		   if(node != null)
+		   {
+			   node.trigger("setQuestionJson");
+		   }
 	   },
 	   error: function (xhr, ajaxOptions, thrownError) {
 		   console.log(xhr.status);

@@ -5,7 +5,7 @@
 										<%
 										Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 										%>
-										<div class="form-question" id="form-question">
+										<div class="form-question" id="form-question" ng-click="setIndexQuestion(question.index)">
 											<jsp:include page="fqComponents/fqMandatoryError.jsp" />
 	
 											<fieldset>
@@ -35,7 +35,7 @@
 														</div>
 							  						</div>
 							  						<div class="char-counter" ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'><span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'>{{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.decimalsMax") %></span> <span ng-show='getJsonArrayElement(question.parameters, "name", "minValue").value || getJsonArrayElement(question.parameters, "name", "maxValue").value'><%= lang.getContent("survey.process.numLimits") %> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("survey.process.desc.numLimits.and") %> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}.</span></div>												
-													<input type="text" class="form-control" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}'  name="decimal" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="{{question.questionId}}" min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' ng-model="question.response" ng-pattern='decimalRegex(getJsonArrayElement(question.parameters, "name", "decimals"))'></input>
+													<input type="text" class="form-control" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}'  name="decimal" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="{{question.questionId}}" min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' ng-model="question.response" ng-pattern='decimalRegex(getJsonArrayElement(question.parameters, "name", "decimals"))' ng-focus="setIndexQuestion(question.index)"></input>
 							  																			
 													<!-- SHORT TEXT -->
 													<div class="msg-error" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
@@ -45,7 +45,7 @@
 														</div>
 													</div>
 													<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'>{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
-													<input type="text" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response"></input>
+													<input type="text" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' class="form-control" id="{{question.questionId}}" name="{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response" ng-focus="setIndexQuestion(question.index)"></input>
 												</div>	
 												
 											</fieldset>																						

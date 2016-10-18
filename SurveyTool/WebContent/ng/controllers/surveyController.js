@@ -7,24 +7,36 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.warning = false;
 	$scope.mandatoryError = false;
 	$scope.error = true;
+	$scope.surveyError = false;
 	$scope.text = "hello world";
 	$scope.decimalRegex = '^[0-9]+(.([0-9]{1,2}))?$';
+	$scope.questionIndex = 1;
 	var mandatoryErrorQuestions = [];
-	var surveyError = false;
+	var errorSurvey = false;
 
 	/*if(!$scope.user.name)
 	{		
 		$scope.user.initialLoad();
 	}*/	
-	console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
+	//console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
 	$scope.currentSurvey.initialLoad();
-	console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
+	//console.log("Json survey info: " + JSON.stringify($scope.currentSurvey));
+	
+	/*$('#question-list').on('click', 'div.form-question', function(){
+		$scope.setIndexQuestion(parseInt($(this).closest('li.question').attr('index')));
+		console.log("Click: " + $scope.questionIndex);		
+	});
+	
+	$('#question-list').on('focus', ':focusable', function(){		
+		$scope.questionIndex = $(this).closest('li.question').attr('index');
+		$scope.setIndexQuestion(console.log("Focus: " + $scope.questionIndex));			
+	});*/
 
 	/** Initial load **/
 
 	$scope.getProgressPercent = function() {
-		console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
-		console.log("Survey Json: " + JSON.stringify($scope.currentSurvey.info));
+		//console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
+		//console.log("Survey Json: " + JSON.stringify($scope.currentSurvey.info));
 		if($scope.currentSurvey.info.section.page.numPage == 1)
 		{
 			return 0;
@@ -117,17 +129,17 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 			var f = parseFloat(num);
 			if(f < min || f > max)
 			{
-				surveyError = true;
+				errorSurvey = true;
 				return true;
 			}
 		}
-		surveyError = false;
+		errorSurvey = false;
 		return false;
 	};
 	
 	$scope.decimalRegex = function(decimals) {
 		//'^[0-9]+(.([0-9]{1,2}))?$'
-		console.log("decimals: " + JSON.stringify(decimals));
+		//console.log("decimals: " + JSON.stringify(decimals));
 		var regex = '^[0-9]+';
 		if(decimals.name && decimals.value)
 		{
@@ -154,7 +166,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	};
 		
 	$scope.nextPage = function(action) {
-		console.log("Next page error: " + $scope.survey.$valid);
+		//console.log("Next page error: " + $scope.survey.$valid);
 		mandatoryErrorQuestions = [];
 		if(action === 'next')
 		{
@@ -194,10 +206,30 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 			});
 			
 
-			surveyError = surveyError || !$scope.survey.$valid || mandatoryErrorQuestions.length != 0;
+			errorSurvey = errorSurvey || !$scope.survey.$valid;
 		}
 		
-		if(action != 'next' || !surveyError) $scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){});
+		if(action != 'next' || (!errorSurvey && mandatoryErrorQuestions.length == 0))
+		{
+			$scope.surveyError = false;
+			$scope.mandatoryError = false;
+			$scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){
+				if(res)
+				{
+					var element = $window.document.getElementById('main-title');
+			        if(element) $(element).focus();	        
+
+			        $scope.questionIndex = 1;
+				}				
+			});	
+			
+		}
+		
+		if(mandatoryErrorQuestions.length != 0) $scope.mandatoryError = true;
+		else $scope.mandatoryError = false; 
+			
+		if(errorSurvey) $scope.surveyError = true;
+		else $scope.surveyError = false;
 	};
 
 	$scope.showMandatoryErrorMsg = function(question) {
@@ -241,6 +273,13 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		{
 			return true;
 		}
+	};
+	
+	//Navigation focus
+
+	$scope.setIndexQuestion = function(qIndex) {
+		$scope.questionIndex = qIndex;
+		console.log("index question: " + $scope.questionIndex);
 	};
 }]);
 

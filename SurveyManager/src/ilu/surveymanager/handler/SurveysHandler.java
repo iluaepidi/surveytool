@@ -215,10 +215,19 @@ public class SurveysHandler {
 										JSONObject optionJson = new JSONObject();
 										optionJson.put("optionId", option.getId());
 										optionJson.put("index", option.getIndex());
-										if(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null)
+										
+										if(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
+										{
 											optionJson.put("title", option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+										}
+										else if(!option.getResources().isEmpty())
+										{
+											optionJson.put("title", option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+										}
 										else
+										{
 											optionJson.put("title", "");
+										}
 										
 										optionsJson.put(optionJson);
 									}

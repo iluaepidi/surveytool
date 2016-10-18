@@ -531,9 +531,15 @@ $(function() {
 		var optionGroupId = $(this).closest('ul').attr('ogid');
 		console.log("Option goto: " + $(this).val() + " - oid: " + optionId);
 		var logicElem = $('#logic-option-' + optionId);
+
+		var text = $(this).val();
+		if(text === "") 
+		{
+			text = $(this).closest('li.option-item').find('li.multimedia-item a').text().split(' - ')[0];
+		}
 		if(logicElem.length)
 		{
-			logicElem.html($(this).val());
+			logicElem.html(text);
 		}
 		else
 		{
@@ -543,7 +549,7 @@ $(function() {
 				logicList.removeClass("hidden");
 				var elem = logicList.find('span');
 				elem.attr("id", "logic-option-" + optionId);
-				elem.html($(this).val());
+				elem.html(text);
 				var logicOption = logicList.find(".logic-option");
 				logicOption.find("select.logic-option-goto").val('none');
 				logicOption.attr("oid", optionId);
@@ -558,7 +564,7 @@ $(function() {
 				clonElem.attr("ogid", optionGroupId);
 				var clonSpan = clonElem.find("span");
 				clonSpan.attr("id", "logic-option-" + optionId);
-				clonSpan.html($(this).val());
+				clonSpan.html(text);
 				clonElem.find("select.logic-option-goto").val('none');
 				ulLogic.append(clonElem);
 			}
@@ -573,6 +579,10 @@ $(function() {
 		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
 		var index = $(this).attr("index");
 		var text = $(this).val();
+		if(text === "") 
+		{
+			text = $(this).closest('li.option-item').find('li.multimedia-item a').text().split(' - ')[0];
+		}
 		console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
 		var existOg = false;
 		var existOpt = false;
@@ -763,6 +773,10 @@ $(function() {
 		var optionId = $(this).attr('oid');
 		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
 		var text = $(this).val();
+		if(text === "") 
+		{
+			text = $(this).closest('li.option-item').find('li.multimedia-item a').text().split(' - ')[0];
+		}
 		
 		var valor = optionGroupId + "-" + optionId;
 		

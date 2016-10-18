@@ -61,6 +61,7 @@ public class SurveyProcessService {
 			{
 				anonimousUser = new AnonimousUser();
 				anonimousUser.setIpAddress(request.getRemoteAddr());
+				anonimousUser.setSurveyId(json.getInt("surveyId"));
 				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
 			}
 			

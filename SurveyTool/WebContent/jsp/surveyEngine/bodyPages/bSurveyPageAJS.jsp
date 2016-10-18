@@ -45,7 +45,7 @@
 				</script>
 				<div class="container-fluid" ng-app="survey" ng-controller="surveyController">
 	  				<div class="title-content col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">	  					
-	  					<h1>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
+	  					<h1 id="main-title" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
 						<div class="progress">
 							<div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{getProgressPercent()}}%">
 								<span class="sr-only" ng-show="showButtonLastPage()"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</span>
@@ -58,17 +58,20 @@
 	  						
 	  						<div class="survey-form col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">
 	  						
-								<div class="error-summary">
-									<p class="msg-title">There are errors in submitted form.</p>
-									<p>Please correct them before continuing</p>
+								<div class="error-summary" ng-show="surveyError || mandatoryError">
+									<p class="msg-title" role="alert"><%= lang.getContent("survey.process.main.error.title") %>:</p>
+									<p class="msg-body" ng-show="surveyError" role="alert"><%= lang.getContent("survey.process.main.error.desc.error") %></p>
+									<p class="msg-body" ng-show="mandatoryError" role="alert"><%= lang.getContent("survey.process.main.error.desc.mandatory") %></p>
 								</div>
 									
 	  							<p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p>
 	  							
 	  							
 	  							<ul id="question-list">
-	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question">
+	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question" index="{{question.index}}" ng-class="{inactive: question.index != questionIndex}">
+	  									<button class="navigation up" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex > 1" ng-click="setIndexQuestion(question.index - 1)">Previous question</button>
 	  									<ng-include src="question.questionJspPath"></ng-include>
+	  									<button class="navigation down" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex < currentSurvey.info.section.page.questions.length" ng-click="setIndexQuestion(question.index + 1)">Next question</button>
 	  								</li>
 	  							</ul>
 	  							

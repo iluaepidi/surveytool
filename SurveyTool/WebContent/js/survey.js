@@ -1,4 +1,4 @@
-(function($){
+/*(function($){
 	
 	$(document).ready(function(){
 		$('#question-list').on('click', '>li', function(){
@@ -48,4 +48,4 @@
 		return $down;
 	}
 	
-})(jQuery);
+})(jQuery);*/

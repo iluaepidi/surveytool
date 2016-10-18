@@ -6,7 +6,7 @@
 	Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 	%>
 
-	<div class="form-question" id="form-question">
+	<div class="form-question" id="form-question" ng-click="setIndexQuestion(question.index)">
 		<jsp:include page="fqComponents/fqMandatoryError.jsp" />
 	
 		<fieldset>
@@ -31,8 +31,8 @@
                     		<th class="matrix-title">{{getJsonArrayElement(optionsGroup.contents, "contentType", "title").text}}</th>
                     		
                     		<td ng-repeat="option in optionsGroup.options">
-                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" value="{{option.optionId}}" ng-if="optionsGroup.optionType == 'radio'" ng-model="optionsGroup.response">
-                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" ng-if="optionsGroup.optionType != 'radio'" ng-model="option.response">
+                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" value="{{option.optionId}}" ng-if="optionsGroup.optionType == 'radio'" ng-model="optionsGroup.response" ng-focus="setIndexQuestion(question.index)">
+                    			<input type='{{getMatrixOptionType(getJsonArrayElement(question.parameters, "name", "matrixType"))}}' name="{{question.questionId}}-{{optionsGroup.optionGroupId}}-{{option.optionId}}" id="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}" ng-if="optionsGroup.optionType != 'radio'" ng-model="option.response" ng-focus="setIndexQuestion(question.index)">
                     			<label for="options-{{optionsGroup.optionGroupId}}-{{option.optionId}}"><span class="sr-only">{{getJsonArrayElement(optionsGroup.contents, "contentType", "title").text}} - {{getJsonArrayElement(option.contents, "contentType", "title").text}}</span></label>
                     		</td>
                     	</tr>

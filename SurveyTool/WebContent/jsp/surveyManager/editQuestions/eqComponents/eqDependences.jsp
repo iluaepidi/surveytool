@@ -255,11 +255,17 @@
 							  													if(option.getId() == lgt.getOid()) logicGoTo = lgt;
 									  										}
 							  											}
+							  											
+							  											String optionTitle = "";
+							  											if(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
+							  												optionTitle = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  											else 
+							  												optionTitle = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  									%>
 								  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
 								  												<label for="logic-option-goto-<%= option.getId() %>">
 								  													<%= lang.getContent("question.edit.logic.option.label") %>
-								  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %></span>
+								  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= optionTitle %></span>
 								  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
 								  												</label>
 								  												<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
