@@ -69,9 +69,9 @@
 	  							
 	  							<ul id="question-list">
 	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question" index="{{question.index}}" ng-class="{inactive: question.index != questionIndex}">
-	  									<button class="navigation up" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex > 1" ng-click="setIndexQuestion(question.index - 1)">Previous question</button>
+	  									<button class="navigation up" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex > 1" ng-click="setIndexQuestion(question.index - 1)"><%= lang.getContent("button.question.previous") %></button>
 	  									<ng-include src="question.questionJspPath"></ng-include>
-	  									<button class="navigation down" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex < currentSurvey.info.section.page.questions.length" ng-click="setIndexQuestion(question.index + 1)">Next question</button>
+	  									<button class="navigation down" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex < currentSurvey.info.section.page.questions.length" ng-click="setIndexQuestion(question.index + 1)"><%= lang.getContent("button.question.next") %></button>
 	  								</li>
 	  							</ul>
 	  							

@@ -18,7 +18,7 @@ Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_
 			<jsp:include page="fqComponents/fqResources.jsp" />
 			
 			<div class="form-question-content">
-				<div class="msg-error" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
+				<div class="msg-alert" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
 					<div class="error">
 						<p class="msg-title">{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}} <%= lang.getContent("survey.process.title.charLimit") %></p>
 						<p role="alert"><%= lang.getContent("survey.process.desc.charLimit") %></p>
