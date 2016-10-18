@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'arthurbecker';
-    src: url('../fonts/arrdb-webfont.woff2') format('woff2'),
-         url('../fonts/arrdb-webfont.woff') format('woff');
+    src: url('../fonts/arrdb.woff2') format('woff2'),
+         url('../fonts/arrdb.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'arthurbecker';
-    src: url('../fonts/arbdb-webfont.woff2') format('woff2'),
-         url('../fonts/arbdb-webfont.woff') format('woff');
+    src: url('../fonts/arbdb.woff2') format('woff2'),
+         url('../fonts/arbdb.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 
@@ -18,8 +18,8 @@
 
 @font-face {
     font-family: 'arthurbecker';
-    src: url('../fonts/arridb-webfont.woff2') format('woff2'),
-         url('../fonts/arridb-webfont.woff') format('woff');
+    src: url('../fonts/arridb.woff2') format('woff2'),
+         url('../fonts/arridb.woff') format('woff');
     font-weight: normal;
     font-style: italic;
 
@@ -27,8 +27,8 @@
 
 @font-face {
     font-family: 'arthurbecker';
-    src: url('../fonts/arbidb-webfont.woff2') format('woff2'),
-         url('../fonts/arbidb-webfont.woff') format('woff');
+    src: url('../fonts/arbidb.woff2') format('woff2'),
+         url('../fonts/arbidb.woff') format('woff');
     font-weight: bold;
     font-style: italic;
 
