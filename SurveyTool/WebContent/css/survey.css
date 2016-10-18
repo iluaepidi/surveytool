@@ -8,6 +8,7 @@
 .body-content{
 	background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;
 	padding-bottom:2em;
+	font-family: 'arthurbecker';
 }
 .body-content .content{
 	background:url(../img/content-bg-top.gif) left top  repeat-x;
@@ -150,6 +151,7 @@
 	padding:4px;
 	color:#016FB8;
 	min-width:20em;
+	font-weight:bold;
 }
 #form-question .checkbox label:hover span,
 #form-question .checkbox input:focus + label span{
@@ -191,8 +193,8 @@
 }
 #form-question .checkbox.img label:hover span,
 #form-question .checkbox.img input:focus + label span{
-	color:#333;
-	background-color:transparent !important;
+	color:#fff !important;
+	background-color:#016FB8 !important;
 }
 #form-question .checkbox.img label:hover img,
 #form-question .checkbox.img input:focus + label img{
@@ -219,6 +221,7 @@
 	padding:4px;
 	color:#016FB8;
 	min-width:20em;
+	font-weight:bold;
 }
 #form-question .radio label:hover span,
 #form-question .radio input:focus + label span{
@@ -260,8 +263,8 @@
 }
 #form-question .radio.img label:hover span,
 #form-question .radio.img input:focus + label span{
-	color:#333;
-	background-color:transparent !important;
+	color:#fff !important;
+	background-color:#016FB8 !important;
 }
 #form-question .radio.img label:hover img,
 #form-question .radio.img input:focus + label img{
@@ -313,24 +316,6 @@
 	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
 }
 /* Scale */
-/*
-#form-question .likert-options{
-	overflow:hidden;
-}
-#form-question .likert-options div{
-	float:left;
-}
-#form-question .likert-options div label{
-	display:block;
-	margin:0px;
-	padding:0px;
-}
-#form-question .likert-options div input{
-	opacity:0;
-	margin:0px;
-	padding:0px;
-}
-*/
 #form-question.scale .form-question-content{
 	max-width:300px;
 	margin:2em auto;
@@ -371,7 +356,7 @@
 	font-size:.75em;
 	text-transform:uppercase;
 	color:#016FB8;
-	padding:1em 5% 0em 5%;
+	padding:1em 5.5% 0em 5.5%;
 }
 #form-question .likert-legend div.disagree{
 	margin-left:-50px;
@@ -380,6 +365,28 @@
 #form-question .likert-legend div.agree{
 	margin-left:50px;
 	margin-right:-50px;
+}
+
+#form-question.scale .scale-img{
+	float:left;
+	text-align:center;
+	width:33%;
+}
+#form-question.scale .scale-img + .scale-content{
+	float:left;
+	width:66%;
+}
+@media all and (max-width:64em){/* 600 */
+	#form-question.scale .scale-img{
+		float:none;
+		text-align:center;
+		width:100%;
+		margin-bottom:1em;
+	}
+	#form-question.scale .scale-img +  .scale-content{
+		float:none;
+		width:100%;
+	}
 }
 
 /* Buttons */
@@ -397,6 +404,7 @@
 	border-radius:0px;
 	font-size:1.786em;
 	padding:0px 12px;
+	background-color:#016fb8;
 }
 
 /* Messages */
@@ -434,6 +442,7 @@
 	text-transform:uppercase;
 	color:#016FB8;
 	margin-bottom:.4em;
+	font-weight:bold;
 }
 
 /*----------------------------------------------*\
