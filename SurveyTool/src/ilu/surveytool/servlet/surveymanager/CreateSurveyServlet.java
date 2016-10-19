@@ -1,6 +1,7 @@
 package ilu.surveytool.servlet.surveymanager;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,12 @@ public class CreateSurveyServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("processRequest in CreateSurveyServlet");
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));

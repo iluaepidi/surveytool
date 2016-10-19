@@ -4,6 +4,8 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.language.Language"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));

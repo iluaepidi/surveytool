@@ -3,6 +3,7 @@
  */
 var qtypeId;
 var numQuestions = 0;
+var currentText = "";
 var currentElement;
 var currentAddNode;
 var currentQuestion = 0;
@@ -259,6 +260,11 @@ $(function() {
 		$(this).closest('li[id=panel-question1]').find('label[id=optionRadioLabel' + index + ']').text($(this).val());
 		//console.log("Option text field!!!! " + $(this).parent().parent().children("li").size());
 	});
+
+	$('.survey-sections').on("focusin", "#option-list #option-item input", function(e){
+		currentText = $(this).val();
+		console.log("Asigned current text: " + currentText);
+	});
 	
 	$('.survey-sections').on("focusout", "#option-list #option-item input", function(e){
 		e.stopPropagation();
@@ -316,6 +322,12 @@ $(function() {
 		else if ($(this).attr('oid')>0){
 			if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
 				$(this).closest('li.option-item').find("#remove-option").trigger("click");
+				console.log("currentText: " + currentText);
+				if(currentText != "")
+				{
+					$(this).val(currentText);
+					currentText = "";
+				}
 			}else{
 				var req = {};
 				var currentNode = $(this);
@@ -1295,7 +1307,7 @@ $(function() {
 					   var ids = elementId.split('/');
 					   var oid = ids[2];
 					   var input = $('input[oid=' + oid + ']'); 					   
-					   var numItems = input.closest("ul").find("li[oid]").size();
+					   var numItems = input.closest("ul").find("li.option-item").size();
 					   
 					   input.trigger("rmvOptJson");
 						
@@ -2239,7 +2251,17 @@ $(function() {
 	});*/
 	
 	
-	
+	$('#listcompletequotas').on("click", "#removeQuota", function(e){
+		var item = $(this).parents(".survey-info");
+		quotaid = item.attr('quota');
+		currentQuestion = item.find(".widthTitleSurveyCollapsed");
+		sid = currentQuestion.attr('sid');
+		qid = currentQuestion.attr('qid');
+		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
+		$("#removeElemId").val(sid + '/' +qid +"/111");
+		$("#removeElemService").val('QuotaService');
+		$("#removeElement").modal("show");
+	});
 	
 	
 });
@@ -2269,11 +2291,11 @@ function loadvaluequestion(id){
 
 function changeoptionsfees(id){
 	var valuesel = $("#selquestionforfees"+id).val();
-	
 	$('#optionsquota'+id).empty();
 	
 	//if(jsonquotas === "undefined"){
 		var json = jQuery.parseJSON(jsonquotas);
+
 		for (var k=0;k<json.length;++k)
 		{
 			for (var i=0;i<json[k].questions.length;++i)
@@ -2444,17 +2466,7 @@ $.getScript('http://mindmup.github.io/bootstrap-wysiwyg/external/jquery.hotkeys.
 	});
 
 function deleteQuote(){
-	$('.survey-sections').on("click", "#removeQuota", function(e){
-		var item = $(this).parents(".survey-info");
-		quotaid = item.attr('quota');
-		currentQuestion = item.find(".widthTitleSurveyCollapsed");
-		sid = currentQuestion.attr('sid');
-		qid = currentQuestion.attr('qid');
-		$("#elementToRemoveText").html('"Quota for Question: ' + item.find('.selquestionforfees option:selected').text() + '"');
-		$("#removeElemId").val(sid + '/' +qid +"/111");
-		$("#removeElemService").val('QuotaService');
-		$("#removeElement").modal("show");
-	});
+	
 	
 }
 

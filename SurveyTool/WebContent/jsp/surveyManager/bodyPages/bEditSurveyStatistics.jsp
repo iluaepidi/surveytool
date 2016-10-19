@@ -284,48 +284,48 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 					      <div class="content-statistics hidden" id="quotas-info">
 					       		<div id="objetivequota" class="edit-quote-frame height200px">
 					       			<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees">
-														<div class="form-group nomargin">
-															<div class="form-group">
-												                <div class="col-md-8">     
-												                	<div class="form-group">
-												                		<h5 id="questionquotaname" class="quotaname">General Objetive</h5>
-												                	</div>
-												                </div>
-											            	</div>
-														</div>
-														
-														<%
-														int quotaTotalSurvey = (int)request.getAttribute(Attribute.s_TOTAL_SURVEY_COMPETE);
-														int quotaprogress = 100;
-														if(survey.getObjetive()>0){
-															quotaprogress = (int)(((double)(((double)quotaTotalSurvey) / ((double)survey.getObjetive())))*100.00);
-														}
-														
-														if(quotaprogress>100)quotaprogress=100;
-														
-														String colorProgressgeneral = "";
-														
-														if(quotaTotalSurvey==survey.getObjetive()){
-															colorProgressgeneral="progress-bar-success";
-														}
+										<div class="form-group nomargin">
+											<div class="form-group">
+								                <div class="col-md-8">     
+								                	<div class="form-group">
+								                		<h5 id="questionquotaname" class="quotaname">General Objetive</h5>
+								                	</div>
+								                </div>
+							            	</div>
+										</div>
+										
+										<%
+										int quotaTotalSurvey = (int)request.getAttribute(Attribute.s_TOTAL_SURVEY_COMPETE);
+										int quotaprogress = 100;
+										if(survey.getObjetive()>0){
+											quotaprogress = (int)(((double)(((double)quotaTotalSurvey) / ((double)survey.getObjetive())))*100.00);
+										}
+										
+										if(quotaprogress>100)quotaprogress=100;
+										
+										String colorProgressgeneral = "";
+										
+										if(quotaTotalSurvey==survey.getObjetive()){
+											colorProgressgeneral="progress-bar-success";
+										}
 
-														%>
-														<div class="form-group col-md-8 quotaresultobjetiveajust">
-															<% if(survey.getObjetive()>0){ %>
-							                					<div class="with100pc">
-							                						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1">max <%=survey.getObjetive()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>
-							                					</div>
-						                					<% } %>
-						                					<div class="with100pc">
-						                						<span class="pull-left">0</span>
-						                						<span class="pull-right"></span>
-						                					</div>
-						                 					<div class="progress quotaresultprogressdiv">
-						                 						<div class="progress-bar <%=colorProgressgeneral%>" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
-												    			<%=quotaTotalSurvey %> surveys
-												    			</div>
-															</div>
-						                 				</div>
+										%>
+										<div class="form-group col-md-8 quotaresultobjetiveajust">
+											<% if(survey.getObjetive()>0){ %>
+			                					<div class="with100pc">
+			                						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1">max <%=survey.getObjetive()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>
+			                					</div>
+		                					<% } %>
+		                					<div class="with100pc">
+		                						<span class="pull-left">0</span>
+		                						<span class="pull-right"></span>
+		                					</div>
+		                 					<div class="progress quotaresultprogressdiv">
+		                 						<div class="progress-bar <%=colorProgressgeneral%>" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=quotaprogress%>%;">
+								    			<%=quotaTotalSurvey %> surveys
+								    			</div>
+											</div>
+		                 				</div>
 										                 			
 										                	
 									</div>

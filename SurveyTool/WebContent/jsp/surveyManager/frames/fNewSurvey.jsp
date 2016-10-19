@@ -4,6 +4,8 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
@@ -14,7 +16,7 @@ HttpSession sessions = request.getSession(false);
 %>
 
 	  			<!-- Modal -->
-				
+			
 				<div class="modal fade survey-win" id="newSurveyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 

@@ -338,6 +338,10 @@ footer {margin-top: 10px;
 .footer-logo-content img {width: 60px;
     float: left;
     margin-left: 20px;}
+.footer-links > ul > li > a {border: 2px solid #fff;
+    padding: 2px;
+    display: inline-block;
+}
 
 /*----------------------------------------------*\
 		$LOGIN

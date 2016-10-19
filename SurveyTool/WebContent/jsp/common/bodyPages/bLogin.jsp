@@ -108,10 +108,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  							<span id='repasswordregister-error' class='error hidden'><%= lang.getContent("msg.error.login.repassword") %></span>
 		  							</div>	
 		  							<div class="login-button">
-		  								<input type="button" id="registerSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("home.register.label.registeruser") %>" />
+		  								<input type="button" id="registerSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.register") %>" />
 		  							</div>  	
 		  							<div class="login-button">
-		  								<input type="button" id="backLogin" class="btn btn-block btn-survey" value="<%= lang.getContent("home.register.label.login") %>" onclick="showHideRegister(false)"/>
+		  								<input type="button" id="backLogin" class="btn btn-block btn-survey" value="<%= lang.getContent("button.login") %>" onclick="showHideRegister(false)"/>
 		  							</div>  
 		  						</fieldset>						
 	  						</form>

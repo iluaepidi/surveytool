@@ -158,7 +158,7 @@
 							 	<% request.setAttribute("listQuestionNoVisible",listQuestionAvaiblesNoVisible);%>
 							 	
 		  					
-								</ul>
+							</ul>
 		  					
 		  					<jsp:include page="../components/cQuotaNew.jsp" />
 							
