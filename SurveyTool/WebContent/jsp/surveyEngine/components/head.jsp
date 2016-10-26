@@ -9,7 +9,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Survey <%= title %></title>
+		<title>Survey {{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}, page {{currentSurvey.info.section.page.numPage}}</title>
 		
 		<!-- CSS de Bootstrap -->
 		<!--<link href="css/style.css" rel="stylesheet" media="screen">-->

@@ -6,7 +6,7 @@ String footerPath = "jsp/surveyEngine/components/footer.jsp";
 String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="en" ng-app="survey" ng-controller="surveyController">
 	<head>
 		<jsp:include page="jsp/surveyEngine/components/head.jsp" />
 	</head>

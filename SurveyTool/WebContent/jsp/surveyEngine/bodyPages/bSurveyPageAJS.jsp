@@ -43,7 +43,7 @@
 				 
 				 sInfo = <%= sInfo.toString() %>;
 				</script>
-				<div class="container-fluid" ng-app="survey" ng-controller="surveyController">
+				<div class="container-fluid">
 	  				<div class="title-content col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">	  					
 	  					<h1 id="main-title" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
 						<div class="progress">
@@ -53,6 +53,11 @@
 						</div>
 	  					<h2>Section X</h2>
 	  				</div>	  				
+	  				
+	  				<div id="loadPageMsg" class="sr-only" aria-relevant="text" aria-atomic="true" aria-live="assertive">
+			          <p>Page {{currentSurvey.info.section.page.numPage}} of {{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}} survey loaded.</p>
+			        </div>
+	  				
 	  				<div class="content">
 	  					<form name="survey" role="form" ng-show="currentSurvey.info.section.page.questions" class="">
 	  						
