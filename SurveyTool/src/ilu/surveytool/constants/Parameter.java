@@ -31,6 +31,7 @@ public class Parameter {
 	public final static String s_SURVEY_ID = "surveyid";
 	public final static String s_PAGE_ID = "pageid";
 	public final static String s_PID = "pid";
+	public final static String s_POLL_ID = "pollId";
 	public final static String s_PREV_ID = "prevId";
 	public final static String s_QTYPE = "qtype";
 	public final static String s_QID = "qid";
@@ -63,5 +64,7 @@ public class Parameter {
 	public final static String s_NEWOGID = "newogid";
 	public final static String s_OTYPE = "otype";
 	public final static String s_LANG = "lang";
+	public final static String s_POID = "poid";
+	public final static String s_TAB = "tab";
 
 }

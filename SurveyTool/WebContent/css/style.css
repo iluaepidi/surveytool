@@ -1240,6 +1240,9 @@ footer {margin-top: 10px;
 	margin-right: 30px !important;
 }
 
+.edit-poll-content {width: 70%;
+    margin: 0 auto;}
+
 /*----------------------------------------------*\
 		$STATISTICS
 \*----------------------------------------------*/

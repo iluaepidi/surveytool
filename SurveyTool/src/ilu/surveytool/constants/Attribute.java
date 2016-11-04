@@ -36,6 +36,7 @@ public class Attribute {
 	public final static String s_RESPONSES_INFO = "responsesInfo";
 	public final static String s_RESOURCE = "resource";
 	public final static String s_ADD_QUESTIONS = "addQuestions";
+	public final static String s_IS_EDIT_POLL = "isEditPoll";
 	public final static String s_SECTION = "section";
 	public final static String s_PAGE = "page";
 	public final static String s_NUM_PAGE = "numPage";
@@ -54,4 +55,5 @@ public class Attribute {
 	public final static String s_QID = "qid";
 	public final static String s_NEWOGID = "newogid";
 	public final static String s_NEWOID = "newoid";
+	public final static String s_TAB = "tab";
 }

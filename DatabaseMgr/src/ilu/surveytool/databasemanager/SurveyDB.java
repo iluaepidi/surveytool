@@ -470,14 +470,14 @@ public class SurveyDB {
 
 	public List<Integer> getQuestionnairesIdByProjectId(int projectId)
 	{
-		List<Integer> surveysId = null;
+		List<Integer> surveysId = new ArrayList<Integer>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_ID_BY_PUBLICID);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRESID_BY_PROJECTID);			
 	   		pstm.setInt(1, projectId);
 	   		
 	   		rs = pstm.executeQuery();
@@ -683,7 +683,7 @@ public class SurveyDB {
 		return formaId;
 	}
 	
-	/*
+	/**
 	 * update
 	 */
 	

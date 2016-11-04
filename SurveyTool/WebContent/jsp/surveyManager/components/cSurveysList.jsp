@@ -9,10 +9,11 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+String tab = (String) request.getAttribute(Attribute.s_TAB);
 %>    								
 
 
-						<div id="surveys-list" style="margin-bottom: 20px;">	    					
+						<div id="surveys-list" <%if(!tab.equals("survey")){%>class="hidden"<%}%> style="margin-bottom: 20px;">	    					
 							<h3><%= lang.getContent("survey_manager.surveys.title") %></h3>							
 							<%= lang.getContent("survey_manager.surveys.description") %>
 		  					<div class="user-panel-surveys">

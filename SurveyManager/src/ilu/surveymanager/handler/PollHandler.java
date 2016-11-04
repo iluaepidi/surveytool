@@ -77,6 +77,14 @@ public class PollHandler {
 		return poll;
 	}
 
+	public Poll getPollDetailById(int pollId, String lang)
+	{
+		PollDB pollDB = new PollDB();
+		if(lang == null || lang.isEmpty()) lang = "en";
+		Poll poll = pollDB.getPollById(pollId, lang);
+		return poll;
+	}
+
 	public List<PollTableInfo> getPollsTableInfoByAuthor(int author, String language)
 	{
 		List<PollTableInfo> response = new ArrayList<PollTableInfo>();
@@ -97,7 +105,67 @@ public class PollHandler {
 		return response;
 	}
 	
+	public boolean updateContent(int pollId, Content content)
+	{
+		boolean updated = false;
+		
+		PollDB pollDB = new PollDB();
+		
+		int contentId = pollDB.getPollContentId(pollId);
+		ContentDB contentDB = new ContentDB();
+		if(contentDB.existContent(contentId, content.getLanguage(), content.getContentType()))
+		{
+			contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		else
+		{
+			if (!content.getText().equals(""))
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+		}
+		
+		updated = true;
+		
+		return updated;
+	}
 
+	public boolean updateProject(int pollId, String projectName)
+	{
+		boolean updated = false;
+		
+		PollDB pollDB = new PollDB();
+		int projectId = pollDB.getPollProjectId(pollId);
+		List<Integer> pollsId = pollDB.getPollsIdByProjectId(projectId);
+		
+		SurveyDB surveyDB = new SurveyDB();
+		List<Integer> surveysId = surveyDB.getQuestionnairesIdByProjectId(projectId);
+		Project project = surveyDB.getProjectByName(projectName);
+		if(project != null)
+		{
+			updated = pollDB.updatePollProject(project.getProjectId(), pollId);
+		}
+		else if(surveysId.size() > 0 || pollsId.size() > 1)
+		{
+			projectId = surveyDB.insertProject(projectName);			
+			updated = pollDB.updatePollProject(projectId, pollId);
+		}
+		else
+		{
+			updated = surveyDB.updateProjectName(projectId, projectName);
+		}
+		
+		return updated;
+	}
+	
+	public boolean updateCallUrl(int pollId, String callUrl)
+	{
+		boolean updated = false;
+		
+		PollDB pollDB = new PollDB();
+		updated = pollDB.updatePollCallUrl(pollId, callUrl);
+		
+		return updated;
+	}
+	
 	public File exportResults(int pollId)
 	{
 		File file = null;

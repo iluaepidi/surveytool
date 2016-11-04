@@ -10,9 +10,10 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+String tab = (String) request.getAttribute(Attribute.s_TAB);
 %>
     								
-						<div class="hidden" id="polls-list">	  					
+						<div id="polls-list"  <%if(!tab.equals("poll")){%>class="hidden"<%}%>>	  					
 							<h3><%= lang.getContent("survey_manager.polls.title") %></h3>							
 							<%= lang.getContent("survey_manager.polls.description") %>
 							

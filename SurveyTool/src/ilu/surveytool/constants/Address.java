@@ -22,6 +22,7 @@ public class Address {
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
 		public final static String s_BODY_SURVEYS = "surveys";
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
+		public final static String s_BODY_EDIT_POLL = "editPoll";
 		public final static String s_BODY_EDIT_STATISTICS = "surveyStatistics";
 		public final static String s_BODY_EDIT_FEES = "editFees";
 		public final static String s_BODY_PROFILE = "profile";
@@ -53,6 +54,7 @@ public class Address {
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
+		public final static String s_SERVLET_POLLS_SERVLET = "PollsServlet";
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
 		

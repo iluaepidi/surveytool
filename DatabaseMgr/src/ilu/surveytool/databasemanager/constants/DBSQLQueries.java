@@ -171,6 +171,8 @@ public class DBSQLQueries {
 		public final static String s_SELECT_POLL_BY_ID = "SELECT *, pr.projectName FROM surveytool.poll p "
 				+ "inner join surveytool.project pr on p.idProject = pr.idProject "
 				+ "where p.idPoll = ?";
+		public final static String s_SELECT_POLL_PROJECTID = "SELECT idProject FROM surveytool.poll WHERE idPoll = ?";
+		public final static String s_SELECT_POLL_ID_BY_PUBLICID = "SELECT idPoll FROM surveytool.poll WHERE idProject = ?";
 		
 		//poll response
 		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text, (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
@@ -183,7 +185,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where qbp.idPoll = ? and l.isoName = ? and ct.name = 'title' "
 				+ "order by numResp desc";
-		
+				
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";
 		
@@ -550,7 +552,9 @@ public class DBSQLQueries {
 
 		//page
 			public final static String s_UPDATE_PAGE_NUM_PAGE = "UPDATE `surveytool`.`page` SET `numPage`=? WHERE `idPage`=?";
-
+		//poll
+			public final static String s_UPDATE_POLL_PROJECT = "UPDATE surveytool.poll SET idProject=? WHERE idPoll= ?";
+			public final static String s_UPDATE_POLL_CALL_URL = "UPDATE surveytool.poll SET callUrl=? WHERE idPoll= ?";
 		//option
 			public final static String s_UPDATE_OPTION_IDRESOURCE = "UPDATE `surveytool`.`option` SET `idResoruces`=? WHERE `idOption`=?";
 

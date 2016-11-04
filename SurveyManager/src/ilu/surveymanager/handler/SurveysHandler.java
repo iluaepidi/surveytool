@@ -15,6 +15,7 @@ import ilu.surveymanager.exportdata.ExportData;
 import ilu.surveymanager.statistics.Statistics;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
+import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.QuotasDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
@@ -141,12 +142,15 @@ public class SurveysHandler {
 		SurveyDB surveyDB = new SurveyDB();
 		int projectId = surveyDB.getQuestionnairesProjectId(surveyId);
 		List<Integer> surveysId = surveyDB.getQuestionnairesIdByProjectId(projectId);
+
+		PollDB pollDB = new PollDB();
+		List<Integer> pollsId = pollDB.getPollsIdByProjectId(projectId);
 		Project project = surveyDB.getProjectByName(projectName);
 		if(project != null)
 		{
 			updated = surveyDB.updateSurveyProject(project.getProjectId(), surveyId);
 		}
-		else if(surveysId.size() > 1)
+		else if(surveysId.size() > 1 || pollsId.size() > 0)
 		{
 			projectId = surveyDB.insertProject(projectName);			
 			updated = surveyDB.updateSurveyProject(projectId, surveyId);
