@@ -4,7 +4,10 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.Poll"%>
 <%
 				Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
-								
+				
+				String host = request.getServerName();
+				int port = request.getServerPort();
+				
 				Language lang = new Language(getServletContext().getRealPath("/")); 
 				lang.loadLanguage(Language.getLanguageRequest(request));
 				
@@ -16,7 +19,7 @@
 	  					<h2 id="title-header-edit"><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys&tab=poll"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("poll.edit.title") %></h2>
 	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">		
 						  	<li role="presentation" class="statistic-tab" id="statistic-tab"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-						  	<li role="presentation" class="share-tab" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-users fa-2x"></i></a></li>
+						  	<li role="presentation" class="share-tab" id="share-tab"><a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-users fa-2x"></i></a></li>
 						  	<li role="presentation" class="edit-tab active" id="edit-tab"><a href="#" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 						</ul>
 	  				</div>
