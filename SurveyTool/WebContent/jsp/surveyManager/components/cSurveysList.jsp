@@ -29,27 +29,9 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 			  					if(!surveys.isEmpty())
 			  					{
 			  					%>
-			  					<!-- <div class="row">
-			  						<div class="col-sm-6">
-			  							<div class="dataTables_length" id="surveys-table_length">
-			  								<label>Show <select name="surveys-table_length" aria-controls="surveys-table" class="form-control input-sm">
-			  										<option value="10" selected>10</option>
-			  										<option value="25">25</option>
-			  										<option value="50">50</option>
-			  										<option value="100">100</option>
-			  									</select> entries</label>
-			  							</div>
-			  						</div>
-			  						<div class="col-sm-6">
-			  							<div id="surveys-table_filter" class="dataTables_filter">
-			  								<label>Search: <input type="search" id="table-search" class="form-control input-sm" placeholder="" aria-controls="surveys-table">
-			  								<i class='fa fa-search' aria-hidden='true'></i></label>
-			  							</div>
-			  						</div>
-			  					</div> -->
 			  						
 			  					<div class="surveys-table">			  					
-			  						<table class="table table-bordered" sumary="List of surveys where ..." id="surveys-table"  data-page-length='25'>
+			  						<table class="table table-bordered table-surveys display" sumary="List of surveys where ..." id=""  data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
 			  							<thead>
 										<tr class="info" id="titles">
@@ -160,29 +142,3 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 <%
 lang.close();
 %>
-
-<script> 
- 
-    $(document).ready(function() {
-
-    	var table = $('#surveys-table').dataTable({
-    		"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        	"pagingType": "full_numbers",
-            "scrollCollapse": false,
-            "searching": true,
-            "ordering": false,
-            "bLengthChange" : true,
-            "language": {
-            	"url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
-            }
-            
-        });        
-        
-    	table.on('draw.dt', function () {
-    		//$('[name="surveys-table_length"]').val("10");
-    	 	$('#surveys-table_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
-        });
-       
-    });
-    
-</script> 

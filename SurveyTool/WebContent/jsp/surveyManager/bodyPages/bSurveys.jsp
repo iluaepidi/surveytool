@@ -35,3 +35,32 @@ lang.close();
 	  			<jsp:include page="../frames/fNewSurvey.jsp" />
 	  			
 	  			<jsp:include page="../frames/fNewPoll.jsp" />
+	  			
+
+<script> 
+ 
+    $(document).ready(function() {
+
+    	var table = $('table.display').dataTable({
+    		"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        	"pagingType": "full_numbers",
+            "scrollCollapse": false,
+            "searching": true,
+            "ordering": false,
+            "bLengthChange" : true,
+            "language": {
+            	"url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
+            }
+            
+        });        
+        
+    	$(document).on('draw.dt', function () {
+    		//$('[name="surveys-table_length"]').val("10");
+    	 	$('#DataTables_Table_0_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
+    	 	$('#DataTables_Table_1_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
+        });
+       
+    });
+    
+</script> 
+	  			

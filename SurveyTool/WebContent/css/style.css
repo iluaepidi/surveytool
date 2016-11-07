@@ -410,13 +410,15 @@ footer {margin-top: 10px;
 .surveys-create-button {text-align: right;
 	padding: 20px 0;}
 .surveys-table {/*text-align: center;*/}
+.table-surveys {width: 100% !important;}
 .btn-pag a {height: 35px;}
 .btn-arrow {padding-top: 9px !important;}
 .percent-bar {margin: 0 !important;
 	border: 1px solid #555;}
 .progress-bar {min-width: 2em}
-.surveys-table ul {margin: 0;
+.polls-table ul, .surveys-table ul {margin: 0;
 	padding: 0 !important;}
+
 .surveys-table ul li{padding: 0 !important;}
 .surveys-table td {vertical-align: middle !important;}
 
