@@ -247,7 +247,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where q.idQuestion = ? and l.isoName = ?";
 		public final static String s_SELECT_QUESTION_CONTENTID_BY_QUESTIONID = "SELECT idContent FROM surveytool.question where idQuestion = ?";
-		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, c.name categoryName FROM surveytool.questionbypoll qbp "
+		public final static String s_SELECT_QUESTION_BY_POLLID = "SELECT q.*, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName FROM surveytool.questionbypoll qbp "
 				+ "inner join surveytool.question q on qbp.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "

@@ -242,8 +242,8 @@ public class QuestionDB {
 	   					parameters,
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_TEMPLATE_FILE),
 	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE),
-	   					//rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
-	   					null,
+	   					rs.getString(DBFieldNames.s_QUESTIONTYPE_STATISTICRESULTS_FILE),
+	   					//null,
 	   					qdependence,
 	   					logicGoTo);
 	   			

@@ -66,8 +66,19 @@ List<Option> o = sQ.getOptions();
 					for(int i = 0; i<o.size();i++){
 						int idoption = ((Option)(o.get(i))).getId();
 						for(int j=0;j<obg.size();j++){
-			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){%>
+			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
+			    				if(((Option)(o.get(i))).getContents().get("text") != null)
+			    				{%>
 			    				<%= ((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>, <%= (int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0))%>
+			    				<%
+			    				}
+			    				else
+			    				{
+			    				%>
+			    				<%= ((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText()%>, <%= (int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0))%>
+			    				<%	
+			    				}
+			    				%>
 			    				<%
 			    				j=obg.size();
 			    			}
@@ -88,7 +99,11 @@ List<Option> o = sQ.getOptions();
 					//System.out.println("Size of options:"+o.size());
 					for(int i = 0; i<o.size();i++){
 						int idoption = ((Option)(o.get(i))).getId();
-						labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());       		    		
+						if(((Option)(o.get(i))).getContents().get("text") != null) {
+							labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
+						} else {
+							labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+						}
 			    		for(int j=0;j<obg.size();j++){
 			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
 			    				values.add((int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)));
@@ -122,7 +137,7 @@ List<Option> o = sQ.getOptions();
 					{
 						%>
 						<li>
-						  			<i class="fa fa-square <%= colors[i%9] %>"></i> <%= labels.get(i) %>
+						  			<i class="fa fa-square <%= colors[i%9] %>"></i> <%= labels.get(i) %>: <%= values.get(i) %>%
 						  		</li>
 						<%
 					}

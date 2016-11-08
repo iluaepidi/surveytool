@@ -7,12 +7,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveymanager.exportdata.ExportData;
+import ilu.surveymanager.statistics.Statistics;
+import ilu.surveymanager.statistics.StatisticsQuestion;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Poll;
 import ilu.surveytool.databasemanager.DataObject.PollResultResume;
@@ -180,6 +183,31 @@ public class PollHandler {
 		file = exportData.exportPollResponses(pollId, questions, responses);
 		
 		return file;
+	}
+	
+	public StatisticsQuestion createStatistics(int pollId, Question question, String language, String languageDefault){
+		StatisticsQuestion sQ = new StatisticsQuestion();
+		
+		sQ.setQuestionId(question.getQuestionId());
+		
+		PollDB pollDB = new PollDB();
+		List<PollResultResume> results = pollDB.getPollResponsesResume(pollId, language);
+		
+		sQ.getOptions().addAll(question.getOptionsGroups().get(0).getOptions());
+		int totalResponses = 0;
+		
+		for(PollResultResume result : results)
+		{
+			OptionsByGroup optionsByGroup = new OptionsByGroup();
+			optionsByGroup.setOptionId(result.getOptionId());
+			optionsByGroup.setNumResponses(result.getNumResposnes());
+			sQ.getOptionsByGroup().add(optionsByGroup);
+			totalResponses += result.getNumResposnes();
+		}		
+		
+		sQ.setNumResponses(totalResponses);
+		
+		return sQ;
 	}
 
 }

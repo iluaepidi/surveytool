@@ -24,6 +24,7 @@ public class Address {
 		public final static String s_BODY_EDIT_SURVEY = "editSurvey";
 		public final static String s_BODY_EDIT_POLL = "editPoll";
 		public final static String s_BODY_EDIT_STATISTICS = "surveyStatistics";
+		public final static String s_BODY_POLL_STATISTICS = "pollStatistics";
 		public final static String s_BODY_EDIT_FEES = "editFees";
 		public final static String s_BODY_PROFILE = "profile";
 	
@@ -57,6 +58,7 @@ public class Address {
 		public final static String s_SERVLET_POLLS_SERVLET = "PollsServlet";
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
+		public final static String s_SERVLET_POLL_STATISTICS = "PollStatisticServlet";
 		
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";
