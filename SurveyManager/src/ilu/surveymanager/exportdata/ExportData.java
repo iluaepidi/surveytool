@@ -74,52 +74,56 @@ public class ExportData {
 			int desp = 1;
 			for(int c = 0; c < questions.size(); c++)
 			{
-				//System.out.println("Question " + c + ": " + questions.get(c));
-				cell1 = row1.createCell(desp);
-				cell1.setCellValue(questions.get(c).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
-				sheet.autoSizeColumn(desp);
-
-				int size = questions.get(c).getOptionsGroups().size();
-				if(size > 0)
+				String qtype = questions.get(c).getQuestionType();
+				//System.out.println("question " + c + ": " + qtype);
+				if(!qtype.equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT))
 				{
-					for(int og = 0; og < size; og++)
+					//System.out.println("Question " + c + ": " + questions.get(c));
+					cell1 = row1.createCell(desp);
+					cell1.setCellValue(questions.get(c).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+					sheet.autoSizeColumn(desp);
+	
+					int size = questions.get(c).getOptionsGroups().size();
+					if(size > 0)
 					{
-						int ogsize = questions.get(c).getOptionsGroups().get(0).getOptions().size();
-						OptionsGroup optionGroup = questions.get(c).getOptionsGroups().get(og);
-
-						Content ogcontent = optionGroup.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
-						if(ogcontent != null)
+						for(int og = 0; og < size; og++)
 						{
-							cell2 = row2.createCell(desp);
-							cell2.setCellValue(ogcontent.getText());
-							sheet.autoSizeColumn(desp);
-						}
-						
-						//System.out.println("Type: " + optionGroup.getOptionType());
-												
-						if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
-						{
-							int osize = optionGroup.getOptions().size();
-							for(int o = 0; o < osize; o++)
+							int ogsize = questions.get(c).getOptionsGroups().get(0).getOptions().size();
+							OptionsGroup optionGroup = questions.get(c).getOptionsGroups().get(og);
+	
+							Content ogcontent = optionGroup.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+							if(ogcontent != null)
 							{
-								cell3 = row3.createCell(desp);
-								cell3.setCellValue(optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+								cell2 = row2.createCell(desp);
+								cell2.setCellValue(ogcontent.getText());
 								sheet.autoSizeColumn(desp);
+							}
+							
+							//System.out.println("Type: " + optionGroup.getOptionType());
+													
+							if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
+							{
+								int osize = optionGroup.getOptions().size();
+								for(int o = 0; o < osize; o++)
+								{
+									cell3 = row3.createCell(desp);
+									cell3.setCellValue(optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+									sheet.autoSizeColumn(desp);
+									desp++;
+								}
+							}
+							else if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
+							{
 								desp++;
 							}
 						}
-						else if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
-						{
-							desp++;
-						}
+						
 					}
-					
-				}
-				else
-				{
-					desp++;
-				}
-
+					else
+					{
+						desp++;
+					}
+				}	
 			}
 			
 			List<Integer> userList = new ArrayList<Integer>();
@@ -136,48 +140,62 @@ public class ExportData {
 				desp = 1;
 				for(int c = 0; c < questions.size(); c++)
 				{
-					HashMap<Integer, List<String>> optionGroups = responses.get(user).get(questions.get(c).getQuestionId());
-					List<OptionsGroup> ogList = questions.get(c).getOptionsGroups();
-					if(ogList.isEmpty())
+					String qtype = questions.get(c).getQuestionType();
+					//System.out.println("question " + c + ": " + qtype);
+					if(!qtype.equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT))
 					{
-						cell = row.createCell(desp);
-						cell.setCellValue(optionGroups.get(0).get(0));
-						desp++;
-					}
-					else
-					{
-						for(int og = 0; og < ogList.size(); og++)
+						HashMap<Integer, List<String>> optionGroups = responses.get(user).get(questions.get(c).getQuestionId());
+						List<OptionsGroup> ogList = questions.get(c).getOptionsGroups();
+						if(ogList.isEmpty())
 						{
-							OptionsGroup ogItem = ogList.get(og);
-							List<String> values = optionGroups.get(ogItem.getId());
-							if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
-							{
-								cell = row.createCell(desp);
-								cell.setCellValue(values.get(0));
-								desp++;				
-							}
-							else if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
-							{
-								for(int o = 0; o < ogItem.getOptions().size(); o++)
-								{
-									if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
-									{
-										cell = row.createCell(desp);
-										cell.setCellValue("yes");
-										desp++;
-									}
-									else
-									{
-										cell = row.createCell(desp);
-										cell.setCellValue("no");
-										desp++;
-									}
-								}
-							} 
+							cell = row.createCell(desp);
+							if(optionGroups != null) cell.setCellValue(optionGroups.get(0).get(0));
+							desp++;
 						}
-
+						else
+						{
+							for(int og = 0; og < ogList.size(); og++)
+							{
+								OptionsGroup ogItem = ogList.get(og);
+								List<String> values = null;
+								if(optionGroups != null) values = optionGroups.get(ogItem.getId());
+								if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
+								{
+									cell = row.createCell(desp);
+									if(optionGroups != null && values != null && !values.isEmpty()) cell.setCellValue(values.get(0));							
+									desp++;				
+								}
+								else if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
+								{
+									for(int o = 0; o < ogItem.getOptions().size(); o++)
+									{
+										if(optionGroups != null)
+										{
+											if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+											{
+												cell = row.createCell(desp);
+												cell.setCellValue("yes");
+												desp++;
+											}
+											else
+											{
+												cell = row.createCell(desp);
+												cell.setCellValue("no");
+												desp++;
+											}
+										}
+										else
+										{
+											cell = row.createCell(desp);
+											desp++;
+										}
+									}
+								} 
+							}
+	
+						}
+						
 					}
-					
 				}
 				rowIndex++;
 			}

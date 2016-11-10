@@ -147,7 +147,7 @@ public class SurveyDB {
 		   			response.setPublicId(rs2.getString(DBFieldNames.s_PUBLIC_ID));
 		   			response.setAuthor(rs2.getInt(DBFieldNames.s_AUTHOR));
 		   			response.setDefaultLanguage(String.valueOf(rs2.getInt(DBFieldNames.s_DEFAULT_LANGUAGE)));
-		   			response.setObjetive(rs.getInt(DBFieldNames.s_OBJETIVE));
+		   			response.setObjetive(rs2.getInt(DBFieldNames.s_OBJETIVE));
 		   			
 		   			String contenttypeName = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 		   			String isoname = rs2.getString(DBFieldNames.s_LANGUAGE_ISONAME);
