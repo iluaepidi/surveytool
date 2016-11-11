@@ -58,7 +58,7 @@ public class ResponsesDB {
 	 * Selects
 	 */
 	      
-	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId)
+	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId, String language)
 	{
 		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>>();
 		
@@ -91,8 +91,19 @@ public class ResponsesDB {
 	   			{
 	   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
 	   			}
-	   			
-	   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(rs.getString(DBFieldNames.s_VALUE));
+	   			String value = rs.getString(DBFieldNames.s_VALUE);
+	   			if(value.isEmpty()) {
+	   				//System.out.println("Response " + rs.getString(DBFieldNames.s_RESPONSE_ID) + ": " + value);
+	   				OptionDB optionDB = new OptionDB();
+	   				int resourceId = optionDB.getResourceIdByOptionId(Integer.parseInt(rs.getString(DBFieldNames.s_OPTIONID)));
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+	   				ContentDB contentDB = new ContentDB();
+	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   				if(contents.isEmpty()) contents = contentDB.getContentByIdLanguageContentType(contentId, "en", DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   				value = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+	   			}
+	   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(value);
 	   			
 	   		}
 	   			   		

@@ -168,8 +168,8 @@ public class SurveysHandler {
 		File file = null;
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId);  
-		
+		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId, userLang);  
+		System.out.println("responses excel: " + responses.toString());
 		Survey survey = this.getSurveyDetail(surveyId, "");
 				
 		QuestionDB questionDB = new QuestionDB();
