@@ -6,6 +6,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
   var survey = {};
 
   survey.info = {};
+  survey.questionNumber = 0;
 
   survey.initialLoad = function(){
 	  
@@ -23,6 +24,12 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  		//var resJson = JSON.parse(response);
 			if(response.stored)
 			{
+				/*if(action != 'next') {
+					response.page.section.page.questions.forEach(function(q){
+						if(q.questionType != "bcontent") survey.questionNumber--;						
+					});
+					console.log("Num Questions sin bcontent: " + survey.questionNumber);
+				}*/
 				survey.info = response.page;
 			}
 	  		callback(false, response.stored);	  			       
@@ -34,6 +41,12 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  
 	  callback();
   };
+  
+  /*survey.increaseNumQuestion = function(question, callback){
+	  console.log("increaseNumQuestion: " + JSON.stringify(question));
+	  if(question.questionType != "bcontent") return survey.questionNumber++;
+	  else return 0;
+  };*/
 
   return survey;
 }]);

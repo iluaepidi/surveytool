@@ -10,7 +10,7 @@
     								  
    												<legend>
 
-													<span class="number">{{question.index}}</span> 
+													<span class="number">{{question.numQuestion}}</span> 
 													<span class="text">{{getJsonArrayElement(question.contents, "contentType", "title").text}}</span> 
 													<span class="mandatory" ng-show="question.mandatory">*<span class="sr-only"><%= lang.getContent("survey.question.label.mandatory") %></span></span>
 											

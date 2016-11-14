@@ -157,7 +157,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		System.out.println("[QuestionDB-getQuestionsJsonByPageId] "+DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID+", pageId:"+pageId);
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionJsonArray(rs, lang, langdefault, anonimousUser);
+	   		questions = this._getQuestionJsonArray(rs, lang, langdefault, anonimousUser, pageId);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -731,8 +731,37 @@ public class QuestionDB {
 		
 		return numQuestions;
 	}
-	
 
+	public int getNumQuestionPreviousPages(int pageId)
+	{
+		int numQuestions = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUM_QUESTIONS_PREVIOUS_PAGES);
+		   	pstm.setInt(1, pageId);
+	   		pstm.setInt(2, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			numQuestions = rs.getInt(DBFieldNames.s_NUM_QUESTION);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return numQuestions;
+	}
+	
 	public List<String> getQuestionSTypeBySurveyPublicIdAndPageId(int surveyId, int numPage)
 	{
 		List<String> response = new ArrayList<String>();
@@ -1070,13 +1099,14 @@ public class QuestionDB {
 	}
 	
 
-	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object anonimousUser)
+	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object anonimousUser, int pageId)
 	{
 		JSONArray questions = new JSONArray();		
 		
 		try
 		{
 			int numBodyContents = 0;
+			int numQuestion = this.getNumQuestionPreviousPages(pageId);
 			while(rs.next())
 	   		{
 				
@@ -1128,6 +1158,9 @@ public class QuestionDB {
 		   			else
 		   			{
 		   				question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+
+			   			numQuestion++;
+			   			question.put("numQuestion", numQuestion);			   			
 		   			}
 					
 		   			QuestionParameterDB questionParameterDB = new QuestionParameterDB();

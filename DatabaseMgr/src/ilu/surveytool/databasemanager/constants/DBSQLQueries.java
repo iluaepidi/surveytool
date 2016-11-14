@@ -294,6 +294,17 @@ public class DBSQLQueries {
 				+ "inner join responses r on r.idQuestion = q.idQuestion "
 				+ "inner join language l on l.idLanguage = cQ.idLanguage "
 				+ "where q.idQuestion = ? and cQ.idContentType=1 and l.isoName = ? order by r.idResponse";
+		public final static String s_SELECT_NUM_QUESTIONS_PREVIOUS_PAGES = "SELECT count(*) numQuestions from surveytool.forma f "
+				+ "inner join surveytool.section s on s.idForma = f.idForma "
+				+ "inner join surveytool.page p on p.idSection = s.idSection "
+				+ "inner join surveytool.questionbypage qbp on qbp.idPage = p.idPage "
+				+ "inner join surveytool.question q on qbp.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
+				+ "where f.idQuestionnaire = (SELECT idQuestionnaire from surveytool.forma ff "
+					+ "inner join surveytool.section ss on ss.idForma = ff.idForma "
+					+ "inner join surveytool.page pp on pp.idSection = ss.idSection "
+					+ "where pp.idPage = ?) "
+				+ "and p.numPage < (SELECT numPage from surveytool.page where idPage = ?) and qt.name != 'bcontent'";
 
 		
 		

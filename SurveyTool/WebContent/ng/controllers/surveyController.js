@@ -4,6 +4,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	
 	/** Initial load **/
 	$scope.currentSurvey = survey;
+	$scope.currentSurvey.questionNumber = 0;
 	$scope.warning = false;
 	$scope.mandatoryError = false;
 	$scope.error = true;
@@ -33,6 +34,7 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	});*/
 
 	/** Initial load **/
+	
 
 	$scope.getProgressPercent = function() {
 		//console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
@@ -231,6 +233,12 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		if(errorSurvey) $scope.surveyError = true;
 		else $scope.surveyError = false;
 	};
+	
+	/*$scope.getNextQuestionNumber = function(question) {
+		$scope.currentSurvey.increaseNumQuestion(question, function(err, res){
+			return res;
+		});
+	};*/
 
 	$scope.showMandatoryErrorMsg = function(question) {
 		var show = false;
