@@ -495,7 +495,8 @@
 #question-list button.down{
 	background:transparent url(../img/down.png) center center no-repeat;
 }
-#question-list .inactive{
+#question-list .inactive,
+.title-content.inactive{
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
