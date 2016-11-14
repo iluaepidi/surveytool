@@ -1,4 +1,4 @@
-var app = angular.module('survey', ['surveyService', 'youtube-embed', 'ngSanitize']);
+var app = angular.module('survey', ['surveyService', 'youtube-embed', 'ngSanitize', 'monospaced.mousewheel']);
 
 app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'survey', function($scope, $http, $window, $filter, survey) {
 	
@@ -281,6 +281,20 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		$scope.questionIndex = qIndex;
 		console.log("index question: " + $scope.questionIndex);
 	};
+	
+	//mousewheel
+    $scope.setWheelIndexQuestion =  function(event, delta, deltaX, deltaY){
+        //console.log('event: ' + event + ', delta: ' + delta + ', deltaX: ' + deltaX + ', deltaY: ' + deltaY);
+        if(delta == -1){
+        	if($scope.questionIndex < $scope.currentSurvey.info.section.page.questions.length)
+        	$scope.questionIndex = $scope.questionIndex + 1;
+        }
+        if(delta == 1){
+        	if($scope.questionIndex > 1){
+        		$scope.questionIndex = $scope.questionIndex - 1;
+        	}
+        }
+      };
 }]);
 
 /*app.directive('decimalLimit',function(){
