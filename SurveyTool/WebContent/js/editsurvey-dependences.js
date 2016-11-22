@@ -486,6 +486,7 @@ $(function() {
 		$("#removeElemId").val(questionIndex + '/' + itemindex);
 		$("#removeElemService").val('QCService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
 	$('.section-pages').on("rmvNoConfirm", "#remove-dependence", function(e){

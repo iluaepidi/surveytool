@@ -11,7 +11,7 @@
    												<div class="msg-error" ng-show="showMandatoryErrorMsg(question)">
 													<div class="required">
 														<p class="msg-title"><%= lang.getContent("survey.question.error.mandatory") %></p>
-														<p><%= lang.getContent("survey.question.error.comment.mandatory") %></p>
+														<p role="alert"><span class="visuallyHidden"><%= lang.getContent("general.question") %> {{question.numQuestion}} <%= lang.getContent("msg.error.mandatory") %>. </span> <%= lang.getContent("survey.question.error.comment.mandatory") %></p>
 													</div>
 												</div>		
 <%

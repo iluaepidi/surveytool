@@ -38,9 +38,19 @@
   				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
 				%>
 				
+				<script type="text/javascript">
+				hideText = "<%= lang.getContent("general.hide") %>";
+				displayText = "<%= lang.getContent("general.display") %>";
+				sectionText = "<%= lang.getContent("general.section") %>";
+				pageText = "<%= lang.getContent("general.page") %>";
+				questionText = "<%= lang.getContent("general.question") %>";
+				surveyInfoText = "<%= lang.getContent("general.survey_info") %>";
+				
+				console.log("hideText: " + hideText);
+				</script>
 				
 	  				<div id="questions">
-	  					<div class="browser-left">Hello</div>	  						  		
+	  					<div class="browser-left"></div>	  						  		
 	  					<div class="edit-content-center">
 	  						<div class="edit-survey-head">
 		  						<div class="survey-preview">
@@ -49,7 +59,7 @@
 		  							
 		  						<div class="survey-language" id="survey-language">
 		  							<form class="" id="survey-language-form">
-		  								<label for="survey-language-version" class="" ><i class="fa fa-language fa-2x"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
+		  								<label for="survey-language-version" class="" ><i class="fa fa-language fa-2x" aria-hidden="true"></i><span><%= lang.getContent("survey.edit.label.lang_version") %></span></label>
 										<select class="form-control-small" id="survey-language-version">
 											<%
 					                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {
@@ -105,7 +115,7 @@
 	  						
 		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">
-		  							<i class="fa fa-caret-right fa-2x"></i>
+		  							<i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
 		  						</button>
 
 		  						<div class="widthTitleSurveyCollapsed" id="survey-div-title">
@@ -140,7 +150,7 @@
 							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>" disabled />
 							     			
 							   		</div>
-							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x"></i></button>
+							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x" aria-hidden="true"></i></button>
 								</div> -->
 		  					</div>	
 		  					  					

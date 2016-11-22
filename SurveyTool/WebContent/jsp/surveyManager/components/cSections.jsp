@@ -20,7 +20,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 							<ul class="survey-sections" id="survey-sections">
 								
 			  					<!-- <div class="add-frame">
-		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x"></i></a>  							
+		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></a>  							
 		  						</div> -->
 <%
 							List<Section> sections = survey.getSections();
@@ -36,7 +36,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 								    								
 								<li class="panel-section" id="panel-section1" scid="<%= section.getSectionId() %>">
 									<div class="panel-heading">	
-										<button id="panel-heading-display" class="section-head btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_section") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
+										<button id="panel-heading-display" class="section-head btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_section") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
 										<h3 class="panel-title">
 										<div class="col-sm-12">
 										 <div class="form-group" style="margin:0px;">
@@ -49,7 +49,7 @@ Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 										</h3>
 										<!--  <div class="panel-section-buttons right">
 											<% //if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-												<button class="btn-transparent" id="removeSection" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x"></i></button>
+												<button class="btn-transparent" id="removeSection" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 											<% //} %>
 										</div>-->
 										<!-- <h3 class="panel-title"><%= lang.getContent("survey.edit.section.title") %></h3> -->

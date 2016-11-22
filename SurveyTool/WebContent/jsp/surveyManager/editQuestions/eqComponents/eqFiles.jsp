@@ -14,7 +14,7 @@ List<Resource> resources = question.getResources();
 %>
 <div class="row" type="global" id="multimediaFrameQuestion">
 	
-	<div id="div_files">
+	<div class="div_files" id="div_files">
 		<div class="question-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
 			<label><%= lang.getContent("question.edit.files.title") %></label>
 		
@@ -35,7 +35,7 @@ List<Resource> resources = question.getResources();
 		</div>
 		<div>
 			<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-			<button class="btn btn-primary btn-sm active" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o"></i><span><%= lang.getContent("button.add_file") %></span></button>
+			<button class="btn btn-primary btn-sm active btn-question-import-file" id="btn-question-import-file" active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o" aria-hidden="true"></i><span><%= lang.getContent("button.add_file") %></span></button>
 			<% } %>
 		</div>
 	</div>

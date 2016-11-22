@@ -16,13 +16,13 @@ request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
 
 
 										<li class="page" id="page" pid="<%= pag.getPageId() %>" index="<%= pag.getNumPage() %>">
-											<div class="page-head row">
-												<div class="col-md-3">
-													<button id="page-display-<%= pag.getPageId() %>" class="page-display btn-transparent panel-heading-display-arrow display-page-arrow"><span class="visuallyhidden">Hide page: Page <%= pag.getNumPage() %></span><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
+											<div class="page-head row nomargin">
+												<div class="col-sm-4 col-xs-2">
+													<button id="page-display-<%= pag.getPageId() %>" class="page-display btn-transparent panel-heading-display-arrow display-page-arrow" aria-label="<%= lang.getContent("general.hide") + ' ' + lang.getContent("general.page") + ' ' + pag.getNumPage()  %>"><span class="visuallyhidden">Hide page: Page <%= pag.getNumPage() %></span><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
 												</div>
-												<h4 class="col-md-6"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></h4>
+												<h4 class="col-sm-4 col-xs-4" tabindex="-1"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></h4>
 												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>	
-												<div class="col-md-3 right">
+												<div class="col-sm-4 col-xs-6 right">
 													<% if(pag.getNumPage() > 1) { %>
 													<button class="remove-page-break">
 														<i class="fa fa-trash" aria-hidden="true"></i>

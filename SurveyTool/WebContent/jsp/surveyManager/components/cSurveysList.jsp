@@ -19,7 +19,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 		  					<div class="user-panel-surveys">
 		  						
 		  						<div class="surveys-create-button">
-		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newSurveyModal"><%= lang.getContent("button.create_new") %></button>
+		  							<button type="button" class="btn btn-primary btn-icon-text" data-toggle="modal" data-target="#newSurveyModal"><i class="fa fa-plus" aria-hidden="true"></i> <%= lang.getContent("button.create_new") %></button>
 		  						</div>
 		  						
 		  						
@@ -77,16 +77,11 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 											</td>
 											<td>
 												<ul class="row">
-													<!-- <li class="col-sm-3 center"><a href="#" title="clone survey"><i class="fa fa-clone fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="settings"><i class="fa fa-cogs fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><a href="#" title="download"><i class="fa fa-download fa-2x"></i></a></li>
-								  					<li class="col-sm-3 center"><a href="#" title="pause survey"><i class="fa fa-pause-circle-o fa-2x"></i></a></li> -->
-								  					<li class="col-sm-3 center"><i class="fa fa-clone fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><a href="SurveyStatisticServlet?surveyid=<%=survey.getSurveyId()%>" aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-								  					<li class="col-sm-2 center"><i class="fa fa-cogs fa-2x"></i></li>
-								  					<li class="col-sm-2 center"><a href="<%= downloadServiceUrl %>" title="download"><i class="fa fa-download fa-2x"></i></a></li>
-								  					<li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x"></i></li>
+								  					<!-- <li class="col-sm-3 center"><i class="fa fa-clone fa-2x" aria-hidden="true"></i></li> -->
+								  					<li class="col-sm-6 center"><a href="SurveyStatisticServlet?surveyid=<%=survey.getSurveyId()%>"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i><span class="visuallyhidden"><%= lang.getContent("survey.edit.tab.go_statistics") %></span></a></li>
+								  					<!-- <li class="col-sm-2 center"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></li> -->
+								  					<li class="col-sm-6 center"><a href="<%= downloadServiceUrl %>"><i class="fa fa-download fa-2x" aria-hidden="true"></i><span class="visuallyhidden"><%= lang.getContent("survey_manager.tab.surveys.descargar") %></span></a></li>
+								  					<!-- <li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i></li> -->
 												</ul>
 											</td>
 										

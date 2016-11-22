@@ -35,6 +35,7 @@ body {margin-bottom: 135px !important;}
 .nav-tabs-right li {float: right !important;
 	margin-bottom: -2px !important;}
 .nav-tabs-right li a {border-width: 2px !important;}
+.nav-tabs-right li a:hover {border: 2px solid !important;}
 .content-box-tabs {border: 2px solid #ddd;
 	min-height: 600px;}
 h2 {width: auto;
@@ -44,6 +45,7 @@ h2 {width: auto;
 	margin-bottom: 5px;
 	border-bottom: 1px solid #ccc;}
 .btn-close-aspa {color:#B60000}
+.btn-icon-text i {margin-right: 5px;}
 .close-frame {text-align: right;
     margin-top: -18px;
     margin-right: -7px;}
@@ -89,7 +91,15 @@ h2 {width: auto;
 	color: #151C25 !important;
 	border-color: #151C25 !important;
 }
-
+.remove-frame-buttons > .btn-success {background-color: #367B36;
+	border-color: #285C28;}
+.remove-frame-buttons > .btn-success:hover,
+.remove-frame-buttons > .btn-success:focus {background-color: #285C28 !important;}
+.remove-frame-buttons > .btn-danger {background-color: #D43F3A;
+    border-color: #AB2925}
+.remove-frame-buttons > .btn-danger:hover,
+.remove-frame-buttons > .btn-danger:focus {background-color: #AB2925;
+    border-color: #AB2925;}
 .btn-transparent {background: transparent;
     border: 2px solid transparent !important;
 	border-radius: 5px;
@@ -151,19 +161,21 @@ input[type="number"] {
 a:focus {
 	border: 2px solid !important;
 	border-radius: 5px;
-	padding: 2px;}
-
+	padding: 2px;
+	outline: 0 none !important;
+	display: inline-block;}
+/*
 :focus {border: 2px solid !important;
-	/*border-color: rgba(38, 92, 137, 0.8) !important;*/
 	border-color: #23527C !important; 
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.6) !important;
-  	/*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(38, 92, 137, 0.6) !important;*/
   	outline: 0 none !important;
   	display: inline-block;
 }
-
+*/
+button:focus,
 textarea:focus,
 select:focus,
+input[type="checkbox"]:focus,
 input[type="radio"]:focus,
 input[type="button"]:focus,
 input[type="submit"]:focus,
@@ -268,7 +280,7 @@ textarea {resize:none;
 
 .page-header {margin: 0px 0 20px;
     border-bottom: 3px solid #ccc !important;
-    padding-left: 4% !important;
+    padding-left: 4%;
 }
 h1 {float: left;
 	/*width: 50%;*/
@@ -291,9 +303,14 @@ h1 span{font-size: 0.6em;
 .header-buttons a {margin-left: 35px;}
 button span {margin-left: 5px;}
 
-.paddingUserZone{
+.userZone{
 	padding: 40px 15px !important;
+	display: inline-block;
 }
+.userZone:hover,
+.userZone:focus {border: 2px solid;
+    background-color: #23527c !important;
+    color: #fff;}
 .user-profile-list {margin-right: 25px !important;}
 /*----------------------------------------------*\
 		$BODY_CONTENT
@@ -304,12 +321,14 @@ button span {margin-left: 5px;}
 	padding-bottom: 20px;}
 .title-content-no-underline {margin: 0 4%;}
 .content {margin: 10px 4% 0px;}
-.row-menu {width: 70%;
+.row-menu {/*width: 70%;
 	left: 15%;
-	position: relative;}
+	position: relative;*/}
 .main-container ul li {list-style: none;}
 .user-panel-menu {min-height: 388px;
-	padding-top: 7%;}
+	padding-top: 7%;
+	width: 70%;
+    margin: 0 auto;}
 .user-panel-menu i {margin-bottom: 10px;
 	font-size: 8em;}
 .user-panel-menu ul li {margin-bottom: 40px;}
@@ -324,9 +343,9 @@ footer {margin-top: 10px;
 	width: 100%;
 	position: absolute;
 	bottom: 0;}
-.row-footer {width: 70%;
+.row-footer {/*width: 70%;
 	left: 15%;
-	position: relative;
+	position: relative;*/
 	margin:10px 10px;}
 .footer-logos {color:#555;
 	text-align: center;
@@ -338,6 +357,8 @@ footer {margin-top: 10px;
 .footer-logo-content img {width: 60px;
     float: left;
     margin-left: 20px;}
+.footer-links {width: 70%;
+    margin: 0 auto;}
 .footer-links > ul > li > a {border: 2px solid #fff;
     padding: 2px;
     display: inline-block;
@@ -352,11 +373,12 @@ footer {margin-top: 10px;
     margin: 0 auto;}
 .login-content-text {width: 70%;
     margin: 30px auto 0;
-    padding: 0 5%;}
+    padding: 0 5%;
+    padding-left: 70px !important;}
 .login-content-text ul li{list-style: initial !important;}
 .login-frame {width: 30%;
     margin-top: 30px;}
-.login-frame form {min-width: 250px;
+.login-frame form {/*min-width: 250px;*/
     width: 85%;
     border: 1px solid #e0e0e0;
     background-color: #fbfbfb;
@@ -380,7 +402,8 @@ footer {margin-top: 10px;
 		$USER_PANEL_SURVEY
 \*----------------------------------------------*/
 
-.nav-tabs-survey-manager {border-bottom: 2px solid #6e6e6e !important;}
+.nav-tabs-survey-manager {border-bottom: none !important;
+	display: inline-flex;}
 .nav-tabs-survey-manager li {min-width: 85px;
     text-align: center;
     width: 10%;}
@@ -403,10 +426,11 @@ footer {margin-top: 10px;
     border-bottom-color: transparent !important;
     color: #444 !important;}
 .gray-padding{height: 20px;
-	background-color: #eee}
+	background-color: #eee;
+	border-top: 2px solid #6e6e6e !important;}
 .user-panel-surveys {min-height: 388px;
-	margin: 0 12%;
-	/*padding-top: 7%;*/}
+    width: 70%;
+    margin: 0 auto;}
 .surveys-create-button {text-align: right;
 	padding: 20px 0;}
 .surveys-table {/*text-align: center;*/}
@@ -552,7 +576,8 @@ footer {margin-top: 10px;
 .edit-with-browser .panel-section {width: 90%;}
 .browser-left {display: none;} 
 .nav-tab-edit {border-color: #007A00 !important;
-	border-bottom: none !important;}
+	border-bottom: none !important;
+	display: inline-flex;}
 .nav-tab-edit .active a {border-left-color: #337ab7 !important;
 	border-right-color: #337ab7 !important;
 	border-top-color: #337ab7 !important;}
@@ -963,6 +988,10 @@ footer {margin-top: 10px;
 	float: left;
 	width: 92%;
 }
+.widthTitleSurveyExtended{
+	float: left;
+	width: 42%;	
+}
 
 .dependences-frame {position:relative;
 	padding: 10px 0 25px;}
@@ -1051,12 +1080,12 @@ footer {margin-top: 10px;
     color: #000 !important;
     background-color: #8fbce0 !important;
 }
-
+.container {width: 100% !important;}
 .wellBContent {
     min-height: 20px;
-    width: 65% !important;
+    width: 100% !important;
     padding: 19px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     background-color: #fff;
     border: 1px solid #4A4A4A;
     border-radius: 4px;
@@ -1295,7 +1324,8 @@ footer {margin-top: 10px;
 .legendSurvey{display:inline-block;
 	vertical-align: top !important;
 	margin-top: 50px !important;
-	margin-bottom: 50px !important;}
+	margin-bottom: 50px !important;
+	padding-left: 15px;}
 .graph-title {margin-up: 0;
     margin-down: 0;
     border-bottom-color: #444;
@@ -1455,6 +1485,9 @@ footer {margin-top: 10px;
 .nomargin{
 	margin:0px !important;
 }
+.nopadding{
+	padding: 0px !important;
+}
 .textalignleft{
 	text-align: left !important;
 }
@@ -1561,6 +1594,9 @@ footer {margin-top: 10px;
 	padding-right: 5% !important;
 }
 
+.quotaresultprogressdiv > .progress-bar-success {background-color: #428542;}
+.quotaresultprogressdiv > .progress-bar-warning {background-color: #A25200;}
+
 /*----------------------------------------------*\
 		$Survey
 \*----------------------------------------------*/
@@ -1570,3 +1606,10 @@ footer {margin-top: 10px;
     display: inline-block;}
 .form-question-mandatory {float:right;
 	padding: 0px 5px;}
+.editorExitHelp {display: inline-block;
+    width: 100%;
+    text-align: right;}
+.editor-buttons a:focus,
+.editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
+	padding: 6px 12px;
+    border-radius: 4px;}

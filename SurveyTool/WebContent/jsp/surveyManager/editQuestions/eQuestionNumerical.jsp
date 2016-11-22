@@ -23,7 +23,7 @@
 							  					<div class="question-frame">
 							  						<h6>Options</h6>
 							  						<div class="row">
-							  							<div class="col-md-4">
+							  							<div class="col-sm-4">
 								  							<label for="type-question-<%= question.getIndex() %>">Type</label>
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<option value="tx">Long Text</option>
@@ -49,13 +49,13 @@
 							  							String minValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MINVALUE);
 							  							String maxValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MAXVALUE);
 							  							%>
-														<div class="col-md-8">	
+														<div class="col-sm-8">	
 															 <div class="row">
-								  								<div class="col-md-6">
+								  								<div class="col-sm-6">
 								  									<label for="min-value-<%= question.getIndex() %>">Min value</label>																															  							
 								  									<textarea class="form-control" id="survey-minValue" rows="1" placeholder="<%= lang.getContent("placeholder.type_minValue") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= minValue %></textarea>
 								  							 	</div>
-								  								<div class="col-md-6"> 
+								  								<div class="col-sm-6"> 
 								  									<label for="max-value-<%= question.getIndex() %>">Max value</label>																															  							
 								  									<textarea class="form-control" id="survey-maxValue" rows="1" placeholder="<%= lang.getContent("placeholder.type_maxValue") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000" onkeypress="return isNumber(event)"><%= maxValue %></textarea>
 								  								 </div>

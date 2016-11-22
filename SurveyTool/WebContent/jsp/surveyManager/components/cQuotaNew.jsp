@@ -58,7 +58,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										
 				  					</div>
 				  					<div class="panel-section-buttons right" class="margintop10">
-										<button class="btn-transparent btn-remove quotaremovebtn" id="removeQuota" aria-label="Remove question: question typo formField"><i class="fa fa-trash fa-2x"></i></button>
+										<button class="btn-transparent btn-remove quotaremovebtn" id="removeQuota" aria-label="Remove question: question typo formField"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 									</div>					
 									</li>
 		  					</div>	

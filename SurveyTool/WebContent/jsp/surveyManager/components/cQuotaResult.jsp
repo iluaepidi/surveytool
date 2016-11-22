@@ -76,8 +76,8 @@ if(quota.getMaxResponses()>0 && quota.getValueProgress()>=quota.getMaxResponses(
 
                 		<div class="form-group col-md-12 nomargin" id="optionquota">
                 			<fieldset class="form-group col-md-12 with100pc nomargin">
-                				<legend class="col-md-4 quotaresultoption"><%=quota.getNameOption()%></legend>
-                				<div class="form-group col-md-8 nomargin">
+                				<legend class="col-sm-4 col-xs-4 quotaresultoption"><%=quota.getNameOption()%></legend>
+                				<div class="form-group col-sm-8 col-xs-8 nomargin">
                 					<%if(quota.getMaxResponses()>0){ %>
                 					<div class="with100pc">
                 						<div class="quotaresultoptiondiv1"><span class="quotaresultoptionspan1"><%= lang.getContent("quota.result.max")%> <%=quota.getMaxResponses()%></span> <span class="glyphicon glyphicon-triangle-bottom quotaresultoptionspanmax" aria-hidden="true"></span></div>

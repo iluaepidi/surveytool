@@ -30,7 +30,7 @@
 							  					<div class="question-frame">
 							  						<h6><%= lang.getContent("survey.type.options") %></h6>
 							  						<div class="row">
-							  							<div class="col-md-4">
+							  							<div class="col-sm-4">
 								  							<label for="type-question-<%= question.getIndex() %>"><%= lang.getContent("survey.type.type") %></label>
 								  							<select class="form-control" id="type-question-<%= question.getIndex() %>">
 															  	<option value="ls" selected><%= lang.getContent("survey.type.text") %></option>
@@ -40,7 +40,7 @@
 																<option value="ma">Matrix</option> -->
 															</select>
 														</div>
-														<div class="col-md-8">
+														<div class="col-sm-8">
 															 <label for="example-<%= question.getIndex() %>"><%= lang.getContent("survey.type.example") %> <%= title %></label>
 														     <textarea class="form-control" id="example-<%= question.getIndex() %>" rows="5" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
 														</div>													 

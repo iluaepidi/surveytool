@@ -7,12 +7,12 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 
 	  			<!-- Modal -->
 				
-				<div class="modal fade survey-win" id="newPollModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade survey-win" id="newPollModal" tabindex="-1" role="dialog" aria-labelledby="newPollTitle">
 					<div class="modal-dialog poll-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="<%= lang.getContent("button.close") %>"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("poll.new.title") %></h2> 
+				    			<h2 class="panel-title" id="newPollTitle"><%= lang.getContent("poll.new.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 			    				<form method="POST" id="newPollForm" class="form-horizontal">
@@ -59,7 +59,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 								     		<legend><%= lang.getContent("question.edit.legend.options") %></legend>
 								     		<ul class="option-list" id="option-list" otype="radio">							  						
 					  							<li class="option-item" id="option-item">
-				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 				  									<div class="circle-info circle-grey fleft">1</div>
 				  									<div class="col-sm-8">
 				  										<div class="form-group" style="margin:0px;">
@@ -69,14 +69,14 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				  										</div>
 				  									</div>
 				  									<div class="option-icons fleft">
-					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-					  									<button class="btn btn-transparent fleft red" id="remove-option-poll" aria-label="<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
+					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+					  									<button class="btn btn-transparent fleft red" id="remove-option-poll" aria-label="<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 					  								</div>
 					  							</li>
 					  							
 					  							<li class="option-item" id="option-item">
-				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+				  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 				  									<div class="circle-info circle-grey fleft">2</div>
 				  									<div class="col-sm-8">
 				  										<div class="form-group" style="margin:0px;">
@@ -86,14 +86,14 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				  										</div>
 				  									</div>
 				  									<div class="option-icons fleft">
-					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-					  									<button class="btn btn-transparent fleft red" id="remove-option-poll" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
+					  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+					  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+					  									<button class="btn btn-transparent fleft red" id="remove-option-poll" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 					  								</div>
 					  							</li>
 					  						
 					  							<li class="center" id="li-add-option-poll">
-					  								<button class="btn btn-primary btn-sm active" id="btn-add-option-poll" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_option") %></span></button>
+					  								<button class="btn btn-primary btn-sm active" id="btn-add-option-poll" ><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option") %></span></button>
 					  							</li>
 					  						</ul>								     		
 								     	</fieldset>

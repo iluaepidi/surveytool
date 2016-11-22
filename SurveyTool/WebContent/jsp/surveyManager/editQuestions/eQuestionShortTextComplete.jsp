@@ -20,11 +20,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	
 	<div class="panel-body">									
 		<div class="question-options">
-			<div class="col-md-1">
+			<div class="col-sm-1 col-xs-2">
 				<label for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 			</div>
 				
-			<div class="col-md-4">
+			<div class="col-sm-4 col-xs-6">
 				<select class="form-control" id="type-question-<%= question.getIndex() %>">
 					<option value="f" selected><%=lang.getContent("question.new.formfield")%></option>
 				    <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
@@ -38,10 +38,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				</select>
 			</div>
 			
-			<div class="right col-md-7">
+			<div class="right col-sm-7 col-xs-4">
 				<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
-				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+				<button class="btn btn-question-head btn-sm active" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red" aria-hidden="true"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 				<%} %>
 			</div>
 		</div>
@@ -155,13 +155,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							String text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 		  						%>
 		  							<li class="option-item" id="option-item">
-	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 	  									<div class="circle-info circle-grey fleft"><%= index %></div>
 	  									<input type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> <%= index %>"/>
 	  									<div class="option-icons fleft">
-		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x"></i></button>
+		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 		  								</div>
 		  							</li>
 		  						<%
@@ -175,13 +175,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  								int index = i + 1;
 		  						%>
 		  							<li class="option-item" id="option-item">
-	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 	  									<div class="circle-info circle-grey fleft"><%= index %></div>
 	  									<input type="text" maxlength="10000" class="option-title form-control fleft" index="<%= index %>" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" aria-label="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>"/>
 	  									<div class="option-icons fleft">
-		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
+		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> <%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 		  								</div>
 		  							</li>
 		  							
@@ -192,7 +192,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  						
 		  							
 		  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
-		  								<button class="btn btn-primary btn-sm active" id="btn-add-option"><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_option") %></span></button>
+		  								<button class="btn btn-primary btn-sm active" id="btn-add-option"><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option") %></span></button>
 		  							</li>
 		  						</ul>
 		  					<%
@@ -205,31 +205,31 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  						<ul class="option-list" id="option-list" ogid="0" otype="radio">
 		  						
 		  							<li class="option-item" id="option-item">
-	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 	  									<div class="circle-info circle-grey fleft">1</div>
 	  									<input type="text" maxlength="10000" class="option-title form-control fleft" index="1" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 1" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 1"/>
 	  									<div class="option-icons fleft">
-		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x"></i></button>
+		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="r<%= lang.getContent("button.remove_option") %> 1"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 		  								</div>
 		  							</li>
 		  							
 		  							<li class="option-item" id="option-item">
-	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> -->
+	  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
 	  									<div class="circle-info circle-grey fleft">2</div>
 	  									<input type="text" maxlength="10000" class="option-title form-control fleft" index="2" oid="0" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> 2" aria-label="<%= lang.getContent("question.edit.aria_label.option") %> 2"/>
 	  									<div class="option-icons fleft">
-		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x"></i></button>
-		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> -->
-		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x"></i></button>
+		  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+		  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+		  									<button class="btn btn-transparent fleft red" id="remove-option" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 		  								</div>
 		  							</li>
 		  							
 		  							
 		  							
 		  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">
-		  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square"></i><span><%= lang.getContent("button.add_option") %></span></button>
+		  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option") %></span></button>
 		  							</li>
 		  						</ul>
 		  					<%

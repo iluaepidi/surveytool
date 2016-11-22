@@ -15,12 +15,12 @@ String titleQuestion="";
 %>	
 				<!-- Modal -->
 				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-				<div class="modal fade survey-win" id="newQuotaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade survey-win" id="newQuotaModal" tabindex="-1" role="dialog" aria-labelledby="newQuotaTitle">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("quota.add.new") %>"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("quota.add.new") %></h2> 
+				    			<h2 class="panel-title" id="newQuotaTitle"><%= lang.getContent("quota.add.new") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 				    			

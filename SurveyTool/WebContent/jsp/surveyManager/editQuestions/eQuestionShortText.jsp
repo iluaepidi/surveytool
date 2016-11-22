@@ -18,11 +18,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	
 	<div class="panel-body question-options">
 			
-			<div class="col-md-1">
+			<div class="col-sm-1 col-xs-2">
 				<label class="type-tittle" for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 			</div>
 				
-			<div class="col-md-4">	
+			<div class="col-sm-4 col-xs-6">	
 				<p class="question-type-aux"><%=lang.getContent("question.new.formfield")%></p>
 			</div>
 			<!--<div class="col-md-4">									
@@ -39,10 +39,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				</select>
 			</div>-->
 			
-			<div class="right col-md-7">
+			<div class="right col-sm-7 col-xs-4">
 				<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 				<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
-				<button class="btn btn-question-head btn-sm active mandatory-button" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+				<button class="btn btn-question-head btn-sm active mandatory-button" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red" aria-hidden="true"></i><span><%= lang.getContent("question.mandatory") %></span></button>
 				<%} %>
 			</div>
 		</div>

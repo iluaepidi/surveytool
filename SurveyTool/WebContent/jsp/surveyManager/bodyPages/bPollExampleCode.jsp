@@ -20,11 +20,13 @@
 				<div class="container-fluid">
 					<div class="title-content-no-underline">
 	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys&tab=poll"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("poll.preview.title") %></h2>
-	  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">		
-						  	<li role="presentation" class="statistic-tab" id="statistic-tab"><a href='<%= Address.s_SERVLET_POLL_STATISTICS + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>' aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x"></i></a></li>
-						  	<li role="presentation" class="share-tab active" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-users fa-2x"></i></a></li>
-						  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
-						</ul>	  					
+	  					<div class="right">
+		  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">
+							  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>" aria-label="<%= lang.getContent("survey.edit.tab.go_edit") %>" title="<%= lang.getContent("survey.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></li>
+							  	<li role="presentation" class="share-tab active" id="share-tab"><a href="#" title="<%= lang.getContent("survey.edit.tab.go_edit") %>"><i class="fa fa-users fa-2x" aria-hidden="true"></i></a></li>		
+							  	<li role="presentation" class="statistic-tab" id="statistic-tab"><a href='<%= Address.s_SERVLET_POLL_STATISTICS + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>' aria-label="<%= lang.getContent("survey.edit.tab.go_statistics") %>" title="<%= lang.getContent("survey.edit.tab.go_statistics") %>" id="tab-display-statistics"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>	  					
 	  				</div>
 	  				<div class="content-box-tabs edit-content">
 	  					<div class="code-poll-frame">

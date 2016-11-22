@@ -132,12 +132,13 @@ List<Option> o = sQ.getOptions();
 					</script>
 			  	</div>
 				<div class="legendSurvey in-block">
+					<h4>Resultados</h4>
 				  	<ul>
 				  	<%for(int i=0;i<labels.size();i++)
 					{
 						%>
 						<li>
-						  			<i class="fa fa-square <%= colors[i%9] %>"></i> <%= labels.get(i) %>: <%= values.get(i) %>%
+						  			<i class="fa fa-square <%= colors[i%9] %>" aria-hidden="true"></i> <%= labels.get(i) %>: <%= values.get(i) %>%
 						  		</li>
 						<%
 					}

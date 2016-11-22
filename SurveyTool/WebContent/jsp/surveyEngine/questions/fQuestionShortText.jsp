@@ -24,13 +24,13 @@
 														<div class="msg-error" ng-show="survey.decimal.$error.pattern">
 															<div class="error">
 																<p class="msg-title"><%= lang.getContent("survey.process.title.numFormat") %></p>
-																<p role="alert" ng-show="survey.decimal.$error.pattern"><%= lang.getContent("survey.process.desc.numFormat1") %> <span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'><%= lang.getContent("survey.process.desc.numFormat2") %> {{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.desc.numFormat3") %></span></p>
+																<p role="alert" ng-show="survey.decimal.$error.pattern"><span class="visuallyHidden"><%= lang.getContent("msg.error.error_in") %> <%= lang.getContent("general.question") %> {{question.numQuestion}}: </span><%= lang.getContent("survey.process.desc.numFormat1") %> <span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'><%= lang.getContent("survey.process.desc.numFormat2") %> {{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.desc.numFormat3") %></span></p>
 															</div>
 														</div>
 														<div class="msg-error" ng-show='isOutOfRange(question.response, getMinValue(getJsonArrayElement(question.parameters, "name", "minValue")), getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue")))'>
 															<div class="error">
 																<p class="msg-title"><%= lang.getContent("survey.process.title.numLimits") %></p>
-																<p role="alert" ng-show='isOutOfRange(question.response, getMinValue(getJsonArrayElement(question.parameters, "name", "minValue")), getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue")))'><%= lang.getContent("survey.process.desc.numLimits") %> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("survey.process.desc.numLimits.and") %> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}.</p>
+																<p role="alert" ng-show='isOutOfRange(question.response, getMinValue(getJsonArrayElement(question.parameters, "name", "minValue")), getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue")))'><span class="visuallyHidden"><%= lang.getContent("msg.error.error_in") %> <%= lang.getContent("general.question") %> {{question.numQuestion}}: </span><%= lang.getContent("survey.process.desc.numLimits") %> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("survey.process.desc.numLimits.and") %> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}.</p>
 															</div>
 														</div>
 							  						</div>

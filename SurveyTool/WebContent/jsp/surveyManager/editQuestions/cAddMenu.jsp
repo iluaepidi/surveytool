@@ -9,7 +9,7 @@ String pageId = request.getParameter("pageId");
 %>
 										<div class="add-menu-frame" id="add-menu-frame">
 				  							<div class="btn-add-element">
-				  								<button class="btn-transparent btn-add" aria-label="<%= lang.getContent("button.aria_label.add_content") %>"><i class="fa fa-plus-circle fa-2x"></i></button>
+				  								<button class="btn-transparent btn-add" aria-label="<%= lang.getContent("button.aria_label.add_content") %>" aria-expanded="false"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></button>
 				  							</div>
 				  							<div class="add-menu">
 				  								<div class="add-menu-points">...</div>

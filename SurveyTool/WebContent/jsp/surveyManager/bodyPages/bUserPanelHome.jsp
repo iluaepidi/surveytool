@@ -13,11 +13,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  				<div class="content">
 	  					<%= lang.getContent("user_panel.description") %>
 	  					<div class="user-panel-menu">
-		  					<ul class="row row-menu">
-		  						<li class="col-md-3 center"><a href="<%= Address.s_SERVLET_USER_PANEL_HOME + "?" + Parameter.s_UPOPTION + "=" + Address.s_BODY_SURVEYS %>"><i class="fa fa-list-alt fa-5x"></i><div><%= lang.getContent("user_panel.link.survey") %></div></a></li>
-		  						<li class="col-md-3 center"><i class="fa fa-users fa-5x" aria-label="User list disabled"></i><p><%= lang.getContent("user_panel.link.users") %></p></li>
-		  						<li class="col-md-3 center"><i class="fa fa-area-chart fa-5x" aria-label="Panel statistics disabled"></i><p><%= lang.getContent("user_panel.link.statistics") %></p></li>
-		  						<li class="col-md-3 center"><i class="fa fa-cogs fa-5x" aria-label="Panel settings disabled"></i><p><%= lang.getContent("user_panel.link.settings") %></p></li>
+		  					<ul class="row row-menu nopadding">
+		  						<li class="col-sm-3 col-xs-3 center"><a href="<%= Address.s_SERVLET_USER_PANEL_HOME + "?" + Parameter.s_UPOPTION + "=" + Address.s_BODY_SURVEYS %>"><i class="fa fa-list-alt fa-5x" aria-hidden="true"></i><div><%= lang.getContent("user_panel.link.survey") %></div></a></li>
+		  						<li class="col-sm-3 col-xs-3 center"><i class="fa fa-users fa-5x" aria-hidden="true"></i><p><%= lang.getContent("user_panel.link.users") %></p></li>
+		  						<li class="col-sm-3 col-xs-3 center"><i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><p><%= lang.getContent("user_panel.link.statistics") %></p></li>
+		  						<li class="col-sm-3 col-xs-3 center"><i class="fa fa-cogs fa-5x" aria-hidden="true"></i><p><%= lang.getContent("user_panel.link.settings") %></p></li>
 		  						<!-- <li class="col-md-3 center"><a href="#"><i class="fa fa-users fa-5x"></i><div>User list</div></a></li>
 		  						<li class="col-md-3 center"><a href="#"><i class="fa fa-area-chart fa-5x"></i><div>Panel statistics</div></a></li>
 		  						<li class="col-md-3 center"><a href="#"><i class="fa fa-cogs fa-5x"></i><div>Panel settings</div></a></li> -->

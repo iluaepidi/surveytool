@@ -18,8 +18,8 @@
 						  					
 											<div class="panel-heading">	
 
-												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x"></i></button>				
-												<h5 class="panel-title">
+												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
+												<h5 class="panel-title" tabindex="-1">
 													<div class="col-sm-12">
 														<div class="form-group" style="margin:0px;">
 															<input type="text" class="survey-section-title-unselected survey-question-title" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>

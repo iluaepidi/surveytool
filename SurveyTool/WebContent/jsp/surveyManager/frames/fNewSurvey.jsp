@@ -17,12 +17,12 @@ HttpSession sessions = request.getSession(false);
 
 	  			<!-- Modal -->
 			
-				<div class="modal fade survey-win" id="newSurveyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade survey-win" id="newSurveyModal" tabindex="-1" role="dialog" aria-labelledby="newSurveyTitle">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("survey.new.title") %>"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("survey.new.title") %></h2> 
+				    			<h2 class="panel-title" id="newSurveyTitle"><%= lang.getContent("survey.new.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 			    				<form action="<%= Address.s_SERVLET_CREATE_SURVEY_SERVLET %>" method="POST" class="form-horizontal" id="formcreatenewsurvey">

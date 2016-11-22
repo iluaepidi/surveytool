@@ -7,12 +7,12 @@
 				%>
 	  			
 				<!-- Modal -->
-				<div class="modal fade remove-win" id="accesibilityHelpWin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade remove-win" id="accesibilityHelpWin" tabindex="-1" role="dialog" aria-labelledby="accessibilityEditorTitle">
 					<div class="modal-dialog accesibility-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("accesibility.window.title") %></h2> 
+				    			<h2 class="panel-title" id="accessibilityEditorTitle"><%= lang.getContent("accesibility.window.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 				    			<div class="survey-frame accesibility" id="import-multimedia-file">

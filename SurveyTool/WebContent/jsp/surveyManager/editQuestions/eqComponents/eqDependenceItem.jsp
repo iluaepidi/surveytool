@@ -24,7 +24,7 @@
 																}
 							  									%>
 							  										<fieldset id="fieldset-dependence">
-							  											<legend class="visuallyhidden"><%= index %>º <%= lang.getContent("question.edit.dependence.legend") %> <%= title %></legend>
+							  											<legend class="visuallyhidden" tabindex="-1"><%= index %>º <%= lang.getContent("question.edit.dependence.legend") %> <%= title %></legend>
 								  										<!--<label for="dependence-action-<%= index %>" class="dependence-action-label visuallyhidden"><%= lang.getContent("question.edit.dependence.action.label") %></label>
 								  										<select id="dependence-action-<%= index %>" class="form-control dependence-action">
 								  											<option value="show" selected><%= lang.getContent("question.edit.dependence.action.option.show") %></option>
@@ -58,7 +58,7 @@
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.option.label_help_hidden") %>)</span>
 								  										</label>
 								  										
-								  										<div class="form-group"  style="margin:0px !important;">
+								  										<div class="form-group select-dependence-option"  style="margin:0px !important;">
 				    														<select id="dependence-option-<%= index %>" class="form-control dependence-option">
 								  												<option value="none" class="default-option" selected><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
 								  											</select>
@@ -68,7 +68,7 @@
 								  										
 								  										<div class="option-icons fright">
 							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= index %></label>
-							  												<button class="btn btn-transparent fright red trash" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= index %>"><i class="fa fa-trash fa-2x"></i></button>
+							  												<button class="btn btn-transparent fright red trash" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  											</div>
 								  									</fieldset>
 							  									</li>

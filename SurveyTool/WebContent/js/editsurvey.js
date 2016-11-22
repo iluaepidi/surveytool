@@ -18,6 +18,8 @@ var placeholderBContent = "";
 var accesibilityTextItem = "";
 var accesibilityTextColumn = "";
 var accesibilityTextOption = "";
+var modalFocus = null;
+var keyBuffer = {};
 
 var phOption = "";
 var phItem = "";
@@ -96,6 +98,7 @@ $(function() {
 					var question = pageItems.find('li.panel-question').last()
 					//console.log("Question created: " + pageItems.find('li.panel-question').last().attr('index'));
 					question.find('input.survey-question-title').trigger("createQuestionJson", [request.qtype, request.pageid, request.qstatement, question.attr('qid'), question.attr('index')]);
+					modalFocus = question.find("h5.panel-title");
 				}
 			});
 			console.log("after post");
@@ -114,7 +117,8 @@ $(function() {
 	
 	$('.survey-sections').on("click", '.btn-question', function(){
 		currentElement = $(this).closest('li.page');
-		$("#newQuestionModal").modal("show");
+		$("#newQuestionModal").modal("show");		
+		modalFocus = $(this);
 	});
 	
 	$('.survey-sections').on("click", ".btn-page-break", function(){
@@ -212,7 +216,7 @@ $(function() {
 	
 	$('.survey-sections').on("click", '#editFile', function(){
 		currentElement = JSON.parse($(this).attr("data-image"));
-		currentAddNode = $(this).closest('li.option-item').find('input#option');
+		currentAddNode = $(this).closest('li.option-item').find('input.option');
 		console.log("editfile opening... " + JSON.stringify(currentElement));
 		$("#updateFile").attr("rid", currentElement.rId);
 		if(currentElement.rType === 'image')
@@ -238,6 +242,8 @@ $(function() {
 		}		
 		$("#rTitle").val(currentElement.tittle);				
 		$("#updateFile").modal("show");
+		
+		modalFocus = $(this);
 	});
 	
 	$('#page-items').on("keyup", "#option-list #option-item input", function(e){
@@ -305,7 +311,7 @@ $(function() {
 						   currentNode.closest('ul').attr('ogid', json.ogid);
 					   }
 					   
-					   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+					   currentNode.closest('li').find('.remove-option').attr('aria-label', 'Remove option: ' + req.text);
 					   
 					   currentNode.trigger("goto");
 					   currentNode.trigger("setJson");
@@ -321,7 +327,7 @@ $(function() {
 		}
 		else if ($(this).attr('oid')>0){
 			if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
-				$(this).closest('li.option-item').find("#remove-option").trigger("click");
+				$(this).closest('li.option-item').find(".remove-option").trigger("click");
 				console.log("currentText: " + currentText);
 				if(currentText != "")
 				{
@@ -362,7 +368,7 @@ $(function() {
 							   currentNode.closest('ul').attr('ogid', json.ogid);
 						   }
 						   
-						   currentNode.closest('li').find('#remove-option').attr('aria-label', 'Remove option: ' + req.text);
+						   currentNode.closest('li').find('.remove-option').attr('aria-label', 'Remove option: ' + req.text);
 						   
 						   currentNode.trigger("goto");
 						   currentNode.trigger("setJson");
@@ -458,7 +464,7 @@ $(function() {
 						   currentNode.attr('oid', json.oid);
 					   }
 					   
-					   currentNode.closest('li').find('#remove-optionmatrix').attr('aria-label', 'Remove option: ' + req.text);
+					   currentNode.closest('li').find('.remove-optionmatrix').attr('aria-label', 'Remove option: ' + req.text);
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -470,7 +476,7 @@ $(function() {
 			});
 		}
 		else if($(this).attr('oid')>0){
-			$(this).closest('li[id=optionmatrix-item]').find("#remove-optionmatrix").trigger("click");
+			$(this).closest('li[id=optionmatrix-item]').find(".remove-optionmatrix").trigger("click");
 		}
 		
 	});
@@ -511,7 +517,7 @@ $(function() {
 						   currentNode.attr('ogid', json.ogid);						   
 					   }
 					   
-					   currentNode.closest('li').find('#remove-optionsgroupmatrix').attr('aria-label', 'Remove option: ' + req.text);
+					   currentNode.closest('li').find('.remove-optionsgroupmatrix').attr('aria-label', 'Remove option: ' + req.text);
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -525,23 +531,25 @@ $(function() {
 		else if($(this).attr('ogid')>0){
 			console.log("empty value, ogid:"+$(this).attr('ogid'));
 			console.log($(this).closest('li[id=optionsgroupmatrix-item]').attr("class"));
-			$(this).closest('li[id=optionsgroupmatrix-item]').find("#remove-optionsgroupmatrix").trigger("click");
+			$(this).closest('li[id=optionsgroupmatrix-item]').find(".remove-optionsgroupmatrix").trigger("click");
 		}
 	});
 	
 	
 	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
 		var index = $(this).parent().parent().children("li").size();
+		var ogid = $(this).closest("ul.option-list").attr("ogid");
+		var qid = $(this).closest("li.panel-question").attr("qid");
 		var optionHtml = '<li class="option-item" id="option-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<label for="option" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
-								'<input id="option" type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
+								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
+								'<input id="option' + qid + '-' + ogid + '-' + index + '" type="text" class="option-title form-control fleft option" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
-									'<button class="btn btn-transparent fleft" id="add-file-option"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
+									'<button class="btn btn-transparent fleft  add-file-option" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
@@ -552,11 +560,12 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
+		var qid = $(this).closest("li.panel-question").attr("qid");
 		var optionHtml = '<li class="option-item" id="optionmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +	
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<label for="inputCol" class="visuallyhidden">'+accesibilityTextColumn+' '+index+'</label>' +
-								'<input type="text" id="inputCol" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+phColumn + ' ' + index + '" autofocus/> ' +
+								'<label for="inputCol' + qid + '-' + index + '" class="visuallyhidden">'+accesibilityTextColumn+' '+index+'</label>' +
+								'<input type="text" id="inputCol' + qid + '-' + index + '" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+phColumn + ' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -569,11 +578,12 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#optionsgroupmatrix-list #btn-add-optionsgroupmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
+		var qid = $(this).closest("li.panel-question").attr("qid");
 		var optionHtml = '<li class="option-item" id="optionsgroupmatrix-item">' +
 								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<label for="inputRow" class="visuallyhidden">'+accesibilityTextItem+' '+index+'</label>' +
-								'<input type="text" id="inputRow" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="'+phItem + ' ' + index + '" autofocus/> ' +
+								'<label for="inputRow' + qid + '-' + index + '" class="visuallyhidden">'+accesibilityTextItem+' '+index+'</label>' +
+								'<input type="text" id="inputRow' + qid + '-' + index + '" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="'+phItem + ' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
@@ -827,7 +837,7 @@ $(function() {
 			  			  var multimediaFrame = $("li[qid=" + currentQuestion + "]").find("div[id=multimediaFrameQuestion]");
 			              multimediaFrame.removeClass("hidden");
 			              multimediaFrame.find("div.question-files-frame").removeClass("hidden");
-			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);		
+			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);
 			        }else if(currentOption>0){
 			        	console.log("En currentoption");
 			        	  //var multimediaFrame = $("li[oid=" + currentOption + "]").find("div[id=multimediaFrame]");
@@ -836,6 +846,9 @@ $(function() {
 			              multimediaFrame.find("div.options-files-frame").removeClass("hidden");
 			              multimediaFrame.find("ul[id=multimediaFilesList]").empty();
 			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);	
+
+			              $("input[oid=" + currentOption + "]").closest("li.option-item").find('button.add-file-option').focus();
+			              
 			        }
 			        else{
 			        	var oid = $(res).attr('oid');
@@ -852,12 +865,13 @@ $(function() {
 			              multimediaFrame.find("ul[id=multimediaFilesList]").append(res);
 			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[oid]").removeAttr('oid');
 			              multimediaFrame.find("ul[id=multimediaFilesList]").find("li[ogid]").removeAttr('ogid');
-			              
+      
 			              if(currentElement.val() === "")
 			              {
 			            	  currentElement.trigger("goto");
 			            	  currentElement.trigger("setJson");
 			              }
+			              			      		
 			        }
 		            $('#optionsFile').empty();
 		              $('#optionsFile').addClass('hidden');
@@ -1094,12 +1108,12 @@ $(function() {
 	});
 	
 	
-	$('.survey-sections').on("click", "#add-file-option", function(e){
+	$('.survey-sections').on("click", ".add-file-option", function(e){
 		
 		currentQuestion = -1*$(this).closest('li[id=panel-question1]').attr('qid');
-		currentOption = $(this).closest('li').find('input[id=option]').attr('oid');
+		currentOption = $(this).closest('li').find('input.option').attr('oid');
 		currentOptionGroup = $(this).closest('ul').attr('ogid');
-		currentElement = $(this).closest('li').find('input[id=option]');
+		currentElement = $(this).closest('li').find('input.option');
 		
 		/*if(currentOption>0){*/
 			currentLanguage = $('#survey-language-version').val();
@@ -1109,6 +1123,8 @@ $(function() {
 		/*}else{
 			alert("First, complete the option");
 		}*/
+			
+		modalFocus = $(this);
 	});
 	
 		
@@ -1156,6 +1172,7 @@ $(function() {
 		$("#removeElemId").val(currentQuestion + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('PageService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
 	$('.survey-sections').on("click", "#removeSection", function(e){
@@ -1165,6 +1182,7 @@ $(function() {
 		$("#removeElemId").val(item.attr('scid') + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('SectionService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
 	$('.survey-sections').on("click", "#removeQuestion", function(e){
@@ -1174,12 +1192,13 @@ $(function() {
 		$("#removeElemId").val(item.attr('qid') + '/' + item.closest('li[id=page]').attr('pid'));
 		$("#removeElemService").val('QuestionService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);		
 	});
 	
 	$('.section-pages').on("click", "#removeMultimediaFile", function(e){
 		var item = $(this).closest('li.multimedia-item');
-		if($(this).closest('li.option-item').find("#option").val()==""){
-			$(this).closest('li.option-item').find("#remove-option").trigger("click");
+		if($(this).closest('li.option-item').find(".option").val()==""){
+			$(this).closest('li.option-item').find(".remove-option").trigger("click");
 		}
 		else{		
 			$("#elementToRemoveText").html('"' + item.find('a').text() + '"');
@@ -1187,6 +1206,7 @@ $(function() {
 			$("#removeElemService").val('ResourceService');
 			$("#removeElement").modal("show");
 		}
+		modalFocus = $(this);
 	});
 	
 	$('.section-pages').on("click", "#removeMultimediaFileQuestion", function(e){
@@ -1195,9 +1215,10 @@ $(function() {
 		$("#removeElemId").val(item.attr('rid'));
 		$("#removeElemService").val('ResourceServiceQuestion');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
-	$('.section-pages').on("click", "#remove-option", function(e){
+	$('.section-pages').on("click", ".remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');		
 		var item = $(this).closest('li');
@@ -1210,10 +1231,11 @@ $(function() {
 		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
 		$("#removeElemId").val(result);
 		$("#removeElemService").val('OptionService');
-		$("#removeElement").modal("show");		
+		$("#removeElement").modal("show");	
+		modalFocus = $(this);	
 	});
 	
-	$('.section-pages').on("click", "#remove-optionmatrix", function(e){
+	$('.section-pages').on("click", ".remove-optionmatrix", function(e){
 		console.log("Remove option matrix");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
@@ -1222,9 +1244,10 @@ $(function() {
 		$("#removeElemId").val(input.attr('oid'));
 		$("#removeElemService").val('OptionMatrixService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
-	$('.section-pages').on("click", "#remove-optionsgroupmatrix", function(e){
+	$('.section-pages').on("click", ".remove-optionsgroupmatrix", function(e){
 		console.log("Remove optionsgroup matrix");
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
@@ -1233,12 +1256,14 @@ $(function() {
 		$("#removeElemId").val(input.attr('ogid'));
 		$("#removeElemService").val('OptionsGroupMatrixService');
 		$("#removeElement").modal("show");
+		modalFocus = $(this);
 	});
 	
 	
 	$('.section-pages').on("click", "#accesibilityHelp", function(e){
 		console.log("Show shortcuts for editor");
 		$("#accesibilityHelpWin").modal("show");
+		modalFocus = $(this);
 	});
 	
 	
@@ -1269,6 +1294,7 @@ $(function() {
 				   {
 					   console.log("ResourceService");
 					   if(removeFileQuestion){
+						   var addResourceButton = $('li[rid=' + elementId + ']').closest("div.div_files").find('button.btn-question-import-file');
 						   console.log("It is a question");
 						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
 						   if($('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length<2){
@@ -1277,23 +1303,28 @@ $(function() {
 							   $('li[rid=' + elementId + ']').closest('div.question-files-frame').addClass('hidden');
 						   }
 						   console.log("Number of elements: "+$('li[rid=' + elementId + ']').closest('div.question-files-frame').find('#multimediaFilesList li').length);
-						  
+						   
 						   $('li[rid=' + elementId + ']').remove();
+						   
+						   modalFocus = addResourceButton;
 					   } else{
 						   console.log("It is an option");
+						   var addResourceButton = $('li[rid=' + elementId + ']').closest("li.option-item").find('button.add-file-option');
 						   $('li[rid=' + elementId + ']').closest('#multimediaFrame').addClass('hidden');
 						   $('li[rid=' + elementId + ']').closest('div.options-files-frame').addClass('hidden');
 						   
 						   $('li[rid=' + elementId + ']').remove();
 						   
-						   
-						   //console.log("Number of elements: "+$('#multimediaFilesList li').length);
+						   modalFocus = addResourceButton;
 					   }
 				   }
 				   else if(service == "QuestionService")
 				   {
 					   $('li[qid="' + currentQuestion + '"]').trigger('rmvQuestionJson');
 					   var questionList = $('li[qid="' + currentQuestion + '"]').closest('ul');
+					   var nextQuestion = null;
+					   if(!$('li[qid="' + currentQuestion + '"]').is(':last-child')) nextQuestion = $('li[qid="' + currentQuestion + '"]').next();
+					   
 					   $('li[qid="' + currentQuestion + '"]').remove();
 					   questionList.find('li[qid]').each(function(i, elem)
 					   {
@@ -1301,6 +1332,10 @@ $(function() {
 						   var index = i + 1;
 						   $(elem).attr('index', index);
 					   });
+					   
+					   if(nextQuestion != null) modalFocus = nextQuestion.find("h5"); 
+					   else modalFocus = questionList.closest("div.page-body").find('button.btn-add');
+					   
 				   }
 				   else if(service == "OptionService")
 				   {   
@@ -1308,6 +1343,7 @@ $(function() {
 					   var oid = ids[2];
 					   var input = $('input[oid=' + oid + ']'); 					   
 					   var numItems = input.closest("ul").find("li.option-item").size();
+					   var list = input.closest("ul.option-list");
 					   
 					   input.trigger("rmvOptJson");
 						
@@ -1340,6 +1376,8 @@ $(function() {
 					   var logicOptionElement = $('#logic-option-' + oid);
 					   removeLogicElement(logicOptionElement);	
 					   
+					   console.log("Delete option: ")
+					   modalFocus = list.first().find("input[index=1]");
 				   }
 				   else if(service == "OptionMatrixService")
 				   {
@@ -1421,6 +1459,8 @@ $(function() {
 							$(elemento).attr('index', indice + 1);
 							$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
 						});
+					   
+					   modalFocus = prevElement.find("h4");
 				   }
 				   else if (service == "QCService"){
 					   if(elementId.split("/").length==3){
@@ -1457,7 +1497,9 @@ $(function() {
 						  var item = question.find('ul.dependences-list').find('[index=' + elementId.split("/")[1] + ']');
 						  var numItems = item.closest("ul.dependences-list").find("li.dependence-item").length;
 						  //console.log("Removed:"+question.attr("qid")+", item="+item.attr("index"));
-						  
+						  var nextDep = null;
+						  if(!item.is(':last-child')) nextDep = item.next();
+						   
 						  if(numItems <= 2)
 						  {
 							  console.log("único item a borrar");
@@ -1496,6 +1538,11 @@ $(function() {
 							  }
 							  item.remove();
 						  }
+						  
+
+						   if(nextDep != null) modalFocus = nextDep.find("legend"); 
+						   else modalFocus = question.find("div.dependences-settings").find('button.btn-primary');
+						   
 					   }
 				   }
 				   else if(service == "QuotaService")
@@ -2135,6 +2182,46 @@ $(function() {
 		updateContent(req, serviceUrl);
 	});	
 	
+	$(".survey-sections").on('keydown', 'div.editor', function(e) {
+		var keyCode = e.keyCode || e.which; 
+		
+		keyBuffer[keyCode] = true;
+
+		if (keyBuffer[27] && keyBuffer[16]) { 
+			e.preventDefault(); 
+			console.log("Shift + Esc pressed");
+			// call custom function here
+			
+			var helpButton = $(this).closest("div.rowPlus").find("a.accesibilityHelp");
+			helpButton.focus();
+			
+			keyBuffer = {};
+			
+			//$(this).next().focus();
+		} 
+	});
+
+	$(".survey-sections").on('keyup', 'div.editor', function(e) {
+		console.log("Key pressed: " + JSON.stringify(keyBuffer));  
+		var keyCode = e.keyCode || e.which; 
+
+		if (keyBuffer[27] && !keyBuffer[16]) { 
+			e.preventDefault(); 
+			console.log("Only Esc key pressed");
+			// call custom function here
+			
+			var filesDiv = $(this).closest("div.question-frame").find("div.question-files-frame");
+			if(filesDiv.hasClass('hidden')) $(this).closest("div.question-frame").find("button.btn-question-import-file").focus();
+			else filesDiv.find("ul").first().find('a').focus();
+
+			keyBuffer = {};
+			
+			//$(this).next().focus();
+		}
+		
+		delete keyBuffer[keyCode];
+	});
+	
 	/*$('.survey-sections').on("click", ".logic-button > button", function(){
 		$(this).parent().addClass('hidden');
 		$(this).closest('div.logic-frame').find('div.logic-settings').removeClass('hidden');
@@ -2263,7 +2350,31 @@ $(function() {
 		$("#removeElement").modal("show");
 	});
 	
+	$('#removeElement').on('hidden.bs.modal', function () {
+		console.log("close remove element");
+		modalFocus.focus();
+	});
 	
+	$('#importFile').on('hidden.bs.modal', function () {
+		console.log("close import file");
+		modalFocus.focus();
+	});
+	
+	$('#updateFile').on('hidden.bs.modal', function () {
+		console.log("close update file");
+		modalFocus.focus();
+	});
+	
+	$('#accesibilityHelpWin').on('hidden.bs.modal', function () {
+		console.log("close accesibilityHelpWin");
+		modalFocus.focus();
+	});
+	
+	$('#newQuestionModal').on('hidden.bs.modal', function () {
+		console.log("close new question: " + modalFocus.prop("tagName"));
+		modalFocus.focus();
+		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
+	});
 });
 
 

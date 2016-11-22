@@ -38,17 +38,17 @@
 			  			{
 			  			%>
 			  				<li>
-			  					<i class="fa fa-square <%= colors[index] %>"></i> <%= result.getValue() + " " + result.getPercentage() + " %" %>
+			  					<i class="fa fa-square <%= colors[index] %>" aria-hidden="true"></i> <%= result.getValue() + " " + result.getPercentage() + " %" %>
 			  				</li>
 			  			<%
 			  				index++;
 			  			}
 			  			%>
 			  				<!--  <li>
-			  					<i class="fa fa-square red" ></i> NVDA 30 %
+			  					<i class="fa fa-square red"  aria-hidden="true"></i> NVDA 30 %
 			  				</li>
 			  				<li>
-			  					<i class="fa fa-square gray"></i> Orca 21 %
+			  					<i class="fa fa-square gray" aria-hidden="true"></i> Orca 21 %
 			  				</li>-->
 			  			</ul>
 			  		</div>

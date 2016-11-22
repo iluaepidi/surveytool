@@ -39,12 +39,12 @@ System.out.println("fUpdateFile opened");
 				 var volumeMinText = "<%= lang.getContent("file.player.yt.alert.volume_min") %>";
 				</script>
 				
-				<div class="modal fade survey-win" id="updateFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade survey-win" id="updateFile" tabindex="-1" role="dialog" aria-labelledby="fileEditTitle">
 					<div class="modal-dialog import-file-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("file.edit.title") %></h2> 
+				    			<h2 class="panel-title" id="fileEditTitle"><%= lang.getContent("file.edit.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body" id="updateFilesSection">
 				    						    		

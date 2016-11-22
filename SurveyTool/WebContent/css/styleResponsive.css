@@ -1,0 +1,119 @@
+
+/*----------------------------------------------*\
+		$SURVEY_TOOL_&_USER_PANEL
+\*----------------------------------------------*/
+/**
+* 
+* WIDTH < 1366
+* WIDTH < 1200
+* WIDTH <  900
+* WIDTH <  800
+* WIDTH <  700
+* 
+*/
+
+/*----------------------------------------------*\
+		$WIDTH < 1366
+\*----------------------------------------------*/
+
+@media (max-width: 1366px) {
+	
+	.content-wrapper {width: 100%;}
+	
+}
+
+/*----------------------------------------------*\
+		$WIDTH < 1200
+\*----------------------------------------------*/
+
+@media (max-width: 1200px) {
+	
+	body {margin-bottom: 170px !important;}
+	.user-panel-menu {width: 100%;}
+	.title-header {font-size: 0.8em;}
+	.user-panel-surveys {width: 100%;}
+	.row-footer {width: 100%;}
+	.footer-links {width: 100%;}
+	.survey-win-dialog,
+	.poll-win-dialog,
+	.import-file-win-dialog {width: 99% !important}
+	.remove-win-dialog {width: 85% !important}
+	.edit-survey-head {width: 100%}
+	.edit-survey-frame {width: 100%}
+	.panel-section {width: 100%}
+	.login-content {width: 100%}
+	.login-content-text {padding-left: 15px !important;}
+	.btn-group {margin-bottom: 5px;}	
+    .content-wrapper {width: 100%;}
+	
+}
+
+/*----------------------------------------------*\
+		$WIDTH < 1000
+\*----------------------------------------------*/
+
+@media (max-width: 1000px) {
+	.profileLabel {text-align: left !important;}
+}
+
+/*----------------------------------------------*\
+		$WIDTH < 900
+\*----------------------------------------------*/
+
+@media (max-width: 900px) {
+	.trash {position: absolute;
+    	right: -20px;
+    	margin: 0 !important;}
+	.dependences-list {width: 100%;}
+	.logic-option-list {width: 100%;}
+	.logic-option > select {width: 25% !important;}
+	.profileLabel {text-align: left !important;}
+}
+
+/*----------------------------------------------*\
+		$WIDTH < 800
+\*----------------------------------------------*/
+
+@media (max-width: 800px) {
+	
+	body {margin-bottom: 210px !important;}
+	.footer-links {width: 100%;}
+	.login-frame form {width: 100%;}
+	.page-header {padding: 0 !important;}
+	.title-header {font-size: 0.5em;}
+	h1 img {width: 70px;}
+	.userZone {padding: 30px 15px !important;}
+	.user-panel-menu i {font-size: 6em;}
+	.surveys-table ul li {margin: 2px 0;}
+	.nav-tabs-right {margin-top: 0px;}
+	.widthTitleSurveyCollapsed {width: 85%;
+		margin: 0 auto;}
+	.widthTitleSurveyExtended{width: 85%;}
+	.survey-info-project,
+	.survey-info-description {width: 100%;}
+	.survey-info-project label,
+	.survey-info-description label {width: 100%;
+		text-align: left;
+		padding-left: 25px;}
+	.option-list {width: 100%;}
+	.option-title {width: 65% !important;}
+	.logic-option > label > span {width: 75% !important;
+    	display: inline-flex;}
+    .logic-option > select {display: inline-block;}
+    .code-poll-frame {width: 100%;}
+    .content-wrapper {width: 100%;}
+    .content-statistics {min-width: initial;}
+    .text {min-width: initial;}
+	
+}
+
+/*----------------------------------------------*\
+		$WIDTH < 700
+\*----------------------------------------------*/
+
+@media (max-width: 700px) {
+	.trash {position: static;
+	    right: -20px;
+	    margin: 0 !important;}
+	.select-dependence-option {display: inline-block;}
+}

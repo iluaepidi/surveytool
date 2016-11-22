@@ -15,7 +15,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  					<h2><%= lang.getContent("home.title") %></h2>	  					
 	  				</div>  -->
 	  				<div class="login-content">
-	  					<div class="login-content-text">
+	  					<div class="col-xs-6 col-sm-7 col-md-8 login-content-text">
 	  						<p>This service offers a suite of accessible tools for improving consumer-developers connections. Current version includes:</p>
 	  						<ul>
 	  							<li>An <strong>online survey tool</strong> for building accessible forms. Developers can create and share accessible surveys to collect consumers information on the context of use, validate product ideas of evaluate low-fi prototypes.</li>
@@ -27,7 +27,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  							<li><strong>Accessible user panel management.</strong> A system providing a dashboard for managing user database. This may be linked to other user feedback tools to foster and manage user participation.</li>
 	  						</ul>
 	  					</div>
-  						<div class="login-frame" id="loginDivForm">
+  						<div class="col-xs-6 col-sm-5 col-md-4 login-frame" id="loginDivForm">
 	  						<form method="post" id="loginForm" action="LoginServlet">
 	  							<fieldset>
 		  							<!-- <h3>Login</h3> -->
@@ -68,7 +68,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 						RegisterResponse registerResponse = (RegisterResponse) request.getAttribute(Attribute.s_REGISTER_RESPONSE);
 			  								
 						%>
-	  					<div class="register-frame" id="registerDivForm">
+	  					<div class="col-xs-6 col-sm-5 col-md-4 register-frame" id="registerDivForm">
 	  						<form method="post" id="registerForm" action="RegisterServlet">
 	  							<fieldset>
 		  							<!-- <h3>Login</h3> -->

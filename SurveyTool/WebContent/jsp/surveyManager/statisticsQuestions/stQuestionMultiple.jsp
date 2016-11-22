@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.databasemanager.constants.DBConstants"%> 
@@ -71,55 +72,80 @@ List<Option> o = sQ.getOptions();
 								}
 							%>
 					</span>
-	            	<div class="tab-content no-padding">
-	            		<div class="chart tab-pane active" id="visits-chart">
-		              		<canvas id="myChartMultiple<%= question.getQuestionId() %>" width="550" height="250" style="width: 550px; height: 250px;"></canvas>
-							<script>
-							
-							var labels = [];
-							var bars = [];
-							<%
-							//System.out.println("Size of options:"+o.size());
-							
-							
-								for(int i = 0; i<o.size();i++){
-									
-									int idoption = ((Option)(o.get(i))).getId();
-	    		    				//System.out.println("New push de labels");
+					<div class="no-block">	
+		            	<div class="tab-content no-padding in-block">
+		            		<div class="chart tab-pane active" id="visits-chart">
+			              		<canvas id="myChartMultiple<%= question.getQuestionId() %>" width="530" height="250" style="width: 550px; height: 250px;"></canvas>
+								<script>
+								
+								var labels = [];
+								var bars = [];
+								<%
+								List<String> labels = new ArrayList<String>();
+								List<Integer> values = new ArrayList<Integer>();
+								//System.out.println("Size of options:"+o.size());
+								
+								
+									for(int i = 0; i<o.size();i++){
+										
+										int idoption = ((Option)(o.get(i))).getId();
+		    		    				//System.out.println("New push de labels");
+		    		    				if(((Option)(o.get(i))).getContents().get("text") != null) {
+											labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
+										} else {
+											labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+										}
+									%>
+										labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>");
+			        		    		
+			        		    		<%
+			        		    		for(int j=0;j<obg.size();j++){
+			        		    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
+			        		    				//System.out.println("New push de bars");
+			        		    				values.add((int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)));
+			        		    				%>
+			        		    				bars.push(<%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>);
+			        		    			<%}
+			        		    		}
+									}
+								
 								%>
-									labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>");
-		        		    		
-		        		    		<%
-		        		    		for(int j=0;j<obg.size();j++){
-		        		    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
-		        		    				//System.out.println("New push de bars");
-		        		    				%>
-		        		    				bars.push(<%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>);
-		        		    			<%}
-		        		    		}
-								}
+									  var data = {
+									    labels: labels,
+									    datasets: [
+									      {
+									    	label: "My First dataset",
+									        fillColor: "#00884b",
+									        strokeColor: "#00884b",
+									        highlightFill: "#fff",
+									        highlightStroke: "#00884b",
+									        data: bars
+									      }
+									    ]
+									  };
+									
+									  // Get the context of the canvas element we want to select
+									  var ctx = document.getElementById("myChartMultiple<%= question.getQuestionId() %>").getContext("2d");
+									
+									  var myChartMultiple = new Chart(ctx).Bar(data);
+								</script>
+							</div>
+		            	</div>
+		            	<div class="legendSurvey in-block">
+		            		<h4>Resultados</h4>
+						  	<ul>
+						  	<%for(int i=0;i<labels.size();i++)
+							{
+								%>
+								<li>
+								  			<%= labels.get(i) %>: <%= values.get(i) %>%
+								</li>
+								<%
+							}
 							
 							%>
-								  var data = {
-								    labels: labels,
-								    datasets: [
-								      {
-								    	label: "My First dataset",
-								        fillColor: "#00884b",
-								        strokeColor: "#00884b",
-								        highlightFill: "#fff",
-								        highlightStroke: "#00884b",
-								        data: bars
-								      }
-								    ]
-								  };
-								
-								  // Get the context of the canvas element we want to select
-								  var ctx = document.getElementById("myChartMultiple<%= question.getQuestionId() %>").getContext("2d");
-								
-								  var myChartMultiple = new Chart(ctx).Bar(data);
-							</script>
-						</div>
-	            	</div>
+						  	</ul>
+						 </div>
+					 </div>
 	          	</div>	      	
 	    	</div>
