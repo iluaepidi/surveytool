@@ -154,7 +154,7 @@ $(function() {
 	});
 	
 	//abrir cerrar question panel
-	$('#survey-sections').on('click', '.display-question-arrow', function(e){
+	$('.survey-sections').on('click', '.display-question-arrow', function(e){
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "panel-heading-display";
@@ -162,13 +162,13 @@ $(function() {
 		var question = $(this).attr("aria-label").split(":")[1].trim();
 		if (cl == "fa fa-caret-down fa-2x")
 		{
-			$(this).closest('li.panel-question').children('.panel-body').css("display", "none");
+			$(this).closest('li.panel-question').find('.panel-body').css("display", "none");
 			$(this).children('i').prop("class", "fa fa-caret-right fa-2x");
 			$(this).attr("aria-label", displayText + ' ' + questionText + ": " + question);
 		}
 		else if(cl == "fa fa-caret-right fa-2x")
 		{
-			$(this).closest('li.panel-question').children('.panel-body').css("display", "inherit");
+			$(this).closest('li.panel-question').find('.panel-body').css("display", "inherit");
 			$(this).children('i').prop("class", "fa fa-caret-down fa-2x");
 			$(this).attr("aria-label", hideText + ' ' + questionText + ": " + question);
 		}

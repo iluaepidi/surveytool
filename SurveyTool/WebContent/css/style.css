@@ -829,15 +829,26 @@ footer {margin-top: 10px;
 	margin-top: 5px !important;
 }
 
-.panel-question {width: 100%;
+/*.panel-question {width: 100%;
 	margin: 15px auto;
 	text-align: center;
 	background-color: #fff;
     border: 1px solid #1F4B71;
     border-radius: 8px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}*/
+.panel-question-content {width: 96.7%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 34px;
+	padding-bottom: 3px;
+	text-align: center;
+	background-color: #fff;
+    border: 1px solid #1F4B71;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);}
-.panel-question > .panel-heading {
+.panel-question-content > .panel-heading {
     color: #1F4B71;
     background-color: #B7D4FA;
     border-color: #1F4B71;
@@ -849,8 +860,9 @@ footer {margin-top: 10px;
 .panel-question .panel-heading a {color: #000;}
 .panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
 
-.up-down-buttons {width: 50px;
-    float: left;}
+.up-down-buttons {width: 25px;
+    float: left;
+    margin-top: 4px;}
 .moveup-question-arrow i {height: 20px;
     margin-top: -9px;}
 .movedown-question-arrow i {height: 19px;
