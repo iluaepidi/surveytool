@@ -296,9 +296,10 @@ public class QuestionService {
 			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
 			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
 			int prevQuestionId = Integer.parseInt(json.getString(Parameter.s_PREV_ID));
+			boolean changePage = Boolean.parseBoolean(json.getString(Parameter.s_CHANGE_PAGE));
 			
 			QuestionHandler questionHandler = new QuestionHandler();
-			response = String.valueOf(questionHandler.updateIndex(questionId, prevQuestionId, pageId));
+			response = String.valueOf(questionHandler.updateIndex(questionId, prevQuestionId, pageId, changePage));
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

@@ -2337,6 +2337,74 @@ $(function() {
 		}
 	});*/
 	
+	$('.survey-sections').on("click", "button.moveup-question-arrow", function(){
+		var question = $(this).closest("li.panel-question");
+		if(question.is(':first-child'))
+		{
+			var currentPage = question.closest("li.page");
+			if(!currentPage.is(':first-child'))
+			{
+				var previousPage = currentPage.prev();
+				var questions = previousPage.find("ul.page-items");
+				questions.append(question);
+				question.attr("index", questions.find("li.panel-question").size());
+				
+				currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
+					$(element).attr("index", index + 1);
+				});
+				
+				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, host);
+			}
+		}
+		else
+		{
+			var prevQuestion = question.prev();
+			prevQuestion.insertAfter(question);
+			var index = parseInt(question.attr("index"));
+			question.attr("index", index - 1);
+			var prevIndex = parseInt(prevQuestion.attr("index"));
+			prevQuestion.attr("index", prevIndex);
+			
+			var prevQid = 0;
+			if(!question.is(':first-child')) prevQid = question.prev().attr("qid");
+				
+			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, host);
+		}
+	});
+
+	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
+		var question = $(this).closest("li.panel-question");
+		if(question.is(':last-child'))
+		{
+			var currentPage = question.closest("li.page");
+			if(!currentPage.is(':last-child'))
+			{
+				var nextPage = currentPage.next();
+				var questions = nextPage.find("ul.page-items");
+				
+				question.insertBefore(questions.find("li.panel-question").first());
+				//console.log("first question: " + questions.find("li.panel-question").first().html());
+
+				questions.find("li.panel-question").each(function(index, element){
+					$(element).attr("index", index + 1);
+				});
+				
+				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, host);
+			}
+		}
+		else
+		{
+			var nextQuestion = question.next();
+			nextQuestion.insertBefore(question);
+			var index = parseInt(question.attr("index"));
+			question.attr("index", index + 1);
+			var prevIndex = parseInt(nextQuestion.attr("index"));
+			nextQuestion.attr("index", prevIndex - 1);
+			
+			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, host);
+		}
+		
+	});
 	
 	$('#listcompletequotas').on("click", "#removeQuota", function(e){
 		var item = $(this).parents(".survey-info");
@@ -2377,6 +2445,35 @@ $(function() {
 	});
 });
 
+function updateQuestionIndex(qid, prevQid, pid, changePage, host)
+{
+	var req = {};		
+	req.qid = qid;
+	req.prevId = prevQid;
+	req.pid = pid;
+	req.changePage = changePage;
+	console.log("Dragged: " + JSON.stringify(req));
+	$.ajax({ 
+		   type: "PUT",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: host + "/SurveyTool/api/QuestionService/updateIndex",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   if(data == "")
+			   {
+				   console.log("llega");
+				  
+			   }
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+	});
+}
 
 function loadquotas(json){
 	jsonquotas = json;

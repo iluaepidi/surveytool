@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
+import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Resource;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -132,39 +134,73 @@ public class QuestionHandler {
 		return parameters;
 	}	
 	
-	public boolean updateIndex(int questionId, int prevQuestionId, int pageId)
+	public boolean updateIndex(int questionId, int prevQuestionId, int pageId, boolean changePage)
 	{
 		boolean updated = false;
 		QuestionDB questionDB = new QuestionDB();
 		
 		int currrentIndex = questionDB.getQuestionByPageIndex(questionId, pageId);
-		int prevIndex = questionDB.getQuestionByPageIndex(prevQuestionId, pageId);
-		List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);	
 		
-		if(prevIndex != 0 || questions.get(0).getQuestionId() != questionId)
-		{		
-			for(int i = 0; i < questions.size(); i++)
-			{
-				int index = questions.get(i).getIndex(); 
-				if(index < currrentIndex)
+		if(!changePage)
+		{
+			int prevIndex = questionDB.getQuestionByPageIndex(prevQuestionId, pageId);
+			List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);	
+			
+			if(prevIndex != 0 || questions.get(0).getQuestionId() != questionId)
+			{		
+				for(int i = 0; i < questions.size(); i++)
 				{
-					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index + 1);
-				}
-				else if(index > currrentIndex)
-				{
-					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index - 1);
-				}
-				else
-				{
-					if(prevIndex < currrentIndex)
+					int index = questions.get(i).getIndex(); 
+					if(index < currrentIndex)
 					{
-						questionDB.updateQuestionIndex(questionId, pageId, prevIndex + 1);
+						questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index + 1);
+					}
+					else if(index > currrentIndex)
+					{
+						questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, index - 1);
 					}
 					else
 					{
-						questionDB.updateQuestionIndex(questionId, pageId, prevIndex);
+						if(prevIndex < currrentIndex)
+						{
+							questionDB.updateQuestionIndex(questionId, pageId, prevIndex + 1);
+						}
+						else
+						{
+							questionDB.updateQuestionIndex(questionId, pageId, prevIndex);
+						}
 					}
 				}
+			}
+		}
+		else if(currrentIndex == 1)
+		{
+			PageDB pageDB = new PageDB();
+			Page page = pageDB.getPageByPageId(pageId);
+			Page previousPage = pageDB.getPageByNumPageSectionId(page.getSectionId(), page.getNumPage() - 1);
+			int numQuestions = pageDB.getNumQuestionByPage(previousPage.getPageId());
+			questionDB.updateQuestionIndexPageId(questionId, pageId, previousPage.getPageId(), numQuestions + 1);
+			
+			List<Question> questions = questionDB.getQuestionsIdIndexByPageId(pageId);
+			for(int i = 0; i < questions.size(); i++)
+			{
+				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, i + 1);
+			}
+		}
+		else
+		{
+			PageDB pageDB = new PageDB();
+			int numQuestions = pageDB.getNumQuestionByPage(pageId);
+			if(currrentIndex == numQuestions)
+			{
+				Page page = pageDB.getPageByPageId(pageId);
+				Page nextPage = pageDB.getPageByNumPageSectionId(page.getSectionId(), page.getNumPage() + 1);
+				List<Question> questions = questionDB.getQuestionsIdIndexByPageId(nextPage.getPageId());
+				for(int i = 0; i < questions.size(); i++)
+				{
+					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), nextPage.getPageId(), i + 2);
+				}
+				questionDB.updateQuestionIndexPageId(questionId, pageId, nextPage.getPageId(), 1);
 			}
 		}
 		

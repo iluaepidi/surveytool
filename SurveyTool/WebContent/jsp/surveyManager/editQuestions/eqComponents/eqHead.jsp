@@ -17,6 +17,11 @@
 						  					%>
 						  					
 											<div class="panel-heading">	
+											
+												<div class="up-down-buttons">
+													<button id="moveup-question-<%= question.getQuestionId() %>" class="btn-transparent moveup-question-arrow" aria-label="<%= lang.getContent("button.question.move.up") %>: <%= title %>"><i class="fa fa-caret-up fa-2x" aria-hidden="true"></i></button>
+													<button id="movedown-question-<%= question.getQuestionId() %>" class="btn-transparent movedown-question-arrow" aria-label="<%= lang.getContent("button.question.move.down") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
+												</div>
 
 												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
 												<h5 class="panel-title" tabindex="-1">

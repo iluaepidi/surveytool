@@ -1036,7 +1036,7 @@ public class QuestionDB {
 		}
 		else if(prevIndex == 0)
 		{
-			maxMin = "and `index` > " + prevIndex;
+			maxMin = "and `index` > " + prevIndex + " and `index` <= " + currentIndex;
 		}
 		
 		return maxMin;

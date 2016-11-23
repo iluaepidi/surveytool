@@ -849,6 +849,13 @@ footer {margin-top: 10px;
 .panel-question .panel-heading a {color: #000;}
 .panel-question .panel-heading a:hover, .panel-question .panel-heading a:focus {color: #70FFFF;}
 
+.up-down-buttons {width: 50px;
+    float: left;}
+.moveup-question-arrow i {height: 20px;
+    margin-top: -9px;}
+.movedown-question-arrow i {height: 19px;
+    margin-top: -7px;}
+
 .btn.btn-question-head {color: #1F4B71;
     background-color: #B7D4FA;
     border-color: #1F4B71;}
