@@ -20,8 +20,11 @@ Section section = (Section) request.getAttribute(Attribute.s_SECTION);
 									for(Page pag : section.getPages())
 									{
 										request.setAttribute(Attribute.s_PAGE, pag);
+										boolean firstPageSection = pag.getPageId() == section.getPages().get(0).getPageId();
 									%>									
-										<jsp:include page='cPage.jsp'/>
+										<jsp:include page='cPage.jsp'>
+											<jsp:param value="<%= firstPageSection %>" name="firstPageSection"/>
+										</jsp:include>
 									<%
 									}
 									%>		

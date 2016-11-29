@@ -59,15 +59,22 @@ public class PageHandler {
 		
 		pageDB.removePage(pageId);
 		
-		List<Page> pages = pageDB.getNumPagesBigerThanBySurveyId(surveyId, currentPage.getNumPage());
+		//List<Page> pages = pageDB.getNumPagesBigerThanBySurveyId(surveyId, currentPage.getNumPage());
+		List<Page> pages = pageDB.getPagesIdNumPageBySurveyId(surveyId);
+		int index = 1;
+		for(Page page : pages)
+		{
+			pageDB.updateNumPage(page.getPageId(), index);
+			index++;
+		}
 		
-		if(!pages.isEmpty())
+		/*if(!pages.isEmpty())
 		{
 			for(Page page : pages)
 			{
 				pageDB.updateNumPage(page.getPageId(), page.getNumPage() - 1);
 			}
-		}
+		}*/
 		response = true;
 		
 		return response;

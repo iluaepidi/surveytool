@@ -669,7 +669,9 @@ footer {margin-top: 10px;
     border-radius: 3px;}
 .display-default-arrow:focus, .display-default-arrow:hover{background-color: #ddd;}
     
-
+.div-add-section {width: 70%;
+    margin: 0 auto;
+    text-align: center;}
 .add-frame {width: 70%;
 	margin: 20px auto;
 	text-align: center;}
@@ -789,7 +791,8 @@ footer {margin-top: 10px;
 .frame-basic-Settings {display: none;}
 
 .section-pages {padding: 0;
-	padding-bottom: 30px;}
+	padding-bottom: 30px;
+	list-style: none;}
 
 /** Pages **/
 .page {/*position: relative;

@@ -11,6 +11,7 @@ public class Survey {
 	HashMap<String, Content> contents;
 	String project = "";
 	int author;
+	int formaId;
 	List<Section> sections = null;
 	String publicId = "";
 	String defaultLanguage;
@@ -127,6 +128,16 @@ public class Survey {
 
 	public void setObjetive(int objetive) {
 		this.objetive = objetive;
+	}
+
+
+	public int getFormaId() {
+		return formaId;
+	}
+
+
+	public void setFormaId(int formaId) {
+		this.formaId = formaId;
 	}
 	
 }

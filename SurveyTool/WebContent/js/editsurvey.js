@@ -133,12 +133,47 @@ $(function() {
 			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
 			else {
 				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
+				//var i = parseInt(node.closest('ul.section-pages').find('li.page').first().attr('index'));
 				node.closest('li.page').after(responseText);
-				node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
+				/*node.closest('ul.section-pages').find('li.page').each(function(indice, elemento) {
 					var cads = $(elemento).find('h4').html().split(' ');
-					$(elemento).attr('index', indice + 1);
-					$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
+					$(elemento).attr('index', i + indice);
+					$(elemento).find('h4').html(cads[0] + " " + (i + indice));
+				});*/
+				var sectionList = node.closest('ul.survey-sections');
+
+				var i = 1;
+				sectionList.find("li.panel-section").each(function(indexSection, section){
+				   $(section).find('li.page').each(function(indexPage, page){
+					   var cads = $(page).find('h4').html().split(' ');
+						$(page).attr('index', i);
+						$(page).find('h4').html(cads[0] + " " + i);
+						i++;
+				   });
 				});
+			   
+			}
+		});
+	});
+
+	$('.edit-content-center').on("click", ".btn-new-section", function(){
+		console.log("create section");
+		var node = $(this);
+		var req = {};
+		req.scid = node.closest('.panel-section').attr('scid');
+		var surveyInfo = node.closest('div.edit-content-center').find('div.survey-info');
+		req.sid = surveyInfo.attr('sid');
+		req.fid = surveyInfo.attr('fid');
+		//req.numPage = node.closest('li.page').attr('index');
+		
+		$.post('CreateSectionServlet', req, function(responseText) {
+			console.log("create section response: " + responseText);
+			var index = responseText.indexOf("<html");
+			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			else {
+				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
+				node.closest('div.edit-content-center').find('ul.survey-sections').append(responseText);	
+				node.closest('div.edit-content-center').find('ul.survey-sections').find('li.panel-section').last().find("h3 input").focus();
 			}
 		});
 	});
@@ -1175,10 +1210,11 @@ $(function() {
 		modalFocus = $(this);
 	});
 	
-	$('.survey-sections').on("click", "#removeSection", function(e){
-		var item = $(this).closest('#panel-section1');
+	$('.survey-sections').on("click", ".remove-section", function(e){
+		var item = $(this).closest('li.panel-section');
 		currentQuestion = item.attr('scid');
-		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-section-title').val() + '"');
+		currentElement = item;
+		$("#elementToRemoveText").html('"Section: ' + item.find('input.survey-section-title').val() + '"');
 		$("#removeElemId").val(item.attr('scid') + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('SectionService');
 		$("#removeElement").modal("show");
@@ -1440,7 +1476,8 @@ $(function() {
 				   }
 				   else if(service == "PageService")
 				   {
-					   var pagesList = currentElement.closest('ul.section-pages');
+					   //var pagesList = currentElement.closest('ul.section-pages');
+					   var sectionList = currentElement.closest('ul.survey-sections');
 					   var prevElement = currentElement.prev();
 					   
 					   var currentQuestionList = currentElement.find('ul.page-items');
@@ -1453,12 +1490,22 @@ $(function() {
 						});
 						   
 					   currentElement.remove();
-					   
+					   /*var i = parseInt(pagesList.find('li.page').first().attr('index'));
 					   pagesList.find('li.page').each(function(indice, elemento) {
 							var cads = $(elemento).find('h4').html().split(' ');
-							$(elemento).attr('index', indice + 1);
-							$(elemento).find('h4').html(cads[0] + " " + (indice + 1));
-						});
+							$(elemento).attr('index', i + indice);
+							$(elemento).find('h4').html(cads[0] + " " + (i + indice));
+						});*/
+					   
+					   var i = 1;
+					   sectionList.find("li.panel-section").each(function(indexSection, section){
+						   $(section).find('li.page').each(function(indexPage, page){
+							   var cads = $(page).find('h4').html().split(' ');
+								$(page).attr('index', i);
+								$(page).find('h4').html(cads[0] + " " + i);
+								i++;
+						   });
+					   });
 					   
 					   modalFocus = prevElement.find("h4");
 				   }
@@ -1553,10 +1600,21 @@ $(function() {
 			   }
 			   else
 			   {
+				   $("#removeElement").modal("hide");
 				   if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
+					   var i = 1;
+					   var sectionList = $('li[scid=' + ids[0] + ']').closest("ul.survey-sections");
 					   $('li[scid=' + ids[0] + ']').remove();
+					   sectionList.find("li.panel-section").each(function(indexSection, section){
+						   $(section).find('li.page').each(function(indexPage, page){
+							   var cads = $(page).find('h4').html().split(' ');
+								$(page).attr('index', i);
+								$(page).find('h4').html(cads[0] + " " + i);
+								i++;
+						   });
+					   });
 				   }
 			   }
 			   

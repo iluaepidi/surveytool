@@ -10,6 +10,7 @@ public class Section {
 	int formaId;
 	List<Page> pages;
 	HashMap<String, Content> contents;
+	int index;
 	
 	public Section() {
 		super();
@@ -17,12 +18,13 @@ public class Section {
 		contents = new HashMap<String, Content>();
 	}
 	
-	public Section(int sectionId, int formaId, List<Page> pages, HashMap<String, Content> contents) {
+	public Section(int sectionId, int formaId, List<Page> pages, HashMap<String, Content> contents, int index) {
 		super();
 		this.sectionId = sectionId;
 		this.formaId = formaId;
 		this.pages = pages;
 		this.contents = contents;
+		this.index = index;
 	}
 
 	public int getSectionId() {
@@ -56,11 +58,19 @@ public class Section {
 	public void setContents(HashMap<String, Content> contents) {
 		this.contents = contents;
 	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 	@Override
 	public String toString() {
 		return "Section [sectionId=" + sectionId + ", formaId=" + formaId + ", pages=" + pages + ", contents="
-				+ contents + "]";
+				+ contents + ", index=" + index + "]";
 	}
-	
+		
 }

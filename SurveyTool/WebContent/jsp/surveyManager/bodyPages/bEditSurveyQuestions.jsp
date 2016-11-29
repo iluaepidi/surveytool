@@ -113,7 +113,7 @@
 							</div>
 							<%} %>
 	  						
-		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>">
+		  					<div class="edit-survey-frame survey-info" id="survey-info" sid="<%= survey.getSurveyId() %>" fid="<%= survey.getFormaId() %>">
 		  						<button class="display-default-arrow" id="display-survey-settings" display="false" aria-label="<%= lang.getContent("survey.edit.info.aria_label.display") %>">
 		  							<i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
 		  						</button>

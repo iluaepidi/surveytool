@@ -70,7 +70,7 @@ $(function() {
 		//$('#add-menu-frame .add-menu').css("display", "inherit");
 		root.find(".add-menu").css("display", "inherit");
 		$(this).attr("aria-expanded", "true");
-		root.find('#btn-question').focus();
+		root.find('button.btn-question').focus();
 	});
 	
 	/*$('#add-menu-frame a').click(function(e){

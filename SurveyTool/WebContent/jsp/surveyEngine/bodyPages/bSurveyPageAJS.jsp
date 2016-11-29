@@ -51,7 +51,7 @@
 								<span class="sr-only" ng-show="showButtonLastPage()"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</span>
 							</div>
 						</div>
-	  					<h2>Section X</h2>
+	  					<h2>{{getJsonArrayElement(currentSurvey.info.section.contents, "contentType", "title").text}}</h2>
 	  				</div>	  				
 	  				
 	  				<div id="loadPageMsg" class="sr-only" aria-relevant="text" aria-atomic="true" aria-live="assertive">

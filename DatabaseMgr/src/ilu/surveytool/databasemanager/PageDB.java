@@ -50,7 +50,7 @@ public class PageDB {
 	/**
 	 * Selects
 	 */
-	
+
 	public List<Page> getPagesBySectionId(int sectionId, String lang, String langdefault)
 	{
 		List<Page> pages = new ArrayList<Page>();
@@ -74,6 +74,76 @@ public class PageDB {
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
 	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang,langdefault));
+	   			
+	   			pages.add(page);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pages;
+	}
+
+	public List<Page> getPagesIdNumPageBySurveyId(int surveyId)
+	{
+		List<Page> pages = new ArrayList<Page>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGES_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			Page page = new Page();
+	   			page.setPageId(rs.getInt(DBFieldNames.s_PAGE_ID));
+	   			page.setNumPage(rs.getInt(DBFieldNames.s_NUM_PAGE));
+	   			
+	   			pages.add(page);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pages;
+	}
+
+	public List<Page> getPagesBySectionIdWithNumPageBigger(int sectionId, String lang, String langdefault, int numPage)
+	{
+		List<Page> pages = new ArrayList<Page>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		if(lang==null)lang = langdefault;
+		
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGES_BY_SECTIONID_WITH_NUMPAGE_BIGGER);			
+	   		pstm.setInt(1, sectionId);
+	   		pstm.setInt(2, numPage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			Page page = new Page();
+	   			page.setPageId(rs.getInt(DBFieldNames.s_PAGE_ID));
+	   			page.setNumPage(rs.getInt(DBFieldNames.s_NUM_PAGE));
+	   			
+	   			/*QuestionDB questionDB = new QuestionDB();
+	   			page.setQuestions(questionDB.getQuestionsByPageId(page.getPageId(), lang,langdefault));*/
 	   			
 	   			pages.add(page);
 	   		}
@@ -533,6 +603,27 @@ public class PageDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_PAGE_NUM_PAGE);
 			pstm.setInt(1, numPage);
+			pstm.setInt(2, pageId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
+	}
+
+	public void updateSectionId(int pageId, int sectionId) {
+		System.out.println("updateQuestionMandatory");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_PAGE_SECTIONID);
+			pstm.setInt(1, sectionId);
 			pstm.setInt(2, pageId);
 		   		
 			int numUpdated = pstm.executeUpdate();

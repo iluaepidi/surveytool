@@ -102,6 +102,7 @@ public class SurveysHandler {
 		Survey survey = surveyDB.getQuestionnairesById(surveyId,lang);
 		SectionDB sectionDB = new SectionDB();
 		survey.setSections(sectionDB.getSectionsBySurveyId(surveyId, lang, survey.getDefaultLanguage()));
+		survey.setFormaId(survey.getSections().get(0).getFormaId());
 		return survey;
 	}
 	

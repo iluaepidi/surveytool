@@ -45,6 +45,7 @@ public class Parameter {
 	public final static String s_RID = "rid";
 	public final static String s_SEND_POLL_BUTTON = "sendPoll";
 	public final static String s_SID = "sid";
+	public final static String s_FID = "fid";
 	public final static String s_SCID = "scid";
 	public final static String s_TITLE = "title";
 	public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";

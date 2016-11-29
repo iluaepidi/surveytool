@@ -12,6 +12,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 
 Page pag = (Page) request.getAttribute(Attribute.s_PAGE);
 request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
+boolean firstPageSection = Boolean.parseBoolean(request.getParameter("firstPageSection"));
 %>
 
 
@@ -23,7 +24,7 @@ request.setAttribute(Attribute.s_NUM_PAGE, pag.getNumPage());
 												<h4 class="col-sm-4 col-xs-4" tabindex="-1"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></h4>
 												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>	
 												<div class="col-sm-4 col-xs-6 right">
-													<% if(pag.getNumPage() > 1) { %>
+													<% if(!firstPageSection) { %>
 													<button class="remove-page-break">
 														<i class="fa fa-trash" aria-hidden="true"></i>
 														<%= lang.getContent("button.remove_pagebreak") %>

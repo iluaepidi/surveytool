@@ -131,6 +131,7 @@ public class DBSQLQueries {
 				+ "where q.idQuestionnaire = ? order by p.numPage";
 		
 		public final static String s_SELECT_PAGES_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage";
+		public final static String s_SELECT_PAGES_BY_SECTIONID_WITH_NUMPAGE_BIGGER = "SELECT * FROM surveytool.page where idSection = ? and numPage > ? order by numPage";
 		public final static String s_SELECT_PAGE_BY_SECTIONID_NUMPAGE = "SELECT * FROM surveytool.page where idSection = ? and numPage = ?";
 		public final static String s_SELECT_PAGE_BY_NUMPAGE_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? and numPage = ?";
 		public final static String s_SELECT_PAGES_ID_BY_SECTIONID = "SELECT * FROM surveytool.page where idSection = ? order by numPage desc";
@@ -144,6 +145,11 @@ public class DBSQLQueries {
 				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
 				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
 				+ "WHERE q.idQuestionnaire = ?  and p.numPage > ? order by p.numPage";
+		public final static String s_SELECT_PAGES_BY_SURVEYID = "SELECT p.* FROM surveytool.page AS p "
+				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
+				+ "WHERE q.idQuestionnaire = ? order by p.numPage";
 		public final static String s_SELECT_NUM_PAGES_BY_SURVEYID = "SELECT DISTINCT COUNT(p.idPage) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.page AS p "
 				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
 				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
@@ -460,11 +466,17 @@ public class DBSQLQueries {
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
 				+ "where s.idQuestionnaire = ? order by sc.`index`";
+		public final static String s_SELECT_SECTIONS_WITH_INDEX_BIGGER_THAN = "SELECT sc.* FROM surveytool.questionnaire s "
+				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
+				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
+				+ "where s.idQuestionnaire = ? and sc.`index` > ? order by sc.`index`";
 		public final static String s_SELECT_SECTION_BY_SURVEYID_INDEX = "SELECT sc.* FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
 				+ "where s.idQuestionnaire = ? and  sc.index = ?";
 		public final static String s_SELECT_SECTION_COTENTID_BY_ID = "SELECT idContent FROM surveytool.section where idSection = ?";
+		public final static String s_SELECT_SECTION_INDEX_BY_ID = "SELECT `index` FROM surveytool.section where idSection = ?";
+		public final static String s_SELECT_SECTION_BY_ID = "SELECT * FROM surveytool.section where idSection = ?";
 		public final static String s_SELECT_SECTION_NUM_ROWS_BY_SURVEYID = "SELECT count(*) " + DBFieldNames.s_NUM_ELEMENTS + " FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
@@ -563,6 +575,7 @@ public class DBSQLQueries {
 
 		//page
 			public final static String s_UPDATE_PAGE_NUM_PAGE = "UPDATE `surveytool`.`page` SET `numPage`=? WHERE `idPage`=?";
+			public final static String s_UPDATE_PAGE_SECTIONID = "UPDATE `surveytool`.`page` SET `idSection`=? WHERE `idPage`=?";
 		//poll
 			public final static String s_UPDATE_POLL_PROJECT = "UPDATE surveytool.poll SET idProject=? WHERE idPoll= ?";
 			public final static String s_UPDATE_POLL_CALL_URL = "UPDATE surveytool.poll SET callUrl=? WHERE idPoll= ?";
@@ -584,6 +597,8 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_QUESTIONNAIRE_PROJECT = "UPDATE surveytool.questionnaire SET idProject=? WHERE idQuestionnaire= ?";
 		//resources
 			public final static String s_UPDATE_RESOURCE_URLPATH = "UPDATE `surveytool`.`resoruces` SET `urlPath`=? WHERE `idResoruces`=?";
+		//section
+			public final static String s_UPDATE_SECTION_INDEX = "UPDATE `surveytool`.`section` SET `index`=? WHERE `idSection`=?";
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
 
