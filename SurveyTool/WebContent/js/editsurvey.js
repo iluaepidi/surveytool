@@ -1608,6 +1608,8 @@ $(function() {
 					   var sectionList = $('li[scid=' + ids[0] + ']').closest("ul.survey-sections");
 					   $('li[scid=' + ids[0] + ']').remove();
 					   sectionList.find("li.panel-section").each(function(indexSection, section){
+						   /*var cads = $(page).find('input.survey-section-title').val().split(' ');
+						   $(section).find('input.survey-section-title').val(cads[0] + " " + i);*/
 						   $(section).find('li.page').each(function(indexPage, page){
 							   var cads = $(page).find('h4').html().split(' ');
 								$(page).attr('index', i);
@@ -1681,7 +1683,7 @@ $(function() {
 		
 	});
 	
-	$('.survey-sections').on("focusout", "#survey-section-title", function(e){
+	$('.survey-sections').on("focusout", "input.survey-section-title", function(e){
 		e.stopPropagation();	
 		var req = {};		
 		req.text = $(this).val();
@@ -2411,7 +2413,24 @@ $(function() {
 					$(element).attr("index", index + 1);
 				});
 				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, host);
+				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
+			}
+			else
+			{
+				var currentSection = currentPage.closest("li.panel-section");
+				if(!currentSection.is(':first-child'))
+				{
+					var questions = currentSection.prev().find('li.page').last().find('ul.page-items');
+					
+					questions.append(question);
+					question.attr("index", questions.find("li.panel-question").size());
+					
+					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
+						$(element).attr("index", index + 1);
+					});
+				}
+				
+				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
 			}
 		}
 		else
@@ -2421,12 +2440,12 @@ $(function() {
 			var index = parseInt(question.attr("index"));
 			question.attr("index", index - 1);
 			var prevIndex = parseInt(prevQuestion.attr("index"));
-			prevQuestion.attr("index", prevIndex);
+			prevQuestion.attr("index", prevIndex + 1);
 			
 			var prevQid = 0;
 			if(!question.is(':first-child')) prevQid = question.prev().attr("qid");
 				
-			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, host);
+			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, "up", host);
 		}
 	});
 
@@ -2437,17 +2456,25 @@ $(function() {
 			var currentPage = question.closest("li.page");
 			if(!currentPage.is(':last-child'))
 			{
+				console.log("no last question");
 				var nextPage = currentPage.next();
 				var questions = nextPage.find("ul.page-items");
-				
-				question.insertBefore(questions.find("li.panel-question").first());
-				//console.log("first question: " + questions.find("li.panel-question").first().html());
 
-				questions.find("li.panel-question").each(function(index, element){
-					$(element).attr("index", index + 1);
-				});
+				insertQuestionNextPage(question, questions);		
 				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, host);
+				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
+			}
+			else
+			{
+				var currentSection = currentPage.closest("li.panel-section");
+				if(!currentSection.is(':last-child'))
+				{
+					var questions = currentSection.next().find('li.page').first().find('ul.page-items');
+					
+					insertQuestionNextPage(question, questions);		
+					
+					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
+				}
 			}
 		}
 		else
@@ -2459,7 +2486,7 @@ $(function() {
 			var prevIndex = parseInt(nextQuestion.attr("index"));
 			nextQuestion.attr("index", prevIndex - 1);
 			
-			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, host);
+			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
 		}
 		
 	});
@@ -2503,13 +2530,35 @@ $(function() {
 	});
 });
 
-function updateQuestionIndex(qid, prevQid, pid, changePage, host)
+function insertQuestionNextPage(question, questions)
+{
+
+	var numQuestions = questions.find("li.panel-question").size();
+	
+	if(numQuestions == 0)
+	{
+		question.attr("index", 1);
+		questions.append(question);
+	}
+	else
+	{
+		question.insertBefore(questions.find("li.panel-question").first());
+		//console.log("first question: " + questions.find("li.panel-question").first().html());
+
+		questions.find("li.panel-question").each(function(index, element){
+			$(element).attr("index", index + 1);
+		});
+	}	
+}
+
+function updateQuestionIndex(qid, prevQid, pid, changePage, action, host)
 {
 	var req = {};		
 	req.qid = qid;
 	req.prevId = prevQid;
 	req.pid = pid;
 	req.changePage = changePage;
+	req.action = action;
 	console.log("Dragged: " + JSON.stringify(req));
 	$.ajax({ 
 		   type: "PUT",

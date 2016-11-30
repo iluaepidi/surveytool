@@ -9,11 +9,13 @@ import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
+import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class QuestionHandler {
@@ -134,7 +136,7 @@ public class QuestionHandler {
 		return parameters;
 	}	
 	
-	public boolean updateIndex(int questionId, int prevQuestionId, int pageId, boolean changePage)
+	public boolean updateIndex(int questionId, int prevQuestionId, int pageId, boolean changePage, String action)
 	{
 		boolean updated = false;
 		QuestionDB questionDB = new QuestionDB();
@@ -146,7 +148,7 @@ public class QuestionHandler {
 			int prevIndex = questionDB.getQuestionByPageIndex(prevQuestionId, pageId);
 			List<Question> questions = questionDB.getQuestionsByPageId(pageId, currrentIndex, prevIndex);	
 			
-			if(prevIndex != 0 || questions.get(0).getQuestionId() != questionId)
+			if(prevIndex != 0 || (!questions.isEmpty() && questions.get(0).getQuestionId() != questionId))
 			{		
 				for(int i = 0; i < questions.size(); i++)
 				{
@@ -173,18 +175,40 @@ public class QuestionHandler {
 				}
 			}
 		}
-		else if(currrentIndex == 1)
+		else if(action.equals("up"))
 		{
 			PageDB pageDB = new PageDB();
 			Page page = pageDB.getPageByPageId(pageId);
 			Page previousPage = pageDB.getPageByNumPageSectionId(page.getSectionId(), page.getNumPage() - 1);
-			int numQuestions = pageDB.getNumQuestionByPage(previousPage.getPageId());
-			questionDB.updateQuestionIndexPageId(questionId, pageId, previousPage.getPageId(), numQuestions + 1);
-			
-			List<Question> questions = questionDB.getQuestionsIdIndexByPageId(pageId);
-			for(int i = 0; i < questions.size(); i++)
+			if(previousPage != null)
 			{
-				questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, i + 1);
+				int numQuestions = pageDB.getNumQuestionByPage(previousPage.getPageId());
+				questionDB.updateQuestionIndexPageId(questionId, pageId, previousPage.getPageId(), numQuestions + 1);
+				
+				List<Question> questions = questionDB.getQuestionsIdIndexByPageId(pageId);
+				for(int i = 0; i < questions.size(); i++)
+				{
+					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, i + 1);
+				}
+			}
+			else
+			{
+				SectionDB sectionDB = new SectionDB();
+				Section currentSection = sectionDB.getSectionBySectionId(page.getSectionId());
+				if(currentSection.getIndex() > 1)
+				{
+					Section previousSection = sectionDB.getSectionByFormaIdIndex(currentSection.getFormaId(), currentSection.getIndex() - 1);
+					previousPage = pageDB.getPageByNumPageSectionId(previousSection.getSectionId(), page.getNumPage() - 1);
+					
+					int numQuestions = pageDB.getNumQuestionByPage(previousPage.getPageId());
+					questionDB.updateQuestionIndexPageId(questionId, pageId, previousPage.getPageId(), numQuestions + 1);
+					
+					List<Question> questions = questionDB.getQuestionsIdIndexByPageId(pageId);
+					for(int i = 0; i < questions.size(); i++)
+					{
+						questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), pageId, i + 1);
+					}
+				}
 			}
 		}
 		else
@@ -195,12 +219,32 @@ public class QuestionHandler {
 			{
 				Page page = pageDB.getPageByPageId(pageId);
 				Page nextPage = pageDB.getPageByNumPageSectionId(page.getSectionId(), page.getNumPage() + 1);
-				List<Question> questions = questionDB.getQuestionsIdIndexByPageId(nextPage.getPageId());
-				for(int i = 0; i < questions.size(); i++)
+				if(nextPage != null)
 				{
-					questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), nextPage.getPageId(), i + 2);
+					List<Question> questions = questionDB.getQuestionsIdIndexByPageId(nextPage.getPageId());
+					for(int i = 0; i < questions.size(); i++)
+					{
+						questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), nextPage.getPageId(), i + 2);
+					}
+					questionDB.updateQuestionIndexPageId(questionId, pageId, nextPage.getPageId(), 1);
 				}
-				questionDB.updateQuestionIndexPageId(questionId, pageId, nextPage.getPageId(), 1);
+				else
+				{
+					SectionDB sectionDB = new SectionDB();
+					Section currentSection = sectionDB.getSectionBySectionId(page.getSectionId());
+					Section nextSection = sectionDB.getSectionByFormaIdIndex(currentSection.getFormaId(), currentSection.getIndex() + 1);
+					if(nextSection != null)
+					{
+						nextPage = pageDB.getPageByNumPageSectionId(nextSection.getSectionId(), page.getNumPage() + 1);
+						
+						List<Question> questions = questionDB.getQuestionsIdIndexByPageId(nextPage.getPageId());
+						for(int i = 0; i < questions.size(); i++)
+						{
+							questionDB.updateQuestionIndex(questions.get(i).getQuestionId(), nextPage.getPageId(), i + 2);
+						}
+						questionDB.updateQuestionIndexPageId(questionId, pageId, nextPage.getPageId(), 1);
+					}
+				}
 			}
 		}
 		

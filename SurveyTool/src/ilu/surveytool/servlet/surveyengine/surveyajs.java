@@ -74,7 +74,7 @@ public class surveyajs extends HttpServlet {
 		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
 		
 		//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
-		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, 1, anonimousUser, language);
+		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
 		System.out.println("Json: " + survey.toString());
 
 		request.setAttribute(Attribute.s_SURVEY_INFO, survey);

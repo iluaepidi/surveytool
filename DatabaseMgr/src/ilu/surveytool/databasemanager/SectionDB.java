@@ -78,6 +78,71 @@ public class SectionDB {
 		
 		return section;
 	}
+
+	public Section getSectionBySurveyIdNumPage(int surveyId, int numPage)
+	{
+		Section section = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_NUMPAGE);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, numPage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			section = new Section();
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+
+	public Section getSectionByFormaIdIndex(int formaId, int index)
+	{
+		Section section = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_FORMAID_INDEX);			
+	   		pstm.setInt(1, formaId);
+	   		pstm.setInt(2, index);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			section = new Section();
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+	
 	public List<Section> getSectionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Section> sections = new ArrayList<Section>();

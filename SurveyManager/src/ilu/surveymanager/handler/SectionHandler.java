@@ -91,6 +91,7 @@ public class SectionHandler {
 		SectionDB sectionDB = new SectionDB();
 		
 		int numSections = sectionDB.getNumSectionsBySurveyId(surveyId);
+		int indexSection = sectionDB.getSectionIndexBySectionId(sectionId);
 		
 		if(numSections > 1)
 		{
@@ -102,6 +103,12 @@ public class SectionHandler {
 			{
 				pageDB.updateNumPage(page.getPageId(), i);
 				i++;
+			}
+			
+			List<Section> sections = sectionDB.getSectionsWithIndexBiggerThan(surveyId, indexSection);
+			for(Section section : sections)
+			{
+				sectionDB.updateIndex(section.getSectionId(), section.getIndex() - 1);
 			}
 		}
 		else

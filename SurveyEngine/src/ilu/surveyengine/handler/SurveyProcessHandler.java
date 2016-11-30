@@ -16,6 +16,7 @@ import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
@@ -36,11 +37,16 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 
-	public JSONObject getCurrentPageJson(String publicId, int numSection, Object anonimousUser, String lang)
+	public JSONObject getCurrentPageJson(String publicId, Object anonimousUser, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		if(lang == null || lang.isEmpty()) lang = "en";		
 		
+		SectionDB sectionDB = new SectionDB();
+		Section section = sectionDB.getSectionBySurveyIdNumPage(((AnonimousUser) anonimousUser).getSurveyId(), ((AnonimousUser) anonimousUser).getCurrentPage());
+		int numSection = 0;
+		if(section != null) numSection = section.getIndex();
+			
 		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, anonimousUser, lang);
 		try {
 			survey.put("hasFinishPage", this.isFinishPage(survey.getInt("surveyId"), survey.getInt("numPages")));
@@ -58,13 +64,14 @@ public class SurveyProcessHandler {
 		int page = -1;
 		
 		SectionDB sectionDB = new SectionDB();
-		int numSection = 0;
+		/*int numSection = 0;
 		List<Section> sections = sectionDB.getSectionsBySurveyId(surveyId, lang, null);
 		if (sections!=null && !sections.isEmpty())
-			numSection = sections.get(0).getSectionId();
+			numSection = sections.get(0).getSectionId();*/
+		Section section = sectionDB.getSectionBySurveyIdNumPage(surveyId, numPage);
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		responsesDB.insertNewPage(numPage, anonimousUser, numSection);
+		responsesDB.insertNewPage(numPage, anonimousUser, section.getSectionId());
 		
 		
 		

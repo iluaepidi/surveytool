@@ -20,12 +20,14 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
 	descriptionText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION).getText(); 
 }
 %>
-<script>
-	placeholderBContent = "<%= lang.getContent("placeholder.type_here") %>";
-</script>
+
 
 										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
-	
+											
+											<script>
+												placeholderBContent = "<%= lang.getContent("placeholder.type_here") %>";
+											</script>
+											
 											<jsp:include page="eqComponents/eqMoveButtons.jsp" />
 					  						
 											<div class="panel-question-content">
