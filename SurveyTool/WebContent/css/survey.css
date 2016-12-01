@@ -118,7 +118,7 @@
 	width:2em;
 	right:-2.2em;
 	top:0px;
-	color:#f00;
+	color:#BA0C2F;
 	text-align:left;
 	font-size:3em;
 	line-height:.9;
@@ -156,6 +156,11 @@
 #form-question .checkbox input[type=checkbox]:checked + label span{
 	background-color:#016FB8;
 	color:#fff;
+}
+#form-question .likert-options input[type=radio]:checked + label span{
+	background-color:#016FB8;
+	color:#fff;
+	padding: 5px;
 }
 #form-question .checkbox label span{
 	display:inline-block;
@@ -434,7 +439,7 @@
 	margin-left:2.5em;
 }
 .error-summary{
-	border:2px solid #f00;
+	border:2px solid #BA0C2F;
 	padding:1em 2em 1em 45px;
 	background:#fff url(../img/exclamation.png) left center no-repeat;
 	margin-bottom:1em;

@@ -25,31 +25,31 @@
 					 	<div class="likert-options-frame">
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="1" id="likert1-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert1-{{question.questionId}}">1</label>
+					 			<label for="likert1-{{question.questionId}}"><span>1</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="2" id="likert2-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert2-{{question.questionId}}">2</label>
+					 			<label for="likert2-{{question.questionId}}"><span>2</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="3" id="likert3-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert3-{{question.questionId}}">3</label>
+					 			<label for="likert3-{{question.questionId}}"><span>3</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="4" id="likert4-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert4-{{question.questionId}}">4</label>
+					 			<label for="likert4-{{question.questionId}}"><span>4</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="5" id="likert5-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert5-{{question.questionId}}">5</label>
+					 			<label for="likert5-{{question.questionId}}"><span>5</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="6" id="likert6-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert6-{{question.questionId}}">6</label>
+					 			<label for="likert6-{{question.questionId}}"><span>6</span></label>
 					 		</span>
 					 		<span>
 					 			<input type="radio" name="{{question.questionId}}" ng-value="7" id="likert7-{{question.questionId}}" ng-model="question.response" ng-focus="setIndexQuestion(question.index)"/>
-					 			<label for="likert7-{{question.questionId}}">7</label>
+					 			<label for="likert7-{{question.questionId}}"><span>7</span></label>
 					 		</span>
 					 	</div>
 					 </div>	
