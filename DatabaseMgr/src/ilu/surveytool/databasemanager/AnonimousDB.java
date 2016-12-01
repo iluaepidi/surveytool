@@ -92,6 +92,35 @@ public class AnonimousDB {
 		return anonimousUser;
 	}
 
+	public boolean existAnonimousUserByIpAddressPollPublicId(int pollId, String ipAddress)
+	{
+		boolean exist = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_POLLID);			
+	   		pstm.setString(1, ipAddress);
+	   		pstm.setInt(2, pollId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			exist = true;
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return exist;
+	}
+
 	/**
 	 * Update
 	 */

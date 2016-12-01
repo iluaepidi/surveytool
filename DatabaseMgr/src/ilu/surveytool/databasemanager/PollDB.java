@@ -173,6 +173,34 @@ public class PollDB {
 		return response;
 	}
 
+	public Integer getPollIdByPublicId(String publicId)
+	{
+		Integer pollId = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLLID_BY_PUBLICID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			pollId = rs.getInt(DBFieldNames.s_POLL_ID);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pollId;
+	}
+	
 	public Poll getPollById(int pollId, String lang)
 	{
 		Poll response = null;

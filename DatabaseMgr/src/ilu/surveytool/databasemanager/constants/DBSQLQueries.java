@@ -179,6 +179,7 @@ public class DBSQLQueries {
 				+ "where p.idPoll = ?";
 		public final static String s_SELECT_POLL_PROJECTID = "SELECT idProject FROM surveytool.poll WHERE idPoll = ?";
 		public final static String s_SELECT_POLL_ID_BY_PUBLICID = "SELECT idPoll FROM surveytool.poll WHERE idProject = ?";
+		public final static String s_SELECT_POLLID_BY_PUBLICID = "SELECT idPoll FROM surveytool.poll WHERE publicId = ?";
 		
 		//poll response
 		public final static String s_SELECT_POLL_RESPONSES_RESUME = "SELECT o.idOption, c.text, (SELECT count(*) FROM surveytool.responses where value = o.idOption) numResp "
@@ -191,6 +192,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where qbp.idPoll = ? and l.isoName = ? and ct.name = 'title' "
 				+ "order by numResp desc";
+		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_POLLID = "SELECT r.idPoll FROM surveytool.anonimoususer AS au "
+				+ "INNER JOIN surveytool.anonimousresponse as ar ON ar.idAnonimousUser = au.idAnonimousUser "
+				+ "INNER JOIN surveytool.responses as r ON r.idResponse = ar.idResponse "
+				+ "WHERE au.ipAddres = ? and r.idPoll = ?";
 				
 		//project
 		public final static String s_SELECT_PROJECT_BY_NAME = "SELECT * FROM surveytool.project where projectName = ?";

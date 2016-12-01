@@ -21,7 +21,7 @@ public class PollProcessHandler {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public int storePollResponse(Response response)
+	public int storePollResponse(Response response, String ipAddr)
 	{
 		int anonymousUserId = 0;
 		
@@ -29,7 +29,7 @@ public class PollProcessHandler {
 		{
 			AnonimousDB anonimousDB = new AnonimousDB();
 			ResponsesDB responsesDB = new ResponsesDB();
-			anonymousUserId = anonimousDB.insertAnonimousUser(0);
+			anonymousUserId = anonimousDB.insertAnonimousUser(0, ipAddr, 1);
 			if(anonymousUserId != 0)
 			{
 				int responseId = responsesDB.insertResponse(response);
