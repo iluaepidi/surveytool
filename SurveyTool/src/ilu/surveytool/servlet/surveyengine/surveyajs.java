@@ -61,11 +61,14 @@ public class surveyajs extends HttpServlet {
 		String language = request.getParameter(Parameter.s_LANGUAGE_SURVEY);
 		SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();
 		
+		boolean preview = request.getParameter("preview") != null;
+		//System.out.println("preview param: " + preview);
+		
 		AnonimousUser anonimousUser = new AnonimousUser();
 		anonimousUser.setIpAddress(request.getRemoteAddr());
 		anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
 		anonimousUser.setCurrentPage(1);
-		anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
+		if(!preview) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
 		request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 		
 		//System.out.println("SID: " + sid + " - Language: " + language);
@@ -91,7 +94,10 @@ public class surveyajs extends HttpServlet {
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
 		jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
-		jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
+		
+		if(preview) jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY_PREVIEW));
+		else jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
+		
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_ANGULAR_API));
 		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_ANGULAR_EMBED));
 		request.setAttribute(Attribute.s_JS_FILES, jsFiles);

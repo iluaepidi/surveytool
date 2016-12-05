@@ -60,13 +60,15 @@ public class poll extends HttpServlet {
 		if(language == null || language.isEmpty()) language = "en";
 		
 		System.out.println("SID: " + pid + " - Language: " + language + " - Ip Address: " + request.getRemoteAddr());
+		
+		boolean preview = request.getParameter("preview") != null;
 
 		String ipAddress = request.getRemoteAddr();
 		PollDB pollDB = new PollDB();
 		int pollId = pollDB.getPollIdByPublicId(pid);
 		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress))
+		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) || preview)
 		{
 			PollHandler pollHandler = new PollHandler();
 			Poll poll = pollHandler.getPollDetailByPublicId(pid, language);
@@ -76,6 +78,7 @@ public class poll extends HttpServlet {
 			
 			SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_QUESTION));
+			request.setAttribute(Attribute.s_IS_PREVIEW, preview);
 			CommonCode.redirect(request, response, Address.s_MASTER_POLL);
 		}
 		else

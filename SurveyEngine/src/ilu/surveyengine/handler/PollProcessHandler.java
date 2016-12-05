@@ -29,7 +29,7 @@ public class PollProcessHandler {
 		{
 			AnonimousDB anonimousDB = new AnonimousDB();
 			ResponsesDB responsesDB = new ResponsesDB();
-			anonymousUserId = anonimousDB.insertAnonimousUser(0, ipAddr, 1);
+			anonymousUserId = anonimousDB.insertAnonimousUser(0, ipAddr, 1, false);
 			if(anonymousUserId != 0)
 			{
 				int responseId = responsesDB.insertResponse(response);
@@ -85,6 +85,24 @@ public class PollProcessHandler {
 			float percentage = Float.parseFloat(Integer.toString(Math.round(((numResp * 100) / totalResponses) * 100))) / 100;
 			results.get(i).setPercentage(percentage);
 			//results.get(i).setPercentage( (float) (Math.round(((results.get(i).getNumResposnes() * 100) / totalResponses) * 100) / 100));
+		}
+		
+		return results;
+	}
+
+	public List<PollResultResume> getPollPreviewResultsResume(int pollId, String lang)
+	{
+		List<PollResultResume> results = new ArrayList<PollResultResume>();
+		
+		PollDB pollDB = new PollDB();
+		results = pollDB.getPollResponsesResume(pollId, lang);
+		
+		int numOptions = results.size();
+		float percentage = 100 / numOptions;
+				
+		for(int i = 0; i < results.size(); i++)
+		{
+			results.get(i).setPercentage(percentage);
 		}
 		
 		return results;

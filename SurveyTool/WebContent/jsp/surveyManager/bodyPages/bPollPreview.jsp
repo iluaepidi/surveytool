@@ -30,7 +30,7 @@
 	  					<div class="code-poll-frame">
   							<h3><%= lang.getContent("poll.preview.section.preview") %></h3>
 	  						<div class="iframe-example">
-	  							<iframe id="iframe" title="<%= lang.getContent("poll.preview.iframe.title") %>" src="<%= pollUrl %>" frameborder="0" aria-atomic="true" aria-live="assertive" style="width: <%= width %>px; height: <%= height %>px;"></iframe>
+	  							<iframe id="iframe" title="<%= lang.getContent("poll.preview.iframe.title") %>" src="<%= pollUrl + "&preview" %>" frameborder="0" aria-atomic="true" aria-live="assertive" style="width: <%= width %>px; height: <%= height %>px;"></iframe>
 	  						</div>
   						</div>
 	  				</div>

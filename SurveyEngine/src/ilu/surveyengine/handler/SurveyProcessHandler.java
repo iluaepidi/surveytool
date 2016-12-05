@@ -58,7 +58,7 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 		
-	public int getPageNumber(int surveyId, int numPage, String action, JSONArray questions, int anonimousUser, String lang)
+	public int getPageNumber(int surveyId, int numPage, String action, JSONArray questions, int anonimousUser, String lang, boolean isPreview)
 	{
 		//System.out.println("In getPageNumber ("+numPage+"): "+json);
 		int page = -1;
@@ -71,10 +71,7 @@ public class SurveyProcessHandler {
 		Section section = sectionDB.getSectionBySurveyIdNumPage(surveyId, numPage);
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		responsesDB.insertNewPage(numPage, anonimousUser, section.getSectionId());
-		
-		
-		
+		if(!isPreview) responsesDB.insertNewPage(numPage, anonimousUser, section.getSectionId());
 		
 		if (action.equals("next")){
 			//Select the goTos related to the questions/responses in the current page
@@ -124,10 +121,10 @@ public class SurveyProcessHandler {
 	}
 	
 	
-	public AnonimousUser existAnonimousUser(AnonimousUser anonimousUser)
+	public AnonimousUser existAnonimousUser(AnonimousUser anonimousUser, boolean isPreview)
 	{		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		AnonimousUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(anonimousUser.getSurveyId(), anonimousUser.getIpAddress());
+		AnonimousUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(anonimousUser.getSurveyId(), anonimousUser.getIpAddress(), isPreview);
 		if(anonimousUser2 != null)
 		{
 			anonimousUser = anonimousUser2;
@@ -162,7 +159,7 @@ public class SurveyProcessHandler {
 		return stored;
 	}
 
-	public boolean anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses)
+	public boolean anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses, boolean isPreview)
 	{
 		boolean stored = true;
 		
@@ -176,7 +173,7 @@ public class SurveyProcessHandler {
 			int surveyId = responses.getInt("surveyId");
 			JSONObject page = responses.getJSONObject("page");
 			int anonymousUserId = anonimousUser.getId();
-			if(anonymousUserId == 0) anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"));
+			if(anonymousUserId == 0) anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"), isPreview);
 			if(anonymousUserId != 0)
 			{
 				JSONArray questions = page.getJSONArray("questions");

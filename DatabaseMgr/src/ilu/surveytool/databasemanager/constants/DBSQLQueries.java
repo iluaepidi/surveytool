@@ -19,7 +19,7 @@ public class DBSQLQueries {
 		        + "inner join surveytool.section as s on s.idSection = p.idSection "
 		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
 				+ "where au.idQuestionnaire = ? order by au.idAnonimousUser";
-		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ?";
+		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ? and testUser = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
 		+ "FROM surveytool.anonimoususer as au "
@@ -503,7 +503,7 @@ public class DBSQLQueries {
 			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`) VALUES (?,?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
-			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`) VALUES (?, ?, ?)";
+			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`, `testUser`) VALUES (?, ?, ?, ?)";
 		//AnonimousResponse
 			public final static String s_INSERT_ANONIMOUS_RESPONSE = "INSERT INTO `surveytool`.`anonimousresponse` (`idAnonimousUser`, `idResponse`) VALUES (?, ?)";
 		//content

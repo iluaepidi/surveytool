@@ -91,7 +91,7 @@
 			            		$('#survey-preview_btn').click(function(publicid){
 			            			
 			            			langselect = $('#survey-language-version').val();
-			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey='+langselect,'_blank');
+			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
 			            			
 			            		});
 			            		

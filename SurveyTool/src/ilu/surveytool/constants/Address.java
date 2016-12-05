@@ -46,6 +46,7 @@ public class Address {
 		public final static String s_JS_YOUTUBE_ANGULAR_EMBED = "youtubeAlgunar";
 		
 		public final static String s_NG_SERVICE_SURVEY = "ngSurveyService";
+		public final static String s_NG_SERVICE_SURVEY_PREVIEW = "ngSurveyPreviewService";
 		
 		public final static String s_NG_CONTROLLER_SURVEY = "ngSurveyController";
 		

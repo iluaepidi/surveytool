@@ -49,6 +49,10 @@ public class SurveyProcessService {
 			SurveyProcessHandler surveyProcessHandler = new SurveyProcessHandler();    	    	
 			json = new JSONObject(req);
 			
+			boolean isPreview = false;
+			if(json.has("isPreview")) isPreview = json.getBoolean("isPreview");
+			System.out.println("Preview: " + isPreview);
+			
 	    	if(lang ==  null)
 	    	{
 	    		lang = new Language(context.getRealPath("/")); 
@@ -62,14 +66,14 @@ public class SurveyProcessService {
 				anonimousUser = new AnonimousUser();
 				anonimousUser.setIpAddress(request.getRemoteAddr());
 				anonimousUser.setSurveyId(json.getInt("surveyId"));
-				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
+				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
 			}
 			
-			boolean stored = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json);
+			boolean stored = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json, isPreview);
 			
 			if(stored && anonimousUser.getId() == 0)
 			{
-				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser);
+				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
 			}
 			
 			response.put("stored", stored);
@@ -79,7 +83,7 @@ public class SurveyProcessService {
 				int numPage = json.getJSONObject("page").getInt("numPage");	
 				String action = json.getString("action");
 				
-				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json.getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage());
+				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json.getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage(), false);
 											
 				anonimousUser.setCurrentPage(numPage);
 				surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				
@@ -92,7 +96,7 @@ public class SurveyProcessService {
 					//The body content is a question, so this while considers that the final page contains one question (the body content with the thanks message)
 					while((survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){
 						numPage = survey.getJSONObject("section").getJSONObject("page").getInt("numPage");	
-						numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage());
+						numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage(), false);
 													
 						anonimousUser.setCurrentPage(numPage);
 						surveyProcessHandler.updateAnonimousUserCurrentPage(anonimousUser.getId(), numPage);				

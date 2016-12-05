@@ -60,7 +60,7 @@ public class AnonimousDB {
 	 */
 	
 
-	public AnonimousUser getAnonimousUserByIpAddress(int surveyId, String ipAddress)
+	public AnonimousUser getAnonimousUserByIpAddress(int surveyId, String ipAddress, boolean isPreview)
 	{
 		AnonimousUser anonimousUser = null;
 		
@@ -72,6 +72,7 @@ public class AnonimousDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID);			
 	   		pstm.setString(1, ipAddress);
 	   		pstm.setInt(2, surveyId);
+	   		pstm.setBoolean(3, isPreview);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
@@ -223,7 +224,7 @@ public class AnonimousDB {
 		return anonimousUserId;
 	}
 
-	public int insertAnonimousUser(int surveyId, String ipAddress, int numPage) 
+	public int insertAnonimousUser(int surveyId, String ipAddress, int numPage, boolean isPreview) 
 	{		
 		int anonimousUserId = 0;
 
@@ -241,6 +242,7 @@ public class AnonimousDB {
 		   
 		   pstm.setString(2, ipAddress);
 		   pstm.setInt(3, numPage);
+		   pstm.setBoolean(4, isPreview);
 		   
 		   boolean notInserted = pstm.execute();
 		   

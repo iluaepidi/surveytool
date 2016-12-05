@@ -57,11 +57,13 @@ public class PollProcessServlet extends HttpServlet {
 		Response pollRes = null;
 		int pollId = Integer.parseInt(request.getParameter(Parameter.s_PID));
 		String ipAddress = request.getRemoteAddr();
+		
+		boolean preview = request.getParameter("preview") != null;
 				
 		PollProcessHandler ppHandler = new PollProcessHandler();
 		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress))
+		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) && !preview)
 		{
 		
 			while(paramNames.hasMoreElements())
@@ -91,7 +93,8 @@ public class PollProcessServlet extends HttpServlet {
 		
 		request.setAttribute(Attribute.s_POLL_INFO, ppHandler.getPollDetail(pollId, language));
 		
-		request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollResultsResume(pollId, language));
+		if(preview) request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollPreviewResultsResume(pollId, language));
+		else request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollResultsResume(pollId, language));
 		
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_RESULT));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");
