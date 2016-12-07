@@ -18,7 +18,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
 		        + "inner join surveytool.section as s on s.idSection = p.idSection "
 		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
-				+ "where au.idQuestionnaire = ? order by au.idAnonimousUser";
+				+ "where au.idQuestionnaire = ? and au.testUser = ? order by au.idAnonimousUser";
 		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ? and testUser = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
@@ -31,7 +31,7 @@ public class DBSQLQueries {
         + "inner join surveytool.page as p on p.idPage = qbp.idPage "
         + "inner join surveytool.section as s on s.idSection = p.idSection "
         + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
-		+ "where au.idQuestionnaire = ? order by idAnonimousUser";
+		+ "where au.idQuestionnaire = ? and au.testUser = ? order by idAnonimousUser";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_POLL_ID = "SELECT au.idAnonimousUser, r.idQuestion, "
 				+ "if(qt.name = 'simple', "

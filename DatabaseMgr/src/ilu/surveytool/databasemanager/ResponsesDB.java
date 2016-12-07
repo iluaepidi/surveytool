@@ -69,6 +69,7 @@ public class ResponsesDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID);			
 	   		pstm.setInt(1, surveyId);
+	   		pstm.setBoolean(2, false);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
@@ -92,7 +93,7 @@ public class ResponsesDB {
 	   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
 	   			}
 	   			String value = rs.getString(DBFieldNames.s_VALUE);
-	   			if(value.isEmpty()) {
+	   			if(value != null && value.isEmpty()) {
 	   				//System.out.println("Response " + rs.getString(DBFieldNames.s_RESPONSE_ID) + ": " + value);
 	   				OptionDB optionDB = new OptionDB();
 	   				int resourceId = optionDB.getResourceIdByOptionId(Integer.parseInt(rs.getString(DBFieldNames.s_OPTIONID)));
@@ -179,6 +180,7 @@ public class ResponsesDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID);			
 	   		pstm.setInt(1, surveyId);
+	   		pstm.setBoolean(2, false);
 	   		//System.out.println(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID+": "+surveyId);
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())

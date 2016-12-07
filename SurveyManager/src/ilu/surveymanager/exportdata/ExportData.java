@@ -107,7 +107,17 @@ public class ExportData {
 								for(int o = 0; o < osize; o++)
 								{
 									cell3 = row3.createCell(desp);
-									cell3.setCellValue(optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+									String optionLabel = "";
+									if(optionGroup.getOptions().get(o).getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) && optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() != null && !optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
+									{
+										optionLabel = optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+									}
+									else
+									{
+										optionLabel = optionGroup.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+									}
+									System.out.println("option label excel: " + optionLabel);
+									cell3.setCellValue(optionLabel);
 									sheet.autoSizeColumn(desp);
 									desp++;
 								}
@@ -171,7 +181,8 @@ public class ExportData {
 									{
 										if(optionGroups != null)
 										{
-											if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+											if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText())
+													|| values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
 											{
 												cell = row.createCell(desp);
 												cell.setCellValue("yes");
