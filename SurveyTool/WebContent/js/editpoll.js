@@ -172,14 +172,14 @@ $(function() {
 								'<input id="option" type="text" class="option-title form-control fleft" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-option" id="remove-option" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 
-	$('.edit-poll-content').on("click", "#remove-option", function(e){
+	$('.edit-poll-content').on("click", "button.remove-option", function(e){
 		console.log("Remove option");
 		currentQuestion = $("#qstatement").attr('qid');		
 		var item = $(this).closest('li');

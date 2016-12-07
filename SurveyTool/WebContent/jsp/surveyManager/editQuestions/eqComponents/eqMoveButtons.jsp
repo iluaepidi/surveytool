@@ -15,9 +15,12 @@
 		    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 		    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 		    								}
-						  					%>
-
+						  					
+											if(request.getAttribute(Attribute.s_ADD_QUESTIONS)==null || (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+											
     										<div class="up-down-buttons">
 												<button id="moveup-question-<%= question.getQuestionId() %>" class="btn-transparent moveup-question-arrow" aria-label="<%= lang.getContent("button.question.move.up") %>: <%= title %>"><i class="fa fa-caret-up fa-2x" aria-hidden="true"></i></button>
 												<button id="movedown-question-<%= question.getQuestionId() %>" class="btn-transparent movedown-question-arrow" aria-label="<%= lang.getContent("button.question.move.down") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
 											</div>
+											
+											<%} %>

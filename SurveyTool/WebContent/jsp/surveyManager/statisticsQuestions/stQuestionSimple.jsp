@@ -1,3 +1,7 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="ilu.surveytool.databasemanager.ContentDB"%>
+<%@page import="ilu.surveytool.databasemanager.ResourceDB"%>
+<%@page import="ilu.surveytool.databasemanager.OptionDB"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%> 
@@ -67,15 +71,27 @@ List<Option> o = sQ.getOptions();
 						int idoption = ((Option)(o.get(i))).getId();
 						for(int j=0;j<obg.size();j++){
 			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
-			    				if(((Option)(o.get(i))).getContents().get("text") != null)
+			    				if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty())
 			    				{%>
 			    				<%= ((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>, <%= (int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0))%>
 			    				<%
 			    				}
-			    				else
+			    				else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
 			    				{
 			    				%>
 			    				<%= ((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText()%>, <%= (int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0))%>
+			    				<%	
+			    				}
+			    				else
+			    				{
+			    					OptionDB optionDB = new OptionDB();
+			    	   				int resourceId = optionDB.getResourceIdByOptionId(((Option)(o.get(i))).getId());
+			    	   				ResourceDB resourceDB = new ResourceDB();
+			    	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+			    	   				ContentDB contentDB = new ContentDB();
+			    	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang.getCurrentLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+			    				%>
+			    				<%= contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() %>, <%= (int)Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0))%>
 			    				<%	
 			    				}
 			    				%>
@@ -99,10 +115,18 @@ List<Option> o = sQ.getOptions();
 					//System.out.println("Size of options:"+o.size());
 					for(int i = 0; i<o.size();i++){
 						int idoption = ((Option)(o.get(i))).getId();
-						if(((Option)(o.get(i))).getContents().get("text") != null) {
+						if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty()) {
 							labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
-						} else {
+						} else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty()) {
 							labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+						} else {
+							OptionDB optionDB = new OptionDB();
+	    	   				int resourceId = optionDB.getResourceIdByOptionId(((Option)(o.get(i))).getId());
+	    	   				ResourceDB resourceDB = new ResourceDB();
+	    	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+	    	   				ContentDB contentDB = new ContentDB();
+	    	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang.getCurrentLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	    	   				labels.add(contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
 						}
 			    		for(int j=0;j<obg.size();j++){
 			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){

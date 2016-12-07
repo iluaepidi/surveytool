@@ -2447,6 +2447,7 @@ $(function() {
 				
 			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, "up", host);
 		}
+		$(this).focus();
 	});
 
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
@@ -2488,7 +2489,7 @@ $(function() {
 			
 			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
 		}
-		
+		$(this).focus();
 	});
 	
 	$('#listcompletequotas').on("click", "#removeQuota", function(e){

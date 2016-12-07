@@ -1,3 +1,7 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="ilu.surveytool.databasemanager.ContentDB"%>
+<%@page import="ilu.surveytool.databasemanager.ResourceDB"%>
+<%@page import="ilu.surveytool.databasemanager.OptionDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="java.util.List"%>
@@ -90,10 +94,18 @@ List<Option> o = sQ.getOptions();
 										
 										int idoption = ((Option)(o.get(i))).getId();
 		    		    				//System.out.println("New push de labels");
-		    		    				if(((Option)(o.get(i))).getContents().get("text") != null) {
+		    		    				if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty()) {
 											labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
-										} else {
+										} else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty()) {
 											labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+										} else {
+											OptionDB optionDB = new OptionDB();
+					    	   				int resourceId = optionDB.getResourceIdByOptionId(((Option)(o.get(i))).getId());
+					    	   				ResourceDB resourceDB = new ResourceDB();
+					    	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+					    	   				ContentDB contentDB = new ContentDB();
+					    	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang.getCurrentLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+					    	   				labels.add(contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
 										}
 									%>
 										labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>");
