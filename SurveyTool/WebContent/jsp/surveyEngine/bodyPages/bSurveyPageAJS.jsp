@@ -63,7 +63,7 @@
 	  						
 	  						<div class="survey-form col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">
 	  						
-								<div class="error-summary" ng-show="surveyError || mandatoryError">
+								<div class="error-summary" ng-show="surveyError || mandatoryError" focus-on="surveyError || mandatoryError" tabindex="-1">
 									<p class="msg-title" role="alert"><%= lang.getContent("survey.process.main.error.title") %>:</p>
 									<p class="msg-body" ng-show="surveyError" role="alert"><%= lang.getContent("survey.process.main.error.desc.error") %></p>
 									<p class="msg-body" ng-show="mandatoryError" role="alert"><%= lang.getContent("survey.process.main.error.desc.mandatory") %></p>

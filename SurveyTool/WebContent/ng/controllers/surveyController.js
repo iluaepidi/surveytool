@@ -227,10 +227,18 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 			
 		}
 		
-		if(mandatoryErrorQuestions.length != 0) $scope.mandatoryError = true;
+		if(mandatoryErrorQuestions.length != 0)
+		{
+			$scope.mandatoryError = true;
+			$(".error-summary").focus();
+		}
 		else $scope.mandatoryError = false; 
 			
-		if(errorSurvey) $scope.surveyError = true;
+		if(errorSurvey)
+		{
+			$scope.surveyError = true;
+			$(".error-summary").focus();
+		}
 		else $scope.surveyError = false;
 	};
 	
@@ -305,6 +313,18 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
       };
 }]);
 
+app.directive('focusOn',function($timeout) {
+    return {
+        restrict : 'A',
+        link : function($scope,$element,$attr) {
+            $scope.$watch($attr.focusOn,function(_focusVal) {
+                $timeout(function() {
+                	if(_focusVal) $(".error-summary").focus();
+                });
+            });
+        }
+    }
+})
 /*app.directive('decimalLimit',function(){
     return {
         link:function(scope,ele,attrs){
