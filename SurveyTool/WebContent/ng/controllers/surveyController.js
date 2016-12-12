@@ -138,6 +138,25 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 		errorSurvey = false;
 		return false;
 	};
+
+	$scope.getQuestionPath = function(question) {		
+		var minMaxCad = "";
+		if(question.questionType == "shortText")
+		{
+			var min = $scope.getJsonArrayElement(question.parameters, "name", "minValue");
+			if(!min.value) {
+				if(minMaxCad == "") minMaxCad = "?";
+				minMaxCad = minMaxCad + "min=0";
+			}
+			
+			var max = $scope.getJsonArrayElement(question.parameters, "name", "maxValue");
+			if(!max.value) {
+				if(minMaxCad == "") { minMaxCad = "?" } else { minMaxCad = minMaxCad + "&" };
+				minMaxCad = minMaxCad + "max=0";
+			}
+		}
+		return question.questionJspPath + minMaxCad;
+	}
 	
 	$scope.decimalRegex = function(decimals) {
 		//'^[0-9]+(.([0-9]{1,2}))?$'

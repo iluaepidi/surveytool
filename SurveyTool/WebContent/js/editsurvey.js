@@ -1971,7 +1971,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("change", "#input-type", function(e){
+	$('.survey-sections').on("change", ".input-type", function(e){
 		e.stopPropagation();
 		console.log("change in input type");
 		var node = $(this);
@@ -1986,11 +1986,21 @@ $(function() {
 			node.closest('div.row').find('#rangeOptions').removeClass('hidden');
 			node.closest('div.row').find('#decimalsOptions').removeClass('hidden');
 			node.closest('div.row').find('#genericOptions').addClass('hidden');
+			node.closest('div.row').find('input.survey-question-decimals').val("");
+			node.closest('div.row').find('input.allowDecimals').attr("checked", false);
+			node.closest('div.row').find('#decimalsDiv').addClass('hidden');
+			node.closest('div.row').find('input.survey-minValue').val("");
+			node.closest('div.row').find('input.survey-maxValue').val("");
+			node.closest('div.row').find('input.range').attr("checked", false);
+			node.closest('div.row').find('#rangeId').addClass('hidden');
 		}else{
 			console.log("isNotNumber");
 			node.closest('div.row').find('#rangeOptions').addClass('hidden');
 			node.closest('div.row').find('#decimalsOptions').addClass('hidden');
 			node.closest('div.row').find('#genericOptions').removeClass('hidden');
+			node.closest('div.row').find('input.survey-question-max-chars').val("");
+			node.closest('div.row').find('input.isLimitedChars').attr("checked", false);
+			node.closest('div.row').find('#charsId').addClass('hidden');
 		}
 		
 		$.ajax({ 
