@@ -2399,15 +2399,22 @@ $(function() {
 	
 	$('.survey-sections').on("click", "button.moveup-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
+		console.log("question moving up");
+		var currentPage = question.closest("li.page");
+		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+		console.log("question to move: " + JSON.stringify(questionJson));
+		question.trigger('rmvQuestionJson');
 		if(question.is(':first-child'))
 		{
-			var currentPage = question.closest("li.page");
+			
 			if(!currentPage.is(':first-child'))
 			{
 				var previousPage = currentPage.prev();
 				var questions = previousPage.find("ul.page-items");
 				questions.append(question);
-				question.attr("index", questions.find("li.panel-question").size());
+				var numQuestions = questions.find("li.panel-question").size();
+				questionJson.index = numQuestions;
+				question.attr("index", numQuestions);
 				
 				currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
 					$(element).attr("index", index + 1);
@@ -2423,7 +2430,10 @@ $(function() {
 					var questions = currentSection.prev().find('li.page').last().find('ul.page-items');
 					
 					questions.append(question);
-					question.attr("index", questions.find("li.panel-question").size());
+					//question.attr("index", questions.find("li.panel-question").size());
+					var numQuestions = questions.find("li.panel-question").size();
+					questionJson.index = numQuestions;
+					question.attr("index", numQuestions);
 					
 					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
 						$(element).attr("index", index + 1);
@@ -2439,6 +2449,7 @@ $(function() {
 			prevQuestion.insertAfter(question);
 			var index = parseInt(question.attr("index"));
 			question.attr("index", index - 1);
+			questionJson.index = index - 2;
 			var prevIndex = parseInt(prevQuestion.attr("index"));
 			prevQuestion.attr("index", prevIndex + 1);
 			
@@ -2447,21 +2458,27 @@ $(function() {
 				
 			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, "up", host);
 		}
+
+		console.log("question moved: " + JSON.stringify(questionJson));
+		question.trigger('insertQuestionJson', [questionJson]);
 		$(this).focus();
 	});
 
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
+		var currentPage = question.closest("li.page");
+		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+		console.log("question to move: " + JSON.stringify(questionJson));
+		question.trigger('rmvQuestionJson');
 		if(question.is(':last-child'))
 		{
-			var currentPage = question.closest("li.page");
 			if(!currentPage.is(':last-child'))
 			{
 				console.log("no last question");
 				var nextPage = currentPage.next();
 				var questions = nextPage.find("ul.page-items");
 
-				insertQuestionNextPage(question, questions);		
+				insertQuestionNextPage(question, questions);				
 				
 				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
 			}
@@ -2477,6 +2494,7 @@ $(function() {
 					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
 				}
 			}
+			questionJson.index = 0;
 		}
 		else
 		{
@@ -2484,11 +2502,15 @@ $(function() {
 			nextQuestion.insertBefore(question);
 			var index = parseInt(question.attr("index"));
 			question.attr("index", index + 1);
+			questionJson.index = index;
 			var prevIndex = parseInt(nextQuestion.attr("index"));
 			nextQuestion.attr("index", prevIndex - 1);
 			
 			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
 		}
+
+		console.log("question moved: " + JSON.stringify(questionJson));
+		question.trigger('insertQuestionJson', [questionJson]);
 		$(this).focus();
 	});
 	

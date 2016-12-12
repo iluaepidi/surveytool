@@ -106,7 +106,9 @@ $(function() {
 		var numPage = $(this).closest("li.page").attr("index");
 		var currentValue = $(this).val();	
 		//Total number of pages
-		var totalNumPages = $(this).closest(".section-pages").find("li.page").size();
+		//var totalNumPages = $(this).closest(".section-pages").find("li.page").size();
+		var totalNumPages = surveyTree.length;
+		console.log("Num pages: " + totalNumPages);
 		var defaultOption = $(this).find('option.default-option');
 		$(this).empty();
 		
@@ -659,10 +661,28 @@ $(function() {
 		    {
 				var questionJson = {"questionId":parseInt(qid),"index":parseInt(qIndex),"type":qType,"title":text,"optionsGroup":[]};
 		    	pageElem.questions.push(questionJson);
+				//pageElem.questions.splice(qIndex - 1, 0, questionJson);
 		    }		    
 		});
 		
-		console.log("surveyTree inserted: " + JSON.stringify(surveyTree));
+		//console.log("surveyTree created: " + JSON.stringify(surveyTree));
+	});
+
+	$('.survey-sections').on("insertQuestionJson", "li.panel-question", function(e, questionJson){
+		var pageId = $(this).closest("li.page").attr("pid");
+		
+		$(surveyTree).each(function(index, pageElem){
+		    if(pageElem.pageId == pageId)
+		    {
+				//var questionJson = {"questionId":parseInt(qid),"index":parseInt(qIndex),"type":qType,"title":text,"optionsGroup":[]};
+				pageElem.questions.splice(questionJson.index, 0, questionJson);
+				$(pageElem.questions).each(function(index, questionElem){
+		    		questionElem.index = index + 1;
+		    	});
+		    }		    
+		});
+		
+		//console.log("surveyTree inserted: " + JSON.stringify(surveyTree));
 	});
 
 	$('.survey-sections').on("setQuestionJson", "input#survey-question-title", function(e){
@@ -684,7 +704,7 @@ $(function() {
 		
 		$(this).trigger("setQuestionGoto");
 		$(this).trigger("setQuestionDepend");
-		console.log("surveyTree question changed: " + JSON.stringify(surveyTree));
+		//console.log("surveyTree question changed: " + JSON.stringify(surveyTree));
 	});
 	
 	$('.survey-sections').on("rmvQuestionJson", "li.panel-question", function(e){
@@ -699,12 +719,16 @@ $(function() {
 		    	pageElem.questions = $.grep(pageElem.questions, function(question) {
     				return question.questionId != questionId;  
     			});
+		    	
+		    	$(pageElem.questions).each(function(index, questionElem){
+		    		questionElem.index = index + 1;
+		    	});
 		    }		    
 		});
 
 		$(this).trigger("rmvQuestionGoto");
 		$(this).trigger("rmvQuestionDepend");
-		console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
+		//console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
 	
 	$('.survey-sections').on("setQuestionGoto", "input#survey-question-title", function(e){
