@@ -201,14 +201,17 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 							q.optionsGroups.forEach(function(og){
 								if(!og.response)
 								{
-									if(og.options && og.options.length > 0)
+									if(og.options && og.options.length > 0 && q.questionType != 'checkbox')
 									{
+										var hasResponse = false;
 										og.options.forEach(function(o){
-											if(!o.response)
+											if(o.response)
 											{
-												mandatoryErrorQuestions.push(q.questionId);
+												hasResponse = true;
 											}
 										});
+										
+										if(!hasResponse) mandatoryErrorQuestions.push(q.questionId);
 									}
 									else
 									{
