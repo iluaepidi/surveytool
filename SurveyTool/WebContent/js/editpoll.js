@@ -18,6 +18,15 @@ $(function() {
 		setWidthPoll($(this));
 	});
 	
+	$('#widthPoll').focusout(function(){
+		var val = $(this).val();
+		if(val < 200)
+		{
+			$(this).val(200);
+		}
+		setWidthPoll($(this));
+	});
+	
 	$('#heightPoll').keyup(function(){
 		setHeightPoll($(this));
 	});
@@ -26,6 +35,14 @@ $(function() {
 		setHeightPoll($(this));
 	});
 	
+	$('#heightPoll').focusout(function(){
+		var val = $(this).val();
+		if(val < 150)
+		{
+			$(this).val(150);
+		}
+		setHeightPoll($(this));
+	});
 
 	$('.edit-poll-content').on("focusout", "#pollTitle", function(e){
 		e.stopPropagation();		
@@ -359,12 +376,7 @@ function setWidthPoll(elem)
 	width = elem.val();
 	var code = $('#pollCode').val();
 	$('#pollCode').val(code.replace(/style=".*"/, 'style="width: ' + width + 'px; height: ' + height + 'px;"'));
-	if(width < 200)
-	{
-		elem.val(200);
-		width = 200;
-	}
-	
+		
 	$('#iframe').css('width', width);
 }
 
@@ -373,11 +385,6 @@ function setHeightPoll(elem)
 	height = elem.val();
 	var code = $('#pollCode').val();
 	$('#pollCode').val(code.replace(/style=".*"/, 'style="width: ' + width + 'px; height: ' + height + 'px;"'));
-	if(height < 150)
-	{
-		elem.val(150);
-		height = 150;
-	}
 	
 	$('#iframe').css('height', height);
 }

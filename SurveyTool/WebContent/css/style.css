@@ -580,10 +580,12 @@ footer {margin-top: 10px;
 	display: inline-flex;}
 .nav-tab-edit .active a {border-left-color: #337ab7 !important;
 	border-right-color: #337ab7 !important;
-	border-top-color: #337ab7 !important;}
-.edit-tab a {color: #337ab7 !important;}
+	border-top-color: #337ab7 !important;
+	color: #337ab7 !important;}
+.nav-tab-edit a {color: #585858 !important;} 
+/*.edit-tab a {color: #337ab7 !important;}
 .share-tab a {color: #B60000 !important;}
-.statistic-tab a {color: #000 !important;}
+.statistic-tab a {color: #000 !important;}*/
 .edit-survey-frame {width: 70%;
     margin: 10px auto;
     border: 1px solid #ccc;
@@ -1265,8 +1267,9 @@ footer {margin-top: 10px;
 .poll-table-tr-th-deadline {width: 15%;}
 .poll-table-tr-th-numresp {width: 16%;}
 
+.poll-preview-notice {margin-top: 15px;}
 .iframe-example {/*border: 2px solid #CCCCCC;*/
-    padding: 15px;
+    padding: 5px;
     /*width: 475px;*/
     margin: 20px auto;
     display: table;}
