@@ -15,17 +15,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  					<h2><%= lang.getContent("home.title") %></h2>	  					
 	  				</div>  -->
 	  				<div class="login-content">
-	  					<div class="col-xs-6 col-sm-7 col-md-8 login-content-text">
-	  						<p>This service offers a suite of accessible tools for improving consumer-developers connections. Current version includes:</p>
-	  						<ul>
-	  							<li>An <strong>online survey tool</strong> for building accessible forms. Developers can create and share accessible surveys to collect consumers information on the context of use, validate product ideas of evaluate low-fi prototypes.</li>
-	  							<li>An <strong>online polling tool</strong> allowing accessible electronic voting. Polls are an appealing way of collecting users’ feedback on existing or future products. For example, polls can be used as a "future feature vote" mechanism for gathering new ideas from the end-users. Accessible polls can be embedded in blogs, websites or product pages using iframes, or share through a URL.</li>
-	  						</ul>
-	  						<p>Future versions of the accessible user feedback tool will include:</p>
-	  						<ul>
-	  							<li><strong>User reviews widget.</strong> A widget allowing for user star-rating and comments to provide feedback to developers and vendors on their products and services. This is also an accessible mechanism allowing consumers to exchange information among themselves about accessible and/or assistive products and services.</li>
-	  							<li><strong>Accessible user panel management.</strong> A system providing a dashboard for managing user database. This may be linked to other user feedback tools to foster and manage user participation.</li>
-	  						</ul>
+	  					<div class="col-xs-6 col-sm-7 col-md-6 login-content-text">
+	  						<p>The current version of this accessible suite includes a tool for creating surveys and pools, publish them and monitor some basic performance metrics as the number of responses received or survey quotas.</p>
+	  						
+	  						<p>Future versions will include an accessible user panel to manage user databases and monitor panel performance. This will help to improve the efficiency of surveys and to foster user participation.</p>
+	  						
 	  					</div>
   						<div class="col-xs-6 col-sm-5 col-md-4 login-frame" id="loginDivForm">
 	  						<form method="post" id="loginForm" action="LoginServlet">

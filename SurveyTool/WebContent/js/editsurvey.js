@@ -2471,6 +2471,8 @@ $(function() {
 
 		console.log("question moved: " + JSON.stringify(questionJson));
 		question.trigger('insertQuestionJson', [questionJson]);
+		question.find("div.logic-frame").trigger("displayLogic");
+		question.find("div.dependences-frame").trigger("displayDependences");
 		$(this).focus();
 	});
 
@@ -2521,6 +2523,9 @@ $(function() {
 
 		console.log("question moved: " + JSON.stringify(questionJson));
 		question.trigger('insertQuestionJson', [questionJson]);
+		question.find("div.logic-frame").trigger("displayLogic");
+		question.find("div.dependences-frame").trigger("displayDependences");
+		question.find("div.logic-frame").trigger("setLogicMoved");
 		$(this).focus();
 	});
 	

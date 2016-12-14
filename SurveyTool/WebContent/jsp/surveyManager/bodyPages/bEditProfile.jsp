@@ -92,8 +92,11 @@
 			                <div class="col-md-4">                        
 			                    	<select id="language" name="language" class="form-control">
 			                    	<%
-			                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
-			                    		<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+			                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {
+			                    		String langSelect = entry.getValue();
+			                    		
+			                    	%>
+			                    		<option value="<%=entry.getKey() %>"><%=langSelect.substring(0, 1).toUpperCase() + langSelect.substring(1).toLowerCase() %></option>
 			                    		
 			                    	<%}%>
 			                    	</select>

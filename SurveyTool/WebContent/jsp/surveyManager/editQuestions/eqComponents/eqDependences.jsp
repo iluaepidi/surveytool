@@ -38,13 +38,34 @@
 												//System.out.println("D5");
 												JSONArray pagesJson = (JSONArray) request.getAttribute(Attribute.s_JSON_PAGES);
 
-												//System.out.println("D6");
+												System.out.println("pagesJson: " + pagesJson.toString());
+							  					
+												String noDependencesClass = "";
+						  						String extraClass = "";
+						  						boolean hasPrevQSimple = false;
+						  						for(int i = 0; i < numPage - 1; i++)
+						  						{
+						  						 	JSONArray questionsJson = pagesJson.getJSONObject(i).getJSONArray("questions");
+						  						 	for(int j = 0; j < questionsJson.length(); j++)
+						  						 	{
+						  						 		if(questionsJson.getJSONObject(j).getString("type").equals("simple")) hasPrevQSimple = true;
+						  						 	}
+						  						}
+						  						
+						  						if(!hasPrevQSimple) { noDependencesClass = "hidden"; }
+						  						
+						  						String lastPageClass = "";
+						  						if(!hasPrevQSimple) { extraClass = "noborder"; }
+						  						if(numPage == pagesJson.length()) { lastPageClass = "hidden"; }
+						  						
+						  						String noLogicDependencesClass = "";
+						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || !question.getQuestionType().equals("simple"))) noLogicDependencesClass = "hidden";						  							
 							  					%>
-												
-							  					<div class="question-frame">
+							  						 
+							  					<div class="question-frame <%= noLogicDependencesClass %>">
 							  						<h6><%= lang.getContent("question.edit.dependences.title") %></h6>
 							  						
-							  						<div class="dependences-frame">
+							  						<div class="dependences-frame <%= noDependencesClass %>">
 							  						<%
 															if(qdependence==null){
 															%>
@@ -224,10 +245,13 @@
 							  								
 							  							
 							  						</div>
-							  						<% if(withLogic) 
-							  						   {							  								
+							  						<% 
+							  						
+							  						//System.out.println("Num Page: " + numPage + " - pages length: " + pagesJson.length() + " - pagesJson: " + pagesJson.toString());
+							  						if(withLogic) 
+							  						{							  								
 							  						%>
-							  						<div class="logic-frame">
+							  						<div class="logic-frame <%= extraClass %> <%= lastPageClass %>">
 							  							
 							  							
 							  							<%

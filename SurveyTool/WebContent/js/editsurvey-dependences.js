@@ -834,6 +834,95 @@ $(function() {
 		});
 	});
 	
+	$('.survey-sections').on("displayLogic", "div.logic-frame", function(e){
+		var pageIndex = $(this).closest('li.page').attr('index');
+		if(pageIndex == surveyTree.length)
+		{
+			if(!$(this).hasClass("hidden"))
+			{
+				$(this).find("select.logic-option-goto").each(function(index, element){
+					if($(element).val() != "none")
+					{
+						$(element).val("none");
+						$(element).trigger("change");
+					}
+				});
+				$(this).addClass("hidden");
+			}
+		}
+		else
+		{
+			$(this).removeClass("hidden");
+			if(!$(this).closest("div.question-frame").find("div.dependences-frame").hasClass("hidden")) $(this).removeClass("noborder");
+			else $(this).addClass("noborder");
+		}
+	});
+
+	$('.survey-sections').on("setLogicMoved", "div.logic-frame", function(e){	
+		var pageIndex = $(this).closest('li.page').attr('index');
+	
+		$(this).find("select.logic-option-goto").each(function(index, element){
+			var val = $(element).val();
+			var exist = false;
+			if(val != "none")
+			{
+				var i  = pageIndex;
+				while(i < surveyTree.length && !exist)
+				{
+					var page = surveyTree[i];
+					for(var j = 0; j < page.questions.length; j++)
+					{
+						if(page.questions[j].questionId == parseInt(val)) exist = true;
+					}
+					i++;
+				}
+				if(!exist)
+				{
+					$(element).val("none");
+					$(element).trigger("change");
+				}
+			}
+		});
+	});
+
+	$('.survey-sections').on("displayDependences", "div.dependences-frame", function(e){
+		var pageIndex = $(this).closest('li.page').attr('index');
+		var hasSimpleQuestions = false;
+		
+		for(var i = 0; i < pageIndex - 1; i++)
+		{
+			var page = surveyTree[i];
+			for(var j = 0; j < page.questions.length; j++)
+			{
+				if(page.questions[j].type === "simple") hasSimpleQuestions = true;
+			}
+		}
+		
+		if(!hasSimpleQuestions)
+		{
+			if(!$(this).hasClass("hidden"))
+			{
+				/*$(this).find("button#remove-dependence").each(function(index, element){
+					$(element).trigger("click");
+				});*/
+				$(this).addClass("hidden");
+			}
+			
+			if(!$(this).closest("div.question-frame").find("div.logic-frame").length || $(this).closest("div.question-frame").find("div.logic-frame").hasClass("hidden"))
+			{
+				$(this).closest("div.question-frame").addClass("hidden");
+			}
+		}
+		else
+		{
+			if($(this).hasClass("hidden"))
+			{
+				$(this).removeClass("hidden");
+				$(this).closest("div.question-frame").removeClass("hidden");
+			}
+		}
+	});
+	
 });
 
 
