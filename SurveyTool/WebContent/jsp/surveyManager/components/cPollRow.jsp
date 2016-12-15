@@ -29,7 +29,7 @@
 %>
 						
 										<tr>
-											<td class="center"><%= deadLine %></td>
+											<!-- <td class="center"><%= deadLine %></td> --> 
 											<td><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>"><%= poll.getTitle() %></a></td>
 											<td class="center">
 												<a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>">http://<%= host %>:<%= port %>/SurveyTool/poll?pid=<%= poll.getPublicUrl() %></a>

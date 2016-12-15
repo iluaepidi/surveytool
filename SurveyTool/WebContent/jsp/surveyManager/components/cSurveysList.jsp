@@ -35,7 +35,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
 			  							<thead>
 										<tr class="info" id="titles">
-											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.deadline") %></th>
+											<!-- <th class="center"><%= lang.getContent("survey_manager.surveys.table.column.deadline") %></th> -->
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.survey") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.num_responses") %></th>
 											<th class="center"><%= lang.getContent("survey_manager.surveys.table.column.actions") %></th>
@@ -60,7 +60,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 											String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
 										%>
 										<tr id="resultdevice">
-											<td class="center"><%= deadLine %></td>
+											<!-- <td class="center"><%= deadLine %></td> -->
 											<td><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 											<td class="center">
 												<%= survey.getNumUsers() %> <%= lang.getContent("survey_manager.surveys.table.survey_responses") %>

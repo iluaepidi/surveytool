@@ -23,7 +23,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  							<caption><%= lang.getContent("survey_manager.polls.table.caption") %></caption>
 			  							<thead>
 											<tr class="info">
-												<th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th>
+												<!-- <th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th> -->
 												<th class="center"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
 												<th class="poll-table-tr-th-responses center"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
 												<th class="poll-table-tr-th-numresp center"><%= lang.getContent("survey_manager.polls.table.column.num_responses") %></th>
