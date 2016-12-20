@@ -38,7 +38,7 @@
 												//System.out.println("D5");
 												JSONArray pagesJson = (JSONArray) request.getAttribute(Attribute.s_JSON_PAGES);
 
-												System.out.println("pagesJson: " + pagesJson.toString());
+												//System.out.println("pagesJson: " + pagesJson.toString());
 							  					
 												String noDependencesClass = "";
 						  						String extraClass = "";

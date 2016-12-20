@@ -25,6 +25,8 @@
 	list-style-type:none;
 	/*overflow:hidden;*/
 }
+
+.center {text-align: center;}
 /*----------------------------------------------*\
 		$HEADER
 \*----------------------------------------------*/
@@ -179,13 +181,18 @@
 	float:left;
 	width:33%;
 	text-align:center;
-	margin:0px;
+	margin:15px 0px;
 	min-width:200px;
 }
 #form-question .checkbox.img label{
 	background:url(../img/checkbox-off.png) center bottom no-repeat;
 	padding-left:0px;
 	padding-bottom:30px;
+	width: 250px;
+	/*padding-bottom:59px;
+	height: 248px;
+    width: 185px;
+    display: table;*/
 }
 #form-question .checkbox.img input[type=checkbox]:checked + label{
 	background: url(../img/checkbox-on.png) center bottom no-repeat;
@@ -199,6 +206,11 @@
 	padding:4px;
 	text-align:center;
 	min-width:auto;
+	min-height: 88px;
+	/*position: absolute;
+	bottom: 33px;
+    left: 0;
+    width: 185px;*/
 }
 #form-question .checkbox.img label img,
 #form-question .checkbox.img input + label img{
@@ -248,14 +260,20 @@
 #form-question .radio.img{
 	float:left;
 	width:33%;
+	/*width: auto;*/
 	text-align:center;
-	margin:0px;
+	margin:15px 0;
 	min-width:200px;
 }
 #form-question .radio.img label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
 	padding-left:0px;
 	padding-bottom:30px;
+	width: 250px;
+	/*padding-bottom:59px;
+	height: 248px;*/
+    /*width: 185px;*/
+    /*display: table;*/
 }
 #form-question .radio.img input[type=radio]:checked + label{
 	background: url(../img/radio-on.png) center bottom no-repeat;
@@ -269,7 +287,17 @@
 	padding:4px;
 	text-align:center;
 	min-width:auto;
+	min-height: 88px;
+	/*position: absolute;
+	bottom: 31px;
+    left: 0;
+    width: 185px;*/
 }
+.option-image {display: table;
+	    height: 190px;
+	    width: 100%;}
+.sub-option-image {    display: table-cell;
+    vertical-align: middle;}
 #form-question .radio.img label img,
 #form-question .radio.img input + label img{
 	border:3px solid #fff;
@@ -286,6 +314,10 @@
 #form-question .radio.img input:focus + label img{
 	border:3px solid #016FB8;
 }
+
+.option-list {/*display: inline-block;
+    max-width: 90%;
+    padding: 0;*/}
 
 /* Matrix */
 #form-question table{

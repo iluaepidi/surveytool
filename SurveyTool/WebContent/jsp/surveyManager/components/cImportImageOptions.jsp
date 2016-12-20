@@ -51,8 +51,8 @@
 					  					else
 					  					{
 										%>
-											<div class="previewFileUpliaded" id="previewFileUploaded">
-								            	<img src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
+											<div class="previewFileUpliaded" id="previewFileUploaded" urlValue= "<%= resource.getPathFile() %>">
+								            	<img id ="imagePreviewFile" src="<%= resource.getPathFile() %>" alt="<%= lang.getContent("file.import.alt.preview") %>" />
 								            </div>
 										<%
 					  					}

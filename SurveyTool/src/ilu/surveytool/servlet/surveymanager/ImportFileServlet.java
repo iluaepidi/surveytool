@@ -1,5 +1,9 @@
 package ilu.surveytool.servlet.surveymanager;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -316,17 +321,56 @@ public class ImportFileServlet extends HttpServlet {
 	{
 		String fileNameFinal = fileName;
 		try{
-			if(index > 0)
+			File output = null;
+			Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+			do
 			{
-				String[] cads = fileName.split(Pattern.quote("."));
-				fileNameFinal = cads[0] + index + "." + cads[1];
-			}
-			System.out.println("File Name: " + fileNameFinal);
+				if(index > 0)
+				{
+					String[] cads = fileName.split(Pattern.quote("."));
+					fileNameFinal = cads[0] + index + "." + cads[1];
+				    fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+				}
+				
+			    output = new File(fpath.toString());
+				System.out.println("File Name: " + fileNameFinal);
+				index++;
+			} while (output.exists());
 			
 			InputStream fileContent = filePart.getInputStream();
-		    System.out.println("RootPath: " + rootPath);
-		    Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
-		    Files.copy(fileContent, fpath);
+			
+		  //CODIGO PRUEBA
+			BufferedImage src = ImageIO.read(fileContent);
+		    
+		    //Scale
+		    int width = src.getWidth();
+		    int height = src.getHeight();
+		    double scale = 0;
+		    double indexFormat = (double)width / height;
+		    if (indexFormat > 1.3325)
+		    {
+		    	scale = (double)533 / width;
+		    }
+		    else
+		    {
+		    	scale = (double)400 /height;
+		    }
+		    
+		    BufferedImage dest = new BufferedImage(((Double)(width * scale)).intValue(), ((Double)(height * scale)).intValue(), BufferedImage.TYPE_INT_RGB);	
+		    System.out.println("With scaled int: " + ((Double)(400 * scale)).intValue() + " - double: " + (400 * scale));
+		    //Fin scale
+		    
+		    Graphics2D g = dest.createGraphics();
+		    //AffineTransform at = AffineTransform.getScaleInstance((double)70 / src.getWidth(), (double)50 / src.getHeight());
+		    AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
+		    g.drawRenderedImage(src, at);
+		  //FIN CODIGO PRUEBA
+		    
+		    ImageIO.write(dest, "JPG", output);
+		    
+		    //Files.copy(fileContent, fpath);		    
+		    System.out.println("Image path: " + fpath.toString());
+		    
 		} catch (FileAlreadyExistsException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
