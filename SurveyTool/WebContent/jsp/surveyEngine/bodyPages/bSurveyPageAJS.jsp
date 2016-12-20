@@ -74,6 +74,7 @@
 	  							
 	  							<ul id="question-list" msd-wheel="setWheelIndexQuestion($event, $delta, $deltaX, $deltaY)">
 	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question" index="{{question.index}}" ng-class="{inactive: question.index != questionIndex}">
+	  									<a id="anchor-{{question.index}}"></a>
 	  									<button class="navigation up" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex > 1" ng-click="setIndexQuestion(question.index - 1)"><%= lang.getContent("button.question.previous") %></button>
 	  									<ng-include src="getQuestionPath(question)"></ng-include>
 	  									<button class="navigation down" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex < currentSurvey.info.section.page.questions.length" ng-click="setIndexQuestion(question.index + 1)"><%= lang.getContent("button.question.next") %></button>

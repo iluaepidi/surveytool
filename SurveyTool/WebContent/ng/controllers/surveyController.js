@@ -1,6 +1,6 @@
 var app = angular.module('survey', ['surveyService', 'youtube-embed', 'ngSanitize', 'monospaced.mousewheel']);
 
-app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'survey', function($scope, $http, $window, $filter, survey) {
+app.controller('surveyController', ['$scope', '$location', '$http', '$window', '$filter', 'survey', function($scope, $location, $http, $window, $filter, survey) {
 	
 	/** Initial load **/
 	$scope.currentSurvey = survey;
@@ -318,6 +318,8 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.setIndexQuestion = function(qIndex) {
 		$scope.questionIndex = qIndex;
 		console.log("index question: " + $scope.questionIndex);
+	    $location.hash('anchor-' + $scope.questionIndex);
+	    $anchorScroll();
 	};
 	
 	//mousewheel
@@ -332,6 +334,8 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
         		$scope.questionIndex = $scope.questionIndex - 1;
         	}
         }
+	    $location.hash('anchor-' + $scope.questionIndex);
+	    $anchorScroll();
       };
 }]);
 
