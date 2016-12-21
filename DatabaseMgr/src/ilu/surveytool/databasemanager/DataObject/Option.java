@@ -1,15 +1,19 @@
 package ilu.surveytool.databasemanager.DataObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Option {
 	
 	int id;
 	HashMap<String, Content> contents;
 	int index;
+	List<Resource> resources;
 
 	public Option() {
 		contents = new HashMap<String, Content>();
+		resources = new ArrayList<Resource>();
 	}
 	
 	public Option(int id, HashMap<String, Content> contents, int index) {
@@ -41,6 +45,14 @@ public class Option {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+	
+	public List<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(List<Resource> resources) {
+		this.resources = resources;
 	}
 
 	@Override

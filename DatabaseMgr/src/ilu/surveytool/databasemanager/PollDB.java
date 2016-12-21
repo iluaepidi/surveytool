@@ -75,6 +75,7 @@ public class PollDB {
 	   			poll.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
 	   			poll.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
 	   			poll.setPublicUrl(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			poll.setNumResponses(rs.getInt(DBFieldNames.s_RESPONSES_NUMBER));
 	   			response.add(poll);
 	   		}	   		
 	   		
@@ -155,7 +156,7 @@ public class PollDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			
 	   			ContentDB contentDB = new ContentDB();
-		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 		   		
 		   		QuestionDB questionDB = new QuestionDB();
 		   		List<Question> questions = questionDB.getQuestionsByPollId(response.getPollId(), lang);
@@ -172,6 +173,34 @@ public class PollDB {
 		return response;
 	}
 
+	public Integer getPollIdByPublicId(String publicId)
+	{
+		Integer pollId = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLLID_BY_PUBLICID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			pollId = rs.getInt(DBFieldNames.s_POLL_ID);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pollId;
+	}
+	
 	public Poll getPollById(int pollId, String lang)
 	{
 		Poll response = null;
@@ -206,7 +235,7 @@ public class PollDB {
 		   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 		   			
 		   			ContentDB contentDB = new ContentDB();
-			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+			   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 	   			}
 		   		
 		   		QuestionDB questionDB = new QuestionDB();
@@ -285,6 +314,63 @@ public class PollDB {
 		return response;
 	}
 
+	public int getPollProjectId(int pollId)
+	{
+		int projectId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLL_PROJECTID);			
+	   		pstm.setInt(1, pollId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			projectId = rs.getInt(DBFieldNames.s_PROJECTID);
+	   		}
+	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return projectId;
+	}
+
+	public List<Integer> getPollsIdByProjectId(int projectId)
+	{
+		List<Integer> pollsId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_POLL_ID_BY_PUBLICID);			
+	   		pstm.setInt(1, projectId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			pollsId.add(rs.getInt(DBFieldNames.s_POLL_ID));
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return pollsId;
+	}
+	
 	public boolean existPublicId(String publicId)
 	{
 		boolean result = false;
@@ -386,7 +472,61 @@ public class PollDB {
 		
 		return inserted;
 	}
+
+	/**
+	 * update
+	 */
 	
+	public boolean updatePollProject(int projectId, int pollId) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_POLL_PROJECT);
+			pstm.setInt(1, projectId);
+			pstm.setInt(2, pollId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		 
+		return updated;
+	}
+
+	public boolean updatePollCallUrl(int pollId, String callUrl) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_POLL_CALL_URL);
+			pstm.setString(1, callUrl);
+			pstm.setInt(2, pollId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		 
+		return updated;
+	}
+
 	private String _generatePublicId()
 	{
 		String publicId = "";

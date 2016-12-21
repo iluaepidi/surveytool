@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import ilu.surveytool.constants.Attribute;
+import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 
 /**
  * 
@@ -22,6 +23,7 @@ public class Language {
 	String rootPath = "";
 	InputStream input = null;
 	Properties prop = null;
+	String currentLanguage = "en";
 
 	/**
 	 * rootPath is the root path of the project in the local system.
@@ -30,7 +32,11 @@ public class Language {
 	public Language(String rootPath) {
 		this.rootPath = rootPath;
 	}
-	
+		
+	public String getCurrentLanguage() {
+		return currentLanguage;
+	}
+
 	/**
 	 * This method load the web contents file corresponding to the language specified.
 	 * @param lang
@@ -39,6 +45,8 @@ public class Language {
 	public Properties loadLanguage(String lang) {
 
 		this.prop = new Properties();
+		
+		this.currentLanguage = lang;
 
 		try {
 			
@@ -86,11 +94,16 @@ public class Language {
 	public static String getLanguageRequest(HttpServletRequest request)
 	{
 		String language = "en";
-		Object langobj = request.getSession().getAttribute(Attribute.s_CURRENT_LANGUAGE);
+		
+		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
+		
+		//Object langobj = request.getSession().getAttribute(Attribute.s_CURRENT_LANGUAGE);
+		Object langobj=null;
+		if(userSessionInfo!=null)langobj = userSessionInfo.getIsoLanguage();
 		if(langobj == null)
 		{
 			String langReq = request.getHeader("Accept-Language").split(";")[0].split(",")[0];
-			System.out.println("Language: " + langReq);
+			//System.out.println("Language: " + langReq);
 			
 			if(langReq.contains("es")){ language = "es";}
 			else if(langReq.contains("en")){ language = "en";}	

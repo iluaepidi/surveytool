@@ -16,6 +16,7 @@ import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.DataObject.PollResultResume;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.properties.SurveyToolProperties;
@@ -39,7 +40,7 @@ public class PollProcessServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
@@ -55,24 +56,33 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		Enumeration<String> paramNames = request.getParameterNames();
 		Response pollRes = null;
 		int pollId = Integer.parseInt(request.getParameter(Parameter.s_PID));
+		String ipAddress = request.getRemoteAddr();
 		
-		while(paramNames.hasMoreElements())
-		{
-			String element = paramNames.nextElement();
-			if(!element.equalsIgnoreCase(Parameter.s_PID) && !element.equalsIgnoreCase(Parameter.s_SEND_POLL_BUTTON))
-			{
-				String[] elemSplit = element.split("-");
-				int questionId = Integer.parseInt(elemSplit[0]);
-				int optionsGroupId = 0;
-				if(elemSplit.length > 1) optionsGroupId = Integer.parseInt(elemSplit[1]);
-				pollRes = new Response(questionId, optionsGroupId, request.getParameter(element), pollId); 
-			
-				System.out.println("Param: " + pollRes.toString());				
-			}
-		}
-		
+		boolean preview = request.getParameter("preview") != null;
+				
 		PollProcessHandler ppHandler = new PollProcessHandler();
-		int anonymousUserId = ppHandler.storePollResponse(pollRes);
+		
+		AnonimousDB anonimousDB = new AnonimousDB();
+		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) && !preview)
+		{
+		
+			while(paramNames.hasMoreElements())
+			{
+				String element = paramNames.nextElement();
+				if(!element.equalsIgnoreCase(Parameter.s_PID) && !element.equalsIgnoreCase(Parameter.s_SEND_POLL_BUTTON))
+				{
+					String[] elemSplit = element.split("-");
+					int questionId = Integer.parseInt(elemSplit[0]);
+					int optionsGroupId = 0;
+					if(elemSplit.length > 1) optionsGroupId = Integer.parseInt(elemSplit[1]);
+					pollRes = new Response(questionId, optionsGroupId, request.getParameter(element), pollId); 
+				
+					System.out.println("Param: " + pollRes.toString());				
+				}
+			}
+		
+			int anonymousUserId = ppHandler.storePollResponse(pollRes, ipAddress);
+		}
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		List<String> jsFiles = new ArrayList<>();
@@ -83,7 +93,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		request.setAttribute(Attribute.s_POLL_INFO, ppHandler.getPollDetail(pollId, language));
 		
-		request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollResultsResume(pollId, language));
+		if(preview) request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollPreviewResultsResume(pollId, language));
+		else request.setAttribute(Attribute.s_RESPONSES_INFO, ppHandler.getPollResultsResume(pollId, language));
 		
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_RESULT));
 		request.setAttribute(Attribute.s_PAGE_TITLE, "Final page");

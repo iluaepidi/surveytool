@@ -9,12 +9,12 @@
 				Language lang = new Language(getServletContext().getRealPath("/")); 
 				lang.loadLanguage(Language.getLanguageRequest(request));
 				%>
-				<div class="modal fade remove-win" id="removeElement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade remove-win" id="removeElement" tabindex="-1" role="dialog" aria-labelledby="deleteElementTitle">
 					<div class="modal-dialog remove-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title"><%= lang.getContent("confirmation.title") %></h2> 
+				    			<h2 class="panel-title" id="deleteElementTitle"><%= lang.getContent("confirmation.title") %></h2> 
 				    		</div> 
 				    		<div class="panel-body">
 				    			<div class="survey-frame" id="import-multimedia-file">

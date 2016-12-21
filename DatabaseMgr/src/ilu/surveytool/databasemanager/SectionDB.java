@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
@@ -44,11 +47,107 @@ public class SectionDB {
 	/**
 	 * Selects
 	 */
+
+	public Section getSectionBySectionId(int sectionId)
+	{
+		Section section = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_ID);			
+	   		pstm.setInt(1, sectionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			section = new Section();
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			section.setSectionId(sectionId);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+
+	public Section getSectionBySurveyIdNumPage(int surveyId, int numPage)
+	{
+		Section section = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_NUMPAGE);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, numPage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			section = new Section();
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+
+	public Section getSectionByFormaIdIndex(int formaId, int index)
+	{
+		Section section = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_FORMAID_INDEX);			
+	   		pstm.setInt(1, formaId);
+	   		pstm.setInt(2, index);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			section = new Section();
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
 	
-	public List<Section> getSectionsBySurveyId(int surveyId, String lang)
+	public List<Section> getSectionsBySurveyId(int surveyId, String lang, String langdefault)
 	{
 		List<Section> sections = new ArrayList<Section>();
 		
+		//if(lang==null)lang = langdefault;
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -66,10 +165,126 @@ public class SectionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
 	   			
 	   			PageDB pageDB = new PageDB();
-	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang));
+	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang,langdefault));
+	   			
+	   			sections.add(section);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return sections;
+	}
+
+	public List<Section> getSectionsWithIndexBiggerThan(int surveyId, int index)
+	{
+		List<Section> sections = new ArrayList<Section>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTIONS_WITH_INDEX_BIGGER_THAN);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, index);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			Section section = new Section();
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));	   			
+	   			section.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			sections.add(section);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return sections;
+	}
+
+	public JSONObject getSectionJsonBySurveyId(int surveyId, int numSection, Object anonimousUser, String lang, String langdefault)
+	{
+		JSONObject section = new JSONObject();
+		
+		//if(lang==null)lang = langdefault;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_INDEX);			
+	   		pstm.setInt(1, surveyId);
+	   		pstm.setInt(2, numSection);
+	   		//System.out.println("[SectionDB-getSectionJsonBySurveyId] "+DBSQLQueries.s_SELECT_SECTION_BY_SURVEYID_INDEX+", "+surveyId+" - "+numSection);
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			int sectionId = rs.getInt(DBFieldNames.s_SECTIONID);
+	   			section.put("sectionId", sectionId);
+	   			section.put("formaId", rs.getInt(DBFieldNames.s_FORMAID));	   			
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+		   		section.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			section.put("page", pageDB.getPageJsonBySectionId(sectionId, anonimousUser, lang, langdefault));
+	   			
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return section;
+	}
+
+	public List<Section> getSectionByIndexNumPage(int surveyId, String lang, String langdefault, int numSection, int numPage)
+	{
+		List<Section> sections = new ArrayList<Section>();
+		
+		//if(lang==null)lang = langdefault;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTIONS_BY_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			Section section = new Section();
+	   			section.setSectionId(rs.getInt(DBFieldNames.s_SECTIONID));
+	   			section.setFormaId(rs.getInt(DBFieldNames.s_FORMAID));	   			
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			section.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			section.setPages(pageDB.getPagesBySectionId(section.getSectionId(), lang,langdefault));
 	   			
 	   			sections.add(section);
 	   		}
@@ -138,6 +353,59 @@ public class SectionDB {
 		}
 		
 		return numSections;
+	}
+
+	public int getSectionIndexBySectionId(int sectionId)
+	{
+		int index = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_SECTION_INDEX_BY_ID);			
+	   		pstm.setInt(1, sectionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			index = rs.getInt(DBFieldNames.s_INDEX);	   			
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return index;
+	}
+
+	/**
+	 * Update
+	 */
+
+	public void updateIndex(int sectionId, int index) {
+		System.out.println("updateSectionIndex");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_SECTION_INDEX);
+			pstm.setInt(1, index);
+			pstm.setInt(2, sectionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
 	}
 
 	/**

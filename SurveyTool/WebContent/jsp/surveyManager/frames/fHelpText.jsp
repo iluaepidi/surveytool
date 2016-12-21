@@ -5,12 +5,12 @@
 				<%
 				Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO); 
 				%>
-				<div class="modal fade survey-win" id="setHelpText" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade survey-win" id="setHelpText" tabindex="-1" role="dialog" aria-labelledby="helpTextTitle">
 					<div class="modal-dialog survey-win-dialog" role="document">
 				    	<div class="panel panel-primary left"> 
 				    		<div class="panel-heading"> 
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				    			<h2 class="panel-title">Help text</h2> 
+				    			<h2 class="panel-title" id="helpTextTitle">Help text</h2> 
 				    		</div> 
 				    		<div class="panel-body">
 				    			<div class="survey-frame" id="import-multimedia-file">

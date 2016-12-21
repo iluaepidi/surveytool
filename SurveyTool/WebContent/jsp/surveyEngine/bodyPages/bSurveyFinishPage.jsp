@@ -1,10 +1,15 @@
+<%@page import="ilu.surveytool.constants.Attribute"%>
+<%@page import="ilu.surveytool.language.Language"%>
+				<%
+				Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
+				%>
 				
-				<div class="container-fluid">
-	  				<div class="content">
   						<div class="survey-finish-content" >
-  							<h2>Thank you for your colaboration.</h2>
-  							<p>If you want to participate in other surveys, fill in the <a href="#">register form</a>.</p>  							
+  							<h2><%= lang.getContent("survey.process.finishPage.title") %></h2>
+  							<p><%= lang.getContent("survey.process.finishPage.body") %></p>  							
   						</div>
-	  				</div>
-	  			</div>
 	  			
+	  			
+<%
+lang.close();
+%>

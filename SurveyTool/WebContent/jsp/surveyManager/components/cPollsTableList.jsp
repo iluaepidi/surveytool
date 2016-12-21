@@ -18,15 +18,19 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  					if(polls != null && !polls.isEmpty())
 			  					{
 			  					%>
-			  					<div class="surveys-table" id="poll-table">
-			  						<table class="table table-bordered" sumary="List of surveys where ...">
+			  					<div class="polls-table">
+			  						<table class="table table-bordered table-surveys display" id="" sumary="List of surveys where ..." data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.polls.table.caption") %></caption>
-										<tr class="info">
-											<th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th>
-											<th class="center"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
-											<th class="poll-table-tr-th-responses center"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
-											<th class="poll-table-tr-th-actions center"><%= lang.getContent("survey_manager.polls.table.column.actions") %></th>
-										</tr>
+			  							<thead>
+											<tr class="info">
+												<!-- <th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th> -->
+												<th class="center"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
+												<th class="poll-table-tr-th-responses center"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
+												<th class="poll-table-tr-th-numresp center"><%= lang.getContent("survey_manager.polls.table.column.num_responses") %></th>
+												<th class="poll-table-tr-th-actions center"><%= lang.getContent("survey_manager.polls.table.column.actions") %></th>
+											</tr>
+										</thead>
+										<tbody>
 										<%
 										System.out.println("Servlet: " + Address.s_SERVLET_SURVEYS_SERVLET);
 										for(PollTableInfo poll : polls)
@@ -39,6 +43,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 										<%
 										}
 										%>
+										</tbody>
 			  						</table>
 			  					</div>
 			  					

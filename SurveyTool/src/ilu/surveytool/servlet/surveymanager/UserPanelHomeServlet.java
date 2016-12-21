@@ -55,6 +55,11 @@ public class UserPanelHomeServlet extends HttpServlet {
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
 			String bodyPage = request.getParameter(Parameter.s_UPOPTION);
+			
+			//pre-select tab
+			String tab = request.getParameter(Parameter.s_TAB);
+			if(tab == null) tab = "survey";
+			
 			if(bodyPage != null && !bodyPage.isEmpty())
 			{
 				if(bodyPage.equals(Address.s_BODY_SURVEYS))
@@ -66,6 +71,7 @@ public class UserPanelHomeServlet extends HttpServlet {
 				}
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
 				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");
+				request.setAttribute(Attribute.s_TAB, tab);
 			}			
 		}
 		else

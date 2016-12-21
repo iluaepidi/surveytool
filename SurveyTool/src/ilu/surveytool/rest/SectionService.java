@@ -25,7 +25,7 @@ import ilu.surveytool.databasemanager.DataObject.Content;
 
 @Path("/SectionService")
 public class SectionService {
-   
+
 	@PUT
 	@Path("/updateContent")
 	@Consumes(MediaType.TEXT_PLAIN)

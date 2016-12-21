@@ -2,11 +2,14 @@ package ilu.surveymanager.handler;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.DataObject.ResourceType;
 
 public class ResourceHandler {
 
@@ -14,7 +17,13 @@ public class ResourceHandler {
 		super();
 	}
 
-	public Resource insertResource(Resource resource, int questionId)
+	public List<ResourceType> getResourceTypes()
+	{
+		ResourceDB resourceDB = new ResourceDB();
+		return resourceDB.getResourceTypes();
+	}
+	
+	public Resource insertResource(Resource resource, int questionId, int optionid)
 	{
 		int resourceId = 0;
 		
@@ -23,6 +32,8 @@ public class ResourceHandler {
 		
 		int contentId = contentDB.insertContentIndex();
 		resourceId = resourceDB.insertResource(resource, contentId);
+		System.out.println(resourceId);
+		//resource.setContentId(contentId);
 		
 		if(resourceId > 0)
 		{
@@ -35,19 +46,24 @@ public class ResourceHandler {
 				resource.getContents().get(key).setContentId(contentId);
 			}*/
 			
-			resourceDB.insertQuestionResource(questionId, resourceId);
+			
+			if(questionId>=0) resourceDB.insertQuestionResource(questionId, resourceId);
+			else if (optionid>=0) resourceDB.updateOptionWithIdResource(optionid, resourceId);
+			System.out.println(resourceId);
 			resource.setResourceId(resourceId);
+			System.out.println(resource.getResourceId());
 		}
 		
 		return resource;
 	}
 
-	public Resource insertImageContent(int resourceId, HashMap<String, Content> contents)
+	public Resource insertContent(int resourceId, HashMap<String, Content> contents)
 	{
 		Resource resource = null;
 		
 		ContentDB contentDB = new ContentDB();
 		ResourceDB resourceDB = new ResourceDB();
+		System.out.println("ResourceHnadler: "+resourceId);
 		resource = resourceDB.getResourceById(resourceId);
 		
 		if(resource != null)
@@ -57,6 +73,7 @@ public class ResourceHandler {
 			{
 				String key = iter.next();
 				Content content = contents.get(key);
+				System.out.println("ResourceHnadler: "+key+", "+resource.getContentId()+", "+content.getLanguage()+", "+content.getContentType()+", "+content.getText());
 				contentDB.insertContent(resource.getContentId(), content.getLanguage(), content.getContentType(), content.getText());
 				contents.get(key).setContentId(resource.getContentId());
 			}
@@ -70,6 +87,32 @@ public class ResourceHandler {
 	{
 		ResourceDB resourceDB = new ResourceDB();
 		return resourceDB.updateResourceUrlPath(resourceId, urlPath);
+	}
+
+	public boolean updateContent(int resourceId, List<Content> contents)
+	{
+		boolean updated = false;
+				
+		ResourceDB resourceDB = new ResourceDB();
+		Resource resource = resourceDB.getResourceById(resourceId);
+		int contentId = resource.getContentId(); 
+		ContentDB contentDB = new ContentDB();
+		
+		for(Content content : contents)
+		{
+			if(contentDB.existContent(contentId, content.getLanguage(), content.getContentType()))
+			{
+				contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			}
+			else
+			{
+				contentDB.insertContent(contentId, content.getLanguage(), content.getContentType(), content.getText());
+			}
+		}
+		
+		updated = true;
+		
+		return updated;
 	}
 	
 	public boolean removeResource(int resourceId)

@@ -18,6 +18,7 @@ import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Response;
+import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.properties.SurveyToolProperties;
@@ -53,6 +54,7 @@ public class SurveyProcessServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
+		System.out.println("");
 		Enumeration<String> paramNames = request.getParameterNames();
 		List<Response> responses = new ArrayList<Response>();
 		int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SID));
@@ -73,7 +75,8 @@ public class SurveyProcessServlet extends HttpServlet {
 		}
 		
 		SurveyProcessHandler spHandler = new SurveyProcessHandler();
-		boolean stored = spHandler.storeAnonimousResponse(surveyId, responses);
+		boolean stored = spHandler.storeAnonimousResponse(surveyId, responses);	
+		
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISH_PAGE));

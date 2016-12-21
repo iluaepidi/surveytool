@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
@@ -83,7 +88,36 @@ public class OptionDB {
 		return contentId;
 	}
 	
-	public List<OptionsGroup> getOptionsGroupByQuestionId(int questionId, String lang)
+
+	public int getContentIdByOptionsGroupId(int optionsGroupId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUP_BY_ID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
+
+	public List<OptionsGroup> getOptionsGroupByQuestionId(int questionId, String lang, String langdefault)
 	{
 		List<OptionsGroup> optionsGroups = new ArrayList<OptionsGroup>();
 		
@@ -102,12 +136,13 @@ public class OptionDB {
 	   			optionsGroup.setId(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
 	   			optionsGroup.setOptionType(rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME));
 	   			optionsGroup.setRandom(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
-	   			
+	   			optionsGroup.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+
+	   			optionsGroup.setContents(contentDB.getContentByIdAndLanguage(contentId, lang, langdefault));
 	   			
-	   			optionsGroup.setOptions(this.getOptionsByOptionsGroupId(optionsGroup.getId(), lang));
+	   			optionsGroup.setOptions(this.getOptionsByOptionsGroupId(optionsGroup.getId(), lang, langdefault));
 	   			
 	   			optionsGroups.add(optionsGroup);
 	   		}
@@ -121,8 +156,93 @@ public class OptionDB {
 		
 		return optionsGroups;
 	}
-	
-	public List<Option> getOptionsByOptionsGroupId(int optionsGroupId, String lang)
+
+	public JSONArray getOptionsGroupJSONByQuestionId(int questionId, String lang, String langdefault, Object anonimousUser)
+	{
+		JSONArray optionsGroups = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUP_BY_QUESTION_ID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			JSONObject optionsGroup = new JSONObject();
+	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   			optionsGroup.put("optionGroupId", optionsGroupId);
+	   			String optionType = rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME);
+	   			optionsGroup.put("optionType", optionType);
+	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
+	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) 
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					optionsGroup.put("response", responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId)); 
+	   				}
+	   				else
+	   				{
+	   					optionsGroup.put("response", "");
+	   				}
+	   			}
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			optionsGroup.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
+	   			
+	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(questionId, optionsGroupId, lang, langdefault, optionType, anonimousUser));
+	   			
+	   			optionsGroups.put(optionsGroup);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionsGroups;
+	}
+
+	public List<Integer> getOptionsGroupIdByQuestionId(int questionId)
+	{
+		List<Integer> optionsGroupsId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUPID_BY_QUESTION_ID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			optionsGroupsId.add(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionsGroupsId;
+	}
+
+	public List<Option> getOptionsByOptionsGroupId(int optionsGroupId, String lang, String langdefault)
 	{
 		List<Option> options = new ArrayList<Option>();
 		
@@ -141,9 +261,15 @@ public class OptionDB {
 	   			option.setId(rs.getInt(DBFieldNames.s_OPTIONID));
 	   			option.setIndex(rs.getInt(DBFieldNames.s_INDEX));
 	   			
+	   			int resource = rs.getInt(DBFieldNames.s_CONTENT_RESOURCE);
+	   			if(resource>0){
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				option.getResources().add(resourceDB.getResourceById(resource,lang,langdefault));
+	   			}
+	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
 	   			
 	   			options.add(option);
 	   		}
@@ -157,10 +283,69 @@ public class OptionDB {
 		
 		return options;
 	}
-	
-	public int getOptionByGroupIdByOptionId(int optionId)
+
+	public JSONArray getOptionsJSONByOptionsGroupId(int questionId, int optionsGroupId, String lang, String langdefault, String optionType, Object anonimousUser)
 	{
-		int optionGroupId = 0;
+		JSONArray options = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTION_BY_OPTIONSGROUPID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			JSONObject option = new JSONObject();
+	   			int optionId = rs.getInt(DBFieldNames.s_OPTIONID);
+	   			option.put("optionId", optionId);
+	   			option.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) 
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					option.put("response", responsesDB.existAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId))); 
+	   				}
+	   				else
+	   				{
+	   					option.put("response", false);
+	   				}
+	   			}
+	   			
+	   			int resource = rs.getInt(DBFieldNames.s_CONTENT_RESOURCE);
+	   			if(resource>0){
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				option.put("resource", resourceDB.getResourceJSONById(resource,lang,langdefault));
+	   			}
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			option.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
+	   			
+	   			options.put(option);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return options;
+	}
+	
+	public List<Integer> getOptionByGroupIdByOptionId(int optionId)
+	{
+		List<Integer> optionGroupId = new ArrayList<Integer>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -171,9 +356,10 @@ public class OptionDB {
 	   		pstm.setInt(1, optionId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		if(rs.next())
+	   		
+	   		while(rs.next())
 	   		{
-	   			optionGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+	   			optionGroupId.add(rs.getInt(DBFieldNames.s_OPTIONSGROUPID));
 	   		}
 	   		
 		} catch (SQLException e) {
@@ -184,6 +370,64 @@ public class OptionDB {
 		}
 		
 		return optionGroupId;
+	}
+	
+	public List<Integer> getOptionIdByQuestionId(int questionId)
+	{
+		List<Integer> optionId = new ArrayList<Integer>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONID_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		while(rs.next())
+	   		{
+	   			optionId.add(rs.getInt(DBFieldNames.s_OPTIONID));
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return optionId;
+	}
+	
+	public int getQuestionIdByOptionsGroupId(int optionsGroupId)
+	{
+		int questionId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_OPTIONSGROUP_BY_ID);			
+	   		pstm.setInt(1, optionsGroupId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		if(rs.next())
+	   		{
+	   			questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return questionId;
 	}
 	
 	public List<OptionsByGroup> getOptionsByGroupById(int optionsGroupId)
@@ -215,12 +459,42 @@ public class OptionDB {
 		
 		return optionsByGroup;
 	}
+
+	public int getResourceIdByOptionId(int optionId)
+	{
+		Integer resourceId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCEID_BY_OPTIONID);			
+	   		pstm.setInt(1, optionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		
+	   		if(rs.next())
+	   		{
+	   			resourceId = rs.getInt(DBFieldNames.s_RESOURCEID);
+	   			if(resourceId == null) resourceId = 0;
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resourceId;
+	}
 	
 	/**
 	 * Inserts 
 	 */
 	
-	public int insertOptionsGroup(int questionId, String optionType, int contentId) 
+	public int insertOptionsGroup(int questionId, String optionType, int contentId, int index) 
 	{		
 		int optionsGroupId = 0;
 
@@ -231,6 +505,7 @@ public class OptionDB {
 		   pstm.setInt(1, questionId); 
 		   pstm.setInt(2, contentId); 
 		   pstm.setString(3, optionType);
+		   pstm.setInt(4, index);
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -259,7 +534,10 @@ public class OptionDB {
 		PreparedStatement pstm = null;
 	    try {
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_OPTION, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setInt(1, contentId); 
+		   if(contentId<0)
+			   pstm.setString(1, null); 
+		   else
+			   pstm.setInt(1, contentId); 
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -343,7 +621,36 @@ public class OptionDB {
 		   
 	}
 	
-	/*
+	public boolean updateOptionsGroupIndex(int optionsGroupId, int index) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSGROUP_INDEX);
+			pstm.setInt(1, index);
+			pstm.setInt(2, optionsGroupId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	/**
 	 * Remove
 	 */
 	
@@ -355,6 +662,26 @@ public class OptionDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTION);
 		   	pstm.setInt(1, optionId);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+	
+	public void removeOptionsGroup(int optionsGroupId) {
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_OPTIONSGROUP);
+		   	pstm.setInt(1, optionsGroupId);
 	   		
 		   	pstm.execute();
 		   	

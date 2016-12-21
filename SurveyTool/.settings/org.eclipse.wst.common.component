@@ -59,6 +59,9 @@
         <dependent-module archiveName="UserPanel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/UserPanel/UserPanel">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="poi-3.14-20160307.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ExternalLibs/poi-3.14-20160307.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/SurveyTool/build/classes"/>
         <property name="context-root" value="SurveyTool"/>
     </wb-module>

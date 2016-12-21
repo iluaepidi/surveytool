@@ -10,6 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -91,26 +95,34 @@ public class SurveyDB {
 		return response;
 	}
 	
-	public Survey getQuestionnairesById(int surveyId)
+	public Survey getQuestionnairesById(int surveyId,String lang)
 	{
 		Survey response = null;
 		
 		Connection con = this._openConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
+		PreparedStatement pstm=null,pstm2 = null;
+		ResultSet rs=null,rs2 = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_ID);			
-	   		pstm.setInt(1, surveyId);
+			
+			if(lang==null){
+				pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_ID);			
+				pstm.setInt(1, surveyId);
+			}else{
+				pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_ID_AND_LANG);			
+				pstm.setInt(1, surveyId);
+				pstm.setString(2, lang);
+			}
 	   		
 	   		rs = pstm.executeQuery();
-	   		if(rs.next())
-	   		{
+	   		if(rs.next()){
 	   			response = new Survey();
 	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
 	   			response.setSurveyId(surveyId);
 	   			response.setPublicId(rs.getString(DBFieldNames.s_PUBLIC_ID));
 	   			response.setAuthor(rs.getInt(DBFieldNames.s_AUTHOR));
+	   			response.setDefaultLanguage(String.valueOf(rs.getInt(DBFieldNames.s_DEFAULT_LANGUAGE)));
+	   			response.setObjetive(rs.getInt(DBFieldNames.s_OBJETIVE));
 	   			
 	   			String contenttypeName = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 	   			String isoname = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
@@ -124,15 +136,47 @@ public class SurveyDB {
 		   			text = rs.getString(DBFieldNames.s_CONTENT_TEXT);
 		   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));		   			
 		   		}
-	   		}
+	   		}else{
+	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_ID);			
+	   			pstm2.setInt(1, surveyId);
+	   			rs2 = pstm2.executeQuery();
+				if(rs2.next()){
+		   			response = new Survey();
+		   			response.setProject(rs2.getString(DBFieldNames.s_PROJECT_NAME));
+		   			response.setSurveyId(surveyId);
+		   			response.setPublicId(rs2.getString(DBFieldNames.s_PUBLIC_ID));
+		   			response.setAuthor(rs2.getInt(DBFieldNames.s_AUTHOR));
+		   			response.setDefaultLanguage(String.valueOf(rs2.getInt(DBFieldNames.s_DEFAULT_LANGUAGE)));
+		   			response.setObjetive(rs2.getInt(DBFieldNames.s_OBJETIVE));
+		   			
+		   			String contenttypeName = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+		   			String isoname = rs2.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+		   			String text = "";
+		   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));
+		   			
+			   		while(rs2.next())
+			   		{
+			   			contenttypeName = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+			   			isoname = rs2.getString(DBFieldNames.s_LANGUAGE_ISONAME);
+			   			text = "";
+			   			response.getContents().put(contenttypeName, new Content(0, isoname, contenttypeName, text));		   			
+			   		}
+				
+				}
+			}
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			this._closeConnections(con, pstm, rs);
+			this._closeConnections(con, pstm2, rs2);
 		}
 		
+		
+		if(response!=null){
+			response.setDefaultLanguage(this.getIsoLanguage(Integer.parseInt(response.getDefaultLanguage())));
+		}
 		return response;
 	}
 	
@@ -188,10 +232,98 @@ public class SurveyDB {
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			
 	   			ContentDB contentDB = new ContentDB();
-		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang));
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
 		   		
 		   		SectionDB sectionDB = new SectionDB();
-				response.setSections(sectionDB.getSectionsBySurveyId(response.getSurveyId(), lang));
+				response.setSections(sectionDB.getSectionsBySurveyId(response.getSurveyId(), lang,null));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public JSONObject getQuestionnaireJson(String publicId, int numSection, Object anonimousUser, String lang)
+	{
+		JSONObject response = new JSONObject();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
+	   		pstm.setString(1, publicId);
+	   		//System.out.println("[SurveyDB-getQuestionnaireJson] "+DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID+", "+publicId);
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			//response = new JSONObject();
+	   			response.put("project", rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.put("publicId", publicId);
+	   			response.put("lang", lang);
+	   				   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			int surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+
+	   			response.put("surveyId", surveyId);
+	   			
+	   			PageDB pageDB = new PageDB();
+	   			int numPages = pageDB.getNumPagesBySurveyId(surveyId);
+	   			response.put("numPages", numPages);
+	   			response.put("isFinishPage", ((AnonimousUser) anonimousUser).getCurrentPage() > numPages);
+	   			
+	   			ContentDB contentDB = new ContentDB();
+		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+		   		
+		   		SectionDB sectionDB = new SectionDB();
+				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, anonimousUser, lang, null));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public Survey getQuestionnaireByPublicIdNumSectionPage(String publicId, int numSection, int numPage, String lang)
+	{
+		Survey response = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = new Survey();
+	   			response.setProject(rs.getString(DBFieldNames.s_PROJECT_NAME));
+	   			response.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			
+	   			ContentDB contentDB = new ContentDB();
+		   		response.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,null));
+		   		
+		   		SectionDB sectionDB = new SectionDB();
+				response.setSections(sectionDB.getSectionsBySurveyId(response.getSurveyId(), lang,null));
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -216,8 +348,8 @@ public class SurveyDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLE_INFO);		
 		   	pstm.setString(1, DBConstants.s_VALUE_STATE_FINISHED);
 	   		pstm.setInt(2, author);
-	   		pstm.setString(3, language);
-	   		pstm.setString(4, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		//pstm.setString(3, language);
+	   		pstm.setString(3, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
@@ -240,6 +372,43 @@ public class SurveyDB {
 		
 		return response;
 	}
+
+	public List<SurveyTableInfo> getSurveysTableInfoAnonimousByAuthor(int author, String language)
+	{
+		List<SurveyTableInfo> response = new ArrayList<SurveyTableInfo>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS);	
+	   		pstm.setInt(1, author);
+	   		//pstm.setString(2, language);
+	   		pstm.setString(2, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			SurveyTableInfo survey = new SurveyTableInfo();
+	   			survey.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			survey.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
+	   			survey.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
+	   			survey.setNumUsers(rs.getInt(DBFieldNames.s_GENERICO_ALL_USERS));
+	   			response.add(survey);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	
 
 	public int getQuestionnairesContentId(int surveyId)
 	{
@@ -298,25 +467,24 @@ public class SurveyDB {
 		
 		return projectId;
 	}
-	
+
 	public List<Integer> getQuestionnairesIdByProjectId(int projectId)
 	{
-		List<Integer> projectsId = new ArrayList<Integer>();
+		List<Integer> surveysId = new ArrayList<Integer>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_PROJECTID);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRESID_BY_PROJECTID);			
 	   		pstm.setInt(1, projectId);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{
-	   			projectsId.add(rs.getInt(DBFieldNames.s_PROJECTID));
-	   		}
-	   		
+	   			surveysId.add(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   		}	   		
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -325,7 +493,35 @@ public class SurveyDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return projectsId;
+		return surveysId;
+	}
+	
+	public Integer getQuestionnaireIdByPublicId(String publicId)
+	{
+		Integer surveyId = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_ID_BY_PUBLICID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return surveyId;
 	}
 	
 	public Project getProjectByName(String name)
@@ -420,9 +616,12 @@ public class SurveyDB {
 		return projectId;
 	}
 	
-	public int insertSurvey(int author, int project, int contentId) {
+	public int insertSurvey(int author, int project, int contentId, String isoNameDefaultLanguage) {
 		//System.out.println("inserUser");
 		int surveyId = 0;
+
+		LanguageDB language = new LanguageDB();
+		int intLanguageDefault = language.getIdLanguage(isoNameDefaultLanguage);
 		
 		//int contentId = this.insertContentIndex();
 		Connection con = this._openConnection();
@@ -434,6 +633,7 @@ public class SurveyDB {
 		   pstm.setInt(3, project); 
 		   pstm.setString(4, this._generatePublicId()); 
 		   pstm.setInt(5, author);  
+		   pstm.setInt(6, intLanguageDefault);  
 		   
 		   boolean notInserted = pstm.execute();
 		   
@@ -483,7 +683,7 @@ public class SurveyDB {
 		return formaId;
 	}
 	
-	/*
+	/**
 	 * update
 	 */
 	
@@ -550,6 +750,35 @@ public class SurveyDB {
 						
 		return publicId;
 	}
+	
+	public String getIsoLanguage(int idLanguage)
+	{
+		String isoName = "";
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_GET_ISOLANGUEGE_FROM_IDLANGUAGE);			
+	   		pstm.setInt(1, idLanguage);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			isoName = rs.getString("isoName");
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return isoName;
+	}
+	
+	
 	
 
 }

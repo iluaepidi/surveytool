@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -41,6 +42,10 @@ public class LoginDB {
 	public LoginResponse login(Credentials credentials)
 	{
 		LoginResponse response = new LoginResponse();
+		//Load list language
+
+		LanguageDB language = new LanguageDB();
+		response.setListLanguage(language.loadListLanguage());
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -59,10 +64,13 @@ public class LoginDB {
 	   			response.setUserId(rs.getInt(DBFieldNames.s_USERID));
 	   			response.setUserName(rs.getString(DBFieldNames.s_USERNAME));
 	   			response.setRol(rs.getString(DBFieldNames.s_ROLNAME));
+	   			response.setPassword(credentials.getPassword());
+	   			response.setEmail(rs.getString(DBFieldNames.s_USER_EMAIL));
+	   			response.setIsoLanguage(rs.getString(DBFieldNames.s_USER_ISO_LANGUAGE));
 	   		}
 	   		else
 	   		{
-	   			response.setErrorMsg("Invalid username or password");
+	   			response.setErrorMsg("login.invalid");
 	   		}
 	   		
 	   } catch (SQLException e) {

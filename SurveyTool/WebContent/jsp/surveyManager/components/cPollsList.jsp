@@ -10,15 +10,16 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+String tab = (String) request.getAttribute(Attribute.s_TAB);
 %>
     								
-						<div class="hidden" id="polls-list">	  					
+						<div id="polls-list"  <%if(!tab.equals("poll")){%>class="hidden"<%}%>>	  					
 							<h3><%= lang.getContent("survey_manager.polls.title") %></h3>							
 							<%= lang.getContent("survey_manager.polls.description") %>
 							
 		  					<div class="user-panel-surveys">
 		  						<div class="surveys-create-button">
-		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPollModal"><%= lang.getContent("button.create_new") %></button>
+		  							<button type="button" class="btn btn-primary btn-icon-text" data-toggle="modal" data-target="#newPollModal"><i class="fa fa-plus" aria-hidden="true"></i> <%= lang.getContent("button.create_new") %></button>
 		  						</div>
 			  					
 			  					<jsp:include page="cPollsTableList.jsp" />
@@ -28,3 +29,4 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 <%
 lang.close();
 %>
+

@@ -11,11 +11,15 @@
 	Poll poll = (Poll) request.getAttribute(Attribute.s_POLL_INFO);
 	Question question = poll.getQuestion();
 	
+	boolean isPreview = (boolean) request.getAttribute(Attribute.s_IS_PREVIEW);
+	
 	Language lang = new Language(getServletContext().getRealPath("/")); 
 	lang.loadLanguage(Language.getLanguageRequest(request));
+	String servletUrl = "PollProcessServlet";
+	if(isPreview) servletUrl = servletUrl + "?preview";
 %>
 						
-            <form action="PollProcessServlet" method="post" id="poll_form" class="">		
+            <form action="<%= servletUrl %>" method="post" id="poll_form" class="">		
             	<input type="hidden" name="pid" value="<%= poll.getPollId() %>" />		
                 <fieldset>
                 

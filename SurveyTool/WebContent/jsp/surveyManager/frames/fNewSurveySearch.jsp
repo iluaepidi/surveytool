@@ -15,7 +15,7 @@
 				    						<div class="input-group">
 										      <input type="text" class="form-control" placeholder="Search for...">
 										      <span class="input-group-btn">
-										        <button class="btn btn-default btn-search" type="button"><i class="fa fa-search"></i></button>
+										        <button class="btn btn-default btn-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
 										      </span>
 										    </div><!-- /input-group -->
 				    					</div>
@@ -33,7 +33,7 @@
 				    				</div>
 				    				<div class="survey-search-table">
 					    				<div class="close-table">
-					    					<a class="btn-close-aspa" href="#" title="Close table"><i class="fa fa-times-circle fa-2x"></i></a>
+					    					<a class="btn-close-aspa" href="#" title="Close table"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></a>
 					    				</div>
 					    				<div class="scroll-frame">
 						    				<table class="table table-bordered" sumary="List of surveys where ...">
@@ -49,12 +49,12 @@
 													<td>Disability and consumers</td>
 													<td>Cloud4all</td>
 													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -62,12 +62,12 @@
 													<td>Disability and consumers</td>
 													<td>Cloud4all</td>
 													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -75,38 +75,12 @@
 													<td>Disability and consumers</td>
 													<td>Cloud4all</td>
 													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
-														</ul>
-													</td>
-												</tr>
-												<tr class="active">
-													<td>Disability and consumers</td>
-													<td>Cloud4all</td>
-													<td class="center">21/11/2015</td>
-													<td class="icon-small center"></td>
-													<td class="icon-small center">
-														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
-														</ul>
-													</td>
-												</tr>
-												<tr>
-													<td>Disability and consumers</td>
-													<td>Cloud4all</td>
-													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
-													<td class="icon-small center">
-														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -117,9 +91,9 @@
 													<td class="icon-small center"></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -127,12 +101,12 @@
 													<td>Disability and consumers</td>
 													<td>Cloud4all</td>
 													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -143,9 +117,9 @@
 													<td class="icon-small center"></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>
@@ -153,12 +127,38 @@
 													<td>Disability and consumers</td>
 													<td>Cloud4all</td>
 													<td class="center">21/11/2015</td>
-													<td class="icon-small center"><i class="fa fa-user-secret"></i></td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
 													<td class="icon-small center">
 														<ul class="row">
-															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol"></i><span class="circle-info circle-blue">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users"></i><span class="circle-info circle-grey">40</span></a></li>
-										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o"></i><span class="circle-info circle-red">40</span></a></li>
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="active">
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"></td>
+													<td class="icon-small center">
+														<ul class="row">
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
+														</ul>
+													</td>
+												</tr>
+												<tr>
+													<td>Disability and consumers</td>
+													<td>Cloud4all</td>
+													<td class="center">21/11/2015</td>
+													<td class="icon-small center"><i class="fa fa-user-secret" aria-hidden="true"></i></td>
+													<td class="icon-small center">
+														<ul class="row">
+															<li class="col-sm-4 center"><a href="#" title="clone survey"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="circle-info circle-blue">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="statistics"><i class="fa fa-users" aria-hidden="true"></i><span class="circle-info circle-grey">40</span></a></li>
+										  					<li class="col-sm-4 center"><a href="#" title="settings"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="circle-info circle-red">40</span></a></li>
 														</ul>
 													</td>
 												</tr>

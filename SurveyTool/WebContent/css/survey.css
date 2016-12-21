@@ -1,0 +1,561 @@
+/*----------------------------------------------*\
+		$GENERIC
+\*----------------------------------------------*/
+.body-content > .container-fluid{
+	padding:0px;
+}
+
+.body-content{
+	background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;
+	padding-bottom:2em;
+	font-family: 'arthurbecker';
+}
+.body-content .content{
+	background:url(../img/content-bg-top.gif) left top  repeat-x;
+	min-height:35em;/*TEST*/
+	clear:both;
+	border-top:3px solid #BBCAD3;
+	padding-top:1em;
+}
+.survey-form > ul{
+	list-style-type:none;
+	padding:0px;
+}
+.survey-form > ul > li{
+	list-style-type:none;
+	/*overflow:hidden;*/
+}
+
+.center {text-align: center;}
+/*----------------------------------------------*\
+		$HEADER
+\*----------------------------------------------*/
+.title-content{
+	bakcground-color:#fff;
+}
+.title-content h1{
+	font-size:2em;
+	color:#016FB8;
+    padding: 2px 0;
+}
+.title-content h2{
+	font-size:1.214em;
+	color:#016FB8;
+	font-weight:bold;
+	text-transform:uppercase;
+	margin-top:2em;
+	margin-bottom:1em;
+}
+.progress {
+    background-color: #CED9DF;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(58, 80, 92, 0.5) inset;
+    height:8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.progress-bar {
+    background-color: #016FB8;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    color: #fff;
+    float: left;
+    font-size: 10px;
+    height: 100%;
+    line-height: 10px;
+    text-align: center;
+    transition: width 0.6s ease 0s;
+    width: 0;
+}
+/*----------------------------------------------*\
+		$QUESTIONS
+\*----------------------------------------------*/
+#form-question{
+	margin:2em 0em 4em 0em;/* margin collapse */
+}
+#form-question fieldset > *:not(legend){
+	padding-left:2.6em;
+}
+#form-question legend{
+	/*
+	color:#016FB8;
+	border:none;
+	font-weight:bold;
+	font-size:1.786em;
+	overflow:hidden;
+	*/
+	position:relative;
+	font-size:1.786em;
+	border:none;
+}
+#form-question legend span{
+	/*
+	background-color:#016FB8;
+	color:#fff;
+	padding:.2em 0em;
+	display:block;
+	float:left;
+	width:33%;
+	*/
+	font-weight:bold;
+	line-height:1.2;
+}
+#form-question legend span.number{
+	position: absolute;
+    width: 1.5em;
+    left: -0.6em;
+    color: #016FB8;
+    text-align: right;
+    font-size: 1.6em;
+    top: -0.2em;
+}
+#form-question legend span.text{
+	background-color:#016FB8;
+	color:#fff;
+	padding:0em .4em;
+	display:block;
+	margin-left:1.6em;
+}
+#form-question legend span.mandatory{
+	position:absolute;
+	width:2em;
+	right:-2.2em;
+	top:0px;
+	color:#BA0C2F;
+	text-align:left;
+	font-size:3em;
+	line-height:.9;
+}
+.previewFileUpliaded {
+	text-align: center;
+    margin-bottom: 20px;
+}
+
+.previewFileUpliaded img {width: 500px;
+    border: 3px solid #C5D3DA;
+    padding: 3px;
+    margin-bottom: 10px;}
+
+/* InputText Textarea*/
+#form-question .form-control,
+#form-question input[type=number]{
+	border:1px solid #016FB8;
+	border-radius:0px;
+}
+.char-counter {text-align: right;
+	color:#484848;
+	text-transform: uppercase;}
+/* Multiple */
+#form-question .checkbox input{
+	opacity:0;
+}
+#form-question .checkbox label{
+	background:url(../img/checkbox-off.png) left center no-repeat;
+	padding-left:30px;
+}
+#form-question .checkbox input[type=checkbox]:checked + label{
+	background: url(../img/checkbox-on.png) left center no-repeat;
+}
+#form-question .checkbox input[type=checkbox]:checked + label span{
+	background-color:#016FB8;
+	color:#fff;
+}
+#form-question .likert-options input[type=radio]:checked + label span{
+	background-color:#016FB8;
+	color:#fff;
+	padding: 5px;
+}
+#form-question .checkbox label span{
+	display:inline-block;
+	padding:4px;
+	color:#016FB8;
+	min-width:20em;
+	font-weight:bold;
+}
+#form-question .checkbox label:hover span,
+#form-question .checkbox input:focus + label span{
+	color:#fff;
+	background-color:#016FB8;
+}
+
+#form-question .checkbox.img{
+	float:left;
+	width:33%;
+	text-align:center;
+	margin:15px 0px;
+	min-width:200px;
+}
+#form-question .checkbox.img label{
+	background:url(../img/checkbox-off.png) center bottom no-repeat;
+	padding-left:0px;
+	padding-bottom:30px;
+	width: 250px;
+	/*padding-bottom:59px;
+	height: 248px;
+    width: 185px;
+    display: table;*/
+}
+#form-question .checkbox.img input[type=checkbox]:checked + label{
+	background: url(../img/checkbox-on.png) center bottom no-repeat;
+	color:#333;
+}
+#form-question .checkbox.img input[type=checkbox]:checked + label img{
+	border:3px solid #016FB8;
+}
+#form-question .checkbox.img label span{
+	display:block;
+	padding:4px;
+	text-align:center;
+	min-width:auto;
+	min-height: 88px;
+	/*position: absolute;
+	bottom: 33px;
+    left: 0;
+    width: 185px;*/
+}
+#form-question .checkbox.img label img,
+#form-question .checkbox.img input + label img{
+	border:3px solid #fff;
+	padding:2px;
+	width:185px;
+	/*height:195px;*/
+}
+#form-question .checkbox.img label:hover span,
+#form-question .checkbox.img input:focus + label span{
+	color:#fff !important;
+	background-color:#016FB8 !important;
+}
+#form-question .checkbox.img label:hover img,
+#form-question .checkbox.img input:focus + label img{
+	border:3px solid #016FB8;
+}
+
+/* Simple */
+#form-question .radio input{
+	opacity:0;
+}
+#form-question .radio label{
+	background:url(../img/radio-off.png) left center no-repeat;
+	padding-left:30px;
+}
+#form-question .radio input[type=radio]:checked + label{
+	background: url(../img/radio-on.png) left center no-repeat;
+}
+#form-question .radio input[type=radio]:checked + label span{
+	background-color:#016FB8;
+	color:#fff;
+}
+#form-question .radio label span{
+	display:inline-block;
+	padding:4px;
+	color:#016FB8;
+	min-width:20em;
+	font-weight:bold;
+}
+#form-question .radio label:hover span,
+#form-question .radio input:focus + label span{
+	color:#fff;
+	background-color:#016FB8 !important;
+}
+
+#form-question .radio.img{
+	float:left;
+	width:33%;
+	/*width: auto;*/
+	text-align:center;
+	margin:15px 0;
+	min-width:200px;
+}
+#form-question .radio.img label{
+	background:url(../img/radio-off.png) center bottom no-repeat;
+	padding-left:0px;
+	padding-bottom:30px;
+	width: 250px;
+	/*padding-bottom:59px;
+	height: 248px;*/
+    /*width: 185px;*/
+    /*display: table;*/
+}
+#form-question .radio.img input[type=radio]:checked + label{
+	background: url(../img/radio-on.png) center bottom no-repeat;
+	color:#333;
+}
+#form-question .radio.img input[type=radio]:checked + label img{
+	border:3px solid #016FB8;
+}
+#form-question .radio.img label span{
+	display:block;
+	padding:4px;
+	text-align:center;
+	min-width:auto;
+	min-height: 88px;
+	/*position: absolute;
+	bottom: 31px;
+    left: 0;
+    width: 185px;*/
+}
+.option-image {display: table;
+	    height: 190px;
+	    width: 100%;}
+.sub-option-image {    display: table-cell;
+    vertical-align: middle;}
+#form-question .radio.img label img,
+#form-question .radio.img input + label img{
+	border:3px solid #fff;
+	padding:2px;
+	width:185px;
+	/*height:195px;*/
+}
+#form-question .radio.img label:hover span,
+#form-question .radio.img input:focus + label span{
+	color:#fff !important;
+	background-color:#016FB8 !important;
+}
+#form-question .radio.img label:hover img,
+#form-question .radio.img input:focus + label img{
+	border:3px solid #016FB8;
+}
+
+.option-list {/*display: inline-block;
+    max-width: 90%;
+    padding: 0;*/}
+
+/* Matrix */
+#form-question table{
+	width:100%;
+}
+#form-question table tr{
+	background-color:#fff;
+}
+#form-question table tbody tr:nth-child(odd){
+	background-color:#E8EEF1;
+}
+
+#form-question table tr th{
+	padding:1em;
+	color:#016FB8;
+	text-align:center;
+}
+#form-question table tr th.matrix-title{
+	text-align:left;
+}
+#form-question table tr td{
+	padding:1em;
+	position:relative;
+	text-align:center;
+	border-left:1px solid #fff;
+}
+#form-question table tr:nth-child(even) td{
+	border-left:1px solid #E8EEF1;
+}
+#form-question table tr td label{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	background:url(../img/radio-off.png) center center no-repeat;
+}
+#form-question table tr td label:hover,
+#form-question table tr td input[type=radio]:focus + label{
+	background-color:#016FB8;
+}
+
+#form-question table tr td input[type=radio]:checked + label{
+	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
+}
+/* Scale */
+#form-question.scale .form-question-content{
+	max-width:300px;
+	margin:2em auto;
+	padding:0px;
+}
+#form-question .likert-options label{
+	background:url(../img/radio-off.png) center bottom no-repeat;
+	padding-bottom:30px;
+	display:inline-block;
+	min-width:20px;
+	text-align:center;
+	margin:0px 11px 10px;
+	color:#016FB8;
+}
+#form-question .likert-options .likert-options-frame span:first-child label{
+	margin-left:0px;
+}
+#form-question .likert-options .likert-options-frame span:last-child label{
+	margin-right:0px;
+}
+#form-question .likert-options input[type=radio]:checked + label{
+	background:url(../img/radio-on.png) center bottom no-repeat;
+}
+#form-question .likert-options input{
+	opacity:0;
+	margin:0px;
+	padding:0px;
+	position:absolute;
+}
+
+#form-question .likert-legend{
+	border-top:3px solid #7191A4;
+}
+#form-question .likert-legend div{
+	float:left;
+	width:33%;
+	text-align:center;
+	font-size:.75em;
+	text-transform:uppercase;
+	color:#016FB8;
+	padding:1em 5.5% 0em 5.5%;
+}
+#form-question .likert-legend div.disagree{
+	margin-left:-50px;
+	margin-right:50px;
+}
+#form-question .likert-legend div.agree{
+	margin-left:50px;
+	margin-right:-50px;
+}
+
+#form-question.scale .scale-img{
+	float:left;
+	text-align:center;
+	width:33%;
+}
+#form-question.scale .scale-img + .scale-content{
+	float:left;
+	width:66%;
+}
+@media all and (max-width:64em){/* 600 */
+	#form-question.scale .scale-img{
+		float:none;
+		text-align:center;
+		width:100%;
+		margin-bottom:1em;
+	}
+	#form-question.scale .scale-img +  .scale-content{
+		float:none;
+		width:100%;
+	}
+}
+
+/* Buttons */
+.btn-submit-page .btn-submit-page-back{
+	border:none;
+	background:transparent url(../img/back.png) left center no-repeat;
+	padding-left:35px;
+	color:#4A555F;
+	font-size:1.428em;
+}
+.btn-submit-page .col-xs-2{
+	text-align:center;
+}
+.btn-submit-page .btn-submit-page-continue{
+	border-radius:0px;
+	font-size:1.786em;
+	padding:0px 12px;
+	background-color:#016fb8;
+}
+
+/* Messages */
+.msg-error{
+	font-size:1.072em;
+	background:url(../img/msg-bg.png) bottom right no-repeat;
+	padding-bottom:25px;
+	margin-right:-3em;
+	margin-left:2.5em;
+}
+.msg-alert{
+	font-size:1.072em;
+	background:url(../img/msg-bg-info.png) bottom right no-repeat;
+	padding-bottom:25px;
+	margin-right:-3em;
+	margin-left:2.5em;
+}
+.error-summary{
+	border:2px solid #BA0C2F;
+	padding:1em 2em 1em 45px;
+	background:#fff url(../img/exclamation.png) left center no-repeat;
+	margin-bottom:1em;
+}
+.form-question-content .msg-error{
+	margin-left:0em;
+	background:url(../img/msg-bg-exc.png) bottom right no-repeat;
+	margin-bottom:-20px;
+	padding-bottom:45px;
+}
+.form-question-content .msg-alert{
+	margin-left:0em;
+	background:url(../img/msg-bg-exc-info.png) bottom right no-repeat;
+	margin-bottom:-20px;
+	padding-bottom:45px;
+}
+.msg-error > div,
+.msg-alert > div{
+	padding-left:70px;
+	margin-left:-2em;
+}
+.msg-error > div.required{
+	background:url(../img/asterisk.png) left top no-repeat;
+}
+.msg-error > div.error{
+	background:url(../img/exclamation.png) left top no-repeat;
+}
+.msg-alert > div.error{
+	background:url(../img/exclamation-info-2.png) left top no-repeat;
+}
+.msg-error .msg-title,
+.msg-alert .msg-title,
+.error-summary .msg-title{
+	text-transform:uppercase;
+	color:#016FB8;
+	margin-bottom:.4em;
+	font-weight:bold;
+}
+
+.msg-body{
+	margin: 0 !important;
+}
+
+/*----------------------------------------------*\
+		$NAVIGATION
+\*----------------------------------------------*/
+.survey-form button.navigation{
+	height:41px;
+	width:100%;
+	border:none;
+	padding:0px;
+	margin:0px;
+	text-indent:-32000px;
+}
+#question-list button.up{
+	background:transparent url(../img/up.png) center center no-repeat;
+}
+#question-list button.down{
+	background:transparent url(../img/down.png) center center no-repeat;
+}
+#question-list .inactive,
+.title-content.inactive{
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray; /* IE 6-9 */
+  opacity:.4;
+}
+.inactive #form-question legend span.text{
+	background-color:transparent;
+	color:#333;
+	border-top:1px solid #666;
+}
+/*----------------------------------------------*\
+		$FOOTER
+\*----------------------------------------------*/
+#powered{
+	text-align:right;
+	padding:2em 0em;
+}
+/*----------------------------------------------*\
+		$FINISH PAGE
+\*----------------------------------------------*/
+.survey-finish-content {text-align: center;
+    margin-top: 130px;}

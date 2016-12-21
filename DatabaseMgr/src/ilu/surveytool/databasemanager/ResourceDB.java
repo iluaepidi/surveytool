@@ -9,12 +9,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
 import ilu.surveytool.databasemanager.DataObject.Resource;
+import ilu.surveytool.databasemanager.DataObject.ResourceType;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
@@ -70,7 +75,7 @@ public class ResourceDB {
 	   		{
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang);
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);
 	   				   			
 	   			Resource resource = new Resource(rs.getInt(DBFieldNames.s_RESOURCEID), 
 	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
@@ -83,6 +88,46 @@ public class ResourceDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resources;
+	}
+
+	public JSONArray getResourcesJsonByQuestionId(int questionId, String lang)
+	{
+		JSONArray resources = new JSONArray();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCES_BY_QUESTIONID);			
+	   		pstm.setInt(1, questionId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			JSONObject resource = new JSONObject();
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			resource.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   				   			
+	   			resource.put("resourceId", rs.getInt(DBFieldNames.s_RESOURCEID)); 
+	   			resource.put("resourceType", rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME)); 
+	   			resource.put("urlPath", rs.getString(DBFieldNames.s_RESOURCE_URL_PATH));
+	   			
+	   			resources.put(resource);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
 			this._closeConnections(con, pstm, rs);
 		}
 		
@@ -104,10 +149,12 @@ public class ResourceDB {
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
+	   			
 	   			resource = new Resource(resourceId, 
 	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
 	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
 	   					rs.getInt(DBFieldNames.s_CONTENTID));
+	   			
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -119,24 +166,36 @@ public class ResourceDB {
 		
 		return resource;
 	}
-	
-	/*public HashMap<String, String> getQuestionContentByQuestionId(int questionId, String lang)
+
+	public Resource getResourceById(int resourceId, String lang,String langdefault)
 	{
-		HashMap<String, String> contents = new HashMap<String, String>();
+		Resource resource = null;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		   
+		if(lang==null)lang = langdefault;
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTION_CONTENT_BY_QUESTIONID);			
-	   		pstm.setInt(1, questionId);
-	   		pstm.setString(2, lang);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_BY_ID);			
+	   		pstm.setInt(1, resourceId);
 	   		
 	   		rs = pstm.executeQuery();
-	   		while(rs.next())
+	   		if(rs.next())
 	   		{
-	   			contents.put(rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME), rs.getString(DBFieldNames.s_CONTENT_TEXT));	   			
+	   			
+	   			/*resource = new Resource(resourceId, 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					rs.getInt(DBFieldNames.s_CONTENTID));*/
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			HashMap<String, Content> contents = contentDB.getContentByIdAndLanguage(contentId, lang,null);
+	   				   			
+	   			resource = new Resource(rs.getInt(DBFieldNames.s_RESOURCEID), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_URL_PATH), 
+	   					contents);
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -146,8 +205,104 @@ public class ResourceDB {
 			this._closeConnections(con, pstm, rs);
 		}
 		
-		return contents;
-	}*/
+		return resource;
+	}
+
+	public JSONObject getResourceJSONById(int resourceId, String lang,String langdefault)
+	{
+		JSONObject resource = new JSONObject();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		if(lang==null)lang = langdefault;
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_BY_ID);			
+	   		pstm.setInt(1, resourceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			
+	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   			ContentDB contentDB = new ContentDB();
+	   			resource.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+	   				   			
+	   			resource.put("resourceId", rs.getInt(DBFieldNames.s_RESOURCEID)); 
+	   			resource.put("resourceType", rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME)); 
+	   			resource.put("urlPath", rs.getString(DBFieldNames.s_RESOURCE_URL_PATH));
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resource;
+	}
+	
+	public List<ResourceType> getResourceTypes()
+	{
+		List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_RESOURCE_TYPES);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			ResourceType resourceType = new ResourceType(rs.getInt(DBFieldNames.s_RESOURCE_TYPE_ID), 
+	   					rs.getString(DBFieldNames.s_RESOURCE_TYPE_NAME));
+	   			resourceTypes.add(resourceType);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return resourceTypes;
+	}
+
+	public int getContentIdByResourceId(int resourceId)
+	{
+		int contentId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENTID_BY_RESOURCEID);
+		   	pstm.setInt(1, resourceId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			contentId = rs.getInt(DBFieldNames.s_CONTENTID);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return contentId;
+	}
 	
 	/**
 	 * Inserts 
@@ -216,6 +371,36 @@ public class ResourceDB {
 	 * Update
 	 */
 	
+	public boolean updateOptionWithIdResource(int idOption,int resourceId) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTION_IDRESOURCE);
+			pstm.setInt(1, resourceId);
+			pstm.setInt(2, idOption);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	
 	public boolean updateResourceUrlPath(int resourceId, String urlPath) {
 		//System.out.println("updateState");
 		boolean updated = false;
@@ -251,7 +436,8 @@ public class ResourceDB {
 	
 	public void removeResource(int resourceId) {
 		//System.out.println("removeUserOptionValues");
-		
+		int contentId = this.getContentIdByResourceId(resourceId);		
+				
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		   
@@ -260,6 +446,9 @@ public class ResourceDB {
 		   	pstm.setInt(1, resourceId);
 	   		
 		   	pstm.execute();
+		   	
+		   	ContentDB contentDB = new ContentDB();
+		   	contentDB.removeContent(contentId);
 		   	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
