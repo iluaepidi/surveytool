@@ -36,6 +36,9 @@
 				
 				HttpSession sessions = request.getSession(false); 
   				LoginResponse loginResp = (LoginResponse)sessions.getAttribute(Attribute.s_USER_SESSION_INFO);
+  				
+  				int numQuestion = 1;
+  				request.setAttribute(Attribute.s_NUM_QUESTION, numQuestion);
 				%>
 				
 				<script type="text/javascript">

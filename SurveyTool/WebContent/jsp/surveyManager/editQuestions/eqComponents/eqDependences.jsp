@@ -55,25 +55,32 @@
 						  						if(!hasPrevQSimple) { noDependencesClass = "hidden"; }
 						  						
 						  						String lastPageClass = "";
-						  						if(!hasPrevQSimple) { extraClass = "noborder"; }
-						  						if(numPage == pagesJson.length()) { lastPageClass = "hidden"; }
+						  						//if(!hasPrevQSimple) { extraClass = "noborder"; }
+						  						if(numPage == pagesJson.length() || !withLogic) { lastPageClass = "hidden"; }
 						  						
 						  						String noLogicDependencesClass = "";
 						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || !question.getQuestionType().equals("simple"))) noLogicDependencesClass = "hidden";						  							
 							  					%>
-							  						 
-							  					<div class="question-frame <%= noLogicDependencesClass %>">
-							  						<h6><%= lang.getContent("question.edit.dependences.title") %></h6>
+							  					<div class="rules-frame <%= noLogicDependencesClass %>">
+							  						<h6 class="visuallyhidden"><%= lang.getContent("question.edit.dependences.title") %></h6>
+							  													  						
+								  					<div class="nav-config">
+									  					<ul class="nav nav-pills">
+														  <li role="presentation"><button class="btn-logic <%= lastPageClass %>"><%= lang.getContent("button.logic") %></button></li>
+														  <li role="presentation"><button class="btn-dependences <%= noDependencesClass %>"><%= lang.getContent("button.dependences") %></button></li>
+														</ul>
+													</div>
 							  						
-							  						<div class="dependences-frame <%= noDependencesClass %>">
+							  						<fieldset class="dependences-frame hidden">
+							  							<legend><%= lang.getContent("question.edit.dependence.question.label_shown") %>:</legend>
+							  							<button class="btn-transparent btn-close-aspa btn-close-dependences"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  						<%
 															if(qdependence==null){
 															%>
-							  							<button class="btn-transparent btn-close-aspa btn-close-dependences hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-							  							<div class="dependences-button center">
+							  							<!-- <div class="dependences-button center">
 							  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_dependence") %></button>
-							  							</div>
-							  							<div class="dependences-settings hidden">
+							  							</div> -->
+							  							<div class="dependences-settings">
 							  								
 							  								<ul class="dependences-list form-inline" index = "0">
 
@@ -82,22 +89,15 @@
 																	<jsp:param value="" name="index"/>
 																	<jsp:param value="true" name="hidden"/>
 																</jsp:include>
-																
-																<jsp:include page="eqDependenceItem.jsp">
-																	<jsp:param value="<%= title %>" name="title"/>
-																	<jsp:param value="-1" name="index"/>
-																	<jsp:param value="false" name="hidden"/>
-																</jsp:include>
 							  								</ul>
 							  								<div class="dependences-add-button center">
-								  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_dependence") %></button>
+								  								<button class="btn btn-primary btn-sm active"><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_dependence") %></span></button>
 								  							</div>
-							  								</div>
+							  							</div>
 							  								<%
 															}
 															else{
 																%>
-														<button class="btn-transparent btn-close-aspa btn-close-dependences hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  							
 							  							<div class="dependences-settings">
 															<ul class="dependences-list form-inline" index = "<%= qdependence.getId() %>">
@@ -120,88 +120,81 @@
 																	<fieldset id="fieldset-dependence">
 							  											<legend class="visuallyhidden"><%= i %>º <%= lang.getContent("question.edit.dependence.legend") + " "+ title%></legend>
 							  											<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
-								  										<div class="form-group"  style="margin:0px !important;">
+								  										<div class="form-group div-dependence-condition"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition hidden">
 								  												<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%} else{%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%}%>
 								  											</select>
 								  										</div>
-																		<label for="dependence-question-<%= i %>" class="dependence-question-label">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+																		<label for="dependence-question-<%= i %>" class="dependence-question-label visualyhidden hidden">
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
-								  										<label for="dependence-question-<%= i %>" class="next-dependence-question-label hidden">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_next_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+								  										<label for="dependence-question-<%= i %>" class="next-dependence-question-label visuallyhidden">
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
 								  										<%
 																	}
 																	else if(i==2){
 																		%>
-																	<fieldset id="fieldset-dependence" class="fieldset-second-dependence">
+																	<fieldset id="fieldset-dependence">
 							  											<legend class="visuallyhidden"><%= i %>º <%= lang.getContent("question.edit.dependence.legend") + " "+ title%></legend>
 																		<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
-								  										<div class="form-group"  style="margin:0px !important;">
+								  										<div class="form-group div-dependence-condition"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition">
 								  											<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%} else{%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%}%>
 								  											</select>
 								  										</div>
-								  										<label for="dependence-question-<%= i %>" class="dependence-question-label hidden">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+								  										<label for="dependence-question-<%= i %>" class="dependence-question-label visuallyhidden hidden">							  											
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
-								  										<label for="dependence-question-<%= i %>" class="next-dependence-question-label">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_next_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+								  										<label for="dependence-question-<%= i %>" class="next-dependence-question-label visuallyhidden">
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
 								  										
 																		<%
 																	}
 																	else{
-																		%>
-																	<fieldset id="fieldset-dependence" class="fieldset-next-dependences">
+																		if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
+																	<fieldset id="fieldset-dependence" condition="and">
+																	<%} else {%>
+																	<fieldset id="fieldset-dependence" condition="or">
+																	<%} %>
 							  											<legend class="visuallyhidden"><%= i %>º <%= lang.getContent("question.edit.dependence.legend") + " "+ title%></legend>
 							  											<label for="dependence-condition-<%= i %>" class="dependence-condition-label visuallyhidden"><%= lang.getContent("question.edit.dependence.condition.label") %></label>
-								  										<div class="form-group"  style="margin:0px !important;">
+								  										<div class="form-group div-dependence-condition"  style="margin:0px !important;">
 								  											<select id="dependence-condition-<%= i %>" class="form-control dependence-condition hidden">
 								  												<%if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and" selected><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" ><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%} else{%>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.and") %>"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
-								  												<option value="<%= lang.getContent("question.edit.dependence.condition.option.or") %>" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
+								  												<option value="and"><%= lang.getContent("question.edit.dependence.condition.option.and") %></option>
+								  												<option value="or" selected><%= lang.getContent("question.edit.dependence.condition.option.or") %></option>
 								  											<%}%>
 								  											</select>
+									  										<span class="static-condition-and"><%= lang.getContent("question.edit.dependence.condition.option.and") %></span>
+									  										<span class="static-condition-or"><%= lang.getContent("question.edit.dependence.condition.option.or") %></span>									  										
 								  										</div>
-								  										<label for="dependence-question-<%= i %>" class="dependence-question-label hidden">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+								  										<label for="dependence-question-<%= i %>" class="dependence-question-label visuallyhidden hidden">
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
-																		<label for="dependence-question-<%= i %>" class="next-dependence-question-label">
-								  											<span class="visuallyhidden"><%= lang.getContent("question.edit.dependence.question.label_hidden") %></span>
-								  											<%= lang.getContent("question.edit.dependence.question.label_next_shown") %>
-								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>)</span>
+																		<label for="dependence-question-<%= i %>" class="next-dependence-question-label visuallyhidden">
+								  											<%= lang.getContent("question.edit.dependence.question.label_help_hidden") %>
 								  										</label>
 																		<%
 																	}
 																	%>
-																		<div class="form-group"  style="margin:0px !important;">
+																		<div class="form-group div-dependence-question"  style="margin:0px !important;">
 																			<select id="dependence-question-<%= i %>" class="form-control dependence-question">
 								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>								  																	  										
 																				<option id="question-dependence-<%= depval.getPid() + "-" + depval.getQid() %>" value="<%= depval.getPid() + "-" + depval.getQid() %>" selected> <%= depval.getQName()%> </option>
@@ -213,7 +206,7 @@
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.option.label_help_hidden") %>)</span>
 								  										</label>
 								  										
-								  										<div class="form-group"  style="margin:0px !important;">
+								  										<div class="form-group div-dependence-option"  style="margin:0px !important;">
 				    														<select id="dependence-option-<%= i %>" class="form-control dependence-option">
 								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
 								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected> <%= depval.getOName()%> </option>
@@ -222,9 +215,9 @@
 			  																<span id='dependence-option-error' class='error hidden' style='top:0px;left: 160px'><%= lang.getContent("msg.error.dependence-option.text") %></span>	
 																		</div>
 																		
-								  										<div class="option-icons fright">
+								  										<div class="option-icons div-remove-dependence">
 							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= i %></label>
-							  												<button class="btn btn-transparent fright red trash" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+							  												<button class="btn btn-transparent red" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  											</div>
 							  										</fieldset>
 							  										
@@ -244,27 +237,27 @@
 															%>
 							  								
 							  							
-							  						</div>
+							  						</fieldset>
 							  						<% 
 							  						
 							  						//System.out.println("Num Page: " + numPage + " - pages length: " + pagesJson.length() + " - pagesJson: " + pagesJson.toString());
 							  						if(withLogic) 
 							  						{							  								
 							  						%>
-							  						<div class="logic-frame <%= extraClass %> <%= lastPageClass %>">
-							  							
+							  						<fieldset class="logic-frame <%= extraClass %> hidden">
+							  							<legend><%= lang.getContent("question.edit.logic.option.label") %>:</legend>
+							  							<button class="btn-transparent btn-close-aspa btn-close-logic"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  							
 							  							<%
 							  							if(!question.getOptionsGroups().isEmpty() && !question.getOptionsGroups().get(0).getOptions().isEmpty())
 					  									{
 							  									
-							  										%>
-							  										<button class="btn-transparent btn-close-aspa btn-close-logic hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-							  										<div class="logic-button center">
+							  										%>							  										
+							  										<!-- <div class="logic-button center">
 							  											<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
-							  										</div>
-										  							<div class="logic-settings hidden">
-										  							
+							  										</div> -->
+										  							<div class="logic-settings">
+										  								
 										  								<p class="hidden"><%= lang.getContent("question.edit.logic.no_option") %></p>
 										  								
 										  								<ul class="logic-option-list form-inline">
@@ -288,8 +281,7 @@
 							  									%>
 								  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
 								  												<label for="logic-option-goto-<%= option.getId() %>">
-								  													<%= lang.getContent("question.edit.logic.option.label") %>
-								  													<span class="form-control" id="logic-option-<%= option.getId() %>"><%= optionTitle %></span>
+								  													<span id="logic-option-<%= option.getId() %>"><%= optionTitle %></span>
 								  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
 								  												</label>
 								  												<select id="logic-option-goto-<%= option.getId() %>" class="form-control logic-option-goto">
@@ -320,17 +312,14 @@
 					  									}
 					  									else
 					  									{
-					  									%>
-					  									<button class="btn-transparent btn-close-aspa btn-close-logic hidden"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-												  							
+					  									%>				
 					  									<div class="logic-settings hidden">
 					  										<p><%= lang.getContent("question.edit.logic.no_option") %></p>
 					  										
 					  										<ul class="logic-option-list form-inline hidden">
 					  											<li class="logic-option"  ogid="0">
-					  												<label for="logic-option-goto-">
-					  													<%= lang.getContent("question.edit.logic.option.label") %>
-					  													<span class="form-control" id="logic-option-"></span>
+					  												<label for="logic-option-goto-">					  													
+					  													<span id="logic-option-"></span>
 					  													<%= lang.getContent("question.edit.logic.option.goto.label") %>
 					  												</label>
 					  												<select id="logic-option-goto-" class="form-control logic-option-goto">
@@ -340,14 +329,14 @@
 					  										</ul>
 					  									</div>
 					  									
-					  									<div class="logic-button center">
+					  									<!-- <div class="logic-button center">
 							  								<button class="btn btn-primary btn-sm active"><%= lang.getContent("button.add_logic") %></button>
-							  							</div>
+							  							</div> -->
 					  									<%	
 					  									}					  									
 							  							%>
 							  							
-							  						</div>		
+							  						</fieldset>		
 							  						<% } %>
 							  					
 							  					</div>						  					

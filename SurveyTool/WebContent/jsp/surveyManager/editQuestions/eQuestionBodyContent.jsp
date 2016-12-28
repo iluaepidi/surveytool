@@ -22,7 +22,7 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
 %>
 
 
-										<li class="panel-question" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
+										<li class="panel-question bcontent" id="panel-question1" qid="<%= question.getQuestionId() %>" index="<%= question.getIndex() %>">
 											
 											<script>
 												placeholderBContent = "<%= lang.getContent("placeholder.type_here") %>";

@@ -1569,19 +1569,21 @@ $(function() {
 								  (item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").addClass("hidden");
 								  (item.closest("ul").find("li:nth-child(3)")).find("label.dependence-question-label").removeClass("hidden");
 								  (item.closest("ul").find("li:nth-child(3)")).find("label.next-dependence-question-label").addClass("hidden");
-								  (item.closest("ul").find("li:nth-child(3)")).find("#fieldset-dependence").removeClass("fieldset-second-dependence");	
+								  (item.closest("ul").find("li:nth-child(3)")).find("#fieldset-dependence").removeClass("fieldset-second-dependence");
 								  
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").val((item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").val());
-								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
-								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");	
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").attr("condition", "hide");
+								  //(item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
 							  }
 							  else if(item.closest("ul").find("li:nth-child(3)").attr("index") == elementId.split("/")[1]){
 								  console.log("Tercer hijo");
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").removeClass("hidden");
 								  (item.closest("ul").find("li:nth-child(4)")).find("select.dependence-condition").val((item.closest("ul").find("li:nth-child(3)")).find("select.dependence-condition").val());
-								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");
-								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").removeClass("fieldset-next-dependences");	
+								  (item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").attr("condition", "hide");
+								  //(item.closest("ul").find("li:nth-child(4)")).find("#fieldset-dependence").addClass("fieldset-second-dependence");
 							  }
 							  item.remove();
 						  }
@@ -2425,6 +2427,7 @@ $(function() {
 				var numQuestions = questions.find("li.panel-question").size();
 				questionJson.index = numQuestions;
 				question.attr("index", numQuestions);
+				var numQuestion = 1;
 				
 				currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
 					$(element).attr("index", index + 1);
@@ -2462,6 +2465,13 @@ $(function() {
 			questionJson.index = index - 2;
 			var prevIndex = parseInt(prevQuestion.attr("index"));
 			prevQuestion.attr("index", prevIndex + 1);
+			
+			if(!prevQuestion.hasClass("bcontent"))
+			{
+				var numQuestion = prevQuestion.find("span.num-question").html();
+				question.find("span.num-question").html(numQuestion);
+				prevQuestion.find("span.num-question").html(parseInt(numQuestion)+1);
+			}
 			
 			var prevQid = 0;
 			if(!question.is(':first-child')) prevQid = question.prev().attr("qid");
@@ -2518,6 +2528,13 @@ $(function() {
 			var prevIndex = parseInt(nextQuestion.attr("index"));
 			nextQuestion.attr("index", prevIndex - 1);
 			
+			if(!nextQuestion.hasClass("bcontent"))
+			{
+				var numQuestion = question.find("span.num-question").html();
+				nextQuestion.find("span.num-question").html(numQuestion);
+				question.find("span.num-question").html(parseInt(numQuestion)+1);
+			}
+
 			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
 		}
 

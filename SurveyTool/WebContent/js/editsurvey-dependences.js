@@ -10,6 +10,20 @@ $(function() {
 	var host = "http://" + window.location.host;
 	console.log("surveyTree: " + JSON.stringify(surveyTree));
 	
+	$(".survey-sections").on("click", "button.btn-dependences", function(){
+		var root = $(this).closest("div.rules-frame") 
+		root.find("fieldset.dependences-frame").removeClass("hidden");
+		root.find("fieldset.logic-frame").addClass("hidden");
+		$(this).addClass("active");
+		root.find("button.btn-logic").removeClass("active");
+	});
+	$(".survey-sections").on("click", "button.btn-logic", function(){
+		var root = $(this).closest("div.rules-frame") 
+		root.find("fieldset.logic-frame").removeClass("hidden");
+		root.find("fieldset.dependences-frame").addClass("hidden");
+		$(this).addClass("active");
+		root.find("button.btn-dependences").removeClass("active");
+	});
 	
 	//Create the question list of the select when focus in select control
 	$(".survey-sections").on("focusin", "select.dependence-question", function(e){
@@ -24,12 +38,13 @@ $(function() {
 		
 		for(var i = 0; i < numPage - 1; i++)
 		{
+			var pageInserted = false;
 			var pageJson = surveyTree[i];
 			console.log("Page number: "+i+", page="+pageJson+", surveyTree="+surveyTree);
 			
 			if(pageJson.pageId == pageId){
 				currentValue = pageJson.pageId+"-"+qId;
-			}
+			}			
 			
 			for(var j = 0; j < pageJson.questions.length; j++)
 			{
@@ -37,7 +52,15 @@ $(function() {
 				var type = questionJson.type;
 				if(type === "simple")
 				{
-					var optionHtml = '<option id="question-dependence-' + pageJson.pageId + '-' + questionJson.questionId + '" value="' + pageJson.pageId + '-' + questionJson.questionId + '">' + questionJson.title + '</option>';
+					if(!pageInserted)
+					{
+						var numPageText = $('li[pid=' + pageJson.pageId + ']').find('h4').html();
+						var optionPageHtml = '<option class="option-page-qdependences" disabled="disabled">' + numPageText + '</option>';
+						$(this).append(optionPageHtml);
+						pageInserted = true;
+					}
+					var numQuestion = $('li[qid=' + questionJson.questionId + ']').find('span.num-question').html();
+					var optionHtml = '<option class="option-qdependences" id="question-dependence-' + pageJson.pageId + '-' + questionJson.questionId + '" value="' + pageJson.pageId + '-' + questionJson.questionId + '"> - ' + numQuestion + ' ' + questionJson.title + '</option>';
 					$(this).append(optionHtml);
 				}
 			}
@@ -115,13 +138,23 @@ $(function() {
 		$(this).append(defaultOption);
 		for(var i = numPage; i < parseFloat(totalNumPages); i++)
 		{
+			var pageInserted = false;
 			var pageJson = surveyTree[i];
 			
 			for(var j = 0; j < pageJson.questions.length; j++)
 			{
+				if(!pageInserted)
+				{
+					var numPageText = $('li[pid=' + pageJson.pageId + ']').find('h4').html();
+					var optionPageHtml = '<option class="option-page-qdependences" disabled="disabled">' + numPageText + '</option>';
+					$(this).append(optionPageHtml);
+					pageInserted = true;
+				}
 				var questionJson = pageJson.questions[j];
 				var type = questionJson.type;
-				var optionHtml = '<option id="option-goto-' + questionJson.questionId + '" value="' + questionJson.questionId + '">' + questionJson.title + '</option>';
+				var numQuestion = " ";
+				if(type != "bcontent") numQuestion = $('li[qid=' + questionJson.questionId + ']').find('span.num-question').html();
+				var optionHtml = '<option id="option-goto-' + questionJson.questionId + '" value="' + questionJson.questionId + '"> - ' + numQuestion + ' ' + questionJson.title + '</option>';
 				$(this).append(optionHtml);
 			}
 		}
@@ -303,6 +336,12 @@ $(function() {
 								   root.closest("li.dependence-item").attr("index", json.qDependeceItemId);						   
 							   }
 						   }
+						   if(root.closest('li').is(':last-child'))
+						   {
+							   root.removeClass("disable");
+							   root.closest(".dependences-settings").find("div.dependences-add-button").find("button").prop("disabled", false);
+						   }
+						   	
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   console.log(xhr.status);
@@ -354,7 +393,10 @@ $(function() {
 				   url: host + "/SurveyTool/api/QCService/updateDependenceType",
 				   data: JSON.stringify(req),
 				   success: function (data) {
-					   console.log("Dentro del function: "+data);
+					   //console.log("Dentro del function: "+data);
+					   root.closest("ul").find("li > fieldset[condition]").each(function(indice, element){
+						   $(element).attr("condition", req.deptype);
+					   });					   
 				   },
 				   error: function (xhr, ajaxOptions, thrownError) {
 					   console.log(xhr.status);
@@ -415,7 +457,8 @@ $(function() {
 	$(".survey-sections").on("click", ".dependences-add-button > button", function(){
 		console.log("Add button")
 		var dependencesList = $(this).closest("div.dependences-settings").find("ul");
-		
+		var condition=  $(this).closest("div.dependences-settings").find("select.dependence-condition:not(.hidden)").val();
+		//console.log("condition selected: " + condition);
 		var depTemp = dependencesList.find("li:first-child").clone();
 		var numElem = dependencesList.find("li").size();
 		
@@ -436,6 +479,12 @@ $(function() {
 		console.log(numElem);
 		if(numElem===1){
 			//$(this).closest("div.dependences-frame").find("button.btn-close-dependences").removeClass("hidden");
+			depTemp.find("label.dependence-question-label").addClass("hidden");
+			depTemp.find("select.dependence-condition").addClass("hidden");
+			depTemp.find("label.next-dependence-question-label").removeClass("hidden");
+			text = depTemp.find("label.next-dependence-question-label").attr("for") + numElem;
+			depTemp.find("label.next-dependence-question-label").attr("for", text);
+			console.log($("ul.dependences-list li:nth-child(3)").find("select.dependence-condition").val());
 		}
 		if(numElem===2){
 			//Only one dependence, the new one needs to have the condition selector
@@ -448,7 +497,7 @@ $(function() {
 			depTemp.find("label.next-dependence-question-label").removeClass("hidden");
 			text = depTemp.find("label.next-dependence-question-label").attr("for") + numElem;
 			depTemp.find("label.next-dependence-question-label").attr("for", text);
-			depTemp.find("#fieldset-dependence").addClass("fieldset-second-dependence");
+			//depTemp.find("#fieldset-dependence").addClass("fieldset-second-dependence");
 		} else if(numElem>=3){
 			//There are two dependences. The new one needs to change the sentence and delete the condition selector
 			$("ul.dependences-list li:nth-child(3)").find("select.dependence-condition").val()
@@ -459,7 +508,10 @@ $(function() {
 			text = depTemp.find("label.next-dependence-question-label").attr("for") + numElem;
 			depTemp.find("label.next-dependence-question-label").attr("for", text);
 			console.log($("ul.dependences-list li:nth-child(3)").find("select.dependence-condition").val());
-			depTemp.find("#fieldset-dependence").addClass("fieldset-next-dependences");
+			depTemp.find("span.static-condition-and").removeClass("hidden");
+			depTemp.find("span.static-condition-or").removeClass("hidden");
+			depTemp.find("fieldSet").attr("condition", condition);
+			//depTemp.find("#fieldset-dependence").addClass("fieldset-next-dependences");
 		}
 		else{
 			text = depTemp.find("label.dependence-question-label").attr("for") + numElem;
@@ -473,6 +525,8 @@ $(function() {
 		depTemp.find("select.dependence-option").attr("id", text);
 		
 		dependencesList.append(depTemp);
+		
+		$(this).prop( "disabled", true );		 
 		
 		console.log("Title: " + title);
 	});
@@ -512,9 +566,8 @@ $(function() {
 	});
 
 	$('.survey-sections').on("click", "button.btn-close-logic", function(){
-		$(this).closest('div.logic-frame').find('div.logic-button').removeClass('hidden');
-		$(this).closest('div.logic-frame').find('div.logic-settings').addClass('hidden');
-		$(this).addClass('hidden');
+		$(this).closest('fieldset.logic-frame').addClass('hidden');
+		var root = $(this).closest("div.rules-frame").find("button.btn-logic").removeClass("active");
 	});
 
 	$('.survey-sections').on("click", ".dependences-button > button", function(){
@@ -524,9 +577,10 @@ $(function() {
 	});
 
 	$('.survey-sections').on("click", "button.btn-close-dependences", function(){
-		$(this).closest('div.dependences-frame').find('div.dependences-button').removeClass('hidden');
-		$(this).closest('div.dependences-frame').find('div.dependences-settings').addClass('hidden');
-		$(this).addClass('hidden');
+		$(this).closest('fieldset.dependences-frame').addClass('hidden');
+		var root = $(this).closest("div.rules-frame").find("button.btn-dependences").removeClass("active");
+		//$(this).closest('div.dependences-frame').find('div.dependences-settings').addClass('hidden');
+		//$(this).addClass('hidden');
 	});
 	
 	$('.survey-sections').on("goto", "#option-list #option-item input", function(e){
@@ -732,8 +786,9 @@ $(function() {
 	});
 	
 	$('.survey-sections').on("setQuestionGoto", "input#survey-question-title", function(e){
-		var questionId = $(this).closest('li.panel-question').attr('qid');
-		var text = $(this).val();
+		var root = $(this).closest('li.panel-question');
+		var questionId = root.attr('qid');
+		var text = root.find("span.num-question").html() + " " + $(this).val();
 		
 		$('.logic-option-goto').each(function(index, selectGoto){
 			//console.log("Select index: " + index + " - val: " + $(selectGoto).val());
@@ -759,14 +814,15 @@ $(function() {
 
 	$('.survey-sections').on("setQuestionDepend", "input#survey-question-title", function(e){
 		var pageId = $(this).closest('li.page').attr('pid');
-		var questionId = $(this).closest('li.panel-question').attr('qid');
-		var text = $(this).val();
+		var root = $(this).closest('li.panel-question');
+		var questionId = root.attr('qid');
+		var text = root.find("span.num-question").html() + " " + $(this).val();
 
 		var valor = pageId + "-" + questionId;
 				
 		$('.dependence-question').each(function(index, selectDepend){
-			console.log("Select index: " + index + " - val: " + $(selectDepend).val());
-			console.log("Select index: " + index + " - valor: " + valor);
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			//console.log("Select index: " + index + " - valor: " + valor);
 			if($(selectDepend).val() == valor)
 			{	
 				console.log("setQuestionDepend entra if");
@@ -941,7 +997,7 @@ function setDependence(root)
 	req.itemindex = root.closest("li.dependence-item").attr("index");
 	req.questionid = root.closest("li.panel-question").attr("qid");
 	
-	if(root.attr("class")==="fieldset-second-dependence")
+	//if(root.attr("class")==="fieldset-second-dependence")
 		req.deptype = root.find("select.dependence-condition").val();
 	
 	console.log("Dependence request: " + JSON.stringify(req));

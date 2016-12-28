@@ -14,6 +14,8 @@
 		    								if(question!=null &&  question.getContents()!=null && question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
 		    									title = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 		    								}
+		    								
+		    								int numQuestion = (int) request.getAttribute(Attribute.s_NUM_QUESTION);
 						  					%>
 						  					
 					  										  					
@@ -21,7 +23,8 @@
 											
 												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
 												<h5 class="panel-title" tabindex="-1">
-													<div class="col-sm-12">
+													<span class="num-question col-sm-1 col-xs-2"><%= numQuestion %></span>
+													<div class="col-sm-11 col-xs-10">														
 														<div class="form-group" style="margin:0px;">
 															<input type="text" class="survey-section-title-unselected survey-question-title" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>
 															<span id='survey-question-title<%= question.getQuestionId() %>-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
@@ -38,6 +41,8 @@
 											</div>	
 						  					
 											<%
+											numQuestion++;
+											request.setAttribute(Attribute.s_NUM_QUESTION, numQuestion);
 											lang.close();
 											%>
 							  					

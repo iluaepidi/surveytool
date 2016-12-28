@@ -66,7 +66,7 @@
     	margin: 0 !important;}
 	.dependences-list {width: 100%;}
 	.logic-option-list {width: 100%;}
-	.logic-option > select {width: 25% !important;}
+	.logic-option > select {width: 35% !important;}
 	.profileLabel {text-align: left !important;}
 }
 
@@ -98,12 +98,16 @@
 	.option-list {width: 100%;}
 	.option-title {width: 65% !important;}
 	.logic-option > label > span {width: 75% !important;
-    	display: inline-flex;}
+    	display: inline;}
     .logic-option > select {display: inline-block;}
     .code-poll-frame {width: 100%;}
     .content-wrapper {width: 100%;}
     .content-statistics {min-width: initial;}
     .text {min-width: initial;}
+    .dependence-item {width: 99%;}
+    .div-dependence-condition {width: 12%;}
+	.div-dependence-question {width: 35%;}
+	.div-dependence-option {width: 35%;}
 	
 }
 

@@ -753,7 +753,7 @@ footer {margin-top: 10px;
 .panel-section-buttons {float: right;}
 .panel-section .panel-heading a {color: #fff;}
 .panel-section .panel-heading a:hover, .panel-section .panel-heading a:focus {color: #70FFFF;}
-
+.num-question {padding: 4px 0;}
 .qtype-icon-text{color: #000;
 	font-size: 0.9em;}
 .form-control-small {padding: 5px 12px;
@@ -1017,29 +1017,61 @@ footer {margin-top: 10px;
 	float: left;
 	width: 42%;	
 }
-
+.nav-config {text-align: right;
+	margin-bottom: 2px;}
+.nav-config > ul {display: inline-block;}
+div.rules-frame > div.nav-config > ul > li > button {border: 2px solid #fff;
+    background-color: #fff;
+    padding: 5px 10px;
+    color: #337ab7;}
+div.rules-frame > div.nav-config > ul > li > button:hover,
+div.rules-frame > div.nav-config > ul > li > button:focus {background-color: #eee;
+    color: #23527c;
+    border: 2px solid #23527c;
+    border-radius: 3px;}
+div.rules-frame > div.nav-config > ul > li > button.active {color: #fff;
+    background-color: #23527c;
+    border-radius: 3px;
+    border: 2px solid #23527c;}
 .dependences-frame {position:relative;
-	padding: 10px 0 25px;}
+	padding: 35px 0 20px;
+    border: 1px solid #555;
+    border-radius: 5px;}
+.dependences-frame > legend,
+.logic-frame > legend {border: none;
+    font-size: 1.2em;
+    position: absolute;
+    top: 9px;
+    padding-left: 3%;
+    width: initial;}
+.dependences-item > fieldset {display: inherit;
+    width: 100%;
+    position: relative;
+    height: 34px;}
 .logic-frame {position:relative;
 	padding: 25px 0 10px;
-	border-top: 1px solid #000;}
+	/*border-top: 1px solid #000;*/
+	border: 1px solid #000;
+    border-radius: 5px;}
 .logic-option-list {width: 700px;
     margin: 0 auto;
     padding: 0px;}
 .logic-option {margin: 5px 0;
 	text-align: center;}
+.logic-option label {width: 40%;
+	text-align: right;}	
 .logic-option > label > span {margin: 0 5px;
 	width: 150px !important;
 	text-align: left;}
 .logic-option > select {margin-bottom: 0 !important;
 	margin-left: 5px;
 	padding-left: 10px !important;
-	width: 225px !important;}
+	width: 45% !important;}
 .logic-settings > p {text-align: center;}
 .btn-close-logic,
 .btn-close-dependences {position: absolute;
     right: 0;
-    top: 5px;}
+    top: 0;}
 .btn-close-dependences:focus,
 .btn-close-dependences:hover,
 .btn-close-logic:focus,
@@ -1048,28 +1080,54 @@ footer {margin-top: 10px;
 .dependences-list {width: 700px;
     margin: 0 auto;
     padding: 0px;}	
-.dependence-item {margin: 5px 0;
-	text-align: center;}
+.dependence-item {margin: 5px auto;
+	text-align: left;
+	width: 100%;}
 .dependence-item > fieldset > .dependence-action {margin-bottom: 0 !important;
     margin-right: 5px;
     padding-left: 5px !important;
     padding-right: 5px !important;
     width: 90px;}
-.dependence-item > fieldset > .dependence-condition {margin-bottom: 0 !important;
+.dependence-item > fieldset > div > .dependence-condition {margin-bottom: 0 !important;
     margin-right: 5px;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-    width: 60px;}
-.dependence-item > fieldset > .dependence-question {margin-bottom: 0 !important;
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+    width: 100%;}
+.dependence-item > fieldset > div > .dependence-question {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 0px !important;
-    width: 180px !important;}
-.dependence-item > fieldset > .dependence-option {margin-bottom: 0 !important;
+    width: 100% !important;}
+.dependence-item > fieldset > div > .dependence-option {margin-bottom: 0 !important;
     margin: 0 5px;
     padding-left: 5px !important;
     padding-right: 5px !important;
-    width: 130px;}
+    width: 100%;}
+.dependence-item > fieldset.disable > div > .dependence-option {color: #777;}
+.dependence-item > fieldset.disable > div > .dependence-question {color: #777;}    
+.dependence-item > fieldset.disable {color: #777;}
+.dependence-item > fieldset.disable > .div-remove-dependence > label {display: none;}
+.dependence-item > fieldset.disable > .div-remove-dependence > button {display: none;}
+.dependence-item > fieldset > .div-remove-dependence {display: inline-block;}
+.div-dependence-condition {width: 9%;
+	display: inline-block;
+	text-align: center;}
+.div-dependence-question {width: 37%;
+	display: inline-block;}
+.dependence-option-label {width: 7%;
+ 	padding-left: 8px;
+ 	text-align: center;}
+.div-dependence-option {width: 37%;
+	display: inline-block;}
+	
+.dependence-item > fieldset[condition=and] > div > .static-condition-and {display:inherit;}
+.dependence-item > fieldset[condition=and] > div > .static-condition-or {display:none;}
+.dependence-item > fieldset[condition=or] > div > .static-condition-and {display:none;}
+.dependence-item > fieldset[condition=or] > div > .static-condition-or {display:inherit;}
+.dependence-item > fieldset[condition=hide] > div > .static-condition-and {display:none;}
+.dependence-item > fieldset[condition=hide] > div > .static-condition-or {display:none;}
+
+.option-qdependences {padding-left: 5px;}
 .dependences-add-button {margin-top: 15px;}
 
 .fieldset-next-dependences{padding-left: 139px;}
