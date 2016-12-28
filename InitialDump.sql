@@ -1057,7 +1057,7 @@ CREATE TABLE `responses` (
   `idResponse` int(11) NOT NULL AUTO_INCREMENT,
   `idQuestion` int(11) NOT NULL,
   `idOptionsGroup` int(11) DEFAULT NULL,
-  `value` varchar(100) NOT NULL,
+  `value` varchar(10000) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idPoll` int(11) DEFAULT NULL,
   PRIMARY KEY (`idResponse`),
