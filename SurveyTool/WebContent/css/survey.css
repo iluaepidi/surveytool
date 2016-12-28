@@ -207,6 +207,7 @@
 	text-align:center;
 	min-width:auto;
 	min-height: 88px;
+	overflow-wrap: break-word;
 	/*position: absolute;
 	bottom: 33px;
     left: 0;
@@ -288,6 +289,7 @@
 	text-align:center;
 	min-width:auto;
 	min-height: 88px;
+	overflow-wrap: break-word;
 	/*position: absolute;
 	bottom: 31px;
     left: 0;

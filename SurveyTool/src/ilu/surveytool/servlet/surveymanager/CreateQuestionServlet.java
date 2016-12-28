@@ -131,6 +131,8 @@ public class CreateQuestionServlet extends HttpServlet {
 			int numPage = Integer.parseInt(request.getParameter(Parameter.s_NUM_PAGE));
 			request.setAttribute(Attribute.s_NUM_PAGE, numPage);
 			
+			request.setAttribute(Attribute.s_NUM_QUESTION, 1);
+			
 			CommonCode.redirect(request, response, Address.s_EDIT_QUESTION_MASTER);
 		}
 		else

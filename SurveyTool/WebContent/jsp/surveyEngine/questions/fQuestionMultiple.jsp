@@ -29,7 +29,7 @@
 					  			<img src="{{option.resource.urlPath}}" alt='{{getJsonArrayElement(option.resource.contents, "contentType", "altText").text}}'/>
 					  		</div>
 					  	</div>					  	
-					    <span>{{getJsonArrayElement(option.contents, "contentType", "title").text}}</span>
+					    <span ng-show='getJsonArrayElement(option.contents, "contentType", "title").text'>{{getJsonArrayElement(option.contents, "contentType", "title").text}}</span>
 					  </label>
 					</li>
 				

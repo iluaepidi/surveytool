@@ -114,9 +114,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 																  	<label class= "question-response-settings-options" for="range"><%=lang.getContent("question.form.options.text.range") %></label>
 																	<div id="rangeId" <% if(minValue.equals("") && maxValue.equals("")){ %> class="question-response-settings-sub-none rangeId" <%} else{%>class="question-response-settings-sub-inherit rangeId"<%} %>>
 																		<label for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
-																		<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-minValue" id="survey-minValue" value="<%=minValue%>"></input>
+																		<input type="number" class="survey-minValue" id="survey-minValue" value="<%=minValue%>"></input>
 																		<label for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
-																		<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-maxValue" id="survey-maxValue" value="<%=maxValue%>"></input>
+																		<input type="number" class="survey-maxValue" id="survey-maxValue" value="<%=maxValue%>"></input>
 																	</div>
 																</div>
 															</div>
