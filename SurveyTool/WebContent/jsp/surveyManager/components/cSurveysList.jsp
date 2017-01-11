@@ -43,7 +43,12 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 			  							</div>	
 				  						<div id="divStateFilter" class="div-state-filter no-padding col-xs-4 col-md-3">
 				  							<label for="stateFilter" class="visuallyhidden"><%= lang.getContent("survey_manager.tab.surveys.state.filter.label") %></label>
-				  							<select class="form-control input-sm state-filter" id="stateFilter"><option value=""><%= lang.getContent("survey_manager.tab.surveys.state.filter.option") %></option></select>			  							
+				  							<select class="form-control input-sm state-filter" id="stateFilter">
+				  								<option value=""><%= lang.getContent("survey_manager.tab.surveys.state.filter.option") %></option>
+				  								<option value="<%= lang.getContent("survey_manager.tab.surveys.state.active") %>"><%= lang.getContent("survey_manager.tab.surveys.state.active") %></option>
+				  								<option value="<%= lang.getContent("survey_manager.tab.surveys.state.paused") %>"><%= lang.getContent("survey_manager.tab.surveys.state.paused") %></option>
+				  								<option value="<%= lang.getContent("survey_manager.tab.surveys.state.finished") %>"><%= lang.getContent("survey_manager.tab.surveys.state.finished") %></option>
+				  							</select>			  							
 				  						</div>				  						
 			  						</fieldset>		  					
 			  						<table class="table table-bordered table-surveys display" sumary="List of surveys where ..." id=""  data-page-length='25'>
@@ -81,7 +86,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 											
 										%>
 										<tr id="resultdevice" sid="<%=survey.getSurveyId()%>">
-											<td class="state center col-sm-1"><%= state %></td>
+											<td class="state center col-sm-1" id="cellState<%= survey.getSurveyId() %>"><%= state %></td>
 											<td class="col-sm-4"><a href="<%= Address.s_SERVLET_SURVEYS_SERVLET + "?" + Parameter.s_SURVEY_ID + "=" + survey.getSurveyId() %>"><%= survey.getTitle() %></a></td>
 											<td class="center col-sm-2">
 												<%= survey.getNumUsers() %> <%= lang.getContent("survey_manager.surveys.table.survey_responses") %>

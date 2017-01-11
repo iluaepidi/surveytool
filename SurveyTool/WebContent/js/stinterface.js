@@ -354,7 +354,9 @@ function setSurveyState(surveyId, state, element, elemToShow)
 		   var json = JSON.parse(data);
 		   if(json.updated)
 		   {
-			   element.closest("tr").find("td.state").html(json.stateLabel);	
+			   //element.closest("tr").find("td.state").html(json.stateLabel);
+			   $('div.surveys-table').find('table').DataTable().cell($('#cellState' + surveyId)).data(json.stateLabel).draw()
+			   
 			   element.addClass("hidden");
 			   if(elemToShow != "")
 			   {

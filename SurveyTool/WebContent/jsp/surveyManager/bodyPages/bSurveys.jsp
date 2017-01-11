@@ -80,9 +80,9 @@ lang.close();
                      column.search( val ? '^'+val+'$' : '', true, false).draw();
                  });
  
-                column.data().unique().sort().each(function(d, j) {
+                /*column.data().unique().sort().each(function(d, j) {
                     select.append('<option value="'+d+'">'+d+'</option>');
-                });
+                });*/
 			}
 			else if(indice == 1)
 			{
