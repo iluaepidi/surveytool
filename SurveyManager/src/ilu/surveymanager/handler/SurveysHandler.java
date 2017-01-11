@@ -353,4 +353,22 @@ public class SurveysHandler {
 		
 		return statistics;
 	}
+	
+	public boolean updateState(int surveyId, String state)
+	{
+		boolean updated = false;
+		SurveyDB surveyDB = new SurveyDB();
+			
+		String currentState = surveyDB.getQuestionnaireStateById(surveyId);
+		if(!state.equals(currentState))
+		{
+			updated = surveyDB.updateSurveyState(surveyId, state);
+		}
+		else
+		{			
+			updated = false;				
+		}
+		
+		return updated;
+	}
 }

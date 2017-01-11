@@ -69,7 +69,9 @@ public class DBConstants {
 			public final static String s_VALUE_ROLNAME_ADMIN = "admin";
 			public final static String s_VALUE_ROLNAME_USER = "user";	
 		//state
-			public final static String s_VALUE_SURVEY_STATE_STOP = "stop";
+			public final static String s_VALUE_SURVEY_STATE_PAUSED = "paused";
+			public final static String s_VALUE_SURVEY_STATE_ACTIVE = "active";
+			public final static String s_VALUE_SURVEY_STATE_FINISHED = "finished";
 			
 		//Dependence
 			public final static String s_VALUE_DEPENDENCETYPE_AND = "And";

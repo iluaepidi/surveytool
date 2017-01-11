@@ -24,10 +24,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  							<thead>
 											<tr class="info">
 												<!-- <th class="poll-table-tr-th-deadline center"><%= lang.getContent("survey_manager.polls.table.column.deadline") %></th> -->
-												<th class="center"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
-												<th class="poll-table-tr-th-responses center"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
-												<th class="poll-table-tr-th-numresp center"><%= lang.getContent("survey_manager.polls.table.column.num_responses") %></th>
-												<th class="poll-table-tr-th-actions center"><%= lang.getContent("survey_manager.polls.table.column.actions") %></th>
+												<th class="center middle"><%= lang.getContent("survey_manager.polls.table.column.poll") %></th>
+												<th class="poll-table-tr-th-responses center middle"><%= lang.getContent("survey_manager.polls.table.column.url") %></th>
+												<th class="poll-table-tr-th-numresp center middle"><%= lang.getContent("survey_manager.polls.table.column.num_responses") %></th>
+												<th class="poll-table-tr-th-actions center middle"><%= lang.getContent("survey_manager.polls.table.column.actions") %></th>
 											</tr>
 										</thead>
 										<tbody>

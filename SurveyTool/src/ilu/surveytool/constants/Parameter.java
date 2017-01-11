@@ -68,5 +68,6 @@ public class Parameter {
 	public final static String s_POID = "poid";
 	public final static String s_TAB = "tab";
 	public final static String s_CHANGE_PAGE = "changePage";
+	public final static String s_STATE = "state";
 
 }

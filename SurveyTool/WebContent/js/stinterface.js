@@ -322,7 +322,59 @@ $(function() {
 		}
 	});
 	
+	$('.surveys-table').on("click", "a.survey-pause", function(e){
+		var surveyId = parseInt($(this).closest("tr").attr("sid"));
+		setSurveyState(surveyId, "paused", $(this), "a.survey-play");
+	});
+	
+	$('.surveys-table').on("click", "a.survey-play", function(e){
+		var surveyId = parseInt($(this).closest("tr").attr("sid"));
+		setSurveyState(surveyId, "active", $(this), "a.survey-pause");
+	});
+	
+	$('.surveys-table').on("click", "a.survey-finish", function(e){
+		var surveyId = parseInt($(this).closest("tr").attr("sid"));
+		setSurveyState(surveyId, "finished", $(this), "");
+	});
 });
+
+function setSurveyState(surveyId, state, element, elemToShow)
+{
+	var req = {};
+	req.sid = surveyId;
+	req.state = state;
+	$.ajax({ 
+	   type: "PUT",
+	   dataType: "text",
+	   contentType: "text/plain",
+	   url: "http://" + window.location.host + "/SurveyTool/api/SurveyService/updateState",
+	   data: JSON.stringify(req),
+	   success: function (data) {
+		   //console.log("set state response: " + data);
+		   var json = JSON.parse(data);
+		   if(json.updated)
+		   {
+			   element.closest("tr").find("td.state").html(json.stateLabel);	
+			   element.addClass("hidden");
+			   if(elemToShow != "")
+			   {
+				   element.closest("li").find(elemToShow).removeClass("hidden");
+			   }
+			   else
+			   {
+				   element.closest("ul").find("a.survey-pause").addClass("hidden");
+				   element.closest("ul").find("a.survey-play").addClass("hidden");
+			   }   
+		   }
+	   },
+	   error: function (xhr, ajaxOptions, thrownError) {
+		   console.log(xhr.status);
+		   console.log(thrownError);
+		   console.log(xhr.responseText);
+		   console.log(xhr);
+	   }
+	});
+}
 
 function displaySurveyInfo(node)
 {

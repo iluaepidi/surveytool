@@ -30,19 +30,19 @@
 						
 										<tr>
 											<!-- <td class="center"><%= deadLine %></td> --> 
-											<td><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>"><%= poll.getTitle() %></a></td>
-											<td class="center">
+											<td class="col-sm-4 middle"><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>"><%= poll.getTitle() %></a></td>
+											<td class="center middle col-sm-3">
 												<a href="http://<%= host %>:<%= port %>/SurveyTool/pollcode?pid=<%= poll.getPublicUrl() %>">http://<%= host %>:<%= port %>/SurveyTool/poll?pid=<%= poll.getPublicUrl() %></a>
 											</td>
-											<td class="center">
+											<td class="center middle col-sm-2">
 												<%= poll.getNumResponses() %> <%= lang.getContent("survey_manager.polls.table.poll_responses") %>
 											</td>
-											<td>
+											<td class="col-sm-3 middle actions">
 												<ul class="row">
 								  					<!-- <li class="col-sm-3 center"><i class="fa fa-clone fa-2x" aria-hidden="true"></i></li> -->
-								  					<li class="col-sm-6 center"><a href="PollStatisticServlet?pollId=<%=poll.getPollId()%>"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i><span class="visuallyhidden"><%= lang.getContent("survey.edit.tab.go_statistics") %></span></a></li>
+								  					<li class="col-sm-6 center"><a href="PollStatisticServlet?pollId=<%=poll.getPollId()%>"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i><span><%= lang.getContent("survey_manager.tab.surveys.label.statistics") %></span><span class="visuallyhidden"><%= lang.getContent("survey.edit.tab.go_statistics") %></span></a></li>
 								  					<!-- <li class="col-sm-2 center"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></li> -->
-								  					<li class="col-sm-6 center"><a href="<%= downloadServiceUrl %>"><i class="fa fa-download fa-2x" aria-hidden="true"></i><span class="visuallyhidden"><%= lang.getContent("survey_manager.tab.polls.descargar") %></span></a></li>
+								  					<li class="col-sm-6 center"><a href="<%= downloadServiceUrl %>"><i class="fa fa-download fa-2x" aria-hidden="true"></i><span><%= lang.getContent("survey_manager.tab.surveys.label.download") %></span><span class="visuallyhidden"><%= lang.getContent("survey_manager.tab.polls.descargar") %></span></a></li>
 								  					<!-- <li class="col-sm-3 center"><i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i></li> -->
 												</ul>
 											</td>

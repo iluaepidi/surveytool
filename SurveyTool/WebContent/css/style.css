@@ -24,6 +24,7 @@ body {margin-bottom: 135px !important;}
   
 .centered {margin: 0 auto;}
 .center {text-align: center;}
+.middle {vertical-align: middle !important;}
 .left {text-align: left !important;}
 .right {text-align: right !important;}
 .hidden {display:none;}
@@ -407,7 +408,7 @@ footer {margin-top: 10px;
 	display: inline-flex;}
 .nav-tabs-survey-manager li {min-width: 85px;
     text-align: center;
-    width: 10%;}
+    /*width: 10%;*/}
 .nav-tabs-survey-manager li a {background-color: #6e6e6e;
 	border: none !important;
 	color: #eee;}
@@ -446,6 +447,14 @@ footer {margin-top: 10px;
 
 .surveys-table ul li{padding: 0 !important;}
 .surveys-table td {vertical-align: middle !important;}
+table.table-surveys caption {color: #666 !important;}
+table.table-surveys {border: 1px solid #777;}
+table.table-surveys tbody tr td,
+table.table-surveys thead tr th {border: 1px solid #777;}
+td.actions ul li a {font-size: 0.9em;}
+td.actions ul li a span {width: 100%;
+    display: block;}
+    
 
 /*new survey*/
 {margin: 20% auto;}
@@ -554,6 +563,19 @@ footer {margin-top: 10px;
     top: 7px;}
 .dataTables_info {padding: 7px 0;}
 .dataTables_paginate {text-align: right;}
+.div-filters {float: right !important;}
+.div-search-survey > div > i {position: absolute;
+    right: 23px;
+    top: 7px;}
+.div-search-survey label {padding: 4.5px 0;
+    text-align: right;
+    margin: 0;
+    font-weight: normal;}
+.state-filter {}
+
+ul.pagination li a {border-color: #777 !important;
+	color: #666 !important;}
+ul.pagination li.active a {color: #fff !important;} 
 
 
 /*----------------------------------------------*\

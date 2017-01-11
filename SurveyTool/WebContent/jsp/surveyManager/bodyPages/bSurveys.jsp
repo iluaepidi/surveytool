@@ -43,8 +43,8 @@ lang.close();
  
     $(document).ready(function() {
 
-    	var table = $('table.display').dataTable({
-    		"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    	var table = $('table.display').DataTable({
+    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         	"pagingType": "full_numbers",
             "scrollCollapse": false,
             "searching": true,
@@ -53,16 +53,48 @@ lang.close();
             "language": {
             	"url": "js/dataTables.<%=Language.getLanguageRequest(request)%>.lang"
             }
-            
-        });        
+        });   
+
+    	$('div.surveys-table').find('table').dataTable().on('draw.dt', function () {
+    		
+    	});
         
     	$(document).on('draw.dt', function () {
     		//$('[name="surveys-table_length"]').val("10");
-    	 	$('#DataTables_Table_0_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
+    	 	//$('#DataTables_Table_0_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
+    	 	$('#DataTables_Table_0_filter').addClass("hidden");
     	 	$('#DataTables_Table_1_filter label').append("<i class='fa fa-search' aria-hidden='true'></i>");
     	 	$('table').removeAttr("role");
-    	 	$('tr').removeAttr("role");
+    	 	$('tr').removeAttr("role"); 
+    	 	
         });
+    	
+
+	 	$('div.surveys-table').find('table').DataTable().columns().every(function (indice) {
+			if(indice == 0)
+			{
+    			var column = this;
+                var select = $('#stateFilter').on('change', function() {
+                     var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                     
+                     column.search( val ? '^'+val+'$' : '', true, false).draw();
+                 });
+ 
+                column.data().unique().sort().each(function(d, j) {
+                    select.append('<option value="'+d+'">'+d+'</option>');
+                });
+			}
+			else if(indice == 1)
+			{
+				var column = this;
+				 
+		        $('#searchSurvey').on('keyup change', function () {
+		            if(column.search() !== this.value) {
+		            	column.search(this.value).draw();
+		            }
+		        });
+			}
+	    }); 
        
     });
     

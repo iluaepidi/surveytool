@@ -323,6 +323,7 @@ public class DBSQLQueries {
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PUBLICID = "SELECT publicId FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
+		public final static String s_SELECT_QUESTIONNAIRE_STATE_BY_ID = "SELECT state FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		/*public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
 				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
 				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
@@ -331,7 +332,7 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE q.author = ? and l.isoName = ? and ct.name = ? ";*/
-		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
+		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state "
 				+ "(select count(*) FROM surveytool.userquestionnaire auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers, "
 				+ "(select count(*) FROM surveytool.userquestionnaire fuq WHERE fuq.idQuestionnaire = q.idQuestionnaire and fuq.state = ?) usersFinished "
 						+ "FROM surveytool.questionnaire q "
@@ -340,7 +341,7 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
 
-		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, "
+		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state, "
 				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
@@ -606,6 +607,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_PARAMETERFORQUESTIONPOLL = "UPDATE surveytool.parameterforquestionpoll SET `value`=? WHERE idPoll=? and idQuestion=? and idParameter=(SELECT idParameter FROM surveytool.questionparameter where parameterName = ?)";
 		//questionnaire
 			public final static String s_UPDATE_QUESTIONNAIRE_PROJECT = "UPDATE surveytool.questionnaire SET idProject=? WHERE idQuestionnaire= ?";
+			public final static String s_UPDATE_QUESTIONNAIRE_STATE = "UPDATE surveytool.questionnaire SET state=? WHERE idQuestionnaire= ?";
 		//resources
 			public final static String s_UPDATE_RESOURCE_URLPATH = "UPDATE `surveytool`.`resoruces` SET `urlPath`=? WHERE `idResoruces`=?";
 		//section

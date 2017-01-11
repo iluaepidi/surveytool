@@ -7,6 +7,7 @@ import java.util.List;
 public class Survey {
 	
 	int surveyId;
+	String state = "";
 	//List<Content> contents;
 	HashMap<String, Content> contents;
 	String project = "";
@@ -103,14 +104,7 @@ public class Survey {
 		this.publicId = publicId;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Survey [surveyId=" + surveyId + ", contents=" + contents + ", project=" + project + ", author=" + author
-				+ ", sections=" + sections + ", publicId=" + publicId + "]";
-	}
-
-
+	
 	public String getDefaultLanguage() {
 		return defaultLanguage;
 	}
@@ -138,6 +132,24 @@ public class Survey {
 
 	public void setFormaId(int formaId) {
 		this.formaId = formaId;
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Survey [surveyId=" + surveyId + ", state=" + state + ", contents=" + contents + ", project=" + project
+				+ ", author=" + author + ", formaId=" + formaId + ", sections=" + sections + ", publicId=" + publicId
+				+ ", defaultLanguage=" + defaultLanguage + ", objetive=" + objetive + "]";
 	}
 	
 }

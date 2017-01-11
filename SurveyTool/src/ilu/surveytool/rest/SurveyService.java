@@ -2,6 +2,7 @@ package ilu.surveytool.rest;
 
 import java.io.File;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -25,6 +26,7 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.language.Language;
 
 @Path("/SurveyService")
@@ -99,4 +101,45 @@ public class SurveyService {
 		
 		return response.build();
 	}
+
+	@PUT
+	@Path("/updateState")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateSurveyState(String req, @Context HttpServletRequest request, @Context ServletContext context) {
+    	System.out.println("Survey state: " + req);
+    	JSONObject json = null;
+    	//String response = "";
+    	//Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
+    	Language lang = new Language(context.getRealPath("/")); 
+    	lang.loadLanguage(Language.getLanguageRequest(request));
+		JSONObject resp = new JSONObject();
+    	
+    	try {
+			json = new JSONObject(req);
+			int surveyId = Integer.parseInt(json.getString(Parameter.s_SID));
+			String state = json.getString(Parameter.s_STATE);
+			
+			SurveysHandler surveysHandler = new SurveysHandler();
+			boolean updated = surveysHandler.updateState(surveyId, state);
+			
+			resp.put("updated", updated);
+			if(updated)
+			{
+				/*String action = "finish";
+				if(state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE)) action = "pause";
+				else if(state.equals(DBConstants.s_VALUE_SURVEY_STATE_PAUSED)) action = "activate";*/
+				resp.put("state", state);
+				/*resp.put("msgAcc", lang.getContent("survey_manager.tab.surveys." + action));
+				resp.put("label", lang.getContent("survey_manager.tab.surveys.label." + action));*/
+				resp.put("stateLabel", lang.getContent("survey_manager.tab.surveys.state." + state));				
+			}
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resp.toString();
+    }
+		
 }

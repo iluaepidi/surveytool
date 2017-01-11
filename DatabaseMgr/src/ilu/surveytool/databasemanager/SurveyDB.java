@@ -208,6 +208,35 @@ public class SurveyDB {
 		
 		return response;
 	}
+
+
+	public String getQuestionnaireStateById(int surveyId)
+	{
+		String response = "";
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_STATE_BY_ID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_STATE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 	
 	
 	public Survey getQuestionnairesByPublicId(String publicId, String lang)
@@ -360,6 +389,7 @@ public class SurveyDB {
 	   			survey.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
 	   			survey.setNumUsers(rs.getInt(DBFieldNames.s_GENERICO_ALL_USERS));
 	   			survey.setNumUsersFinished(rs.getInt(DBFieldNames.s_GENERICO_USERS_FINISHED));
+	   			survey.setState(rs.getString(DBFieldNames.s_STATE));
 	   			response.add(survey);
 	   		}	   		
 	   		
@@ -395,6 +425,7 @@ public class SurveyDB {
 	   			survey.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
 	   			survey.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
 	   			survey.setNumUsers(rs.getInt(DBFieldNames.s_GENERICO_ALL_USERS));
+	   			survey.setState(rs.getString(DBFieldNames.s_STATE));
 	   			response.add(survey);
 	   		}	   		
 	   		
@@ -628,7 +659,7 @@ public class SurveyDB {
 		PreparedStatement pstm = null;
 	    try {
 		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_QUESTIONNAIRE, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setString(1, DBConstants.s_VALUE_SURVEY_STATE_STOP);
+		   pstm.setString(1, DBConstants.s_VALUE_SURVEY_STATE_PAUSED);
 		   pstm.setInt(2, contentId); 
 		   pstm.setInt(3, project); 
 		   pstm.setString(4, this._generatePublicId()); 
@@ -696,6 +727,31 @@ public class SurveyDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONNAIRE_PROJECT);
 			pstm.setInt(1, projectId);
+			pstm.setInt(2, surveyId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		 
+		return updated;
+	}
+
+	public boolean updateSurveyState(int surveyId, String state) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONNAIRE_STATE);
+			pstm.setString(1, state);
 			pstm.setInt(2, surveyId);
 		   		
 			int numUpdated = pstm.executeUpdate();

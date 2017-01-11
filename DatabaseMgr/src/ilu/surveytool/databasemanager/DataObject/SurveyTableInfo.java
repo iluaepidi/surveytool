@@ -9,6 +9,7 @@ public class SurveyTableInfo {
 	int numUsers;
 	int numUsersFinished;
 	Timestamp deadLineDate;
+	String state = "";
 
 	public SurveyTableInfo() {
 		super();
@@ -64,10 +65,19 @@ public class SurveyTableInfo {
 		this.deadLineDate = deadLineDate;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
 		return "SurveyTableInfo [surveyId=" + surveyId + ", title=" + title + ", numUsers=" + numUsers
-				+ ", numUsersFinished=" + numUsersFinished + ", deadLineDate=" + deadLineDate + "]";
+				+ ", numUsersFinished=" + numUsersFinished + ", deadLineDate=" + deadLineDate + ", state=" + state
+				+ "]";
 	}
-
+	
 }
