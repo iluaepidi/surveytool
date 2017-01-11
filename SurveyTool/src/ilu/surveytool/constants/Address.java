@@ -27,6 +27,8 @@ public class Address {
 		public final static String s_BODY_POLL_STATISTICS = "pollStatistics";
 		public final static String s_BODY_EDIT_FEES = "editFees";
 		public final static String s_BODY_PROFILE = "profile";
+		public final static String s_BODY_SURVEY_PAUSED = "surveyPaused";
+		public final static String s_BODY_SURVEY_FINISHED = "surveyFinished";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";

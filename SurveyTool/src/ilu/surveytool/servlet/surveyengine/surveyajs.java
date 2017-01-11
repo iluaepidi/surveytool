@@ -64,49 +64,63 @@ public class surveyajs extends HttpServlet {
 		boolean preview = request.getParameter("preview") != null;
 		//System.out.println("preview param: " + preview);
 		
-		AnonimousUser anonimousUser = new AnonimousUser();
-		anonimousUser.setIpAddress(request.getRemoteAddr());
-		anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
-		anonimousUser.setCurrentPage(1);
-		if(!preview) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
-		request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
-		
+		String state = surveyDB.getQuestionnaireStateByPublicId(sid);
+
 		//System.out.println("SID: " + sid + " - Language: " + language);
 		Language lang = new Language(getServletContext().getRealPath("/")); 
 		lang.loadLanguage(language); 
 		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
 		
-		//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
-		JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
-		System.out.println("Json: " + survey.toString());
-
-		request.setAttribute(Attribute.s_SURVEY_INFO, survey);
-		String surveyTitle = "";
-		//if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-		request.setAttribute(Attribute.s_PAGE_TITLE, surveyTitle);
-
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
-		List<String> jsFiles = new ArrayList<>();
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
-		jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
-		
-		if(preview) jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY_PREVIEW));
-		else jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
-		
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_ANGULAR_API));
-		jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_ANGULAR_EMBED));
-		request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+		if(preview || state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE))
+		{
+			AnonimousUser anonimousUser = new AnonimousUser();
+			anonimousUser.setIpAddress(request.getRemoteAddr());
+			anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+			anonimousUser.setCurrentPage(1);
+			if(!preview) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+			request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+			
+			//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
+			JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
+			System.out.println("Json: " + survey.toString());
+	
+			request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+			String surveyTitle = "";
+			//if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+			request.setAttribute(Attribute.s_PAGE_TITLE, surveyTitle);
+				
+			List<String> jsFiles = new ArrayList<>();
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
+			jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
+			
+			if(preview) jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY_PREVIEW));
+			else jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
+			
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_ANGULAR_API));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_ANGULAR_EMBED));
+			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+	
+			List<String> cssFiles = new ArrayList<>();
+			cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
+			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
+			
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE_AJS));
+		}
+		else if(state.equals(DBConstants.s_VALUE_SURVEY_STATE_PAUSED))
+		{
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAUSED));
+		}
+		else
+		{
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISHED));
+		}
 
-		List<String> cssFiles = new ArrayList<>();
-		cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
-		request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
-		
-		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE_AJS));
 		CommonCode.redirect(request, response, Address.s_SURVEY_MASTER_PAGE);
 	}
 
