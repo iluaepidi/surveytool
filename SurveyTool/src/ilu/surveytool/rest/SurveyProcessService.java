@@ -91,7 +91,7 @@ public class SurveyProcessService {
 				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), anonimousUser, lang.getCurrentLanguage());
 				System.out.println(survey);
 				
-				if(survey.has("page"))
+				if(survey.getJSONObject("section").has("page"))
 				{
 					//The body content is a question, so this while considers that the final page contains one question (the body content with the thanks message)
 					while((survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){

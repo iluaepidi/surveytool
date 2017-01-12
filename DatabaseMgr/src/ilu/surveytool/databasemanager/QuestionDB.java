@@ -1106,6 +1106,7 @@ public class QuestionDB {
 		try
 		{
 			int numBodyContents = 0;
+			int indexQuestion = 1;
 			int numQuestion = this.getNumQuestionPreviousPages(pageId);
 			while(rs.next())
 	   		{
@@ -1176,7 +1177,9 @@ public class QuestionDB {
 		   			question.put("optionAlAnswer", rs.getBoolean(DBFieldNames.s_QUESTION_OPTIONALANSWER));
 		   			question.put("questionJspPath", rs.getString(DBFieldNames.s_QUESTIONTYPE_FORM_FILE));
 		   			
-		   			question.put("index", rs.getInt(DBFieldNames.s_INDEX));
+		   			//question.put("index", rs.getInt(DBFieldNames.s_INDEX));
+		   			question.put("index", indexQuestion);
+		   			indexQuestion++;
 		   			
 		   			OptionDB optionDB = new OptionDB();
 		   			
