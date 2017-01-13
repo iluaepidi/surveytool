@@ -11,6 +11,7 @@
 	font-family: 'arthurbecker';
 }
 .body-content .content{
+	display: inline-block;
 	background:url(../img/content-bg-top.gif) left top  repeat-x;
 	min-height:35em;/*TEST*/
 	clear:both;

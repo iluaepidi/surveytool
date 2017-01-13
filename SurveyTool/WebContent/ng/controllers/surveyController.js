@@ -1,6 +1,9 @@
 var app = angular.module('survey', ['surveyService', 'youtube-embed', 'ngSanitize', 'monospaced.mousewheel']);
 
-app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'survey', function($scope, $http, $window, $filter, survey) {
+var scrollIndex = 0;
+var scrolling = false;
+
+app.controller('surveyController', ['$scope', '$location', '$http', '$window', '$filter', '$anchorScroll', '$timeout', 'survey', function($scope, $location, $http, $window, $filter, $anchorScroll, $timeout, survey) {
 	
 	/** Initial load **/
 	$scope.currentSurvey = survey;
@@ -318,21 +321,48 @@ app.controller('surveyController', ['$scope', '$http', '$window', '$filter', 'su
 	$scope.setIndexQuestion = function(qIndex) {
 		$scope.questionIndex = qIndex;
 		console.log("index question: " + $scope.questionIndex);
+	    $location.hash('anchor-' + $scope.questionIndex);
+	    $anchorScroll();
 	};
 	
 	//mousewheel
     $scope.setWheelIndexQuestion =  function(event, delta, deltaX, deltaY){
-        //console.log('event: ' + event + ', delta: ' + delta + ', deltaX: ' + deltaX + ', deltaY: ' + deltaY);
-        if(delta == -1){
-        	if($scope.questionIndex < $scope.currentSurvey.info.section.page.questions.length)
-        	$scope.questionIndex = $scope.questionIndex + 1;
-        }
-        if(delta == 1){
-        	if($scope.questionIndex > 1){
-        		$scope.questionIndex = $scope.questionIndex - 1;
-        	}
-        }
-      };
+        //console.log('event: ' + event + ', delta: ' + delta + ', deltaX: ' + deltaX + ', deltaY: ' + deltaY);    	
+    	//console.log("---- target 1: " + $(event.target).html());
+    	var elem = $('li[index=' + $scope.questionIndex + ']');
+    		
+    	scrolling = isScrolledIntoView(elem, delta);
+    	
+    	console.log("Scrolling: " + scrolling);
+    	
+    	if(scrolling)
+    	{
+			if(delta == -1){
+	        	if($scope.questionIndex < $scope.currentSurvey.info.section.page.questions.length) {
+	        		$scope.questionIndex = $scope.questionIndex + 1;
+	        		scrollIndex = $scope.questionIndex;
+	        		$location.hash('anchor-' + $scope.questionIndex);
+	        	    $anchorScroll();
+	        	}
+	        	else
+	        	{
+	        		scrollIndex = $scope.currentSurvey.info.section.page.questions.length + 1;
+	        	}
+	        }
+	        else if(delta == 1){
+	        	if($scope.questionIndex > 1){
+	        		$scope.questionIndex = $scope.questionIndex - 1;
+	        		scrollIndex = $scope.questionIndex;
+	        		$location.hash('anchor-' + $scope.questionIndex);
+	        	    $anchorScroll();
+	        	}
+	        	else
+	        	{
+	        		scrollIndex = 0;
+	        	}
+	        }		
+    	}  
+	 };
 }]);
 
 app.directive('focusOn',function($timeout) {
@@ -346,7 +376,53 @@ app.directive('focusOn',function($timeout) {
             });
         }
     }
-})
+});
+
+app.directive('preventScrollBody', function() {
+    return{
+        link: link,
+        restrict: 'A'
+    };
+
+    function link(scope, element, attrs) {
+        element.bind( 'mousewheel DOMMouseScroll', function ( e ) {   
+        	//var elem = $('li[index=' + scope.questionIndex + ']');    		
+        	
+            if(scrolling && scrollIndex > 0 && scrollIndex < scope.currentSurvey.info.section.page.questions.length + 1)
+            {
+            	var e0 = e.originalEvent;
+                	delta = e0.wheelDelta || -e0.detail;
+            	var deltaScroll = (delta < 0 ? 1 : -1);
+            	
+		        this.scrollTop += deltaScroll * 30;
+	            e.preventDefault();
+            }
+            
+        });
+    }
+});
+
+function isScrolledIntoView(elem, delta)
+{
+    var docViewTop = $(window).scrollTop();
+    var elemTop = $(elem).offset().top;
+    console.log("Windows top: " + docViewTop + " <= elem top: " + elemTop);
+       
+    if(delta == 1)
+    {
+    	return elemTop >= docViewTop
+    }
+    else
+    {
+    	var docViewBottom = docViewTop + $(window).height();   
+        var elemBottom = elemTop + $(elem).height();
+        console.log("Windows bottom: " + docViewBottom + " >= elem bottom: " + elemBottom);
+        return elemBottom <= docViewBottom;
+    }
+    
+    //return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+
 /*app.directive('decimalLimit',function(){
     return {
         link:function(scope,ele,attrs){
