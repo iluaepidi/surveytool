@@ -43,7 +43,7 @@
 				 
 				 sInfo = <%= sInfo.toString() %>;
 				</script>
-				<div class="container-fluid">
+				<div class="container-fluid" prevent-scroll-body>
 	  				<div class="title-content col-xs-10 col-xs-push-1 col-md-8 col-md-push-2" ng-class="{inactive: questionIndex > 1}">	  					
 	  					<h1 id="main-title" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
 						<div class="progress">
@@ -58,7 +58,7 @@
 			          <p>Page {{currentSurvey.info.section.page.numPage}} of {{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}} survey loaded.</p>
 			        </div>
 	  				
-	  				<div class="content">
+	  				<div class="content" msd-wheel="setWheelIndexQuestion($event, $delta, $deltaX, $deltaY)">
 	  					<form name="survey" role="form" ng-show="currentSurvey.info.section.page.questions" class="">
 	  						
 	  						<div class="survey-form col-xs-10 col-xs-push-1 col-md-8 col-md-push-2">
@@ -72,7 +72,7 @@
 	  							<p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p>
 	  							
 	  							
-	  							<ul id="question-list" msd-wheel="setWheelIndexQuestion($event, $delta, $deltaX, $deltaY)">
+	  							<ul id="question-list">
 	  								<li ng-repeat="question in currentSurvey.info.section.page.questions" class="question" index="{{question.index}}" ng-class="{inactive: question.index != questionIndex}">
 	  									<a id="anchor-{{question.index}}"></a>
 	  									<button class="navigation up" aria-hidden="true" tabindex="-1" ng-show="question.index == questionIndex && questionIndex > 1" ng-click="setIndexQuestion(question.index - 1)"><%= lang.getContent("button.question.previous") %></button>
