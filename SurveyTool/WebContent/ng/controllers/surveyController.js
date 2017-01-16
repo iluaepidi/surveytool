@@ -341,8 +341,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	        	if($scope.questionIndex < $scope.currentSurvey.info.section.page.questions.length) {
 	        		$scope.questionIndex = $scope.questionIndex + 1;
 	        		scrollIndex = $scope.questionIndex;
-	        		$location.hash('anchor-' + $scope.questionIndex);
-	        	    $anchorScroll();
+	        		//$location.hash('anchor-' + $scope.questionIndex);
+	        	    //$anchorScroll();
 	        	}
 	        	else
 	        	{
@@ -353,8 +353,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	        	if($scope.questionIndex > 1){
 	        		$scope.questionIndex = $scope.questionIndex - 1;
 	        		scrollIndex = $scope.questionIndex;
-	        		$location.hash('anchor-' + $scope.questionIndex);
-	        	    $anchorScroll();
+	        		//$location.hash('anchor-' + $scope.questionIndex);
+	        	    //$anchorScroll();
 	        	}
 	        	else
 	        	{
@@ -410,14 +410,14 @@ function isScrolledIntoView(elem, delta)
        
     if(delta == 1)
     {
-    	return elemTop >= docViewTop
+    	return elemTop >= docViewTop + 150;
     }
     else
     {
     	var docViewBottom = docViewTop + $(window).height();   
         var elemBottom = elemTop + $(elem).height();
         console.log("Windows bottom: " + docViewBottom + " >= elem bottom: " + elemBottom);
-        return elemBottom <= docViewBottom;
+        return elemBottom <= docViewBottom - 150;
     }
     
     //return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
