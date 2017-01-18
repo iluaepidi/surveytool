@@ -320,16 +320,22 @@ public class ImportFileServlet extends HttpServlet {
 	private String _importFile(Part filePart, String fileName, String rootPath, int index)
 	{
 		String fileNameFinal = fileName;
+		String folder = "C:\\surveytool\\resources";
+		
 		try{
+			File ffolder = new File(folder);
+			if(!ffolder.exists()) ffolder.mkdirs();
 			File output = null;
-			Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+			//Path fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+			Path fpath = Paths.get(folder, fileNameFinal);
 			do
 			{
 				if(index > 0)
 				{
 					String[] cads = fileName.split(Pattern.quote("."));
 					fileNameFinal = cads[0] + index + "." + cads[1];
-				    fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+				    //fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
+					fpath = Paths.get(folder, fileNameFinal);
 				}
 				
 			    output = new File(fpath.toString());
