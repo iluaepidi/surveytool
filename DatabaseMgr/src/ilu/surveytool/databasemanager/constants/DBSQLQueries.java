@@ -502,7 +502,7 @@ public class DBSQLQueries {
 		
 	//inserts
 		//User
-			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`) VALUES (?,?,?,?,?,?)";
+			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`) VALUES (?,?,?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`, `testUser`) VALUES (?, ?, ?, ?)";

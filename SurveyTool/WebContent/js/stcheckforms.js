@@ -56,8 +56,108 @@ $(function() {
 			$('#registerForm').submit();
 		}
 	});
+
+	$('#accountSubmit').click(function(e){
+		e.preventDefault();
+		var valid = true;
+		
+		if($('#email').val() == "" || $('#email').val().length < 6){
+			valid = false;
+			showFieldError($('#email'));
+		}else if(!($('#email').val().indexOf("@")!=-1) || !($('#email').val().indexOf(".")!=-1)){
+			valid = false;
+			showFieldError($('#email'));
+		}
+		
+		if($('#reemail').val() != $('#email').val()){
+			valid = false;
+			showFieldError($('#reemail'));
+		}
+		
+		if($('#passwordregister').val() == "" || $('#passwordregister').val().length < 8){
+			valid = false;
+			showFieldError($('#passwordregister')); 
+		}
+		
+		if($('#repasswordregister').val() != $('#passwordregister').val()){
+			valid = false;
+			showFieldError($('#repasswordregister'));
+		}
+		
+		if(valid){
+			error = false;
+			$('#registerForm').submit();
+		}
+	});
 	
+	$('#email').keyup(function(){
+		if(error)
+		{
+			if($('#email').val() != "" && $('#email').val().length >= 6 && $('#email').val().indexOf("@")!=-1 && $('#email').val().indexOf(".")!=-1){				
+				hideFieldError($('#email'));
+			}
+			else
+			{
+				showFieldError($('#email'));
+			}
+			
+			if($('#reemail').val() == $('#email').val()){				
+				hideFieldError($('#reemail'));
+			}
+			else
+			{
+				showFieldError($('#reemail'));
+			}
+		}
+	});
 	
+	$('#reemail').keyup(function(){
+		if(error)
+		{
+			if($('#reemail').val() == $('#email').val()){				
+				hideFieldError($('#reemail'));
+			}
+			else
+			{
+				showFieldError($('#reemail'));
+			}
+		}
+	});
+
+	$('#passwordregister').keyup(function(){
+		if(error)
+		{
+			if($('#passwordregister').val() != "" && $('#passwordregister').val().length >= 8){				
+				hideFieldError($('#passwordregister'));
+			}
+			else
+			{
+				showFieldError($('#passwordregister'));
+			}
+			
+			if($('#repasswordregister').val() == $('#passwordregister').val()){				
+				hideFieldError($('#repasswordregister'));
+			}
+			else
+			{
+				showFieldError($('#repasswordregister'));
+			}
+		}
+	});
+
+	$('#repasswordregister').keyup(function(){
+		if(error)
+		{
+			if($('#repasswordregister').val() == $('#passwordregister').val()){				
+				hideFieldError($('#repasswordregister'));
+			}
+			else
+			{
+				showFieldError($('#repasswordregister'));
+			}
+		}
+	});
+
 	$('#savesubmit').click(function(e){
 		e.preventDefault();
 		var valid = true;
@@ -146,9 +246,6 @@ function showFieldError(element)
 	
 	error = true;
 }
-
-
-
 
 function showFieldErrorRegisterUsername(element)
 {	

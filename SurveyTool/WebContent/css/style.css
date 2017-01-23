@@ -114,6 +114,10 @@ h2 {width: auto;
 .error-msg {color: #B60000;
     font-size: 1.1em;
     font-weight: bold;}
+.error-msg p {text-align: center;
+	border: 1px solid #B60000;
+	padding: 10px;
+	border-radius: 5px;}
 .st-styles .form-control, 
 .st-styles .form-control-small {color: #4A4A4A;
 	border-color: #4A4A4A; 
@@ -157,6 +161,13 @@ input[type="number"] {
    text-align:center;
    rows:1;
 }
+
+.horizontal-form-group-controls {display: inline-block;
+	width: 100%;
+	margin: 10px 0;}
+.horizontal-formfield legend {border: none;
+	font-size: 1em;
+	font-weight: bold;}
 
 /*focus*/
 
@@ -266,6 +277,22 @@ textarea {resize:none;
 	left: -16px;
 	position: absolute;
 	top: 5px;}
+
+.herror{background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	display: block;
+	margin-top: 8px;}
+.herror:before{content: '';
+	border-top: 8px solid transparent;
+	border-bottom: 9px solid #A94442;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+	left: 20px;
+	position: absolute;
+	top: 27px;}
 
 .error-profile{background-color: #A94442;
 	padding: 6px 12px;
@@ -1721,3 +1748,20 @@ div.rules-frame > div.nav-config > ul > li > button.active {color: #fff;
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
     border-radius: 4px;}
+
+/*----------------------------------------------*\
+		$User Panel
+\*----------------------------------------------*/
+ 
+.conditions-win {}
+.conditions-win-dialog {margin: 14% auto !important;
+	width: 30% !important;} 
+.conditions-win-dialog h2 {font-size: 1.2em;}
+.conditions-win-dialog button.close {color: #fff;
+	opacity: unset;}
+.conditions-win-dialog div.modal-footer {border: none !important;}
+.account-register-button-div {text-align: center;
+	margin: 20px 0;}
+.confirmation-back-login a {margin-top: 60px;}
+.confirmation-back-login a:hover,
+.confirmation-back-login a:focus {padding: 10px 16px;}

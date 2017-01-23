@@ -5,13 +5,22 @@ public class RegisterResponse {
 	int userId;
 	String userName = "";
 	private String email = "";
+	private String reemail = "";
 	private String password = "";
 	private String repassword = "";
+	private int rol = 2;
+	private int status = 2;
 	boolean isValid = false;
 	String errorMsg = "";
 	private String isoLanguage ="";
 
-	public static int ROL_NORMAL_USER = 1;
+	public static int ROL_ADMIN_USER = 1;
+	public static int ROL_INTERVIEWER_USER = 4;
+	public static int ROL_NORMAL_USER = 2;
+	public static int ROL_OBSERVER_USER = 5;
+	
+	public static int STATUS_ACTIVE_USER = 1;
+	public static int STATUS_EMAIL_USER = 2;
 	
 	public RegisterResponse() {
 		super();
@@ -60,6 +69,30 @@ public class RegisterResponse {
 	}
 
 	
+
+	public String getReemail() {
+		return reemail;
+	}
+
+	public void setReemail(String reemail) {
+		this.reemail = reemail;
+	}
+
+	public int getRol() {
+		return rol;
+	}
+
+	public void setRol(int rol) {
+		this.rol = rol;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {

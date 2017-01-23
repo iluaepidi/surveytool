@@ -49,7 +49,7 @@ public class RegisterDB {
 		int idLanguage = language.getIdLanguage(registerResponse.getIsoLanguage());
 		
 		//comprobar que no existe ese username
-		if(!this.existsUsername(registerResponse.getUserName())){
+		if(!this.existsUsername(registerResponse.getUserName()) || registerResponse.getUserName().isEmpty()){
 			
 			if(!this.existsEmail(registerResponse.getEmail())){
 				
@@ -63,8 +63,9 @@ public class RegisterDB {
 			   		pstm.setString(2, registerResponse.getEmail());
 			   		pstm.setString(3, registerResponse.getPassword());
 			   		pstm.setBoolean(4, false);
-			   		pstm.setInt(5, registerResponse.ROL_NORMAL_USER);
+			   		pstm.setInt(5, registerResponse.getRol());
 			   		pstm.setInt(6, idLanguage);
+			   		pstm.setInt(7, registerResponse.getStatus());
 			   		
 			   		boolean notInserted = pstm.execute();
 					   if(!notInserted){

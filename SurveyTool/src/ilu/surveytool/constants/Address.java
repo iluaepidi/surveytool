@@ -13,6 +13,7 @@ package ilu.surveytool.constants;
 public class Address {
 	//BodypPagesNames
 		public final static String s_BODY_LOGIN = "login";
+		public final static String s_BODY_LOGIN_USER_PANEL = "loginUserPanel";
 		public final static String s_BODY_POLL_EXAMPLE_CODE = "pollExampleCode";
 		public final static String s_BODY_POLL_QUESTION = "pollQuestion";
 		public final static String s_BODY_POLL_RESULT = "pollResult";
@@ -29,6 +30,9 @@ public class Address {
 		public final static String s_BODY_PROFILE = "profile";
 		public final static String s_BODY_SURVEY_PAUSED = "surveyPaused";
 		public final static String s_BODY_SURVEY_FINISHED = "surveyFinished";
+		public final static String s_BODY_LOGIN_REGISTRATION_CONDITIONS = "registrationConditions";
+		public final static String s_BODY_LOGIN_ACCOUNT_CREATION = "accountCreation";
+		public final static String s_BODY_LOGIN_REGISTRATION_CONFIRMATION = "confirmRegistration";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
@@ -57,6 +61,7 @@ public class Address {
 		public final static String s_SERVLET_CREATE_BCONTENT = "CreateBContentServlet";
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
+		public final static String s_SERVLET_LOGIN_USER_PANEL = "LoginUPServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
 		public final static String s_SERVLET_POLLS_SERVLET = "PollsServlet";
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
@@ -66,6 +71,8 @@ public class Address {
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";
 		public final static String s_MASTER_PAGE = "master.jsp";
+		public final static String s_MASTER_PAGE_USER_PANEL = "masterUP.jsp";
+		public final static String s_PAGE_INDEX_MANAGER = "indexManager.jsp";
 		public final static String s_SURVEY_MASTER_PAGE = "surveyMaster.jsp";
 		public final static String s_MASTER_POLL = "masterPoll.jsp";
 		public final static String s_EDIT_QUESTION_MASTER= "EditQuestionMaster.jsp";
