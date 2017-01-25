@@ -147,14 +147,13 @@
 							   		</div>
 								</div>
 								
-								<!-- <div class="survey-info-url">
+								<div class="survey-info-url">
 									<label for="clipboard-text" class="col-sm-3 control-label left"><%= lang.getContent("survey.edit.info.label.url") %></label>
-							   		<div class="col-sm-8">
-							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/survey?sid=<%= survey.getPublicId() %>" disabled />
-							     			
+							   		<div class="col-sm-9">
+							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/surveyajs?sid=<%= survey.getPublicId() %>&langsurvey=<%= lang.getCurrentLanguage() %>" readonly="readonly" />							     			
 							   		</div>
-							   		<button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x" aria-hidden="true"></i></button>
-								</div> -->
+							   		<!-- <button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x" aria-hidden="true"></i></button> -->
+								</div>
 		  					</div>	
 		  					  					
 		  					
