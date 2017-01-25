@@ -1227,6 +1227,7 @@ $(function() {
 		var item = $(this).closest('li.panel-section');
 		currentQuestion = item.attr('scid');
 		currentElement = item;
+		$("#confirmRemoveSection").removeClass("hidden");
 		$("#elementToRemoveText").html('"Section: ' + item.find('input.survey-section-title').val() + '"');
 		$("#removeElemId").val(item.attr('scid') + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('SectionService');
@@ -1569,6 +1570,7 @@ $(function() {
 				   else if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
+					  
 					   $('li[scid=' + ids[0] + ']').find('ul[id=section-pages]').each(function(indice, elemento) {
 						   if(indice == 0)
 						   {
@@ -1579,7 +1581,7 @@ $(function() {
 							   $(elemento).remove();
 						   }
 					   });
-					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title]').val('Section 1');
+					   $('li[scid=' + ids[0] + ']').find('input[id=survey-section-title-' + ids[0] + ']').val('Section 1');
 				   }
 				   else if(service == "PageService")
 				   {
@@ -1719,6 +1721,13 @@ $(function() {
 				   if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
+					   
+					   $('li[scid=' + ids[0] + ']').find('li.panel-question').each(function(index, element){
+						   console.log("QuestionId: " + $(element).attr("qid"));
+						   $(element).trigger("rmvQuestionGoto");
+						   $(element).trigger("rmvQuestionDepend");
+					   });
+					   					   
 					   var i = 1;
 					   var sectionList = $('li[scid=' + ids[0] + ']').closest("ul.survey-sections");
 					   $('li[scid=' + ids[0] + ']').remove();
@@ -2675,6 +2684,7 @@ $(function() {
 		$("#confirmRemoveDep").addClass("hidden");
 		$("#confirmRemovelogic").addClass("hidden");
 		$("#confirmRemoveRule").addClass("hidden");
+		$("#confirmRemoveSection").addClass("hidden");
 		modalFocus.focus();
 	});
 	

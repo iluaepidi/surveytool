@@ -181,8 +181,8 @@ public class ExportData {
 									{
 										if(optionGroups != null)
 										{
-											if(values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText())
-													|| values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+											if((ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+													|| (ogItem.getOptions().get(o).getResources() != null && !ogItem.getOptions().get(o).getResources().isEmpty() && ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText())))
 											{
 												cell = row.createCell(desp);
 												cell.setCellValue("yes");
