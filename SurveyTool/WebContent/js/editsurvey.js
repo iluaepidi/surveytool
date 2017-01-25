@@ -160,7 +160,8 @@ $(function() {
 						i++;
 				   });
 				});
-			   
+				
+				insertPageJson($(responseText).attr("index"), $(responseText).attr("pid"));
 			}
 		});
 	});
@@ -1583,6 +1584,8 @@ $(function() {
 				   else if(service == "PageService")
 				   {
 					   //var pagesList = currentElement.closest('ul.section-pages');
+					   var currentPageId = parseInt(currentElement.attr("pid"));
+					   var currentNumPage = parseInt(currentElement.attr("index"));
 					   var sectionList = currentElement.closest('ul.survey-sections');
 					   var prevElement = currentElement.prev();
 					   
@@ -1614,6 +1617,8 @@ $(function() {
 					   });
 					   
 					   modalFocus = prevElement.find("h4");
+					   
+					   removePageJson(currentNumPage, currentPageId);
 				   }
 				   else if (service == "QCService"){
 					   if(elementId.split("/").length==3){
@@ -2522,7 +2527,6 @@ $(function() {
 		console.log("question moving up");
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
-		console.log("question to move: " + JSON.stringify(questionJson));
 		question.trigger('rmvQuestionJson');
 		if(question.is(':first-child'))
 		{

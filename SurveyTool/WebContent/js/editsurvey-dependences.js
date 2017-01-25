@@ -1029,6 +1029,37 @@ function setDepLabelCounter(rules)
 	}	
 }
 
+function insertPageJson(numPage, pageId)
+{
+	var newPage = {};
+	newPage.numPage = parseInt(numPage);
+	newPage.pageId = parseInt(pageId);
+	newPage.questions = [];
+	var position = newPage.numPage - 1;
+	surveyTree.splice(position, 0, newPage);
+	updateNumberPage();
+	console.log("SurveyTree inserPage: " + JSON.stringify(surveyTree));
+}
+
+function removePageJson(numPage, pageId)
+{
+	var position = numPage - 1;
+	var positionPrev = numPage - 2;
+	surveyTree[positionPrev].questions = surveyTree[positionPrev].questions.concat(surveyTree[position].questions);
+	surveyTree = jQuery.grep(surveyTree, function(page) {
+		return page.pageId != pageId;
+	});	
+	updateNumberPage();
+}
+
+function updateNumberPage()
+{
+	for(var i = 0; i < surveyTree.length; i++)
+	{
+		surveyTree[i].numPage = i + 1;
+	}
+}
+
 function setDependence(root)
 {	
 	var questionparams = root.find("select.dependence-question").val().split("-");
