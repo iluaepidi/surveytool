@@ -24,11 +24,11 @@
 													<label for="{{question.questionId}}" class="sr-only"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
 													
 													<!-- NUMERIC -->
-													<div ng-show='(survey.$submitted || survey.decimal.$touched)'>
-														<div class="msg-error" ng-show="survey.decimal.$error.pattern">
+													<div ng-show='(survey.$submitted || survey["decimal-" + question.questionId].$touched)'>
+														<div class="msg-error" ng-show='survey["decimal-" + question.questionId].$error.pattern'>
 															<div class="error">
 																<p class="msg-title"><%= lang.getContent("survey.process.title.numFormat") %></p>
-																<p role="alert" ng-show="survey.decimal.$error.pattern"><span class="visuallyHidden"><%= lang.getContent("msg.error.error_in") %> <%= lang.getContent("general.question") %> {{question.numQuestion}}: </span><%= lang.getContent("survey.process.desc.numFormat1") %> <span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'><%= lang.getContent("survey.process.desc.numFormat2") %> {{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.desc.numFormat3") %></span></p>
+																<p role="alert" ng-show='survey["decimal-" + question.questionId].$error.pattern'><span class="visuallyHidden"><%= lang.getContent("msg.error.error_in") %> <%= lang.getContent("general.question") %> {{question.numQuestion}}: </span><%= lang.getContent("survey.process.desc.numFormat1") %> <span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'><%= lang.getContent("survey.process.desc.numFormat2") %> {{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.desc.numFormat3") %></span></p>
 															</div>
 														</div>
 														<div class="msg-error" ng-show='(getJsonArrayElement(question.parameters, "name", "minValue").value || getJsonArrayElement(question.parameters, "name", "maxValue").value) && isOutOfRange(question.response, getMinValue(getJsonArrayElement(question.parameters, "name", "minValue")), getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue")))'>
@@ -42,7 +42,7 @@
 							  							<span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'>{{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.decimalsMax") %></span> 
 							  							<span ng-show='getJsonArrayElement(question.parameters, "name", "minValue").value || getJsonArrayElement(question.parameters, "name", "maxValue").value'><%= lang.getContent("survey.process.numLimits") %> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("survey.process.desc.numLimits.and") %> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}.</span>
 							  						</div>												
-													<input type="text" class="form-control" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}'  name="decimal" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="number-{{question.questionId}}" <%if(hasMinMax){ %>min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' <%}%> ng-model="question.response" ng-pattern='decimalRegex(getJsonArrayElement(question.parameters, "name", "decimals"))' ng-focus="setIndexQuestion(question.index)"></input>
+													<input type="text" class="form-control" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}'  name="decimal-{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="number-{{question.questionId}}" <%if(hasMinMax){ %>min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' <%}%> ng-model="question.response" ng-pattern='decimalRegex(getJsonArrayElement(question.parameters, "name", "decimals"))' ng-focus="setIndexQuestion(question.index)"></input>
 							  																			
 													<!-- SHORT TEXT -->
 													<div class="msg-alert" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>

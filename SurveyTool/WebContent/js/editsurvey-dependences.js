@@ -254,6 +254,7 @@ $(function() {
 	
 	$(".survey-sections").on("change", "select.dependence-option", function(e){
 		var value = $(this).val();
+		var select = $(this);
 		console.log("in on change");		
 		if(value != 'none')
 		{
@@ -294,6 +295,8 @@ $(function() {
 						   var index = root.closest("li.dependence-item").attr("index");
 						   if(index>0)
 							   root.closest("li.dependence-item").attr("index", index*(-1));
+						   
+						   setDepLabelCounter(select.closest("div.rules-frame"));
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   console.log(xhr.status);
@@ -313,60 +316,36 @@ $(function() {
 				setDependence(root);
 				
 				$.ajax({ 
-					   type: "POST",
-					   dataType: "text",
-					   contentType: "text/plain",
-					   url: host + "/SurveyTool/api/QCService/insertDependence",
-					   data: JSON.stringify(req),
-					   success: function (data) {
-						   console.log("Dentro del function: "+data);
-						   if(data != '')
-						   {
-							   var json = JSON.parse(data);
-								
-							   if(json.hasOwnProperty('qdependenceId'))
-							   {
-								   console.log("qdependenceId: "+json.qdependenceId+", previous id="+root.closest("ul.dependences-list").attr("index"));
-								   root.closest("ul.dependences-list").attr("index", json.qdependenceId);						   
-							   }
-							   
-							   if(json.hasOwnProperty('qDependeceItemId'))
-							   {
-								   console.log("qDependeceItemId: "+json.qDependeceItemId);
-								   root.closest("li.dependence-item").attr("index", json.qDependeceItemId);						   
-							   }
-						   }
-						   if(root.closest('li').is(':last-child'))
-						   {
-							   root.removeClass("disable");
-							   root.closest(".dependences-settings").find("div.dependences-add-button").find("button").prop("disabled", false);
-						   }
-						   	
-					   },
-					   error: function (xhr, ajaxOptions, thrownError) {
-						   console.log(xhr.status);
-						   console.log(thrownError);
-						   console.log(xhr.responseText);
-						   console.log(xhr);
-					   }
-					});
-			}
-		}
-		else
-			{
-			var root = $(this).closest("fieldset");
-			setDependence(root);
-			
-			$.ajax({ 
 				   type: "POST",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+				   url: host + "/SurveyTool/api/QCService/insertDependence",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   console.log("Dentro del function: "+data);
-					   var index = root.closest("li.dependence-item").attr("index");
-					   root.closest("li.dependence-item").attr("index", index*(-1));
+					   if(data != '')
+					   {
+						   var json = JSON.parse(data);
+							
+						   if(json.hasOwnProperty('qdependenceId'))
+						   {
+							   console.log("qdependenceId: "+json.qdependenceId+", previous id="+root.closest("ul.dependences-list").attr("index"));
+							   root.closest("ul.dependences-list").attr("index", json.qdependenceId);						   
+						   }
+						   
+						   if(json.hasOwnProperty('qDependeceItemId'))
+						   {
+							   console.log("qDependeceItemId: "+json.qDependeceItemId);
+							   root.closest("li.dependence-item").attr("index", json.qDependeceItemId);						   
+						   }
+					   }
+					   if(root.closest('li').is(':last-child'))
+					   {
+						   root.removeClass("disable");
+						   root.closest(".dependences-settings").find("div.dependences-add-button").find("button").prop("disabled", false);
+					   }
+					   	
+					   setDepLabelCounter(select.closest("div.rules-frame"));
 				   },
 				   error: function (xhr, ajaxOptions, thrownError) {
 					   console.log(xhr.status);
@@ -376,6 +355,33 @@ $(function() {
 				   }
 				});
 			}
+		}
+		else
+		{
+			var root = $(this).closest("fieldset");
+			setDependence(root);
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log("Dentro del function: "+data);
+				   var index = root.closest("li.dependence-item").attr("index");
+				   root.closest("li.dependence-item").attr("index", index*(-1));
+				   
+				   setDepLabelCounter(select.closest("div.rules-frame"));
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		}
 	});
 	
 	
@@ -433,6 +439,9 @@ $(function() {
 	$(".survey-sections").on("change", "select.logic-option-goto", function(e){
 		var root = $(this).closest("li.logic-option");
 		setLogic(root);
+		var value = $(this).val();
+		var select = $(this);
+		console.log("logic value: " + value);
 			
 		$.ajax({ 
 			type: "POST",
@@ -442,6 +451,25 @@ $(function() {
 			data: JSON.stringify(req),
 			success: function (data) {
 				console.log("Dentro del function: "+data);
+				var labelCounter = select.closest("div.rules-frame ").find("#logicCounter")
+				var counter = 0;
+				select.closest("ul.logic-option-list").find("select.logic-option-goto").each(function(index, element){
+					if($(element).val() != "none")
+					{
+						counter++;
+					}
+				});
+				console.log("Logic counter: " + counter);
+				if(counter > 0)
+				{
+					labelCounter.html(counter);
+					labelCounter.removeClass("hidden");
+				}
+				else
+				{
+					labelCounter.html(counter);
+					labelCounter.addClass("hidden");
+				}				
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
@@ -844,7 +872,7 @@ $(function() {
 			if($(selectDepend).val() == valor)
 			{
 				console.log("entra");
-				var trashButton = $(selectDepend).closest("fieldset").find("button.trash");
+				var trashButton = $(selectDepend).closest("fieldset").find("button#remove-dependence");
 				trashButton.trigger("rmvNoConfirm");
 			}
 		});
@@ -981,6 +1009,25 @@ $(function() {
 	
 });
 
+function setDepLabelCounter(rules)
+{
+	var labelCounter = rules.find("#depCounter");
+	var counter = -1;
+	rules.find("ul.dependences-list").find("select.dependence-option").each(function(index, element){
+		counter++;
+	});	
+	console.log("Dependence counter: " + counter);
+	if(counter > 0)
+	{
+		labelCounter.html(counter);
+		labelCounter.removeClass("hidden");
+	}
+	else
+	{
+		labelCounter.html(counter);
+		labelCounter.addClass("hidden");
+	}	
+}
 
 function setDependence(root)
 {	

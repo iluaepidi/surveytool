@@ -363,6 +363,17 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	        }		
     	}  
 	 };
+	 
+	 $scope.hasResource = function(options) {
+		var hasResource =  false;
+		var i = 0;
+		while(!hasResource && i < options.length){
+			if(options[i].resource) hasResource = true;
+			console.log("hasResource " + i + ": " + hasResource);
+			i++;
+		}
+		return hasResource;
+	 };
 }]);
 
 app.directive('focusOn',function($timeout) {

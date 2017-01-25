@@ -23,7 +23,11 @@
 				    				<input type="hidden" id="removeElemId"/>
 				    				<input type="hidden" id="removeElemService"/>
 
-			    					<p><%= lang.getContent("confirmation.remove.message") %></p>
+			    					<p><%= lang.getContent("confirmation.remove.message") %> 
+			    						<span id="confirmRemoveDep" class="hidden"><%= lang.getContent("confirmation.remove.message.dependences") %> </span>
+			    						<span id="confirmRemovelogic" class="hidden"><%= lang.getContent("confirmation.remove.message.logic") %> </span>
+			    						<span id="confirmRemoveRule" class="hidden"><%= lang.getContent("confirmation.remove.message.rules") %> </span>
+			    						<%= lang.getContent("confirmation.remove.message.sure") %></p>
 			    					
 			    					<div class="remove-frame-buttons">
 			    						<button class="btn btn-danger" data-dismiss="modal"><%= lang.getContent("button.cancel") %></button>

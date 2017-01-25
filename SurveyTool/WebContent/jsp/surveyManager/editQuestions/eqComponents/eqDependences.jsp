@@ -66,8 +66,20 @@
 							  													  						
 								  					<div class="nav-config">
 									  					<ul class="nav nav-pills">
-														  <li role="presentation"><button class="btn-logic <%= lastPageClass %>"><%= lang.getContent("button.logic") %></button></li>
-														  <li role="presentation"><button class="btn-dependences <%= noDependencesClass %>"><%= lang.getContent("button.dependences") %></button></li>
+														  <li role="presentation"><button class="btn-logic <%= lastPageClass %>"><%= lang.getContent("button.logic") %> 
+														  <%if(!question.getLogicGoTo().isEmpty()){ %>
+														  	<span id="logicCounter" class="badge deplog-counter"><%= question.getLogicGoTo().size() %></span>
+														  <%} else {%>
+														  	<span id="logicCounter" class="badge deplog-counter hidden">0</span>
+														  <%} %>
+														  </button></li>
+														  <li role="presentation"><button class="btn-dependences <%= noDependencesClass %>"><%= lang.getContent("button.dependences") %> 
+														  <%if(qdependence != null && !qdependence.getqdepval().isEmpty()){ %>
+														  	<span id="depCounter" class="badge deplog-counter"><%= qdependence.getqdepval().size() %></span>
+														  <%} else {%>
+														  	<span id="depCounter" class="badge deplog-counter hidden">0</span>
+														  <%} %>
+														  </button></li>
 														</ul>
 													</div>
 							  						
@@ -195,9 +207,9 @@
 																	}
 																	%>
 																		<div class="form-group div-dependence-question"  style="margin:0px !important;">
-																			<select id="dependence-question-<%= i %>" class="form-control dependence-question">
-								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>								  																	  										
-																				<option id="question-dependence-<%= depval.getPid() + "-" + depval.getQid() %>" value="<%= depval.getPid() + "-" + depval.getQid() %>" selected> <%= depval.getQName()%> </option>
+																			<select id="dependence-question-<%= question.getQuestionId() %>-<%= i %>" class="form-control dependence-question" autocomplete="off">								  																	  										
+																				<option id="question-dependence-<%= depval.getPid() + "-" + depval.getQid() %>" value="<%= depval.getPid() + "-" + depval.getQid() %>" selected="selected"> <%= depval.getQName()%> </option>
+								  												<option value="none"><%= lang.getContent("question.edit.dependence.question.label_help_hidden") %></option>
 								  											</select>
 								  										</div>
 								  										<label for="dependence-option-<%= i %>" class="dependence-option-label">
@@ -207,9 +219,9 @@
 								  										</label>
 								  										
 								  										<div class="form-group div-dependence-option"  style="margin:0px !important;">
-				    														<select id="dependence-option-<%= i %>" class="form-control dependence-option">
-								  												<option value="none" class="default-option"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
-								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected> <%= depval.getOName()%> </option>
+				    														<select id="dependence-option-<%= question.getQuestionId() %>-<%= i %>" class="form-control dependence-option" autocomplete="off">
+								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected="selected"> <%= depval.getOName()%> </option>
+								  												<option value="none"><%= lang.getContent("question.edit.dependence.option.label_help_hidden") %></option>
 								  											</select>
 				    														<span id='dependence-option-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style='top:0px;right: 10px'></span>
 			  																<span id='dependence-option-error' class='error hidden' style='top:0px;left: 160px'><%= lang.getContent("msg.error.dependence-option.text") %></span>	

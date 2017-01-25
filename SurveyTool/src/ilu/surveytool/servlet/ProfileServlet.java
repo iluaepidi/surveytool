@@ -16,6 +16,7 @@ import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
 import ilu.surveytool.properties.SurveyToolProperties;
+import ilu.surveytool.sessioncontrol.SessionHandler;
 import ilu.userpanel.accesscontrol.Login;
 import ilu.userpanel.accesscontrol.Profile;
 import ilu.userpanel.accesscontrol.Register;
@@ -55,8 +56,9 @@ public class ProfileServlet extends HttpServlet {
 	{
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		
-		
-		String savesubmit = request.getParameter("savesubmitvalue");
+		if(userSessionInfo != null && userSessionInfo.isValid())
+		{
+			String savesubmit = request.getParameter("savesubmitvalue");
 		
 			Profile profileHandler = new Profile();
 			RegisterResponse registerReponse = new RegisterResponse();
@@ -66,28 +68,34 @@ public class ProfileServlet extends HttpServlet {
 			registerReponse.setEmail(request.getParameter(Parameter.s_EMAIL));
 			registerReponse.setUserId(userSessionInfo.getUserId());
 			registerReponse.setIsoLanguage(request.getParameter(Parameter.s_LANGUAGE));
-		if(savesubmit!=null){	
-			boolean updateuser = profileHandler.updateUser(registerReponse);
-			if(updateuser){
-				HttpSession session = request.getSession();
-				Login loginHandler = new Login();
-				Credentials credentials = new Credentials();
-				credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
-				credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
-				LoginResponse loginResp = loginHandler.login(credentials);
-				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-				
-				//ConformationUpdateProfile
-				request.setAttribute("ConformationUpdateProfile", "yes");
-			}else{
-				
+			if(savesubmit!=null){	
+				boolean updateuser = profileHandler.updateUser(registerReponse);
+				if(updateuser){
+					HttpSession session = request.getSession();
+					Login loginHandler = new Login();
+					Credentials credentials = new Credentials();
+					credentials.setUsername(request.getParameter(Parameter.s_USERNAME));
+					credentials.setPassword(request.getParameter(Parameter.s_PASSWORD));
+					LoginResponse loginResp = loginHandler.login(credentials);
+					session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+					
+					//ConformationUpdateProfile
+					request.setAttribute("ConformationUpdateProfile", "yes");
+				}else{
+					
+				}
 			}
+			
+			SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_PROFILE));
 		}
+		else
+		{
+			SessionHandler sessionHandler = new SessionHandler();
+			SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+			sessionHandler.sessionClosed(request, properties);
+		}		
 		
-		
-		
-		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
-		request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_PROFILE));
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);
 		
 	}

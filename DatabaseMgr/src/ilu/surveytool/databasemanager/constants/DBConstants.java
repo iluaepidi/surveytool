@@ -67,6 +67,7 @@ public class DBConstants {
 			public final static String s_VALUE_RESOURCE_TYPE_VIDEO = "video";
 		//Rol
 			public final static String s_VALUE_ROLNAME_ADMIN = "admin";
+			public final static String s_VALUE_ROLNAME_INTERVIEWER = "interviewer";
 			public final static String s_VALUE_ROLNAME_USER = "user";	
 		//state
 			public final static String s_VALUE_SURVEY_STATE_PAUSED = "paused";

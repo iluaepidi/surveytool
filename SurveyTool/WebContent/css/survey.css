@@ -186,6 +186,7 @@
 	margin:15px 0px;
 	min-width:200px;
 }
+#form-question .checkbox.img.fourImg{width: 50% !important;}
 #form-question .checkbox.img label{
 	background:url(../img/checkbox-off.png) center bottom no-repeat;
 	padding-left:0px;
@@ -196,6 +197,7 @@
     width: 185px;
     display: table;*/
 }
+#form-question .checkbox.img label div.option-image {display: table !important;}
 #form-question .checkbox.img input[type=checkbox]:checked + label{
 	background: url(../img/checkbox-on.png) center bottom no-repeat;
 	color:#333;
@@ -268,6 +270,7 @@
 	margin:15px 0;
 	min-width:200px;
 }
+#form-question .radio.img.fourImg{width: 50% !important;}
 #form-question .radio.img label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
 	padding-left:0px;
@@ -297,17 +300,21 @@
     left: 0;
     width: 185px;*/
 }
-.option-image {display: table;
+.option-image {display: none;
 	    height: 190px;
 	    width: 100%;}
+#form-question .radio.img label div.option-image {display: table !important;}
 .sub-option-image {    display: table-cell;
-    vertical-align: middle;}
+    vertical-align: middle;
+    height: 195px;}
 #form-question .radio.img label img,
 #form-question .radio.img input + label img{
 	border:3px solid #fff;
 	padding:2px;
-	width:185px;
-	/*height:195px;*/
+	max-width: 185px;
+	max-height: 195px;
+	/*width:185px;
+	height:195px;*/
 }
 #form-question .radio.img label:hover span,
 #form-question .radio.img input:focus + label span{
@@ -448,7 +455,10 @@
 	padding-left:35px;
 	color:#4A555F;
 	font-size:1.428em;
+	border: 2px solid transparent;
 }
+.btn-submit-page-back:hover,
+.btn-submit-page-back:focus {border: 2px solid #4A555F;}
 .btn-submit-page .col-xs-2{
 	text-align:center;
 }
@@ -457,8 +467,11 @@
 	font-size:1.786em;
 	padding:0px 12px;
 	background-color:#016fb8;
+	border: 2px solid transparent;
 }
-
+.btn-submit-page-continue:hover, 
+.btn-submit-page-continue:focus {background-color: #013F68;
+border: 2px solid #016fb8;}
 /* Messages */
 .msg-error{
 	font-size:1.072em;

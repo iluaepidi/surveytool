@@ -16,10 +16,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  				</div>  -->
 	  				<div class="login-content">
 	  					<div class="col-xs-6 col-sm-7 col-md-6 login-content-text">
-	  						<p>The current version of this accessible suite includes a tool for creating surveys and pools, publish them and monitor some basic performance metrics as the number of responses received or survey quotas.</p>
-	  						
-	  						<p>Future versions will include an accessible user panel to manage user databases and monitor panel performance. This will help to improve the efficiency of surveys and to foster user participation.</p>
-	  						
+	  						<%= lang.getContent("user_panel.description") %>
 	  					</div>
   						<div class="col-xs-6 col-sm-5 col-md-4 login-frame" id="loginDivForm">
 	  						<form method="post" id="loginForm" action="LoginServlet">

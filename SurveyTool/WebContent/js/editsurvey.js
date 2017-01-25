@@ -669,17 +669,20 @@ $(function() {
              contentType: false,
              processData: false
          }).done(function(res){
-             console.log("Respuesta: " + res);
-             //$('#selectFile').addClass('hidden');
-             if($('#optionsFile').hasClass('hidden')){
-            	 $('#optionsFile').removeClass('hidden');
-                 $('#optionsFile').append(res);
-             }
-             else
-             {
-            	 $('#previewFileUploaded').replaceWith(res);
-             }
-             
+        	 var index = res.indexOf("<html");
+        	 if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+        	 else {
+	             console.log("Respuesta: " + res);
+	             //$('#selectFile').addClass('hidden');
+	             if($('#optionsFile').hasClass('hidden')){
+	            	 $('#optionsFile').removeClass('hidden');
+	                 $('#optionsFile').append(res);
+	             }
+	             else
+	             {
+	            	 $('#previewFileUploaded').replaceWith(res);
+	             }
+        	 }
          });
 	});
 	
@@ -1232,7 +1235,93 @@ $(function() {
 	
 	$('.survey-sections').on("click", "#removeQuestion", function(e){
 		var item = $(this).closest('#panel-question1');
+		var pageId = $(this).closest('li.page').attr('pid');
 		currentQuestion = item.attr('qid');
+		var qDependence = [];
+		var valor = pageId + "-" + currentQuestion;
+		$('.dependence-question').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{
+				console.log("Dependence question " + index + ": " + $(selectDepend).closest("li.panel-question").find("span.num-question").html());
+				qDependence.push($(selectDepend).closest("li.panel-question").find("span.num-question").html());
+			}
+		});
+		
+		var qLogic = [];
+		$('.logic-option-goto').each(function(index, selectLogic){
+			if($(selectLogic).val() == currentQuestion)
+			{
+				qLogic.push($(selectLogic).closest("li.panel-question").find("span.num-question").html());
+			}
+		});
+		
+		if(qDependence.length > 0)
+		{
+			$("#confirmRemoveDep").removeClass("hidden");
+			var depCad = "";
+			for(var i = 0; i < qDependence.length; i++)
+			{
+				if((i + 1) == qDependence.length && i > 0) depCad = depCad + " y ";
+				else if(i > 0) depCad = depCad + ", ";
+				depCad = depCad + qDependence[i];
+			}
+			$("#confirmRemoveQuestionDepList").html(depCad);
+			if(qDependence.length == 1)
+			{
+				$("#questionDSingular").removeClass("hidden");
+				$("#questionDPlural").addClass("hidden");
+				$("#questionDHas").removeClass("hidden");
+				$("#questionDHave").addClass("hidden");
+			}
+			else
+			{
+				$("#questionDSingular").addClass("hidden");
+				$("#questionDPlural").removeClass("hidden");
+				$("#questionDHas").addClass("hidden");
+				$("#questionDHave").removeClass("hidden");
+			}
+			$("#confirmRemoveRule").removeClass("hidden");
+		}
+		else
+		{
+			$("#confirmRemoveDep").addClass("hidden");
+		}
+
+		if(qLogic.length > 0)
+		{
+			$("#confirmRemovelogic").removeClass("hidden");
+			var logCad = "";
+			for(var i = 0; i < qLogic.length; i++)
+			{
+				if((i + 1) == qLogic.length && i > 0) logCad = logCad + " y ";
+				else if(i > 0) logCad = logCad + ", ";
+				logCad = logCad + qLogic[i];
+			}
+			$("#confirmRemoveQuestionLogicList").html(logCad);
+			if(qLogic.length == 1)
+			{
+				$("#questionLSingular").removeClass("hidden");
+				$("#questionLPlural").addClass("hidden");
+				$("#questionLHas").removeClass("hidden");
+				$("#questionLHave").addClass("hidden");
+			}
+			else
+			{
+				$("#questionLSingular").addClass("hidden");
+				$("#questionLPlural").removeClass("hidden");
+				$("#questionLHas").addClass("hidden");
+				$("#questionLHave").removeClass("hidden");
+			}
+			$("#confirmRemoveRule").removeClass("hidden");
+		}
+		else
+		{
+			$("#confirmRemovelogic").addClass("hidden");
+		}
+		
+		if(qDependence.length == 0 && qLogic.length == 0) $("#confirmRemoveRule").addClass("hidden");
+		
 		$("#elementToRemoveText").html('"Question: ' + item.find('#survey-question-title').val() + '"');
 		$("#removeElemId").val(item.attr('qid') + '/' + item.closest('li[id=page]').attr('pid'));
 		$("#removeElemService").val('QuestionService');
@@ -1609,6 +1698,8 @@ $(function() {
 						   if(nextDep != null) modalFocus = nextDep.find("legend"); 
 						   else modalFocus = question.find("div.dependences-settings").find('button.btn-primary');
 						   
+						   var rules = question.find("div.rules-frame");
+						   setDepLabelCounter(rules);
 					   }
 				   }
 				   else if(service == "QuotaService")
@@ -2577,6 +2668,9 @@ $(function() {
 	
 	$('#removeElement').on('hidden.bs.modal', function () {
 		console.log("close remove element");
+		$("#confirmRemoveDep").addClass("hidden");
+		$("#confirmRemovelogic").addClass("hidden");
+		$("#confirmRemoveRule").addClass("hidden");
 		modalFocus.focus();
 	});
 	
@@ -2704,7 +2798,7 @@ function changeoptionsfees(id){
 						}
 						
 						//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
-						$('#optionsquota'+id).prepend("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
+						$('#optionsquota'+id).prepend("<div class='form-group quoteoption' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 					}
 					
 				}

@@ -18,12 +18,12 @@
 
 			<div class="form-question-content" ng-class="{center: option.resource}">
 				<ul class="form-options option-list">
-					<li class="radio" ng-class="{img: option.resource}" ng-repeat="option in question.optionsGroups[0].options">
+					<li class="radio" ng-class="{img: hasResource(question.optionsGroups[0].options), fourImg: question.optionsGroups[0].options.length == 4}" ng-repeat="option in question.optionsGroups[0].options">
 					  <input type="radio" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}" id="optionsRadios{{option.optionId}}" ng-value="{{option.optionId}}" ng-model="question.optionsGroups[0].response" ng-focus="setIndexQuestion(question.index)">
 					  <label for="optionsRadios{{option.optionId}}">
-					  	<div class="option-image"  ng-if="option.resource">
+					  	<div class="option-image">
 					  		<div class="sub-option-image">
-					  			<img src="{{option.resource.urlPath}}" alt='{{getJsonArrayElement(option.resource.contents, "contentType", "altText").text}}'/>
+					  			<img src="{{option.resource.urlPath}}" alt='{{getJsonArrayElement(option.resource.contents, "contentType", "altText").text}}' ng-if="option.resource"/>
 					  		</div>
 					  	</div>
 					    <span ng-show='getJsonArrayElement(option.contents, "contentType", "title").text'>{{getJsonArrayElement(option.contents, "contentType", "title").text}}</span>

@@ -53,7 +53,7 @@ public class InitialServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.removeAttribute(Attribute.s_USER_SESSION_INFO);
 			try {
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("manager");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

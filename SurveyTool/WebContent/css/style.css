@@ -1084,6 +1084,12 @@ div.rules-frame > div.nav-config > ul > li > button.active {color: #fff;
     background-color: #23527c;
     border-radius: 3px;
     border: 2px solid #23527c;}
+div.rules-frame > div.nav-config > ul > li > button.active > span {background-color: #fff !important;
+	color: #23527c;}
+.deplog-counter {padding: 3px 5px !important;
+	margin-left: 0px;
+	background-color: #337ab7 !important;
+	margin-bottom: 4px;}
 .dependences-frame {position:relative;
 	padding: 35px 0 20px;
     border: 1px solid #555;
@@ -1663,8 +1669,10 @@ div.rules-frame > div.nav-config > ul > li > button.active {color: #fff;
 .quotaname{
 	text-align: left;font-size: 18px;
 }
+.optionsquota{display: inline-block;}
 .quoteoption{
-	margin:0px;display: inline-flex;
+	margin:0px;
+	/*display: inline-flex;*/
 }
 .quotaremovebtn{
 	color: #B60000 !important;
