@@ -2538,7 +2538,6 @@ $(function() {
 		console.log("Acepta mover ");
 		var question = currentElement;
 		var currentPage = question.closest("li.page");
-		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
 		var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
 		
 		question.find("select.dependence-question").each(function(index, element){
@@ -2550,11 +2549,19 @@ $(function() {
 			}
 		});
 		
+		var questionId = question.attr("qid");
+		previousPage.find("select.logic-option-goto").each(function(index, element){
+			var value = $(element).val();
+			if(value == questionId)
+			{
+				$(element).val("none");
+				$(element).trigger("change");
+			}
+		});
+		
 		moveQuestionPrevPage(previousPage, currentPage, question);
-		console.log("question moved: " + JSON.stringify(questionJson));
-		question.trigger('insertQuestionJson', [questionJson]);
-		question.find("div.logic-frame").trigger("displayLogic");
-		question.find("div.dependences-frame").trigger("displayDependences");
+		question.find("fieldset.logic-frame").trigger("displayLogic");
+		question.find("fieldset.dependences-frame").trigger("displayDependences");
 		$("#moveQuestion").modal('hide');
 		question.find("button.moveup-question-arrow").focus();
 	});
@@ -2565,25 +2572,26 @@ $(function() {
 		console.log("question moving up");
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
-		question.trigger('rmvQuestionJson');
+		//question.trigger('rmvQuestionJsonNoDepLog');
+		var isModal = false;
 		if(question.is(':first-child'))
 		{
 			
 			if(!currentPage.is(':first-child'))
 			{
 				previousPage = currentPage.prev();
+				var existLogDep = false;
 				if(question.find("li.dependence-item").size() > 1)
 				{
 					var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
-					var existDep = false;
 					question.find("select.dependence-question").each(function(index, element){
 						var values = $(element).val().split("-");
-						existDep = existDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
+						existLogDep = existLogDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
 					});
 					
-					if(existDep)
+					if(existLogDep)
 					{
-						console.log("Hay dependencia.");
+						isModal = true;
 						$("#moveQuestion").modal('show');
 						modalFocus = $(this);
 					}
@@ -2594,18 +2602,24 @@ $(function() {
 				}
 				else
 				{ 
-					moveQuestionPrevPage(previousPage, currentPage, question);
-					/*var questions = previousPage.find("ul.page-items");
-					questions.append(question);
-					var numQuestions = questions.find("li.panel-question").size();
-					questionJson.index = numQuestions;
-					question.attr("index", numQuestions);
-					
-					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
-						$(element).attr("index", index + 1);
+					//moveQuestionPrevPage(previousPage, currentPage, question);
+					var questionId = question.attr("qid");
+					previousPage.find("select.logic-option-goto").each(function(index, element){
+						console.log("Select index: " + index + " - val: " + $(element).val());
+						var value = $(element).val();
+						existLogDep = existLogDep || value == questionId;
 					});
 					
-					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);*/
+					if(existLogDep)
+					{
+						isModal = true;
+						$("#moveQuestion").modal('show');
+						modalFocus = $(this);
+					}
+					else
+					{
+						moveQuestionPrevPage(previousPage, currentPage, question);
+					}
 				}				
 			}
 			else
@@ -2615,23 +2629,13 @@ $(function() {
 				{
 					previousPage = currentSection.prev().find('li.page').last();
 					moveQuestionPrevPage(previousPage, currentPage, question);
-					/*var questions = currentSection.prev().find('li.page').last().find('ul.page-items');
-					questions.append(question);
-					var numQuestions = questions.find("li.panel-question").size();
-					questionJson.index = numQuestions;
-					question.attr("index", numQuestions);
-					
-					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
-						$(element).attr("index", index + 1);
-					});
-
-					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);*/
 				}
 				
 			}
 		}
 		else
 		{
+			question.trigger('rmvQuestionJsonNoDepLog');
 			var prevQuestion = question.prev();
 			prevQuestion.insertAfter(question);
 			var index = parseInt(question.attr("index"));
@@ -2651,13 +2655,19 @@ $(function() {
 			if(!question.is(':first-child')) prevQid = question.prev().attr("qid");
 				
 			updateQuestionIndex(question.attr("qid"), prevQid, question.closest("li.page").attr("pid"), false, "up", host);
+			question.trigger('insertQuestionJson', [questionJson]);
 		}
 
-		console.log("question moved: " + JSON.stringify(questionJson));
-		question.trigger('insertQuestionJson', [questionJson]);
-		question.find("div.logic-frame").trigger("displayLogic");
-		question.find("div.dependences-frame").trigger("displayDependences");
-		$(this).focus();
+		if(!isModal)
+		{
+			console.log("question moved: " + JSON.stringify(questionJson));
+			//question.trigger('rmvQuestionJsonNoDepLog');
+			//question.trigger('insertQuestionJson', [questionJson]);
+			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("fieldset.dependences-frame").trigger("displayDependences");
+			$(this).focus();
+		}		
+		else isModal = false;
 	});
 
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
@@ -2665,7 +2675,7 @@ $(function() {
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
 		console.log("question to move: " + JSON.stringify(questionJson));
-		question.trigger('rmvQuestionJson');
+		question.trigger('rmvQuestionJsonNoDepLog');
 		if(question.is(':last-child'))
 		{
 			if(!currentPage.is(':last-child'))
@@ -2714,9 +2724,9 @@ $(function() {
 
 		console.log("question moved: " + JSON.stringify(questionJson));
 		question.trigger('insertQuestionJson', [questionJson]);
-		question.find("div.logic-frame").trigger("displayLogic");
-		question.find("div.dependences-frame").trigger("displayDependences");
-		question.find("div.logic-frame").trigger("setLogicMoved");
+		question.find("fieldset.logic-frame").trigger("displayLogic");
+		question.find("fieldset.dependences-frame").trigger("displayDependences");
+		question.find("fieldset.logic-frame").trigger("setLogicMoved");
 		$(this).focus();
 	});
 	
@@ -2767,20 +2777,22 @@ $(function() {
 	});
 });
 
-function moveQuestionPrevPage(prevPage, currentPage, question)
+function moveQuestionPrevPage(pPage, cPage, question)
 {
-	var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
-	var questions = prevPage.find('ul.page-items');
+	var questionJson = surveyTree[parseInt(cPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+	question.trigger('rmvQuestionJsonNoDepLog');
+	var questions = pPage.find('ul.page-items');
 	questions.append(question);
 	var numQuestions = questions.find("li.panel-question").size();
 	questionJson.index = numQuestions;
 	question.attr("index", numQuestions);
 	
-	currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
+	cPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
 		$(element).attr("index", index + 1);
 	});
 
-	updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
+	updateQuestionIndex(question.attr("qid"), 0, cPage.attr("pid"), true, "up", host);
+	question.trigger('insertQuestionJson', [questionJson]);
 }
 
 function insertQuestionNextPage(question, questions)

@@ -812,6 +812,26 @@ $(function() {
 		$(this).trigger("rmvQuestionDepend");
 		//console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
+
+	$('.survey-sections').on("rmvQuestionJsonNoDepLog", "li.panel-question", function(e){
+		var pageId = $(this).closest('li.page').attr('pid');
+		var questionId = $(this).attr('qid');
+		
+		//console.log("question remove - pageId: " + pageId + " - questionId: " + questionId);
+		
+		$(surveyTree).each(function(index, pageElem){
+		    if(pageElem.pageId == pageId)
+		    {
+		    	pageElem.questions = $.grep(pageElem.questions, function(question) {
+    				return question.questionId != questionId;  
+    			});
+		    	
+		    	$(pageElem.questions).each(function(index, questionElem){
+		    		questionElem.index = index + 1;
+		    	});
+		    }		    
+		});
+	});
 	
 	$('.survey-sections').on("setQuestionGoto", "input#survey-question-title", function(e){
 		var root = $(this).closest('li.panel-question');
@@ -831,7 +851,7 @@ $(function() {
 		var questionId = $(this).attr('qid');
 		
 		$('.logic-option-goto').each(function(index, selectGoto){
-			console.log("Select index: " + index + " - val: " + $(selectGoto).val());
+			//console.log("Select index: " + index + " - val: " + $(selectGoto).val());
 			if($(selectGoto).val() == questionId)
 			{
 				$(selectGoto).val('none');
@@ -918,8 +938,9 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("displayLogic", "div.logic-frame", function(e){
+	$('.survey-sections').on("displayLogic", "fieldset.logic-frame", function(e){
 		var pageIndex = $(this).closest('li.page').attr('index');
+		var logicButton = $(this).closest("div.rules-frame").find("button.btn-logic");
 		if(pageIndex == surveyTree.length)
 		{
 			if(!$(this).hasClass("hidden"))
@@ -933,16 +954,23 @@ $(function() {
 				});
 				$(this).addClass("hidden");
 			}
+			
+			if(!logicButton.hasClass("hidden"))
+			{
+				logicButton.addClass("hidden");
+				logicButton.removeClass("active");
+			}
 		}
 		else
 		{
-			$(this).removeClass("hidden");
-			if(!$(this).closest("div.question-frame").find("div.dependences-frame").hasClass("hidden")) $(this).removeClass("noborder");
-			else $(this).addClass("noborder");
+			//$(this).removeClass("hidden");
+			//if(!$(this).closest("div.question-frame").find("div.dependences-frame").hasClass("hidden")) $(this).removeClass("noborder");
+			//else $(this).addClass("noborder");			
+			logicButton.removeClass("hidden");
 		}
 	});
 
-	$('.survey-sections').on("setLogicMoved", "div.logic-frame", function(e){	
+	$('.survey-sections').on("setLogicMoved", "fieldset.logic-frame", function(e){	
 		var pageIndex = $(this).closest('li.page').attr('index');
 	
 		$(this).find("select.logic-option-goto").each(function(index, element){
@@ -969,9 +997,10 @@ $(function() {
 		});
 	});
 
-	$('.survey-sections').on("displayDependences", "div.dependences-frame", function(e){
+	$('.survey-sections').on("displayDependences", "fieldset.dependences-frame", function(e){
 		var pageIndex = $(this).closest('li.page').attr('index');
 		var hasSimpleQuestions = false;
+		var depButton = $(this).closest("div.rules-frame").find("button.btn-dependences");
 		
 		for(var i = 0; i < pageIndex - 1; i++)
 		{
@@ -990,6 +1019,13 @@ $(function() {
 					$(element).trigger("click");
 				});*/
 				$(this).addClass("hidden");
+				depButton.removeClass("hidden");
+			}
+			
+			if(!depButton.hasClass("hidden"))
+			{
+				depButton.addClass("hidden");
+				depButton.removeClass("active");
 			}
 			
 			if(!$(this).closest("div.question-frame").find("div.logic-frame").length || $(this).closest("div.question-frame").find("div.logic-frame").hasClass("hidden"))
@@ -1001,8 +1037,9 @@ $(function() {
 		{
 			if($(this).hasClass("hidden"))
 			{
-				$(this).removeClass("hidden");
+				//$(this).removeClass("hidden");
 				$(this).closest("div.question-frame").removeClass("hidden");
+				depButton.removeClass("hidden");
 			}
 		}
 	});
