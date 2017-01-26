@@ -68,4 +68,6 @@ lang.close();
 	  			
 	  			<jsp:include page="../frames/fDeleteElement.jsp" />
 	  			
+	  			<jsp:include page="../frames/fMoveElemWithDep.jsp" />
+	  			
 	  			

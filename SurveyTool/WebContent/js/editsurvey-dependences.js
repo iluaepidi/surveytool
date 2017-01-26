@@ -1009,6 +1009,17 @@ $(function() {
 	
 });
 
+function getSimpleQuestions(numPage)
+{
+	var questions = [];
+	var position = numPage - 1;
+	for(var j = 0; j < surveyTree[position].questions.length; j++)
+	{
+		if(surveyTree[position].questions[j].type === "simple") questions.push(surveyTree[position].questions[j].questionId);
+	}
+	return questions;
+}
+
 function setDepLabelCounter(rules)
 {
 	var labelCounter = rules.find("#depCounter");

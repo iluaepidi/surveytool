@@ -499,7 +499,8 @@ td.actions ul li a span {width: 100%;
 	width: 40% !important;}
 .remove-frame-buttons {width: 70%;
 	margin: 5px auto;}
-.btn-accept-remove-element {float:right;}
+.btn-accept-remove-element,
+.btn-accept-move-element {float:right;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
 	padding: 20px 15px;
@@ -1089,7 +1090,7 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .deplog-counter {padding: 3px 5px !important;
 	margin-left: 0px;
 	background-color: #337ab7 !important;
-	margin-bottom: 4px;}
+	margin-bottom: 2px;}
 .dependences-frame {position:relative;
 	padding: 35px 0 20px;
     border: 1px solid #555;

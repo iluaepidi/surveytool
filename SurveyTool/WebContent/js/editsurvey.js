@@ -6,6 +6,7 @@ var numQuestions = 0;
 var currentText = "";
 var currentElement;
 var currentAddNode;
+var previousPage;
 var currentQuestion = 0;
 var currentOption = 0;
 var currentOptionGroup = 0;
@@ -25,10 +26,13 @@ var phOption = "";
 var phItem = "";
 var phColumn = "";
 
+var host = "http://" + window.location.host;
+console.log("host: " + host);
+
 $(function() {
 	
-	var host = "http://" + window.location.host;
-	console.log("host: " + host);
+	host = "http://" + window.location.host;
+	//console.log("host: " + host);
 	
 	/*var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
 	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
@@ -2530,9 +2534,34 @@ $(function() {
 			});
 		}
 	});*/
+	$('.body-content').on("click", "button.btn-accept-move-element", function(){
+		console.log("Acepta mover ");
+		var question = currentElement;
+		var currentPage = question.closest("li.page");
+		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+		var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
+		
+		question.find("select.dependence-question").each(function(index, element){
+			var values = $(element).val().split("-");
+			if($.inArray(parseInt(values[1]), simpleQuestions) != -1)
+			{
+				var trashButton = $(element).closest("fieldset").find("button#remove-dependence");
+				trashButton.trigger("rmvNoConfirm");
+			}
+		});
+		
+		moveQuestionPrevPage(previousPage, currentPage, question);
+		console.log("question moved: " + JSON.stringify(questionJson));
+		question.trigger('insertQuestionJson', [questionJson]);
+		question.find("div.logic-frame").trigger("displayLogic");
+		question.find("div.dependences-frame").trigger("displayDependences");
+		$("#moveQuestion").modal('hide');
+		question.find("button.moveup-question-arrow").focus();
+	});
 	
 	$('.survey-sections').on("click", "button.moveup-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
+		currentElement = question;
 		console.log("question moving up");
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
@@ -2542,29 +2571,32 @@ $(function() {
 			
 			if(!currentPage.is(':first-child'))
 			{
-				var previousPage = currentPage.prev();
-				var questions = previousPage.find("ul.page-items");
-				questions.append(question);
-				var numQuestions = questions.find("li.panel-question").size();
-				questionJson.index = numQuestions;
-				question.attr("index", numQuestions);
-				var numQuestion = 1;
-				
-				currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
-					$(element).attr("index", index + 1);
-				});
-				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
-			}
-			else
-			{
-				var currentSection = currentPage.closest("li.panel-section");
-				if(!currentSection.is(':first-child'))
+				previousPage = currentPage.prev();
+				if(question.find("li.dependence-item").size() > 1)
 				{
-					var questions = currentSection.prev().find('li.page').last().find('ul.page-items');
+					var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
+					var existDep = false;
+					question.find("select.dependence-question").each(function(index, element){
+						var values = $(element).val().split("-");
+						existDep = existDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
+					});
 					
+					if(existDep)
+					{
+						console.log("Hay dependencia.");
+						$("#moveQuestion").modal('show');
+						modalFocus = $(this);
+					}
+					else
+					{
+						moveQuestionPrevPage(previousPage, currentPage, question);
+					}
+				}
+				else
+				{ 
+					moveQuestionPrevPage(previousPage, currentPage, question);
+					/*var questions = previousPage.find("ul.page-items");
 					questions.append(question);
-					//question.attr("index", questions.find("li.panel-question").size());
 					var numQuestions = questions.find("li.panel-question").size();
 					questionJson.index = numQuestions;
 					question.attr("index", numQuestions);
@@ -2572,9 +2604,30 @@ $(function() {
 					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
 						$(element).attr("index", index + 1);
 					});
+					
+					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);*/
+				}				
+			}
+			else
+			{
+				var currentSection = currentPage.closest("li.panel-section");
+				if(!currentSection.is(':first-child'))
+				{
+					previousPage = currentSection.prev().find('li.page').last();
+					moveQuestionPrevPage(previousPage, currentPage, question);
+					/*var questions = currentSection.prev().find('li.page').last().find('ul.page-items');
+					questions.append(question);
+					var numQuestions = questions.find("li.panel-question").size();
+					questionJson.index = numQuestions;
+					question.attr("index", numQuestions);
+					
+					currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
+						$(element).attr("index", index + 1);
+					});
+
+					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);*/
 				}
 				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
 			}
 		}
 		else
@@ -2688,6 +2741,10 @@ $(function() {
 		modalFocus.focus();
 	});
 	
+	/*$('#moveQuestion').on('hidden.bs.modal', function () {		
+		modalFocus.focus();
+	});*/
+	
 	$('#importFile').on('hidden.bs.modal', function () {
 		console.log("close import file");
 		modalFocus.focus();
@@ -2709,6 +2766,22 @@ $(function() {
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
 });
+
+function moveQuestionPrevPage(prevPage, currentPage, question)
+{
+	var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+	var questions = prevPage.find('ul.page-items');
+	questions.append(question);
+	var numQuestions = questions.find("li.panel-question").size();
+	questionJson.index = numQuestions;
+	question.attr("index", numQuestions);
+	
+	currentPage.find("ul.page-items").find("li.panel-question").each(function(index, element){
+		$(element).attr("index", index + 1);
+	});
+
+	updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "up", host);
+}
 
 function insertQuestionNextPage(question, questions)
 {
