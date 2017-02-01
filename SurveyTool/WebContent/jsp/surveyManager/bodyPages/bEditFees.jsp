@@ -129,9 +129,8 @@
 								}
 							 %>
 							 
-							 <ul class="survey-sections overflowhidden" id="survey-sections">
+							 <ul class="survey-sections overflowhidden quota-item-list" id="survey-sections">
 			  						
-							 
 							 	<%  List<Quota> listQuotas = (List<Quota>) request.getAttribute(Attribute.s_LIST_QUOTAS);
 							 	Quota quotaold=null;
 							 	

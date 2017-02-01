@@ -373,6 +373,10 @@ public class DBSQLQueries {
 				+"inner join page p on p.idSection = s.idSection "
 				+"inner join questionbypage q on q.idPage = p.idPage "
 				+"where f.idQuestionnaire = ? group by q.mandatory";
+		public final static String s_SELECT_QUESTIONNAIREID_PAGEID = "SELECT f.idQuestionnaire from forma f "
+				+"inner join section s on s.idForma = f.idForma "
+				+"inner join page p on p.idSection = s.idSection "
+				+"where p.idPage = ?";
 		
 		//QuestionByPage
 		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";

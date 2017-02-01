@@ -582,6 +582,34 @@ public class SurveyDB {
 		
 		return surveyId;
 	}
+
+	public Integer getQuestionnaireIdByPageId(int pageId)
+	{
+		Integer surveyId = null;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIREID_PAGEID);			
+	   		pstm.setInt(1, pageId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			surveyId = rs.getInt(DBFieldNames.s_QUESTIONNAIREID);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return surveyId;
+	}
 	
 	public Project getProjectByName(String name)
 	{

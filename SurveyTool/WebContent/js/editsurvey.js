@@ -7,6 +7,7 @@ var currentText = "";
 var currentElement;
 var currentAddNode;
 var previousPage;
+var nextPage;
 var currentQuestion = 0;
 var currentOption = 0;
 var currentOptionGroup = 0;
@@ -230,11 +231,12 @@ $(function() {
 			if($("#survey-quota-"+newquota).length > 0){
 				alertNotQuota();
 			}else{
-				var newQuota=$('#survey-quota-new').clone();
-				newQuota.css("display","block");
+				var newQuota=$('#survey-quota-new').find("li.quota-item").clone();
+				//newQuota.css("display","block");
 				newQuota.attr("quota",newquota);
 				newQuota.attr("sid",newquota);
 				newQuota.attr("id","survey-quota-"+newquota);
+				newQuota.removeClass("hidden")
 				var selectQuota = newQuota.find('select');
 				selectQuota.attr("id","selquestionforfees"+newquota);
 				selectQuota.attr("name","selquestionforfees"+newquota);
@@ -247,8 +249,8 @@ $(function() {
 				divoptions.attr("id","optionsquota"+newquota);
 				
 				
-				//newQuota.prependTo("#listcompletequotas");
-				newQuota.insertBefore("#survey-quota-new");
+				//newQuota.insertBefore("#survey-quota-new");
+				newQuota.insertAfter($('ul.quota-item-list').find("li.quota-item").last());
 				$('#selquestionforfees'+newquota).val(newquota);
 				loadvaluequestion(newquota);
 				//eliminar opcion del combo
@@ -2538,32 +2540,67 @@ $(function() {
 		console.log("Acepta mover ");
 		var question = currentElement;
 		var currentPage = question.closest("li.page");
-		var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
-		
-		question.find("select.dependence-question").each(function(index, element){
-			var values = $(element).val().split("-");
-			if($.inArray(parseInt(values[1]), simpleQuestions) != -1)
-			{
-				var trashButton = $(element).closest("fieldset").find("button#remove-dependence");
-				trashButton.trigger("rmvNoConfirm");
-			}
-		});
-		
-		var questionId = question.attr("qid");
-		previousPage.find("select.logic-option-goto").each(function(index, element){
-			var value = $(element).val();
-			if(value == questionId)
-			{
-				$(element).val("none");
-				$(element).trigger("change");
-			}
-		});
-		
-		moveQuestionPrevPage(previousPage, currentPage, question);
-		question.find("fieldset.logic-frame").trigger("displayLogic");
-		question.find("fieldset.dependences-frame").trigger("displayDependences");
-		$("#moveQuestion").modal('hide');
-		question.find("button.moveup-question-arrow").focus();
+				
+		var moveType = $("#moveType").val();
+		if(moveType === "up")
+		{
+			var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
+			
+			question.find("select.dependence-question").each(function(index, element){
+				var values = $(element).val().split("-");
+				if($.inArray(parseInt(values[1]), simpleQuestions) != -1)
+				{
+					var trashButton = $(element).closest("fieldset").find("button#remove-dependence");
+					trashButton.trigger("rmvNoConfirm");
+				}
+			});
+			
+			var questionId = question.attr("qid");
+			previousPage.find("select.logic-option-goto").each(function(index, element){
+				var value = $(element).val();
+				if(value == questionId)
+				{
+					$(element).val("none");
+					$(element).trigger("change");
+				}
+			});
+			
+			moveQuestionPrevPage(previousPage, currentPage, question);
+			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("fieldset.dependences-frame").trigger("displayDependences");
+			$("#moveQuestion").modal('hide');
+			question.find("button.moveup-question-arrow").focus();
+		}
+		else if(moveType === "down")
+		{
+			var idQuestions = getAllQuestions(nextPage.attr("index"));
+			var questionId = question.attr("qid");
+			
+			nextPage.find("select.dependence-question").each(function(index, element){
+				var values = $(element).val().split("-");
+				if(values[1] === questionId)
+				{
+					var trashButton = $(element).closest("fieldset").find("button#remove-dependence");
+					trashButton.trigger("rmvNoConfirm");
+				}
+			});
+			
+			question.find("select.logic-option-goto").each(function(index, element){
+				var value = $(element).val();
+				if($.inArray(parseInt(value), idQuestions) != -1)
+				{
+					$(element).val("none");
+					$(element).trigger("change");
+				}
+			});
+			
+			moveQuestionNextPage(nextPage, currentPage, question);
+			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("fieldset.dependences-frame").trigger("displayDependences");
+			question.find("fieldset.logic-frame").trigger("setLogicMoved");
+			$("#moveQuestion").modal('hide');
+			question.find("button.movedown-question-arrow").focus();
+		}
 	});
 	
 	$('.survey-sections').on("click", "button.moveup-question-arrow", function(){
@@ -2580,47 +2617,7 @@ $(function() {
 			if(!currentPage.is(':first-child'))
 			{
 				previousPage = currentPage.prev();
-				var existLogDep = false;
-				if(question.find("li.dependence-item").size() > 1)
-				{
-					var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
-					question.find("select.dependence-question").each(function(index, element){
-						var values = $(element).val().split("-");
-						existLogDep = existLogDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
-					});
-					
-					if(existLogDep)
-					{
-						isModal = true;
-						$("#moveQuestion").modal('show');
-						modalFocus = $(this);
-					}
-					else
-					{
-						moveQuestionPrevPage(previousPage, currentPage, question);
-					}
-				}
-				else
-				{ 
-					//moveQuestionPrevPage(previousPage, currentPage, question);
-					var questionId = question.attr("qid");
-					previousPage.find("select.logic-option-goto").each(function(index, element){
-						console.log("Select index: " + index + " - val: " + $(element).val());
-						var value = $(element).val();
-						existLogDep = existLogDep || value == questionId;
-					});
-					
-					if(existLogDep)
-					{
-						isModal = true;
-						$("#moveQuestion").modal('show');
-						modalFocus = $(this);
-					}
-					else
-					{
-						moveQuestionPrevPage(previousPage, currentPage, question);
-					}
-				}				
+				isModal = executeBtnMoveup(previousPage, currentPage, question);				
 			}
 			else
 			{
@@ -2628,7 +2625,8 @@ $(function() {
 				if(!currentSection.is(':first-child'))
 				{
 					previousPage = currentSection.prev().find('li.page').last();
-					moveQuestionPrevPage(previousPage, currentPage, question);
+					//moveQuestionPrevPage(previousPage, currentPage, question);
+					isModal = executeBtnMoveup(previousPage, currentPage, question);
 				}
 				
 			}
@@ -2669,8 +2667,71 @@ $(function() {
 		}		
 		else isModal = false;
 	});
-
+	
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
+		var question = $(this).closest("li.panel-question");
+		currentElement = question;
+		var currentPage = question.closest("li.page");
+		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+		console.log("question to move: " + JSON.stringify(questionJson));
+		//question.trigger('rmvQuestionJsonNoDepLog');
+		var isModal = false;
+		if(question.is(':last-child'))
+		{
+			if(!currentPage.is(':last-child'))
+			{
+				console.log("no last question");
+				nextPage = currentPage.next();
+
+				isModal = executeBtnMovedown(nextPage, currentPage, question);
+			}
+			else
+			{
+				var currentSection = currentPage.closest("li.panel-section");
+				if(!currentSection.is(':last-child'))
+				{
+					nextPage = currentSection.next().find('li.page').first();
+
+					isModal = executeBtnMovedown(nextPage, currentPage, question);
+				}
+			}
+			//questionJson.index = 0;
+		}
+		else
+		{
+			question.trigger('rmvQuestionJsonNoDepLog');
+			var nextQuestion = question.next();
+			nextQuestion.insertBefore(question);
+			var index = parseInt(question.attr("index"));
+			question.attr("index", index + 1);
+			questionJson.index = index;
+			var prevIndex = parseInt(nextQuestion.attr("index"));
+			nextQuestion.attr("index", prevIndex - 1);
+			
+			if(!nextQuestion.hasClass("bcontent"))
+			{
+				var numQuestion = question.find("span.num-question").html();
+				nextQuestion.find("span.num-question").html(numQuestion);
+				question.find("span.num-question").html(parseInt(numQuestion)+1);
+			}
+
+			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
+			question.trigger('insertQuestionJson', [questionJson]);
+		}
+
+		if(!isModal)
+		{
+			console.log("question moved: " + JSON.stringify(questionJson));
+			//question.trigger('insertQuestionJson', [questionJson]);
+			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("fieldset.dependences-frame").trigger("displayDependences");
+			question.find("fieldset.logic-frame").trigger("setLogicMoved");
+			$(this).focus();
+		}	
+		else isModal = false;
+	});
+	
+	/*$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
@@ -2728,7 +2789,7 @@ $(function() {
 		question.find("fieldset.dependences-frame").trigger("displayDependences");
 		question.find("fieldset.logic-frame").trigger("setLogicMoved");
 		$(this).focus();
-	});
+	});*/
 	
 	$('#listcompletequotas').on("click", "#removeQuota", function(e){
 		var item = $(this).parents(".survey-info");
@@ -2775,7 +2836,107 @@ $(function() {
 		modalFocus.focus();
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
+	
 });
+
+function executeBtnMovedown(nextPage, currentPage, question)
+{
+	var isModal = false;
+	var existLogDep = false;
+	
+	//var idQuestions = getAllQuestions(nextPage.attr("index"));
+	var questionId = question.attr("qid");
+	nextPage.find("select.dependence-question").each(function(index, element){
+		var values = $(element).val().split("-");
+		existLogDep = existLogDep || values[1] == questionId;
+		//existLogDep = existLogDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
+	});
+	
+	var idQuestions = getAllQuestions(nextPage.attr("index"));
+	question.find("select.logic-option-goto").each(function(index, element){
+		console.log("Select index: " + index + " - val: " + $(element).val());
+		var value = $(element).val();
+		existLogDep = existLogDep || $.inArray(parseInt(value), idQuestions) != -1;
+	});
+	
+	if(existLogDep)
+	{
+		isModal = true;
+		$("#moveType").val("down");
+		$("#moveQuestion").modal('show');
+		modalFocus = $(this);
+	}
+	else
+	{
+		moveQuestionNextPage(nextPage, currentPage, question)
+	}
+		
+	return isModal;
+}
+
+function moveQuestionNextPage(nPage, cPage, question)
+{
+	var questionJson = surveyTree[parseInt(cPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
+	question.trigger('rmvQuestionJsonNoDepLog');
+	var questions = nPage.find("ul.page-items");
+
+	insertQuestionNextPage(question, questions);				
+	
+	updateQuestionIndex(question.attr("qid"), 0, cPage.attr("pid"), true, "down", host);
+	
+	questionJson.index = 0;
+	question.trigger('insertQuestionJson', [questionJson]);
+}
+
+function executeBtnMoveup(previousPage, currentPage, question)
+{
+	var isModal = false;
+	var existLogDep = false;
+	if(question.find("li.dependence-item").size() > 1)
+	{
+		var simpleQuestions = getSimpleQuestions(previousPage.attr("index"));
+		question.find("select.dependence-question").each(function(index, element){
+			var values = $(element).val().split("-");
+			existLogDep = existLogDep || $.inArray(parseInt(values[1]), simpleQuestions) != -1;
+		});
+		
+		if(existLogDep)
+		{
+			isModal = true;
+			$("#moveType").val("up");
+			$("#moveQuestion").modal('show');
+			modalFocus = $(this);
+		}
+		else
+		{
+			moveQuestionPrevPage(previousPage, currentPage, question);
+		}
+	}
+	else
+	{ 
+		//moveQuestionPrevPage(previousPage, currentPage, question);
+		var questionId = question.attr("qid");
+		previousPage.find("select.logic-option-goto").each(function(index, element){
+			console.log("Select index: " + index + " - val: " + $(element).val());
+			var value = $(element).val();
+			existLogDep = existLogDep || value == questionId;
+		});
+		
+		if(existLogDep)
+		{
+			isModal = true;
+			$("#moveType").val("up");
+			$("#moveQuestion").modal('show');
+			modalFocus = $(this);
+		}
+		else
+		{
+			moveQuestionPrevPage(previousPage, currentPage, question);
+		}
+	}
+	
+	return isModal;
+}
 
 function moveQuestionPrevPage(pPage, cPage, question)
 {
@@ -2897,7 +3058,7 @@ function changeoptionsfees(id){
 						}
 						
 						//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
-						$('#optionsquota'+id).prepend("<div class='form-group quoteoption' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
+						$('#optionsquota'+id).prepend("<div class='form-group quoteoption' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small no-number-buttons col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small no-number-buttons col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 					}
 					
 				}
@@ -2953,7 +3114,7 @@ function limitInput(element, max_chars)
 }
 
 function insertValueQuota(){
-	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+	$('.widthTitleSurveyCollapsed').on("focusout change", "#optionquota input", function(e){
 		e.stopPropagation();
 		//if($(this).val() != ""){
 			

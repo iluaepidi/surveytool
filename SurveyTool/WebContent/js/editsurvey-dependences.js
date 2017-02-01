@@ -1057,6 +1057,17 @@ function getSimpleQuestions(numPage)
 	return questions;
 }
 
+function getAllQuestions(numPage)
+{
+	var questions = [];
+	var position = numPage - 1;
+	for(var j = 0; j < surveyTree[position].questions.length; j++)
+	{
+		questions.push(surveyTree[position].questions[j].questionId);
+	}
+	return questions;
+}
+
 function setDepLabelCounter(rules)
 {
 	var labelCounter = rules.find("#depCounter");

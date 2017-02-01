@@ -91,7 +91,7 @@ public class SurveyProcessHandler {
 						oid = Integer.parseInt(((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).getString("response")));
 						LogicGoToDB logicGoToDB = new LogicGoToDB();
 						int pageAux = logicGoToDB.getLogicGoToByQuestionId_OgId_OId(questionId, ogid, oid); 
-						if((page<0) || (page>=0 && pageAux<page))
+						if((page<0) || (page>=0 && pageAux>=0 && pageAux<page))
 							page = pageAux;
 					}
 				 }

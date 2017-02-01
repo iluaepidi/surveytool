@@ -8,8 +8,10 @@ import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.QuestionParameterDB;
+import ilu.surveytool.databasemanager.QuotasDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.SectionDB;
+import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.Page;
@@ -289,6 +291,10 @@ public class QuestionHandler {
 		int prevQuestionId = questionDB.getQuestionByPageIdIndex(numQuestions, pageId);
 		questionDB.removeQuestionByPage(questionId, pageId);
 		this.updateIndexRemove(pageId);
+		SurveyDB surveyDB = new SurveyDB();
+		int surveyId = surveyDB.getQuestionnaireIdByPageId(pageId);
+		QuotasDB quotasDB = new QuotasDB();
+		quotasDB.removeQuota(surveyId, questionId);
 		removed = true;
 		return removed;
 	}

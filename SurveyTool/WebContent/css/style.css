@@ -1624,9 +1624,19 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .noborder{
 	border:0 !important;
 }
+.quota-item {display: inline-block;
+	position: relative;
+	width: 90%;
+	border-bottom: 1px solid #ccc;}
+.remove-quota {position: absolute;
+	right: 15px;
+	top: 17px;}
+.quoteoption > fieldset > div > input[type=number]{width: 60%;
+	padding: 5px 1px 5px 5px;}
 .nomargin{
 	margin:0px !important;
 }
+
 .nopadding{
 	padding: 0px !important;
 }
@@ -1670,11 +1680,14 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .quotaname{
 	text-align: left;font-size: 18px;
 }
-.optionsquota{display: inline-block;}
+.optionsquota{display: inline-block;
+	width: 100%;}
 .quoteoption{
 	margin:0px;
 	/*display: inline-flex;*/
 }
+.quoteoption fieldset legend {margin: 0 !important;
+	word-wrap: break-word;}
 .quotaremovebtn{
 	color: #B60000 !important;
 }

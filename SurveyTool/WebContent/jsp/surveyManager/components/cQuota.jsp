@@ -19,8 +19,8 @@ List<Question> listQuestionFees = (ArrayList<Question>) request.getAttribute("li
 
 Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 
-<div class="survey-info quotadiv" id="survey-quota-<%=index%>" sid="<%=index%>" quota="<%=index%>">
-		  							<li class="displayblock">
+<!-- <div class="survey-info quotadiv" id="survey-quota-<%=index%>" sid="<%=index%>" quota="<%=index%>"> -->
+		  						<li class="quota-item" id="survey-quota-<%=index%>" sid="<%=index%>" quota="<%=index%>">
 	
 			  						<div class="widthTitleSurveyCollapsed with90percent" id="survey-div-title-fees" qid="" sid="<%=survey.getSurveyId()%>">
 			  							<div class="form-group nomargin">
@@ -51,8 +51,8 @@ Integer quotaid = (Integer)request.getAttribute("quotaid");%>
 				                    				</div>
 										
 				  					</div>
-				  					<div class="panel-section-buttons right" class="margintop10">
+				  					<div class="panel-section-buttons remove-quota right" class="margintop10">
 										<button class="btn-transparent btn-remove quotaremovebtn" id="removeQuota" aria-label="Remove question: question typo formField"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 									</div>					
-									</li>
-		  					</div>	
+								</li>
+		  					<!-- </div> -->	

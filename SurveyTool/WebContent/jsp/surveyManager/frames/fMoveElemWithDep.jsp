@@ -19,7 +19,7 @@
 				    		<div class="panel-body">
 				    			<div class="survey-frame" id="import-multimedia-file">
 				    				<h3><%= lang.getContent("confirmation.move.title") %></h3>
-				    				
+				    				<input type="hidden" id="moveType"/>
 			    					<p><%= lang.getContent("confirmation.move.message.withdep") %></p>
 			    					
 			    					<div class="remove-frame-buttons">
