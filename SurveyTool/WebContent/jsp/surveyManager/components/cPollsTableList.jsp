@@ -19,7 +19,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  					{
 			  					%>
 			  					<div class="polls-table">
-			  						<table class="table table-bordered table-surveys display" id="" sumary="List of surveys where ..." data-page-length='25'>
+			  						<table class="table table-bordered table-surveys table-polls display" id="" sumary="List of surveys where ..." data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.polls.table.caption") %></caption>
 			  							<thead>
 											<tr class="info">

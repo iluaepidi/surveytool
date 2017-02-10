@@ -235,6 +235,7 @@ $(function() {
 	});
 	
 	$('#btnCreateNewPoll').click(function(){
+		console.log("Table lenght: " + $('table.table-polls tr').length);
 		var valid = true;
 		if($('#pollTitle').val() == ""){
 			valid = false;
@@ -277,7 +278,7 @@ $(function() {
 		
 			var pollOptions = [];
 			var existPolls = 'false';
-			if($('#poll-table').length)
+			if($('table.table-polls tr').length)
 			{
 				existPolls = 'true';
 				console.log("Exist polls: " + existPolls);
@@ -313,7 +314,7 @@ $(function() {
 	  			}
 	  			else
 	  			{
-	  				$('#poll-table').find('tbody').append(res);
+	  				$('table.table-polls').find('tbody').append(res);
 	  			}
 	  		});
 

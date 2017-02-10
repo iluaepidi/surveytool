@@ -231,12 +231,11 @@ $(function() {
 			if($("#survey-quota-"+newquota).length > 0){
 				alertNotQuota();
 			}else{
-				var newQuota=$('#survey-quota-new').find("li.quota-item").clone();
-				//newQuota.css("display","block");
+				var newQuota=$('#survey-quota-new').clone();
+				newQuota.css("display","block");
 				newQuota.attr("quota",newquota);
 				newQuota.attr("sid",newquota);
 				newQuota.attr("id","survey-quota-"+newquota);
-				newQuota.removeClass("hidden")
 				var selectQuota = newQuota.find('select');
 				selectQuota.attr("id","selquestionforfees"+newquota);
 				selectQuota.attr("name","selquestionforfees"+newquota);
@@ -249,8 +248,8 @@ $(function() {
 				divoptions.attr("id","optionsquota"+newquota);
 				
 				
-				//newQuota.insertBefore("#survey-quota-new");
-				newQuota.insertAfter($('ul.quota-item-list').find("li.quota-item").last());
+				//newQuota.prependTo("#listcompletequotas");
+				newQuota.insertBefore("#survey-quota-new");
 				$('#selquestionforfees'+newquota).val(newquota);
 				loadvaluequestion(newquota);
 				//eliminar opcion del combo
@@ -2594,7 +2593,7 @@ $(function() {
 				}
 			});
 			
-			moveQuestionNextPage(nextPage, currentPage, question);
+			moveQuestionNextPage(previousPage, currentPage, question);
 			question.find("fieldset.logic-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
@@ -2670,7 +2669,6 @@ $(function() {
 	
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
-		currentElement = question;
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
 		console.log("question to move: " + JSON.stringify(questionJson));
@@ -2836,7 +2834,6 @@ $(function() {
 		modalFocus.focus();
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
-	
 });
 
 function executeBtnMovedown(nextPage, currentPage, question)
@@ -2868,7 +2865,7 @@ function executeBtnMovedown(nextPage, currentPage, question)
 	}
 	else
 	{
-		moveQuestionNextPage(nextPage, currentPage, question)
+		moveQuestionNextPage(nPage, cPage, question)
 	}
 		
 	return isModal;
@@ -2882,7 +2879,7 @@ function moveQuestionNextPage(nPage, cPage, question)
 
 	insertQuestionNextPage(question, questions);				
 	
-	updateQuestionIndex(question.attr("qid"), 0, cPage.attr("pid"), true, "down", host);
+	updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
 	
 	questionJson.index = 0;
 	question.trigger('insertQuestionJson', [questionJson]);
@@ -3058,7 +3055,7 @@ function changeoptionsfees(id){
 						}
 						
 						//$('#optionsquota'+id).append("<div class='form-group' style='margin:0px;display: inline-flex;' id='optionquota'><div class='form-group col-md-4'><label class='control-label profileLabel' for='language'>"+json[0].questions[i].optionsGroup[0].options[j].title+"</label></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Min</label><input id='min"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel' for='language'>Max</label> <input id='max"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[0].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div></div>");
-						$('#optionsquota'+id).prepend("<div class='form-group quoteoption' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small no-number-buttons col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small no-number-buttons col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
+						$('#optionsquota'+id).prepend("<div class='form-group quoteoption' id='optionquota'><fieldset class='form-group col-md-4' style='width:100%'><legend class='col-md-4' style='border:0px;font-size:16px;'>"+json[k].questions[i].optionsGroup[0].options[j].title+"</legend><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Min</label><input id='min"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='min' type='number' placeholder='none' class='form-control-small col-md-8' "+min+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></div><div class='form-group col-md-4'><label class='col-md-4 control-label profileLabel'>Max</label> <input id='max"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' name='max' type='number' placeholder='none' class='form-control-small col-md-8' "+max+" index='"+j+"' oid='"+json[k].questions[i].optionsGroup[0].options[j].optionId+"' style='width: 60%;' min='1'></fieldset></div>");
 					}
 					
 				}
@@ -3114,7 +3111,7 @@ function limitInput(element, max_chars)
 }
 
 function insertValueQuota(){
-	$('.widthTitleSurveyCollapsed').on("focusout change", "#optionquota input", function(e){
+	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
 		e.stopPropagation();
 		//if($(this).val() != ""){
 			
