@@ -1,5 +1,7 @@
 package ilu.surveytool.databasemanager;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,7 @@ import java.sql.Statement;
 import ilu.surveytool.databasemanager.DataObject.Credentials;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
@@ -52,7 +55,7 @@ public class RegisterDB {
 		if(!this.existsUsername(registerResponse.getUserName()) || registerResponse.getUserName().isEmpty()){
 			
 			if(!this.existsEmail(registerResponse.getEmail())){
-				
+				String tempId = this._generateTemporalId();
 				Connection con = this._openConnection();
 				PreparedStatement pstm = null;
 				ResultSet rs = null;
@@ -66,12 +69,14 @@ public class RegisterDB {
 			   		pstm.setInt(5, registerResponse.getRol());
 			   		pstm.setInt(6, idLanguage);
 			   		pstm.setInt(7, registerResponse.getStatus());
+			   		pstm.setString(8, tempId);
 			   		
 			   		boolean notInserted = pstm.execute();
 					   if(!notInserted){
 						   rs = pstm.getGeneratedKeys();
 						   if(rs.next()){
 							   response.setUserId(rs.getInt(1));
+							   response.setTemporalId(tempId);
 							   response.setValid(true);
 						   }
 						   System.out.println("userid:"+registerResponse.getUserId());
@@ -157,4 +162,46 @@ public class RegisterDB {
 		return existemail;
 	}		
 
+	public boolean existTemporalId(String temporalId)
+	{
+		boolean result = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS);		
+		   	pstm.setString(1, temporalId);
+	   		pstm.setInt(2, DBConstants.i_VALUE_USER_STATE_EMAIL_CONFIRM);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			result = true;
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return result;
+	}
+	
+	private String _generateTemporalId()
+	{
+		String temporalId = "";
+		
+		SecureRandom random = new SecureRandom();
+		
+		do{
+			temporalId = new BigInteger(50, random).toString(32);
+		}while(this.existTemporalId(temporalId));
+						
+		return temporalId;
+	}
+	
 }

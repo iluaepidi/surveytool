@@ -218,6 +218,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol inner join surveytool.language l on l.idLanguage = u.idLanguage WHERE (userName = ? or email = ?) and password = ?";
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_USERNAME = "SELECT idUser FROM surveytool.user WHERE userName LIKE ?";
+		public final static String s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS = "SELECT idUser FROM surveytool.user WHERE temporalId LIKE ? AND idUserState = ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL = "SELECT idUser FROM surveytool.user WHERE email LIKE ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE = "SELECT idUser FROM surveytool.user WHERE email LIKE ? AND userName != ?";
 		public final static String s_GET_IDLANGUEGE_FROM_ISONAME = "SELECT idLanguage FROM surveytool.language WHERE isoName LIKE ?";
@@ -506,7 +507,7 @@ public class DBSQLQueries {
 		
 	//inserts
 		//User
-			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`) VALUES (?,?,?,?,?,?,?)";
+			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`, `temporalId`) VALUES (?,?,?,?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`, `testUser`) VALUES (?, ?, ?, ?)";
@@ -619,6 +620,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_SECTION_INDEX = "UPDATE `surveytool`.`section` SET `index`=? WHERE `idSection`=?";
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
+			public final static String s_UPDATE_USER_ACCOUNT = "UPDATE surveytool.user SET temporalId=?, idUserState=? WHERE idUser= ?";
 
 		//QDependences
 			public final static String s_UPDATE_QDEPENDENCE_SHOW = "UPDATE `surveytool`.`qdependences` SET show=? WHERE idQDependences = ?";

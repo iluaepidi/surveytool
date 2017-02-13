@@ -10,6 +10,10 @@
 LoginResponse loginResponse = (LoginResponse) request.getAttribute(Attribute.s_LOGIN_RESPONSE);
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+
+Object verifiedObject = request.getAttribute(Attribute.s_EMAIL_VERIFIED);
+boolean verified = false;
+if(verifiedObject != null) verified = (boolean) verifiedObject;
 %>
 				<div class="container-fluid">
 	  				<div class="title-content">
@@ -17,10 +21,28 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  				</div>
 	  				<div class="login-content confirmation-back-login">
 	  					<div class="col-xs-12 col-sm-12 col-md-10 login-content-text">
+	  							<%
+	  							if(verifiedObject == null)
+	  							{
+	  							%>
 		  						<p><%= lang.getContent("userpanel.registration.confirmation.content1") %></p>
 		  						
 		  						<p><%= lang.getContent("userpanel.registration.confirmation.content2") %></p>
-		  						
+		  						<%
+	  							}
+	  							else if(verified)
+	  							{
+		  						%>
+		  						<p><%= lang.getContent("userpanel.registration.verification.true.content") %></p>
+		  						<%
+	  							}
+	  							else if(!verified)
+	  							{
+		  						%>
+		  						<p><%= lang.getContent("userpanel.registration.verification.false.content") %></p>
+		  						<%
+	  							}
+		  						%>
 								<div class="center">
 									<a href="/SurveyTool" class="btn btn-primary btn-lg"><%= lang.getContent("userpanel.registration.confirmation.button") %></a>
 								</div>			

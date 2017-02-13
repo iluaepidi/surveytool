@@ -8,6 +8,7 @@ public class RegisterResponse {
 	private String reemail = "";
 	private String password = "";
 	private String repassword = "";
+	private String temporalId ="";
 	private int rol = 2;
 	private int status = 2;
 	boolean isValid = false;
@@ -130,6 +131,14 @@ public class RegisterResponse {
 
 	public void setIsoLanguage(String isoLanguage) {
 		this.isoLanguage = isoLanguage;
+	}
+
+	public String getTemporalId() {
+		return temporalId;
+	}
+
+	public void setTemporalId(String temporalId) {
+		this.temporalId = temporalId;
 	}
 
 }

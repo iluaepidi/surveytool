@@ -43,6 +43,7 @@ public class Attribute {
 	public final static String s_NUM_PAGE = "numPage";
 	public final static String s_NUM_QUESTION = "numQuestion";
 	public final static String s_INDEX = "index";
+	public final static String s_EMAIL_VERIFIED = "emailVerified";
 	
 	public final static String s_JSON_PAGES = "jsonPages";
 
