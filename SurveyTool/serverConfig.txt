@@ -1,0 +1,4 @@
+
+1.- Configurar path de la carpeta recursos en server.xml dentro del <host> correspondiente:
+ 
+  <Context docBase="C:\surveytool\resources" path="/SurveyTool/resources"/>
