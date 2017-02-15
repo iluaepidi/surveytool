@@ -223,38 +223,41 @@ $(function() {
 	
 	var newquota = 1000;
 	$('#create-quota').click(function(event) {
-			
 			$('#newQuotaModal').modal('toggle');
-			newquota = $("#selquestionnewquota").val();
+			newquotaid = $("#selquestionnewquota").val();
+			console.log("Quota: " + newquotaid);
 			
 			//Copy survey-quota-new
-			if($("#survey-quota-"+newquota).length > 0){
+			if($("#survey-quota-"+newquotaid).length > 0){
 				alertNotQuota();
 			}else{
-				var newQuota=$('#survey-quota-new').clone();
-				newQuota.css("display","block");
-				newQuota.attr("quota",newquota);
-				newQuota.attr("sid",newquota);
-				newQuota.attr("id","survey-quota-"+newquota);
+				var newQuota=$('#survey-quota-new').find("li").clone();
+				//newQuota.css("display","block");
+				newQuota.removeClass("hidden");
+				newQuota.attr("quota",newquotaid);
+				newQuota.attr("sid",newquotaid);
+				newQuota.attr("id","survey-quota-"+newquotaid);
+
 				var selectQuota = newQuota.find('select');
-				selectQuota.attr("id","selquestionforfees"+newquota);
-				selectQuota.attr("name","selquestionforfees"+newquota);
-				selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
+				selectQuota.attr("id","selquestionforfees"+newquotaid);
+				selectQuota.attr("name","selquestionforfees"+newquotaid);
+				selectQuota.attr("onchange","changeoptionsfees("+newquotaid+")");
 				
 				var h5title =  newQuota.find('h5');
-				h5title.attr("id","questionquotaname"+newquota);
+				h5title.attr("id","questionquotaname"+newquotaid);
 				
 				var divoptions = newQuota.find('#optionsquotanew');
-				divoptions.attr("id","optionsquota"+newquota);
+				divoptions.attr("id","optionsquota"+newquotaid);
 				
 				
 				//newQuota.prependTo("#listcompletequotas");
-				newQuota.insertBefore("#survey-quota-new");
-				$('#selquestionforfees'+newquota).val(newquota);
-				loadvaluequestion(newquota);
+				//newQuota.insertBefore("#survey-quota-new");
+				$('ul.quota-item-list').append(newQuota);
+				$('#selquestionforfees'+newquotaid).val(newquotaid);
+				loadvaluequestion(newquotaid);
 				//eliminar opcion del combo
 				//$("#selquestionnewquota").find('[value="'+newquota+'"]').remove();
-				$('#questionquotaname'+newquota).html($("#selquestionforfees"+newquota +" option:selected").text());
+				$('#questionquotaname'+newquotaid).html($("#selquestionforfees"+newquotaid +" option:selected").text());
 			}
 			
 	});
@@ -2729,68 +2732,9 @@ $(function() {
 		else isModal = false;
 	});
 	
-	/*$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
-		var question = $(this).closest("li.panel-question");
-		var currentPage = question.closest("li.page");
-		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
-		console.log("question to move: " + JSON.stringify(questionJson));
-		question.trigger('rmvQuestionJsonNoDepLog');
-		if(question.is(':last-child'))
-		{
-			if(!currentPage.is(':last-child'))
-			{
-				console.log("no last question");
-				var nextPage = currentPage.next();
-				var questions = nextPage.find("ul.page-items");
-
-				insertQuestionNextPage(question, questions);				
-				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
-			}
-			else
-			{
-				var currentSection = currentPage.closest("li.panel-section");
-				if(!currentSection.is(':last-child'))
-				{
-					var questions = currentSection.next().find('li.page').first().find('ul.page-items');
-					
-					insertQuestionNextPage(question, questions);		
-					
-					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
-				}
-			}
-			questionJson.index = 0;
-		}
-		else
-		{
-			var nextQuestion = question.next();
-			nextQuestion.insertBefore(question);
-			var index = parseInt(question.attr("index"));
-			question.attr("index", index + 1);
-			questionJson.index = index;
-			var prevIndex = parseInt(nextQuestion.attr("index"));
-			nextQuestion.attr("index", prevIndex - 1);
-			
-			if(!nextQuestion.hasClass("bcontent"))
-			{
-				var numQuestion = question.find("span.num-question").html();
-				nextQuestion.find("span.num-question").html(numQuestion);
-				question.find("span.num-question").html(parseInt(numQuestion)+1);
-			}
-
-			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
-		}
-
-		console.log("question moved: " + JSON.stringify(questionJson));
-		question.trigger('insertQuestionJson', [questionJson]);
-		question.find("fieldset.logic-frame").trigger("displayLogic");
-		question.find("fieldset.dependences-frame").trigger("displayDependences");
-		question.find("fieldset.logic-frame").trigger("setLogicMoved");
-		$(this).focus();
-	});*/
-	
 	$('#listcompletequotas').on("click", "#removeQuota", function(e){
-		var item = $(this).parents(".survey-info");
+		//var item = $(this).parents(".survey-info");
+		var item = $(this).closest("li.quota-item");
 		quotaid = item.attr('quota');
 		currentQuestion = item.find(".widthTitleSurveyCollapsed");
 		sid = currentQuestion.attr('sid');
@@ -3111,7 +3055,7 @@ function limitInput(element, max_chars)
 }
 
 function insertValueQuota(){
-	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+	$('.widthTitleSurveyCollapsed').on("focusout change", "#optionquota input", function(e){
 		e.stopPropagation();
 		//if($(this).val() != ""){
 			

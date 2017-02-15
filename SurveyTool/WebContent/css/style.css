@@ -807,7 +807,8 @@ ul.pagination li.active a {color: #fff !important;}
 .panel-section .panel-heading a:hover, .panel-section .panel-heading a:focus {color: #70FFFF;}
 .num-question {padding: 4px 0;}
 .qtype-icon-text{color: #000;
-	font-size: 0.9em;}
+	font-size: 0.9em;
+	margin: 0;}
 .form-control-small {padding: 5px 12px;
     font-size: 0.9em;
     line-height: 1.428571;
