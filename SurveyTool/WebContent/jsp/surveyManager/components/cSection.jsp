@@ -45,7 +45,6 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 												<button class="btn-transparent remove-section" id="removeSection<%= section.getSectionId() %>" aria-label="<%= lang.getContent("button.remove_section") %>: <%= title %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 											<% } %>
 										</div>
-										<!-- <h3 class="panel-title"><%= lang.getContent("survey.edit.section.title") %></h3> -->
 									</div>
 									<% request.setAttribute(Attribute.s_SECTION, section); %>
 									<jsp:include page="cPages.jsp" />

@@ -67,6 +67,7 @@ public class LoginDB {
 	   			response.setPassword(credentials.getPassword());
 	   			response.setEmail(rs.getString(DBFieldNames.s_USER_EMAIL));
 	   			response.setIsoLanguage(rs.getString(DBFieldNames.s_USER_ISO_LANGUAGE));
+	   			response.setUserState(rs.getInt(DBFieldNames.s_USER_STATE_ID));
 	   		}
 	   		else
 	   		{

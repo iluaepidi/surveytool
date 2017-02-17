@@ -62,6 +62,10 @@ public class DBConstants {
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";
 		//UserQuestionnaire
 			public final static String s_VALUE_STATE_FINISHED = "finished";
+		//UserState
+			public final static int i_VALUE_USER_STATE_ID_ACTIVE = 1;
+			public final static int i_VALUE_USER_STATE_ID_EMAIL = 2;
+			public final static int i_VALUE_USER_STATE_ID_ADMIN = 3;
 		//Resource
 			public final static String s_VALUE_RESOURCE_TYPE_IMAGE = "image";
 			public final static String s_VALUE_RESOURCE_TYPE_VIDEO = "video";

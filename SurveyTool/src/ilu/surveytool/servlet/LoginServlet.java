@@ -75,12 +75,20 @@ public class LoginServlet extends HttpServlet {
 			
 			System.out.println(loginResp.toString());
 			
-			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_INTERVIEWER))
+			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_INTERVIEWER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE)
 			{
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
 				HttpSession session = request.getSession();
 				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 				request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
+			}
+			else if(loginResp.isValid() && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ADMIN)
+			{
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
+				loginResp.setValid(false);
+				loginResp.setErrorMsg("login.invalid.state.admin");
+				request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 			}
 			else
 			{

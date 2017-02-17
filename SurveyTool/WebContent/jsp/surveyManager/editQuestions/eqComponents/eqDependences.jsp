@@ -325,7 +325,7 @@
 					  									else
 					  									{
 					  									%>				
-					  									<div class="logic-settings hidden">
+					  									<div class="logic-settings">
 					  										<p><%= lang.getContent("question.edit.logic.no_option") %></p>
 					  										
 					  										<ul class="logic-option-list form-inline hidden">

@@ -73,6 +73,8 @@ public class RegisterServlet extends HttpServlet {
 		registerReponse.setRepassword(request.getParameter(Parameter.s_REPASSWORD));
 		registerReponse.setEmail(request.getParameter(Parameter.s_EMAIL));
 		registerReponse.setIsoLanguage(langReq);
+		registerReponse.setRol(registerReponse.ROL_INTERVIEWER_USER);
+		registerReponse.setStatus(registerReponse.STATUS_ACTIVE_USER);
 		
 		
 		

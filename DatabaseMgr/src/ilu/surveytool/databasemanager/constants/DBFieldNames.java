@@ -108,6 +108,7 @@ public class DBFieldNames {
 		public final static String s_USERNAME = "username";
 		public final static String s_USER_EMAIL = "email";
 		public final static String s_USER_ISO_LANGUAGE = "isoName";
+		public final static String s_USER_STATE_ID = "idUserState";
 		
 	//QDependences
 		public final static String s_IDQDEPENDENCE = "idQDependences";

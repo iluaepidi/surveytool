@@ -84,7 +84,7 @@ public class SurveyProcessHandler {
 				
 				for (int i = 0; i < questions.length(); i++) {
 					//System.out.println(i+","+((questions.getJSONObject(i)).getString("questionType")));
-					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
+					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").length() > 0) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
 						questionId = (questions.getJSONObject(i)).getInt("questionId");
 						JSONArray optionsGroup = (questions.getJSONObject(i)).getJSONArray("optionsGroups");
 						ogid = optionsGroup.getJSONObject(0).getInt("optionGroupId");

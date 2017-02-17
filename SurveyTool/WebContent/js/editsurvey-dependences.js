@@ -747,6 +747,18 @@ $(function() {
 		    }		    
 		});
 		
+		var question = $(this).closest("li.panel-question");
+		var page = $(this).closest("li.page");
+		var prevPage = page.prev();
+		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+		prevPage.find("li.panel-question").each(function(index, qElement){
+			var qElementId = parseInt($(qElement).attr("qid")); 
+			if($.inArray(qElementId, simpleQuestions) != -1)
+			{
+				$(qElement).find("button.btn-logic").removeClass("hidden");
+			}
+		});
+					
 		//console.log("surveyTree created: " + JSON.stringify(surveyTree));
 	});
 
@@ -810,6 +822,20 @@ $(function() {
 
 		$(this).trigger("rmvQuestionGoto");
 		$(this).trigger("rmvQuestionDepend");
+		
+
+		var question = $(this).closest("li.panel-question");
+		var page = $(this).closest("li.page");
+		var prevPage = page.prev();
+		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+		prevPage.find("li.panel-question").each(function(index, qElement){
+			var qElementId = parseInt($(qElement).attr("qid")); 
+			if($.inArray(qElementId, simpleQuestions) != -1)
+			{
+				$(qElement).find("button.btn-logic").addClass("hidden");
+			}
+		});
+		
 		//console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
 

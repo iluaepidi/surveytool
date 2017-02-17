@@ -69,7 +69,7 @@
 									<p class="msg-body" ng-show="mandatoryError" role="alert"><%= lang.getContent("survey.process.main.error.desc.mandatory") %></p>
 								</div>
 									
-	  							<p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p>
+	  							<!-- <p>{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "description").text}}</p> -->
 	  							
 	  							
 	  							<ul id="question-list">

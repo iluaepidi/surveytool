@@ -1254,6 +1254,7 @@ $(function() {
 				qDependence.push($(selectDepend).closest("li.panel-question").find("span.num-question").html());
 			}
 		});
+		qDependence = $.unique(qDependence);
 		
 		var qLogic = [];
 		$('.logic-option-goto').each(function(index, selectLogic){
@@ -1262,6 +1263,7 @@ $(function() {
 				qLogic.push($(selectLogic).closest("li.panel-question").find("span.num-question").html());
 			}
 		});
+		qlogic = $.unique(qLogic);
 		
 		if(qDependence.length > 0)
 		{
@@ -1299,6 +1301,7 @@ $(function() {
 		{
 			$("#confirmRemovelogic").removeClass("hidden");
 			var logCad = "";
+			
 			for(var i = 0; i < qLogic.length; i++)
 			{
 				if((i + 1) == qLogic.length && i > 0) logCad = logCad + " y ";
@@ -2865,7 +2868,7 @@ function executeBtnMovedown(nextPage, currentPage, question)
 	}
 	else
 	{
-		moveQuestionNextPage(nPage, cPage, question)
+		moveQuestionNextPage(nextPage, currentPage, question)
 	}
 		
 	return isModal;
@@ -2879,7 +2882,7 @@ function moveQuestionNextPage(nPage, cPage, question)
 
 	insertQuestionNextPage(question, questions);				
 	
-	updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
+	updateQuestionIndex(question.attr("qid"), 0, cPage.attr("pid"), true, "down", host);
 	
 	questionJson.index = 0;
 	question.trigger('insertQuestionJson', [questionJson]);
@@ -3207,7 +3210,6 @@ function deleteQuote(){
 	
 	
 }
-
 
 function alertNotQuota(){
     bootbox.dialog({

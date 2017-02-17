@@ -18,10 +18,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 Survey survey = (Survey) request.getAttribute(Attribute.s_SURVEY_INFO);
 %>
 							<ul class="survey-sections" id="survey-sections">
-								
-			  					<!-- <div class="add-frame">
-		  							<a href="#" class="btn-add" title="create new section"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></a>  							
-		  						</div> -->
+							
 <%
 							List<Section> sections = survey.getSections();
 							int i = 1;
