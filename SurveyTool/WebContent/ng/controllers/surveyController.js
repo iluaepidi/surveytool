@@ -129,19 +129,38 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 	
 	$scope.isOutOfRange = function(num, min, max) {
-		if(!isNaN(parseFloat(num)) && isFinite(num))
+		if(!angular.isUndefined(num))
 		{
-			var f = parseFloat(num);
-			if(f < min || f > max)
+			var numParts = num.split(",");
+			var finalNum = num;
+			if(numParts.length > 1) finalNum = numParts[0] + "." + numParts[1]; 
+			console.log("isNumber: " + finalNum);
+			if(!isNaN(parseFloat(finalNum)) && isFinite(finalNum))
 			{
-				errorSurvey = true;
-				return true;
+				var f = parseFloat(finalNum);
+				if(f < min || f > max)
+				{
+					errorSurvey = true;
+					return true;
+				}
 			}
 		}
 		errorSurvey = false;
 		return false;
 	};
 
+	$scope.isNumber = function(num) {
+		console.log("isNumber: " + num);
+		
+		if(isNaN(parseFloat(finalNum)))
+		{
+			errorSurvey = true;
+			return false;
+		}
+		errorSurvey = false;
+		return true;
+	};
+	
 	$scope.getQuestionPath = function(question) {		
 		var minMaxCad = "";
 		if(question.questionType == "shortText")

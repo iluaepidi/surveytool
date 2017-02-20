@@ -749,12 +749,14 @@ $(function() {
 		
 		var question = $(this).closest("li.panel-question");
 		var page = $(this).closest("li.page");
-		var prevPage = page.prev();
+		var pageIndex = parseInt(page.attr("index"));
+		var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
 		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
 		prevPage.find("li.panel-question").each(function(index, qElement){
 			var qElementId = parseInt($(qElement).attr("qid")); 
 			if($.inArray(qElementId, simpleQuestions) != -1)
 			{
+				$(qElement).find("div.rules-frame").removeClass("hidden");
 				$(qElement).find("button.btn-logic").removeClass("hidden");
 			}
 		});
@@ -825,17 +827,22 @@ $(function() {
 		
 
 		var question = $(this).closest("li.panel-question");
-		var page = $(this).closest("li.page");
-		var prevPage = page.prev();
-		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
-		prevPage.find("li.panel-question").each(function(index, qElement){
-			var qElementId = parseInt($(qElement).attr("qid")); 
-			if($.inArray(qElementId, simpleQuestions) != -1)
-			{
-				$(qElement).find("button.btn-logic").addClass("hidden");
-			}
-		});
-		
+		var numQuestions = question.closest("ul.page-items").find("li.panel-question").length;
+		console.log("Num questions: " + numQuestions);
+		if(numQuestions < 2)
+		{
+			var page = $(this).closest("li.page");
+			var pageIndex = parseInt(page.attr("index"));
+			var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+			var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+			prevPage.find("li.panel-question").each(function(index, qElement){
+				var qElementId = parseInt($(qElement).attr("qid")); 
+				if($.inArray(qElementId, simpleQuestions) != -1)
+				{
+					$(qElement).find("button.btn-logic").addClass("hidden");
+				}
+			});
+		}
 		//console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
 
@@ -964,35 +971,73 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("displayLogic", "fieldset.logic-frame", function(e){
+	$('.survey-sections').on("displayLogic", "div.rules-frame", function(e){
 		var pageIndex = $(this).closest('li.page').attr('index');
-		var logicButton = $(this).closest("div.rules-frame").find("button.btn-logic");
+		var logicButton = $(this).find("button.btn-logic");
 		if(pageIndex == surveyTree.length)
 		{
-			if(!$(this).hasClass("hidden"))
+			if($(this).find("fieldset.logic-frame").length)
 			{
-				$(this).find("select.logic-option-goto").each(function(index, element){
-					if($(element).val() != "none")
-					{
-						$(element).val("none");
-						$(element).trigger("change");
-					}
-				});
-				$(this).addClass("hidden");
+				console.log("Pregunta simple o con lógica");
+				if(!$(this).hasClass("hidden"))
+				{
+					$(this).find("select.logic-option-goto").each(function(index, element){
+						if($(element).val() != "none")
+						{
+							$(element).val("none");
+							$(element).trigger("change");
+						}
+					});
+					$(this).addClass("hidden");
+				}
+				
+				if(!logicButton.hasClass("hidden"))
+				{
+					logicButton.addClass("hidden");
+					logicButton.removeClass("active");
+				}
 			}
 			
-			if(!logicButton.hasClass("hidden"))
+			var numQuestions = $(this).closest("ul.page-items").find("li.panel-question").length;
+			console.log("numero de preguntas: " + numQuestions);
+			if(numQuestions < 2)
 			{
-				logicButton.addClass("hidden");
-				logicButton.removeClass("active");
+				var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+				var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+				prevPage.find("li.panel-question").each(function(index, qElement){
+					var qElementId = parseInt($(qElement).attr("qid")); 
+					if($.inArray(qElementId, simpleQuestions) != -1)
+					{
+						$(qElement).find("div.rules-frame").removeClass("hidden");
+						$(qElement).find("button.btn-logic").removeClass("hidden");
+					}
+				});
 			}
 		}
 		else
 		{
-			//$(this).removeClass("hidden");
-			//if(!$(this).closest("div.question-frame").find("div.dependences-frame").hasClass("hidden")) $(this).removeClass("noborder");
-			//else $(this).addClass("noborder");			
-			logicButton.removeClass("hidden");
+			var nextPageIndex = parseInt(pageIndex) + 1;
+			var nextPage = $("li.page[index=" + nextPageIndex + "]");
+			var nextPageId = parseInt(nextPage.attr("pid"));
+			var lastPageId = surveyTree[surveyTree.length - 1].pageId;
+			var numQuestions = nextPage.find("li.panel-question").length;
+			console.log("PageIndex: " + nextPageIndex + " - nextId: " + nextPageId + " - lastId: " + lastPageId + " - numQuestions: " + numQuestions);
+			if(nextPageId != lastPageId || numQuestions > 0)
+			{
+				if($(this).find("fieldset.logic-frame").length) logicButton.removeClass("hidden");
+			}
+			else
+			{
+				var simpleQuestions = getSimpleQuestions(pageIndex);
+				$(this).closest('li.page').find("li.panel-question").each(function(index, qElement){
+					var qElementId = parseInt($(qElement).attr("qid")); 
+					if($.inArray(qElementId, simpleQuestions) != -1)
+					{
+						$(qElement).find("button.btn-logic").addClass("hidden");
+					}
+				});
+				logicButton.addClass("hidden");
+			}
 		}
 	});
 
@@ -1135,6 +1180,34 @@ function removePageJson(numPage, pageId)
 		return page.pageId != pageId;
 	});	
 	updateNumberPage();
+}
+
+function removeLastPage(page, pageId)
+{
+	//var lastPageId = parseInt(page.closest("ul.section-pages").find("li.page").last().attr("pid"));
+	var lastPageId = surveyTree[surveyTree.length - 1].pageId;
+	console.log("CurrentPageId: " + pageId + " - lasPageId: " + lastPageId);
+	var prevPage = page.prev();
+	if(pageId === lastPageId)
+	{
+		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+		prevPage.find("li.panel-question").each(function(index, qElement){
+			var qElementId = parseInt($(qElement).attr("qid")); 
+			if($.inArray(qElementId, simpleQuestions) != -1)
+			{
+				$(qElement).find("button.btn-logic").addClass("hidden");
+			}
+		});		
+	}
+
+	var prevPageId = parseInt(prevPage.attr("pid"));
+	var firstPageId = surveyTree[0].pageId;
+	if(prevPageId === firstPageId)
+	{
+		page.find("li.panel-question").each(function(index, qElement){
+			$(qElement).find("button.btn-dependences").addClass("hidden");
+		});
+	}
 }
 
 function updateNumberPage()

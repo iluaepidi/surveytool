@@ -61,7 +61,7 @@
 						  						String noLogicDependencesClass = "";
 						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || !question.getQuestionType().equals("simple"))) noLogicDependencesClass = "hidden";						  							
 							  					%>
-							  					<div class="rules-frame <%= noLogicDependencesClass %>">
+							  					<div class="rules-frame">
 							  						<h6 class="visuallyhidden"><%= lang.getContent("question.edit.dependences.title") %></h6>
 							  													  						
 								  					<div class="nav-config">

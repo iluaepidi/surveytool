@@ -1595,6 +1595,7 @@ $(function() {
 				   {
 					   //var pagesList = currentElement.closest('ul.section-pages');
 					   var currentPageId = parseInt(currentElement.attr("pid"));
+					   removeLastPage(currentElement, currentPageId);
 					   var currentNumPage = parseInt(currentElement.attr("index"));
 					   var sectionList = currentElement.closest('ul.survey-sections');
 					   var prevElement = currentElement.prev();
@@ -2568,7 +2569,7 @@ $(function() {
 			});
 			
 			moveQuestionPrevPage(previousPage, currentPage, question);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			$("#moveQuestion").modal('hide');
 			question.find("button.moveup-question-arrow").focus();
@@ -2597,7 +2598,7 @@ $(function() {
 			});
 			
 			moveQuestionNextPage(previousPage, currentPage, question);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
 			$("#moveQuestion").modal('hide');
@@ -2663,7 +2664,7 @@ $(function() {
 			console.log("question moved: " + JSON.stringify(questionJson));
 			//question.trigger('rmvQuestionJsonNoDepLog');
 			//question.trigger('insertQuestionJson', [questionJson]);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			$(this).focus();
 		}		
@@ -2724,7 +2725,7 @@ $(function() {
 		{
 			console.log("question moved: " + JSON.stringify(questionJson));
 			//question.trigger('insertQuestionJson', [questionJson]);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
 			$(this).focus();
