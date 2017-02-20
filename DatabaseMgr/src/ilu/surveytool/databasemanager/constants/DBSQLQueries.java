@@ -78,6 +78,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "where c.idContent = ? and l.isoName = ? order by ct.name, c.index";
 		
+		public final static String s_SELECT_COUNT_CONTENT_BY_ID_CONTENTTYPE = "SELECT count(*) countContent FROM surveytool.content c "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "where c.idContent = ? and ct.name = ?";
+		
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE_CONTENTTYPE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
@@ -104,6 +108,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "inner join surveytool.optionsgroup og on obg.idOptionsGroup = og.idOptionsGroup "
 				+ "where og.idQuestion = ? ";
+		
 		//optionsGroup
 		public final static String s_SELECT_OPTIONSGROUP_BY_ID = "select * from surveytool.optionsgroup where idOptionsGroup = ?";
 		public final static String s_SELECT_OPTIONSGROUP_BY_QUESTION_ID = "SELECT og.*, ot.name optionTypeName FROM surveytool.optionsgroup og "
@@ -528,6 +533,9 @@ public class DBSQLQueries {
 		//OptionGroup
 			public final static String s_INSERT_OPTIONS_GROUP = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idContent`, `idOptionType`, `index`) VALUES (?, ?, "
 					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?), ?)";
+			
+			public final static String s_INSERT_OPTIONS_GROUP_NOCONTENT = "INSERT INTO `surveytool`.`optionsgroup` (`idQuestion`, `idOptionType`, `index`) VALUES (?, "
+					+ "(SELECT idOptionType FROM surveytool.optiontype where name = ?), ?)";
 		//poll
 			public final static String s_INSERT_POLL = "INSERT INTO `surveytool`.`poll` (`publicId`, `author`, `idQuestionnaire`, `idContent`, `idProject`, `callUrl`) VALUES (?, ?, ?, ?, ?, ?)";
 		//page
@@ -587,7 +595,9 @@ public class DBSQLQueries {
 		//optionsGroup
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
-		//optionsByCroup
+			public final static String s_UPDATE_OPTIONSGROUP = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?), `idContent`=? WHERE `idOptionsGroup`=?";
+						
+			//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
 
 		//page
@@ -598,7 +608,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_POLL_CALL_URL = "UPDATE surveytool.poll SET callUrl=? WHERE idPoll= ?";
 		//option
 			public final static String s_UPDATE_OPTION_IDRESOURCE = "UPDATE `surveytool`.`option` SET `idResoruces`=? WHERE `idOption`=?";
-
+			
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
 		//questionByPage
@@ -645,7 +655,8 @@ public class DBSQLQueries {
 			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
-		
+
+			public final static String s_REMOVE_OPTIONSGROUP_CONTENT = "DELETE FROM surveytool.content where idContent=(SELECT idContent FROM surveytool.optionsgroup WHERE idOptionsGroup=?)";
 		//option
 			public final static String s_DELETE_OPTION = "DELETE FROM surveytool.option WHERE idOption = ?";
 			

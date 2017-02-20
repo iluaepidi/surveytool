@@ -73,7 +73,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 											  				<fieldset>
 																<legend><%=lang.getContent("question.long.chars")%></legend>																															  							
 												  				<div class="question-response-settings" id="genericOptions">
-												  					<input class= "question-response-settings-options isLimitedChars" type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars<%= question.getQuestionId() %>" <%if(!textLength.equals("")){%> checked <%}%>>
+												  					<input class= "question-response-settings-options isLimitedChars" type="checkbox" autocomplete="off" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars<%= question.getQuestionId() %>" <%if(!textLength.equals("")){%> checked="checked" <%}%>>
 																	<label class= "question-response-settings-options" for="isLimitedChars<%= question.getQuestionId() %>"><%=lang.getContent("question.long.chars.label") %></label>
 												  					<div id="charsId" <% if(textLength.equals("")){ %> class="question-response-settings-sub-none" <%} else{%>class="question-response-settings-sub-inherit"<%} %>>
 																		<input type="number" min="0" max="9999" onkeyup="limit(this)" class="survey-question-max-chars" id="survey-question-max-chars<%= question.getQuestionId() %>" value="<%= textLength %>"></input>
@@ -89,11 +89,11 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 															<fieldset>
 																<legend><%=lang.getContent("question.long.lines")%></legend>
 																<div class="question-response-settings">
-																	<input class="question-response-settings-options adjust-lines-adjust" type="radio" name="lines-<%= question.getIndex() %>" id="adjust-lines-adjust<%= question.getQuestionId() %>" value="adjusted" <%if(lines.equals("")){%> checked <%}%>>
+																	<input class="question-response-settings-options adjust-lines-adjust" type="radio" autocomplete="off" name="lines-<%= question.getIndex() %>" id="adjust-lines-adjust<%= question.getQuestionId() %>" value="adjusted" <%if(lines.equals("")){%> checked="checked" <%}%>>
 												  					<label class="question-response-settings-options" for="adjust-lines-adjust<%= question.getQuestionId() %>"><%=lang.getContent("question.long.lines.numberChars")%></label>
 																</div>
-																<div class="question-response-settings">																														  							
-												  					<input class= "question-response-settings-options adjust-lines-set" type="radio" name="lines-<%= question.getIndex() %>" id="adjust-lines-set<%= question.getQuestionId() %>" value="set" <%if(!lines.equals("")){%> checked <%}%>>
+																<div class="question-response-settings">	
+																	<input class= "question-response-settings-options adjust-lines-set" type="radio" autocomplete="off" name="lines-<%= question.getIndex() %>" id="adjust-lines-set<%= question.getQuestionId() %>" value="set" <%if(!lines.equals("")){%> checked="checked" <%}%>>
 												  					<label class= "question-response-settings-options" for="adjust-lines-set<%= question.getQuestionId() %>"><%=lang.getContent("question.long.lines.set")%></label>
 																	<div id="lines" <% if(lines.equals("")){ %> class="question-response-settings-sub-none" <%} else{%>class="question-response-settings-sub-inherit"<%} %>>
 																		<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" id="survey-question-max-lines<%= question.getQuestionId() %>" class="survey-question-max-lines" value="<%= lines %>"></input>

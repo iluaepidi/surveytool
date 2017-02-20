@@ -99,7 +99,11 @@ List<OptionsByGroup> obg = sQ.getOptionsByGroup();
 								  // Get the context of the canvas element we want to select
 								  var ctx = document.getElementById("myChartScale<%= question.getQuestionId() %>").getContext("2d");
 								
-								  var myChartScale = new Chart(ctx).Bar(data);
+								  var myChartScale = new Chart(ctx).Bar(data, {scaleLabel: function (valuePayload) {
+							  		    return Number(valuePayload.value) + '%';
+							  		}, tooltipTemplate: function (valuePayload) {
+							  		    return valuePayload.label +": "+ Number(valuePayload.value) + '%';
+							  		}});
 							</script>
 						</div>
 	            	</div>
