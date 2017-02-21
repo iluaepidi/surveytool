@@ -1180,6 +1180,19 @@ function removePageJson(numPage, pageId)
 		return page.pageId != pageId;
 	});	
 	updateNumberPage();
+	console.log("SurveyTree removePage: " + JSON.stringify(surveyTree));
+}
+
+function removePageCompleteJson(section)
+{
+	section.find("li.page").each(function(indexPage, page){
+		var pageId = parseInt($(page).attr("pid"));
+		surveyTree = jQuery.grep(surveyTree, function(page) {
+			return page.pageId != pageId;
+		});	
+	});
+	updateNumberPage();
+	console.log("SurveyTree removePageComplete: " + JSON.stringify(surveyTree));
 }
 
 function removeLastPage(page, pageId)

@@ -42,15 +42,15 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.getProgressPercent = function() {
 		//console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
 		//console.log("Survey Json: " + JSON.stringify($scope.currentSurvey.info));
-		if($scope.currentSurvey.info.section.page.numPage == 1)
+		if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage == 1)
 		{
 			return 0;
 		}
-		else if($scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
+		else if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
 		{
 			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages - 1)) * 100;
 		}
-		else  if($scope.currentSurvey.info.section.page.numPage)
+		else  if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage)
 		{
 			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages)) * 100;
 		}

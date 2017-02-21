@@ -189,7 +189,11 @@ $(function() {
 				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
 				node.closest('div.edit-content-center').find('ul.survey-sections').append(responseText);	
 				node.closest('div.edit-content-center').find('ul.survey-sections').find('li.panel-section').last().find("h3 input").focus();
-			}
+				var section = node.closest("div.edit-content-center").find("ul.survey-sections").find("li.panel-section").last();
+				var newPage = section.find("li.page").first();
+				insertPageJson(newPage.attr("index"), newPage.attr("pid"));
+			}			
+			console.log("create section surveyTree: " + JSON.stringify(surveyTree));
 		});
 	});
 
@@ -1578,7 +1582,7 @@ $(function() {
 				   else if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
-					  
+					   
 					   $('li[scid=' + ids[0] + ']').find('ul[id=section-pages]').each(function(indice, elemento) {
 						   if(indice == 0)
 						   {
@@ -1730,7 +1734,9 @@ $(function() {
 				   if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
-					   
+
+					   removePageCompleteJson(currentElement);
+					  
 					   $('li[scid=' + ids[0] + ']').find('li.panel-question').each(function(index, element){
 						   console.log("QuestionId: " + $(element).attr("qid"));
 						   $(element).trigger("rmvQuestionGoto");
