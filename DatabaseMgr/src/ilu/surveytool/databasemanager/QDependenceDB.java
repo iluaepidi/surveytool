@@ -86,14 +86,27 @@ public class QDependenceDB {
 	   				
 	   			}
 	   			
-	   			qDependenceValue.add(new QDependenceValue(
+	   			QDependenceValue qDepVal = new QDependenceValue(
 	   					rs.getInt(DBFieldNames.s_DEPENDENCEITEM),
 	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
 	   					rs.getInt(DBFieldNames.s_PAGE_ID),
 	   					rs.getString(DBFieldNames.s_QTEXT),
 	   					rs.getInt(DBFieldNames.s_OPTIONSGROUPID),
 	   					rs.getInt(DBFieldNames.s_DEPENDENCEOPTIONID),
-	   					rs.getString(DBFieldNames.s_OTEXT)));
+	   					rs.getString(DBFieldNames.s_OTEXT));
+	   			
+	   			if(qDepVal.getOName().isEmpty())
+	   			{
+	   				OptionDB optionDB = new OptionDB();
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				int resourceId = optionDB.getResourceIdByOptionId(qDepVal.getOid());
+	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+	   				ContentDB contentDB = new ContentDB();
+	   				String text = contentDB.getContentByIdLanguageContentType(contentId, lang, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+	   				qDepVal.setOName(text);
+	   			}
+	   			
+	   			qDependenceValue.add(qDepVal);
 	   		}
 	   		
 	   		if(qDependence != null)
