@@ -333,7 +333,7 @@ public class ImportFileServlet extends HttpServlet {
 				if(index > 0)
 				{
 					String[] cads = fileName.split(Pattern.quote("."));
-					fileNameFinal = cads[0] + index + "." + cads[1];
+					fileNameFinal = cads[0] + "_" + index + "." + cads[1];
 				    //fpath = Paths.get(rootPath + "\\resources", fileNameFinal);
 					fpath = Paths.get(folder, fileNameFinal);
 				}
