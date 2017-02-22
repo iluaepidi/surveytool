@@ -623,7 +623,7 @@ $(function() {
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red" id="remove-optionmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-optionmatrix" id="remove-optionmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
@@ -641,7 +641,7 @@ $(function() {
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red" id="remove-optionsgroupmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-optionsgroupmatrix" id="remove-optionsgroupmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
@@ -1185,7 +1185,7 @@ $(function() {
 	});
 	
 		
-	$('.survey-sections').on("change", "#type-matrix", function(e){
+	$('.survey-sections').on("change", "select.type-matrix", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -1376,9 +1376,11 @@ $(function() {
 		var result = currentQuestion + "/" + ogid + "/" + oid;
 		console.log("result: " + result);
 		
-		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
+		$("#elementToRemoveText").html('"'+phOption+': ' + input.val() + '"');
 		$("#removeElemId").val(result);
 		$("#removeElemService").val('OptionService');
+		$("#removeQuestionId").val(currentQuestion);
+		$("#removeElemIndex").val(input.attr('index'));
 		$("#removeElement").modal("show");	
 		modalFocus = $(this);	
 	});
@@ -1388,8 +1390,10 @@ $(function() {
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
 		var input = item.find('input');
-		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
+		$("#elementToRemoveText").html('"'+phColumn+': ' + input.val() + '"');
 		$("#removeElemId").val(input.attr('oid'));
+		$("#removeElemIndex").val(input.attr('index'));
+		$("#removeQuestionId").val(currentQuestion);
 		$("#removeElemService").val('OptionMatrixService');
 		$("#removeElement").modal("show");
 		modalFocus = $(this);
@@ -1400,8 +1404,10 @@ $(function() {
 		currentQuestion = $(this).closest('#panel-question1').attr('qid');
 		var item = $(this).closest('li');
 		var input = item.find('input');
-		$("#elementToRemoveText").html('"Option: ' + input.val() + '"');
+		$("#elementToRemoveText").html('"'+phItem+': ' + input.val() + '"');
 		$("#removeElemId").val(input.attr('ogid'));
+		$("#removeElemIndex").val(input.attr('index'));
+		$("#removeQuestionId").val(currentQuestion);
 		$("#removeElemService").val('OptionsGroupMatrixService');
 		$("#removeElement").modal("show");
 		modalFocus = $(this);
@@ -1420,6 +1426,8 @@ $(function() {
 	$('#removeElement').on("click", "#acceptRemoveElement", function(e){
 		
 		var elementId = $('#removeElemId').val(); 
+		var questionId = $('#removeQuestionId').val(); 
+		var elementIndex = $('#removeElemIndex').val(); 
 		var service = $("#removeElemService").val();
 		console.log("Resource ID: " + elementId+", service: "+service);
 		console.log(host + "/SurveyTool/api/" + service + "/" + elementId);
@@ -1497,7 +1505,8 @@ $(function() {
 				   {   
 					   var ids = elementId.split('/');
 					   var oid = ids[2];
-					   var input = $('input[oid=' + oid + ']'); 					   
+					   var input = $('li[qid=' + currentQuestion + '] ul[id=option-list] li[id=option-item]').find('input[oid=' + oid + '][index='+elementIndex+']');
+					   //var input = $('input[oid=' + oid + '][index='+elementIndex+']'); 					   
 					   var numItems = input.closest("ul").find("li.option-item").size();
 					   var list = input.closest("ul.option-list");
 					   
@@ -1512,7 +1521,7 @@ $(function() {
 							   console.log("li: " + i + " - elem: " + $(elem).find('input').val());
 							   var index = i + 1;
 							   $(elem).find('input').attr('index', index);
-							   $(elem).find('input').attr('placeholder', "Option " + index)
+							   $(elem).find('input').attr('placeholder', phOption+" " + index)
 							   $(elem).find('.circle-grey').text(index);
 						   });
 					   }
@@ -1537,7 +1546,8 @@ $(function() {
 				   }
 				   else if(service == "OptionMatrixService")
 				   {
-					   var input = $('input[oid=' + elementId + ']'); 					   
+					   //var input = $('input[oid=' + elementId + '][index='+elementIndex+']'); 					   
+					   var input = $('li[qid=' + currentQuestion + '] ul[id=optionmatrix-list] li[id=optionmatrix-item]').find('input[oid=' + elementId + '][index='+elementIndex+']');
 					   var numItems = input.closest("ul").find("li").size();
 					   //console.log("Items: " + numItems);
 					   if(numItems > 3)
@@ -1548,20 +1558,22 @@ $(function() {
 							   //console.log("li: " + i + " - elem: " + $(elem).find('input').val());
 							   var index = i + 1;
 							   $(elem).find('input').attr('index', index);
-							   $(elem).find('input').attr('placeholder', "Option " + index)
+							   $(elem).find('input').attr('placeholder', phColumn+ " " + index)
 							   $(elem).find('.circle-grey').text(index);
 						   });
 					   }
 					   else
 					   {
 						   input.val("");
+						   input.attr('oid', '0');
 					   }
 				   }
 				   else if(service == "OptionsGroupMatrixService")
 				   {
-					   var input = $('input[ogid=' + elementId + ']'); 					   
+					   //var input = $('input[ogid=' + elementId + '][index='+elementIndex+']'); 					   
+					   var input = $('li[qid=' + currentQuestion + '] ul[id=optionsgroupmatrix-list] li[id=optionsgroupmatrix-item]').find('input[ogid=' + elementId + '][index='+elementIndex+']');
 					   var numItems = input.closest("ul").find("li").size();
-					   //console.log("Items: " + numItems);
+					   console.log("Items: " + numItems);
 					   if(numItems > 3)
 					   {
 						   input.closest("li").remove();
@@ -1570,13 +1582,15 @@ $(function() {
 							   //console.log("li: " + i + " - elem: " + $(elem).find('input').val());
 							   var index = i + 1;
 							   $(elem).find('input').attr('index', index);
-							   $(elem).find('input').attr('placeholder', "Option " + index)
+							   $(elem).find('input').attr('placeholder', phItem + " " + index)
 							   $(elem).find('.circle-grey').text(index);
 						   });
 					   }
 					   else
 					   {
+						   console.log("input"+input.attr('ogid'));
 						   input.val("");
+						   input.attr('ogid', '0');
 					   }
 				   }
 				   else if(service == "SectionService")
@@ -1957,7 +1971,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("focusout", "#survey-question-decimals", function(e){
+	$('.survey-sections').on("focusout", "input.survey-question-decimals", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -2019,7 +2033,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("change", "#range", function(e){
+	$('.survey-sections').on("change", "input.range", function(e){
 		e.stopPropagation();
 		console.log("range");
 		var node = $(this); 
@@ -2033,6 +2047,10 @@ $(function() {
 		}else{
 			console.log("Está deseleccionado");
 			node.closest('div.question-response-settings').find('#rangeId').attr('class','question-response-settings-sub-none');
+			node.closest('div.question-response-settings').find('#rangeId').find('input#survey-minValue'+node.closest('li[id=panel-question1]').attr('qid')).attr('active','');
+			node.closest('div.question-response-settings').find('#rangeId').find('input#survey-minValue'+node.closest('li[id=panel-question1]').attr('qid')).value('');
+			node.closest('div.question-response-settings').find('#rangeId').find('input#survey-maxValue'+node.closest('li[id=panel-question1]').attr('qid')).attr('active','');
+			node.closest('div.question-response-settings').find('#rangeId').find('input#survey-maxValue'+node.closest('li[id=panel-question1]').attr('qid')).value('');
 		}
 		node.closest('#rangeOptions').find('#survey-minValue').val('');
 		node.closest('#rangeOptions').find('#survey-maxValue').val('');
@@ -2074,7 +2092,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("change", "#allowDecimals", function(e){
+	$('.survey-sections').on("change", "input.allowDecimals", function(e){
 		e.stopPropagation();
 		console.log("allowDecimals");
 		var node = $(this); 
@@ -2088,6 +2106,8 @@ $(function() {
 		}else{
 			console.log("Está deseleccionado");
 			node.closest('div.question-response-settings').find('#decimalsDiv').attr('class','question-response-settings-sub-none');
+			node.closest('div.question-response-settings').find('#decimalsDiv').find('input#survey-question-decimals'+node.closest('li[id=panel-question1]').attr('qid')).attr('active','');
+			node.closest('div.question-response-settings').find('#decimalsDiv').find('input#survey-question-decimals'+node.closest('li[id=panel-question1]').attr('qid')).value('');
 		}
 		node.closest('#decimalsOptions').find('#survey-question-decimals').val('');
 		
@@ -2176,8 +2196,9 @@ $(function() {
 			   url: host + "/SurveyTool/api/QuestionService/updateTextLines",
 			   data: JSON.stringify(req),
 			   success: function (data) {
-				   console.log(data);
+				   console.log("data="+data);
 				   node.attr('active', data);
+				   
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
 				   console.log(xhr.status);
@@ -2249,7 +2270,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("focusout", "#survey-minValue", function(e){
+	$('.survey-sections').on("focusout", "input.survey-minValue", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};
@@ -2275,7 +2296,7 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("focusout", "#survey-maxValue", function(e){
+	$('.survey-sections').on("focusout", "input.survey-maxValue", function(e){
 		e.stopPropagation();
 		var node = $(this); 
 		var req = {};

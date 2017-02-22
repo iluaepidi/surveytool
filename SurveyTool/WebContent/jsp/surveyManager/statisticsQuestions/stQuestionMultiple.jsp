@@ -70,7 +70,7 @@ List<Option> o = sQ.getOptions();
 								for(int j=0;j<obg.size();j++){
 		        		    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
 		        		    				%>
-		        		    				<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>, <%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>
+		        		    				<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>, <%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>%
 		        		    				<%}
 		        		    		}
 								}
@@ -86,6 +86,7 @@ List<Option> o = sQ.getOptions();
 								var bars = [];
 								<%
 								List<String> labels = new ArrayList<String>();
+								List<String> indexes = new ArrayList<String>();
 								List<Integer> values = new ArrayList<Integer>();
 								//System.out.println("Size of options:"+o.size());
 								
@@ -96,8 +97,10 @@ List<Option> o = sQ.getOptions();
 		    		    				//System.out.println("New push de labels");
 		    		    				if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty()) {
 											labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
+											indexes.add(Character.toString((char)(65+i)));
 										} else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty()) {
 											labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+											indexes.add(Character.toString((char)(65+i)));
 										} else {
 											OptionDB optionDB = new OptionDB();
 					    	   				int resourceId = optionDB.getResourceIdByOptionId(((Option)(o.get(i))).getId());
@@ -106,9 +109,12 @@ List<Option> o = sQ.getOptions();
 					    	   				ContentDB contentDB = new ContentDB();
 					    	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang.getCurrentLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
 					    	   				labels.add(contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+											indexes.add(Character.toString((char)(65+i)));
 										}
+		    		    				
+		    		    				//labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()");
 									%>
-										labels.push("<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>");
+										labels.push("<%=Character.toString((char)(65+i))%>");
 			        		    		
 			        		    		<%
 			        		    		for(int j=0;j<obg.size();j++){
@@ -139,18 +145,22 @@ List<Option> o = sQ.getOptions();
 									  // Get the context of the canvas element we want to select
 									  var ctx = document.getElementById("myChartMultiple<%= question.getQuestionId() %>").getContext("2d");
 									
-									  var myChartMultiple = new Chart(ctx).Bar(data);
+									  var myChartMultiple = new Chart(ctx).Bar(data, {scaleLabel: function (valuePayload) {
+								  		    return Number(valuePayload.value) + '%';
+								  		}, tooltipTemplate: function (valuePayload) {
+								  		    return valuePayload.label +": "+ Number(valuePayload.value) + '%';
+								  		}});
 								</script>
 							</div>
 		            	</div>
 		            	<div class="legendSurvey in-block">
-		            		<h4>Resultados</h4>
+		            		<h4><%= lang.getContent("statistics.results")%></h4>
 						  	<ul>
 						  	<%for(int i=0;i<labels.size();i++)
 							{
 								%>
 								<li>
-								  			<%= labels.get(i) %>: <%= values.get(i) %>%
+								  			<b><%= indexes.get(i)%></b>. <%=labels.get(i) %>: <%= values.get(i) %>%
 								</li>
 								<%
 							}
