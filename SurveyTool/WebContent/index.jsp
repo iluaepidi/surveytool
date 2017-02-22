@@ -13,11 +13,11 @@ String footerPath = "jsp/common/masterComponents/footer.jsp";
   	<body>
   		<div class="main-container">
   			<div class="page-header">
-  				<jsp:include page="jsp/userPanel/components/header.jsp" />
+  				<jsp:include page="jsp/common/masterComponents/header.jsp" />
   			</div>
   			
   			<div class="body-content st-styles">
-	  			<jsp:include page="jsp/userPanel/bodyPages/bLogin.jsp" />
+	  			<jsp:include page="jsp/common/bodyPages/bLogin.jsp" />
 	  		</div>
 	  		
 	  		<footer class="footer">
