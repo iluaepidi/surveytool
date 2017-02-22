@@ -343,7 +343,7 @@ public class DBSQLQueries {
 						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
 
 		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state, "
-				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers "
+				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire and testUser = false and finished = true) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
