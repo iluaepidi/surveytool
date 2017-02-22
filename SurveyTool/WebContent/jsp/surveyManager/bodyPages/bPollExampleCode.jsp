@@ -19,7 +19,7 @@
 				
 				<div class="container-fluid">
 					<div class="title-content-no-underline">
-	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <a href="UserPanelHomeServlet?upoption=surveys&tab=poll"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("poll.preview.title") %></h2>
+	  					<h2><a href="UserPanelHomeServlet?upoption=surveys&tab=poll"><%= lang.getContent("survey_manager.title") %></a> > <%= lang.getContent("poll.preview.title") %></h2>
 	  					<div class="right">
 		  					<ul class="nav nav-tabs nav-tabs-right nav-tab-edit">
 							  	<li role="presentation" class="edit-tab" id="edit-tab"><a href="<%= Address.s_SERVLET_POLLS_SERVLET + "?" + Parameter.s_POLL_ID + "=" + poll.getPollId() %>" aria-label="<%= lang.getContent("poll.edit.tab.go_edit") %>" title="<%= lang.getContent("poll.edit.tab.go_edit") %>" id="tab-display-questions"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></li>

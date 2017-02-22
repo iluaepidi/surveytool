@@ -13,7 +13,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 %>   
 				<div class="container-fluid">
 	  				<div class="title-content-no-underline">
-	  					<h2><a href="InitialServlet"><%= lang.getContent("user_panel.title") %></a> > <%= lang.getContent("survey_manager.title") %></h2>
+	  					<h2><%= lang.getContent("survey_manager.title") %></h2>
 	  					<div class="right">
 		  					<ul class="nav nav-tabs nav-tabs-right nav-tabs-survey-manager">
 							  <li role="presentation" id="nav-tabs-li-surveys" <%if(tab.equals("survey")){%>class="active"<%}%>><a href="#" id="tab-display-surveys"><%= lang.getContent("survey_manager.tab.surveys") %></a></li>

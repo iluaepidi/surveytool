@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ilu.surveytool.constants.Attribute;
+import ilu.surveymanager.handler.PollHandler;
+import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Parameter;
@@ -72,15 +74,26 @@ public class LoginServlet extends HttpServlet {
 			//System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
 			LoginResponse loginResp = loginHandler.login(credentials);
 			
+			HttpSession session = request.getSession();
+			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+			
 			
 			System.out.println(loginResp.toString());
 			
 			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_INTERVIEWER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE)
 			{
-				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-				HttpSession session = request.getSession();
-				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-				request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
+				String tab = request.getParameter(Parameter.s_TAB);
+				if(tab == null) tab = "survey";
+							
+				SurveysHandler surveysHandler = new SurveysHandler();
+				request.setAttribute(Attribute.s_SURVEYS, surveysHandler.getSurveysTableInfoByAuthor(loginResp.getUserId(), lang.getCurrentLanguage()));
+				PollHandler pollHandler = new PollHandler();
+				request.setAttribute(Attribute.s_POLLS, pollHandler.getPollsTableInfoByAuthor(loginResp.getUserId(), lang.getCurrentLanguage()));
+				
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEYS));
+				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");
+				request.setAttribute(Attribute.s_TAB, tab);
+				
 			}
 			else if(loginResp.isValid() && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ADMIN)
 			{
