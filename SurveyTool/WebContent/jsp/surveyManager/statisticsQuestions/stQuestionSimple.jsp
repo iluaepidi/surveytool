@@ -111,14 +111,17 @@ List<Option> o = sQ.getOptions();
 				  	<%
 					List<String> labels = new ArrayList<String>();
 					List<Integer> values = new ArrayList<Integer>();
+					List<String> indexes = new ArrayList<String>();
 					
 					//System.out.println("Size of options:"+o.size());
 					for(int i = 0; i<o.size();i++){
 						int idoption = ((Option)(o.get(i))).getId();
 						if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty()) {
 							labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
+							indexes.add(Character.toString((char)(65+i)));
 						} else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty()) {
 							labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
+							indexes.add(Character.toString((char)(65+i)));
 						} else {
 							OptionDB optionDB = new OptionDB();
 	    	   				int resourceId = optionDB.getResourceIdByOptionId(((Option)(o.get(i))).getId());
@@ -127,6 +130,7 @@ List<Option> o = sQ.getOptions();
 	    	   				ContentDB contentDB = new ContentDB();
 	    	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang.getCurrentLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
 	    	   				labels.add(contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+	    	   				indexes.add(Character.toString((char)(65+i)));
 						}
 			    		for(int j=0;j<obg.size();j++){
 			    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
@@ -142,7 +146,7 @@ List<Option> o = sQ.getOptions();
 						graf += "{value: " + values.get(i) + ", " +
 								"color: \"" + grafColors[i%9] + "\", " +
 								"highlight: \"" +highlight[i%9] + "\", " +
-								"label: \"" + labels.get(i) + "\"}";
+								"label: \"" + indexes.get(i) + "\"}";
 						if(i < (labels.size()-1))graf += ",";
 					}
 					
@@ -152,17 +156,21 @@ List<Option> o = sQ.getOptions();
 					];
 		
 						var ctx = document.getElementById("chart-area-<%= question.getQuestionId() %>").getContext("2d");
-						window.myPie<%= question.getQuestionId() %> = new Chart(ctx).Pie(pieData<%= question.getQuestionId() %>,{percentageInnerCutout : 40});
+						window.myPie<%= question.getQuestionId() %> = new Chart(ctx).Pie(pieData<%= question.getQuestionId() %>,{percentageInnerCutout : 40, tooltipTemplate: function (valuePayload) {
+				  		    return valuePayload.label +": "+ Number(valuePayload.value) + '%';
+				  		}, scaleLabel: function (valuePayload) {
+				  		    return Number(valuePayload.value) + '%';
+				  		}});
 					</script>
 			  	</div>
 				<div class="legendSurvey in-block">
-					<h4>Resultados</h4>
+					<h4><%= lang.getContent("statistics.results")%></h4>
 				  	<ul>
 				  	<%for(int i=0;i<labels.size();i++)
 					{
 						%>
 						<li>
-						  			<i class="fa fa-square <%= colors[i%9] %>" aria-hidden="true"></i> <%= labels.get(i) %>: <%= values.get(i) %>%
+						  			<i class="fa fa-square <%= colors[i%9] %>" aria-hidden="true"></i> <b><%= indexes.get(i)%></b>. <%= labels.get(i) %>: <%= values.get(i) %>%
 						  		</li>
 						<%
 					}

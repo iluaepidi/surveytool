@@ -88,7 +88,6 @@ public class OptionDB {
 		return contentId;
 	}
 	
-
 	public int getContentIdByOptionsGroupId(int optionsGroupId)
 	{
 		int contentId = 0;
@@ -284,6 +283,7 @@ public class OptionDB {
 		return options;
 	}
 
+	
 	public JSONArray getOptionsJSONByOptionsGroupId(int questionId, int optionsGroupId, String lang, String langdefault, String optionType, Object anonimousUser)
 	{
 		JSONArray options = new JSONArray();
@@ -501,20 +501,23 @@ public class OptionDB {
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_OPTIONS_GROUP, Statement.RETURN_GENERATED_KEYS);
-		   pstm.setInt(1, questionId); 
-		   pstm.setInt(2, contentId); 
-		   pstm.setString(3, optionType);
-		   pstm.setInt(4, index);
-		   
-		   boolean notInserted = pstm.execute();
-		   
-		   if(!notInserted)
-		   {
-			   ResultSet rs = pstm.getGeneratedKeys();
-			   if(rs.next())
-				   optionsGroupId = rs.getInt(1);
-		   }
+	    	pstm = con.prepareStatement(DBSQLQueries.s_INSERT_OPTIONS_GROUP, Statement.RETURN_GENERATED_KEYS);
+			pstm.setInt(1, questionId); 
+			pstm.setInt(2, contentId); 
+			pstm.setString(3, optionType);
+			pstm.setInt(4, index);
+			   
+			boolean notInserted = pstm.execute();
+			   
+			if(!notInserted)
+			{
+				ResultSet rs = pstm.getGeneratedKeys();
+				if(rs.next())
+					optionsGroupId = rs.getInt(1);
+			}
+			else{
+				
+			}
 		  		  	   
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -650,6 +653,36 @@ public class OptionDB {
 		   
 	}
 	
+	public boolean updateOptionsGroup(int optionsGroupId, int contentId, String type) {
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSGROUP);
+			pstm.setString(1, type);
+			pstm.setInt(2, contentId);
+			pstm.setInt(3, optionsGroupId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+	
+	 
 	/**
 	 * Remove
 	 */
@@ -692,6 +725,27 @@ public class OptionDB {
 			this._closeConnections(con, pstm, null);
 		}
 
+	}
+	
+	public void removeOptionsGroupContent(int optionsGroupId) {
+		//System.out.println("updateState");
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+			System.out.println("optionsGroupId="+optionsGroupId);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_REMOVE_OPTIONSGROUP_CONTENT);
+		   	pstm.setInt(1, optionsGroupId);
+		   		
+			pstm.executeUpdate();
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		   
 	}
 
 }

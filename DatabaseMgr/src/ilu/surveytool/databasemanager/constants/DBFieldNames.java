@@ -30,6 +30,7 @@ public class DBFieldNames {
 		public final static String s_CONTENT_OG = "optionsGroup";
 		public final static String s_CONTENT_OPTIONS = "options";
 		public final static String s_CONTENT_RESOURCE = "idResoruces";
+		public final static String s_COUNT_CONTENT = "countContent";
 	
 	//contenttype
 		public final static String s_CONTENT_TYPE_NAME = "contentTypeName";

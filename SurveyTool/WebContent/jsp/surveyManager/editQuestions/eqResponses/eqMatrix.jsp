@@ -52,7 +52,7 @@
 											  <fieldset>	
 												<legend><%=lang.getContent("question.matrix.rowoption") %></legend>
 							  					<%
-							  					if(question.getOptionsGroups().size() > 0)
+							  					if(question.getOptionsGroups().size() > 1 || (question.getOptionsGroups().size() == 1 && !question.getOptionsGroups().get(0).getContents().isEmpty()))
 							  					{
 							  					%>						  						
 						  							<ul class="option-list" id="optionsgroupmatrix-list" otype="<%= otype %>">
