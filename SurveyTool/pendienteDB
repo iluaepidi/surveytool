@@ -1,0 +1,2 @@
+ALTER TABLE `surveytool`.`user` 
+ADD COLUMN `temporalId` VARCHAR(45) NULL COMMENT '' AFTER `idUserState`;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
@@ -69,6 +70,35 @@ public class UserDB {
 		
 		return email;
 	}
+
+	public int getUserByTempIdAndEmailConfirmStatus(String tempId)
+	{
+		int userId = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS);			
+	   		pstm.setString(1, tempId);
+	   		pstm.setInt(2, DBConstants.i_VALUE_USER_STATE_EMAIL_CONFIRM);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			userId = rs.getInt(DBFieldNames.s_USERID);
+	   		}
+	   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return userId;
+	}
 	
 	/*
 	 * update
@@ -105,6 +135,32 @@ public class UserDB {
 				this._closeConnections(con, pstm, null);
 			}
 		}
+		 
+		return updated;
+	}
+
+	public boolean updateActivateAccount(int userId) {
+		boolean updated = false;
+			
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_USER_ACCOUNT);
+			pstm.setString(1, null);
+			pstm.setInt(2, DBConstants.i_VALUE_USER_STATE_ACTIVE);
+			pstm.setInt(3, userId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}		
 		 
 		return updated;
 	}

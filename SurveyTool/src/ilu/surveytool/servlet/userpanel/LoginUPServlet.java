@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ilu.surveyengine.emailSender.EmailSender;
 import ilu.surveytool.commoncode.CommonCode;
 import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
@@ -83,6 +84,22 @@ public class LoginUPServlet extends HttpServlet {
 				registerReponse.setStatus(registerReponse.STATUS_EMAIL_USER);
 				String title = lang.getContent("userpanel.registration.title") + " - " + lang.getContent("userpanel.registration.confirmation.title");
 				request.setAttribute(Attribute.s_PAGE_TITLE, title);
+
+				/*
+				 * Testeo email 
+				 */
+				System.out.println("Enviando email...");
+				String emailSubject = lang.getContent("email.verify.subject");
+				String emailContent = "<h1>" + lang.getContent("email.verify.title") + "</h1>" + 
+						"<p>" + lang.getContent("email.verify.text") + "</p>" + 
+						"<a href='http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/VerifyEmail?token=" + regResp.getTemporalId() + "'>" + lang.getContent("email.verify.link") + "</a>";
+				EmailSender emailSender = new EmailSender();
+				emailSender.send(registerReponse.getEmail(), emailSubject, emailContent);
+				System.out.println("Email enviado.");
+				/*
+				 * Fin testeo email
+				 */
+				
 				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN_REGISTRATION_CONFIRMATION));
 			}
 			else

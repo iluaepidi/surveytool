@@ -77,6 +77,9 @@ public class DBConstants {
 			public final static String s_VALUE_SURVEY_STATE_PAUSED = "paused";
 			public final static String s_VALUE_SURVEY_STATE_ACTIVE = "active";
 			public final static String s_VALUE_SURVEY_STATE_FINISHED = "finished";
+		//user state
+			public final static int i_VALUE_USER_STATE_ACTIVE = 1;
+			public final static int i_VALUE_USER_STATE_EMAIL_CONFIRM = 2;
 			
 		//Dependence
 			public final static String s_VALUE_DEPENDENCETYPE_AND = "And";
