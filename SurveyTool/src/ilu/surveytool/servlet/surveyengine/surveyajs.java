@@ -79,7 +79,8 @@ public class surveyajs extends HttpServlet {
 			anonimousUser.setIpAddress(request.getRemoteAddr());
 			anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
 			anonimousUser.setCurrentPage(1);
-			if(!preview) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+			/*if(!preview)*/ anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+			if(preview) anonimousUser.setCurrentPage(1);
 			request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 			
 			//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
