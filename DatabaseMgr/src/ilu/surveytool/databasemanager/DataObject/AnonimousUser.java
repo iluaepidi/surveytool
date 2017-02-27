@@ -6,13 +6,14 @@ public class AnonimousUser {
 	int surveyId;
 	String ipAddress = "";
 	int currentPage;
+	boolean surveyFinished = false;
 	
 	public AnonimousUser() {
 		super();
 		this.id = 0;
 		this.surveyId = 0;
 		this.ipAddress = "";
-		this.currentPage = 0;
+		this.currentPage = 1;
 	}
 
 	public AnonimousUser(int id, int surveyId, String ipAddress, int currentPage) {
@@ -53,6 +54,14 @@ public class AnonimousUser {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
+	}
+
+	public boolean isSurveyFinished() {
+		return surveyFinished;
+	}
+
+	public void setSurveyFinished(boolean surveyFinished) {
+		this.surveyFinished = surveyFinished;
 	}
 
 	@Override

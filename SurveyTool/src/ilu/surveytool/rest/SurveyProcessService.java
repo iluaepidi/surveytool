@@ -66,14 +66,17 @@ public class SurveyProcessService {
 				anonimousUser = new AnonimousUser();
 				anonimousUser.setIpAddress(request.getRemoteAddr());
 				anonimousUser.setSurveyId(json.getInt("surveyId"));
-				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
+				//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
 			}
-			
-			boolean stored = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json, isPreview);
+
+			//boolean stored = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json, isPreview);
+			int anonimousUserId = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json, isPreview);
+			boolean stored = anonimousUserId != 0;
 			
 			if(stored && anonimousUser.getId() == 0)
 			{
-				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
+				//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
+				anonimousUser.setId(anonimousUserId);
 			}
 			
 			response.put("stored", stored);
@@ -107,12 +110,13 @@ public class SurveyProcessService {
 				//}
 				response.put("page", survey);
 				
-				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 				int numPages = json.getInt("numPages");
 				if(numPage > numPages || (numPage == numPages && surveyProcessHandler.isOnlyTextPage(survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"))))
 				{
 					surveyProcessHandler.updateAnonimousUserFinished(anonimousUser.getId(), true);
+					anonimousUser.setSurveyFinished(true);
 				}
+				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 			}
 						
 		} catch (JSONException e) {

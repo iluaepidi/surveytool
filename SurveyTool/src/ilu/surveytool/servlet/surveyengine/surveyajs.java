@@ -75,13 +75,21 @@ public class surveyajs extends HttpServlet {
 		
 		if(preview || state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE))
 		{
-			AnonimousUser anonimousUser = new AnonimousUser();
-			anonimousUser.setIpAddress(request.getRemoteAddr());
-			anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
-			anonimousUser.setCurrentPage(1);
-			/*if(!preview)*/ anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
-			if(preview) anonimousUser.setCurrentPage(1);
-			request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+			AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
+			if(anonimousUser == null)
+			{
+				anonimousUser = new AnonimousUser();
+				anonimousUser.setIpAddress(request.getRemoteAddr());
+				anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+				anonimousUser.setCurrentPage(1);
+				/*if(!preview)*/ //anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+				//if(preview) anonimousUser.setCurrentPage(1);
+				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+			}
+			else
+			{
+				if(anonimousUser.isSurveyFinished()) anonimousUser.setCurrentPage(1);
+			}
 			
 			//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
 			JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);

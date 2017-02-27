@@ -84,7 +84,7 @@ public class SurveyProcessHandler {
 				
 				for (int i = 0; i < questions.length(); i++) {
 					//System.out.println(i+","+((questions.getJSONObject(i)).getString("questionType")));
-					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").length() > 0) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
+					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).has("optionsGroups")) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").length() > 0) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
 						questionId = (questions.getJSONObject(i)).getInt("questionId");
 						JSONArray optionsGroup = (questions.getJSONObject(i)).getJSONArray("optionsGroups");
 						ogid = optionsGroup.getJSONObject(0).getInt("optionGroupId");
@@ -159,9 +159,11 @@ public class SurveyProcessHandler {
 		return stored;
 	}
 
-	public boolean anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses, boolean isPreview)
+	//public boolean anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses, boolean isPreview)
+	public int anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses, boolean isPreview)
 	{
 		boolean stored = true;
+		int anonymousUserId = anonimousUser.getId();
 		
 		//List<Response> responseList = this._responsesJsonToList(responsesJson);
 		
@@ -172,7 +174,7 @@ public class SurveyProcessHandler {
 		{
 			int surveyId = responses.getInt("surveyId");
 			JSONObject page = responses.getJSONObject("page");
-			int anonymousUserId = anonimousUser.getId();
+			
 			if(anonymousUserId == 0) anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"), isPreview);
 			if(anonymousUserId != 0)
 			{
@@ -225,13 +227,17 @@ public class SurveyProcessHandler {
 					/*EmailsToSend emailToSend = new EmailsToSend("en");
 					emailToSend.sendUserResponse(surveyId, anonymousUserId, responses);*/
 				}
+				else
+				{
+					anonymousUserId = 0;
+				}
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return stored;
+		return anonymousUserId;
 	}
 	
 	public boolean updateAnonimousUserCurrentPage(int anonimousUserId, int currentPage)
