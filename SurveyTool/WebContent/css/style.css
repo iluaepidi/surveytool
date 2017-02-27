@@ -977,7 +977,10 @@ ul.pagination li.active a {color: #fff !important;}
 .btn-transparent.btn-remove:focus {border-color: #B60000 !important;}
 .toggle input{display: inherit;}
 .mandatory-toggle-label {margin-right: 5px;}
-.mandatory-toggle-div {min-height: 24px !important;}
+.mandatory-toggle-div {min-height: 24px !important;
+	border: 1px solid #000 !important;}
+.mandatory-toggle-div:focus,
+.mandatory-toggle-div:hover {border: 2px solid #000 !important;}
 .mandatory-toggle-on {padding: 1px 24px 1px 12px !important;}
 .mandatory-toggle-off {padding: 1px 12px 1px 24px !important;}
 .question-frame {border: 1px solid #555;
@@ -1343,7 +1346,8 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
     min-height:30px !important;}
     
 .question-options {background-color: #C8C8C8;
-    padding: 1.5%;
+    /*padding: 1.5%;*/
+    padding: 15px 15px 10px 15px !important;
     margin-top: -4px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;

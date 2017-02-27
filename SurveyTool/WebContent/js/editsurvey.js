@@ -1912,6 +1912,23 @@ $(function() {
 		});
 	});
 	
+	$('.survey-sections').on("keyup", 'div.mandatory-toggle-div', function(e){
+		if(e.keyCode == 13)
+	    {
+			var checkbox = $(this).siblings("input.mandatoryToggle");
+			var checked = checkbox.is(":checked");
+			if(checked)
+			{
+				checkbox.prop("checked", false);
+			}
+			else
+			{
+				checkbox.prop("checked", true);
+			}
+			checkbox.trigger("change");
+	    }
+	});
+	
 	$('.survey-sections').on("change", 'input.mandatoryToggle', function(e){
 		e.stopPropagation();
 		
