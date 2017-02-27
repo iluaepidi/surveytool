@@ -21,7 +21,10 @@ boolean firstPageSection = Boolean.parseBoolean(request.getParameter("firstPageS
 												<div class="col-sm-4 col-xs-2">
 													<button id="page-display-<%= pag.getPageId() %>" class="page-display btn-transparent panel-heading-display-arrow display-page-arrow" aria-label="<%= lang.getContent("general.hide") + ' ' + lang.getContent("general.page") + ' ' + pag.getNumPage()  %>"><span class="visuallyhidden">Hide page: Page <%= pag.getNumPage() %></span><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>
 												</div>
-												<h4 class="col-sm-4 col-xs-4" tabindex="-1"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></h4>
+												<h4 class="col-sm-4 col-xs-4" tabindex="-1">
+													<div class="page-title-line"></div>
+													<span class="page-title"><%= lang.getContent("survey.edit.page.title") + " " + pag.getNumPage() %></span>
+												</h4>
 												<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>	
 												<div class="col-sm-4 col-xs-6 right">
 													<% if(!firstPageSection) { %>

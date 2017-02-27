@@ -25,11 +25,12 @@
 												<h5 class="panel-title" tabindex="-1">
 													<span class="num-question col-sm-1 col-xs-2"><%= numQuestion %></span>
 													<div class="col-sm-11 col-xs-10">														
-														<div class="form-group" style="margin:0px;">
+														<div class="form-group heading-title">
 															<input type="text" class="survey-section-title-unselected survey-question-title" id="survey-question-title" value="<%= title %>" aria-label="<%= lang.getContent("question.statement") %>"/>
 															<span id='survey-question-title<%= question.getQuestionId() %>-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
 						  									<span id='survey-question-title<%= question.getQuestionId() %>-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.question.title") %></span>
 														</div>
+														<button class="btn-transparent btn-edit"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visuallyHidden"><%= lang.getContent("button.edit_title") %>: <%= title %></span></button>
 													</div>
 												</h5>
 												<div class="panel-section-buttons right">

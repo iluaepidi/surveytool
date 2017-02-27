@@ -31,14 +31,15 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 									<div class="panel-heading">	
 										<button id="panel-heading-display" class="section-head btn-transparent panel-heading-display-arrow" aria-label="<%= lang.getContent("button.hide_section") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
 										<h3 class="panel-title">
-										<div class="col-sm-12">
-										 <div class="form-group" style="margin:0px;">
-												<!-- <span  class="noEditingTitle"><%=lang.getContent("survey.edit.section.listQuestions")%></span> -->
-												<input type="text" class="survey-section-title-unselected survey-section-title" id="survey-section-title-<%= section.getSectionId() %>" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
-												<span  id='survey-section-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
-				  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span>
+											<div class="col-sm-12">
+											 	<div class="form-group heading-title">
+													<!-- <span  class="noEditingTitle"><%=lang.getContent("survey.edit.section.listQuestions")%></span> -->
+													<input type="text" class="survey-section-title-unselected survey-section-title" id="survey-section-title-<%= section.getSectionId() %>" value="<%= title %>" aria-label="<%= lang.getContent("survey.edit.section.title") %>"/>
+													<span  id='survey-section-title-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="color: #a94442;right: 20px"></span>
+					  								<span id='survey-section-title-error' class='error hidden' style='top: 0px'><%= lang.getContent("msg.error.section.title") %></span>
+												</div>
+												<button class="btn-transparent btn-edit"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visuallyHidden"><%= lang.getContent("button.edit_title") %>: <%= title %></span></button>
 											</div>
-										</div>
 										</h3>
 										<div class="panel-section-buttons right">
 											<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>

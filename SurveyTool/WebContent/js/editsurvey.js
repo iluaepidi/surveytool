@@ -54,14 +54,16 @@ $(function() {
 	
 	//survey-info  #e6e6e6
 	$('.btn-qtype button').click(function(){
-		console.log("Clicking on type query button");
-		$('#frame-basic-Settings').css('display', 'inherit');
-		$('#' + qtypeId + " i").css("background-color","#fff");
+		//console.log("Clicking on type query button");
+		//$('#frame-basic-Settings').css('display', 'inherit');
+		//$('#' + qtypeId + " i").css("background-color","#fff");
+		$('#' + qtypeId + " i").removeClass("qtype-selected");
 		qtypeId = $(this).attr('id');
-		$('#' + qtypeId + ' i').css("background-color","#e6e6e6");
+		$('#' + qtypeId + " i").addClass("qtype-selected");
+		//$('#' + qtypeId + ' i').css("background-color","#e6e6e6");
 		$('#qtypevalue').val(qtypeId);
 		$('#qstatement').focus();
-		
+		$("div.qtype-error > span").addClass("hidden");
 	});
 	
 	$('#basic-settings-close').click(function(){
@@ -76,10 +78,18 @@ $(function() {
 	
 	$('#create-question').click(function(event) {
 		var valid = true;
+		var qTypeSelected = false;
+		$('ul.qtype-list').find("li.btn-qtype").each(function(index, elem){
+			qTypeSelected = qTypeSelected || $(elem).find("i").hasClass("qtype-selected");
+		});
+		
 		//check de name project
 		if($('#qstatement').val() == ""){
 			valid = false;
 			showFieldError($('#qstatement'));
+		}else if(!qTypeSelected){
+			valid = false;
+			$("div.qtype-error > span").removeClass("hidden");
 		}else{
 			hideFieldError($('#qstatement'));
 			console.log("num page: " + currentElement.attr('index'));
@@ -120,12 +130,14 @@ $(function() {
 			//$('#main-version').val("none");
 			$('#mandatory').val("false");
 			$('#help-text').val("false");
-			$('#' + qtypeId + " i").css("background-color","#fff");
-			$('#frame-basic-Settings').css('display', 'none');
+			$('#' + qtypeId + " i").removeClass("qtype-selected");
+			//$('#' + qtypeId + " i").css("background-color","#fff");
+			//$('#frame-basic-Settings').css('display', 'none');
 			
 			//$('#modal').modal('hide');
 			//$('#newQuestionModal').hide();
 			$('#newQuestionModal').modal('toggle');
+			$("div.qtype-error > span").addClass("hidden");
 		}
 	});
 	
@@ -133,6 +145,10 @@ $(function() {
 		currentElement = $(this).closest('li.page');
 		$("#newQuestionModal").modal("show");		
 		modalFocus = $(this);
+	});
+	
+	$('.survey-sections').on("click", '.btn-edit', function(){
+		$(this).closest('div').find("input").focus();
 	});
 	
 	$('.survey-sections').on("click", ".btn-page-break", function(){
@@ -159,9 +175,9 @@ $(function() {
 				var i = 1;
 				sectionList.find("li.panel-section").each(function(indexSection, section){
 				   $(section).find('li.page').each(function(indexPage, page){
-					   var cads = $(page).find('h4').html().split(' ');
+					   var cads = $(page).find('h4 > span').html().split(' ');
 						$(page).attr('index', i);
-						$(page).find('h4').html(cads[0] + " " + i);
+						$(page).find('h4 > span').html(cads[0] + " " + i);
 						i++;
 				   });
 				});
@@ -1228,7 +1244,7 @@ $(function() {
 		var item = $(this).closest('li.page');
 		currentElement = item;
 		currentQuestion = item.attr('pid');
-		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4').html() + '"');
+		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4 span').html() + '"');
 		$("#removeElemId").val(currentQuestion + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('PageService');
 		$("#removeElement").modal("show");
@@ -1641,9 +1657,9 @@ $(function() {
 					   var i = 1;
 					   sectionList.find("li.panel-section").each(function(indexSection, section){
 						   $(section).find('li.page').each(function(indexPage, page){
-							   var cads = $(page).find('h4').html().split(' ');
+							   var cads = $(page).find('h4 > span').html().split(' ');
 								$(page).attr('index', i);
-								$(page).find('h4').html(cads[0] + " " + i);
+								$(page).find('h4 > span').html(cads[0] + " " + i);
 								i++;
 						   });
 					   });
@@ -1767,9 +1783,9 @@ $(function() {
 						   /*var cads = $(page).find('input.survey-section-title').val().split(' ');
 						   $(section).find('input.survey-section-title').val(cads[0] + " " + i);*/
 						   $(section).find('li.page').each(function(indexPage, page){
-							   var cads = $(page).find('h4').html().split(' ');
+							   var cads = $(page).find('h4 > span').html().split(' ');
 								$(page).attr('index', i);
-								$(page).find('h4').html(cads[0] + " " + i);
+								$(page).find('h4 > span').html(cads[0] + " " + i);
 								i++;
 						   });
 					   });
@@ -1896,9 +1912,13 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("click", "#mandatoryButton", function(e){
-		console.log("mandatory");
+	$('.survey-sections').on("change", 'input.mandatoryToggle', function(e){
 		e.stopPropagation();
+		
+		var checked = $(this).is(":checked");
+		if(checked) $(this).closest("div").find("div.toggle").removeClass("off");
+		else $(this).closest("div").find("div.toggle").addClass("off");		
+	
 		var node = $(this); 
 		var req = {};
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');

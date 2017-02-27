@@ -19,6 +19,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    		<div class="panel-body">
 				    			<fieldset class="survey-frame">
 				    				<legend><%= lang.getContent("question.new.question_type") %></legend>
+				    				<div class="qtype-error" role="status" aria-live="assertive">
+				    					<span class="hidden"><%=lang.getContent("msg.error.question.type.selected")%></span>
+				    				</div>
 									<ul class="row qtype-list">
 										<li class="col-sm-1 center btn-qtype">
 											<button class="btn-transparent" id="shortText"><i class="fa fa-square-o fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.formfield")%></span></button>
@@ -51,9 +54,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    			</fieldset>
 				    			<div class="survey-frame frame-basic-Settings" id="frame-basic-Settings">
 				    				<h3><%= lang.getContent("question.new.basic_settings.title") %></h3>
-				    				<div class="close-frame">
+				    				<!-- <div class="close-frame">
 				    					<button class="btn-transparent btn-close-aspa" id="basic-settings-close" title="Close basic settings" aria-label="<%= lang.getContent("button.close") %> <%= lang.getContent("question.new.basic_settings.title") %>"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
-				    				</div>
+				    				</div> -->
 				    				<div class="row">
 				    					<form>
 				    						<input type="hidden" id="qtypevalue" name="qtype" value="" />

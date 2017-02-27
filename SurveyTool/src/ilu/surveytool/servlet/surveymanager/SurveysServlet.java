@@ -90,10 +90,12 @@ public class SurveysServlet extends HttpServlet {
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CHART_GRAPHICS));
+			//jsFiles.add(properties.getJsFilePath(Address.s_JS_TOGGLE_BUTTON));
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			
 			List<String> cssFiles = new ArrayList<>();
 			cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
+			cssFiles.add(properties.getCssFilePath(Address.s_CSS_TOGGLE_BUTTON));
 			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
 			
 			int pageId = surveysHandler.getPageIdBySurveyId(surveyId);
