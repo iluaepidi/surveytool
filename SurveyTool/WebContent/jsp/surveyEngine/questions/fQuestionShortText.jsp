@@ -24,7 +24,7 @@
 													<label for="{{question.questionId}}" class="sr-only"><%= lang.getContent("accesibility.question.shorttextAnswer") %></label>
 													
 													<!-- NUMERIC -->
-													<div ng-show='(survey.$submitted || survey["decimal-" + question.questionId].$touched)'>
+													<div ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' ng-show='(survey.$submitted || survey["decimal-" + question.questionId].$touched)'>
 														<div class="msg-error" ng-show='survey["decimal-" + question.questionId].$error.pattern'>
 															<div class="error">
 																<p class="msg-title"><%= lang.getContent("survey.process.title.numFormat") %></p>
@@ -38,20 +38,20 @@
 															</div>
 														</div>
 							  						</div>
-							  						<div class="char-counter" ng-show='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"'>
+							  						<div class="char-counter" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"'>
 							  							<span ng-show='getJsonArrayElement(question.parameters, "name", "decimals").value'>{{getJsonArrayElement(question.parameters, "name", "decimals").value}} <%= lang.getContent("survey.process.decimalsMax") %></span> 
 							  							<span ng-show='getJsonArrayElement(question.parameters, "name", "minValue").value || getJsonArrayElement(question.parameters, "name", "maxValue").value'><%= lang.getContent("survey.process.numLimits") %> {{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}} <%= lang.getContent("survey.process.desc.numLimits.and") %> {{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}.</span>
 							  						</div>												
 													<input type="text" class="form-control" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value == "formFieldTypeNumber"' step='{{getDecimals(getJsonArrayElement(question.parameters, "name", "decimals"))}}'  name="decimal-{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" id="number-{{question.questionId}}" <%if(hasMinMax){ %>min='{{getMinValue(getJsonArrayElement(question.parameters, "name", "minValue"))}}' max='{{getMaxValue(getJsonArrayElement(question.parameters, "name", "maxValue"))}}' <%}%> ng-model="question.response" ng-pattern='decimalRegex(getJsonArrayElement(question.parameters, "name", "decimals"))' ng-focus="setIndexQuestion(question.index)"></input>
 							  																			
 													<!-- SHORT TEXT -->
-													<div class="msg-alert" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
+													<div class="msg-alert" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.response.length'>
 														<div class="error">
 															<p class="msg-title">{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}} <%= lang.getContent("survey.process.title.charLimit") %></p>
 															<p role="alert"><%= lang.getContent("survey.process.desc.charLimit") %></p>
 														</div>
 													</div>
-													<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999' >
+													<div class="char-counter" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999' >
 														{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %>
 													</div>
 													<input type="text" ng-if='getJsonArrayElement(question.parameters, "name", "formFieldType").value != "formFieldTypeNumber"' class="form-control" id="text-{{question.questionId}}" name="text-{{question.questionId}}" placeholder="<%= lang.getContent("placeholder.type_here")%>" maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' ng-model="question.response" ng-focus="setIndexQuestion(question.index)"></input>

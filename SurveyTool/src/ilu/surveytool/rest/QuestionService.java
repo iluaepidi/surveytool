@@ -195,7 +195,7 @@ public class QuestionService {
 			questionHandler.removeParametersByQuestionByPage(questionId, pageId);
 			
 			HashMap<String,String> parameters = new HashMap<String,String>();			
-			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE,json.getString(Parameter.s_INPUTMODE));
+			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE,"formFieldInputModeFree");
 			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE,json.getString(Parameter.s_TEXT));			
 			questionHandler.updateParameters(questionId, pageId, parameters);
 			response=json.getString(Parameter.s_TEXT);

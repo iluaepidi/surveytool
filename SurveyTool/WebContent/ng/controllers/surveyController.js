@@ -109,7 +109,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.getMaxValue = function(maxValue) {
 		if(maxValue == null || maxValue.value == null || maxValue.value == "")
 		{
-			return "9999";
+			return "0";
 		}
 		else
 		{
@@ -129,12 +129,13 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 	
 	$scope.isOutOfRange = function(num, min, max) {
-		if(!angular.isUndefined(num))
+		if(!angular.isUndefined(num) && min != max)
 		{
 			var numParts = num.split(",");
 			var finalNum = num;
 			if(numParts.length > 1) finalNum = numParts[0] + "." + numParts[1]; 
 			console.log("isNumber: " + finalNum);
+			console.log("isNumber min: " + min + " - max: " + max);
 			if(!isNaN(parseFloat(finalNum)) && isFinite(finalNum))
 			{
 				var f = parseFloat(finalNum);
