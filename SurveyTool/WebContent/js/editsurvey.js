@@ -2844,6 +2844,7 @@ $(function() {
 	$('#newQuestionModal').on('hidden.bs.modal', function () {
 		console.log("close new question: " + modalFocus.prop("tagName"));
 		modalFocus.focus();
+		$('html,body').animate({scrollTop: modalFocus.offset().top - 25},'slow');
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
 });
