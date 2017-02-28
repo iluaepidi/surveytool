@@ -242,7 +242,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "where s.idQuestionnaire = ? order by qp.index";
+				+ "where s.idQuestionnaire = ? order by p.numPage, qp.index";
 		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.section sc "
 				+ "inner join surveytool.page p on sc.idSection = p.idSection "
