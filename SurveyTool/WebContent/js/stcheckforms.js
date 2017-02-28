@@ -6,8 +6,8 @@ var error = false;
 
 $(function() {
 	
-	$('#loginSubmit').click(function(e){
-		e.preventDefault();
+	//$('#loginSubmit').click(function(e){
+	$('#loginForm').submit(function(e){
 		var valid = true;
 		if($('#username').val() == ""){
 			valid = false;
@@ -16,12 +16,14 @@ $(function() {
 			valid = false;
 			showFieldError($('#password'));}		
 		if(valid){
-			error = false;
-			$('#loginForm').submit();}
+			error = false;}
+		else {
+			e.preventDefault();}
 	});
 	
-	$('#registerSubmit').click(function(e){
-		e.preventDefault();
+	//$('#registerSubmit').click(function(e){
+	$('#registerForm').submit(function(e){
+		console.log("register");
 		var valid = true;
 		if($('#usernameregister').val() == ""){
 			valid = false;
@@ -53,7 +55,9 @@ $(function() {
 		
 		if(valid){
 			error = false;
-			$('#registerForm').submit();
+			//$('#registerForm').submit();
+		}else{
+			e.preventDefault();
 		}
 	});
 
