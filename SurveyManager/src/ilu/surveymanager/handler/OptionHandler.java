@@ -9,6 +9,7 @@ import ilu.surveymanager.data.Option;
 import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
@@ -77,6 +78,24 @@ public class OptionHandler {
 		return response.toString();
 	}
 	
+	public boolean setOptionOther(Option option, int pageId, boolean value)
+	{
+		boolean updated = false;
+		OptionDB optionDB = new OptionDB();
+		
+		updated = optionDB.updateOptionOther(option.getOgid(), option.getQid(), value);
+		
+		if(!value && updated)
+		{
+			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+			questionParameterDB.removeQuestionParameters(option.getQid(), pageId);
+			ContentDB contentDB = new ContentDB();
+			int contentId = optionDB.getContentIdByOptionsGroupId(option.getOgid());
+			contentDB.removeContentByType(contentId, DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL);
+		}
+			
+		return updated;
+	}
 	
 	public String updateTextOption(Option option)
 	{
@@ -129,6 +148,24 @@ public class OptionHandler {
 		return response.toString();
 	}
 	
+	public boolean updateTextOtherOption(Option option)
+	{
+		boolean updated = false;
+		ContentDB contentDB = new ContentDB();
+		OptionDB optionDB = new OptionDB();
+		int contentId = optionDB.getContentIdByOptionsGroupId(option.getOgid());
+		boolean exist = contentDB.existContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL);
+		if(exist)
+		{
+			contentDB.updateContentText(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL, option.getText());
+			updated = true;
+		}
+		else
+		{
+			updated = contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL, option.getText());
+		}
+		return updated;
+	}
 	
 	public String saveOptionWithoutContent(Option option)
 	{

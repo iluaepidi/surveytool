@@ -12,6 +12,7 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT = "ackText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_CALL_TEXT = "callText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
+			public final static String s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL = "otherLabel";
 		//ContentLength
 			public final static int s_MAX_CONTENT_LENGTH = 1000;
 		//OptionType	

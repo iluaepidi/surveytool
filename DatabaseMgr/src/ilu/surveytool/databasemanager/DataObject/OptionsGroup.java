@@ -13,6 +13,7 @@ public class OptionsGroup {
 	List<Option> options;
 	int index;
 	int questionId = 0;
+	boolean otherOption = false;
 
 	public OptionsGroup() 
 	{
@@ -86,6 +87,14 @@ public class OptionsGroup {
 
 	public void setOptions(List<Option> options) {
 		this.options = options;
+	}
+
+	public boolean isOtherOption() {
+		return otherOption;
+	}
+
+	public void setOtherOption(boolean otherOption) {
+		this.otherOption = otherOption;
 	}
 
 	@Override

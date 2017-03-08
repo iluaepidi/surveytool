@@ -34,6 +34,58 @@ public class OptionService {
     	return response;
     }
 	
+	@POST
+	@Path("/setOptionOther")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String setOptionOther(String req) {
+    	System.out.println("Opción (setOptionOther): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			Option option = new Option();
+			option.setQid(Integer.parseInt(json.getString("qid")));
+			option.setOgid(Integer.parseInt(json.getString("ogid")));
+			int pageId =Integer.parseInt(json.getString("pid"));
+			boolean value = Boolean.parseBoolean(json.getString("value"));
+			System.out.println("Opción: " + option.toString());
+			OptionHandler optionHandler = new OptionHandler();
+			response = Boolean.toString(optionHandler.setOptionOther(option, pageId, value)); 
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+
+	@POST
+	@Path("/updateTextOtehrOption")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateTextOtehrOption(String req) {
+    	System.out.println("Opción (updateTextOption): " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			
+			Option option = new Option();
+			option.setLanguage(json.getString("lang"));
+			option.setOgid(Integer.parseInt(json.getString("ogid")));
+			option.setQid(Integer.parseInt(json.getString("qid")));
+			option.setText(json.getString("text"));
+					
+			System.out.println("Opción: " + option.toString());
+			OptionHandler optionHandler = new OptionHandler();
+			response = Boolean.toString(optionHandler.updateTextOtherOption(option));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+		
 	@DELETE
 	@Path("/{qid}/{ogid}/{oid}")
 	@Consumes(MediaType.TEXT_PLAIN)

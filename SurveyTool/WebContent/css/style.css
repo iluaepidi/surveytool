@@ -1089,8 +1089,24 @@ ul.pagination li.active a {color: #fff !important;}
     clear: both;
     float:center;
     width: 100%;}
+.other-option-label {float: left;
+	margin: 0 6px;
+	padding: 4.1px 0;}
+.other-option-fieldset {width: 70%;
+	margin: 0 6px;
+	padding: 0 13px;
+	border: 1px solid #000;
+	border-radius: 3px;
+	margin-bottom: 7px;}
+.other-option-fieldset > legend {width: auto;
+	padding: 5px 7px;}
 .option-item .circle-info {}
-.option-title {width: 70% !important;
+.option-title,
+.option-other-title {width: 70% !important;
+    margin: 0px 5px;
+    height: 28px !important;
+    padding: 0 !important;}
+.option-title-other {width: 66% !important;
     margin: 0px 5px;
     height: 28px !important;
     padding: 0 !important;}

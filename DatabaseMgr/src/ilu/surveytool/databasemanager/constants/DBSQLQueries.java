@@ -597,6 +597,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 			public final static String s_UPDATE_OPTIONSGROUP = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?), `idContent`=? WHERE `idOptionsGroup`=?";
+			public final static String s_UPDATE_OPTION_OTHER = "UPDATE `surveytool`.`optionsgroup` SET `otherOption`=? WHERE `idOptionsGroup`=? and `idQuestion`=?";
 						
 			//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
@@ -657,6 +658,8 @@ public class DBSQLQueries {
 			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+			public final static String s_DELETE_CONTENT_BY_ID_TYPE = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
+					+ "and `idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
 
 			public final static String s_REMOVE_OPTIONSGROUP_CONTENT = "DELETE FROM surveytool.content where idContent=(SELECT idContent FROM surveytool.optionsgroup WHERE idOptionsGroup=?)";
 		//option

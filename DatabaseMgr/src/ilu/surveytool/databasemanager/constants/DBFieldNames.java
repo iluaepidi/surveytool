@@ -50,6 +50,7 @@ public class DBFieldNames {
 		public final static String s_OPTIONSGROUPID = "idOptionsGroup";
 		public final static String s_OPTIONSGROUP_OPTIONTYPE_NAME = "optionTypeName";
 		public final static String s_OPTIONSGROUP_RANDOM = "random";
+		public final static String s_OPTIONSGROUP_OTHER_OPTION = "otherOption";
 		
 	//page
 		public final static String s_PAGE_ID = "idPage";

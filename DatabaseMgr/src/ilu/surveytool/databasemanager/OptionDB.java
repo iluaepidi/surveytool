@@ -136,6 +136,7 @@ public class OptionDB {
 	   			optionsGroup.setOptionType(rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME));
 	   			optionsGroup.setRandom(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.setIndex(rs.getInt(DBFieldNames.s_INDEX));
+	   			optionsGroup.setOtherOption(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 
@@ -178,6 +179,7 @@ public class OptionDB {
 	   			optionsGroup.put("optionType", optionType);
 	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			optionsGroup.put("otherOption", rs.getInt(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
@@ -663,6 +665,35 @@ public class OptionDB {
 			pstm.setString(1, type);
 			pstm.setInt(2, contentId);
 			pstm.setInt(3, optionsGroupId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
+
+	public boolean updateOptionOther(int optionsGroupId, int questionId, boolean value) {
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTION_OTHER);
+			pstm.setBoolean(1, value);
+		   	pstm.setInt(2, optionsGroupId);
+			pstm.setInt(3, questionId);
 		   		
 			int numUpdated = pstm.executeUpdate();
 			
