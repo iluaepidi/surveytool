@@ -385,6 +385,37 @@ public class ResponsesDB {
 		return response;
 	}
 
+	public String getAnonymousOtherResponseValue(int anonymousUserId, int surveyId, int questionId)
+	{
+		String response = "";
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		String query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE;
+	   	   
+		try{
+			pstm = con.prepareStatement(query);			
+		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(2, surveyId);
+		   	pstm.setInt(3, questionId);
+		   		
+		   	rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_VALUE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
 	public boolean existAnonymousResponseValue(int anonymousUserId, int suveyId, int questionId, int optionsGroupId, String value)
 	{
 		boolean response = false;

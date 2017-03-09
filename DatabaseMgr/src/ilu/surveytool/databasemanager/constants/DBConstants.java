@@ -3,6 +3,7 @@ package ilu.surveytool.databasemanager.constants;
 public class DBConstants {
 	
 	//DB Values
+			public final static String s_VALUE_TOKEN = "-#-";
 		//ContentType
 			public final static String s_VALUE_CONTENTTYPE_NAME_TITLE = "title";
 			public final static String s_VALUE_CONTENTTYPE_NAME_DESCRIPTION = "description";

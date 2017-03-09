@@ -15,6 +15,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.text = "hello world";
 	$scope.decimalRegex = '^[0-9]+(.([0-9]{1,2}))?$';
 	$scope.questionIndex = 1;
+	$scope.otherOptionValue = -1;
 	var mandatoryErrorQuestions = [];
 	var errorSurvey = false;
 
@@ -222,10 +223,13 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 						if(q.optionsGroups && q.optionsGroups.length > 0)
 						{
 							q.optionsGroups.forEach(function(og){
+								console.log("response option: " + og.response + "- type: " + q.questionType);
 								if(!og.response)
 								{
-									if(og.options && og.options.length > 0 && q.questionType != 'checkbox')
+									console.log("response option 2: " + og.response + " - other: " + og.responseOther);
+									if(og.options && og.options.length > 0 && q.questionType == 'multiple')
 									{
+										console.log("response option 3: " + og.response);
 										var hasResponse = false;
 										og.options.forEach(function(o){
 											if(o.response)
@@ -233,6 +237,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 												hasResponse = true;
 											}
 										});
+										
+										if(og.responseOther) hasResponse = true;
 										
 										if(!hasResponse) mandatoryErrorQuestions.push(q.questionId);
 									}
@@ -335,7 +341,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 			return true;
 		}
 	};
-	
+
 	//Navigation focus
 
 	$scope.setIndexQuestion = function(qIndex) {
@@ -343,6 +349,14 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		console.log("index question: " + $scope.questionIndex);
 	    $location.hash('anchor-' + $scope.questionIndex);
 	    $anchorScroll();
+	};
+
+	$scope.setOtherSimpleFocus = function(optionGroup) {
+		if(optionGroup.response != '-1') optionGroup.response = '-1';
+	};
+
+	$scope.setOtherMultipleFocus = function(optionGroup) {
+		if(!optionGroup.responseOther || optionGroup.responseOther == false) optionGroup.responseOther = true;
 	};
 	
 	//mousewheel
@@ -389,7 +403,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		var i = 0;
 		while(!hasResource && i < options.length){
 			if(options[i].resource) hasResource = true;
-			console.log("hasResource " + i + ": " + hasResource);
+			//console.log("hasResource " + i + ": " + hasResource);
 			i++;
 		}
 		return hasResource;

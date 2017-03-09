@@ -33,6 +33,32 @@
 					  </label>
 					</li>
 				
+					<li class="checkbox" ng-show="question.optionsGroups[0].otherOption">
+					  <input type="checkbox" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}-{{option.optionId}}" id="optionsChecks-other-{{option.optionId}}" ng-model="question.optionsGroups[0].responseOther" ng-focus="setIndexQuestion(question.index)">
+					  <label for="optionsChecks-other-{{option.optionId}}">
+					  	<span ng-if='getJsonArrayElement(question.optionsGroups[0].contents, "contentType", "otherLabel").text'>{{getJsonArrayElement(option.contents, "contentType", "title").text}}</span>
+					  	<span ng-if='!getJsonArrayElement(question.optionsGroups[0].contents, "contentType", "otherLabel").text'><%= lang.getContent("accesibility.question.option.legend.other") %></span>
+					    <span class="sr-only">(<%= lang.getContent("accesibility.question.option.longtextOther") %>)</span>
+					  </label>
+					  <div class="form-question-content other-option-text-div">
+						<div class="msg-alert" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) == question.optionsGroups[0].responseOtherText.length'>
+							<div class="error">
+								<p class="msg-title">{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}} <%= lang.getContent("survey.process.title.charLimit") %></p>
+								<p role="alert"><%= lang.getContent("survey.process.desc.charLimit") %></p>
+							</div>
+						</div>
+						<div class="char-counter" ng-show='getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) < 9999'>{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength")) - question.response.length}} <%= lang.getContent("survey.process.charCounter") %></div>
+						<label for="otherText-{{question.questionId}}" class="sr-only"><%= lang.getContent("accesibility.question.textArea.longtextOther") %></label>				
+						<textarea class="form-control other-option-text" 
+							id="otherText-{{question.questionId}}" 
+							name="otherText-{{question.questionId}}" 
+							rows='{{getLines(getJsonArrayElement(question.parameters, "name", "textLines"), getJsonArrayElement(question.parameters, "name", "textLength"))}}' 
+							placeholder='<%= lang.getContent("placeholder.type_here")%>' 
+							maxlength='{{getMaxLength(getJsonArrayElement(question.parameters, "name", "textLength"))}}' 
+							ng-focus='setOtherMultipleFocus(question.optionsGroups[0])' ng-readonly='!question.optionsGroups[0].responseOther'
+							ng-model='question.optionsGroups[0].responseOtherText'></textarea>
+					  </div>
+					</li>
 				</ul>
 			
 			</div>	

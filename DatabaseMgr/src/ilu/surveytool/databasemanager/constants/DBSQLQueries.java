@@ -49,6 +49,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
+				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '-1%'";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL = " and r.idOptionsGroup = ?";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL = " and isnull(r.idOptionsGroup)";
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "

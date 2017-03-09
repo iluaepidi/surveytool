@@ -186,13 +186,46 @@ public class OptionDB {
 	   				if(anonimousUser instanceof AnonimousUser)
 	   				{
 	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
-	   					optionsGroup.put("response", responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId)); 
+	   					String response = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId);
+	   					String responseOtherText = "";
+	   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
+	   					{
+	   						String[] respParts = response.split(DBConstants.s_VALUE_TOKEN);
+	   						response = respParts[0];
+	   						responseOtherText = respParts[1];
+	   					}
+	   					optionsGroup.put("response", response); 
+	   					optionsGroup.put("responseOtherText", responseOtherText);
 	   				}
 	   				else
 	   				{
-	   					optionsGroup.put("response", "");
+	   					optionsGroup.put("response", "");	   					
 	   				}
 	   			}
+	   			else if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX))
+	   			{
+	   				ResponsesDB responsesDB = new ResponsesDB();
+	   				if(anonimousUser instanceof AnonimousUser)
+	   				{
+	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					String response = responsesDB.getAnonymousOtherResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId);
+	   					String responseOtherText = "";
+	   					boolean responseOther = false;
+	   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
+	   					{
+	   						String[] respParts = response.split(DBConstants.s_VALUE_TOKEN);
+	   						responseOther = true;
+	   						responseOtherText = respParts[1];
+	   					} 
+	   					optionsGroup.put("responseOther", responseOther);
+	   					optionsGroup.put("responseOtherText", responseOtherText);
+	   				}
+	   				else
+	   				{
+   						optionsGroup.put("responseOther", false); 
+	   				}
+	   			}
+	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			optionsGroup.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));

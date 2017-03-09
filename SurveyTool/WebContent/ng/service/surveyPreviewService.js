@@ -20,7 +20,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  console.log("Json Response: " + JSON.stringify(responses));
 	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
-	  		console.log("Rest response: " + JSON.stringify(response));
+	  		//console.log("Rest response: " + JSON.stringify(response));
 	  		//var resJson = JSON.parse(response);
 			if(response.stored)
 			{
@@ -84,6 +84,12 @@ function getResponseJson(currentSurvey, action, preview)
 					if(og.response)
 					{
 						optionsGroup.response = og.response;
+						//console.log("###### antes otro: " + optionsGroup.responseOtherText);
+						if(optionsGroup.response == -1)
+						{
+							//console.log("###### Es otro: " + og.responseOtherText);
+							optionsGroup.responseOtherText = og.responseOtherText;
+						}
 					}
 					else
 					{
@@ -99,6 +105,12 @@ function getResponseJson(currentSurvey, action, preview)
 									optionsGroup.options.push(option);
 								}
 							});
+						}
+						
+						if(og.otherOption)
+						{
+							if(og.responseOther) optionsGroup.responseOther = og.responseOther;
+							if(og.responseOtherText) optionsGroup.responseOtherText = og.responseOtherText;
 						}
 					}
 					question.optionsGroups.push(optionsGroup);
