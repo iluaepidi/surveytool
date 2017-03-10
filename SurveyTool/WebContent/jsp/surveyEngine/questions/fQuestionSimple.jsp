@@ -17,7 +17,6 @@
 			<jsp:include page="fqComponents/fqResources.jsp" />
 
 			<div class="form-question-content" ng-class="{center: option.resource}">
-				Response: {{question.optionsGroups[0].response}} - {{question.optionsGroups[0].response == otherOptionValue}}
 				<ul class="form-options option-list">
 					<li class="radio" ng-class="{img: hasResource(question.optionsGroups[0].options), fourImg: question.optionsGroups[0].options.length == 4}" ng-repeat="option in question.optionsGroups[0].options">
 					  <input type="radio" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}" id="optionsRadios{{option.optionId}}" ng-value="{{option.optionId}}" ng-model="question.optionsGroups[0].response" ng-focus="setIndexQuestion(question.index)">

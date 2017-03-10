@@ -192,7 +192,7 @@ public class OptionDB {
 	   					{
 	   						String[] respParts = response.split(DBConstants.s_VALUE_TOKEN);
 	   						response = respParts[0];
-	   						responseOtherText = respParts[1];
+	   						if(respParts.length > 1) responseOtherText = respParts[1];
 	   					}
 	   					optionsGroup.put("response", response); 
 	   					optionsGroup.put("responseOtherText", responseOtherText);
@@ -215,7 +215,7 @@ public class OptionDB {
 	   					{
 	   						String[] respParts = response.split(DBConstants.s_VALUE_TOKEN);
 	   						responseOther = true;
-	   						responseOtherText = respParts[1];
+	   						if(respParts.length > 1) responseOtherText = respParts[1];
 	   					} 
 	   					optionsGroup.put("responseOther", responseOther);
 	   					optionsGroup.put("responseOtherText", responseOtherText);

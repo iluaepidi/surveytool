@@ -17,7 +17,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
   survey.saveResponseAndGetNextPage = function(action, callback){
 	  console.log("Next page: " + JSON.stringify(survey));
 	  var responses = getResponseJson(survey, action, true);
-	  console.log("Json Response: " + JSON.stringify(responses));
+	  //console.log("Json Response: " + JSON.stringify(responses));
 	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
 	  		//console.log("Rest response: " + JSON.stringify(response));
@@ -84,7 +84,7 @@ function getResponseJson(currentSurvey, action, preview)
 					if(og.response)
 					{
 						optionsGroup.response = og.response;
-						//console.log("###### antes otro: " + optionsGroup.responseOtherText);
+						console.log("###### antes otro: " + optionsGroup.response);
 						if(optionsGroup.response == -1)
 						{
 							//console.log("###### Es otro: " + og.responseOtherText);
