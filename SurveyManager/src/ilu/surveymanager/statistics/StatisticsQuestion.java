@@ -13,6 +13,7 @@ import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.Option;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 
 public class StatisticsQuestion {
@@ -174,7 +175,9 @@ public class StatisticsQuestion {
 				    while (it2.hasNext()) {
 				    	Map.Entry option = (Map.Entry)it2.next();
 				    	for(int i=0;i<optionsByOptionsGroup.size();i++){
-				    		if((optionsByOptionsGroup.get(i).getOptionId()==Integer.parseInt((String)option.getKey())) && ((((Integer)optionGroup.getKey()).intValue())==optionsByOptionsGroup.get(i).getOptionsGroupId())){
+				    		String optionIdKey = (String)option.getKey();
+				    		if(optionIdKey.contains(DBConstants.s_VALUE_TOKEN)) optionIdKey = optionIdKey.split(DBConstants.s_VALUE_TOKEN)[0];
+				    		if((optionsByOptionsGroup.get(i).getOptionId()==Integer.parseInt(optionIdKey)) && ((((Integer)optionGroup.getKey()).intValue())==optionsByOptionsGroup.get(i).getOptionsGroupId())){
 				    			optionsByOptionsGroup.get(i).setNumResponses(optionsByOptionsGroup.get(i).getNumResponses()+1);
 				    			//System.out.println("optionId "+(String)option.getKey()+" en set responses: "+optionsByOptionsGroup.get(i).getNumResponses());
 						    	
