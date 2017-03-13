@@ -7,6 +7,7 @@ public class DBFieldNames {
 		public final static String s_ANONYMOUS_USER_DATE = "createDate";
 		public final static String s_RESPONSE_TIMESTAMP = "timestamp";
 		public final static String s_CURRENT_PAGE = "currentPage";
+		public final static String s_ANONYMOUS_USER_FINISHED = "finished";		
 				
 	//anonymousResponse
 		public final static String s_RESPONSE_ID = "idResponse";

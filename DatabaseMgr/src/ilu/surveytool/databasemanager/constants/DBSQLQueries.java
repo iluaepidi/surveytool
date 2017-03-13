@@ -322,6 +322,7 @@ public class DBSQLQueries {
 					+ "where pp.idPage = ?) "
 				+ "and p.numPage < (SELECT numPage from surveytool.page where idPage = ?) and qt.name != 'bcontent'";
 
+		public final static String s_SELECT_NUMBER_ANONIMUSER_SURVEYID = "SELECT idAnonimousUser, createDate, finished FROM surveytool.anonimoususer WHERE idQuestionnaire=?";
 		
 		
 		

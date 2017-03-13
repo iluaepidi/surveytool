@@ -70,24 +70,26 @@ public class Statistics {
 		
 		//anonymousUserId, createDate, questionId, optionsGroupId, value, timestamp
 		HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses = responsesDB.getAnonimousResponseCompleteWithoptionIdBySurveyId(surveyId);
+		HashMap<Integer, HashMap<Timestamp, Integer>> visits = responsesDB.getAnonimousResponseBySurveyId(surveyId);
+				
+		numVisits = visits.size();
+				
 		
-		numVisits = responses.size();
-		
-		loadVisitsByDay(responses);
+		loadVisitsByDay(visits);
 		
 		int[] questions = responsesDB.getNumQuestionsQuestionnaires(surveyId); //0-->No mandatory, 1-->Mandatory
 		HashMap<Integer,Boolean> questionMandatories = responsesDB.getQuestionsID_Mandatory_BySurveyId(surveyId);
-		loadDataOfCompleted(responses, questions, questionMandatories);
+		loadDataOfCompleted(visits);
 		loadQuestions(surveyId, responses, languageDefault);
 	}
 	
-	public void loadVisitsByDay(HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses){
+	public void loadVisitsByDay(HashMap<Integer, HashMap<Timestamp, Integer>> responses){
 		HashMap<Date, Integer> visitsByDay2 = new HashMap<Date, Integer>();
 		
 		Iterator it = responses.entrySet().iterator();
 		while (it.hasNext()) {
 		    Map.Entry pair = (Map.Entry)it.next();
-		    HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>> times = (HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>)pair.getValue();
+		    HashMap<Timestamp, Integer> times = (HashMap<Timestamp, Integer>)pair.getValue();
 		    
 		    Iterator it2 = times.entrySet().iterator();
 		    while (it2.hasNext()) {
@@ -361,21 +363,21 @@ public class Statistics {
 	}
 */
 	
-	public void loadDataOfCompleted(HashMap<Integer, HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>> responses, int[] questions, HashMap<Integer,Boolean> questionMandatories){
+	public void loadDataOfCompleted(HashMap<Integer, HashMap<Timestamp, Integer>> responses){
 		
 		HashMap<Date, Integer> completedQuestionnairesByDay2 = new HashMap<Date, Integer>();
+		ResponsesDB responsesDB = new ResponsesDB();
 		//numCompleteResponses = 0;
 		numCompleteMandatoryResponses = 0;
 		
 		Iterator it = responses.entrySet().iterator();
 		while (it.hasNext()) {
 		    Map.Entry pair = (Map.Entry)it.next();
-		    HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>> times = (HashMap<Timestamp, HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>>)pair.getValue();
+		    HashMap<Timestamp, Integer> times = (HashMap<Timestamp, Integer>)pair.getValue();
 		    
 		    Iterator it2 = times.entrySet().iterator();
 		    while (it2.hasNext()) {
 		    	Map.Entry pair2 = (Map.Entry)it2.next();	
-		    	HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>> questionsList = (HashMap<Integer, HashMap<Integer, HashMap<String,Timestamp>>>)pair2.getValue();
 		    	
 		    	Date moment = new Date(((Timestamp)(pair2.getKey())).getTime());
 		    	Calendar cal = Calendar.getInstance(); // locale-specific
@@ -385,17 +387,8 @@ public class Statistics {
 		    	cal.set(Calendar.SECOND, 0);
 		    	cal.set(Calendar.MILLISECOND, 0);
 		    	
-		    	int numMandatories = 0;
-			    Iterator it3 = questionsList.entrySet().iterator();
-			    while (it3.hasNext()) {
-			    	Map.Entry pair3 = (Map.Entry)it3.next();	
-			    	
-			    	if(questionMandatories!=null && ((Boolean)(questionMandatories.get(((Integer)(pair3.getKey())).intValue()))).booleanValue()){
-			    		numMandatories++;
-			    		//////System.out.println("Question "+(((Integer)(pair3.getKey())).intValue())+" is mandatory");
-			    	}
-			    }
-			    
+		    	int finished = (((Integer)pair2.getValue()).intValue());
+		    	
 			    int countMandatory = 0;
 			    if(!completedQuestionnairesByDay2.isEmpty()){
 			    	if(completedQuestionnairesByDay2.containsKey(cal.getTime())){
@@ -404,7 +397,7 @@ public class Statistics {
 			    }
 			    
 			    //////System.out.println("Mandatories "+numMandatories+", questions[1] "+questions[1]+", questions[0]"+questions[0]);
-			    if(numMandatories==questions[1]){
+			    if(finished==1){
 			    	countMandatory++;
 			    	numCompleteMandatoryResponses++;
 			    	//////System.out.println("Incremento numCompleteMandatoryResponses "+numCompleteMandatoryResponses);
