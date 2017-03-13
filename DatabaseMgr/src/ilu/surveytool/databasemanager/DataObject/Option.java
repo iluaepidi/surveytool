@@ -10,6 +10,7 @@ public class Option {
 	HashMap<String, Content> contents;
 	int index;
 	List<Resource> resources;
+	boolean isOther = false;
 
 	public Option() {
 		contents = new HashMap<String, Content>();
@@ -53,6 +54,14 @@ public class Option {
 
 	public void setResources(List<Resource> resources) {
 		this.resources = resources;
+	}
+
+	public boolean isOther() {
+		return isOther;
+	}
+
+	public void setOther(boolean isOther) {
+		this.isOther = isOther;
 	}
 
 	@Override

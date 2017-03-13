@@ -199,7 +199,8 @@ public class SurveyProcessHandler {
 								{									
 									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
 									String value = optionsGroup.getString("response");
-									if(value.equals("-1") && optionsGroup.has("responseOtherText")) value = value + DBConstants.s_VALUE_TOKEN + optionsGroup.getString("responseOtherText");
+									boolean selectedOther = optionsGroup.getBoolean("selectedOther");
+									if(selectedOther && optionsGroup.has("responseOtherText")) value = value + DBConstants.s_VALUE_TOKEN + optionsGroup.getString("responseOtherText");
 									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
 								}
 								else
@@ -210,18 +211,17 @@ public class SurveyProcessHandler {
 									{
 										JSONObject option = options.getJSONObject(o);
 										int optionId = option.getInt("optionId");
+										String value = Integer.toString(optionId);
 										if(option.has("response"))
 										{
-											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, Integer.toString(optionId), 0), anonymousUserId, surveyId);
+											if(option.getBoolean("otherOption") && option.has("responseOtherText"))
+											{
+												value += DBConstants.s_VALUE_TOKEN + option.getString("responseOtherText");
+											}
+											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
 										}
 									}
-									
-									if(optionsGroup.has("responseOther"))
-									{
-										String otherValue = "-1";
-										if(optionsGroup.has("responseOtherText")) otherValue += DBConstants.s_VALUE_TOKEN + optionsGroup.getString("responseOtherText"); 
-										stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, otherValue, 0), anonymousUserId, surveyId);
-									}
+								
 								}
 							}
 						}

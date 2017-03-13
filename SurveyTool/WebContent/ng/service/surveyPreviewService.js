@@ -84,12 +84,12 @@ function getResponseJson(currentSurvey, action, preview)
 					if(og.response)
 					{
 						optionsGroup.response = og.response;
-						console.log("###### antes otro: " + optionsGroup.response);
-						if(optionsGroup.response == -1)
-						{
-							//console.log("###### Es otro: " + og.responseOtherText);
-							optionsGroup.responseOtherText = og.responseOtherText;
-						}
+						var selectedOther = false;
+						og.options.forEach(function(o){
+							if(o.optionId == optionsGroup.response) selectedOther = o.otherOption;
+						});
+						optionsGroup.selectedOther = selectedOther;
+						if(selectedOther) optionsGroup.responseOtherText =  og.responseOtherText;
 					}
 					else
 					{
@@ -102,16 +102,13 @@ function getResponseJson(currentSurvey, action, preview)
 									var option = {};
 									option.optionId = o.optionId;
 									option.response = o.response;
+									option.otherOption = o.otherOption;
+									if(option.otherOption) option.responseOtherText = o.responseOtherText
 									optionsGroup.options.push(option);
 								}
 							});
 						}
 						
-						if(og.otherOption)
-						{
-							if(og.responseOther) optionsGroup.responseOther = og.responseOther;
-							if(og.responseOtherText) optionsGroup.responseOtherText = og.responseOtherText;
-						}
 					}
 					question.optionsGroups.push(optionsGroup);
 				});

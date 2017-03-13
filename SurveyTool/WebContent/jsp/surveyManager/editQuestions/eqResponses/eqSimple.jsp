@@ -16,6 +16,7 @@
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 											boolean noOptions = false;
 											int optionGroupId = 0;
+											Option optionOther = null;
 											
 											boolean editPoll = false;
 											if(request.getAttribute(Attribute.s_IS_EDIT_POLL) != null) editPoll = (boolean) request.getAttribute(Attribute.s_IS_EDIT_POLL);
@@ -31,37 +32,44 @@
 								  						<%
 								  						for(Option option : optionsGroup.getOptions())
 								  						{
-								  							int index = option.getIndex();
-								  							String text = "";
-								  							if(option!=null && option.getContents()!=null && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
-								  								text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+								  							if(option.isOther())
+								  							{
+								  								optionOther = option;
 								  							}
-								  							
-								  						%>
-								  							<li class="option-item" id="option-item">
-							  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
-							  									<div class="circle-info circle-grey fleft"><%= index %></div>
-							  									<label for="option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
-								  								<input id="option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" type="text" maxlength="10000" class="option-title form-control fleft option" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
-							  									<div class="option-icons fleft">
-								  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-								  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
-	
-								  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-								  										<% if(!editPoll){ %>
-								  										<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
-																		<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-																		<% } %>
-								  										<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
-								  										<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
-								  									<% } %>
-								  								</div>
-								  								<%
-									  							request.setAttribute(Attribute.s_OPTION, option);
-																%>
-																<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
-								  							</li>
+								  							else
+								  							{
+									  							int index = option.getIndex();
+									  							String text = "";
+									  							if(option!=null && option.getContents()!=null && option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null){
+									  								text = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+									  							}
+									  							
+									  						%>
+									  							<li class="option-item" id="option-item">
+								  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
+								  									<div class="circle-info circle-grey fleft"><%= index %></div>
+								  									<label for="option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.option") %>  <%= index %></label>
+									  								<input id="option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" type="text" maxlength="10000" class="option-title form-control fleft option" index="<%= index %>" oid="<%= option.getId() %>" placeholder="<%= lang.getContent("question.edit.placeholder.option") %> <%= index %>" value="<%= text %>"/>
+								  									<div class="option-icons fleft">
+									  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+									  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
+		
+									  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
+									  										<% if(!editPoll){ %>
+									  										<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
+																			<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																			<% } %>
+									  										<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
+									  										<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+									  									<% } %>
+									  								</div>
+									  								<%
+										  							request.setAttribute(Attribute.s_OPTION, option);
+																	%>
+																	<jsp:include page="../eqComponents/eqFilesOptions.jsp" />
+									  							</li>
 								  						<%
+								  							}
 								  						}
 								  						
 								  						int size = optionsGroup.getOptions().size();
@@ -101,10 +109,19 @@
 								  						}
 
 								  						String hideOther = "";
-								  						if(!optionsGroup.isOtherOption()) hideOther = "hidden";
+								  						int optionId = 0;
+								  						if(optionOther == null)
+								  						{
+								  							hideOther = "hidden";
+								  						}
+								  						else
+								  						{
+								  							optionId = optionOther.getId();
+								  						}
+								  						request.setAttribute(Attribute.s_OPTION, optionOther);
 								  						%>
 								  						
-								  						<li class="option-item <%= hideOther %>" id="option-item">
+								  						<li class="option-item <%= hideOther %>" id="option-item" oid="<%= optionId %>">
 						  									<jsp:include page="../eqResponses/eqOptionOther.jsp" />
 							  							</li>							  						
 								  						
@@ -191,7 +208,7 @@
 															</div>
 						  							</li>
 						  											  							
-						  							<li class="option-item hidden" id="option-item">
+						  							<li class="option-item hidden" id="option-item" oid="0">
 					  									<jsp:include page="../eqResponses/eqOptionOther.jsp" />
 						  							</li>
 						  					<%

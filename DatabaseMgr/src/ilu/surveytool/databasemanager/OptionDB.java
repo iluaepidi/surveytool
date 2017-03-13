@@ -136,7 +136,7 @@ public class OptionDB {
 	   			optionsGroup.setOptionType(rs.getString(DBFieldNames.s_OPTIONSGROUP_OPTIONTYPE_NAME));
 	   			optionsGroup.setRandom(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.setIndex(rs.getInt(DBFieldNames.s_INDEX));
-	   			optionsGroup.setOtherOption(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
+	   			//optionsGroup.setOtherOption(rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 
@@ -179,7 +179,7 @@ public class OptionDB {
 	   			optionsGroup.put("optionType", optionType);
 	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
-	   			optionsGroup.put("otherOption", rs.getInt(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
+	   			//optionsGroup.put("otherOption", rs.getInt(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
@@ -202,7 +202,7 @@ public class OptionDB {
 	   					optionsGroup.put("response", "");	   					
 	   				}
 	   			}
-	   			else if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX))
+	   			/*else if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX))
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
 	   				if(anonimousUser instanceof AnonimousUser)
@@ -224,7 +224,7 @@ public class OptionDB {
 	   				{
    						optionsGroup.put("responseOther", false); 
 	   				}
-	   			}
+	   			}*/
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
@@ -300,7 +300,7 @@ public class OptionDB {
 	   				ResourceDB resourceDB = new ResourceDB();
 	   				option.getResources().add(resourceDB.getResourceById(resource,lang,langdefault));
 	   			}
-	   			
+	   			option.setOther(rs.getBoolean(DBFieldNames.s_OPTION_OTHER_OPTION));
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
 	   			option.setContents(contentDB.getContentByIdAndLanguage(contentId, lang,langdefault));
@@ -338,13 +338,31 @@ public class OptionDB {
 	   			int optionId = rs.getInt(DBFieldNames.s_OPTIONID);
 	   			option.put("optionId", optionId);
 	   			option.put("index", rs.getInt(DBFieldNames.s_INDEX));
+	   			boolean isOtherOption = rs.getBoolean(DBFieldNames.s_OPTION_OTHER_OPTION);
+	   			option.put("otherOption", isOtherOption);
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
 	   				if(anonimousUser instanceof AnonimousUser)
 	   				{
 	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
-	   					option.put("response", responsesDB.existAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId))); 
+	   					if(isOtherOption)
+	   					{
+		   					String response = responsesDB.getAnonymousOtherResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId);
+		   					String responseOtherText = "";
+		   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
+		   					{
+		   						String[] respParts = response.split(DBConstants.s_VALUE_TOKEN);
+		   						response = respParts[0];
+		   						if(respParts.length > 1) responseOtherText = respParts[1];
+		   					}
+		   					option.put("response", (!response.isEmpty() && response.equals(String.valueOf(optionId)))); 
+		   					option.put("responseOtherText", responseOtherText);
+	   					}
+	   					else
+	   					{
+	   						option.put("response", responsesDB.existAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId)));
+	   					}
 	   				}
 	   				else
 	   				{
@@ -717,7 +735,7 @@ public class OptionDB {
 		   
 	}
 
-	public boolean updateOptionOther(int optionsGroupId, int questionId, boolean value) {
+	public boolean updateOptionOther(int optionId, boolean value) {
 		boolean updated = false;
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -725,8 +743,7 @@ public class OptionDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTION_OTHER);
 			pstm.setBoolean(1, value);
-		   	pstm.setInt(2, optionsGroupId);
-			pstm.setInt(3, questionId);
+		   	pstm.setInt(2, optionId);
 		   		
 			int numUpdated = pstm.executeUpdate();
 			

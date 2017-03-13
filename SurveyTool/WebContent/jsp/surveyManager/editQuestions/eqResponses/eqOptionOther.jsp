@@ -9,14 +9,15 @@
 											lang.loadLanguage(Language.getLanguageRequest(request));
 											
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
+											Option option = (Option) request.getAttribute(Attribute.s_OPTION);
 											boolean noOptions = false;											
 											int optionGroupId = 0;
 											if(!question.getOptionsGroups().isEmpty()) question.getOptionsGroups().get(0).getId();
 											
 											String title = lang.getContent("accesibility.question.option.legend.other");
-											if(!question.getOptionsGroups().isEmpty() && question.getOptionsGroups().get(0).getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL))
+											if(option != null && option.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))
 											{
-												title = question.getOptionsGroups().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL).getText();
+												title = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 											}
 											%>
 					  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->

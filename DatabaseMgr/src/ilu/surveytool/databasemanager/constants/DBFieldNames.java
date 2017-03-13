@@ -45,12 +45,12 @@ public class DBFieldNames {
 	//option
 		public final static String s_OPTIONID = "idOption";
 		public final static String s_VALUE = "value";
+		public final static String s_OPTION_OTHER_OPTION = "otherOption";
 		
 	//optionsgroup
 		public final static String s_OPTIONSGROUPID = "idOptionsGroup";
 		public final static String s_OPTIONSGROUP_OPTIONTYPE_NAME = "optionTypeName";
 		public final static String s_OPTIONSGROUP_RANDOM = "random";
-		public final static String s_OPTIONSGROUP_OTHER_OPTION = "otherOption";
 		
 	//page
 		public final static String s_PAGE_ID = "idPage";

@@ -35,23 +35,28 @@ public class OptionService {
     }
 	
 	@POST
-	@Path("/setOptionOther")
+	@Path("/createOptionOther")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-    public String setOptionOther(String req) {
+    public String createOptionOther(String req) {
     	System.out.println("Opción (setOptionOther): " + req);
     	JSONObject json = null;
     	String response = "";
     	try {
 			json = new JSONObject(req);
-			Option option = new Option();
-			option.setQid(Integer.parseInt(json.getString("qid")));
-			option.setOgid(Integer.parseInt(json.getString("ogid")));
+			
+			Option option = new Option("", 
+					999, 
+					Integer.parseInt(json.getString("qid")), 
+					Integer.parseInt(json.getString("ogid")),
+					0,
+					json.getString("otype"),
+					json.getString("lang"));			
+			option.setOther(Boolean.parseBoolean(json.getString("isOther")));			
 			int pageId =Integer.parseInt(json.getString("pid"));
-			boolean value = Boolean.parseBoolean(json.getString("value"));
-			System.out.println("Opción: " + option.toString());
+			
 			OptionHandler optionHandler = new OptionHandler();
-			response = Boolean.toString(optionHandler.setOptionOther(option, pageId, value)); 
+			response = optionHandler.createOptionOther(option); 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,8 +77,7 @@ public class OptionService {
 			
 			Option option = new Option();
 			option.setLanguage(json.getString("lang"));
-			option.setOgid(Integer.parseInt(json.getString("ogid")));
-			option.setQid(Integer.parseInt(json.getString("qid")));
+			option.setOid(Integer.parseInt(json.getString("oid")));
 			option.setText(json.getString("text"));
 					
 			System.out.println("Opción: " + option.toString());
@@ -85,7 +89,28 @@ public class OptionService {
 		}
     	return response;
     }
-		
+
+	@DELETE
+	@Path("/removeOptionOther")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String removeOptionOther(String req) {
+    	String response = "false";
+    	JSONObject json = null;
+    	
+    	try {
+			json = new JSONObject(req);
+
+	    	OptionHandler optionHandler = new OptionHandler();
+	    	response = String.valueOf(optionHandler.removeOption(Integer.parseInt(json.getString("qid")), Integer.parseInt(json.getString("ogid")), Integer.parseInt(json.getString("oid"))));
+	    	
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return response;
+    }
 	@DELETE
 	@Path("/{qid}/{ogid}/{oid}")
 	@Consumes(MediaType.TEXT_PLAIN)

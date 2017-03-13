@@ -52,7 +52,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
-				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '-1%'";
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL = " and r.idOptionsGroup = ?";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL = " and isnull(r.idOptionsGroup)";
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
@@ -104,7 +104,7 @@ public class DBSQLQueries {
 		//option
 		public final static String s_SELECT_OPTION_BY_OPTIONID = "SELECT * FROM surveytool.`option` where idOption = ?";
 		public final static String s_SELECT_RESOURCEID_BY_OPTIONID = "SELECT idResoruces FROM surveytool.`option` where idOption = ?";
-		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, obg.index FROM surveytool.optionsbygroup obg "
+		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, o.otherOption, obg.index FROM surveytool.optionsbygroup obg "
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "where obg.idOptionsGroup = ? "
 				+ "order by obg.index";
@@ -601,7 +601,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 			public final static String s_UPDATE_OPTIONSGROUP = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?), `idContent`=? WHERE `idOptionsGroup`=?";
-			public final static String s_UPDATE_OPTION_OTHER = "UPDATE `surveytool`.`optionsgroup` SET `otherOption`=? WHERE `idOptionsGroup`=? and `idQuestion`=?";
+			public final static String s_UPDATE_OPTION_OTHER = "UPDATE `surveytool`.`option` SET `otherOption`=? WHERE `idOption`=?";
 						
 			//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";

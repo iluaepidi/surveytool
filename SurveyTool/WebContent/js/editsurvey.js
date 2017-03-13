@@ -512,8 +512,7 @@ $(function() {
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
-			req.qid = currentNode.closest('li[id=panel-question1]').attr('qid');
-			req.ogid = currentNode.closest('ul').attr('ogid');
+			req.oid = currentNode.closest('li').attr('oid');
 			req.lang = $('#survey-language-version').val();
 			
 			$.ajax({ 
@@ -667,30 +666,44 @@ $(function() {
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
-	$('.survey-sections').on("click", "button.btnAddOptionOther, button.removeOptionOther", function(e){
+	$('.survey-sections').on("click", "button.btnAddOptionOther", function(e){
 		var req = {};
 		var currentNode = $(this);
+				
 		req.qid = currentNode.closest('li.panel-question').attr('qid');
 		req.ogid = currentNode.closest('ul').attr('ogid');
 		req.pid = currentNode.closest('li.page').attr('pid');
-		if($(this).hasClass("btnAddOptionOther")) req.value = "true";
-		else req.value = "false";
+		req.index = currentNode.closest("ul").find("li.option-item").size();
+		req.otype = currentNode.closest('ul').attr('otype');
+		req.lang = $('#survey-language-version').val();
+		if($(this).hasClass("btnAddOptionOther")) req.isOther = "true";
+		else req.isOther = "false";
 		
 		$.ajax({ 
 		   type: "POST",
 		   dataType: "text",
 		   contentType: "text/plain",
-		   url: host + "/SurveyTool/api/OptionService/setOptionOther",
+		   url: host + "/SurveyTool/api/OptionService/createOptionOther",
 		   data: JSON.stringify(req),
 		   success: function (data) {
-			   if(data == 'true' && req.value == 'true')
+			   if(data != "")
 			   {
 				   currentNode.closest("li").prev().removeClass("hidden"); 
-					var index = currentNode.closest("ul").find("li.option-item").size();
-					currentNode.closest("li").prev().find("div.circle-info").html(index);
-					currentNode.prop( "disabled", true );
+				   var index = currentNode.closest("ul").find("li.option-item").size();
+				   currentNode.closest("li").prev().find("div.circle-info").html(index);
+				   currentNode.prop( "disabled", true );
+				   var json = JSON.parse(data);
+				   if(json.hasOwnProperty('oid'))
+				   {
+					   currentNode.closest("li").prev().attr('oid', json.oid);
+				   }
+				   
+				   if(json.hasOwnProperty('ogid'))
+				   {
+					   currentNode.closest('ul').attr('ogid', json.ogid);
+				   }
 			   }
-			   else if(data == 'true' && req.value == 'false')
+			   /*else if(data == 'true' && req.value == 'false')
 			   {
 				   var optionElem = currentNode.closest("li.option-item");				   
 				   optionElem.addClass("hidden");
@@ -706,7 +719,7 @@ $(function() {
 				   optionElem.find("input.survey-question-max-lines").val("");
 				   optionElem.next().find("button.btnAddOptionOther").prop( "disabled", false );
 					
-			   }
+			   }*/
 		   },
 		   error: function (xhr, ajaxOptions, thrownError) {
 			   console.log(xhr.status);
@@ -1490,8 +1503,46 @@ $(function() {
 		modalFocus = $(this);	
 	});
 	
-	$('.section-pages').on("click", ".removeOptionOther", function(e){
+	$('.section-pages').on("click", "button.removeOptionOther", function(e){
+		var req = {};
+		var currentNode = $(this);
+	    
+		req.qid = currentNode.closest('li.panel-question').attr('qid');
+		req.ogid = currentNode.closest('ul').attr('ogid');
+		req.oid = currentNode.closest('li.option-item').attr('oid'); 
 		
+		$.ajax({ 
+		   type: "DELETE",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: host + "/SurveyTool/api/OptionService/removeOptionOther",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   if(data == "true")
+			   {
+				   var optionElem = currentNode.closest("li.option-item");				   
+				   optionElem.addClass("hidden");
+				   var titleOther = optionElem.find("legend").html();
+				   optionElem.find("input.otherOptionTitle").val(titleOther);
+				   optionElem.find("input.survey-question-max-chars").val("");
+				   optionElem.find("input.isLimitedChars").prop("checked", false);
+				   optionElem.find("input.isLimitedChars").attr('active', false);
+				   optionElem.find('#charsId').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.adjust-lines-adjust").prop("checked", true);
+				   optionElem.find("input.adjust-lines-set").prop("checked", false);
+				   optionElem.find('#lines').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.survey-question-max-lines").val("");
+				   optionElem.next().find("button.btnAddOptionOther").prop( "disabled", false );
+					
+			   }
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+		});	
 	});
 	
 	$('.section-pages').on("click", ".remove-optionmatrix", function(e){

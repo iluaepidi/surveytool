@@ -351,12 +351,12 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	    $anchorScroll();
 	};
 
-	$scope.setOtherSimpleFocus = function(optionGroup) {
-		if(optionGroup.response != '-1') optionGroup.response = '-1';
+	$scope.setOtherSimpleFocus = function(optionGroup, optionId) {
+		if(optionGroup.response != optionId) optionGroup.response = optionId;
 	};
 
-	$scope.setOtherMultipleFocus = function(optionGroup) {
-		if(!optionGroup.responseOther || optionGroup.responseOther == false) optionGroup.responseOther = true;
+	$scope.setOtherMultipleFocus = function(option) {
+		if(option.response == false) option.response = true;
 	};
 	
 	//mousewheel

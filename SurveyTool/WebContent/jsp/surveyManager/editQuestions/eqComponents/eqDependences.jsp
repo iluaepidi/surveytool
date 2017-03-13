@@ -289,7 +289,10 @@
 							  											if(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
 							  												optionTitle = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  											else 
-							  												optionTitle = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  											{
+							  												if(option.isOther()) optionTitle = lang.getContent("accesibility.question.option.legend.other");
+							  												else optionTitle = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  											}
 							  									%>
 								  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
 								  												<label for="logic-option-goto-<%= option.getId() %>">

@@ -9,6 +9,7 @@ public class Option {
 	int oid;
 	String otype = "";
 	String language = ""; 
+	boolean other = false;
 	
 
 	public Option() {
@@ -80,6 +81,14 @@ public class Option {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public boolean isOther() {
+		return other;
+	}
+
+	public void setOther(boolean other) {
+		this.other = other;
 	}
 
 	@Override
