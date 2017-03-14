@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.sun.javafx.collections.MappingChange.Map; 
 
 import ilu.surveytool.databasemanager.DataObject.Content;
+import ilu.surveytool.databasemanager.DataObject.Option;
 import ilu.surveytool.databasemanager.DataObject.OptionsGroup;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Response;
@@ -44,6 +45,7 @@ public class ExportData {
 		
 		File fileXLS = new File(filePath);
 		
+		List<Integer> questionsWithOther = new ArrayList<Integer>();
 		
 		try {
 			
@@ -106,25 +108,54 @@ public class ExportData {
 								int osize = optionGroup.getOptions().size();
 								for(int o = 0; o < osize; o++)
 								{
+									Option option = optionGroup.getOptions().get(o);
 									cell3 = row3.createCell(desp);
 									String optionLabel = "";
-									if(optionGroup.getOptions().get(o).getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) && optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() != null && !optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
+									if(option.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) && optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText() != null && !optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
 									{
-										optionLabel = optionGroup.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+										optionLabel = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 									}
 									else
 									{
-										optionLabel = optionGroup.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+										optionLabel = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 									}
 									System.out.println("option label excel: " + optionLabel);
 									cell3.setCellValue(optionLabel);
 									sheet.autoSizeColumn(desp);
 									desp++;
+									
+									if(option.isOther())
+									{
+										cell3 = row3.createCell(desp);
+										cell3.setCellValue("Other answer");
+										sheet.autoSizeColumn(desp);
+										desp++;
+										questionsWithOther.add(questions.get(c).getQuestionId());
+									}
 								}
 							}
 							else if(optionGroup.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 							{
+								cell3 = row3.createCell(desp);
+								cell3.setCellValue("Option selected");
+								sheet.autoSizeColumn(desp);
 								desp++;
+								
+								int osize = optionGroup.getOptions().size();
+								boolean exist = false;
+								for(int o = 0; o < osize; o++)
+								{
+									Option option = optionGroup.getOptions().get(o);
+									if(option.isOther() && !exist)
+									{
+										cell3 = row3.createCell(desp);
+										cell3.setCellValue("Other answer");
+										sheet.autoSizeColumn(desp);
+										desp++;
+										questionsWithOther.add(questions.get(c).getQuestionId());
+										exist = true;
+									}
+								}								
 							}
 						}
 						
@@ -171,16 +202,28 @@ public class ExportData {
 								if(optionGroups != null) values = optionGroups.get(ogItem.getId());
 								if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 								{
+									String val = "";
+									if(optionGroups != null && values != null && !values.isEmpty()) val = values.get(0);
+									String[] vals = val.split(DBConstants.s_VALUE_TOKEN);
+									
 									cell = row.createCell(desp);
-									if(optionGroups != null && values != null && !values.isEmpty()) cell.setCellValue(values.get(0));							
-									desp++;				
+									if(vals.length > 0 && !vals[0].isEmpty()) cell.setCellValue(vals[0]);							
+									desp++;
+									
+									if(questionsWithOther.contains(questions.get(c).getQuestionId()))
+									{
+										cell = row.createCell(desp);
+										if(val.indexOf(DBConstants.s_VALUE_TOKEN) > -1) cell.setCellValue(vals[1]);							
+										desp++;
+									}
 								}
 								else if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_CHECKBOX))
 								{
+									String otherText = "";
 									for(int o = 0; o < ogItem.getOptions().size(); o++)
 									{
 										if(optionGroups != null)
-										{
+										{	
 											if((ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
 													|| (ogItem.getOptions().get(o).getResources() != null && !ogItem.getOptions().get(o).getResources().isEmpty() && ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText())))
 											{
@@ -190,16 +233,38 @@ public class ExportData {
 											}
 											else
 											{
+												String val = "no";
+												
+												for(String value : values)
+												{
+													if(value.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()) && value.contains(DBConstants.s_VALUE_TOKEN))
+													{
+														val = "yes";
+														otherText = value.split(DBConstants.s_VALUE_TOKEN)[1];
+													}
+												}
+												
 												cell = row.createCell(desp);
-												cell.setCellValue("no");
+												cell.setCellValue(val);
 												desp++;
 											}
 										}
 										else
 										{
 											cell = row.createCell(desp);
+											cell.setCellValue("no");
 											desp++;
 										}
+									}
+									
+									if(questionsWithOther.contains(questions.get(c).getQuestionId()))
+									{
+										if(!otherText.isEmpty())
+										{
+											cell = row.createCell(desp);
+											cell.setCellValue(otherText);
+										}
+										desp++;
 									}
 								} 
 							}

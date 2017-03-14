@@ -4,11 +4,13 @@ public class DBSQLQueries {
 	//Selects
 		//AnonymousResponse
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
-					+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
+				+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
 					+ "inner join surveytool.content as c on o.idContent = c.idContent "
 					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
-					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+					+ "where ct.name = 'title' and o.idOption = cast(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)), r.value) value, "
+				+ "if(INSTR(r.value, '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+					+ "(substring_index(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
 				+ "FROM surveytool.anonimoususer as au "
 				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
