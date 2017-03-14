@@ -25,6 +25,7 @@ import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.surveytool.sessioncontrol.SessionHandler;
 
@@ -63,6 +64,9 @@ public class SurveysServlet extends HttpServlet {
 		System.out.println("processRequest en SurveysServlet");
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		
+		Language lang = new Language(getServletContext().getRealPath("/")); 
+		lang.loadLanguage(Language.getLanguageRequest(request));
 		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
@@ -104,7 +108,7 @@ public class SurveysServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
 			
 			JSONArray pages = new JSONArray();
-			if(language == null || language.isEmpty() || language.equals(survey.getDefaultLanguage())) pages = surveysHandler.getQuestionsJson(survey);
+			if(language == null || language.isEmpty() || language.equals(survey.getDefaultLanguage())) pages = surveysHandler.getQuestionsJson(survey, lang.getContent("accesibility.question.option.legend.other"));
 			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
 			if(language==null || language.equals(survey.getDefaultLanguage())){

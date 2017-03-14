@@ -217,7 +217,10 @@
 								  											<%= lang.getContent("question.edit.dependence.option.label_shown") %>
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.option.label_help_hidden") %>)</span>
 								  										</label>
-								  										
+								  										<%
+								  										String oName = depval.getOName(); 
+								  										if(oName.equals("Other")) oName = lang.getContent("accesibility.question.option.legend.other");
+								  										%>
 								  										<div class="form-group div-dependence-option"  style="margin:0px !important;">
 				    														<select id="dependence-option-<%= question.getQuestionId() %>-<%= i %>" class="form-control dependence-option" autocomplete="off">
 								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected="selected"> <%= depval.getOName()%> </option>
@@ -229,7 +232,7 @@
 																		
 								  										<div class="option-icons div-remove-dependence">
 							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= i %></label>
-							  												<button class="btn btn-transparent red" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+							  												<button class="btn btn-transparent red removeDependence" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  											</div>
 							  										</fieldset>
 							  										

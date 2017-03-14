@@ -449,7 +449,7 @@ public class DBSQLQueries {
 				+ "where question.idQuestion = ?";
 
 		//QDependences
-		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, dv.idOptionsGroup, dv.optionValue, contentOption.text oText FROM surveytool.qdependences qd "
+		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG2 = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, dv.idOptionsGroup, dv.optionValue, contentOption.text oText FROM surveytool.qdependences qd "
 				+"inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
 				+"inner join surveytool.qdependencesvalue dv on dv.idQDependences = qd.idQDependences "
 				+"inner join surveytool.option opt on opt.idOption = dv.optionValue "
@@ -458,7 +458,22 @@ public class DBSQLQueries {
 				+"inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
 				+"inner join surveytool.content contentOption on opt.idContent=contentoption.idContent "
 				+"where qd.idQuestion = ? and contentQuestion.idContentType = 1 and contentOption.idContentType = 1  and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)  and contentOption.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)";
-			
+		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, "
+				+ "dv.idOptionsGroup, dv.optionValue, "
+				+ "(SELECT text FROM surveytool.content "
+					+ "where idContent = opt.idContent and idContentType = 1 and idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)) oText "
+				+ "FROM surveytool.qdependences qd "
+					+ "inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
+					+ "inner join surveytool.qdependencesvalue dv on dv.idQDependences = qd.idQDependences "
+					+ "inner join surveytool.`option` opt on opt.idOption = dv.optionValue "
+					+ "inner join surveytool.question question on question.idQuestion=dv.idQuestion "
+					+ "inner join surveytool.questionbypage qbp on qbp.idQuestion = question.idQuestion "
+					+ "inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
+					+ "where qd.idQuestion = ? "
+						+ "and contentQuestion.idContentType = 1 "
+						+ "and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?);";
+		
+		
 		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_NOTEXT = "select qd.idQDependences, dt.name depType, qdv.idQuestion, qdv.idOptionsGroup, qdv.optionValue from surveytool.qdependences qd "
 				+"inner join surveytool.qdependencesvalue qdv on qdv.idQDependences = qd.idQDependences "
 				+"inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "

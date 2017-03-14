@@ -506,9 +506,9 @@ $(function() {
 		var titleOther = $(this).closest("fieldset").find("legend").html();
 		var value = $(this).val();
 		
-		if(value === "") {$(this).val(titleOther);}
-		else if (value != titleOther)
-		{
+		
+		/*else if (value != titleOther)
+		{*/
 			var req = {};
 			var currentNode = $(this);
 			req.text = currentNode.val();
@@ -525,7 +525,9 @@ $(function() {
 				   console.log(data);
 				   if(data != '')
 				   {
-					   
+					   if(value === "") {currentNode.val(titleOther);}
+					   currentNode.trigger("gotoOther");
+					   currentNode.trigger("setJsonOther");					   
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -535,7 +537,7 @@ $(function() {
 				   console.log(xhr);
 			   }
 			});
-		}
+		//}
 	});
 	
 	$('.survey-sections').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
@@ -702,6 +704,9 @@ $(function() {
 				   {
 					   currentNode.closest('ul').attr('ogid', json.ogid);
 				   }
+				   
+				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("gotoOther");
+				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("setJsonOther");
 			   }
 			   /*else if(data == 'true' && req.value == 'false')
 			   {
@@ -1520,6 +1525,7 @@ $(function() {
 		   success: function (data) {
 			   if(data == "true")
 			   {
+				   currentNode.closest('li.option-item').find("input.otherOptionTitle").trigger("rmvOptOtherJson")
 				   var optionElem = currentNode.closest("li.option-item");				   
 				   optionElem.addClass("hidden");
 				   var titleOther = optionElem.find("legend").html();
@@ -1533,7 +1539,9 @@ $(function() {
 				   optionElem.find('#lines').attr('class','question-response-settings-sub-none');
 				   optionElem.find("input.survey-question-max-lines").val("");
 				   optionElem.next().find("button.btnAddOptionOther").prop( "disabled", false );
-					
+				   
+				   var logicOptionElement = $('#logic-option-' + req.oid);
+				   removeLogicElement(logicOptionElement);
 			   }
 		   },
 		   error: function (xhr, ajaxOptions, thrownError) {

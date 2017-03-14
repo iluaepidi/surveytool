@@ -195,7 +195,14 @@
 							  					<%
 							  				}
 							  				
-							  				boolean hasOther = !question.getOptionsGroups().isEmpty() && question.getOptionsGroups().get(0).isOtherOption();
+							  				boolean hasOther = false;
+							  				if(!question.getOptionsGroups().isEmpty())
+							  				{
+							  					for(Option opt : question.getOptionsGroups().get(0).getOptions())
+							  					{
+							  						hasOther = hasOther || opt.isOther();
+							  					}
+							  				}
 							  				%>
 
 						  							<li class="center" id="li-add-option<%= question.getQuestionId() %>">

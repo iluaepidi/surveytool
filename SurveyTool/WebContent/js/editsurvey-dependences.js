@@ -657,6 +657,49 @@ $(function() {
 		
 	});
 
+	$('.survey-sections').on("gotoOther", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest('ul').attr('ogid');
+		console.log("Option other goto: " + $(this).val() + " - oid: " + optionId);
+		var logicElem = $('#logic-option-' + optionId);
+
+		var text = $(this).val();
+		
+		if(logicElem.length)
+		{
+			logicElem.html(text);
+		}
+		else
+		{
+			var logicList = $(this).closest("div.panel-body").find("ul.logic-option-list");
+			if(logicList.hasClass('hidden'))
+			{
+				logicList.removeClass("hidden");
+				var elem = logicList.find('span');
+				elem.attr("id", "logic-option-" + optionId);
+				elem.html(text);
+				var logicOption = logicList.find(".logic-option");
+				logicOption.find("select.logic-option-goto").val('none');
+				logicOption.attr("oid", optionId);
+				logicOption.attr("ogid", optionGroupId);
+				logicList.closest(".logic-settings").find("p").addClass("hidden");
+			}
+			else
+			{
+				var ulLogic = $(this).closest("div.question-frame").next().find("ul.logic-option-list");
+				var clonElem = ulLogic.find("li").first().clone();
+				clonElem.attr("oid", optionId);
+				clonElem.attr("ogid", optionGroupId);
+				var clonSpan = clonElem.find("span");
+				clonSpan.attr("id", "logic-option-" + optionId);
+				clonSpan.html(text);
+				clonElem.find("select.logic-option-goto").val('none');
+				ulLogic.append(clonElem);
+			}
+		}
+		
+	});
+
 	$('.survey-sections').on("setJson", "#option-list #option-item input", function(e){
 		var optionId = $(this).attr('oid');
 		var pageId = $(this).closest("li.page").attr("pid");
@@ -668,41 +711,27 @@ $(function() {
 		{
 			text = $(this).closest('li.option-item').find('li.multimedia-item a').text().split(' - ')[0];
 		}
-		console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
-		var existOg = false;
-		var existOpt = false;
-		console.log("index: " + index);
-		$(surveyTree).each(function(ind, pageElem){
-		    if(pageElem.pageId == pageId)
-		    {
-		    	$(pageElem.questions).each(function(ind2, questionElem){
-		    		if(questionElem.questionId == questionId)
-		    		{
-		    			$(questionElem.optionsGroup).each(function(ind3, ogElem){
-				    		if(ogElem.optionsGroupId == optionGroupId)
-				    		{
-				    			existOg = true;
-				    			$(ogElem.options).each(function(ind4, optionElem){
-						    		if(optionElem.optionId == optionId)
-						    		{
-						    			existOpt = true;
-						    			optionElem.title = text;
-						    		}
-						    	});
-				    			
-				    			if(!existOpt) ogElem.options.push({"optionId":parseInt(optionId),"index":parseInt(index),"title": text});
-				    		}
-				    	});
-		    			
-		    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":parseInt(optionGroupId),"options":[{"optionId":parseInt(optionId),"index":parseInt($(this).attr("index")),"title": text}]});
-		    		}
-		    	});
-		    }		    
-		});
 		
+		setJson(optionId, pageId, questionId, optionGroupId, index, text);	
+				
 		$(this).trigger("setOptionDepend");
-
-		console.log("surveyTree changed: " + JSON.stringify(surveyTree));
+	
+		//console.log("surveyTree changed: " + JSON.stringify(surveyTree));
+	});
+	
+	$('.survey-sections').on("setJsonOther", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var pageId = $(this).closest("li.page").attr("pid");
+		var questionId = $(this).closest("li.panel-question").attr("qid");
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var index = 999;
+		var text = $(this).val();
+		
+		setJson(optionId, pageId, questionId, optionGroupId, index, text);	
+				
+		$(this).trigger("setOptionOtherDepend");
+	
+		//console.log("surveyTree changed: " + JSON.stringify(surveyTree));
 	});
 	
 	$('.survey-sections').on("rmvOptJson", "#option-list #option-item input", function(e){		
@@ -733,6 +762,37 @@ $(function() {
 		});
 		
 		$(this).trigger('rmvOptionDepend');
+		//console.log("surveyTree removed: " + JSON.stringify(surveyTree));
+	});
+
+	$('.survey-sections').on("rmvOptOtherJson", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var pageId = $(this).closest("li.page").attr("pid");
+		var questionId = $(this).closest("li.panel-question").attr("qid");
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		
+		//console.log("Entra en rmvOptJson - oId: " + optionId + " - ogid: " + optionGroupId + " - qid: " + questionId + " - pid: " + pageId);
+		
+		$(surveyTree).each(function(index, pageElem){
+		    if(pageElem.pageId == pageId)
+		    {
+		    	$(pageElem.questions).each(function(index, questionElem){
+		    		if(questionElem.questionId == questionId)
+		    		{
+		    			$(questionElem.optionsGroup).each(function(index, ogElem){
+				    		if(ogElem.optionsGroupId == optionGroupId)
+				    		{
+				    			ogElem.options = $.grep(ogElem.options, function(option) {
+				    				return option.optionId != optionId;  
+				    			});						    					    		
+				    		}
+				    	});
+		    		}
+		    	});
+		    }		    
+		});
+		
+		$(this).trigger('rmvOptionOtherDepend');
 		//console.log("surveyTree removed: " + JSON.stringify(surveyTree));
 	});
 	
@@ -953,6 +1013,24 @@ $(function() {
 		});
 	});
 
+	$('.survey-sections').on("setOptionOtherDepend", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var text = $(this).val();		
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				$(selectDepend).find('#option-dependence-' + valor).html(text);
+			}
+		});
+	});
+
 	$('.survey-sections').on("rmvOptionDepend", "#option-list #option-item input", function(e){
 		var optionId = $(this).attr('oid');
 		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
@@ -966,6 +1044,24 @@ $(function() {
 			if($(selectDepend).val() == valor)
 			{					
 				var trashButton = $(selectDepend).closest("fieldset").find("button.trash");
+				trashButton.trigger("rmvNoConfirm");
+			}
+		});
+	});
+
+	$('.survey-sections').on("rmvOptionOtherDepend", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		//console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				var trashButton = $(selectDepend).closest("fieldset").find("button.removeDependence");
 				trashButton.trigger("rmvNoConfirm");
 			}
 		});
@@ -1116,6 +1212,42 @@ $(function() {
 	});
 	
 });
+
+function setJson(optionId, pageId, questionId, optionGroupId, index, text)
+{
+	console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
+	var existOg = false;
+	var existOpt = false;
+	console.log("index: " + index);
+	$(surveyTree).each(function(ind, pageElem){
+	    if(pageElem.pageId == pageId)
+	    {
+	    	$(pageElem.questions).each(function(ind2, questionElem){
+	    		if(questionElem.questionId == questionId)
+	    		{
+	    			$(questionElem.optionsGroup).each(function(ind3, ogElem){
+			    		if(ogElem.optionsGroupId == optionGroupId)
+			    		{
+			    			existOg = true;
+			    			$(ogElem.options).each(function(ind4, optionElem){
+					    		if(optionElem.optionId == optionId)
+					    		{
+					    			existOpt = true;
+					    			optionElem.title = text;
+					    		}
+					    	});
+			    			
+			    			if(!existOpt) ogElem.options.push({"optionId":parseInt(optionId),"index":parseInt(index),"title": text});
+			    		}
+			    	});
+	    			
+	    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":parseInt(optionGroupId),"options":[{"optionId":parseInt(optionId),"index":parseInt(index),"title": text}]});
+	    		}
+	    	});
+	    }		    
+	});
+	
+}
 
 function getSimpleQuestions(numPage)
 {

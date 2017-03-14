@@ -69,7 +69,7 @@
 								  										
 								  										<div class="option-icons div-remove-dependence">
 							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= index %></label>
-							  												<button class="btn btn-transparent red" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+							  												<button class="btn btn-transparent red removeDependence" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  											</div>
 								  									</fieldset>
 							  									</li>
