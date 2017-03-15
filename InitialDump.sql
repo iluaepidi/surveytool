@@ -189,7 +189,7 @@ CREATE TABLE `contenttype` (
   `idContentType` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`idContentType`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +198,7 @@ CREATE TABLE `contenttype` (
 
 LOCK TABLES `contenttype` WRITE;
 /*!40000 ALTER TABLE `contenttype` DISABLE KEYS */;
-INSERT INTO `contenttype` VALUES (1,'title'),(2,'description'),(3,'altText'),(4,'helpText'),(5,'ackText'),(6,'callText'),(7,'label'),(8,'other');
+INSERT INTO `contenttype` VALUES (1,'title'),(2,'description'),(3,'altText'),(4,'helpText'),(5,'ackText'),(6,'callText'),(7,'label'),(8,'other'),(9,'otherLabel');
 /*!40000 ALTER TABLE `contenttype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,6 +318,7 @@ CREATE TABLE `option` (
   `idContent` int(11) NOT NULL,
   `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idResoruces` int(11) DEFAULT NULL,
+  `otherOption` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idOption`),
   KEY `fk_Option_ContentIndex1_idx` (`idContent`),
   KEY `fk_Option_Resoruces1_idx` (`idResoruces`),
@@ -1159,7 +1160,7 @@ CREATE TABLE `user` (
   CONSTRAINT `fk_User_Language1` FOREIGN KEY (`idLanguage`) REFERENCES `language` (`idLanguage`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_Rol1` FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_UserState1` FOREIGN KEY (`idUserState`) REFERENCES `userstate` (`idUserState`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1168,7 +1169,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin@admin.com','adminadmin','2017-01-20 12:36:14',0,1,1,1,NULL),(2,'guti','jagdkws@gmail.com','lalalala','2017-01-23 16:21:23',0,4,1,1,NULL);
+INSERT INTO `user` VALUES (1,'admin','admin@admin.com','adminadmin','2017-01-20 12:36:14',0,1,1,1,NULL),(2,'guti','jagdkws@gmail.com','lalalala','2017-02-28 13:09:31',0,4,1,1,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1294,4 +1295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-22 16:05:43
+-- Dump completed on 2017-03-15 11:50:54
