@@ -186,22 +186,27 @@ public class OptionHandler {
 			if(option.getOid() == 0)
 			{
 				if(!option.getText().equals("")){
-				List<Integer> optionsGroupId = optionDB.getOptionsGroupIdByQuestionId(option.getQid());
-				
-				int contentId = contentDB.insertContentIndex();
-				if(contentId != 0)
-				{
-					option.setOid(optionDB.insertOption(contentId));
+					List<Integer> optionsGroupId = optionDB.getOptionsGroupIdByQuestionId(option.getQid());					
 					
-					contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
-					
-					if(option.getOid() != 0 && !optionsGroupId.isEmpty())
+					int contentId = contentDB.insertContentIndex();
+					if(contentId != 0)
 					{
-						for(int og: optionsGroupId)
-							optionDB.insertOptionsByGroup(og, option.getOid(), option.getIndex());
+						option.setOid(optionDB.insertOption(contentId));
+						
+						contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+						
+						if(option.getOid() != 0 && !optionsGroupId.isEmpty())
+						{
+							for(int og: optionsGroupId)
+								optionDB.insertOptionsByGroup(og, option.getOid(), option.getIndex());
+						}
+						else if(option.getOid() != 0 && optionsGroupId.isEmpty()){
+							int contentIdGroup = contentDB.insertContentIndex();
+							int id = optionDB.insertOptionsGroup(option.getQid(), option.getOtype(), contentIdGroup, 1);
+							optionDB.insertOptionsByGroup(id, option.getOid(), option.getIndex());
+						}
 					}
-				}
-				response.put("oid", String.valueOf(option.getOid()));
+					response.put("oid", String.valueOf(option.getOid()));
 				}
 			}
 			else
@@ -238,25 +243,41 @@ public class OptionHandler {
 			{
 				System.out.println("createOptionsGroup porque ogid=0");
 				if(!optionsGroup.getText().equals("")){
-				List<Integer> options = optionDB.getOptionIdByQuestionId(optionsGroup.getQid());
-				
-				int contentId = contentDB.insertContentIndex();
-				if(contentId != 0)
-				{
-					optionsGroup.setOgid(optionDB.insertOptionsGroup(optionsGroup.getQid(), optionsGroup.getOtype(), contentId, optionsGroup.getIndex()));
+					List<Integer> options = optionDB.getOptionIdByQuestionId(optionsGroup.getQid());
 					
-					contentDB.insertContent(contentId, optionsGroup.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, optionsGroup.getText());
-					
-					if(optionsGroup.getOgid() != 0 && !options.isEmpty())
-					{
-						int index = 1;
-						for(int o: options){
-							optionDB.insertOptionsByGroup(optionsGroup.getOgid(), o, index);
-							index++;
-						}
+					int contentId = 0;
+					int optionsGroupId = 0;
+					List<Integer> optionsGroupIdList = optionDB.getOptionsGroupIdByQuestionId(optionsGroup.getQid());
+					if(!optionsGroupIdList.isEmpty() && optionsGroupIdList.size()==1 && contentDB.getCountContentByIdAndType(optionDB.getContentIdByOptionsGroupId(optionsGroupIdList.get(0)), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)==0){
+						optionsGroupId= optionsGroupIdList.get(0);						
+						contentId = optionDB.getContentIdByOptionsGroupId(optionsGroupId);
+						
+						optionsGroup.setOgid(optionsGroupId);
+						contentDB.insertContent(contentId, optionsGroup.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, optionsGroup.getText());							
+							
+						response.put("ogid", String.valueOf(optionsGroup.getOgid()));
 					}
-				}
-				response.put("ogid", String.valueOf(optionsGroup.getOgid()));
+					else{
+						contentId = contentDB.insertContentIndex();
+						if(contentId != 0)
+						{
+							optionsGroup.setOgid(optionDB.insertOptionsGroup(optionsGroup.getQid(), optionsGroup.getOtype(), contentId, optionsGroup.getIndex()));
+							
+							contentDB.insertContent(contentId, optionsGroup.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, optionsGroup.getText());
+							
+							if(optionsGroup.getOgid() != 0 && !options.isEmpty())
+							{
+								int index = 1;
+								for(int o: options){
+									optionDB.insertOptionsByGroup(optionsGroup.getOgid(), o, index);
+									index++;
+								}
+							}
+						}
+						response.put("ogid", String.valueOf(optionsGroup.getOgid()));
+					}
+					
+					
 				}
 			}
 			else
@@ -381,20 +402,33 @@ public class OptionHandler {
 		
 		OptionDB optionDB = new OptionDB();
 		int questionId = optionDB.getQuestionIdByOptionsGroupId(optionsGroupId);
-		optionDB.removeOptionsGroup(optionsGroupId);
-		
+		System.out.println("In removeOptionsGroupMatrix");
 		List<OptionsGroup> optionsGroup = optionDB.getOptionsGroupByQuestionId(questionId, "", "");
-		int index = 1;
-		
-		for(OptionsGroup optionGroup : optionsGroup)
-		{
-			if(optionGroup.getIndex() != index)
-			{
-				optionDB.updateOptionsGroupIndex(optionGroup.getId(), index);
-			}
-			index++;
+		if(optionsGroup!=null && optionsGroup.size()==1){
+			System.out.println("In removeOptionsGroupMatrix, one item");
+			optionDB.removeOptionsGroupContent(optionsGroupId);
+			removed=true;
 		}
-		removed = true;
+		else if(optionsGroup!=null && optionsGroup.size()>1){
+			System.out.println("In removeOptionsGroupMatrix, more than one item");
+			optionDB.removeOptionsGroup(optionsGroupId);
+			
+			optionsGroup = optionDB.getOptionsGroupByQuestionId(questionId, "", "");
+			int index = 1;
+			
+			for(OptionsGroup optionGroup : optionsGroup)
+			{
+				if(optionGroup.getIndex() != index)
+				{
+					optionDB.updateOptionsGroupIndex(optionGroup.getId(), index);
+				}
+				index++;
+			}
+			removed = true;
+		}	
+		
+		removed=true;
+		
 		
 		return removed;
 	}

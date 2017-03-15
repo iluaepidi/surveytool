@@ -22,6 +22,8 @@
 				    				
 				    				<input type="hidden" id="removeElemId"/>
 				    				<input type="hidden" id="removeElemService"/>
+				    				<input type="hidden" id="removeElemIndex"/>
+				    				<input type="hidden" id="removeQuestionId"/>
 
 			    					<p><%= lang.getContent("confirmation.remove.message") %> 
 			    						<span id="confirmRemoveDep" class="hidden"><%= lang.getContent("confirmation.remove.message.dependences") %> </span>

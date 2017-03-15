@@ -222,6 +222,41 @@ public class ResponsesDB {
 		return responses;
 	}
 	
+	public HashMap<Integer, HashMap<Timestamp, Integer>> getAnonimousResponseBySurveyId(int surveyId)
+	{
+		//System.out.println("Buscando visitas:"+surveyId);
+		HashMap<Integer, HashMap<Timestamp, Integer>> responses = new HashMap<Integer, HashMap<Timestamp, Integer>>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUMBER_ANONIMUSER_SURVEYID);			
+	   		pstm.setInt(1, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{	   		
+	   			//System.out.println("Visitas: "+rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID)+", "+rs.getTimestamp(DBFieldNames.s_ANONYMOUS_USER_DATE)+", "+rs.getInt(DBFieldNames.s_ANONYMOUS_USER_FINISHED));
+	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+	   			Timestamp createDate = rs.getTimestamp(DBFieldNames.s_ANONYMOUS_USER_DATE);
+	   			int finished = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_FINISHED);
+	   			
+	   			responses.put(anonymousUserId, new HashMap<Timestamp, Integer>());
+	   			responses.get(anonymousUserId).put(createDate, finished);
+	   		}
+	   			   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return responses;
+	}
+	
 	public int[] getNumQuestionsQuestionnaires(int surveyId){
 		int[] count = new int[2];
 		

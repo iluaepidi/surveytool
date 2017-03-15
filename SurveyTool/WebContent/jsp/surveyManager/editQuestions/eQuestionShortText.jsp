@@ -67,7 +67,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 														String inputMode = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE);
 														String inputType = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE);
 														String minValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MINVALUE);
-														String maxValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MAXVALUE);							  							
+														String maxValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MAXVALUE);					  							
 														%>
 														<div class="row" style="vertical-align:middle">
 															<div class="col-md-3" id="inputMode">
@@ -92,31 +92,31 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 															
 															<div class="respsettingsCheckbox col-md-6" id="inputOptions" ><!-- <%//if(!inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%>style="display:none"<%//}%>>-->
 																<div id="genericOptions" <%if(inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>class="question-response-settings hidden"<%}else{%>class="question-response-settings"<%} %>>								  									
-																	<input class= "question-response-settings-options isLimitedChars" type="checkbox" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars" <%if(!textLength.equals("")){%> checked <%}%>>
-																	<label class= "question-response-settings-options" for="isLimitedChars"><%=lang.getContent("question.form.options.text.chars") %></label>
+																	<input class= "question-response-settings-options isLimitedChars" type="checkbox" autocomplete="off" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars<%= question.getQuestionId() %>" <%if(!textLength.equals("")){%> checked <%}%>>
+																	<label class= "question-response-settings-options" for="isLimitedChars<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.chars") %></label>
 																	<div id="charsId" <% if(textLength.equals("")){ %> class="question-response-settings-sub-none charsId" <%} else{%>class="question-response-settings-sub-inherit charsId"<%} %>>
-															  			<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-question-max-chars" id="survey-question-max-chars" value="<%= textLength %>"></input>
-																		<label for="survey-question-max-chars"><%=lang.getContent("question.form.options.text.charshelp") %></label>
+															  			<input type="number" min="0" max="9999" autocomplete="off" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-question-max-chars" id="survey-question-max-chars<%= question.getQuestionId() %>" value="<%= textLength %>"></input>
+																		<label for="survey-question-max-chars<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.charshelp") %></label>
 																	</div>
 																</div>
 																			
 																<div id="decimalsOptions" <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>class="question-response-settings hidden"<%}else{%>class="question-response-settings"<%} %>>								  									
-																	<input class= "question-response-settings-options allowDecimals" type="checkbox" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals" <%if(!decimals.equals("")){%> checked <%}%>>
-																  	<label class= "question-response-settings-options" for="allowDecimals"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
+																	<input class= "question-response-settings-options allowDecimals" type="checkbox" autocomplete="off" name="allowDecimals-<%= question.getIndex() %>" id="allowDecimals<%= question.getQuestionId() %>" <%if(!decimals.equals("")){%> checked <%}%>>
+																  	<label class= "question-response-settings-options" for="allowDecimals<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.decimalValue") %></label>
 																	<div  id="decimalsDiv" <% if(decimals.equals("")){%> class="question-response-settings-sub-none survey-question-decimals decimalsDiv" <%} else{%> class="question-response-settings-sub-inherit survey-question-decimals"<%} %>>
-															  			<input type="number" min="0" max="9999" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-question-decimals" id="survey-question-decimals" value="<%= decimals %>"></input>
-																		<label for="survey-question-decimals"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
+															  			<input type="number" min="0" max="9999" autocomplete="off" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-question-decimals" id="survey-question-decimals<%= question.getQuestionId() %>" value="<%= decimals %>"></input>
+																		<label for="survey-question-decimals<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.decimalNumbers") %></label>
 																	</div>
 																</div>
 																			
 																<div id="rangeOptions"  <%if(!inputType.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER)){%>class="question-response-settings hidden"<%}else{%>class="question-response-settings"<%}%>>	
-																 	<input class= "question-response-settings-options range" type="checkbox" name="range-<%= question.getIndex() %>" id="range" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
-																  	<label class= "question-response-settings-options" for="range"><%=lang.getContent("question.form.options.text.range") %></label>
+																 	<input class= "question-response-settings-options range" type="checkbox" autocomplete="off" name="range-<%= question.getIndex() %>" id="range<%= question.getQuestionId() %>" <%if(!minValue.equals("") || !maxValue.equals("")){%> checked <%}%>>
+																  	<label class= "question-response-settings-options" for="range<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.range") %></label>
 																	<div id="rangeId" <% if(minValue.equals("") && maxValue.equals("")){ %> class="question-response-settings-sub-none rangeId" <%} else{%>class="question-response-settings-sub-inherit rangeId"<%} %>>
-																		<label for="survey-minValue"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
-																		<input type="number" class="survey-minValue" id="survey-minValue" value="<%=minValue%>"></input>
-																		<label for="survey-maxValue"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
-																		<input type="number" class="survey-maxValue" id="survey-maxValue" value="<%=maxValue%>"></input>
+																		<label for="survey-minValue<%= question.getQuestionId() %>"><%= lang.getContent("question.form.options.text.minNumericalValue") %></label>																															  							
+																		<input type="number" autocomplete="off" class="survey-minValue" id="survey-minValue<%= question.getQuestionId() %>" value="<%=minValue%>"></input>
+																		<label for="survey-maxValue<%= question.getQuestionId() %>"><%= lang.getContent("question.form.options.text.maxNumericalValue") %></label>																															  							
+																		<input type="number" autocomplete="off" class="survey-maxValue" id="survey-maxValue<%= question.getQuestionId() %>" value="<%=maxValue%>"></input>
 																	</div>
 																</div>
 															</div>
