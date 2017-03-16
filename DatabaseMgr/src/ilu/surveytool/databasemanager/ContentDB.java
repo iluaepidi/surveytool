@@ -619,9 +619,9 @@ public class ContentDB {
 			int upperBound = DBConstants.s_MAX_CONTENT_LENGTH;
 			while (upperBound<=text.length()){
 				textChain.add(text.substring(lowerBound, upperBound));
-				lowerBound = upperBound+1;
+				lowerBound = upperBound;
 				upperBound = upperBound + DBConstants.s_MAX_CONTENT_LENGTH;
-				if((lowerBound<=text.length()) && (upperBound>text.length())){
+				if((lowerBound<text.length()) && (upperBound>text.length())){
 					upperBound = text.length();
 				}
 			}

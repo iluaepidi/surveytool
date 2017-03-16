@@ -34,7 +34,7 @@ public class QuestionService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
     public String updateContent(String req) {
-    	System.out.println("Opción: " + req);
+    	//System.out.println("Opción: " + req);
     	JSONObject json = null;
     	String response = "";
     	try {
@@ -44,7 +44,7 @@ public class QuestionService {
 					json.getString(Parameter.s_LANGUAGE_LAN), 
 					json.getString(Parameter.s_CONTENT_TYPE), 
 					json.getString(Parameter.s_TEXT));
-			System.out.println("content: " + content.toString());
+			//System.out.println("content: " + content.toString());
 			
 			QuestionHandler questionHandler = new QuestionHandler();
 			response = String.valueOf(questionHandler.updateContent(questionId, content));
