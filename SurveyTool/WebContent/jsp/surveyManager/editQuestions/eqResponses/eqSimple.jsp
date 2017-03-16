@@ -119,6 +119,9 @@
 								  							optionId = optionOther.getId();
 								  						}
 								  						request.setAttribute(Attribute.s_OPTION, optionOther);
+								  						int opIndex = optionsGroup.getOptions().size();
+								  						if(opIndex <= 2) opIndex = 3; 
+								  						request.setAttribute(Attribute.s_INDEX, opIndex);
 								  						%>
 								  						
 								  						<li class="option-item <%= hideOther %>" id="option-item" oid="<%= optionId %>">
@@ -207,7 +210,9 @@
 																			
 															</div>
 						  							</li>
-						  											  							
+						  							<%
+							  						request.setAttribute(Attribute.s_INDEX, 3);
+						  							%>				  							
 						  							<li class="option-item hidden" id="option-item" oid="0">
 					  									<jsp:include page="../eqResponses/eqOptionOther.jsp" />
 						  							</li>

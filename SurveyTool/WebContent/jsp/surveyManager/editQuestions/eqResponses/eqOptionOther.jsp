@@ -8,6 +8,8 @@
 											Language lang = new Language(getServletContext().getRealPath("/")); 
 											lang.loadLanguage(Language.getLanguageRequest(request));
 											
+											int index = (int) request.getAttribute(Attribute.s_INDEX);
+											
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 											Option option = (Option) request.getAttribute(Attribute.s_OPTION);
 											boolean noOptions = false;											
@@ -21,7 +23,7 @@
 											}
 											%>
 					  									<!-- <button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x" aria-hidden="true"></i></button> -->
-					  									<div class="circle-info circle-grey fleft">2</div>
+					  									<div class="circle-info circle-grey fleft"><%= index %></div>
 					  									<!-- <label for="option<%= question.getQuestionId() %>-<%= optionGroupId %>-other" class="other-option-label fleft"><%= lang.getContent("accesibility.question.option.other") %></label> -->
 					  									<fieldset class="other-option-fieldset fleft">
 					  										<legend><%= lang.getContent("accesibility.question.option.legend.other") %></legend>
