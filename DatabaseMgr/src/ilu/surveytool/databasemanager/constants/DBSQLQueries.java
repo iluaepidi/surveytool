@@ -4,11 +4,13 @@ public class DBSQLQueries {
 	//Selects
 		//AnonymousResponse
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
-					+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
+				+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
 					+ "inner join surveytool.content as c on o.idContent = c.idContent "
 					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
-					+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+					+ "where ct.name = 'title' and o.idOption = cast(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)), r.value) value, "
+				+ "if(INSTR(r.value, '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+					+ "(substring_index(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
 				+ "FROM surveytool.anonimoususer as au "
 				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
@@ -49,6 +51,10 @@ public class DBSQLQueries {
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
+				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL = " and r.idOptionsGroup = ?";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL = " and isnull(r.idOptionsGroup)";
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
@@ -100,7 +106,7 @@ public class DBSQLQueries {
 		//option
 		public final static String s_SELECT_OPTION_BY_OPTIONID = "SELECT * FROM surveytool.`option` where idOption = ?";
 		public final static String s_SELECT_RESOURCEID_BY_OPTIONID = "SELECT idResoruces FROM surveytool.`option` where idOption = ?";
-		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, obg.index FROM surveytool.optionsbygroup obg "
+		public final static String s_SELECT_OPTION_BY_OPTIONSGROUPID = "SELECT o.idOption, o.idContent, o.idResoruces, o.otherOption, obg.index FROM surveytool.optionsbygroup obg "
 				+ "inner join surveytool.option o on obg.idOption = o.idOption "
 				+ "where obg.idOptionsGroup = ? "
 				+ "order by obg.index";
@@ -223,6 +229,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol inner join surveytool.language l on l.idLanguage = u.idLanguage WHERE (userName = ? or email = ?) and password = ?";
 		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_USERNAME = "SELECT idUser FROM surveytool.user WHERE userName LIKE ?";
+		public final static String s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS = "SELECT idUser FROM surveytool.user WHERE temporalId LIKE ? AND idUserState = ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL = "SELECT idUser FROM surveytool.user WHERE email LIKE ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE = "SELECT idUser FROM surveytool.user WHERE email LIKE ? AND userName != ?";
 		public final static String s_GET_IDLANGUEGE_FROM_ISONAME = "SELECT idLanguage FROM surveytool.language WHERE isoName LIKE ?";
@@ -241,7 +248,7 @@ public class DBSQLQueries {
 				+ "inner join surveytool.question q on q.idQuestion = qp.idQuestion "
 				+ "inner join surveytool.questiontype qt on q.idQuestionType = qt.idQuestionType "
 				+ "inner join surveytool.category c on q.idCategory = c.idCategory "
-				+ "where s.idQuestionnaire = ? order by qp.index";
+				+ "where s.idQuestionnaire = ? order by p.numPage, qp.index";
 		public final static String s_SELECT_QUESTION_BY_SECTIONID = "SELECT q.*, qp.`index`, qt.name questionTypeName, qt.templateFile, qt.formFile, qt.statisticResultsFile, c.name categoryName, qp.mandatory, qp.optionalAnswer, qp.idPage "
 				+ "FROM surveytool.section sc "
 				+ "inner join surveytool.page p on sc.idSection = p.idSection "
@@ -349,7 +356,7 @@ public class DBSQLQueries {
 						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
 
 		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state, "
-				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire) allUsers "
+				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire and testUser = false and finished = true) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
@@ -443,7 +450,7 @@ public class DBSQLQueries {
 				+ "where question.idQuestion = ?";
 
 		//QDependences
-		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, dv.idOptionsGroup, dv.optionValue, contentOption.text oText FROM surveytool.qdependences qd "
+		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG2 = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, dv.idOptionsGroup, dv.optionValue, contentOption.text oText FROM surveytool.qdependences qd "
 				+"inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
 				+"inner join surveytool.qdependencesvalue dv on dv.idQDependences = qd.idQDependences "
 				+"inner join surveytool.option opt on opt.idOption = dv.optionValue "
@@ -452,7 +459,22 @@ public class DBSQLQueries {
 				+"inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
 				+"inner join surveytool.content contentOption on opt.idContent=contentoption.idContent "
 				+"where qd.idQuestion = ? and contentQuestion.idContentType = 1 and contentOption.idContentType = 1  and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)  and contentOption.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)";
-			
+		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG = "SELECT qd.idQDependences, dt.name depType, qbp.idPage, dv.idDependenceItem, dv.idQuestion, contentQuestion.text qText, "
+				+ "dv.idOptionsGroup, dv.optionValue, "
+				+ "(SELECT text FROM surveytool.content "
+					+ "where idContent = opt.idContent and idContentType = 1 and idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)) oText "
+				+ "FROM surveytool.qdependences qd "
+					+ "inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
+					+ "inner join surveytool.qdependencesvalue dv on dv.idQDependences = qd.idQDependences "
+					+ "inner join surveytool.`option` opt on opt.idOption = dv.optionValue "
+					+ "inner join surveytool.question question on question.idQuestion=dv.idQuestion "
+					+ "inner join surveytool.questionbypage qbp on qbp.idQuestion = question.idQuestion "
+					+ "inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
+					+ "where qd.idQuestion = ? "
+						+ "and contentQuestion.idContentType = 1 "
+						+ "and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?);";
+		
+		
 		public final static String s_SELECT_QDEPENDENCES_BY_QUESTIONID_NOTEXT = "select qd.idQDependences, dt.name depType, qdv.idQuestion, qdv.idOptionsGroup, qdv.optionValue from surveytool.qdependences qd "
 				+"inner join surveytool.qdependencesvalue qdv on qdv.idQDependences = qd.idQDependences "
 				+"inner join surveytool.dependencetype dt on qd.idDependenceType = dt.idDependenceType "
@@ -512,7 +534,7 @@ public class DBSQLQueries {
 		
 	//inserts
 		//User
-			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`) VALUES (?,?,?,?,?,?,?)";
+			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`, `temporalId`) VALUES (?,?,?,?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`, `testUser`) VALUES (?, ?, ?, ?)";
@@ -597,6 +619,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
 			public final static String s_UPDATE_OPTIONSGROUP = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?), `idContent`=? WHERE `idOptionsGroup`=?";
+			public final static String s_UPDATE_OPTION_OTHER = "UPDATE `surveytool`.`option` SET `otherOption`=? WHERE `idOption`=?";
 						
 			//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
@@ -630,6 +653,7 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_SECTION_INDEX = "UPDATE `surveytool`.`section` SET `index`=? WHERE `idSection`=?";
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
+			public final static String s_UPDATE_USER_ACCOUNT = "UPDATE surveytool.user SET temporalId=?, idUserState=? WHERE idUser= ?";
 
 		//QDependences
 			public final static String s_UPDATE_QDEPENDENCE_SHOW = "UPDATE `surveytool`.`qdependences` SET show=? WHERE idQDependences = ?";
@@ -656,6 +680,8 @@ public class DBSQLQueries {
 			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+			public final static String s_DELETE_CONTENT_BY_ID_TYPE = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
+					+ "and `idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
 
 			public final static String s_REMOVE_OPTIONSGROUP_CONTENT = "DELETE FROM surveytool.content where idContent=(SELECT idContent FROM surveytool.optionsgroup WHERE idOptionsGroup=?)";
 		//option

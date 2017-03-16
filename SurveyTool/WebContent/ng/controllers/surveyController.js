@@ -15,6 +15,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.text = "hello world";
 	$scope.decimalRegex = '^[0-9]+(.([0-9]{1,2}))?$';
 	$scope.questionIndex = 1;
+	$scope.otherOptionValue = -1;
 	var mandatoryErrorQuestions = [];
 	var errorSurvey = false;
 
@@ -42,15 +43,15 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.getProgressPercent = function() {
 		//console.log("Progress: " + ($scope.currentSurvey.info.numPages) + " / " + ($scope.currentSurvey.info.section.page.numPage));
 		//console.log("Survey Json: " + JSON.stringify($scope.currentSurvey.info));
-		if($scope.currentSurvey.info.section.page.numPage == 1)
+		if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage == 1)
 		{
 			return 0;
 		}
-		else if($scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
+		else if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
 		{
 			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages - 1)) * 100;
 		}
-		else  if($scope.currentSurvey.info.section.page.numPage)
+		else  if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage)
 		{
 			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages)) * 100;
 		}
@@ -109,7 +110,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.getMaxValue = function(maxValue) {
 		if(maxValue == null || maxValue.value == null || maxValue.value == "")
 		{
-			return "9999";
+			return "0";
 		}
 		else
 		{
@@ -129,19 +130,39 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 	
 	$scope.isOutOfRange = function(num, min, max) {
-		if(!isNaN(parseFloat(num)) && isFinite(num))
+		if(!angular.isUndefined(num) && min != max)
 		{
-			var f = parseFloat(num);
-			if(f < min || f > max)
+			var numParts = num.split(",");
+			var finalNum = num;
+			if(numParts.length > 1) finalNum = numParts[0] + "." + numParts[1]; 
+			console.log("isNumber: " + finalNum);
+			console.log("isNumber min: " + min + " - max: " + max);
+			if(!isNaN(parseFloat(finalNum)) && isFinite(finalNum))
 			{
-				errorSurvey = true;
-				return true;
+				var f = parseFloat(finalNum);
+				if(f < min || f > max)
+				{
+					errorSurvey = true;
+					return true;
+				}
 			}
 		}
 		errorSurvey = false;
 		return false;
 	};
 
+	$scope.isNumber = function(num) {
+		console.log("isNumber: " + num);
+		
+		if(isNaN(parseFloat(finalNum)))
+		{
+			errorSurvey = true;
+			return false;
+		}
+		errorSurvey = false;
+		return true;
+	};
+	
 	$scope.getQuestionPath = function(question) {		
 		var minMaxCad = "";
 		if(question.questionType == "shortText")
@@ -202,10 +223,13 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 						if(q.optionsGroups && q.optionsGroups.length > 0)
 						{
 							q.optionsGroups.forEach(function(og){
+								console.log("response option: " + og.response + "- type: " + q.questionType);
 								if(!og.response)
 								{
-									if(og.options && og.options.length > 0 && q.questionType != 'checkbox')
+									console.log("response option 2: " + og.response + " - other: " + og.responseOther);
+									if(og.options && og.options.length > 0 && q.questionType == 'multiple')
 									{
+										console.log("response option 3: " + og.response);
 										var hasResponse = false;
 										og.options.forEach(function(o){
 											if(o.response)
@@ -213,6 +237,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 												hasResponse = true;
 											}
 										});
+										
+										if(og.responseOther) hasResponse = true;
 										
 										if(!hasResponse) mandatoryErrorQuestions.push(q.questionId);
 									}
@@ -315,7 +341,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 			return true;
 		}
 	};
-	
+
 	//Navigation focus
 
 	$scope.setIndexQuestion = function(qIndex) {
@@ -323,6 +349,14 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		console.log("index question: " + $scope.questionIndex);
 	    $location.hash('anchor-' + $scope.questionIndex);
 	    $anchorScroll();
+	};
+
+	$scope.setOtherSimpleFocus = function(optionGroup, optionId) {
+		if(optionGroup.response != optionId) optionGroup.response = optionId;
+	};
+
+	$scope.setOtherMultipleFocus = function(option) {
+		if(option.response == false) option.response = true;
 	};
 	
 	//mousewheel
@@ -369,7 +403,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		var i = 0;
 		while(!hasResource && i < options.length){
 			if(options[i].resource) hasResource = true;
-			console.log("hasResource " + i + ": " + hasResource);
+			//console.log("hasResource " + i + ": " + hasResource);
 			i++;
 		}
 		return hasResource;

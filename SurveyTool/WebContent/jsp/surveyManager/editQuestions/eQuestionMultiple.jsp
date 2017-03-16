@@ -44,8 +44,7 @@
 															</div> -->
 															<div class="right col-sm-7 col-xs-4">
 																<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-																<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
-																<button class="btn btn-question-head btn-sm active mandatory-button" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red" aria-hidden="true"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+																<jsp:include page="eqComponents/eqMandatoryToggle.jsp" />
 																<%} %>
 															</div>
 								  					</div>

@@ -17,10 +17,10 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
   survey.saveResponseAndGetNextPage = function(action, callback){
 	  console.log("Next page: " + JSON.stringify(survey));
 	  var responses = getResponseJson(survey, action, true);
-	  console.log("Json Response: " + JSON.stringify(responses));
+	  //console.log("Json Response: " + JSON.stringify(responses));
 	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
-	  		console.log("Rest response: " + JSON.stringify(response));
+	  		//console.log("Rest response: " + JSON.stringify(response));
 	  		//var resJson = JSON.parse(response);
 			if(response.stored)
 			{
@@ -84,6 +84,12 @@ function getResponseJson(currentSurvey, action, preview)
 					if(og.response)
 					{
 						optionsGroup.response = og.response;
+						var selectedOther = false;
+						og.options.forEach(function(o){
+							if(o.optionId == optionsGroup.response) selectedOther = o.otherOption;
+						});
+						optionsGroup.selectedOther = selectedOther;
+						if(selectedOther) optionsGroup.responseOtherText =  og.responseOtherText;
 					}
 					else
 					{
@@ -96,10 +102,13 @@ function getResponseJson(currentSurvey, action, preview)
 									var option = {};
 									option.optionId = o.optionId;
 									option.response = o.response;
+									option.otherOption = o.otherOption;
+									if(option.otherOption) option.responseOtherText = o.responseOtherText
 									optionsGroup.options.push(option);
 								}
 							});
 						}
+						
 					}
 					question.optionsGroups.push(optionsGroup);
 				});

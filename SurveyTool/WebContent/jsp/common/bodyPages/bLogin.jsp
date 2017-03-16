@@ -45,7 +45,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  							<span id='password-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.password") %></span>
 		  							</div>	
 		  							<div class="login-button">
-		  								<input type="button" id="loginSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.login") %>" />
+		  								<input type="submit" id="loginSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.login") %>" />
 		  							</div>  
 		  							
 		  							<div class="login-button">
@@ -99,7 +99,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 			  							<span id='repasswordregister-error' class='error hidden'><%= lang.getContent("msg.error.login.repassword") %></span>
 		  							</div>	
 		  							<div class="login-button">
-		  								<input type="button" id="registerSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.register") %>" />
+		  								<input type="submit" id="registerSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.register") %>" />
 		  							</div>  	
 		  							<div class="login-button">
 		  								<input type="button" id="backLogin" class="btn btn-block btn-survey" value="<%= lang.getContent("button.login") %>" onclick="showHideRegister(false)"/>

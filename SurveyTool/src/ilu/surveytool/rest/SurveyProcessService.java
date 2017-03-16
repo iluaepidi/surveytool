@@ -91,10 +91,10 @@ public class SurveyProcessService {
 				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), anonimousUser, lang.getCurrentLanguage());
 				System.out.println(survey);
 				
-				if(survey.getJSONObject("section").has("page"))
-				{
+				/*if(survey.getJSONObject("section").has("page"))
+				{*/
 					//The body content is a question, so this while considers that the final page contains one question (the body content with the thanks message)
-					while((survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){
+					while(survey.getJSONObject("section").has("page") && (survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){
 						numPage = survey.getJSONObject("section").getJSONObject("page").getInt("numPage");	
 						numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), anonimousUser.getId(), lang.getCurrentLanguage(), false);
 													
@@ -104,7 +104,7 @@ public class SurveyProcessService {
 						survey = surveyProcessHandler.getCurrentPageJson(survey.getString("publicId"), anonimousUser, lang.getCurrentLanguage());
 						System.out.println("In while: "+survey);
 					}
-				}
+				//}
 				response.put("page", survey);
 				
 				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);

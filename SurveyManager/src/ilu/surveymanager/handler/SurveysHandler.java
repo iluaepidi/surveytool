@@ -182,7 +182,7 @@ public class SurveysHandler {
 		return file;
 	}
 	
-	public JSONArray getQuestionsJson(Survey survey)
+	public JSONArray getQuestionsJson(Survey survey, String otherLabel)
 	{
 		JSONArray pagesJson = new JSONArray();
 		
@@ -228,6 +228,10 @@ public class SurveysHandler {
 										else if(!option.getResources().isEmpty())
 										{
 											optionJson.put("title", option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText());
+										}
+										else if(option.isOther())
+										{
+											optionJson.put("title", otherLabel);
 										}
 										else
 										{

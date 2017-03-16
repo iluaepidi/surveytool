@@ -84,7 +84,7 @@ public class SurveyProcessHandler {
 				
 				for (int i = 0; i < questions.length(); i++) {
 					//System.out.println(i+","+((questions.getJSONObject(i)).getString("questionType")));
-					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
+					if ((((questions.getJSONObject(i)).getString("questionType")).equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE)) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").length() > 0) && ((questions.getJSONObject(i)).getJSONArray("optionsGroups").getJSONObject(0).has("response"))){
 						questionId = (questions.getJSONObject(i)).getInt("questionId");
 						JSONArray optionsGroup = (questions.getJSONObject(i)).getJSONArray("optionsGroups");
 						ogid = optionsGroup.getJSONObject(0).getInt("optionGroupId");
@@ -198,7 +198,10 @@ public class SurveyProcessHandler {
 								if(optionsGroup.has("response"))
 								{									
 									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
-									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, optionsGroup.getString("response"), 0), anonymousUserId, surveyId);
+									String value = optionsGroup.getString("response");
+									boolean selectedOther = optionsGroup.getBoolean("selectedOther");
+									if(selectedOther && optionsGroup.has("responseOtherText")) value = value + DBConstants.s_VALUE_TOKEN + optionsGroup.getString("responseOtherText");
+									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
 								}
 								else
 								{									
@@ -208,11 +211,17 @@ public class SurveyProcessHandler {
 									{
 										JSONObject option = options.getJSONObject(o);
 										int optionId = option.getInt("optionId");
+										String value = Integer.toString(optionId);
 										if(option.has("response"))
 										{
-											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, Integer.toString(optionId), 0), anonymousUserId, surveyId);
+											if(option.getBoolean("otherOption") && option.has("responseOtherText"))
+											{
+												value += DBConstants.s_VALUE_TOKEN + option.getString("responseOtherText");
+											}
+											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
 										}
 									}
+								
 								}
 							}
 						}

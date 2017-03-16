@@ -46,6 +46,7 @@ public class DBFieldNames {
 	//option
 		public final static String s_OPTIONID = "idOption";
 		public final static String s_VALUE = "value";
+		public final static String s_OPTION_OTHER_OPTION = "otherOption";
 		
 	//optionsgroup
 		public final static String s_OPTIONSGROUPID = "idOptionsGroup";
@@ -110,6 +111,7 @@ public class DBFieldNames {
 		public final static String s_USERNAME = "username";
 		public final static String s_USER_EMAIL = "email";
 		public final static String s_USER_ISO_LANGUAGE = "isoName";
+		public final static String s_USER_STATE_ID = "idUserState";
 		
 	//QDependences
 		public final static String s_IDQDEPENDENCE = "idQDependences";

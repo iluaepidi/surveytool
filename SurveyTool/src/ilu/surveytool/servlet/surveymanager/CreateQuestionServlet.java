@@ -25,6 +25,7 @@ import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.surveytool.sessioncontrol.SessionHandler;
 
@@ -125,7 +126,11 @@ public class CreateQuestionServlet extends HttpServlet {
 			int surveyId = Integer.parseInt(request.getParameter(Parameter.s_SURVEY_ID));
 			SurveysHandler surveysHandler = new SurveysHandler();
 			Survey survey = surveysHandler.getSurveyDetail(surveyId, language);
-			JSONArray pages = surveysHandler.getQuestionsJson(survey);
+
+			Language lang = new Language(getServletContext().getRealPath("/")); 
+			lang.loadLanguage(Language.getLanguageRequest(request));
+			
+			JSONArray pages = surveysHandler.getQuestionsJson(survey, lang.getContent("accesibility.question.option.legend.other"));
 			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
 			int numPage = Integer.parseInt(request.getParameter(Parameter.s_NUM_PAGE));

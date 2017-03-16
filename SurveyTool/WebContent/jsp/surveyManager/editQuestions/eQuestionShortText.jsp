@@ -46,8 +46,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 														
 														<div class="right col-sm-7 col-xs-4">
 															<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-															<label for="mandatoryButton" class="visuallyhidden"><%= lang.getContent("accesibility.question.mandatory") %></label>														
-															<button class="btn btn-question-head btn-sm active mandatory-button" id="mandatoryButton" active="<%= question.isMandatory() %>"><i class="fa fa-asterisk red" aria-hidden="true"></i><span><%= lang.getContent("question.mandatory") %></span></button>
+															<jsp:include page="eqComponents/eqMandatoryToggle.jsp" />
 															<%} %>
 														</div>
 													</div>
@@ -70,13 +69,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 														String maxValue = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_MAXVALUE);					  							
 														%>
 														<div class="row" style="vertical-align:middle">
-															<div class="col-md-3" id="inputMode">
+															<!-- <div class="col-md-3" id="inputMode">
 																<label for="input-mode"><%=lang.getContent("question.form.options.text.inputTextBoxInput") %></label>
 																<select class="form-control" id="input-mode">
 																	<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_FREE)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.free")%></option>
-																	<!-- <option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.pulldown")%></option>-->
+																	<option value="<%=DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN%>" <%if(inputMode.equals(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_INPUT_MODE_PULLDOWN)){%> selected <%}%>><%=lang.getContent("question.form.options.text.inputTextBoxInput.pulldown")%></option>
 																</select>
-															</div>
+															</div> -->
 															
 															<div class="col-md-3" id="inputType">
 																<label for="input-type"><%=lang.getContent("question.form.options.text.inputTextBoxType") %></label>

@@ -61,7 +61,7 @@
 						  						String noLogicDependencesClass = "";
 						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || !question.getQuestionType().equals("simple"))) noLogicDependencesClass = "hidden";						  							
 							  					%>
-							  					<div class="rules-frame <%= noLogicDependencesClass %>">
+							  					<div class="rules-frame">
 							  						<h6 class="visuallyhidden"><%= lang.getContent("question.edit.dependences.title") %></h6>
 							  													  						
 								  					<div class="nav-config">
@@ -217,7 +217,10 @@
 								  											<%= lang.getContent("question.edit.dependence.option.label_shown") %>
 								  											<span class="visuallyhidden">(<%= lang.getContent("question.edit.dependence.option.label_help_hidden") %>)</span>
 								  										</label>
-								  										
+								  										<%
+								  										String oName = depval.getOName(); 
+								  										if(oName.equals("Other")) oName = lang.getContent("accesibility.question.option.legend.other");
+								  										%>
 								  										<div class="form-group div-dependence-option"  style="margin:0px !important;">
 				    														<select id="dependence-option-<%= question.getQuestionId() %>-<%= i %>" class="form-control dependence-option" autocomplete="off">
 								  												<option id="option-dependence-<%= depval.getOgid() + "-" + depval.getOid() %>" value="<%= depval.getOgid() + "-" + depval.getOid() %>" selected="selected"> <%= depval.getOName()%> </option>
@@ -229,7 +232,7 @@
 																		
 								  										<div class="option-icons div-remove-dependence">
 							  												<label for="remove-dependence" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.dependence") %>  <%= i %></label>
-							  												<button class="btn btn-transparent red" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+							  												<button class="btn btn-transparent red removeDependence" id="remove-dependence" aria-label="<%= lang.getContent("button.remove_dependence") %> <%= i %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  											</div>
 							  										</fieldset>
 							  										
@@ -289,7 +292,10 @@
 							  											if(option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE)!=null && !option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty())
 							  												optionTitle = option.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
 							  											else 
-							  												optionTitle = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  											{
+							  												if(option.isOther()) optionTitle = lang.getContent("accesibility.question.option.legend.other");
+							  												else optionTitle = option.getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+							  											}
 							  									%>
 								  											<li class="logic-option"  ogid="<%= question.getOptionsGroups().get(0).getId()%>" oid="<%= option.getId() %>">
 								  												<label for="logic-option-goto-<%= option.getId() %>">
@@ -325,7 +331,7 @@
 					  									else
 					  									{
 					  									%>				
-					  									<div class="logic-settings hidden">
+					  									<div class="logic-settings">
 					  										<p><%= lang.getContent("question.edit.logic.no_option") %></p>
 					  										
 					  										<ul class="logic-option-list form-inline hidden">

@@ -19,7 +19,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 							
 		  					<div class="user-panel-surveys">
 		  						<div class="surveys-create-button">
-		  							<button type="button" class="btn btn-primary btn-icon-text" data-toggle="modal" data-target="#newPollModal"><i class="fa fa-plus" aria-hidden="true"></i> <%= lang.getContent("button.create_new") %></button>
+		  							<button type="button" class="btn btn-primary btn-icon-text" data-toggle="modal" data-target="#newPollModal"><i class="fa fa-plus" aria-hidden="true"></i> <%= lang.getContent("button.create_new_poll") %></button>
 		  						</div>
 			  					
 			  					<jsp:include page="cPollsTableList.jsp" />

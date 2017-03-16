@@ -657,6 +657,49 @@ $(function() {
 		
 	});
 
+	$('.survey-sections').on("gotoOther", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest('ul').attr('ogid');
+		console.log("Option other goto: " + $(this).val() + " - oid: " + optionId);
+		var logicElem = $('#logic-option-' + optionId);
+
+		var text = $(this).val();
+		
+		if(logicElem.length)
+		{
+			logicElem.html(text);
+		}
+		else
+		{
+			var logicList = $(this).closest("div.panel-body").find("ul.logic-option-list");
+			if(logicList.hasClass('hidden'))
+			{
+				logicList.removeClass("hidden");
+				var elem = logicList.find('span');
+				elem.attr("id", "logic-option-" + optionId);
+				elem.html(text);
+				var logicOption = logicList.find(".logic-option");
+				logicOption.find("select.logic-option-goto").val('none');
+				logicOption.attr("oid", optionId);
+				logicOption.attr("ogid", optionGroupId);
+				logicList.closest(".logic-settings").find("p").addClass("hidden");
+			}
+			else
+			{
+				var ulLogic = $(this).closest("div.question-frame").next().find("ul.logic-option-list");
+				var clonElem = ulLogic.find("li").first().clone();
+				clonElem.attr("oid", optionId);
+				clonElem.attr("ogid", optionGroupId);
+				var clonSpan = clonElem.find("span");
+				clonSpan.attr("id", "logic-option-" + optionId);
+				clonSpan.html(text);
+				clonElem.find("select.logic-option-goto").val('none');
+				ulLogic.append(clonElem);
+			}
+		}
+		
+	});
+
 	$('.survey-sections').on("setJson", "#option-list #option-item input", function(e){
 		var optionId = $(this).attr('oid');
 		var pageId = $(this).closest("li.page").attr("pid");
@@ -668,41 +711,27 @@ $(function() {
 		{
 			text = $(this).closest('li.option-item').find('li.multimedia-item a').text().split(' - ')[0];
 		}
-		console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
-		var existOg = false;
-		var existOpt = false;
-		console.log("index: " + index);
-		$(surveyTree).each(function(ind, pageElem){
-		    if(pageElem.pageId == pageId)
-		    {
-		    	$(pageElem.questions).each(function(ind2, questionElem){
-		    		if(questionElem.questionId == questionId)
-		    		{
-		    			$(questionElem.optionsGroup).each(function(ind3, ogElem){
-				    		if(ogElem.optionsGroupId == optionGroupId)
-				    		{
-				    			existOg = true;
-				    			$(ogElem.options).each(function(ind4, optionElem){
-						    		if(optionElem.optionId == optionId)
-						    		{
-						    			existOpt = true;
-						    			optionElem.title = text;
-						    		}
-						    	});
-				    			
-				    			if(!existOpt) ogElem.options.push({"optionId":parseInt(optionId),"index":parseInt(index),"title": text});
-				    		}
-				    	});
-		    			
-		    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":parseInt(optionGroupId),"options":[{"optionId":parseInt(optionId),"index":parseInt($(this).attr("index")),"title": text}]});
-		    		}
-		    	});
-		    }		    
-		});
 		
+		setJson(optionId, pageId, questionId, optionGroupId, index, text);	
+				
 		$(this).trigger("setOptionDepend");
-
-		console.log("surveyTree changed: " + JSON.stringify(surveyTree));
+	
+		//console.log("surveyTree changed: " + JSON.stringify(surveyTree));
+	});
+	
+	$('.survey-sections').on("setJsonOther", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var pageId = $(this).closest("li.page").attr("pid");
+		var questionId = $(this).closest("li.panel-question").attr("qid");
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var index = 999;
+		var text = $(this).val();
+		
+		setJson(optionId, pageId, questionId, optionGroupId, index, text);	
+				
+		$(this).trigger("setOptionOtherDepend");
+	
+		//console.log("surveyTree changed: " + JSON.stringify(surveyTree));
 	});
 	
 	$('.survey-sections').on("rmvOptJson", "#option-list #option-item input", function(e){		
@@ -735,6 +764,37 @@ $(function() {
 		$(this).trigger('rmvOptionDepend');
 		//console.log("surveyTree removed: " + JSON.stringify(surveyTree));
 	});
+
+	$('.survey-sections').on("rmvOptOtherJson", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var pageId = $(this).closest("li.page").attr("pid");
+		var questionId = $(this).closest("li.panel-question").attr("qid");
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		
+		//console.log("Entra en rmvOptJson - oId: " + optionId + " - ogid: " + optionGroupId + " - qid: " + questionId + " - pid: " + pageId);
+		
+		$(surveyTree).each(function(index, pageElem){
+		    if(pageElem.pageId == pageId)
+		    {
+		    	$(pageElem.questions).each(function(index, questionElem){
+		    		if(questionElem.questionId == questionId)
+		    		{
+		    			$(questionElem.optionsGroup).each(function(index, ogElem){
+				    		if(ogElem.optionsGroupId == optionGroupId)
+				    		{
+				    			ogElem.options = $.grep(ogElem.options, function(option) {
+				    				return option.optionId != optionId;  
+				    			});						    					    		
+				    		}
+				    	});
+		    		}
+		    	});
+		    }		    
+		});
+		
+		$(this).trigger('rmvOptionOtherDepend');
+		//console.log("surveyTree removed: " + JSON.stringify(surveyTree));
+	});
 	
 	$('.survey-sections').on("createQuestionJson", "input.survey-question-title", function(e, qType, pageId, text, qid, qIndex){
 		
@@ -747,6 +807,20 @@ $(function() {
 		    }		    
 		});
 		
+		var question = $(this).closest("li.panel-question");
+		var page = $(this).closest("li.page");
+		var pageIndex = parseInt(page.attr("index"));
+		var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+		prevPage.find("li.panel-question").each(function(index, qElement){
+			var qElementId = parseInt($(qElement).attr("qid")); 
+			if($.inArray(qElementId, simpleQuestions) != -1)
+			{
+				$(qElement).find("div.rules-frame").removeClass("hidden");
+				$(qElement).find("button.btn-logic").removeClass("hidden");
+			}
+		});
+					
 		//console.log("surveyTree created: " + JSON.stringify(surveyTree));
 	});
 
@@ -810,6 +884,25 @@ $(function() {
 
 		$(this).trigger("rmvQuestionGoto");
 		$(this).trigger("rmvQuestionDepend");
+		
+
+		var question = $(this).closest("li.panel-question");
+		var numQuestions = question.closest("ul.page-items").find("li.panel-question").length;
+		console.log("Num questions: " + numQuestions);
+		if(numQuestions < 2)
+		{
+			var page = $(this).closest("li.page");
+			var pageIndex = parseInt(page.attr("index"));
+			var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+			var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+			prevPage.find("li.panel-question").each(function(index, qElement){
+				var qElementId = parseInt($(qElement).attr("qid")); 
+				if($.inArray(qElementId, simpleQuestions) != -1)
+				{
+					$(qElement).find("button.btn-logic").addClass("hidden");
+				}
+			});
+		}
 		//console.log("surveyTree question removed: " + JSON.stringify(surveyTree));
 	});
 
@@ -920,6 +1013,24 @@ $(function() {
 		});
 	});
 
+	$('.survey-sections').on("setOptionOtherDepend", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		var text = $(this).val();		
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				$(selectDepend).find('#option-dependence-' + valor).html(text);
+			}
+		});
+	});
+
 	$('.survey-sections').on("rmvOptionDepend", "#option-list #option-item input", function(e){
 		var optionId = $(this).attr('oid');
 		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
@@ -937,36 +1048,92 @@ $(function() {
 			}
 		});
 	});
+
+	$('.survey-sections').on("rmvOptionOtherDepend", "input.otherOptionTitle", function(e){
+		var optionId = $(this).closest("li.option-item").attr('oid');
+		var optionGroupId = $(this).closest("ul.option-list").attr("ogid");
+		
+		var valor = optionGroupId + "-" + optionId;
+		
+		//console.log("rmvOptionDepend value: " + valor);
+		
+		$('.dependence-option').each(function(index, selectDepend){
+			//console.log("Select index: " + index + " - val: " + $(selectDepend).val());
+			if($(selectDepend).val() == valor)
+			{					
+				var trashButton = $(selectDepend).closest("fieldset").find("button.removeDependence");
+				trashButton.trigger("rmvNoConfirm");
+			}
+		});
+	});
 	
-	$('.survey-sections').on("displayLogic", "fieldset.logic-frame", function(e){
+	$('.survey-sections').on("displayLogic", "div.rules-frame", function(e){
 		var pageIndex = $(this).closest('li.page').attr('index');
-		var logicButton = $(this).closest("div.rules-frame").find("button.btn-logic");
+		var logicButton = $(this).find("button.btn-logic");
 		if(pageIndex == surveyTree.length)
 		{
-			if(!$(this).hasClass("hidden"))
+			if($(this).find("fieldset.logic-frame").length)
 			{
-				$(this).find("select.logic-option-goto").each(function(index, element){
-					if($(element).val() != "none")
-					{
-						$(element).val("none");
-						$(element).trigger("change");
-					}
-				});
-				$(this).addClass("hidden");
+				console.log("Pregunta simple o con lógica");
+				if(!$(this).hasClass("hidden"))
+				{
+					$(this).find("select.logic-option-goto").each(function(index, element){
+						if($(element).val() != "none")
+						{
+							$(element).val("none");
+							$(element).trigger("change");
+						}
+					});
+					$(this).addClass("hidden");
+				}
+				
+				if(!logicButton.hasClass("hidden"))
+				{
+					logicButton.addClass("hidden");
+					logicButton.removeClass("active");
+				}
 			}
 			
-			if(!logicButton.hasClass("hidden"))
+			var numQuestions = $(this).closest("ul.page-items").find("li.panel-question").length;
+			console.log("numero de preguntas: " + numQuestions);
+			if(numQuestions < 2)
 			{
-				logicButton.addClass("hidden");
-				logicButton.removeClass("active");
+				var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+				var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+				prevPage.find("li.panel-question").each(function(index, qElement){
+					var qElementId = parseInt($(qElement).attr("qid")); 
+					if($.inArray(qElementId, simpleQuestions) != -1)
+					{
+						$(qElement).find("div.rules-frame").removeClass("hidden");
+						$(qElement).find("button.btn-logic").removeClass("hidden");
+					}
+				});
 			}
 		}
 		else
 		{
-			//$(this).removeClass("hidden");
-			//if(!$(this).closest("div.question-frame").find("div.dependences-frame").hasClass("hidden")) $(this).removeClass("noborder");
-			//else $(this).addClass("noborder");			
-			logicButton.removeClass("hidden");
+			var nextPageIndex = parseInt(pageIndex) + 1;
+			var nextPage = $("li.page[index=" + nextPageIndex + "]");
+			var nextPageId = parseInt(nextPage.attr("pid"));
+			var lastPageId = surveyTree[surveyTree.length - 1].pageId;
+			var numQuestions = nextPage.find("li.panel-question").length;
+			console.log("PageIndex: " + nextPageIndex + " - nextId: " + nextPageId + " - lastId: " + lastPageId + " - numQuestions: " + numQuestions);
+			if(nextPageId != lastPageId || numQuestions > 0)
+			{
+				if($(this).find("fieldset.logic-frame").length) logicButton.removeClass("hidden");
+			}
+			else
+			{
+				var simpleQuestions = getSimpleQuestions(pageIndex);
+				$(this).closest('li.page').find("li.panel-question").each(function(index, qElement){
+					var qElementId = parseInt($(qElement).attr("qid")); 
+					if($.inArray(qElementId, simpleQuestions) != -1)
+					{
+						$(qElement).find("button.btn-logic").addClass("hidden");
+					}
+				});
+				logicButton.addClass("hidden");
+			}
 		}
 	});
 
@@ -1046,6 +1213,42 @@ $(function() {
 	
 });
 
+function setJson(optionId, pageId, questionId, optionGroupId, index, text)
+{
+	console.log("Option setJson pageId: " + pageId + " - oid: " + optionId + " - valor: " + text);
+	var existOg = false;
+	var existOpt = false;
+	console.log("index: " + index);
+	$(surveyTree).each(function(ind, pageElem){
+	    if(pageElem.pageId == pageId)
+	    {
+	    	$(pageElem.questions).each(function(ind2, questionElem){
+	    		if(questionElem.questionId == questionId)
+	    		{
+	    			$(questionElem.optionsGroup).each(function(ind3, ogElem){
+			    		if(ogElem.optionsGroupId == optionGroupId)
+			    		{
+			    			existOg = true;
+			    			$(ogElem.options).each(function(ind4, optionElem){
+					    		if(optionElem.optionId == optionId)
+					    		{
+					    			existOpt = true;
+					    			optionElem.title = text;
+					    		}
+					    	});
+			    			
+			    			if(!existOpt) ogElem.options.push({"optionId":parseInt(optionId),"index":parseInt(index),"title": text});
+			    		}
+			    	});
+	    			
+	    			if(!existOg) questionElem.optionsGroup.push({"optionsGroupId":parseInt(optionGroupId),"options":[{"optionId":parseInt(optionId),"index":parseInt(index),"title": text}]});
+	    		}
+	    	});
+	    }		    
+	});
+	
+}
+
 function getSimpleQuestions(numPage)
 {
 	var questions = [];
@@ -1109,6 +1312,47 @@ function removePageJson(numPage, pageId)
 		return page.pageId != pageId;
 	});	
 	updateNumberPage();
+	console.log("SurveyTree removePage: " + JSON.stringify(surveyTree));
+}
+
+function removePageCompleteJson(section)
+{
+	section.find("li.page").each(function(indexPage, page){
+		var pageId = parseInt($(page).attr("pid"));
+		surveyTree = jQuery.grep(surveyTree, function(page) {
+			return page.pageId != pageId;
+		});	
+	});
+	updateNumberPage();
+	console.log("SurveyTree removePageComplete: " + JSON.stringify(surveyTree));
+}
+
+function removeLastPage(page, pageId)
+{
+	//var lastPageId = parseInt(page.closest("ul.section-pages").find("li.page").last().attr("pid"));
+	var lastPageId = surveyTree[surveyTree.length - 1].pageId;
+	console.log("CurrentPageId: " + pageId + " - lasPageId: " + lastPageId);
+	var prevPage = page.prev();
+	if(pageId === lastPageId)
+	{
+		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
+		prevPage.find("li.panel-question").each(function(index, qElement){
+			var qElementId = parseInt($(qElement).attr("qid")); 
+			if($.inArray(qElementId, simpleQuestions) != -1)
+			{
+				$(qElement).find("button.btn-logic").addClass("hidden");
+			}
+		});		
+	}
+
+	var prevPageId = parseInt(prevPage.attr("pid"));
+	var firstPageId = surveyTree[0].pageId;
+	if(prevPageId === firstPageId)
+	{
+		page.find("li.panel-question").each(function(index, qElement){
+			$(qElement).find("button.btn-dependences").addClass("hidden");
+		});
+	}
 }
 
 function updateNumberPage()

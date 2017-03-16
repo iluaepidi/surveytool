@@ -54,14 +54,16 @@ $(function() {
 	
 	//survey-info  #e6e6e6
 	$('.btn-qtype button').click(function(){
-		console.log("Clicking on type query button");
-		$('#frame-basic-Settings').css('display', 'inherit');
-		$('#' + qtypeId + " i").css("background-color","#fff");
+		//console.log("Clicking on type query button");
+		//$('#frame-basic-Settings').css('display', 'inherit');
+		//$('#' + qtypeId + " i").css("background-color","#fff");
+		$('#' + qtypeId + " i").removeClass("qtype-selected");
 		qtypeId = $(this).attr('id');
-		$('#' + qtypeId + ' i').css("background-color","#e6e6e6");
+		$('#' + qtypeId + " i").addClass("qtype-selected");
+		//$('#' + qtypeId + ' i').css("background-color","#e6e6e6");
 		$('#qtypevalue').val(qtypeId);
 		$('#qstatement').focus();
-		
+		$("div.qtype-error > span").addClass("hidden");
 	});
 	
 	$('#basic-settings-close').click(function(){
@@ -76,10 +78,18 @@ $(function() {
 	
 	$('#create-question').click(function(event) {
 		var valid = true;
+		var qTypeSelected = false;
+		$('ul.qtype-list').find("li.btn-qtype").each(function(index, elem){
+			qTypeSelected = qTypeSelected || $(elem).find("i").hasClass("qtype-selected");
+		});
+		
 		//check de name project
 		if($('#qstatement').val() == ""){
 			valid = false;
 			showFieldError($('#qstatement'));
+		}else if(!qTypeSelected){
+			valid = false;
+			$("div.qtype-error > span").removeClass("hidden");
 		}else{
 			hideFieldError($('#qstatement'));
 			console.log("num page: " + currentElement.attr('index'));
@@ -120,12 +130,14 @@ $(function() {
 			//$('#main-version').val("none");
 			$('#mandatory').val("false");
 			$('#help-text').val("false");
-			$('#' + qtypeId + " i").css("background-color","#fff");
-			$('#frame-basic-Settings').css('display', 'none');
+			$('#' + qtypeId + " i").removeClass("qtype-selected");
+			//$('#' + qtypeId + " i").css("background-color","#fff");
+			//$('#frame-basic-Settings').css('display', 'none');
 			
 			//$('#modal').modal('hide');
 			//$('#newQuestionModal').hide();
 			$('#newQuestionModal').modal('toggle');
+			$("div.qtype-error > span").addClass("hidden");
 		}
 	});
 	
@@ -133,6 +145,10 @@ $(function() {
 		currentElement = $(this).closest('li.page');
 		$("#newQuestionModal").modal("show");		
 		modalFocus = $(this);
+	});
+	
+	$('.survey-sections').on("click", '.btn-edit', function(){
+		$(this).closest('div').find("input").focus();
 	});
 	
 	$('.survey-sections').on("click", ".btn-page-break", function(){
@@ -159,9 +175,9 @@ $(function() {
 				var i = 1;
 				sectionList.find("li.panel-section").each(function(indexSection, section){
 				   $(section).find('li.page').each(function(indexPage, page){
-					   var cads = $(page).find('h4').html().split(' ');
+					   var cads = $(page).find('h4 > span').html().split(' ');
 						$(page).attr('index', i);
-						$(page).find('h4').html(cads[0] + " " + i);
+						$(page).find('h4 > span').html(cads[0] + " " + i);
 						i++;
 				   });
 				});
@@ -189,7 +205,11 @@ $(function() {
 				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
 				node.closest('div.edit-content-center').find('ul.survey-sections').append(responseText);	
 				node.closest('div.edit-content-center').find('ul.survey-sections').find('li.panel-section').last().find("h3 input").focus();
-			}
+				var section = node.closest("div.edit-content-center").find("ul.survey-sections").find("li.panel-section").last();
+				var newPage = section.find("li.page").first();
+				insertPageJson(newPage.attr("index"), newPage.attr("pid"));
+			}			
+			console.log("create section surveyTree: " + JSON.stringify(surveyTree));
 		});
 	});
 
@@ -223,38 +243,41 @@ $(function() {
 	
 	var newquota = 1000;
 	$('#create-quota').click(function(event) {
-			
 			$('#newQuotaModal').modal('toggle');
-			newquota = $("#selquestionnewquota").val();
+			newquotaid = $("#selquestionnewquota").val();
+			console.log("Quota: " + newquotaid);
 			
 			//Copy survey-quota-new
-			if($("#survey-quota-"+newquota).length > 0){
+			if($("#survey-quota-"+newquotaid).length > 0){
 				alertNotQuota();
 			}else{
-				var newQuota=$('#survey-quota-new').clone();
-				newQuota.css("display","block");
-				newQuota.attr("quota",newquota);
-				newQuota.attr("sid",newquota);
-				newQuota.attr("id","survey-quota-"+newquota);
+				var newQuota=$('#survey-quota-new').find("li").clone();
+				//newQuota.css("display","block");
+				newQuota.removeClass("hidden");
+				newQuota.attr("quota",newquotaid);
+				newQuota.attr("sid",newquotaid);
+				newQuota.attr("id","survey-quota-"+newquotaid);
+
 				var selectQuota = newQuota.find('select');
-				selectQuota.attr("id","selquestionforfees"+newquota);
-				selectQuota.attr("name","selquestionforfees"+newquota);
-				selectQuota.attr("onchange","changeoptionsfees("+newquota+")");
+				selectQuota.attr("id","selquestionforfees"+newquotaid);
+				selectQuota.attr("name","selquestionforfees"+newquotaid);
+				selectQuota.attr("onchange","changeoptionsfees("+newquotaid+")");
 				
 				var h5title =  newQuota.find('h5');
-				h5title.attr("id","questionquotaname"+newquota);
+				h5title.attr("id","questionquotaname"+newquotaid);
 				
 				var divoptions = newQuota.find('#optionsquotanew');
-				divoptions.attr("id","optionsquota"+newquota);
+				divoptions.attr("id","optionsquota"+newquotaid);
 				
 				
 				//newQuota.prependTo("#listcompletequotas");
-				newQuota.insertBefore("#survey-quota-new");
-				$('#selquestionforfees'+newquota).val(newquota);
-				loadvaluequestion(newquota);
+				//newQuota.insertBefore("#survey-quota-new");
+				$('ul.quota-item-list').append(newQuota);
+				$('#selquestionforfees'+newquotaid).val(newquotaid);
+				loadvaluequestion(newquotaid);
 				//eliminar opcion del combo
 				//$("#selquestionnewquota").find('[value="'+newquota+'"]').remove();
-				$('#questionquotaname'+newquota).html($("#selquestionforfees"+newquota +" option:selected").text());
+				$('#questionquotaname'+newquotaid).html($("#selquestionforfees"+newquotaid +" option:selected").text());
 			}
 			
 	});
@@ -322,7 +345,7 @@ $(function() {
 		console.log("Asigned current text: " + currentText);
 	});
 	
-	$('.survey-sections').on("focusout", "#option-list #option-item input", function(e){
+	$('.survey-sections').on("focusout", "#option-list #option-item input.option-title", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
 		if($(this).val() != "")
@@ -479,7 +502,43 @@ $(function() {
 		//}
 	});
 	
-	
+	$('.survey-sections').on("focusout", "input.otherOptionTitle", function(e){
+		var titleOther = $(this).closest("fieldset").find("legend").html();
+		var value = $(this).val();
+		
+		
+		/*else if (value != titleOther)
+		{*/
+			var req = {};
+			var currentNode = $(this);
+			req.text = currentNode.val();
+			req.oid = currentNode.closest('li').attr('oid');
+			req.lang = $('#survey-language-version').val();
+			
+			$.ajax({ 
+			   type: "POST",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/OptionService/updateTextOtehrOption",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);
+				   if(data != '')
+				   {
+					   if(value === "") {currentNode.val(titleOther);}
+					   currentNode.trigger("gotoOther");
+					   currentNode.trigger("setJsonOther");					   
+				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+			});
+		//}
+	});
 	
 	$('.survey-sections').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
@@ -587,7 +646,8 @@ $(function() {
 	
 	
 	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
-		var index = $(this).parent().parent().children("li").size();
+		//var index = $(this).parent().parent().children("li").size();
+		var index = $(this).closest("ul").find("li.option-item").size();
 		var ogid = $(this).closest("ul.option-list").attr("ogid");
 		var qid = $(this).closest("li.panel-question").attr("qid");
 		var optionHtml = '<li class="option-item" id="option-item">' +
@@ -603,10 +663,77 @@ $(function() {
 								'</div> ' +
 								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
-		$(this).parent().before(optionHtml);
+		$(this).closest("li").prev().before(optionHtml);
+		$(this).closest("li").prev().find("div.circle-info").html(index + 1);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
+	$('.survey-sections').on("click", "button.btnAddOptionOther", function(e){
+		var req = {};
+		var currentNode = $(this);
+				
+		req.qid = currentNode.closest('li.panel-question').attr('qid');
+		req.ogid = currentNode.closest('ul').attr('ogid');
+		req.pid = currentNode.closest('li.page').attr('pid');
+		req.index = currentNode.closest("ul").find("li.option-item").size();
+		req.otype = currentNode.closest('ul').attr('otype');
+		req.lang = $('#survey-language-version').val();
+		if($(this).hasClass("btnAddOptionOther")) req.isOther = "true";
+		else req.isOther = "false";
+		
+		$.ajax({ 
+		   type: "POST",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: host + "/SurveyTool/api/OptionService/createOptionOther",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   if(data != "")
+			   {
+				   currentNode.closest("li").prev().removeClass("hidden"); 
+				   var index = currentNode.closest("ul").find("li.option-item").size();
+				   currentNode.closest("li").prev().find("div.circle-info").html(index);
+				   currentNode.prop( "disabled", true );
+				   var json = JSON.parse(data);
+				   if(json.hasOwnProperty('oid'))
+				   {
+					   currentNode.closest("li").prev().attr('oid', json.oid);
+				   }
+				   
+				   if(json.hasOwnProperty('ogid'))
+				   {
+					   currentNode.closest('ul').attr('ogid', json.ogid);
+				   }
+				   
+				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("gotoOther");
+				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("setJsonOther");
+			   }
+			   /*else if(data == 'true' && req.value == 'false')
+			   {
+				   var optionElem = currentNode.closest("li.option-item");				   
+				   optionElem.addClass("hidden");
+				   var titleOther = optionElem.find("legend").html();
+				   optionElem.find("input.otherOptionTitle").val(titleOther);
+				   optionElem.find("input.survey-question-max-chars").val("");
+				   optionElem.find("input.isLimitedChars").prop("checked", false);
+				   optionElem.find("input.isLimitedChars").attr('active', false);
+				   optionElem.find('#charsId').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.adjust-lines-adjust").prop("checked", true);
+				   optionElem.find("input.adjust-lines-set").prop("checked", false);
+				   optionElem.find('#lines').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.survey-question-max-lines").val("");
+				   optionElem.next().find("button.btnAddOptionOther").prop( "disabled", false );
+					
+			   }*/
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+		});		
+	});
 	
 	$('.survey-sections').on("click", "#optionmatrix-list #btn-add-optionmatrix", function(e){
 		var index = $(this).parent().parent().children("li").size();
@@ -1221,7 +1348,7 @@ $(function() {
 		var item = $(this).closest('li.page');
 		currentElement = item;
 		currentQuestion = item.attr('pid');
-		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4').html() + '"');
+		$("#elementToRemoveText").html('"Page-break: ' + item.find('.page-head h4 span').html() + '"');
 		$("#removeElemId").val(currentQuestion + '/' + $('#survey-info').attr('sid'));
 		$("#removeElemService").val('PageService');
 		$("#removeElement").modal("show");
@@ -1254,6 +1381,7 @@ $(function() {
 				qDependence.push($(selectDepend).closest("li.panel-question").find("span.num-question").html());
 			}
 		});
+		qDependence = $.unique(qDependence);
 		
 		var qLogic = [];
 		$('.logic-option-goto').each(function(index, selectLogic){
@@ -1262,6 +1390,7 @@ $(function() {
 				qLogic.push($(selectLogic).closest("li.panel-question").find("span.num-question").html());
 			}
 		});
+		qlogic = $.unique(qLogic);
 		
 		if(qDependence.length > 0)
 		{
@@ -1299,6 +1428,7 @@ $(function() {
 		{
 			$("#confirmRemovelogic").removeClass("hidden");
 			var logCad = "";
+			
 			for(var i = 0; i < qLogic.length; i++)
 			{
 				if((i + 1) == qLogic.length && i > 0) logCad = logCad + " y ";
@@ -1376,6 +1506,51 @@ $(function() {
 		$("#removeElemIndex").val(input.attr('index'));
 		$("#removeElement").modal("show");	
 		modalFocus = $(this);	
+	});
+	
+	$('.section-pages').on("click", "button.removeOptionOther", function(e){
+		var req = {};
+		var currentNode = $(this);
+	    
+		req.qid = currentNode.closest('li.panel-question').attr('qid');
+		req.ogid = currentNode.closest('ul').attr('ogid');
+		req.oid = currentNode.closest('li.option-item').attr('oid'); 
+		
+		$.ajax({ 
+		   type: "DELETE",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: host + "/SurveyTool/api/OptionService/removeOptionOther",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   if(data == "true")
+			   {
+				   currentNode.closest('li.option-item').find("input.otherOptionTitle").trigger("rmvOptOtherJson")
+				   var optionElem = currentNode.closest("li.option-item");				   
+				   optionElem.addClass("hidden");
+				   var titleOther = optionElem.find("legend").html();
+				   optionElem.find("input.otherOptionTitle").val(titleOther);
+				   optionElem.find("input.survey-question-max-chars").val("");
+				   optionElem.find("input.isLimitedChars").prop("checked", false);
+				   optionElem.find("input.isLimitedChars").attr('active', false);
+				   optionElem.find('#charsId').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.adjust-lines-adjust").prop("checked", true);
+				   optionElem.find("input.adjust-lines-set").prop("checked", false);
+				   optionElem.find('#lines').attr('class','question-response-settings-sub-none');
+				   optionElem.find("input.survey-question-max-lines").val("");
+				   optionElem.next().find("button.btnAddOptionOther").prop( "disabled", false );
+				   
+				   var logicOptionElement = $('#logic-option-' + req.oid);
+				   removeLogicElement(logicOptionElement);
+			   }
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+		});	
 	});
 	
 	$('.section-pages').on("click", ".remove-optionmatrix", function(e){
@@ -1589,7 +1764,7 @@ $(function() {
 				   else if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
-					  
+					   
 					   $('li[scid=' + ids[0] + ']').find('ul[id=section-pages]').each(function(indice, elemento) {
 						   if(indice == 0)
 						   {
@@ -1606,6 +1781,7 @@ $(function() {
 				   {
 					   //var pagesList = currentElement.closest('ul.section-pages');
 					   var currentPageId = parseInt(currentElement.attr("pid"));
+					   removeLastPage(currentElement, currentPageId);
 					   var currentNumPage = parseInt(currentElement.attr("index"));
 					   var sectionList = currentElement.closest('ul.survey-sections');
 					   var prevElement = currentElement.prev();
@@ -1630,9 +1806,9 @@ $(function() {
 					   var i = 1;
 					   sectionList.find("li.panel-section").each(function(indexSection, section){
 						   $(section).find('li.page').each(function(indexPage, page){
-							   var cads = $(page).find('h4').html().split(' ');
+							   var cads = $(page).find('h4 > span').html().split(' ');
 								$(page).attr('index', i);
-								$(page).find('h4').html(cads[0] + " " + i);
+								$(page).find('h4 > span').html(cads[0] + " " + i);
 								i++;
 						   });
 					   });
@@ -1740,7 +1916,9 @@ $(function() {
 				   if(service == "SectionService")
 				   {
 					   var ids = elementId.split('/');
-					   
+
+					   removePageCompleteJson(currentElement);
+					  
 					   $('li[scid=' + ids[0] + ']').find('li.panel-question').each(function(index, element){
 						   console.log("QuestionId: " + $(element).attr("qid"));
 						   $(element).trigger("rmvQuestionGoto");
@@ -1754,9 +1932,9 @@ $(function() {
 						   /*var cads = $(page).find('input.survey-section-title').val().split(' ');
 						   $(section).find('input.survey-section-title').val(cads[0] + " " + i);*/
 						   $(section).find('li.page').each(function(indexPage, page){
-							   var cads = $(page).find('h4').html().split(' ');
+							   var cads = $(page).find('h4 > span').html().split(' ');
 								$(page).attr('index', i);
-								$(page).find('h4').html(cads[0] + " " + i);
+								$(page).find('h4 > span').html(cads[0] + " " + i);
 								i++;
 						   });
 					   });
@@ -1883,9 +2061,30 @@ $(function() {
 		});
 	});
 	
-	$('.survey-sections').on("click", "#mandatoryButton", function(e){
-		console.log("mandatory");
+	$('.survey-sections').on("keyup", 'div.mandatory-toggle-div', function(e){
+		if(e.keyCode == 13)
+	    {
+			var checkbox = $(this).siblings("input.mandatoryToggle");
+			var checked = checkbox.is(":checked");
+			if(checked)
+			{
+				checkbox.prop("checked", false);
+			}
+			else
+			{
+				checkbox.prop("checked", true);
+			}
+			checkbox.trigger("change");
+	    }
+	});
+	
+	$('.survey-sections').on("change", 'input.mandatoryToggle', function(e){
 		e.stopPropagation();
+		
+		var checked = $(this).is(":checked");
+		if(checked) $(this).closest("div").find("div.toggle").removeClass("off");
+		else $(this).closest("div").find("div.toggle").addClass("off");		
+	
 		var node = $(this); 
 		var req = {};
 		req.qid = node.closest('li[id=panel-question1]').attr('qid');
@@ -2586,7 +2785,7 @@ $(function() {
 			});
 			
 			moveQuestionPrevPage(previousPage, currentPage, question);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			$("#moveQuestion").modal('hide');
 			question.find("button.moveup-question-arrow").focus();
@@ -2615,7 +2814,7 @@ $(function() {
 			});
 			
 			moveQuestionNextPage(previousPage, currentPage, question);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
 			$("#moveQuestion").modal('hide');
@@ -2681,7 +2880,7 @@ $(function() {
 			console.log("question moved: " + JSON.stringify(questionJson));
 			//question.trigger('rmvQuestionJsonNoDepLog');
 			//question.trigger('insertQuestionJson', [questionJson]);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			$(this).focus();
 		}		
@@ -2742,7 +2941,7 @@ $(function() {
 		{
 			console.log("question moved: " + JSON.stringify(questionJson));
 			//question.trigger('insertQuestionJson', [questionJson]);
-			question.find("fieldset.logic-frame").trigger("displayLogic");
+			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
 			$(this).focus();
@@ -2750,68 +2949,9 @@ $(function() {
 		else isModal = false;
 	});
 	
-	/*$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
-		var question = $(this).closest("li.panel-question");
-		var currentPage = question.closest("li.page");
-		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
-		console.log("question to move: " + JSON.stringify(questionJson));
-		question.trigger('rmvQuestionJsonNoDepLog');
-		if(question.is(':last-child'))
-		{
-			if(!currentPage.is(':last-child'))
-			{
-				console.log("no last question");
-				var nextPage = currentPage.next();
-				var questions = nextPage.find("ul.page-items");
-
-				insertQuestionNextPage(question, questions);				
-				
-				updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
-			}
-			else
-			{
-				var currentSection = currentPage.closest("li.panel-section");
-				if(!currentSection.is(':last-child'))
-				{
-					var questions = currentSection.next().find('li.page').first().find('ul.page-items');
-					
-					insertQuestionNextPage(question, questions);		
-					
-					updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
-				}
-			}
-			questionJson.index = 0;
-		}
-		else
-		{
-			var nextQuestion = question.next();
-			nextQuestion.insertBefore(question);
-			var index = parseInt(question.attr("index"));
-			question.attr("index", index + 1);
-			questionJson.index = index;
-			var prevIndex = parseInt(nextQuestion.attr("index"));
-			nextQuestion.attr("index", prevIndex - 1);
-			
-			if(!nextQuestion.hasClass("bcontent"))
-			{
-				var numQuestion = question.find("span.num-question").html();
-				nextQuestion.find("span.num-question").html(numQuestion);
-				question.find("span.num-question").html(parseInt(numQuestion)+1);
-			}
-
-			updateQuestionIndex(question.attr("qid"), nextQuestion.attr("qid"), question.closest("li.page").attr("pid"), false, "down", host);
-		}
-
-		console.log("question moved: " + JSON.stringify(questionJson));
-		question.trigger('insertQuestionJson', [questionJson]);
-		question.find("fieldset.logic-frame").trigger("displayLogic");
-		question.find("fieldset.dependences-frame").trigger("displayDependences");
-		question.find("fieldset.logic-frame").trigger("setLogicMoved");
-		$(this).focus();
-	});*/
-	
 	$('#listcompletequotas').on("click", "#removeQuota", function(e){
-		var item = $(this).parents(".survey-info");
+		//var item = $(this).parents(".survey-info");
+		var item = $(this).closest("li.quota-item");
 		quotaid = item.attr('quota');
 		currentQuestion = item.find(".widthTitleSurveyCollapsed");
 		sid = currentQuestion.attr('sid');
@@ -2853,6 +2993,7 @@ $(function() {
 	$('#newQuestionModal').on('hidden.bs.modal', function () {
 		console.log("close new question: " + modalFocus.prop("tagName"));
 		modalFocus.focus();
+		$('html,body').animate({scrollTop: modalFocus.offset().top - 25},'slow');
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
 });
@@ -2886,7 +3027,7 @@ function executeBtnMovedown(nextPage, currentPage, question)
 	}
 	else
 	{
-		moveQuestionNextPage(nPage, cPage, question)
+		moveQuestionNextPage(nextPage, currentPage, question)
 	}
 		
 	return isModal;
@@ -2900,7 +3041,7 @@ function moveQuestionNextPage(nPage, cPage, question)
 
 	insertQuestionNextPage(question, questions);				
 	
-	updateQuestionIndex(question.attr("qid"), 0, currentPage.attr("pid"), true, "down", host);
+	updateQuestionIndex(question.attr("qid"), 0, cPage.attr("pid"), true, "down", host);
 	
 	questionJson.index = 0;
 	question.trigger('insertQuestionJson', [questionJson]);
@@ -3132,7 +3273,7 @@ function limitInput(element, max_chars)
 }
 
 function insertValueQuota(){
-	$('.widthTitleSurveyCollapsed').on("focusout", "#optionquota input", function(e){
+	$('.widthTitleSurveyCollapsed').on("focusout change", "#optionquota input", function(e){
 		e.stopPropagation();
 		//if($(this).val() != ""){
 			
@@ -3228,7 +3369,6 @@ function deleteQuote(){
 	
 	
 }
-
 
 function alertNotQuota(){
     bootbox.dialog({

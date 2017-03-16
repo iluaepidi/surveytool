@@ -25,6 +25,7 @@ import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Question;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.DataObject.Survey;
+import ilu.surveytool.language.Language;
 import ilu.surveytool.properties.SurveyToolProperties;
 import ilu.surveytool.sessioncontrol.SessionHandler;
 
@@ -64,6 +65,9 @@ public class SurveysServlet extends HttpServlet {
 		LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
+		Language lang = new Language(getServletContext().getRealPath("/")); 
+		lang.loadLanguage(Language.getLanguageRequest(request));
+		
 		if(userSessionInfo != null && userSessionInfo.isValid())
 		{
 			//cargar lenguaje seleccionado en el combo
@@ -90,10 +94,12 @@ public class SurveysServlet extends HttpServlet {
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 			jsFiles.add(properties.getJsFilePath(Address.s_JS_CHART_GRAPHICS));
+			//jsFiles.add(properties.getJsFilePath(Address.s_JS_TOGGLE_BUTTON));
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			
 			List<String> cssFiles = new ArrayList<>();
 			cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
+			cssFiles.add(properties.getCssFilePath(Address.s_CSS_TOGGLE_BUTTON));
 			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
 			
 			int pageId = surveysHandler.getPageIdBySurveyId(surveyId);
@@ -102,7 +108,7 @@ public class SurveysServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
 			
 			JSONArray pages = new JSONArray();
-			if(language == null || language.isEmpty() || language.equals(survey.getDefaultLanguage())) pages = surveysHandler.getQuestionsJson(survey);
+			if(language == null || language.isEmpty() || language.equals(survey.getDefaultLanguage())) pages = surveysHandler.getQuestionsJson(survey, lang.getContent("accesibility.question.option.legend.other"));
 			request.setAttribute(Attribute.s_JSON_PAGES, pages);
 			
 			if(language==null || language.equals(survey.getDefaultLanguage())){

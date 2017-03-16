@@ -36,6 +36,7 @@ public class Address {
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
+		public final static String s_CSS_TOGGLE_BUTTON = "toggleButton";
 		
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
@@ -50,7 +51,7 @@ public class Address {
 		public final static String s_JS_ANGULAR_ROUTER = "angularRouter";
 		public final static String s_JS_YOUTUBE_IFRAME_ANGULAR_API = "youtubeIframeApi";
 		public final static String s_JS_YOUTUBE_ANGULAR_EMBED = "youtubeAlgunar";
-		
+		public final static String s_JS_TOGGLE_BUTTON = "toggleButton";
 		public final static String s_NG_SERVICE_SURVEY = "ngSurveyService";
 		public final static String s_NG_SERVICE_SURVEY_PREVIEW = "ngSurveyPreviewService";
 		

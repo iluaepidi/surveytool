@@ -7,6 +7,7 @@ public class LoginResponse {
 	int userId;
 	String userName = "";
 	String rol = "";
+	int userState = 1;
 	boolean isValid = false;
 	String errorMsg = "";
 	private String password;
@@ -103,6 +104,14 @@ public class LoginResponse {
 
 	public void setListLanguage(HashMap<String, String> listLanguage) {
 		this.listLanguage = listLanguage;
+	}
+
+	public int getUserState() {
+		return userState;
+	}
+
+	public void setUserState(int userState) {
+		this.userState = userState;
 	}
 
 }

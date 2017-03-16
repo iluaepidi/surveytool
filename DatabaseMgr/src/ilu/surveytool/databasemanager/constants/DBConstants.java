@@ -3,6 +3,7 @@ package ilu.surveytool.databasemanager.constants;
 public class DBConstants {
 	
 	//DB Values
+			public final static String s_VALUE_TOKEN = "-#-";
 		//ContentType
 			public final static String s_VALUE_CONTENTTYPE_NAME_TITLE = "title";
 			public final static String s_VALUE_CONTENTTYPE_NAME_DESCRIPTION = "description";
@@ -12,6 +13,7 @@ public class DBConstants {
 			public final static String s_VALUE_CONTENTTYPE_NAME_ACKNOWLEDGMENT_TEXT = "ackText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_CALL_TEXT = "callText";
 			public final static String s_VALUE_CONTENTTYPE_NAME_LABEL = "label";
+			public final static String s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL = "otherLabel";
 		//ContentLength
 			public final static int s_MAX_CONTENT_LENGTH = 1000;
 		//OptionType	
@@ -62,6 +64,10 @@ public class DBConstants {
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";
 		//UserQuestionnaire
 			public final static String s_VALUE_STATE_FINISHED = "finished";
+		//UserState
+			public final static int i_VALUE_USER_STATE_ID_ACTIVE = 1;
+			public final static int i_VALUE_USER_STATE_ID_EMAIL = 2;
+			public final static int i_VALUE_USER_STATE_ID_ADMIN = 3;
 		//Resource
 			public final static String s_VALUE_RESOURCE_TYPE_IMAGE = "image";
 			public final static String s_VALUE_RESOURCE_TYPE_VIDEO = "video";
@@ -73,6 +79,9 @@ public class DBConstants {
 			public final static String s_VALUE_SURVEY_STATE_PAUSED = "paused";
 			public final static String s_VALUE_SURVEY_STATE_ACTIVE = "active";
 			public final static String s_VALUE_SURVEY_STATE_FINISHED = "finished";
+		//user state
+			public final static int i_VALUE_USER_STATE_ACTIVE = 1;
+			public final static int i_VALUE_USER_STATE_EMAIL_CONFIRM = 2;
 			
 		//Dependence
 			public final static String s_VALUE_DEPENDENCETYPE_AND = "And";

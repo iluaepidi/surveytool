@@ -9,6 +9,7 @@ import ilu.surveymanager.data.Option;
 import ilu.surveymanager.data.OptionsGroupSurveyManager;
 import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.OptionDB;
+import ilu.surveytool.databasemanager.QuestionParameterDB;
 import ilu.surveytool.databasemanager.ResourceDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.OptionsByGroup;
@@ -40,12 +41,15 @@ public class OptionHandler {
 			
 			if(option.getOid() == 0)
 			{
-				if(!option.getText().equals("")){
+				if(!option.getText().equals("") || (option.getText().equals("") && option.isOther())){
 					int contentId = contentDB.insertContentIndex();
 					if(contentId != 0)
 					{
 						option.setOid(optionDB.insertOption(contentId));
-						contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+						
+						if(option.isOther()) optionDB.updateOptionOther(option.getOid(), option.isOther());
+						
+						if(!option.getText().equals("")) contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
 						if(option.getOid() != 0 && option.getOgid() != 0)
 						{
 							optionDB.insertOptionsByGroup(option.getOgid(), option.getOid(), option.getIndex());
@@ -76,7 +80,35 @@ public class OptionHandler {
 		
 		return response.toString();
 	}
+
+	public String createOptionOther(Option option)
+	{
+		String response = "";
+		OptionDB optionDB = new OptionDB();
+
+		response = this.saveOption(option);
+			
+		return response;
+	}
 	
+	/*public boolean setOptionOther(Option option, int pageId)
+	{
+		boolean updated = false;
+		OptionDB optionDB = new OptionDB();
+
+		updated = optionDB.updateOptionOther(option.getOgid(), option.getQid(), value);
+		
+		if(!option.isOther() && updated)
+		{
+			QuestionParameterDB questionParameterDB = new QuestionParameterDB();
+			questionParameterDB.removeQuestionParameters(option.getQid(), pageId);
+			ContentDB contentDB = new ContentDB();
+			int contentId = optionDB.getContentIdByOptionsGroupId(option.getOgid());
+			contentDB.removeContentByType(contentId, DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER_LABEL);
+		}
+			
+		return updated;
+	}*/
 	
 	public String updateTextOption(Option option)
 	{
@@ -129,6 +161,24 @@ public class OptionHandler {
 		return response.toString();
 	}
 	
+	public boolean updateTextOtherOption(Option option)
+	{
+		boolean updated = false;
+		ContentDB contentDB = new ContentDB();
+		OptionDB optionDB = new OptionDB();
+		int contentId = optionDB.getContentIdByOptionId(option.getOid());
+		boolean exist = contentDB.existContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+		if(exist)
+		{
+			contentDB.updateContentText(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+			updated = true;
+		}
+		else
+		{
+			updated = contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
+		}
+		return updated;
+	}
 	
 	public String saveOptionWithoutContent(Option option)
 	{
@@ -354,7 +404,7 @@ public class OptionHandler {
 			int index = 1;
 			for(OptionsByGroup optionByGroup : optionsByGroup)
 			{
-				if(optionByGroup.getIndex() != index)
+				if(optionByGroup.getIndex() != index && optionByGroup.getIndex() != 999)
 				{
 					optionDB.updateOptionsByGroupIndex(optionsGroupId.get(0), optionByGroup.getOptionId(), index);
 				}

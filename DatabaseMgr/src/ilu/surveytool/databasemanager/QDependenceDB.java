@@ -67,9 +67,9 @@ public class QDependenceDB {
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG);			
-	   		pstm.setInt(1, questionId);
-	   		pstm.setString(2, lang);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QDEPENDENCES_BY_QUESTIONID_LANG);	
+	   		pstm.setString(1, lang);		
+	   		pstm.setInt(2, questionId);
 	   		pstm.setString(3, lang);
 	   		
 	   		rs = pstm.executeQuery();
@@ -86,14 +86,33 @@ public class QDependenceDB {
 	   				
 	   			}
 	   			
-	   			qDependenceValue.add(new QDependenceValue(
+	   			QDependenceValue qDepVal = new QDependenceValue(
 	   					rs.getInt(DBFieldNames.s_DEPENDENCEITEM),
 	   					rs.getInt(DBFieldNames.s_QUESTION_ID),
 	   					rs.getInt(DBFieldNames.s_PAGE_ID),
 	   					rs.getString(DBFieldNames.s_QTEXT),
 	   					rs.getInt(DBFieldNames.s_OPTIONSGROUPID),
 	   					rs.getInt(DBFieldNames.s_DEPENDENCEOPTIONID),
-	   					rs.getString(DBFieldNames.s_OTEXT)));
+	   					rs.getString(DBFieldNames.s_OTEXT));
+	   			
+	   			if(qDepVal.getOName() == null || qDepVal.getOName().isEmpty())
+	   			{
+	   				OptionDB optionDB = new OptionDB();
+	   				ResourceDB resourceDB = new ResourceDB();
+	   				int resourceId = optionDB.getResourceIdByOptionId(qDepVal.getOid());
+	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+	   				ContentDB contentDB = new ContentDB();
+	   				
+	   				String text = "";
+	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, lang, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   				if(!contents.isEmpty()) text = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+	   				
+	   				if(text == null || text.isEmpty()) text = "Other";
+	   					
+	   				qDepVal.setOName(text);
+	   			}
+	   			
+	   			qDependenceValue.add(qDepVal);
 	   		}
 	   		
 	   		if(qDependence != null)

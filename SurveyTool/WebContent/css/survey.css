@@ -202,7 +202,7 @@
 	background: url(../img/checkbox-on.png) center bottom no-repeat;
 	color:#333;
 }
-#form-question .checkbox.img input[type=checkbox]:checked + label img{
+#form-question .checkbox.img input[type=checkbox]:checked + label div.option-image {
 	border:3px solid #016FB8;
 }
 #form-question .checkbox.img label span{
@@ -229,8 +229,8 @@
 	color:#fff !important;
 	background-color:#016FB8 !important;
 }
-#form-question .checkbox.img label:hover img,
-#form-question .checkbox.img input:focus + label img{
+#form-question .checkbox.img label:hover div.option-image,
+#form-question .checkbox.img input:focus + label div.option-image{
 	border:3px solid #016FB8;
 }
 
@@ -285,7 +285,7 @@
 	background: url(../img/radio-on.png) center bottom no-repeat;
 	color:#333;
 }
-#form-question .radio.img input[type=radio]:checked + label img{
+#form-question .radio.img input[type=radio]:checked + label div.option-image{
 	border:3px solid #016FB8;
 }
 #form-question .radio.img label span{
@@ -302,7 +302,8 @@
 }
 .option-image {display: none;
 	    height: 190px;
-	    width: 100%;}
+	    width: 100%;
+	    border: 3px solid transparent;}
 #form-question .radio.img label div.option-image {display: table !important;}
 .sub-option-image {    display: table-cell;
     vertical-align: middle;
@@ -321,14 +322,18 @@
 	color:#fff !important;
 	background-color:#016FB8 !important;
 }
-#form-question .radio.img label:hover img,
-#form-question .radio.img input:focus + label img{
+#form-question .radio.img label:hover div.option-image,
+#form-question .radio.img input:focus + label div.option-image{
 	border:3px solid #016FB8;
 }
 
 .option-list {/*display: inline-block;
     max-width: 90%;
     padding: 0;*/}
+    
+.other-option-text-div {margin-left: 30px;
+	width: 90%;
+	margin-top: 5px;}
 
 /* Matrix */
 #form-question table{

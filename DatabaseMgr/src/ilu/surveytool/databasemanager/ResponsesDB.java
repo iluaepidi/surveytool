@@ -74,38 +74,47 @@ public class ResponsesDB {
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
 	   		{	   			
-	   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
-	   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
-	   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
-	   			
-	   			if(!responses.containsKey(anonymousUserId))
-	   			{
-	   				responses.put(anonymousUserId, new HashMap<Integer, HashMap<Integer, List<String>>>());
-	   			}
-	   			
-	   			if(!responses.get(anonymousUserId).containsKey(questionId))
-	   			{
-	   				responses.get(anonymousUserId).put(questionId, new HashMap<Integer, List<String>>());
-	   			}
-	   			
-	   			if(!responses.get(anonymousUserId).get(questionId).containsKey(optionsGroupId))
-	   			{
-	   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
-	   			}
 	   			String value = rs.getString(DBFieldNames.s_VALUE);
-	   			if(value != null && value.isEmpty()) {
-	   				//System.out.println("Response " + rs.getString(DBFieldNames.s_RESPONSE_ID) + ": " + value);
-	   				OptionDB optionDB = new OptionDB();
-	   				int resourceId = optionDB.getResourceIdByOptionId(Integer.parseInt(rs.getString(DBFieldNames.s_OPTIONID)));
-	   				ResourceDB resourceDB = new ResourceDB();
-	   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
-	   				ContentDB contentDB = new ContentDB();
-	   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
-	   				if(contents.isEmpty()) contents = contentDB.getContentByIdLanguageContentType(contentId, "en", DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
-	   				value = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+	   			if(value != null)
+	   			{
+		   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+		   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
+		   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
+		   			
+		   			if(!responses.containsKey(anonymousUserId))
+		   			{
+		   				responses.put(anonymousUserId, new HashMap<Integer, HashMap<Integer, List<String>>>());
+		   			}
+		   			
+		   			if(!responses.get(anonymousUserId).containsKey(questionId))
+		   			{
+		   				responses.get(anonymousUserId).put(questionId, new HashMap<Integer, List<String>>());
+		   			}
+		   			
+		   			if(!responses.get(anonymousUserId).get(questionId).containsKey(optionsGroupId))
+		   			{
+		   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
+		   			}
+		   				
+		   			if(value != null && value.isEmpty()) {
+		   				//System.out.println("Response " + rs.getString(DBFieldNames.s_RESPONSE_ID) + ": " + value);
+		   				OptionDB optionDB = new OptionDB();
+		   				int resourceId = optionDB.getResourceIdByOptionId(Integer.parseInt(rs.getString(DBFieldNames.s_OPTIONID)));
+		   				ResourceDB resourceDB = new ResourceDB();
+		   				int contentId = resourceDB.getContentIdByResourceId(resourceId);
+		   				ContentDB contentDB = new ContentDB();
+		   				HashMap<String, Content> contents = contentDB.getContentByIdLanguageContentType(contentId, language, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+		   				if(contents.isEmpty()) contents = contentDB.getContentByIdLanguageContentType(contentId, "en", DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+		   				value = contents.get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+		   			}
+		   			else if(value != null)
+		   			{
+		   				String otherText = rs.getString("otherText");
+			   			if(!otherText.isEmpty()) value += DBConstants.s_VALUE_TOKEN + otherText;		   			
+		   			}
+		   			
+		   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(value);
 	   			}
-	   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(value);
-	   			
 	   		}
 	   			   		
 	   } catch (SQLException e) {
@@ -403,6 +412,37 @@ public class ResponsesDB {
 		   	pstm.setInt(2, surveyId);
 		   	pstm.setInt(3, questionId);
 		   	if(optionsGroupId != null) pstm.setInt(4, optionsGroupId);
+		   		
+		   	rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_VALUE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public String getAnonymousOtherResponseValue(int anonymousUserId, int surveyId, int questionId)
+	{
+		String response = "";
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		String query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE;
+	   	   
+		try{
+			pstm = con.prepareStatement(query);			
+		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(2, surveyId);
+		   	pstm.setInt(3, questionId);
 		   		
 		   	rs = pstm.executeQuery();
 	   		if(rs.next())

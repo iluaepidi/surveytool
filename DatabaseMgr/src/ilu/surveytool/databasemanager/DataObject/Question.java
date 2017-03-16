@@ -151,7 +151,6 @@ public class Question {
 	
 	public String getParameterValue(String parameterName) {
 		String value = "";
-		
 		if(!parameters.isEmpty()){
 			value = parameters.get(parameterName);
 			if(value==null)
