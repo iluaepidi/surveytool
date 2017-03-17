@@ -385,6 +385,9 @@
 	margin:2em auto;
 	padding:0px;
 }
+.question-select {display: flex;}
+.question-select label {padding: 7px 15px 0px 40px;}
+.option-list-select {width: auto;}
 #form-question .likert-options label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
 	padding-bottom:30px;

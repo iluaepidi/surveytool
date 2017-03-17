@@ -1306,8 +1306,7 @@ $(function() {
 			
 		modalFocus = $(this);
 	});
-	
-		
+			
 	$('.survey-sections').on("change", "select.type-matrix", function(e){
 		e.stopPropagation();
 		var node = $(this); 
@@ -1334,6 +1333,31 @@ $(function() {
 					   node.closest('div.question-frame').find('ul').attr('otype', 'radio');
 					   //node.closest('div.question-frame').find('#optionsgroupmatrix-list').attr('otype', 'radio');
 				   }
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+	});
+	
+	$('.survey-sections').on("change", "select.type-simple-answer", function(e){
+		e.stopPropagation();
+		var node = $(this); 
+		var req = {};
+		req.qid = node.closest('li.panel-question').attr('qid');
+		req.pid = node.closest('li.page').attr('pid');
+		req.text = $(this).val();
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuestionService/updateSimpleTypeAnswer",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   console.log(data);				  
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
 				   console.log(xhr.status);

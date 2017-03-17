@@ -47,16 +47,7 @@
 							ng-focus="setOtherSimpleFocus(question.optionsGroups[0], option.optionId)" ng-readonly="question.optionsGroups[0].response != option.optionId"
 							ng-model="question.optionsGroups[0].responseOtherText"></textarea>
 					  </div>
-					</li>
-					
-					<!-- <li class="radio" ng-show="question.optionsGroups[0].otherOption">
-					  <input type="radio" name="{{question.questionId}}-{{question.optionsGroups[0].optionGroupId}}" id="optionsRadios-other-{{question.questionId}}" ng-value="{{otherOptionValue}}" ng-model="question.optionsGroups[0].response" ng-focus="setIndexQuestion(question.index)">
-					  <label for="optionsRadios-other-{{question.questionId}}">					  	
-					    <span ng-if='getJsonArrayElement(question.optionsGroups[0].contents, "contentType", "otherLabel").text'>{{getJsonArrayElement(question.optionsGroups[0].contents, "contentType", "otherLabel").text}}</span>
-					    <span ng-if='!getJsonArrayElement(question.optionsGroups[0].contents, "contentType", "otherLabel").text'><%= lang.getContent("accesibility.question.option.legend.other") %></span>
-					    <span class="sr-only">(<%= lang.getContent("accesibility.question.option.longtextOther") %>)</span>
-					  </label>
-					</li> -->								
+					</li>												
 				</ul>
 			</div>	
 		</fieldset>																						

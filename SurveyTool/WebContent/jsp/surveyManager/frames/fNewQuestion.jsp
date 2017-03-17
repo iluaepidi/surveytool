@@ -24,16 +24,19 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 				    				</div>
 									<ul class="row qtype-list">
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="shortText"><i class="fa fa-square-o fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.formfield")%></span></button>
+											<button class="btn-transparent" id="shortText"><i class="fa fa-square-o fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.shortText")%></span></button>
 										</li>
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="longText"><i class="fa fa-align-justify fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.paragraph")%></span></button>
+											<button class="btn-transparent" id="longText"><i class="fa fa-align-justify fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.longText")%></span></button>
 										</li> 
 										<li class="col-sm-1 center btn-qtype">
 											<button class="btn-transparent" id="multiple"><i class="fa fa-list fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.multiple")%></span></button>
 										</li>
 										<li class="col-sm-1 center btn-qtype">
-											<button class="btn-transparent" id="simple"><i class="fa fa-list-ul fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.simple")%></span></button>
+											<button class="btn-transparent" id="simpleRadio"><i class="fa fa-list-ul fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.simpleRadio")%></span></button>
+										</li>
+										<li class="col-sm-1 center btn-qtype">
+											<button class="btn-transparent" id="simpleCombo"><i class="fa fa-caret-square-o-down fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.simpleCombo")%></span></button>
 										</li>
 										<!-- <li class="col-sm-1 center btn-qtype">
 											<button class="btn-transparent" id="ordering"><i class="fa fa-sort-numeric-asc fa-2x btn btn-default" aria-hidden="true"></i> <span class="qtype-icon-text"><%=lang.getContent("question.new.ordering")%></span></button>

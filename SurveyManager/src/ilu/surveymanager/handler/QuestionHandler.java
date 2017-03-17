@@ -270,7 +270,7 @@ public class QuestionHandler {
 		return updated;
 	}
 	
-	public boolean updateOptionsGroupType(int questionId, String optionType){
+	public boolean updateMatrixOptionsGroupType(int questionId, String optionType){
 		boolean updated = false;
 		
 		QuestionDB questionDB = new QuestionDB();
@@ -282,6 +282,16 @@ public class QuestionHandler {
 		
 		return updated;
 	}	
+	
+	public boolean updateOptionsGroupType(int questionId, String optionType)
+	{
+		boolean updated = false;
+		
+		QuestionDB questionDB = new QuestionDB();
+		updated = questionDB.updateOptionsGroupType( questionId, optionType);
+		
+		return updated;
+	}
 	
 	public boolean removeQuestionByPage(int questionId, int pageId)
 	{

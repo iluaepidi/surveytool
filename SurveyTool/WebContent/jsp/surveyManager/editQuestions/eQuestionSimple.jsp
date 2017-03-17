@@ -27,31 +27,7 @@
 											
 												<jsp:include page="eqComponents/eqHead.jsp" />
 						
-												<div class="panel-body question-options">
-						  							<div class="col-sm-1 col-xs-2">
-							  							<label class="type-tittle" for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
-													</div>	
-													<div class="col-sm-4 col-xs-6">	
-														<p class="question-type-aux"><%=lang.getContent("question.new.simple")%></p>														
-							  							<!-- <select class="form-control" id="type-question-<%= question.getIndex() %>">
-														  	<option value="f"><%=lang.getContent("question.new.formfield")%></option>
-														    <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
-														    <option value="m"><%=lang.getContent("question.new.multiple")%></option>
-														    <option value="s" selected><%=lang.getContent("question.new.simple")%></option>
-														    <option value="o"><%=lang.getContent("question.new.ordering")%></option>
-														    <option value="g"><%=lang.getContent("question.new.grading")%></option>
-														    <option value="ma"><%=lang.getContent("question.new.matrix")%></option>
-														    <option value="sc"><%=lang.getContent("question.new.scale")%></option>
-														    <option value="c"><%=lang.getContent("question.new.code")%></option>
-														</select> -->
-													</div>
-													<div class="right col-sm-7 col-xs-4">
-														<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-														<jsp:include page="eqComponents/eqMandatoryToggle.jsp" />	
-														<%} %>
-													</div>
-	
-							  					</div>
+												<jsp:include page="eqComponents/eqQuestionOptions.jsp" />
 												
 												<div class="panel-body">							  					
 								  					<div class="question-frame">
@@ -65,17 +41,6 @@
 														<jsp:param name="response" value="../eqResponses/eqSimple.jsp" />
 													</jsp:include>
 													
-													<!-- <%
-															String otherText = "";
-								  							if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER))
-								  							{
-								  								otherText = question.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_OTHER).getText(); 
-								  							}
-								  							%>
-															<div class="row">	
-																<label for="other-option-<%= question.getIndex() %>"><%=lang.getContent("question.form.options.other")%></label>																															  							
-									  							<textarea class="form-control" id="survey-question-other-text" rows="1" placeholder="<%= lang.getContent("placeholder.type_label") %>" aria-label="<%= lang.getContent("question.edit.description.aria_label") %>" maxlength="1000"><%= otherText %></textarea>
-								  							</div> -->
 								  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 													<jsp:include page="eqComponents/eqDependences.jsp">
 														<jsp:param value="true" name="withLogic"/>
@@ -84,5 +49,7 @@
 												</div>
 											</div>																						
 										</li>
-										
-										
+																			
+						  			<%
+						  			lang.close();							  				
+						  			%>

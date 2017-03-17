@@ -273,9 +273,31 @@ public class QuestionService {
 			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_MATRIXTYPE,json.getString(Parameter.s_TEXT));
 			QuestionHandler questionHandler = new QuestionHandler();
 			questionHandler.updateParameters(questionId, pageId, parameters);
-			questionHandler.updateOptionsGroupType(questionId, json.getString(Parameter.s_TEXT));
+			questionHandler.updateMatrixOptionsGroupType(questionId, json.getString(Parameter.s_TEXT));
 			response=json.getString(Parameter.s_TEXT);
 			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+
+	@PUT
+	@Path("/updateSimpleTypeAnswer")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateSimpleTypeAnswer(String req) {
+    	System.out.println("Opción: " + req);
+    	JSONObject json = null;
+    	String response = "false";
+    	try {
+			json = new JSONObject(req);
+			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
+			String otype = json.getString(Parameter.s_TEXT);
+			QuestionHandler questionHandler = new QuestionHandler();
+			boolean updated = questionHandler.updateOptionsGroupType(questionId, json.getString(Parameter.s_TEXT));
+			response= Boolean.toString(updated);			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -21,35 +21,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 											
 												<jsp:include page="eqComponents/eqHead.jsp" />
 												
-												<div class="panel-body question-options">
-														
-														<div class="col-sm-1 col-xs-2">
-															<label class="type-tittle" for="type-question-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
-														</div>
-															
-														<div class="col-sm-4 col-xs-6">	
-															<p class="question-type-aux"><%=lang.getContent("question.new.formfield")%></p>
-														</div>
-														<!--<div class="col-md-4">									
-															<select class="form-control" id="type-question-<%= question.getIndex() %>">
-																<option value="f" selected><%=lang.getContent("question.new.formfield")%></option>
-															     <option value="p"><%=lang.getContent("question.new.paragraph")%></option>
-															    <option value="m"><%=lang.getContent("question.new.multiple")%></option>
-															    <option value="s"><%=lang.getContent("question.new.simple")%></option>
-															    <option value="o"><%=lang.getContent("question.new.ordering")%></option>
-															    <option value="g"><%=lang.getContent("question.new.grading")%></option>
-															    <option value="ma"><%=lang.getContent("question.new.matrix")%></option>
-															    <option value="sc"><%=lang.getContent("question.new.scale")%></option>
-															    <option value="c"><%=lang.getContent("question.new.code")%></option> 
-															</select>
-														</div>-->
-														
-														<div class="right col-sm-7 col-xs-4">
-															<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-															<jsp:include page="eqComponents/eqMandatoryToggle.jsp" />
-															<%} %>
-														</div>
-													</div>
+												<jsp:include page="eqComponents/eqQuestionOptions.jsp" />
 												
 												<div class="panel-body">	
 													<div class="question-frame">

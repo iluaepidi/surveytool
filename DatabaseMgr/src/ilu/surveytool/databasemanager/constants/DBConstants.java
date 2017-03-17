@@ -22,6 +22,7 @@ public class DBConstants {
 		//OptionsGroup type
 			public final static String s_VALUE_OPTIONSGROUP_TYPE_RADIO = "radio";
 			public final static String s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX = "checkbox";
+			public final static String s_VALUE_OPTIONSGROUP_TYPE_SELECT = "select";
 		//Question parameters
 			public final static String s_VALUE_QUESTIONTYPE_FORMFIELD = "formfield";
 			public final static String s_VALUE_QUESTIONTYPE_PARAGRAPH = "paragraph";
@@ -31,7 +32,8 @@ public class DBConstants {
 			public final static String s_VALUE_QUESTIONTYPE_SCALE = "scale";
 			public final static String s_VALUE_QUESTIONTYPE_CODE = "code";
 			public final static String s_VALUE_QUESTIONTYPE_MULTIPLE = "multiple";
-			public final static String s_VALUE_QUESTIONTYPE_SIMPLE = "simple";
+			public final static String s_VALUE_QUESTIONTYPE_SIMPLE_RADIO = "simpleRadio";
+			public final static String s_VALUE_QUESTIONTYPE_SIMPLE_COMBO = "simpleCombo";
 			public final static String s_VALUE_QUESTIONTYPE_LONGTEXT = "longText";
 			public final static String s_VALUE_QUESTIONTYPE_SHORTTEXT = "shortText";			
 			public final static String s_VALUE_QUESTIONTYPE_BCONTENT = "bcontent";
@@ -59,6 +61,7 @@ public class DBConstants {
 			public final static String s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL = "formFieldTypeGeneral";
 			public final static String s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT = "formFieldTypeText";
 			public final static String s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER = "formFieldTypeNumber";
+			public final static String s_VALUE_QUESTIONPARAMETER_SIMPLE_TYPE_ANSWER = "typeAnswer";
 		//language
 			public final static String s_VALUE_LANGUAGE_ISONAME_ENGLISH = "en";
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";
