@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Resource"%>
 <%@page import="java.util.List"%>
 <%@page import="ilu.surveytool.language.Language"%>
@@ -8,7 +9,7 @@
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
-
+Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
 Option option = (Option) request.getAttribute(Attribute.s_OPTION);
 if(option==null){
 	%>
@@ -34,7 +35,7 @@ if(option==null){
 else{
 List<Resource> resources = option.getResources();
 %>
-<div class="row margin-top-40<% if(resources.isEmpty()){ %> hidden <%}%>" type="global" id="multimediaFrame">
+<div class="row margin-top-40<% if(resources.isEmpty() || question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %> hidden <%}%>" type="global" id="multimediaFrame">
 	<div id="div_files">
 		<div class="options-files-frame <%if(resources.isEmpty()){ %>hidden<% } %>">
 			<label><%= lang.getContent("question.edit.files.option.title") %></label>

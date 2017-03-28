@@ -355,6 +355,22 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		if(optionGroup.response != optionId) optionGroup.response = optionId;
 	};
 
+	$scope.hasOtherOption = function(options) {
+		var hasOther = false;
+		for(var i = 0; i < options.length; i++){
+			if(options[i].otherOption) hasOther = true; 
+		}		
+		return hasOther;
+	};
+
+	$scope.getOtherOptionId = function(options) {
+		var otherId = 0;
+		for(var i = 0; i < options.length; i++){
+			if(options[i].otherOption) otherId = options[i].optionId; 
+		}		
+		return otherId;
+	};
+
 	$scope.setOtherMultipleFocus = function(option) {
 		if(option.response == false) option.response = true;
 	};
@@ -408,6 +424,11 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		}
 		return hasResource;
 	 };
+	 
+	 /*$scope.focusTextArea = function(optionGroup, textAreaId) {
+		 console.log("OptionGroup: " + JSON.stringify(optionGroup) + " - textAreaId: " + textAreaId);
+		 if(optionGroup.response == $scope.getOtherOptionId(optionGroup.options)) $('#' + textAreaId).focus();
+	 }*/
 }]);
 
 app.directive('focusOn',function($timeout) {
@@ -522,3 +543,4 @@ var compareTo = function() {
 
 app.directive("compareTo", compareTo);
 */
+

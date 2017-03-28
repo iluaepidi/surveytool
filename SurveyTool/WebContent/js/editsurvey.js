@@ -1345,27 +1345,65 @@ $(function() {
 	
 	$('.survey-sections').on("change", "select.type-simple-answer", function(e){
 		e.stopPropagation();
-		var node = $(this); 
-		var req = {};
-		req.qid = node.closest('li.panel-question').attr('qid');
-		req.pid = node.closest('li.page').attr('pid');
-		req.text = $(this).val();
-		$.ajax({ 
-			   type: "PUT",
-			   dataType: "text",
-			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateSimpleTypeAnswer",
-			   data: JSON.stringify(req),
-			   success: function (data) {
-				   console.log(data);				  
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-				   console.log(xhr.status);
-				   console.log(thrownError);
-				   console.log(xhr.responseText);
-				   console.log(xhr);
-			   }
-		});
+		var node = $(this);
+		var change = true;
+		var qtype = $(this).val();
+				
+		if(qtype === "select")
+		{		
+			node.closest("div.panel-question-content").find("ul.option-list").find("div#multimediaFrame").each(function(indice, element){
+				change = change && $(element).hasClass("hidden");
+			});
+		}
+		
+		if(change)
+		{
+			var req = {};
+			req.qid = node.closest('li.panel-question').attr('qid');
+			req.pid = node.closest('li.page').attr('pid');
+			req.text = qtype;
+			$.ajax({ 
+				   type: "PUT",
+				   dataType: "text",
+				   contentType: "text/plain",
+				   url: host + "/SurveyTool/api/QuestionService/updateSimpleTypeAnswer",
+				   data: JSON.stringify(req),
+				   success: function (data) {
+					   console.log(data);
+					   var json = JSON.parse(data);
+					   node.closest("div.question-options").find("p.question-type-aux").html(json.questionTypeText);
+					   if(json.questionType === "simpleRadio")
+					   {
+						   node.closest("div.panel-question-content").find("button.addFileOption").each(function(indice, element){$(element).removeClass("hidden");});
+						   node.closest("div.panel-question-content").find("label.addFileOption").each(function(indice, element){$(element).removeClass("hidden");});
+						   
+						   node.closest("div.panel-question-content").find("ul.option-list").find("ul#multimediaFilesList").each(function(indice, element){
+							   if($(element).find("li").length > 0)
+							   {
+								   $(element).closest("div#multimediaFrame").removeClass("hidden");
+							   }
+						   });
+					   }
+					   else if(json.questionType === "simpleCombo")
+					   {
+						   node.closest("div.panel-question-content").find("button.addFileOption").each(function(indice, element){$(element).addClass("hidden");});
+						   node.closest("div.panel-question-content").find("label.addFileOption").each(function(indice, element){$(element).addClass("hidden");});
+					   }
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   console.log(xhr.status);
+					   console.log(thrownError);
+					   console.log(xhr.responseText);
+					   console.log(xhr);
+				   }
+			});
+		}
+		else
+		{
+			console.log("Ahh po no!");
+			currentElement = node;
+			$('#questioTypeSimple').modal("show");
+		}
 	});
 
 	$('.survey-sections').on("click", ".remove-page-break", function(){
@@ -2844,6 +2882,19 @@ $(function() {
 			$("#moveQuestion").modal('hide');
 			question.find("button.movedown-question-arrow").focus();
 		}
+	});
+	
+	$('.body-content').on("click", "button.btn-accept-change-sqType", function(){
+		currentElement.closest("div.panel-question-content").find("ul.option-list").find("div#multimediaFrame").each(function(indice, element){
+			$(element).addClass("hidden");
+		});
+		$('#questioTypeSimple').modal('hide');
+		currentElement.trigger("change");
+	});
+
+	$('.body-content').on("click", "button.btn-cancel-change-sqType", function(){
+		currentElement.val("radio");
+		$('#questioTypeSimple').modal('hide');
 	});
 	
 	$('.survey-sections').on("click", "button.moveup-question-arrow", function(){

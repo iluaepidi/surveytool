@@ -73,7 +73,7 @@
 
 						  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 						  									<label for="remove-option<%= question.getQuestionId() %>-<%= optionGroupId %>-other" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>  <%= lang.getContent("accesibility.question.option.other") %></label>
-						  									<button class="btn btn-transparent fleft red removeOptionOther" id="remove-option<%= question.getQuestionId() %>-<%= optionGroupId %>-other" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
+						  									<button class="btn btn-transparent fleft red remove-option-other removeOptionOther" id="remove-option<%= question.getQuestionId() %>-<%= optionGroupId %>-other" aria-label="<%= lang.getContent("button.remove_option") %> 2"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 						  									<% } %>
 						  								</div>
 						  							

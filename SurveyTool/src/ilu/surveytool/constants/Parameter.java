@@ -71,5 +71,7 @@ public class Parameter {
 	public final static String s_CHANGE_PAGE = "changePage";
 	public final static String s_STATE = "state";
 	public final static String s_TOKEN = "token";
+	public final static String s_RADIO = "radio";
+	public final static String s_COMBO = "combo";
 
 }

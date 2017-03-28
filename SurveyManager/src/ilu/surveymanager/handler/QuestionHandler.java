@@ -283,14 +283,24 @@ public class QuestionHandler {
 		return updated;
 	}	
 	
-	public boolean updateOptionsGroupType(int questionId, String optionType)
+	public String updateQuestionType(int questionId, String optionType)
 	{
-		boolean updated = false;
+		String questionType = "";
 		
 		QuestionDB questionDB = new QuestionDB();
-		updated = questionDB.updateOptionsGroupType( questionId, optionType);
-		
-		return updated;
+		boolean updated = questionDB.updateOptionsGroupType(questionId, optionType);
+		if(updated && optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO))
+		{
+			updated = updated && questionDB.updateQuestionType(questionId, DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_RADIO);
+			questionType = DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_RADIO;
+		}
+		else if(updated && optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_SELECT))
+		{
+			updated = updated && questionDB.updateQuestionType(questionId, DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO);
+			questionType = DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO;
+		} 
+				
+		return questionType;
 	}
 	
 	public boolean removeQuestionByPage(int questionId, int pageId)

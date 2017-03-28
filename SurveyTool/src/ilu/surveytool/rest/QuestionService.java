@@ -2,6 +2,8 @@ package ilu.surveytool.rest;
 
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,9 +25,11 @@ import ilu.surveymanager.handler.QuestionHandler;
 import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveymanager.handler.ResourceHandler;
 import ilu.surveymanager.handler.SurveysHandler;
+import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.constants.DBConstants;
+import ilu.surveytool.language.Language;
 
 @Path("/QuestionService")
 public class QuestionService {
@@ -287,22 +292,33 @@ public class QuestionService {
 	@Path("/updateSimpleTypeAnswer")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-    public String updateSimpleTypeAnswer(String req) {
+    public String updateSimpleTypeAnswer(String req, @Context HttpServletRequest request, @Context ServletContext context) {
     	System.out.println("Opción: " + req);
     	JSONObject json = null;
-    	String response = "false";
+    	JSONObject response = new JSONObject();
     	try {
+    		Language lang = new Language(context.getRealPath("/")); 
+        	lang.loadLanguage(Language.getLanguageRequest(request));
 			json = new JSONObject(req);
 			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
 			String otype = json.getString(Parameter.s_TEXT);
 			QuestionHandler questionHandler = new QuestionHandler();
-			boolean updated = questionHandler.updateOptionsGroupType(questionId, json.getString(Parameter.s_TEXT));
-			response= Boolean.toString(updated);			
+			String questionType = questionHandler.updateQuestionType(questionId, otype);
+			
+			boolean updated = !questionType.isEmpty();
+			
+			response.put("updated", updated);
+			if(updated)
+			{
+				response.put("questionType", questionType);
+				String qTypeText = lang.getContent("question") + ": "  + lang.getContent("question.new." + questionType);
+				response.put("questionTypeText", qTypeText);
+			}					
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	return response;
+    	return response.toString();
     }
 
 	@PUT

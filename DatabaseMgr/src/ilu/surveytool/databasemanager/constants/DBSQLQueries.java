@@ -635,6 +635,8 @@ public class DBSQLQueries {
 			
 		//project
 			public final static String s_UPDATE_PROJECT_NAME = "UPDATE surveytool.project SET projectName=? WHERE idProject=?";
+		//question
+			public final static String s_UPDATE_QUESTION_TYPE = "UPDATE surveytool.question SET idQuestionType=(SELECT idQuestionType FROM surveytool.questiontype where name=?) WHERE idQuestion=?";
 		//questionByPage
 			public final static String s_UPDATE_QUESTIONBYPAGE_MANDATORY = "UPDATE surveytool.questionbypage SET mandatory=? WHERE idPage=? and idQuestion=?";
 			public final static String s_UPDATE_QUESTIONBYPAGE_OPTIONALANSWER = "UPDATE surveytool.questionbypage SET optionalAnswer=? WHERE idPage=? and idQuestion=?";

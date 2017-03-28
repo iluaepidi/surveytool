@@ -55,9 +55,9 @@
 									  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
 		
 									  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-									  										<% if(!editPoll){ %>
-									  										<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
-																			<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+									  										<% if(!editPoll && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %>
+									  										<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden addFileOption"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
+																			<button class="btn btn-transparent fleft add-file-option addFileOption" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 																			<% } %>
 									  										<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
 									  										<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
@@ -89,7 +89,7 @@
 								  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
 	
 								  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-								  										<% if(!editPoll){ %>
+								  										<% if(!editPoll && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %>
 								  									<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
 																	<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 																		<% } %>
@@ -161,7 +161,7 @@
 						  									<% 
 						  									boolean addQuestion = (boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS);
 						  									if(addQuestion){ %>
-						  										<% if(!editPoll){ %>
+						  										<% if(!editPoll && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %>
 						  									<label for="add-file-option<%= question.getQuestionId() %>-<%= optionGroupId %>-1" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 1</label>														
 															<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionGroupId %>-1"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 																<% } %>
@@ -190,7 +190,7 @@
 						  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
 
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-							  										<% if(!editPoll){ %>
+							  										<% if(!editPoll && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %>
 							  									<label for="add-file-option<%= question.getQuestionId() %>-<%= optionGroupId %>-2" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> 2</label>														
 																<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionGroupId %>-2"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 																	<% } %>

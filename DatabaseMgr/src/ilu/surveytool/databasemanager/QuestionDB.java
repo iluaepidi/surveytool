@@ -895,6 +895,34 @@ public class QuestionDB {
 		}
 		   
 	}
+
+	public boolean updateQuestionType(int questionId, String questionType) {
+		System.out.println("updateQuestionType");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTION_TYPE);
+			pstm.setString(1, questionType);
+			pstm.setInt(2, questionId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+	}
 	
 	public void updateQuestionOptionalAnswer(int questionId, int pageId, boolean optionalAnswer) {
 		System.out.println("updateQuestionOptionalAnswer");

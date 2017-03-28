@@ -180,7 +180,7 @@ public class OptionDB {
 	   			optionsGroup.put("ramdom", rs.getBoolean(DBFieldNames.s_OPTIONSGROUP_RANDOM));
 	   			optionsGroup.put("index", rs.getInt(DBFieldNames.s_INDEX));
 	   			//optionsGroup.put("otherOption", rs.getInt(DBFieldNames.s_OPTIONSGROUP_OTHER_OPTION));
-	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO)) 
+	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO) || optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_SELECT)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
 	   				if(anonimousUser instanceof AnonimousUser)

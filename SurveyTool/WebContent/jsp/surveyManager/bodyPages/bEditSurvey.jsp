@@ -70,4 +70,6 @@ lang.close();
 	  			
 	  			<jsp:include page="../frames/fMoveElemWithDep.jsp" />
 	  			
+	  			<jsp:include page="../frames/fChangeQTypeWithOptionImage.jsp" />
+	  			
 	  			
