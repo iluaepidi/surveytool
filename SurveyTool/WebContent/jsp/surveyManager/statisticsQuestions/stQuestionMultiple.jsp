@@ -69,8 +69,11 @@ List<Option> o = sQ.getOptions();
 									int idoption = ((Option)(o.get(i))).getId();
 								for(int j=0;j<obg.size();j++){
 		        		    			if ((((OptionsByGroup)(obg.get(j))).getOptionId()) == idoption){
+		        		    				String label = ((Content)(((Option)(o.get(i))).getContents().get("text"))).getText();
+		        		    				if(label.equals("Other"+DBConstants.s_VALUE_TOKEN))
+		        		    					label=lang.getContent("accesibility.question.option.legend.other");
 		        		    				%>
-		        		    				<%=((Content)(((Option)(o.get(i))).getContents().get("text"))).getText()%>, <%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>%
+		        		    				<%=label%>, <%= Math.round((((((OptionsByGroup)(obg.get(j))).getNumResponses()*1.0)/(sQ.getNumResponses()*1.0))*100.0)*100.0)/100.0%>%
 		        		    				<%}
 		        		    		}
 								}
@@ -96,7 +99,11 @@ List<Option> o = sQ.getOptions();
 										int idoption = ((Option)(o.get(i))).getId();
 		    		    				//System.out.println("New push de labels");
 		    		    				if(((Option)(o.get(i))).getContents().get("text") != null && !((Option)(o.get(i))).getContents().get("text").getText().isEmpty()) {
-											labels.add(((Content)(((Option)(o.get(i))).getContents().get("text"))).getText());
+		    		    					String label = ((Content)(((Option)(o.get(i))).getContents().get("text"))).getText();
+		        		    				if(label.equals("Other"+DBConstants.s_VALUE_TOKEN))
+		        		    					label=lang.getContent("accesibility.question.option.legend.other");
+		    		    					
+		    		    					labels.add(label);
 											indexes.add(Character.toString((char)(65+i)));
 										} else if(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && !((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText().isEmpty()) {
 											labels.add(((Content)(((Option)(o.get(i))).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE))).getText());
@@ -169,5 +176,25 @@ List<Option> o = sQ.getOptions();
 						  	</ul>
 						 </div>
 					 </div>
+					 <div class="row single-questions-row">
+		      		<div class="nav-tabs-custom-noshadow no-block text">
+		            	<!-- Tabs within a box -->
+		            	<p class="subgraph-title no-block"> <%= lang.getContent("statistics.results.others")%></p>
+		            	<div class="tab-content no-padding no-block">
+			              <ul>
+			              <%
+			              
+			              List<String> valuesOthers = sQ.getValueOthers();
+						  	for(int i=0;i<valuesOthers.size();i++)
+							{
+								%>
+								<li><i class="enum fa fa-caret-right" aria-hidden="true"></i><%=valuesOthers.get(i) %></li>
+								<%
+							}
+			              %>
+			              </ul>
+		            	</div>
+		          	</div>	      	
+		    	</div>
 	          	</div>	      	
 	    	</div>

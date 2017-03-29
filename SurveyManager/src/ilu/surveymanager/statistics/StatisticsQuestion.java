@@ -23,6 +23,7 @@ public class StatisticsQuestion {
 	List<OptionsGroup> optionsGroup;
 	List<Option> options;
 	List<OptionsByGroup> optionsByOptionsGroup;
+	List<String> valueOthers;
 
 	public StatisticsQuestion() {
 		super();
@@ -30,6 +31,7 @@ public class StatisticsQuestion {
 		optionsGroup = new ArrayList<OptionsGroup>();
 		options = new ArrayList<Option>();
 		optionsByOptionsGroup = new ArrayList<OptionsByGroup>();
+		valueOthers = new ArrayList<String>();
 	}
 
 	public void setQuestionType(int questionType) {
@@ -63,6 +65,14 @@ public class StatisticsQuestion {
 	
 	public List<OptionsByGroup> getOptionsByGroup(){
 		return optionsByOptionsGroup;
+	}
+	
+	public List<String> getValueOthers(){
+		return valueOthers;
+	}
+	
+	public void setValueOthers(List<String> valueOthers){
+		this.valueOthers = valueOthers;
 	}
 	
 	public void fillLabels(int questionID, String defaultLanguage){
@@ -176,7 +186,17 @@ public class StatisticsQuestion {
 				    	Map.Entry option = (Map.Entry)it2.next();
 				    	for(int i=0;i<optionsByOptionsGroup.size();i++){
 				    		String optionIdKey = (String)option.getKey();
-				    		if(optionIdKey.contains(DBConstants.s_VALUE_TOKEN)) optionIdKey = optionIdKey.split(DBConstants.s_VALUE_TOKEN)[0];
+				    		if(optionIdKey.contains(DBConstants.s_VALUE_TOKEN)){
+				    			System.out.println("Contains token: "+optionIdKey+", size="+optionIdKey.split(DBConstants.s_VALUE_TOKEN).length);
+				    			String[] others = optionIdKey.split(DBConstants.s_VALUE_TOKEN);
+				    			optionIdKey = others[0];
+				    			if (others.length>1){
+					    			if(!others[1].equals("") && !valueOthers.contains(others[1]))
+					    				valueOthers.add(others[1]);
+				    			}
+				    		}
+				    		System.out.println("Length of valueOthers: "+valueOthers.size());
+				    		
 				    		if((optionsByOptionsGroup.get(i).getOptionId()==Integer.parseInt(optionIdKey)) && ((((Integer)optionGroup.getKey()).intValue())==optionsByOptionsGroup.get(i).getOptionsGroupId())){
 				    			optionsByOptionsGroup.get(i).setNumResponses(optionsByOptionsGroup.get(i).getNumResponses()+1);
 				    			//System.out.println("optionId "+(String)option.getKey()+" en set responses: "+optionsByOptionsGroup.get(i).getNumResponses());
