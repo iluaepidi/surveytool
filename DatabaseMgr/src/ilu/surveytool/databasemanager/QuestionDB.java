@@ -417,6 +417,10 @@ public class QuestionDB {
 		   				List<Option> options = new ArrayList<Option>();
 		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
 		   				c = new Content();
+		   				System.out.println("Content con other= "+rs.getInt(DBFieldNames.s_OTHER_OPTIONS)+" es "+rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				if(rs.getInt(DBFieldNames.s_OTHER_OPTIONS)==1 && rs.getString(DBFieldNames.s_CONTENT_OPTIONS).equals("")){
+		   					
+		   				}
 		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 		   				contentsO.put("text", c);
 		   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
@@ -428,6 +432,7 @@ public class QuestionDB {
 		   			else{
 		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
 		   				Content c = new Content();
+		   				System.out.println("Content con other= "+rs.getInt(DBFieldNames.s_OTHER_OPTIONS)+" es "+rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 		   				contentsO.put("text", c);
 		   				contents.get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions().add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
@@ -446,6 +451,7 @@ public class QuestionDB {
 	
 	public HashMap<Integer,HashMap<Integer,OptionsGroup>> getSurveyQuestionsContentsLang(int questionnaireId, String defaultLanguage)
 	{
+		
 		HashMap<Integer,HashMap<Integer,OptionsGroup>> contents = new HashMap<Integer,HashMap<Integer,OptionsGroup>>();
 		
 		Connection con = this._openConnection();
@@ -471,7 +477,12 @@ public class QuestionDB {
 	   				List<Option> options = new ArrayList<Option>();
 	   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
 	   				c = new Content();
-	  				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+	   				System.out.println("Content con other= "+rs.getInt(DBFieldNames.s_OTHER_OPTIONS)+" es "+rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+	   				if(rs.getInt(DBFieldNames.s_OTHER_OPTIONS)==1 && rs.getString(DBFieldNames.s_CONTENT_OPTIONS).equals("")){
+	   					c.setText("Other"+DBConstants.s_VALUE_TOKEN);
+	   				}
+	   				else
+	   					c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 	   				contentsO.put("text", c);
 	   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
 		   				
@@ -494,7 +505,12 @@ public class QuestionDB {
 		   				List<Option> options = new ArrayList<Option>();
 		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
 		   				c = new Content();
-		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				System.out.println("Content con other= "+rs.getInt(DBFieldNames.s_OTHER_OPTIONS)+" es "+rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				if(rs.getInt(DBFieldNames.s_OTHER_OPTIONS)==1 && rs.getString(DBFieldNames.s_CONTENT_OPTIONS).equals("")){
+		   					c.setText("Other"+DBConstants.s_VALUE_TOKEN);
+		   				}
+		   				else
+		   					c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 		   				contentsO.put("text", c);
 		   				options.add(new Option(rs.getInt(DBFieldNames.s_OPTIONID), contentsO, 0));
 			   				
@@ -506,7 +522,12 @@ public class QuestionDB {
 		   			else{
 		   				HashMap<String, Content> contentsO = new HashMap<String, Content>();
 		   				Content c = new Content();
-		   				c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				System.out.println("Content con other= "+rs.getInt(DBFieldNames.s_OTHER_OPTIONS)+" es "+rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
+		   				if(rs.getInt(DBFieldNames.s_OTHER_OPTIONS)==1 && rs.getString(DBFieldNames.s_CONTENT_OPTIONS).equals("")){
+		   					c.setText("Other"+DBConstants.s_VALUE_TOKEN);
+		   				}
+		   				else
+		   					c.setText(rs.getString(DBFieldNames.s_CONTENT_OPTIONS));
 		   				contentsO.put("text", c);
 		   				List<Option> options = contents.get(rs.getInt(DBFieldNames.s_QUESTION_ID)).get(rs.getInt(DBFieldNames.s_OPTIONSGROUPID)).getOptions();
 		   				//System.out.println(options.size());
