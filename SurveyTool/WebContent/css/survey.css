@@ -1,6 +1,8 @@
 /*----------------------------------------------*\
 		$GENERIC
 \*----------------------------------------------*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu');
+
 .body-content > .container-fluid{
 	padding:0px;
 }
@@ -8,7 +10,9 @@
 .body-content{
 	background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;
 	padding-bottom:2em;
-	font-family: 'arthurbecker';
+	/*font-family: 'arthurbecker';*/
+	font-family: 'Open Sans', sans-serif;
+	/*font-family: "Ubuntu";*/
 }
 .body-content .content{
 	display: inline-block;
@@ -29,6 +33,8 @@
 }
 
 .center {text-align: center;}
+
+h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important;}
 /*----------------------------------------------*\
 		$HEADER
 \*----------------------------------------------*/
@@ -102,30 +108,37 @@
 	line-height:1.2;
 }
 #form-question legend span.number{
-	position: absolute;
+	/*position: absolute;
     width: 1.5em;
-    left: -0.6em;
+    left: -0.6em;*/
     color: #016FB8;
     text-align: right;
     font-size: 1.6em;
-    top: -0.2em;
+    vertical-align: top;
+    /*top: -0.25em;*/
 }
 #form-question legend span.text{
-	background-color:#016FB8;
+	/*background-color:#016FB8;
 	color:#fff;
 	padding:0em .4em;
 	display:block;
-	margin-left:1.6em;
+	margin-left:1.6em;*/
+	color: #016FB8;
+	padding: 0em .4em;
+	display: inline-block;
+	max-width: 90%;
+	margin-top: 14px;
 }
 #form-question legend span.mandatory{
 	position:absolute;
-	width:2em;
-	right:-2.2em;
-	top:0px;
+	/*width:2em;
+	right:-2.2em;*/
+	top:-3px;
 	color:#BA0C2F;
 	text-align:left;
-	font-size:3em;
+	font-size:1.7em;
 	line-height:.9;
+	vertical-align: top;
 }
 .previewFileUpliaded {
 	text-align: center;
@@ -386,7 +399,8 @@
 	padding:0px;
 }
 .question-select {display: flex;}
-.question-select label {padding: 7px 15px 0px 40px;}
+.question-select label {padding: 7px 15px 0px 40px;
+	color: #016FB8;}
 .option-list-select {width: auto;}
 #form-question .likert-options label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
@@ -543,6 +557,7 @@ border: 2px solid #016fb8;}
 /*----------------------------------------------*\
 		$NAVIGATION
 \*----------------------------------------------*/
+.survey-form {padding: 0 40px;}
 .survey-form button.navigation{
 	height:41px;
 	width:100%;
@@ -559,18 +574,18 @@ border: 2px solid #016fb8;}
 }
 #question-list .inactive,
 .title-content.inactive{
-  -webkit-filter: grayscale(100%);
+  /*-webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
   filter: grayscale(100%);
-  filter: gray; /* IE 6-9 */
-  opacity:.4;
+  filter: gray;*/ /* IE 6-9 */
+  opacity:.2;
 }
 .inactive #form-question legend span.text{
-	background-color:transparent;
-	color:#333;
-	border-top:1px solid #666;
+	/*background-color:transparent;*/
+	color: #016FB8;
+	/*border-top:1px solid #666;*/
 }
 /*----------------------------------------------*\
 		$FOOTER

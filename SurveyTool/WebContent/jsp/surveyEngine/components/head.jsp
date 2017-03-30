@@ -12,11 +12,12 @@
 		<title>Survey {{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}, page {{currentSurvey.info.section.page.numPage}}</title>
 		
 		<!-- CSS de Bootstrap -->
-		<!--<link href="css/style.css" rel="stylesheet" media="screen">-->
+		<!--<link href="css/style.css" rel="stylesheet" media="screen">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">--> 
 		<link href="css/bootstrap-accessibility.css" rel="stylesheet" media="screen">
 		<link href="css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
-		<link href="css/fonts.css" rel="stylesheet" media="screen">
+		<!-- <link href="css/fonts.css" rel="stylesheet" media="screen"> -->
 		<link href="css/survey.css" rel="stylesheet" media="screen">
 		
 	<%

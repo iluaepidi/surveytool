@@ -347,8 +347,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.setIndexQuestion = function(qIndex) {
 		$scope.questionIndex = qIndex;
 		console.log("index question: " + $scope.questionIndex);
-	    $location.hash('anchor-' + $scope.questionIndex);
-	    $anchorScroll();
+	    //$location.hash('anchor-' + $scope.questionIndex);
+	    //$anchorScroll();
 	};
 
 	$scope.setOtherSimpleFocus = function(optionGroup, optionId) {
@@ -379,7 +379,12 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
     $scope.setWheelIndexQuestion =  function(event, delta, deltaX, deltaY){
         //console.log('event: ' + event + ', delta: ' + delta + ', deltaX: ' + deltaX + ', deltaY: ' + deltaY);    	
     	//console.log("---- target 1: " + $(event.target).html());
-    	var elem = $('li[index=' + $scope.questionIndex + ']');
+    	var index = $scope.questionIndex - delta;
+    	if(index > $scope.currentSurvey.info.section.page.questions.length) index = $scope.questionIndex;
+    	else if(index <= 0) index = 1;
+    	var elem = $('li[index=' + index + ']');
+    	console.log("Index: " + index);
+    	//var elem = $('li[index=' + $scope.questionIndex + ']');
     		
     	scrolling = isScrolledIntoView(elem, delta);
     	
@@ -472,18 +477,31 @@ function isScrolledIntoView(elem, delta)
 {
     var docViewTop = $(window).scrollTop();
     var elemTop = $(elem).offset().top;
-    console.log("Windows top: " + docViewTop + " <= elem top: " + elemTop);
+    var chagePoint = $(window).height() / 2;
+    
        
     if(delta == 1)
     {
-    	return elemTop >= docViewTop + 150;
+    	console.log("Windows top: " + docViewTop + " + Change Point: " + chagePoint + " <= elem top: " + elemTop);
+    	if(docViewTop == 0) return true;
+    	else return elemTop >= docViewTop + chagePoint - ((2 * chagePoint) / 2);
     }
     else
     {
+    	console.log("Windows top: " + docViewTop + " + Change Point: " + chagePoint + " = total " + (docViewTop + chagePoint - (chagePoint / 5)) + " >= elem top: " + elemTop);
     	var docViewBottom = docViewTop + $(window).height();   
-        var elemBottom = elemTop + $(elem).height();
-        console.log("Windows bottom: " + docViewBottom + " >= elem bottom: " + elemBottom);
-        return elemBottom <= docViewBottom - 150;
+    	console.log("Windows botton: " + docViewBottom + " < body height: " + $('body').height());
+        /*var elemBottom = elemTop + $(elem).height();
+        console.log("Windows bottom: " + docViewBottom + " >= elem bottom: " + elemBottom + " - body heigth: " + $('body').height());*/
+        if(docViewBottom < $('body').height())
+        {
+        	//return elemBottom <= docViewBottom - 550;
+        	return elemTop <= docViewTop + chagePoint - (chagePoint / 5);
+        }
+        else
+        {
+        	return true;
+        }
     }
     
     //return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
