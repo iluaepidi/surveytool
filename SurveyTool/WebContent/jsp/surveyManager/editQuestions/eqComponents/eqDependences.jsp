@@ -48,7 +48,7 @@
 						  						 	JSONArray questionsJson = pagesJson.getJSONObject(i).getJSONArray("questions");
 						  						 	for(int j = 0; j < questionsJson.length(); j++)
 						  						 	{
-						  						 		if(questionsJson.getJSONObject(j).getString("type").equals("simple")) hasPrevQSimple = true;
+						  						 		if(questionsJson.getJSONObject(j).getString("type").equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_RADIO) || questionsJson.getJSONObject(j).getString("type").equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)) hasPrevQSimple = true;
 						  						 	}
 						  						}
 						  						
@@ -59,7 +59,7 @@
 						  						if(numPage == pagesJson.length() || !withLogic) { lastPageClass = "hidden"; }
 						  						
 						  						String noLogicDependencesClass = "";
-						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || !question.getQuestionType().equals("simple"))) noLogicDependencesClass = "hidden";						  							
+						  						if(!hasPrevQSimple && (!lastPageClass.isEmpty() || (!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_RADIO) && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)))) noLogicDependencesClass = "hidden";						  							
 							  					%>
 							  					<div class="rules-frame">
 							  						<h6 class="visuallyhidden"><%= lang.getContent("question.edit.dependences.title") %></h6>

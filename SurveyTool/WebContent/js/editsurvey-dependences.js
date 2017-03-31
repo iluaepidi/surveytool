@@ -50,7 +50,7 @@ $(function() {
 			{
 				var questionJson = pageJson.questions[j];
 				var type = questionJson.type;
-				if(type === "simple")
+				if(type === "simpleRadio" || type === "simpleCombo")
 				{
 					if(!pageInserted)
 					{
@@ -1174,7 +1174,7 @@ $(function() {
 			var page = surveyTree[i];
 			for(var j = 0; j < page.questions.length; j++)
 			{
-				if(page.questions[j].type === "simple") hasSimpleQuestions = true;
+				if(page.questions[j].type === "simpleRadio" || page.questions[j].type === "simpleCombo") hasSimpleQuestions = true;
 			}
 		}
 		
@@ -1255,7 +1255,7 @@ function getSimpleQuestions(numPage)
 	var position = numPage - 1;
 	for(var j = 0; j < surveyTree[position].questions.length; j++)
 	{
-		if(surveyTree[position].questions[j].type === "simple") questions.push(surveyTree[position].questions[j].questionId);
+		if(surveyTree[position].questions[j].type === "simpleRadio" || surveyTree[position].questions[j].type === "simpleCombo") questions.push(surveyTree[position].questions[j].questionId);
 	}
 	return questions;
 }
