@@ -45,8 +45,9 @@
 				</script>
 				<div class="container-fluid" prevent-scroll-body>
 	  				<div class="title-content col-xs-10 col-xs-push-1 col-md-8 col-md-push-2" ng-class="{inactive: questionIndex > 1}">	  					
-	  					<h1 id="main-title" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
-						<div class="progress">
+	  					<h1 id="main-title" class="col-md-10 nopadding" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
+	  					<span class="percetaje-text col-md-2 nopadding">{{getProgressPercent()}}% <%= lang.getContent("survey.process.percentage.complete") %></span>
+						<div class="progress col-md-12 nopadding">
 							<div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{getProgressPercent()}}%">
 								<span class="sr-only" ng-show="showButtonLastPage()"><%= lang.getContent("survey.process.pageInfo1") %> {{currentSurvey.info.section.page.numPage}} <%= lang.getContent("survey.process.pageInfo2") %> {{currentSurvey.info.numPages}}</span>
 							</div>

@@ -31,6 +31,9 @@
 	list-style-type:none;
 	/*overflow:hidden;*/
 }
+.nopadding{
+	padding: 0px !important;
+}
 
 .center {text-align: center;}
 
@@ -54,6 +57,9 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	margin-top:2em;
 	margin-bottom:1em;
 }
+.percetaje-text {text-align: right;
+	margin-top: 20px;
+	color: #016FB8;}
 .progress {
     background-color: #CED9DF;
     border-radius: 5px;

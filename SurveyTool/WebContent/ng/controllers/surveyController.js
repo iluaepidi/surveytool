@@ -49,11 +49,11 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		}
 		else if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.hasFinishPage)
 		{
-			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages - 1)) * 100;
+			return  ((($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages - 1)) * 100).toFixed(2);
 		}
 		else  if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage)
 		{
-			return  (($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages)) * 100;
+			return  ((($scope.currentSurvey.info.section.page.numPage - 1) / ($scope.currentSurvey.info.numPages)) * 100).toFixed(2);
 		}
 		else
 		{
