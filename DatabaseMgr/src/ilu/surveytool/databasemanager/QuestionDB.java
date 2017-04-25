@@ -1221,18 +1221,23 @@ public class QuestionDB {
 		   				{
 		   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
 		   					String value = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, null);
-		   					try
+		   					if(!questionType.equals("scale") || (questionType.equals("scale") && !value.isEmpty()))
 		   					{
-		   						Float valFloat = Float.valueOf(value);
-		   						question.put("response", valFloat);
-		   					}catch(NumberFormatException e){
-		   						question.put("response", value);
+			   					try
+			   					{
+			   						Float valFloat = Float.valueOf(value);
+			   						question.put("response", valFloat);
+			   					}catch(NumberFormatException e){
+			   						question.put("response", value);
+			   					}
 		   					}
-		   					
 		   				}
 		   				else
 		   				{
-		   					question.put("response", "");
+		   					if(!questionType.equals("scale"))
+		   					{
+		   						question.put("response", "");
+		   					}
 		   				}
 		   			}
 		   			

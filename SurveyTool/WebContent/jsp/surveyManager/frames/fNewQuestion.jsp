@@ -80,6 +80,14 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 													    <option value="true"><%= lang.getContent("label.yes") %></option>
 													  </select>
 												</div>
+												<div  class="div-create-question-type-scale row hidden">
+													<label for="nqLikertType" class="col-md-5 col-sm-3 col-xs-3"><span><%=lang.getContent("question.scale.type")%></span></label>															
+													<select name="nqLikertType" id="nqLikertType" class="form-control-small col-md-6">
+														<option value="5">5 <%=lang.getContent("question.scale.type.points")%></option>
+														<option value="7">7 <%=lang.getContent("question.scale.type.points")%></option>
+														<option value="11">11 <%=lang.getContent("question.scale.type.points")%></option>
+													</select>
+												</div>
 												<!-- <div class="div-create-question-optional-answer row">
 													<label for="askAlways" class="col-md-5" ><i class="fa fa-unlock-alt red" aria-hidden="true"></i><span><%= lang.getContent("question.notAnswerRequeried") %></span></label>
 													<select class="form-control-small col-md-6" id="askAlways">

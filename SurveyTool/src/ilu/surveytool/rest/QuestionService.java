@@ -289,6 +289,31 @@ public class QuestionService {
     }
 
 	@PUT
+	@Path("/scaleType")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateScaleType(String req) {
+    	System.out.println("Opción: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
+			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
+			QuestionHandler questionHandler = new QuestionHandler();
+			HashMap<String,String> parameters = new HashMap<String,String>();
+			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_SCALE_TYPE,json.getString(Parameter.s_SCALE_TYPE));
+			questionHandler.updateParameters(questionId, pageId, parameters);
+			response=json.getString(Parameter.s_SCALE_TYPE);
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
+	
+	@PUT
 	@Path("/updateSimpleTypeAnswer")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)

@@ -62,6 +62,7 @@ public class DBConstants {
 			public final static String s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_TEXT = "formFieldTypeText";
 			public final static String s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_NUMBER = "formFieldTypeNumber";
 			public final static String s_VALUE_QUESTIONPARAMETER_SIMPLE_TYPE_ANSWER = "typeAnswer";
+			public final static String s_VALUE_QUESTIONPARAMETER_SCALE_TYPE = "scaleType";
 		//language
 			public final static String s_VALUE_LANGUAGE_ISONAME_ENGLISH = "en";
 			public final static String s_VALUE_LANGUAGE_ISONAME_SPANISH = "es";

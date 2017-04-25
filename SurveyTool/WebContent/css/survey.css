@@ -36,6 +36,7 @@
 }
 
 .center {text-align: center;}
+.float-left {float:left;}
 
 h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important;}
 /*----------------------------------------------*\
@@ -399,8 +400,13 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
 }
 /* Scale */
+ul.likert-options-frame {list-style: none;
+	padding: 0 !important;
+	display: inline-block;}
+ul.likert-options-frame > li {/*width: 80px;*/
+	text-align: center;}
 #form-question.scale .form-question-content{
-	max-width:300px;
+	/*max-width:300px;*/
 	margin:2em auto;
 	padding:0px;
 }
@@ -408,13 +414,15 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 .question-select label {padding: 7px 15px 0px 40px;
 	color: #016FB8;}
 .option-list-select {width: auto;}
+div.likert-options {text-align: center;
+	display: grid;}
 #form-question .likert-options label{
 	background:url(../img/radio-off.png) center bottom no-repeat;
 	padding-bottom:30px;
 	display:inline-block;
 	min-width:20px;
 	text-align:center;
-	margin:0px 11px 10px;
+	/*margin:0px 11px 10px;*/
 	color:#016FB8;
 }
 #form-question .likert-options .likert-options-frame span:first-child label{
@@ -433,17 +441,29 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	position:absolute;
 }
 
-#form-question .likert-legend{
+.div-likert-line {width: 100% !important;
+	padding:1em 5.5% 0em 5.5%;}
+.div-likert-line-5 {padding-left: 10% !important;
+	padding-right: 10% !important;}
+.div-likert-line-7 {padding-left: 7% !important;
+	padding-right: 7% !important;}
+.div-likert-line-11 {padding-left: 5% !important;
+	padding-right: 5% !important;}
+#form-question .liker-line {
 	border-top:3px solid #7191A4;
+	width: 100% !important;
 }
+
+#form-question .likert-legend {width: 100%;
+	display: inline-block;}
 #form-question .likert-legend div{
-	float:left;
-	width:33%;
+	/*float:left;
+	width:33%;*/
 	text-align:center;
 	font-size:.75em;
 	text-transform:uppercase;
 	color:#016FB8;
-	padding:1em 5.5% 0em 5.5%;
+	padding:1em 0 0em 0;
 }
 #form-question .likert-legend div.disagree{
 	margin-left:-50px;

@@ -327,7 +327,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 
 	$scope.showButtonLastPage = function() {
-		if($scope.currentSurvey.info.section.page.numPage == $scope.currentSurvey.info.numPages)
+		if($scope.currentSurvey.info.section && $scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage == $scope.currentSurvey.info.numPages)
 		{
 			var show = true;
 			$scope.currentSurvey.info.section.page.questions.forEach(function(q){
@@ -430,6 +430,10 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		return hasResource;
 	 };
 	 
+	 $scope.getNumber = function(textNum) {
+		 return parseInt(textNum);
+	 }
+	 
 	 /*$scope.focusTextArea = function(optionGroup, textAreaId) {
 		 console.log("OptionGroup: " + JSON.stringify(optionGroup) + " - textAreaId: " + textAreaId);
 		 if(optionGroup.response == $scope.getOtherOptionId(optionGroup.options)) $('#' + textAreaId).focus();
@@ -506,6 +510,24 @@ function isScrolledIntoView(elem, delta)
     
     //return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 }
+
+app.filter('range', function() {
+	return function(input, total) {
+		total = parseInt(total);
+		var init = 1;
+		if(total == 11)
+		{
+			init = 0;
+			total = 10;
+		}
+
+		for (var i=init; i<=total; i++) {
+			input.push(i);
+		}
+
+		return input;
+	};
+});
 
 /*app.directive('decimalLimit',function(){
     return {

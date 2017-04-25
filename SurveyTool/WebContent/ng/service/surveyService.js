@@ -68,7 +68,7 @@ function getResponseJson(currentSurvey, action)
 		var question = {};
 		question.questionId = q.questionId;
 		question.questionType = q.questionType;
-		if(q.response)
+		if(q.response || (q.questionType === 'scale' && q.response == 0))
 		{
 			question.response = q.response;
 		}

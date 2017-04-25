@@ -43,6 +43,21 @@
 								  						<jsp:include page="eqComponents/eqFiles.jsp" />
 								  					</div>
 								  					
+								  					<div class="question-frame">
+														<h6><%=lang.getContent("question.edit.response_settings.title")%></h6>
+														<%
+														String scaleType = question.getParameterValue(DBConstants.s_VALUE_QUESTIONPARAMETER_SCALE_TYPE);
+														%>
+														<div class="likert-type-div">
+															<label for="likertType<%= question.getQuestionId() %>"><%=lang.getContent("question.scale.type")%></label>															
+															<select name="likertType" id="likertType<%= question.getQuestionId() %>" class="form-control likertType" autocomplete="off">
+																<option value="5" <%if(scaleType.equals("5")){ %>selected<% } %>>5 <%=lang.getContent("question.scale.type.points")%></option>
+																<option value="7" <%if(scaleType.equals("7")){ %>selected<% } %>>7 <%=lang.getContent("question.scale.type.points")%></option>
+																<option value="11" <%if(scaleType.equals("11")){ %>selected<% } %>>11 <%=lang.getContent("question.scale.type.points")%></option>
+															</select>
+														</div>														
+													</div>
+								  					
 								  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>			
 								  					<jsp:include page="eqComponents/eqDependences.jsp">
 														<jsp:param value="false" name="withLogic"/>

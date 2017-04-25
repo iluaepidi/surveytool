@@ -64,6 +64,9 @@ $(function() {
 		$('#qtypevalue').val(qtypeId);
 		$('#qstatement').focus();
 		$("div.qtype-error > span").addClass("hidden");
+		
+		if(qtypeId === "scale") $("div.div-create-question-type-scale").removeClass("hidden");
+		else $("div.div-create-question-type-scale").addClass("hidden");
 	});
 	
 	$('#basic-settings-close').click(function(){
@@ -94,8 +97,9 @@ $(function() {
 			hideFieldError($('#qstatement'));
 			console.log("num page: " + currentElement.attr('index'));
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
+			var qTypeValue = $('#qtypevalue').val();
 			var request = {
-					qtype : $('#qtypevalue').val(),
+					qtype : qTypeValue,
 					qstatement: $('#qstatement').val(),
 					mandatory: $('#mandatory').val(),
 					helpText: $('#help-text').val(),
@@ -104,6 +108,7 @@ $(function() {
 					numPage: currentElement.attr('index'),
 					langsurvey : $("#survey-language-version").val()
 				};
+			if(qTypeValue === 'scale') request.scaleType = $('#nqLikertType').val();
 			$.post('CreateQuestionServlet', request, function(responseText) {
 				var index = responseText.indexOf("<html");
 				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
@@ -2274,6 +2279,33 @@ $(function() {
 			   success: function (data) {
 				   console.log(data);
 				   node.attr('active', data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   console.log(xhr.status);
+				   console.log(thrownError);
+				   console.log(xhr.responseText);
+				   console.log(xhr);
+			   }
+		});
+	});
+
+	$('.survey-sections').on("change", "select.likertType", function(e){
+		e.stopPropagation();
+		console.log("likertType");
+		var node = $(this); 
+		var req = {};
+		req.qid = node.closest('li[id=panel-question1]').attr('qid');
+		req.pid = node.closest('li[id=page]').attr('pid');
+		req.scaleType = node.val();
+		
+		$.ajax({ 
+			   type: "PUT",
+			   dataType: "text",
+			   contentType: "text/plain",
+			   url: host + "/SurveyTool/api/QuestionService/scaleType",
+			   data: JSON.stringify(req),
+			   success: function (data) {
+				   //console.log(data);
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
 				   console.log(xhr.status);

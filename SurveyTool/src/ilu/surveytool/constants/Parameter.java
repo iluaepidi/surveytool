@@ -73,5 +73,5 @@ public class Parameter {
 	public final static String s_TOKEN = "token";
 	public final static String s_RADIO = "radio";
 	public final static String s_COMBO = "combo";
-
+	public final static String s_SCALE_TYPE = "scaleType";
 }

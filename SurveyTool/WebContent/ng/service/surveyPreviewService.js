@@ -68,8 +68,10 @@ function getResponseJson(currentSurvey, action, preview)
 		var question = {};
 		question.questionId = q.questionId;
 		question.questionType = q.questionType;
-		if(q.response)
+		//console.log("RESPONSE: " + q.response + " - qid: " + q.questionId);
+		if(q.response || (q.questionType === 'scale' && q.response == 0))
 		{
+			//console.log("RESPONSE DENTRO: " + q.response + " - qid: " + q.questionId);
 			question.response = q.response;
 		}
 		else

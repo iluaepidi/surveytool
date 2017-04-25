@@ -89,6 +89,12 @@ public class CreateQuestionServlet extends HttpServlet {
 				shorttext.put(DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE, DBConstants.s_VALUE_QUESTIONPARAMETER_FORMFIELD_TYPE_GENERAL);
 				question.setParameters(shorttext);
 			}
+
+			if (request.getParameter(Parameter.s_QTYPE).equals("scale")){
+				HashMap<String, String> scaleType = new HashMap<String, String>();
+				scaleType.put(DBConstants.s_VALUE_QUESTIONPARAMETER_SCALE_TYPE, request.getParameter(Parameter.s_SCALE_TYPE));
+				question.setParameters(scaleType);
+			}
 			
 			if (request.getParameter(Parameter.s_QTYPE).equals("bcontent")){
 				question.setCategory("generic");

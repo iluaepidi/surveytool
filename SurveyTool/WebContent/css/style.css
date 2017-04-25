@@ -546,6 +546,7 @@ td.actions ul li a span {width: 100%;
     width: auto;}
 .survey-frame textarea {height: 54px !important;}
 .div-create-question-mandatory {margin-top: 10px;}
+.div-create-question-type-scale {margin-top: 10px;}
 .div-btn-create-question {margin-top: 28px;}
 .survey-frame fieldset legend{margin-bottom: 5px;
     font-weight: bold;}
@@ -853,7 +854,7 @@ ul.pagination li.active a {color: #fff !important;}
     padding-left: 30px !important;}
 .basic-settings-right-options div label i {margin-right: 5px;
     margin-top: 2px;
-    min-width: 24px;
+    /*min-width: 24px;*/
     text-align: right;}
 .basic-settings-right-options div label {display: flex;}    
 .basic-settings-right-options div label span {padding-top: 5px;}
@@ -1038,6 +1039,14 @@ ul.pagination li.active a {color: #fff !important;}
 	color: #fff;
 }
 
+.likert-type-div {margin-left: 5px;}
+.likert-type-div > label {padding-top: 7px;
+	padding-right: 10px;
+	margin: 0;
+	height: auto;}
+.likert-type-div > select {width: 135px;
+	display: inline-block;
+	margin: 0 !important;}
 .likert-options {display: inline-flex;
     width: 100%;
     text-align: center;}
