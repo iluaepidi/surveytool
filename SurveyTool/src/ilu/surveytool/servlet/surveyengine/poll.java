@@ -68,8 +68,8 @@ public class poll extends HttpServlet {
 		int pollId = pollDB.getPollIdByPublicId(pid);
 		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) || preview)
-		{
+		//if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) || preview)
+		//{
 			PollHandler pollHandler = new PollHandler();
 			Poll poll = pollHandler.getPollDetailByPublicId(pid, language);
 			request.setAttribute(Attribute.s_POLL_INFO, poll);
@@ -80,7 +80,7 @@ public class poll extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_QUESTION));
 			request.setAttribute(Attribute.s_IS_PREVIEW, preview);
 			CommonCode.redirect(request, response, Address.s_MASTER_POLL);
-		}
+		/*}
 		else
 		{
 
@@ -102,7 +102,7 @@ public class poll extends HttpServlet {
 			
 			CommonCode.redirect(request, response, Address.s_MASTER_POLL);
 		
-		}
+		}*/
 	}
 
 }

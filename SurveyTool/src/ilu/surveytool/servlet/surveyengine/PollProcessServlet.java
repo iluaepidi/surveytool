@@ -63,7 +63,8 @@ public class PollProcessServlet extends HttpServlet {
 		PollProcessHandler ppHandler = new PollProcessHandler();
 		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) && !preview)
+		//if(!anonimousDB.existAnonimousUserByIpAddressPollPublicId(pollId, ipAddress) && !preview)
+		if(!preview)
 		{
 		
 			while(paramNames.hasMoreElements())
