@@ -55,7 +55,26 @@
 																<option value="7" <%if(scaleType.equals("7")){ %>selected<% } %>>7 <%=lang.getContent("question.scale.type.points")%></option>
 																<option value="11" <%if(scaleType.equals("11")){ %>selected<% } %>>11 <%=lang.getContent("question.scale.type.points")%></option>
 															</select>
-														</div>														
+														</div>	
+														<div class="likert-labels-div">
+															<fieldset>
+																<legend><%= lang.getContent("question.form.scale.liker.point_label.legend") %></legend>
+																<ul class="option-list" id="option-list">
+																	<% 
+																	int numPoints = scaleType.equals("11") ? 10 : Integer.parseInt(scaleType);
+																	int initPoint = numPoints == 10 ? 0 : 1;
+																	for(int i = initPoint; i <= numPoints; i++) { 
+																		String value = question.getContents().containsKey("label" + i) ? question.getContents().get("label" + i).getText() : "";
+																	%>
+																		<li class="option-item" id="option-item">
+																			<div class="circle-info circle-grey fleft"><%= i %></div>
+																			<label for="option<%= question.getQuestionId() %>-<%= i %>" class="visuallyhidden"><%= lang.getContent("question.form.scale.liker.point_label") %>  <%= i %></label>
+									  										<input id="option<%= question.getQuestionId() %>-<%= i %>" type="text" maxlength="10000" class="point-label form-control fleft option" index="<%= i %>" placeholder="<%= lang.getContent("question.form.scale.liker.point_label") %> <%= i %>" value="<%= value %>"/>
+																		</li>
+																	<% } %>
+																</ul>
+															</fieldset>
+														</div>													
 													</div>
 								  					
 								  					<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>			

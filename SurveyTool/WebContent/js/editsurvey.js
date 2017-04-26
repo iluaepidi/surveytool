@@ -2645,6 +2645,21 @@ $(function() {
 		
 	});
 
+	$('.survey-sections').on("focusout", "input.point-label", function(e){
+		
+		console.log("Question update content entra");
+		e.stopPropagation();
+		var req = {};		
+		req.text = $(this).val();
+		req.contentType = "label";
+		req.lan = $("#survey-language-version").val();
+		req.qid = $(this).closest('#panel-question1').attr('qid');	
+		req.index = $(this).attr("index");
+		var serviceUrl = host + "/SurveyTool/api/QuestionService/updatePointLabel";
+		
+		updateContent(req, serviceUrl);		
+	});
+
 	$('.survey-sections').on("focusout", "#survey-question-description-text", function(e){
 		e.stopPropagation();
 		var req = {};		

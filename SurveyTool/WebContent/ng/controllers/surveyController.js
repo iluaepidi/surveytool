@@ -70,6 +70,21 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		return {};
 	};
 
+	$scope.getContentElementByAttrAndIndex = function(array, attribute, value, index) {
+		for(var i = 0; i < array.length; i++)
+		{
+			if( array[i][attribute] == value && array[i]['index'] == index) return array[i];
+		}
+		return {};
+	};
+
+	$scope.getLabelPointDisp = function(numPoints) {
+		var disp = 0;
+		if(numPoints == 7) disp = 1;
+		if(numPoints == 5) disp = 2;
+		return disp;
+	};
+
 	$scope.getLines = function(numLines, maxLength) {
 		if(numLines == null || numLines.value == null || numLines.value == "")
 		{

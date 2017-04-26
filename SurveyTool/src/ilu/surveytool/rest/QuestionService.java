@@ -60,6 +60,34 @@ public class QuestionService {
 		}
     	return response;
     }
+
+	@PUT
+	@Path("/updatePointLabel")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updatePointLabel(String req) {
+    	//System.out.println("Opción: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			int questionId = Integer.parseInt(json.getString(Parameter.s_QID));
+			Content content = new Content(0, 
+					json.getString(Parameter.s_LANGUAGE_LAN), 
+					json.getString(Parameter.s_CONTENT_TYPE), 
+					json.getString(Parameter.s_TEXT));			
+			int index = Integer.parseInt(json.getString(Parameter.s_INDEX));
+			//System.out.println("content: " + content.toString());
+			
+			QuestionHandler questionHandler = new QuestionHandler();
+			response = String.valueOf(questionHandler.updateContent(questionId, content, index));
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
 	
 	@PUT
 	@Path("/updateMandatory")

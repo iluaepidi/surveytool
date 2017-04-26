@@ -1047,9 +1047,17 @@ ul.pagination li.active a {color: #fff !important;}
 .likert-type-div > select {width: 135px;
 	display: inline-block;
 	margin: 0 !important;}
+.likert-labels-div {margin-left: 6px;
+	margin-top: 15px;}
+.likert-labels-div > fieldset > ul > li {margin: 5px 0;}
+.likert-labels-div > fieldset > legend {margin-bottom: 10px;}
 .likert-options {display: inline-flex;
     width: 100%;
     text-align: center;}
+.point-label {width: 52% !important;
+	margin: 0px 5px;
+	height: 28px !important;
+	padding: 0 !important;}
 .likert-options-frame {border: 1px solid #000;
     width: 60%;
     margin: 0 auto;}

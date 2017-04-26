@@ -6,6 +6,7 @@ public class Content {
 	String language = "";
 	String contentType = "";
 	String text = "";
+	int index = 0;
 	
 	public Content() {
 		super();
@@ -17,6 +18,15 @@ public class Content {
 		this.language = language;
 		this.contentType = contentType;
 		this.text = text;
+	}
+
+	public Content(int contentId, String language, String contentType, String text, int index) {
+		super();
+		this.contentId = contentId;
+		this.language = language;
+		this.contentType = contentType;
+		this.text = text;
+		this.index = index;
 	}
 
 	public int getContentId() {
@@ -50,11 +60,19 @@ public class Content {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 	@Override
 	public String toString() {
 		return "Content [contentId=" + contentId + ", language=" + language + ", contentType=" + contentType + ", text="
-				+ text + "]";
+				+ text + ", index=" + index + "]";
 	}
 	
 }

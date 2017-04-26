@@ -180,6 +180,7 @@ public class ContentDB {
 		   			content.put("lang", lang);
 		   			content.put("contentType", rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME));
 		   			content.put("text", text);
+		   			content.put("index", rs.getInt(DBFieldNames.s_INDEX));
 		   			contents.put(content);
 	   			}
 	   		}
@@ -270,16 +271,38 @@ public class ContentDB {
 	   			//System.out.println("Previous: typename-"+typename+", contentType-"+contentType+", text-"+text);
 	   			if(typename.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME))){
 	   				//System.out.println("In if(typename.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
-	   				if(text!=null && !text.equals("")){
-	   					//System.out.println("In if(text!=null && !text.equals(empty))");
-	   					contenttext = contenttext + rs.getString(DBFieldNames.s_CONTENT_TEXT);
-	   					text = text + rs.getString(DBFieldNames.s_CONTENT_TEXT);
-		   			}
-	   				index = rs.getInt(DBFieldNames.s_INDEX);
+	   				if(typename.equals(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL))
+	   				{
+	   					if(!contents.containsKey(typename + index))
+	   					{
+	   						contents.put(typename + index, new Content(contentId, lang, 
+				   					typename, 
+				   					contenttext, index));
+	   						//contents.remove(typename);
+	   					}	   					
+
+	   					contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+			   			contenttext = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+			   			index = rs.getInt(DBFieldNames.s_INDEX);
+
+			   			contents.put(contentType + index, new Content(contentId, lang, 
+			   					typename, 
+			   					contenttext, index));
+	   					
+	   				}
+	   				else
+	   				{
+		   				if(text!=null && !text.equals("")){
+		   					//System.out.println("In if(text!=null && !text.equals(empty))");
+		   					contenttext = contenttext + rs.getString(DBFieldNames.s_CONTENT_TEXT);
+		   					text = text + rs.getString(DBFieldNames.s_CONTENT_TEXT);
+			   			}
+		   				index = rs.getInt(DBFieldNames.s_INDEX);
+	   				}	   				
 	   			}
 	   			else{
 	   				//System.out.println("In else");
-	   				if(!contentType.equals("")){
+	   				if(!contentType.equals("") && !contents.containsKey(typename + index)){
 	   					//System.out.println("In if(!contentType.equals(empty))");
 	   					if(text!=null && !text.equals("")){
 	   						//System.out.println("In if(text!=null && !text.equals(empty))");
@@ -316,12 +339,34 @@ public class ContentDB {
 		   			//System.out.println("In second while");
 		   			if(contentType.equals(rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME))){
 		   				//System.out.println("In if(contentType.equals(rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME)))");
-		   				text = text+rs2.getString(DBFieldNames.s_CONTENT_TEXT);
-		   				index = rs2.getInt(DBFieldNames.s_INDEX);
+		   				if(contentType.equals(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL))
+		   				{
+		   					if(!contents.containsKey(contentType + index))
+		   					{
+		   						contents.put(contentType + index, new Content(contentId, lang, 
+		   								contentType, 
+					   					contenttext, index));
+		   						//contents.remove(typename);
+		   					}	   					
+
+		   					contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+				   			contenttext = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+				   			index = rs.getInt(DBFieldNames.s_INDEX);
+
+				   			contents.put(contentType + index, new Content(contentId, lang, 
+				   					contentType, 
+				   					contenttext, index));
+		   					
+		   				}
+		   				else
+		   				{
+			   				text = text+rs2.getString(DBFieldNames.s_CONTENT_TEXT);
+			   				index = rs2.getInt(DBFieldNames.s_INDEX);
+		   				}
 		   			}
 		   			else{
 		   				//System.out.println("In else");
-		   				if(!contentType.equals("")){
+		   				if(!contentType.equals("") && !contents.containsKey(contentType + index)){
 		   					//System.out.println("In if(!contentType.equals(empty))");
 			   				contents.put(contentType, new Content(contentId, lang, 
 			   						contentType, 
@@ -575,12 +620,38 @@ public class ContentDB {
 		
 		return inserted;
 	}
+
+	public boolean insertContent(int contentId, String language, String contentType, String text, int index) {
+		System.out.println("insertContent: [contentId: "+ contentId+", language: "+language+", contentType: "+contentType+", text: "+text+", index:" + index + "]");
+		boolean inserted = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+	    try {
+		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_CONTENT);
+		   pstm.setInt(1, contentId);
+		   pstm.setString(2, language); 
+		   pstm.setString(3, contentType); 
+		   pstm.setInt(4, index);
+		   pstm.setString(5, text);
+		   
+		   inserted = pstm.execute();
+		   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return inserted;
+	}
 	
 	/*
 	 * Update
 	 */
 	
-	/*public void updateContentText(int contentId, String language, String contentType, String text) {
+	public void updateContentText(int contentId, String language, String contentType, String text, int index) {
 		//System.out.println("updateState");
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null,pstm2 = null;;
@@ -588,18 +659,18 @@ public class ContentDB {
 		
 		
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_CONTENT_TEXT);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_CONTENT_TEXT_WITH_INDEX);
 			pstm.setString(1, text);
 			pstm.setInt(2, contentId);
 			pstm.setString(3, language);
 			pstm.setString(4, contentType);
+			pstm.setInt(5, index);
 		   		
 			int numUpdated = pstm.executeUpdate();
 			
 			if(numUpdated<1){
 				//es necesario insertarlo
-				this.insertContent(contentId, language, contentType, text);
-				
+				this.insertContent(contentId, language, contentType, text, index);				
 			}
 					
 		} catch (SQLException e) {
@@ -609,7 +680,7 @@ public class ContentDB {
 			this._closeConnections(con, pstm, null);
 		}
 		   
-	}*/
+	}
 	
 	
 	public void updateContentText(int contentId, String language, String contentType, String text) {
@@ -693,6 +764,30 @@ public class ContentDB {
 		   	pstm.setInt(1, contentId);
 			pstm.setString(2, language);
 			pstm.setString(3, contentType);
+	   		
+		   	pstm.execute();
+		   	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+
+	}
+
+	public void removeContentByTypeLangIndex(int contentId, String language, String contentType, int index) {
+		//System.out.println("removeUserOptionValues");
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_DELETE_CONTENT_BY_ID_TYPE_LANG_INDEX);
+		   	pstm.setInt(1, contentId);
+			pstm.setString(2, language);
+			pstm.setString(3, contentType);
+			pstm.setInt(4, index);
 	   		
 		   	pstm.execute();
 		   	

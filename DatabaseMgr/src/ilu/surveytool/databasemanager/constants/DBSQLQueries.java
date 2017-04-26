@@ -74,7 +74,7 @@ public class DBSQLQueries {
 				+"where ar.idAnonimousUser = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
 		
 		//Content
-		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
+		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, c.index, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on c.idLanguage = l.idLanguage "
 				+ "where c.idContent = ? and l.isoName = ?";
@@ -615,6 +615,11 @@ public class DBSQLQueries {
 					+ "WHERE `idContent`= ? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+			public final static String s_UPDATE_CONTENT_TEXT_WITH_INDEX = "UPDATE `surveytool`.`content` SET `text`= ? "
+					+ "WHERE `idContent`= ? "
+					+ "and `idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
+					+ "and `idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?) "
+					+ "and `index`=?";
 		//optionsGroup
 			public final static String s_UPDATE_OPTIONSGROUP_INDEX = "UPDATE `surveytool`.`optionsgroup` SET `index`=? WHERE `idOptionsGroup`=?";
 			public final static String s_UPDATE_OPTIONSGROUP_TYPE = "UPDATE `surveytool`.`optionsgroup` SET `idOptionType`=(SELECT idOptionType FROM `surveytool`.`optionType` WHERE name=?) WHERE `idQuestion`=?";
@@ -682,6 +687,10 @@ public class DBSQLQueries {
 			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
 					+ "and`idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
 					+ "and`idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
+			public final static String s_DELETE_CONTENT_BY_ID_TYPE_LANG_INDEX = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
+					+ "and `idLanguage`= (SELECT idLanguage FROM surveytool.language where isoName = ?) "
+					+ "and `idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?) "
+					+ "and `index`=?";
 			public final static String s_DELETE_CONTENT_BY_ID_TYPE = "DELETE FROM `surveytool`.`content` WHERE `idContent`=? "
 					+ "and `idContentType`= (SELECT idContentType FROM surveytool.contenttype where name = ?)";
 

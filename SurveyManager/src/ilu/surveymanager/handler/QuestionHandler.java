@@ -109,6 +109,27 @@ public class QuestionHandler {
 		
 		return updated;
 	}
+
+	public boolean updateContent(int questionId, Content content, int index)
+	{
+		boolean updated = false;
+				
+		QuestionDB questionDB = new QuestionDB();
+		int contentId = questionDB.getQuestionContentIdByQuestionId(questionId);
+		ContentDB contentDB = new ContentDB();
+		if(!content.getText().isEmpty())
+		{
+			contentDB.updateContentText(contentId, content.getLanguage(), content.getContentType(), content.getText(), index);
+		}
+		else
+		{
+			contentDB.removeContentByTypeLangIndex(contentId, content.getLanguage(), content.getContentType(), index);
+		}
+		
+		updated = true;
+		
+		return updated;
+	}
 	
 	public boolean updateMandatory(int questionId, int pageId)
 	{
