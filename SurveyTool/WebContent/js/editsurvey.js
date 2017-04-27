@@ -4,6 +4,7 @@
 var qtypeId;
 var numQuestions = 0;
 var currentText = "";
+var currentValue;
 var currentElement;
 var currentAddNode;
 var previousPage;
@@ -2289,32 +2290,42 @@ $(function() {
 		});
 	});
 
+	$('.survey-sections').on("focus", "select.likertType", function(e){
+		currentValue = $(this).val();
+	});
+	
 	$('.survey-sections').on("change", "select.likertType", function(e){
 		e.stopPropagation();
 		console.log("likertType");
-		var node = $(this); 
-		var req = {};
-		req.qid = node.closest('li[id=panel-question1]').attr('qid');
-		req.pid = node.closest('li[id=page]').attr('pid');
-		req.scaleType = node.val();
 		
-		$.ajax({ 
-			   type: "PUT",
-			   dataType: "text",
-			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/scaleType",
-			   data: JSON.stringify(req),
-			   success: function (data) {
-				   //console.log(data);
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-				   console.log(xhr.status);
-				   console.log(thrownError);
-				   console.log(xhr.responseText);
-				   console.log(xhr);
-			   }
+		var hasLabel = false;
+		
+		$(this).closest("div.question-frame").find("input.point-label").each(function(i, elem){
+			hasLabel = hasLabel || $(elem).val() != "";
 		});
+		
+		if(hasLabel)
+		{
+			currentElement = $(this);			
+			$("#scaleTypeConfirm").modal("show");
+		}
+		else
+		{
+			setScaleType($(this));
+		}
 	});
+	
+
+	$('.body-content').on("click", "button.btn-accept-change-qScaleType", function(){
+		setScaleType(currentElement);
+		$('#scaleTypeConfirm').modal('hide');
+	});
+
+	$('.body-content').on("click", "button.btn-cancel-change-qScaleType", function(){
+		currentElement.val(currentValue);
+		$('#scaleTypeConfirm').modal('hide');
+	});
+	
 	
 	$('.survey-sections').on("change", "input.range", function(e){
 		e.stopPropagation();
@@ -3119,6 +3130,59 @@ $(function() {
 		/*if(modalFocus.prop("tagName") === "BUTTON")*/ modalFocus.closest("add-menu").show(); 
 	});
 });
+
+function setScaleType(node)
+{
+	var req = {};
+	req.qid = node.closest('li[id=panel-question1]').attr('qid');
+	req.pid = node.closest('li[id=page]').attr('pid');
+	req.scaleType = node.val();
+	
+	$.ajax({ 
+		   type: "PUT",
+		   dataType: "text",
+		   contentType: "text/plain",
+		   url: host + "/SurveyTool/api/QuestionService/scaleType",
+		   data: JSON.stringify(req),
+		   success: function (data) {
+			   var numPoints = parseInt(node.val());
+			   var listNode = node.closest("div.question-frame").find("ul.option-list");
+			   //var numLiElements = listNode.find("li").size();
+			   var tempElement = listNode.find("li").first().clone();
+			   listNode.find("li").remove();
+			   
+			   var label = tempElement.find("label").html();
+			   label = label.substring(0, label.length - 1);
+			   var labelFor = tempElement.find("label").attr("for").split("-")[0] + "-";
+			   
+			   var initial = 1;
+			   var total = numPoints;
+			   if(numPoints == 11) {
+				   initial = 0;
+				   total = 10;
+			   }
+			   
+			   for(i = initial; i <= total; i++) {
+				   var elem = tempElement.clone();
+				   elem.find("div.circle-info").html(i);
+				   elem.find("label").attr("for", labelFor + i);
+				   elem.find("label").html(label + i);
+				   elem.find("input").attr("id", labelFor + i);
+				   elem.find("input").attr("placeholder", label + i);
+				   elem.find("input").attr("index", i);
+				   elem.find("input").val("");
+				   
+				   listNode.append(elem);
+			   }
+		   },
+		   error: function (xhr, ajaxOptions, thrownError) {
+			   console.log(xhr.status);
+			   console.log(thrownError);
+			   console.log(xhr.responseText);
+			   console.log(xhr);
+		   }
+	});
+}
 
 function executeBtnMovedown(nextPage, currentPage, question)
 {

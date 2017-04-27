@@ -357,4 +357,17 @@ public class QuestionHandler {
 		removed = true;
 		return removed;
 	}
+	
+	public boolean removeContent(int questionId, String contentType)
+	{
+		boolean removed = false;		
+		ContentDB contentDB = new ContentDB();
+		QuestionDB questionDB = new QuestionDB();
+		
+		int contentId =  questionDB.getQuestionContentIdByQuestionId(questionId);
+		contentDB.removeContentByType(contentId, contentType);
+		
+		removed = true;
+		return removed;
+	}
 }

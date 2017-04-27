@@ -44,6 +44,7 @@ public class Attribute {
 	public final static String s_NUM_QUESTION = "numQuestion";
 	public final static String s_INDEX = "index";
 	public final static String s_EMAIL_VERIFIED = "emailVerified";
+	public final static String s_CONTENTS = "contents";
 	
 	public final static String s_JSON_PAGES = "jsonPages";
 
@@ -60,4 +61,5 @@ public class Attribute {
 	public final static String s_NEWOGID = "newogid";
 	public final static String s_NEWOID = "newoid";
 	public final static String s_TAB = "tab";
+	public final static String s_SCALE_TYPE = "scaleType";
 }

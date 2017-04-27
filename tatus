@@ -1,0 +1,2168 @@
+[33mcommit 57a2e70b98d2c49c539dbfd504f626ad8d1a21c1[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Apr 26 18:23:36 2017 +0200
+
+    scale question type width point labels editable, but without update in edit survey when change likert type
+
+[33mcommit 89a07f1a848eb66e93819386c540b4dcb7c0635d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Apr 25 18:43:35 2017 +0200
+
+    Scale question type with points settings
+
+[33mcommit 2a3e7c1187e57fd1efbb91efee40ada9f4ca0b7a[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Apr 21 14:07:03 2017 +0200
+
+    precentage survey complete text
+
+[33mcommit ff09ebe6d9cf17115760af903a11f46da1af31c7[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Mar 31 14:57:16 2017 +0200
+
+    solved dependences issues with simpleRadio and simpleCombo
+
+[33mcommit 26111fcf87826854ad0a3bdde027e2bcf90a1f6f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Mar 30 14:41:28 2017 +0200
+
+    change survey interface and ajust the scroll
+
+[33mcommit 188335333de346109c60b68e6e8caa8a2ba46c46[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Mar 28 18:04:38 2017 +0200
+
+    simple question drop down list type, and other option in combo
+
+[33mcommit 9414e4f55d5fc24f09797c35a214da4c9efbc93e[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Mar 17 11:48:07 2017 +0100
+
+    Simple question with dorp down list
+
+[33mcommit 87142ee4c9d1aea59a84b354e56e6480b727c629[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Mar 16 11:11:52 2017 +0100
+
+    edit survey circle number index issue solved
+
+[33mcommit a462b85d1aba6bcc48536636e9d9ec9d72d749bf[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Mar 16 10:41:25 2017 +0100
+
+    body content lost chars issue solved
+
+[33mcommit b2c361758ae7e9408adf6200fcf95d03dce1c801[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Mar 15 12:07:27 2017 +0100
+
+    InitialDump and DumpWithData
+
+[33mcommit 3a8046f0ee575a492828c2c71e90ebec098a4886[m
+Author: Jesica Rivero Espinosa <Jrivero@e-fti.com>
+Date:   Mon Mar 13 14:55:32 2017 +0100
+
+    merge Jrivero statistics with dependences
+
+[33mcommit ae014e26506c762dc8ab1eae3b9e04eb2960c8b8[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Mar 14 19:57:52 2017 +0100
+
+    Dependences and logic with option other
+
+[33mcommit 0595f95a8ea57014653a67384a09ae8482135394[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Mar 14 13:57:49 2017 +0100
+
+    excel with other option
+
+[33mcommit 04c9d2df430e75145b6d2a411237435880d9d98e[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Mar 13 14:34:27 2017 +0100
+
+    option other as new option, in edit survey and final survey
+
+[33mcommit 3f6693526e67447f11763c8effb4a881bcfcd027[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Mar 10 12:07:08 2017 +0100
+
+    survey other option 2
+
+[33mcommit 62028b5aaa067bdc3abb4023ac723a23f270c9bc[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Mar 9 18:35:20 2017 +0100
+
+    survey option other
+
+[33mcommit ee8d238a4d2b609b89b8805cc8292156f42f99bf[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Mar 8 13:32:08 2017 +0100
+
+    edit survey option other in multiple question
+
+[33mcommit 84594c49f594e095a3fd318a1c4b03c14ab2d36a[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Mar 8 13:04:21 2017 +0100
+
+    edit survey other option in questions simple
+
+[33mcommit 6e0724dab1a08ce6effa417bb8e849b01406bcc5[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 28 17:56:38 2017 +0100
+
+    jquery question animate offset top
+
+[33mcommit 7196340b4078ab87816fd8a72f6fdd6383f0cd72[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 28 13:56:10 2017 +0100
+
+    solved language html issue
+
+[33mcommit 97a96dd2934ff1455223a00ad486ea6e41ca6fa6[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 28 12:36:16 2017 +0100
+
+    title body content changed to content
+
+[33mcommit eb35a9318f751a78e045db2a767280ed10fe0485[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 28 11:46:03 2017 +0100
+
+    Excel with questions ordered
+
+[33mcommit faf6eef1656e598c771ea0c8c43ee35768911933[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 28 11:03:45 2017 +0100
+
+    nacho list, body content help and login and register submit with intro
+
+[33mcommit 3f6588977738bd3226d0d3b92f366dabd255ca5b[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Feb 27 18:46:20 2017 +0100
+
+    solved short text error with nomber
+
+[33mcommit 2d80527a78ecc886e10223e044c8a32d198f5357[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Feb 27 17:52:59 2017 +0100
+
+    mandatory toggle focusable
+
+[33mcommit dc03195ce7f0c98de1fb90c61fb9eed0776d22a9[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Feb 27 11:50:36 2017 +0100
+
+    nacho issues list 1
+
+[33mcommit 675c17e971de0723974e72c2c0b53a6fedc8dd17[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 18:28:27 2017 +0100
+
+    initialDump
+
+[33mcommit 1a55cf22d6c395ec05af72e73b16542b6c336fc2[m
+Merge: fa60f02 5571917
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 18:24:38 2017 +0100
+
+    merge confirmation email user panel, and solve preview anonimousUser issue
+
+[33mcommit fa60f02b0cac341bc1339b16b4c38dc3380e13fe[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 12:26:36 2017 +0100
+
+    gitignore
+
+[33mcommit 6f66ff6174f01daaa9b59f5896c97821d74daf2d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 12:20:04 2017 +0100
+
+    merge dstTemp
+
+[33mcommit 05ab6ccdc7685b1d4a03ab5e4fb6b103417ce4a2[m
+Merge: 4cd0e4a 8f660dc
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 12:09:03 2017 +0100
+
+    merge jrivero
+
+[33mcommit 8f660dc50e67c3e37f19e416c3fafe0fb814d842[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 12:06:49 2017 +0100
+
+    commit jrivero 2
+
+[33mcommit 00555a4b7303cb337a0565fd0e93c96fa7c60849[m
+Merge: 5162ee5 65b6a81
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 12:00:16 2017 +0100
+
+    commit jesica
+
+[33mcommit 4cd0e4a6a4507074f013ee05211adc74da1b7938[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 22 11:03:52 2017 +0100
+
+    surveys table answer counter only finished and no test user
+
+[33mcommit 1057dd8eda548bd8964478c92533fe4596e09b2f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 21 19:44:45 2017 +0100
+
+    solved dependence option only title image selected
+
+[33mcommit 170ae424d82e13fc9a06090d4ec897d58d0cb555[m
+Merge: 5162ee5 ccb4dc9
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 21 18:53:55 2017 +0100
+
+    Merge branch 'dstJanuary17' into tempSprint
+
+[33mcommit 5162ee57afa9fa6c6c45484a8ad1abe27352306f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 21 18:41:30 2017 +0100
+
+    jessica issues part 3
+
+[33mcommit f32f11dc214b7d02da9f78813256bec7518dbebc[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Feb 20 19:35:39 2017 +0100
+
+    issues jesica part 2
+
+[33mcommit 65b6a81b9ad0acf44069a9f39abf6551247b4460[m
+Author: Jesica Rivero Espinosa <Jrivero@e-fti.com>
+Date:   Mon Feb 20 12:38:13 2017 +0100
+
+    Solved problem with matrix, ids of 'set to' and 'limit', and statistics
+
+[33mcommit 2831953404ac455f7504bee66287d43921f6bcce[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Feb 17 15:38:03 2017 +0100
+
+    issues jesica part 1
+
+[33mcommit ccb4dc963cec24c8c5a6711ee5c0609eed0c71be[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 15 11:04:10 2017 +0100
+
+    quotas issues solved
+
+[33mcommit 695bc26a0d7e36ea7fbb6a866400300043c56c51[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Feb 14 12:00:57 2017 +0100
+
+    server config file
+
+[33mcommit 55719171abff2c5dd191436c18e883e4882d2e9f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Feb 13 18:08:28 2017 +0100
+
+    verification email registration
+
+[33mcommit 25fc577fa7144f36682b4ffb270b033deb7579b7[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Feb 10 11:04:52 2017 +0100
+
+    add poll into the table after of create it
+
+[33mcommit e1b312f86adedad1b356e3d3bbabda89700d5b54[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 1 18:17:54 2017 +0100
+
+    initial dump
+
+[33mcommit cbd59bce92c1082750924726499ff9200224a2ed[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 1 18:00:59 2017 +0100
+
+    initial dump
+
+[33mcommit 8387d306268ee5552ff5dd85e59ba1b1e885071b[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Feb 1 17:41:41 2017 +0100
+
+    solved quotas issues
+
+[33mcommit b93449fd2b92df151f6c17c6833208b9dd297cd5[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Jan 26 20:20:56 2017 +0100
+
+    solved moveup question and logic issue
+
+[33mcommit c8d10f20c376ca4171c038e909951449f5a0ef11[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Jan 26 14:07:52 2017 +0100
+
+    solved issue gestion de dependencias al mover preguntas
+
+[33mcommit 9bc4959066c33fc92c11f9e2be373af21437a83f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 25 19:16:27 2017 +0100
+
+    added field with survey URL
+
+[33mcommit f54c47b003b11d57940eb12a6e8ba05f98f53462[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 25 19:02:19 2017 +0100
+
+    solved issues with delete sections and logic and dependences. Solved download excel issue
+
+[33mcommit 2f9fb747cd80464e7c5f9cac00292c6dbf08bd11[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 25 17:18:58 2017 +0100
+
+    solved resolver error al mover preguntas en una encuesta
+
+[33mcommit 1c8fe1841da6d7f62327bbd76da5311f5fc994c1[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 25 13:46:48 2017 +0100
+
+    solved issues not all, stable version
+
+[33mcommit e790ebe2dda2c0638f6098c4a4b82793171e3fd5[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Jan 23 09:49:06 2017 +0100
+
+    auto registration without confirmation mail
+
+[33mcommit 00021373250cfc5f5bac1c5ced39a35545e7b083[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 18 13:22:13 2017 +0100
+
+    import files issues solved
+
+[33mcommit 8e230b259f7946f0feab26f3e3c3feddd2ff06d8[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Jan 16 13:23:39 2017 +0100
+
+    firefox tabs issues solved
+
+[33mcommit 1e438430a5237e5c78e864347a8df391ac7c276d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Jan 16 11:59:21 2017 +0100
+
+    scroll focus survey finished
+
+[33mcommit 245e8343c5974db9356494fe823aacca148cea92[m
+Merge: f313477 7eed3fa
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Jan 13 15:03:08 2017 +0100
+
+    Merge branch 'p-sl-dstDecember' into temp
+
+[33mcommit 7eed3fae0adadeda3cc1460818ce8baa5f356639[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Jan 13 15:02:19 2017 +0100
+
+    scroll focus issue solved
+
+[33mcommit b89cf26a1e8b7a1eefe875ff206969ad20f80a29[m
+Merge: f883c02 afbada3
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Jan 12 17:37:02 2017 +0100
+
+    Merge branch 'dstDecember' of https://github.com/p-sl/surveytool into p-sl-dstDecember
+
+[33mcommit f313477c165aa7c3e4f30b7ef4671bb89c391884[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Jan 12 17:32:52 2017 +0100
+
+    surveys with empty pages and focus issues solved
+
+[33mcommit f883c024d79536670a550ccb3e571dc033be376a[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 11 18:42:40 2017 +0100
+
+    Show survey only when it is active. If paused or finished display intefaces
+
+[33mcommit 741d6453dac4be09a58c46082784c96db0031628[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 11 16:42:34 2017 +0100
+
+    solved issues filter state updated
+
+[33mcommit f5916f00b1652825295adad8951545edf8784a13[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Jan 11 14:22:37 2017 +0100
+
+    Set survey states (Active, paused and fihished) and filter the table with it
+
+[33mcommit 17ddf2e63f6e4fb1bec15a1b3214d9cd11c2b6dc[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 28 14:59:12 2016 +0100
+
+    responses value varchar 10000
+
+[33mcommit bc1db772202b52bf90c9b1a9b81ea2a157b28883[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 28 14:54:25 2016 +0100
+
+    solved issues characteres limit, num question when create and delete question, long words in options label and hide option label without text.
+
+[33mcommit dec7f974d69cda7ed11f7e6c1413e40b4ebbf17d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 28 12:16:39 2016 +0100
+
+    new dependences and goto finished
+
+[33mcommit afbada3c6a1c9b5d8cc99649ef3c91a361976c93[m
+Author: Pablo Suárez León <psuarez@E-FTI>
+Date:   Tue Dec 20 18:34:07 2016 +0100
+
+    Anchor scroll
+
+[33mcommit 2831ac2e7cb3954023fa1131468233efaed7641f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Dec 20 13:40:04 2016 +0100
+
+    save images 533x400px
+
+[33mcommit 80871c74ceb6a797d38f1d7e6e5a0a3dab4623c7[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Dec 15 12:31:34 2016 +0100
+
+    remove deadline colums from surveys and polls tables
+
+[33mcommit 58d7165b8e365a6e04d8e3037303205f4ea3a4d6[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Dec 15 11:38:11 2016 +0100
+
+    InitialDump.sql with testUser field in anonimousUser
+
+[33mcommit 96eca55af2f203f672f8158f2ae8045914d6aaf8[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 14 12:46:06 2016 +0100
+
+    logic and dependesces issues solved
+
+[33mcommit 7bb692d03de6520db3204e56f90bb8192d47c76a[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Dec 13 16:17:26 2016 +0100
+
+    border buton user
+
+[33mcommit 02632fbb017afd4d01021b276b70f4b5d63fc5c7[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Dec 13 14:14:02 2016 +0100
+
+    Manu revision solved
+
+[33mcommit 8aec340be6fc1fe768f9e33e326e7a4eb695a6c9[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Dec 13 12:19:02 2016 +0100
+
+    mandatory multiple questions issues solved
+
+[33mcommit 5fa5466b280141b9ef05ea8ec5f67fa1501a0f2a[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Dec 12 18:27:07 2016 +0100
+
+    input field issues solved
+
+[33mcommit e4dd9141a72edab73c365e9160f7adcde59d2001[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Dec 12 14:04:20 2016 +0100
+
+    logic questions issues solved
+
+[33mcommit dd585c19a3161d7f97df87cb6a7d9417692e200d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Fri Dec 9 14:56:44 2016 +0100
+
+    solved conginuing and error msg focus
+
+[33mcommit 9ff8dbcd9276f2769a1dfbd3785579b00dcac73d[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 7 18:41:14 2016 +0100
+
+    multiples only image in statistics, hide move question buttons in no default language
+
+[33mcommit 4aac6ca232f7cc4014e2553f7634ba726375f66f[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Dec 7 13:54:53 2016 +0100
+
+    solved issues multiple option only with image
+
+[33mcommit 8775dc0e46430fa7edffc47fa0cd1739ce5955f5[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Mon Dec 5 18:29:47 2016 +0100
+
+    final previews to surveys and polls
+
+[33mcommit e5620f0e2b1db54a466714c2e12e458b67d7ce0b[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Dec 1 18:25:44 2016 +0100
+
+    avoid multiple answers from same person
+
+[33mcommit b8a800801b58f6505c3ad9aabfdc0fc2ed9fbf1b[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Thu Dec 1 14:06:58 2016 +0100
+
+    solved pablo accesibility
+
+[33mcommit 13b6325a77fb220c4f52ac42ac1d76d60411c8fd[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Wed Nov 30 16:58:42 2016 +0100
+
+    Solved issues with functionalities affected by sections system
+
+[33mcommit f36205ac99815d371ab14807d50079ee3070116e[m
+Author: Jose Antonio Gutierrez <JAgutierrez@e-fti.com>
+Date:   Tue Nov 29 17:51:42 2016 +0100
+
+    Sections finished
+
+[33mcommit 4ee1febec970dfea207fad6ecf6a4656138c5f30[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Nov 23 17:01:32 2016 +0100
+
+    question position controls solved
+
+[33mcommit fc7aa78b0802953f18e15f7647e9f4980a3840c2[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Nov 23 13:48:14 2016 +0100
+
+    change question position finish
+
+[33mcommit 24f7afc54c8c40c916617e75c1d15cf815f2d868[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Nov 22 12:05:26 2016 +0100
+
+    Accessibility review complete without pablo tasks
+
+[33mcommit 8240ee94cff82b5f1b45a0a216d354f28fe78853[m
+Merge: aa8b626 7bdd668
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Nov 14 12:58:11 2016 +0100
+
+    Merge branch 'sprintNovember' of https://github.com/p-sl/surveytool into mousewheel
+
+[33mcommit aa8b626db2a84b668d58f34d672ee442690542f6[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Nov 14 12:53:37 2016 +0100
+
+    question numbers issue solved
+
+[33mcommit 7bdd668bbd908559752422b6a92ef430bbbe9d31[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Mon Nov 14 11:46:07 2016 +0100
+
+    mousewheel
+
+[33mcommit ea9132ccd87c8ba89d049e52d7ba71dffcd0c005[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Nov 11 13:35:41 2016 +0100
+
+    images question and body content finished
+
+[33mcommit 7957bcb93d6f73e4e065ed13ccf8d7e6363c1856[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Nov 11 13:05:04 2016 +0100
+
+    export excel final
+
+[33mcommit a2f1e8805858ae267e1aa7da5f5d4a17399f2171[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Nov 10 18:38:34 2016 +0100
+
+    download excel solved widthout options with only image
+
+[33mcommit 2b6e3c0d1ec739fc7ea5d11fa023f241b96422ee[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Nov 8 16:28:35 2016 +0100
+
+    poll statistics
+
+[33mcommit 455d1ef7314613d18c2242264a3d14ce7036bccd[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Nov 7 14:18:46 2016 +0100
+
+    Polls interface like Surveys with search, num elements filter and pagination
+
+[33mcommit ac773add9f066c74e17a89cf3605bb9d8bbf3efd[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Nov 4 14:49:23 2016 +0100
+
+    tab share poll with code
+
+[33mcommit 842afd7c32e091cfbf6268f7f527ce0baff2f29c[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Nov 4 14:08:20 2016 +0100
+
+    Edit poll finished and pre-select tab survey-poll
+
+[33mcommit 8db5867155b15065bb0b0befa3e2b06ae17311ce[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Nov 3 11:55:47 2016 +0100
+
+    classpath
+
+[33mcommit 88d1c2b970c4b547f4d06b3a53b964f4fd29882e[m
+Merge: d14290b 9c74cd9
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Nov 3 10:40:08 2016 +0100
+
+    Merge branch 'dstSeptember' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-dstSeptember
+
+[33mcommit 9c74cd9bfdacf1f2f721f18b0d66de5db028f173[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Nov 2 11:23:45 2016 +0100
+
+    Solved problem with 30/10/2016
+
+[33mcommit d14290bcfffdf4466fd3310ce13bc3b8f980318c[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 26 17:13:45 2016 +0200
+
+    issues screen reader solved
+
+[33mcommit 3ec81ee15c70582d22e6c440c5d8d6338d97d891[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 19 14:02:14 2016 +0200
+
+    solved issues first revision jrivero
+
+[33mcommit e41acac74e3b11227a4c773bf3d9e44a16e5c43a[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 18:05:37 2016 +0200
+
+    initial dump
+
+[33mcommit 97907147648dfdd6fe256fd5df9c6f87b6234f0e[m
+Merge: 54994f0 5d9993d
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 17:47:37 2016 +0200
+
+    Merge branch 'p-sl-sprintSeptember' into tempMergePG
+
+[33mcommit 5d9993dd2b62b4376f0bec8d98b7c40fe87162e3[m
+Merge: 0916a2e ad96fe1
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 17:46:54 2016 +0200
+
+    Merge branch 'sprintSeptember' of https://github.com/p-sl/surveytool into p-sl-sprintSeptember
+
+[33mcommit 54994f06fa65d6c8c6e6abcfc496bb7038b5f535[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 17:39:58 2016 +0200
+
+    alert messages and questions buttons multilanguage
+
+[33mcommit ad96fe1b42506501678e26f2988ae41cbe9bbf78[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Tue Oct 18 17:24:25 2016 +0200
+
+    New web fonts
+
+[33mcommit 90827863339679dd797fb0302f494f3c8a6732e6[m
+Merge: 73b3d2f 0916a2e
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 14:41:32 2016 +0200
+
+    merge psuarez
+
+[33mcommit 0916a2eae09a2a7cee858d63f3732b022ed56472[m
+Merge: 0b47fce 4f7b364
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 14:36:16 2016 +0200
+
+    pull request psuarez
+
+[33mcommit 73b3d2f84b56307909467eed6694eb44ecc79cbc[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 18 14:27:40 2016 +0200
+
+    foco accessibility and foco questions navigation, title option image as title in goto an dependences and session issues
+
+[33mcommit 4f7b3646d0d8ae49bfe3313cae27c1e3ac8a6f37[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Tue Oct 18 12:43:11 2016 +0200
+
+    Web fonts
+
+[33mcommit 51ade80bcf1f8e13a8627bc97425a36e46bd7162[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 17 17:09:14 2016 +0200
+
+    .gitignore
+
+[33mcommit 0b47fce96b310fbd21558e58e6a4db205e1708e3[m
+Merge: f6d94f8 1d0a636
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 17 16:48:13 2016 +0200
+
+    pull request psuarez
+
+[33mcommit f6d94f80d6512ab5be6c65f949c2223eebdabe97[m
+Merge: b833f56 3d18186
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 17 16:12:50 2016 +0200
+
+    Merge branch 'sprintSeptember2' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-sprintSeptember2
+
+[33mcommit 3d18186f81da73fd8e1bede968b892029e6c9705[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Oct 17 15:06:25 2016 +0200
+
+    Handle empty text for options in matrix
+
+[33mcommit b833f5680d160d251a86afdf43d0593c907ff382[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 17 14:11:31 2016 +0200
+
+    Multiple optiosn with images, delete option solved issues with html and jquery, delete contents and resources when remove option.
+
+[33mcommit ba3f3d5ab2817176018a2f53aa1882171c7fcb00[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Oct 17 12:20:20 2016 +0200
+
+    cambios
+
+[33mcommit 3859d49f0b210b758e37fcecbac562bc38c05b32[m
+Merge: d57edb4 44055b4
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 17 11:25:38 2016 +0200
+
+    pull request jrivero
+
+[33mcommit 1d0a636594e62ca15590b5dc6f0fe8088e42676c[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Mon Oct 17 10:23:35 2016 +0200
+
+    Focus on active question
+
+[33mcommit 44055b4c108ea3ba1aca2a1147516e5f8fa08a6b[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Oct 17 09:25:03 2016 +0200
+
+    Update of texts in options
+
+[33mcommit 9493e765705bb42b8a94fee381ed19e4a4638e93[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Oct 17 08:33:01 2016 +0200
+
+    Change in text of remove window
+
+[33mcommit cc994800a41412677f97b550adb900283b921dc9[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Sat Oct 15 01:34:08 2016 +0200
+
+    Attach file to options without text
+
+[33mcommit d57edb47fa5d3e3ec8b5c118a4251d6c33260e32[m
+Merge: 2f44672 daf1994
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Oct 14 15:54:14 2016 +0200
+
+    pull request jrivero
+
+[33mcommit 2f446726330536866437a3704577c8a6e2cedab2[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Oct 14 15:20:10 2016 +0200
+
+    Navigation error control, progress bar and finish page
+
+[33mcommit c62297662bfda2570c2051c406c91d02cd67e566[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 13 20:14:48 2016 +0200
+
+    error messages, index questions issues solved, images survey options
+
+[33mcommit e71f0816b7ad5843d86b9bf87e156cb88b38560e[m
+Merge: 520ff2a c60d9c9
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 13 13:26:18 2016 +0200
+
+    merge psuarez
+
+[33mcommit daf1994253850c14b33cdcf0c7afddc3215e9958[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Oct 13 11:39:18 2016 +0200
+
+    Control of decimals in shorttext
+
+[33mcommit c60d9c92ce46de642850bb9fb43ed4a3e9e2b7e1[m
+Merge: 047e727 61698b5
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 13 09:28:12 2016 +0200
+
+    psuarez pull request
+
+[33mcommit 61698b53774a157bcdef3f87170c7143d9bedc74[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Tue Oct 11 19:28:11 2016 +0200
+
+    deleted bad folders
+
+[33mcommit 520ff2a6178c28c8a0eb0f77bcabc5c2029851b1[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 11 18:47:21 2016 +0200
+
+    regex number field solved
+
+[33mcommit f2aeff513aa88aa72a7fbf871b617301eaabc7c9[m
+Author: Pablo Suárez León <psuarez@consultoria.ilunion.com>
+Date:   Tue Oct 11 15:44:09 2016 +0200
+
+    New design
+
+[33mcommit 6a550131140dcd567199fad8447ef07f2a753de7[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Oct 11 09:28:52 2016 +0200
+
+    Control of title, desc and alt ext mandatories
+
+[33mcommit b32e8920e64c5bc9cdd80dea237163cca52d88f4[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 10 19:31:34 2016 +0200
+
+    mandatory question in survey
+
+[33mcommit 047e72745b1aa25fc8e9d4f91591ae43f6d44e68[m
+Merge: 11f81e9 1c73c66
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 10 14:12:40 2016 +0200
+
+    merge jrivero, resource title and alt mandatory
+
+[33mcommit 1c73c667dddf57a9775b6d066efa1f274fa290fa[m
+Merge: 3501717 890cacc
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 10 13:59:41 2016 +0200
+
+    Merge branch 'sprintSeptember' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-sprintSeptember
+
+[33mcommit 11f81e9f79d4d7a4ce661bf18aa7553d724f041f[m
+Merge: eec2cc1 f68a486
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Oct 10 13:52:50 2016 +0200
+
+    merged wiht eetayo, result quotas
+
+[33mcommit f68a48635ff3647e5001973e652e088fce9e5ab5[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Oct 7 14:43:52 2016 +0200
+
+    deshacer último commit eetayo
+
+[33mcommit eec2cc1a53723cd2013ffd4d33beadaf6fddd8e0[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Oct 7 14:18:02 2016 +0200
+
+    limit caracter messages
+
+[33mcommit 890cacc177b197de58c1904f641dc71640a7ea38[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Fri Oct 7 14:10:35 2016 +0200
+
+    Title, alt text and desc mandatories
+
+[33mcommit 9b8acdecbb522ec5d19b077e24a6a9fbbf0ea36a[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 6 17:04:07 2016 +0200
+
+    survey finished control
+
+[33mcommit 6bb4036d269f14b69613d96e3559441d9e5f1705[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Oct 6 12:41:30 2016 +0200
+
+    Solved problem in fiels of questions
+
+[33mcommit 3501717aea2cd7ed77acfecbc514a671e80536ec[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 6 12:14:50 2016 +0200
+
+    survey master page
+
+[33mcommit a1663bca262ed081a83295adef358964d31a1fe0[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Oct 6 11:01:07 2016 +0200
+
+    solved statistics body content eetayo solved
+
+[33mcommit 693945cce963f9fe7be0bde86066c651519849a6[m
+Merge: 6b1f17f 011acd5
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 5 18:16:43 2016 +0200
+
+    merge eetayo issues solved
+
+[33mcommit 6b1f17fea81706da50c4d985119acb14d0aa797f[m
+Merge: 54f4166 bdb0089
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 5 17:49:37 2016 +0200
+
+    merge with jrivero
+
+[33mcommit bdb0089e12d4ab5c7fa7de9b8e473b51f79d8229[m
+Merge: d82e3c1 0d36c4b
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 5 17:35:37 2016 +0200
+
+    import jrivero issues solved
+
+[33mcommit 54f4166962b76a1073ff2a01318d09e142173a67[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Oct 5 17:12:37 2016 +0200
+
+    Finish page
+
+[33mcommit 0d36c4bc4c76e49351feb4ca72cbe8091711423b[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Oct 5 15:09:02 2016 +0200
+
+    Bugs in dependences in engine (when all hidden minus bodycontent) and manager (update question and type in dependence)
+
+[33mcommit 011acd59bf20aafefdb785d3505d859200c31dff[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Wed Oct 5 11:29:50 2016 +0200
+
+    posibilidad de opciones con imagen y sin texto
+
+[33mcommit d82e3c1315f57def64630c09f23ee635e90e3be7[m
+Merge: 20d147b 3052e75
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 4 17:52:44 2016 +0200
+
+    merge goto and dependences
+
+[33mcommit 20d147bbc08080791e0d8905a3c8daf9da162fdc[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Oct 4 16:05:02 2016 +0200
+
+    pagination and other things of the survey
+
+[33mcommit 3052e757f82ca4cd30cb734c1852b3deb0a4e96c[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Oct 4 14:43:36 2016 +0200
+
+    Dependences in user view
+
+[33mcommit ee0f8dac5c27c920299794d02651a8457db44a10[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon Oct 3 16:48:30 2016 +0200
+
+    version estable modulo completo cuotas
+
+[33mcommit e131ffe098be64048af248d39498b48d6f247e2b[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Oct 3 15:32:58 2016 +0200
+
+    GoTo in surveys for final users
+
+[33mcommit 2d6a0db450699c122053da853a74acce2d1ac2da[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 30 14:59:05 2016 +0200
+
+    load server with previous responses and update responses
+
+[33mcommit bda6e3f5b6c672a1dfc75ee6dbe6b06d2f4e2f41[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri Sep 30 14:42:02 2016 +0200
+
+    modulo resultados cuotas, sin terminar
+
+[33mcommit b8df055c387a4adc1aeb5078238e672a69a74990[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 29 14:35:40 2016 +0200
+
+    modulo resultados cuotas, sin terminar
+
+[33mcommit 75bfb0fcaad97ed877f1e50cb92fba4bc8fc5916[m
+Merge: 0ef639a 5cf1d95
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 12:38:32 2016 +0200
+
+    Merge branch 'jriveroILUNION-changesForSeptember' into dstSeptember
+
+[33mcommit 5cf1d9542021b45cce8a10d41b4055643f054c87[m
+Merge: fbfa576 b0a9210
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 12:36:22 2016 +0200
+
+    Merge branch 'changesForSeptember' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-changesForSeptember
+
+[33mcommit 0ef639a0d72cd87efd9869d7f29bfe47f4f171c1[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 12:35:28 2016 +0200
+
+    survey service method name changed
+
+[33mcommit fbfa57609d55d5e87d7fb3c8f7a961039265f7ae[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 11:54:45 2016 +0200
+
+    solved issue about checkout store survey
+
+[33mcommit 8a7fc397fe3003c26a85ee8bb1b6b0c775c34988[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 11:36:44 2016 +0200
+
+    initialDump with delete cascade in responses
+
+[33mcommit b73e77a8a77dd042a50fb9be0fd34b498179ddae[m
+Merge: fe277d6 62f5a25
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 11:05:54 2016 +0200
+
+    Merge branch 'jriveroILUNION-changesForSeptember' into tempSeptMergeJG
+
+[33mcommit b0a92103a51f9d298ff0c96e2248c11bc2261588[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Sep 29 10:52:53 2016 +0200
+
+    Hidden options when no by default language
+
+[33mcommit 62f5a252703d608f837f57d11af4fc9ad7423dc0[m
+Merge: 3e36b11 82f9325
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 29 10:48:08 2016 +0200
+
+    Merge Jesica changes
+
+[33mcommit 82f93256ff84717b7aeb3f433a693dcb1236ad54[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Sep 29 10:26:32 2016 +0200
+
+    Solved problem of LogContent and icon for quotes
+
+[33mcommit fe277d6d0d29ff8e0e9de69321f4f15fa5a03820[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Sep 28 19:25:26 2016 +0200
+
+    navegation v0.1
+
+[33mcommit 8152cad77100e9c844f65006ac451a230d1e62dc[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Sep 28 16:15:21 2016 +0200
+
+    change in no default message
+
+[33mcommit 3bbb754b369eae61ae9e6773da7092315e054a55[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Sep 28 15:44:08 2016 +0200
+
+    texts changes, right padding in options/items/columns, labels disappear when file delete, text when no default language
+
+[33mcommit def86669eff03cb7826f0e7ade652b8ff28ee3ac[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Sep 27 10:35:49 2016 +0200
+
+    Visually hideen button in editor
+
+[33mcommit 3e36b116fd222a2baae78884845dd5cd0d7223e8[m
+Merge: fa709ab 6fe231c
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 26 18:42:05 2016 +0200
+
+    Body content added
+
+[33mcommit 6fe231cd20b3740e96d95c9b7b561702dc68f418[m
+Merge: 3ae5d38 aa95d9e
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 26 17:29:16 2016 +0200
+
+    Merge branch 'changesForSeptember' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-changesForSeptember
+
+[33mcommit fa709ab595fef27262806f3c99078272a460289c[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 26 17:22:14 2016 +0200
+
+    Questions adapted to angularjs
+
+[33mcommit aa95d9e1ccaae5741a6804c190b56be4a5dcfbc1[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 26 15:40:01 2016 +0200
+
+    Button for statistics in survey list
+
+[33mcommit c2fcb9e090bf414f972237cae4bea3f1b20b01fe[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 26 14:08:32 2016 +0200
+
+    body content con cambio en css
+
+[33mcommit a88888ce895f16ffbd1c09cf5fe9c2e13d1272ed[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 26 13:59:34 2016 +0200
+
+    body content con división de campo
+
+[33mcommit 3ae5d3818d86d998e38c6ff6e873a366a5c5ca1e[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 26 12:47:43 2016 +0200
+
+    gitignore
+
+[33mcommit 22b603ea236d04d673c16de8a0ba32d7a0b87599[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 26 09:36:03 2016 +0200
+
+    body content sin división de campo
+
+[33mcommit 52a23280a0af8109f76710ccbe1de3e293c3d2ec[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 23 14:49:40 2016 +0200
+
+    integration Angular in survey
+
+[33mcommit 6dfa0eedf955ded91e54c82f3e7a12225f204bb8[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 19 12:56:05 2016 +0200
+
+    Solved quotes pages problem, Final July Version
+
+[33mcommit f24a441455550e9cf24ac5cd70f4c6c6e5c9f3bf[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 19 11:48:57 2016 +0200
+
+    Finished Sprint July
+
+[33mcommit a5e4f10bf697b544d0a05615a67368c2916ae7a3[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 16 14:56:14 2016 +0200
+
+    merge errors solved
+
+[33mcommit 6868b9842416752b38995edf228d9238ea366fbb[m
+Merge: fad4a7b 09133f1
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 16 14:25:20 2016 +0200
+
+    quotas merged
+
+[33mcommit 09133f1cb8af86da46b27c5c129666d36163c73e[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 16 12:33:02 2016 +0200
+
+    initial dump adapted
+
+[33mcommit 09af9be49339992b376bf2eb9200f427b754e25b[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 15 17:19:46 2016 +0200
+
+    cambios icono de borrar fichero opcion y ocultar capa de opciones
+
+[33mcommit fad4a7b47ab5dda8d9d2b584e31a0457bcd03127[m
+Merge: 461417e 0b7fd59
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Sep 15 16:15:36 2016 +0200
+
+    Statistics integrated
+
+[33mcommit 251dad51e59fd3ae467041f19af521411da99998[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 15 13:52:58 2016 +0200
+
+    modulo cuotasv1.1
+
+[33mcommit 9bf1ebcf6b8394bcab17ebc145d48749e851b8db[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 15 12:37:20 2016 +0200
+
+    modulo cuotasv1
+
+[33mcommit 0b7fd59ac049b9e1d0376287199db711327484b8[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Sep 15 10:50:11 2016 +0200
+
+    El títilo de las secciones ya no es editable y aparece con otro texto, y no hay combo para el tipo de pregunta
+
+[33mcommit 1e291a452524ffd2429bd9b1f112b5ccd410adc4[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Wed Sep 14 18:15:37 2016 +0200
+
+    modulo cuotasv0
+
+[33mcommit 461417e1bb5efc1e00825b63213920c003deb80b[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Sep 13 18:53:17 2016 +0200
+
+    dependences and goto finished without tests
+
+[33mcommit 257eecd42caacc75473d0ce91f222152f6ffe724[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Tue Sep 13 18:02:14 2016 +0200
+
+    modulo de cuotasvbeta
+
+[33mcommit 358e0f5818fa5eb2c7a60c86acc09622c5bd934a[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Sep 13 14:54:19 2016 +0200
+
+    Gráficos simples con diagrama de quesitos y gráficos accesibles
+
+[33mcommit 3bd766e8a04c652e6990fa28e47b0704fc5a79ff[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Sep 12 19:14:45 2016 +0200
+
+    update Json finished and set question in goto
+
+[33mcommit e2b31d239c36aebef59033a6a219ab0e482946ad[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 12 15:13:30 2016 +0200
+
+    título en estadísticas y cambios de estilo de Nacho
+
+[33mcommit 891fec5ef020bab9961629d34a5a4ab2271a8d16[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Mon Sep 12 11:45:48 2016 +0200
+
+    Bugs de estadísticas corregidos
+
+[33mcommit 8c044b788a7ad13c8b9e99231c2693877afa9ead[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Sun Sep 11 21:19:24 2016 +0200
+
+    modulo de cuotas, falta parte insertar
+
+[33mcommit eba4a06bd6d019744f07943c49b482ea005bd03e[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Fri Sep 9 14:25:18 2016 +0200
+
+    Gráficos de estadísticas
+
+[33mcommit 13014f2c5808d3699a485abd828537bf45c418cc[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri Sep 9 14:04:37 2016 +0200
+
+    modulo de cuotas, falta parte insertar
+
+[33mcommit 0cf0b0550e8ba02ebb9d55da2cec5f785b0eb582[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Sep 9 10:26:13 2016 +0200
+
+    update option in goto
+
+[33mcommit ab40c45fa565e6d8f31a5bbe5fef6c09dead914a[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 1 12:27:00 2016 +0200
+
+    quotas v1
+
+[33mcommit 5a057f3cd809d46c9eadf993ef2a1085d7ced955[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Sep 1 12:08:57 2016 +0200
+
+    quotas v1
+
+[33mcommit 1797cef58f5da30fc30a332597ab839de3146e11[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Aug 31 11:36:22 2016 +0200
+
+    punto solucionado
+
+[33mcommit 8e8d4474d3041375418d9e2050272a0eb2222ab9[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Aug 31 11:32:01 2016 +0200
+
+    solucionando problema punto
+
+[33mcommit 72627694fd55bdc94229ed2d4d5b2c270d2a0321[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Aug 31 11:25:57 2016 +0200
+
+    cambios 310816
+
+[33mcommit 43ae119504c1035f13fa6fc0a964cb153f710d0d[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Aug 30 12:09:59 2016 +0200
+
+    archivos malos salvados
+
+[33mcommit 104f88f2d8234e55fe944f90fe526bde3bfcdab2[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Aug 30 12:07:14 2016 +0200
+
+    archivos buenos salvados
+
+[33mcommit 99624c6d9c811ddcc75bf284fe7907a0784571d6[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Aug 18 12:18:25 2016 +0200
+
+    GoTo terminado y aspectos estéticos de Dependences solucionados también
+
+[33mcommit 7a06ced26d5d1e1ce197c4c1ef49d776db4af9c3[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Aug 17 15:06:34 2016 +0200
+
+    Dependecias y goto termiandas a falta de poner bonito el error de dependencias iguales
+
+[33mcommit e19e4c743d7f0eed84d287d78791025768afe65d[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Aug 9 14:59:05 2016 +0200
+
+    Filtrado de preguntas en proceso
+
+[33mcommit 02a94fd112787b62af0bc38a34b7a4ec1386c403[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Aug 4 15:07:36 2016 +0200
+
+    editsurvey.js changes
+
+[33mcommit 613ba9a7c01a629173b3d7c6cedcc8853488442d[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Aug 4 11:49:06 2016 +0200
+
+    Database quotas
+
+[33mcommit f1d4018efb6b34b1e4961067a4a2e166dfcd8ad5[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Aug 3 18:56:55 2016 +0200
+
+    jquery functionality
+
+[33mcommit e535a285b1509595cbb97ce511a33c2e9981cc26[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Aug 2 15:02:45 2016 +0200
+
+    json acabado y carga del select de preguntas en dependencias
+
+[33mcommit 0c4f2e2db9240ae384da90574544bc7783eb86e6[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Tue Aug 2 13:30:27 2016 +0200
+
+    ficheros adjuntos en questions multiple y simple
+
+[33mcommit 7dfc0261c64d13e1fdf406a628dda6da65d9e6cb[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Aug 1 18:19:13 2016 +0200
+
+    maquetado filtros dependencias
+
+[33mcommit aa32ffb8c032ecc6d6606deb93b9be8f298ce400[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Aug 1 12:50:57 2016 +0200
+
+    developing question filter
+
+[33mcommit 562e2b65756a0d25075db06fe769474704224843[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon Aug 1 12:00:40 2016 +0200
+
+    ficheros adjuntos a opciones
+
+[33mcommit fea3b0a6152d3e6b2812f356b894a6b19c836b6b[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 28 15:09:51 2016 +0200
+
+    edit question h4 to h6 and initialDump.sql with dependences an goto
+
+[33mcommit ba4dc4ad3e0992cdd8b7fda4f97517d2f2f2cadc[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 28 12:50:51 2016 +0200
+
+    pages finished, no sortable
+
+[33mcommit 708c3b19a58233586f30c0efa1b138333eb79590[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 27 15:37:58 2016 +0200
+
+    add page finished and testing remove page
+
+[33mcommit 4643261abe399ece939d223d035d000f89d7938b[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jul 26 15:33:05 2016 +0200
+
+    create page
+
+[33mcommit 52d3e6403dcaa9eb7e0d6a214c550adf662d5aa3[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 22 15:06:33 2016 +0200
+
+    separado las páginas de las secciones
+
+[33mcommit ab1e594c7311da078cc669862aa3843cab2c9c82[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 22 14:03:46 2016 +0200
+
+    Database updated
+
+[33mcommit 1d60bd6086818e975b33010834fd09aabe20643f[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 22 12:24:56 2016 +0200
+
+    Eprint June Finished and Merged
+
+[33mcommit b826d537c21391028d9b4eb69ae2f139a247349c[m
+Merge: 0210b83 5f4eac4
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 21 15:58:14 2016 +0200
+
+    las pull request etayo sprint June
+
+[33mcommit 5f4eac489cefeafa1d9d7c3ca116f3dfd0f7b35f[m
+Merge: c6f0596 14ab9ad
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 21 15:28:02 2016 +0200
+
+    Merge eetayo last issues sprint June
+
+[33mcommit 0210b832dd2aa282d9caadf1261fd338cd84c2f4[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 21 15:21:38 2016 +0200
+
+    solved show entries
+
+[33mcommit ae1c4e58ef5728d7d21163d8ee68c6c97f3a41ef[m
+Merge: e78fdb7 c6f0596
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 21 15:10:24 2016 +0200
+
+    All Esteban's changes merged
+
+[33mcommit 14ab9ad2341441e888ef26ee1097cde3ed6a1c34[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Jul 21 14:51:54 2016 +0200
+
+    modificaciones en la ediccion de titulos y nombres
+
+[33mcommit c6f05962107d8ea4f58ae947982da24961afced3[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 20 14:13:26 2016 +0200
+
+    maquetación tabla, new survey, profile
+
+[33mcommit e78fdb7346a2c0dcccbbdd76f319d26e609bc067[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jul 19 15:18:17 2016 +0200
+
+    Edit multimedia file finished
+
+[33mcommit c2cc909ed2f6f146cbc70a6289ab4acd854a76f6[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 18 15:41:03 2016 +0200
+
+    edit resource, sin guardar
+
+[33mcommit 3d34f107f78a0305f3fbfd5d4741eb01ace9e0a1[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon Jul 18 13:11:55 2016 +0200
+
+    Cambios ficheros internos, lenguaje por defecto
+
+[33mcommit 321c7298f4c7aacaaaacf5f5b7af70f8617f4f35[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 18 12:26:25 2016 +0200
+
+    Reproductor videos youtube accesible integrado
+
+[33mcommit a1458d7ada4b34f057aa5c174e0c4ed72f8d4f2c[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jul 14 15:28:20 2016 +0200
+
+    import file and videos in question solved
+
+[33mcommit e9da15b5eeef4b943b9f8ff1a0366dda9d066f62[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu Jul 14 09:04:01 2016 +0200
+
+    Cambios Perfil de usuario y ediccion encuesta
+
+[33mcommit e06d210d653abf77663f90f37e6e264d292867a1[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Wed Jul 13 10:10:23 2016 +0200
+
+    Cambios listado Encuestas y Formulario Nueva Encuesta
+
+[33mcommit c9eae2c883856cfff8a10bfb51bba2d891e1f671[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 11 14:05:04 2016 +0200
+
+    remove dev comments
+
+[33mcommit 1db103ef9ec45c1a1c02d1b2cc8f12d678fa497d[m
+Merge: b61e3ff 71ff26f
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 11 13:31:23 2016 +0200
+
+    merge jrivero 20160711
+
+[33mcommit 71ff26f7cc6e99a9146faf65fc20982884fbbbf2[m
+Merge: 5ab0b3a ba7c504
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 11 13:18:06 2016 +0200
+
+    merge jrivero 20160711
+
+[33mcommit ba7c50490f4f2620c61264385afc6d13064ac2a2[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 11 13:06:00 2016 +0200
+
+    merge
+
+[33mcommit a51a93af438ffc014f8591552f5b52b2489bb892[m
+Merge: 9c53020 a485db2
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jul 11 11:31:12 2016 +0200
+
+    Merge branch 'jrivero' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-jrivero
+
+[33mcommit a485db22f9b75fdc43fff88d54f455b0bb615b48[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Sat Jul 9 12:15:03 2016 +0200
+
+    control de preview e intento de edit del file
+
+[33mcommit f6528807394534714256959752b227a23492d544[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Jul 7 10:55:59 2016 +0200
+
+    layout con todos los estilos en el css y desaparece div de files cuando no hay files
+
+[33mcommit b61e3ffac5f947d5a5b876e6062b0e2abe27f74d[m
+Merge: 01dcaaf 5ab0b3a
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 6 13:50:00 2016 +0200
+
+    merge jrivero issues solved
+
+[33mcommit 5ab0b3adc89206ee7fc4bdec6b6b7ecbd640fefb[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 6 12:04:22 2016 +0200
+
+    solved css issues
+
+[33mcommit c51cd2c0323e4bf76f5ce83f650f24e9179bc9e4[m
+Merge: 3d01caf 9c53020
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 6 11:03:09 2016 +0200
+
+    merge isssues jrivero solved
+
+[33mcommit 9c530209ad3bae3298b08498294620c82b5fffa4[m
+Merge: f4847fa ca7b598
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 6 10:40:32 2016 +0200
+
+    Merge branch 'jrivero' of https://github.com/jriveroILUNION/surveytool into jriveroILUNION-jrivero
+
+[33mcommit 01dcaafac5d878f3c1d28b6f66d3011f5c449c01[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jul 6 10:00:55 2016 +0200
+
+    merge issues multi-language solved
+
+[33mcommit fd2c03c6448afec410f224a5d8981184a23cc325[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jul 5 15:29:42 2016 +0200
+
+    Solving merge issues
+
+[33mcommit ca7b598a9a94c2ea83abf20aa0fa7114d32798b2[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Tue Jul 5 14:29:47 2016 +0200
+
+    cambios en layouts y algunos controles en las preguntas
+
+[33mcommit f4847fac798bcdc53ed7350dd258416e2379ac57[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jul 5 11:53:11 2016 +0200
+
+    .gitignore
+
+[33mcommit e1ba13dd63773bd97fd388253c6c500ba372b907[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jul 5 11:32:42 2016 +0200
+
+    removed temp files
+
+[33mcommit 4910b47e20e3e35f19be2a1b78f4b20db9287858[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri Jun 24 18:09:45 2016 +0200
+
+    Modo multidioma completo
+
+[33mcommit b8c082f2d299aaf60ca68e9b436086fad1c07406[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri May 27 14:46:22 2016 +0200
+
+    multilanguagev27May
+
+[33mcommit 419b2117168cd5cc8d81ac1796d6f4cb497493d1[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon May 23 17:00:59 2016 +0200
+
+    multilanguagev3
+
+[33mcommit e67781808ba1b050d7a1c2820e14db831616605e[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Sat May 21 11:20:54 2016 +0200
+
+    multilanguagev2
+
+[33mcommit c8a22818da21f4de2706f6179dda2e6a3550f529[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu May 19 17:58:13 2016 +0200
+
+    multi language
+
+[33mcommit 3d01cafcfd390f65e2c9052f30b1c2cb3ef2beb3[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 1 16:06:37 2016 +0200
+
+    export data complete
+
+[33mcommit 76785f01090c32e0a32bed83d756cd0f136d4652[m
+Merge: 5f47cd6 98cc531
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 1 15:18:17 2016 +0200
+
+    merge new changes jrivero
+
+[33mcommit 5f47cd6ebbe85ccad44f1b79170f760d613dd152[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jul 1 15:04:36 2016 +0200
+
+    export data width matrix
+
+[33mcommit 4e455d32bfcba5480176c3e9da40af00240bd615[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Fri Jul 1 13:47:41 2016 +0200
+
+    new dump of database with change in length of value field of responses table
+
+[33mcommit 98cc5315e1de0131e89e9ea11bb74434a04d9e1c[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Fri Jul 1 13:29:50 2016 +0200
+
+    invisible labels in all elements and arial-labels removed
+
+[33mcommit 8804f2c3e9c773f7fdb07fc1bf74a7a694bef801[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Fri Jul 1 08:29:10 2016 +0200
+
+    update of optionsGroupType when it is changed in matrix type
+
+[33mcommit 9a4b01c388fbf62e8c5d850e17704d94ab8ae73d[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Jun 30 14:54:09 2016 +0200
+
+    changes in layout of form fields
+
+[33mcommit a51464976a10e303018c2cfa93d0a709f1f558bc[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Jun 30 13:36:43 2016 +0200
+
+    changes in layout of questions and in the name of options selected to be stored
+
+[33mcommit 8193fe8afce626b0540cb4fe52e291b24d1696bd[m
+Merge: 3d71df7 5197f84
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jun 30 10:59:28 2016 +0200
+
+    Merge branch 'jriveroILUNION-jrivero' into guje
+
+[33mcommit 3d71df736d24105988772b5d0f2dd8944ce23542[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jun 30 10:44:46 2016 +0200
+
+    classpath merge solved
+
+[33mcommit 5197f8420975cafe8150208fb44fb33fb61d72a9[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Jun 30 08:23:04 2016 +0200
+
+    update functions related to questionParameters chenged from QuestionDB to QuestionParametersDB
+
+[33mcommit d8138877a249cc336b72a88cf0c9fa344e6b0ec0[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Thu Jun 30 08:18:23 2016 +0200
+
+    aligned fQuestionMatrix and functions related to questionParameters chenged from QuestionDB to QuestionParametersDB
+
+[33mcommit 0f1ce19c1fd8a21373b77103d0242b86a9e686b7[m
+Merge: afa3de6 b306e02
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 29 17:46:01 2016 +0200
+
+    merge guti with jrivero branchs
+
+[33mcommit b306e02fd59c8109b75c2b89e0feb1dc9d69443a[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 14:48:40 2016 +0200
+
+    problem with + and new questions out of frame solved
+
+[33mcommit afa3de6789fa4bda252f180baeeda6a0d2088fdf[m
+Merge: c76e4fe 631f425
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Wed Jun 29 14:06:40 2016 +0200
+
+    Merge pull request #11 from GutiX/master
+    
+    create survey f5 error solved
+
+[33mcommit 631f4259913dc2cf4fb3814da9fe971c8246d11b[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 29 14:05:40 2016 +0200
+
+    create survey f5 error solved
+
+[33mcommit c76e4fe7679d205d6f60aac2aedf42ac4c8f12fb[m
+Merge: 1b4c074 c16b5e1
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Wed Jun 29 13:00:53 2016 +0200
+
+    Merge pull request #9 from GutiX/master
+    
+    Sections and download results
+
+[33mcommit 7e094da93b35e73a075c4abd760bbfba01f9069f[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 12:38:26 2016 +0200
+
+    solved problem with numerical range in form field questions
+
+[33mcommit c16b5e17c9dce954133df5ae492ff2ad16584327[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 29 12:07:53 2016 +0200
+
+    Poll url in preview
+
+[33mcommit da2da4370a3723ea36d319c06be7621dbf1bbe87[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 11:50:16 2016 +0200
+
+    new dump for questions and preview and value for matrix responses solved
+
+[33mcommit b822952c7d77c115f19a411d4a5acb9210f78aac[m
+Author: Jesica <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 09:15:39 2016 +0200
+
+    changes for push
+
+[33mcommit b9154b43e693aa1604d5a58ee9c4255740a90ca1[m
+Author: jriveroILUNION <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 07:50:29 2016 +0200
+
+    nuevos tipos de preguntas y preview
+
+[33mcommit 78f081db170083187a3bec4b37f2f2a40d235598[m
+Author: jriveroILUNION <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 07:49:58 2016 +0200
+
+    nuevos tipos de preguntas y preview
+
+[33mcommit 219bfb178ed29be30a9fca35053ba663314e7d92[m
+Author: jriveroILUNION <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 07:49:29 2016 +0200
+
+    nuevos tipos de preguntas y preview
+
+[33mcommit dffd02dbea5f7c60a34ef7969f23b4d8583c5e07[m
+Author: jriveroILUNION <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 07:48:05 2016 +0200
+
+    nuevos tipos de preguntas y preview
+
+[33mcommit 7a709edeebff1a55892fa9f254884a6161c0d280[m
+Author: jriveroILUNION <jrivero@consultoria.ilunion.com>
+Date:   Wed Jun 29 07:47:16 2016 +0200
+
+    nuevos tipos de preguntas y preview
+
+[33mcommit be8e5c1420d37f5ad0cdb6f784916dd528fa9a33[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jun 28 19:32:03 2016 +0200
+
+    poll insert code
+
+[33mcommit 1d502b10bcf3e8a0c14ef0f81841660ebeb5a4fb[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jun 28 13:43:58 2016 +0200
+
+    Responses number of surveys and polls
+
+[33mcommit 2624f9cd0dbb8cb6c3f633c0e68a41c5bb6d99e4[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Jun 27 17:02:08 2016 +0200
+
+    download survey and pool results finished
+
+[33mcommit 725e6494e3a2f308dfe1391d5dd57067cdf0d858[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri Jun 24 18:09:45 2016 +0200
+
+    Modo multidioma completo
+
+[33mcommit 798f9a610254a87863bd1d470d611187578e0dc3[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 22 13:49:52 2016 +0200
+
+    resource alt null issue solved 2
+
+[33mcommit cb55d99486598daa0e502229c75ff5bf41a5347f[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 22 13:44:34 2016 +0200
+
+    resource alt null issue solved
+
+[33mcommit a8fd8764ccf870ceaab0d01ef0a2629507b12797[m
+Author: gutix <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jun 22 11:52:34 2016 +0200
+
+    developing sections
+
+[33mcommit 186e81883c2fa77eca0f047205f8c9245681b603[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Fri May 27 14:46:22 2016 +0200
+
+    multilanguagev27May
+
+[33mcommit e7f5573bb44ad58c0b63ade45d384353aa71f3ba[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon May 23 17:00:59 2016 +0200
+
+    multilanguagev3
+
+[33mcommit 2c10fcf22f23c060d98373b81212caf4f8c44d48[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Sat May 21 11:20:54 2016 +0200
+
+    multilanguagev2
+
+[33mcommit 58bde51a3ad1771a625c5fe9fbbc6c2ad1162d61[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu May 19 17:58:13 2016 +0200
+
+    multilanguage
+
+[33mcommit b44ac0c837c1938510e3e9c682ecdd3153507822[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu May 12 11:01:24 2016 +0200
+
+    solve bugs validation
+
+[33mcommit 8569adf0409a8e45787d0189f834bc06ced32127[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Thu May 12 09:41:03 2016 +0200
+
+    Validacion formularios
+
+[33mcommit 5e0ae2b183b733f039272d70c4ea65b15b7649d3[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Wed Apr 20 12:49:02 2016 +0200
+
+    pagination and searchv2
+
+[33mcommit 46e3dfcf4932fa50bb983265476a35b825d031cd[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Tue Apr 19 11:50:22 2016 +0200
+
+    pagination and search surveys
+
+[33mcommit a823301c622e27f39219e93b4b8a86384948cfd8[m
+Author: unknown <eetayo@0189W7P.e-fti.com>
+Date:   Mon Apr 18 13:05:41 2016 +0200
+
+    Registe, profile and close session
+
+[33mcommit 1b4c074ee02031747de241b79d8782de36cbac71[m
+Merge: 0074c66 407e158
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Wed Apr 6 12:36:49 2016 +0200
+
+    Merge pull request #4 from GutiX/master
+    
+    New componentes structure
+
+[33mcommit 407e15867778a2a72885f1359203e3c79eac678c[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Mar 17 18:48:49 2016 +0100
+
+    solved sort question issue
+
+[33mcommit 5a08f7ec896fe0b6a7456b1247ed4c28fb12ba62[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Mar 17 14:28:50 2016 +0100
+
+    solved issues with the create survey process and the sections, and changed the label of import file title.
+
+[33mcommit d2eb16d61d2d0c403fb9154ae4dc447c58b154d8[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Mar 17 11:02:29 2016 +0100
+
+    change texts
+
+[33mcommit 3e655eb6c7e25bbab8ab1695331a7caf17ad5309[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Mar 16 16:29:36 2016 +0100
+
+    tamaño questions head en editsurvey
+
+[33mcommit 0c3cde61b932622ef6086e670441c404eee382cb[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Mar 15 12:50:44 2016 +0100
+
+    Section head functionality. Section, page and questions as lists. Change question position.
+
+[33mcommit 60b19709b643fd520e06159a76e3668d626b3ea8[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Mar 9 13:23:22 2016 +0100
+
+    accessibility, all browsers, create poll complete and other issues
+
+[33mcommit 7b652bef6922dd9482cb50a732030019d27b76b9[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Mar 1 14:26:22 2016 +0100
+
+    create user panel component
+
+[33mcommit fcbcd8193edb63bdcdc1a7f26f28dc55a9fbb5f2[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Mar 1 14:04:33 2016 +0100
+
+    New version of InitialDump.sql
+
+[33mcommit 84ff7950052b7d7f89ce47819297047001cee438[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Feb 29 18:29:04 2016 +0100
+
+    rename SurveyManager and SurveyEngine
+
+[33mcommit 46b4d4fa927ef2ba4bdf8ae1d59ca8ce36547540[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Feb 29 09:35:09 2016 +0100
+
+    language from browser settings
+
+[33mcommit 3a3a2d41b75c2e46fc87f8409f3c19cd7b0513f6[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Feb 25 19:15:01 2016 +0100
+
+    chage code structure
+
+[33mcommit e2acfd87728e82c6d2aa238a8f0100ca66d3a108[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Feb 25 12:30:36 2016 +0100
+
+    Login form validation
+
+[33mcommit cc025f9871558067c0da9460f6d4e3ae82d53d86[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 23 18:45:19 2016 +0100
+
+    issues Ivan solved and multi-language
+
+[33mcommit eb4f74f075159addafc169b02d763018b0ac242c[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Feb 19 14:42:39 2016 +0100
+
+    Issues proposed by Nacho and Ivan [High Priority]
+
+[33mcommit 03de944086deb4af7ee25de4684c69d8c985b3d5[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 16 19:20:29 2016 +0100
+
+    change help text to description question
+
+[33mcommit 110d49479ba85fac3fcaddbe59065abadf477fb4[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 16 16:46:25 2016 +0100
+
+    Language only in survey level
+
+[33mcommit 59521912ec12519e3aa5ec01ffd11219250058f7[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 16 11:20:33 2016 +0100
+
+    version with poll preview
+
+[33mcommit 74abfa26b7e000d628c43231a6e4977771a5cee2[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Feb 12 15:29:21 2016 +0100
+
+    add result page poll with graphical
+
+[33mcommit 9c3fef7707372888c3a99325c880b2de802d0679[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Feb 11 18:37:33 2016 +0100
+
+    adapt result stored methods to surveys an polls, and implementes these methods
+
+[33mcommit 3179bf2984bcfe5bfda5715858981e6b44022541[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Feb 11 09:18:09 2016 +0100
+
+    Poll list, create poll and show poll servlet with html
+
+[33mcommit 8743fcebc726a6461bd74fe71a65a61f504fa384[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Feb 5 14:46:51 2016 +0100
+
+    survey manager with tabs and polls section
+
+[33mcommit 0074c661fbaaededb859deb7f0a19e07175590db[m
+Merge: 0ae651e b407b65
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Wed Feb 3 17:33:29 2016 +0100
+
+    Merge pull request #3 from GutiX/master
+    
+    Last version 1
+
+[33mcommit b407b6573a5c7ad5d869931239d1c3834fffb30c[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Feb 3 17:26:13 2016 +0100
+
+    title page accesibility
+
+[33mcommit 74995fc6647614525c01e13c12fc885f77f50336[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Feb 3 09:48:11 2016 +0100
+
+    new initial dump
+
+[33mcommit 0ae651e729309426bdc507e96ca05b33a9df5571[m
+Merge: ffad2f9 2dfd321
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Tue Feb 2 20:22:21 2016 +0100
+
+    Merge pull request #2 from GutiX/master
+    
+    Version review february 2016
+
+[33mcommit 2dfd32150e838f7117b0632d914396b5944d2aa1[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 2 20:16:02 2016 +0100
+
+    accessibility revision
+
+[33mcommit b59573f879594cb633aef8198cffa3f8f0f51275[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Feb 2 14:09:42 2016 +0100
+
+    last versión for v1, without accesibility revision
+
+[33mcommit eeb4d4e868257faf36ee5ce9108caedd6288ace3[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jan 29 15:14:48 2016 +0100
+
+    edit survey funcionality, v0.1
+
+[33mcommit 9bd362944a2857da7cc5d718dfb1298d34c73b16[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jan 27 18:33:59 2016 +0100
+
+    upload multimedia file finished
+
+[33mcommit 95ca9e6bc7cef05b7d70baa8673c28e74526ff8c[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jan 22 15:21:03 2016 +0100
+
+    upload file no final 2
+
+[33mcommit fe13900e9ac1994ae505064aab871cd0737a07a9[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Jan 21 18:48:10 2016 +0100
+
+    implementing upload file, no finished
+
+[33mcommit 4490d37d985aec78b1640379a0a475bf313aa427[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Jan 20 13:02:37 2016 +0100
+
+    ContestDBConfig.txt
+
+[33mcommit ffad2f9a4403c5b2cb91bc22697a2f8ce7ce3fba[m
+Merge: bcdaa73 11cdbfb
+Author: iluaepidi <iluaepidi@gmail.com>
+Date:   Tue Jan 19 18:22:27 2016 +0100
+
+    Merge pull request #1 from GutiX/master
+    
+    Test remote
+
+[33mcommit 11cdbfb12b5246e575005e3cff7d0040f006149d[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jan 19 18:16:48 2016 +0100
+
+    Test remote
+
+[33mcommit bcdaa7341cf3fb60d90a53d472bb9fe409068491[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jan 19 17:05:38 2016 +0100
+
+    script database InitialDum.sql
+
+[33mcommit 26c1d97c6485c2ffc5803e1cc4e826eae547c301[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jan 19 16:58:00 2016 +0100
+
+    Test version width email result
+
+[33mcommit 0518badcdfd2f290650648532133cc47140d128f[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jan 15 14:37:58 2016 +0100
+
+    15 january version
+
+[33mcommit 9add4b648ca2967b5f90f0ab610185da1888c2b1[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Jan 12 19:30:10 2016 +0100
+
+    adding eQuestionSimple.jsp
+
+[33mcommit 459e71f0b6506b272f771995a7c507597dcd289b[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Jan 8 14:33:18 2016 +0100
+
+    Load edit version questions from survey list. survey servlet
+
+[33mcommit 016d40d85b7c3f2c4c0e92d506cf3c7a89e45e14[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Tue Dec 22 13:58:18 2015 +0100
+
+    add questions in a selected place
+
+[33mcommit b46c3c6831d436d18c2d5328c4ad55dd62152ec2[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Dec 21 15:21:54 2015 +0100
+
+    insert set question in html
+
+[33mcommit 095ef79693f72ee37f7da16692279cd737599bf1[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Dec 21 09:00:57 2015 +0100
+
+    new question
+
+[33mcommit 45651d7787bb13d87fb8529573cffe631077f5b6[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Dec 16 18:28:26 2015 +0100
+
+    create survey
+
+[33mcommit 1a314ffa99e537ace0e537a08d0a5db28c7adb26[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Wed Dec 9 19:39:03 2015 +0100
+
+    new question and new survey search table
+
+[33mcommit 907c3588806cc0281986b4ecde1066809695af18[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Fri Dec 4 15:32:21 2015 +0100
+
+    new question
+
+[33mcommit 959ad04cc65b03586bbedf372ef1629bf1946b57[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Thu Dec 3 19:03:33 2015 +0100
+
+    add new question
+
+[33mcommit 6ebc88f261a4d20eb2a4af4f435e12bb71801bf6[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Nov 30 12:29:45 2015 +0100
+
+    src
+
+[33mcommit 02cc508c6564a210a862c9b0fb7686fee427d293[m
+Author: Jagutierrez <jagutierrez@consultoria.ilunion.com>
+Date:   Mon Nov 30 12:02:24 2015 +0100
+
+    first commit

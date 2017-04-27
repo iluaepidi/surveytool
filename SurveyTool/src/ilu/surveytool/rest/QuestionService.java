@@ -25,8 +25,11 @@ import ilu.surveymanager.handler.QuestionHandler;
 import ilu.surveymanager.handler.QuotaHandler;
 import ilu.surveymanager.handler.ResourceHandler;
 import ilu.surveymanager.handler.SurveysHandler;
+import ilu.surveytool.commoncode.CommonCode;
+import ilu.surveytool.constants.Address;
 import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
+import ilu.surveytool.databasemanager.ContentDB;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.language.Language;
@@ -320,7 +323,7 @@ public class QuestionService {
 	@Path("/scaleType")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-    public String updateScaleType(String req) {
+    public String updateScaleType(String req, @Context HttpServletRequest request, @Context ServletContext context) {
     	System.out.println("Opción: " + req);
     	JSONObject json = null;
     	String response = "";
@@ -330,10 +333,11 @@ public class QuestionService {
 			int pageId = Integer.parseInt(json.getString(Parameter.s_PID));
 			QuestionHandler questionHandler = new QuestionHandler();
 			HashMap<String,String> parameters = new HashMap<String,String>();
-			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_SCALE_TYPE,json.getString(Parameter.s_SCALE_TYPE));
+			String scaleType = json.getString(Parameter.s_SCALE_TYPE);
+			parameters.put(DBConstants.s_VALUE_QUESTIONPARAMETER_SCALE_TYPE, scaleType);
 			questionHandler.updateParameters(questionId, pageId, parameters);
-			response=json.getString(Parameter.s_SCALE_TYPE);
-			
+			questionHandler.removeContent(questionId, DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL);						
+			response=json.getString(Parameter.s_SCALE_TYPE);						
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
