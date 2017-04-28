@@ -4,7 +4,7 @@
 
 var surveyInfoOpen = false;
 var currentFrameActivate = "";
-
+var currentElement;
 var hideText = "";
 var displayText = "";
 var sectionText = "";
@@ -334,8 +334,16 @@ $(function() {
 	});
 	
 	$('.surveys-table').on("click", "a.survey-finish", function(e){
-		var surveyId = parseInt($(this).closest("tr").attr("sid"));
-		setSurveyState(surveyId, "finished", $(this), "");
+		/*var surveyId = parseInt($(this).closest("tr").attr("sid"));
+		setSurveyState(surveyId, "finished", $(this), "");*/
+		currentElement =  $(this);
+		$("#finishQuestionarieConfirm").modal("show");
+	});
+	
+	$('.body-content').on("click", "button.btn-accept-finish-survey", function(){
+		var surveyId = parseInt(currentElement.closest("tr").attr("sid"));
+		setSurveyState(surveyId, "finished", currentElement, "");
+		$('#finishQuestionarieConfirm').modal('hide');
 	});
 });
 

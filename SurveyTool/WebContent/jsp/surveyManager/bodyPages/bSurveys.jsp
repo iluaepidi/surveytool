@@ -38,6 +38,7 @@ lang.close();
 	  			
 	  			<jsp:include page="../frames/fNewPoll.jsp" />
 	  			
+	  			<jsp:include page="../frames/fFinishSurvey.jsp" />
 
 <script> 
  

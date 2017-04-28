@@ -521,7 +521,8 @@ td.actions ul li a span {width: 100%;
 .btn-accept-remove-element,
 .btn-accept-move-element,
 .btn-accept-change-sqType,
-.btn-accept-change-qScaleType {float:right;}
+.btn-accept-change-qScaleType,
+.btn-accept-finish-survey {float:right;}
 .survey-frame {border: 1px solid #555;
 	margin: 10px 0px;
 	padding: 20px 15px;
