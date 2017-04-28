@@ -361,7 +361,8 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
-						+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? ";
+						+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? "
+						+ "ORDER BY creationDate DESC";
 		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage, q.objetive FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
 				+ "inner join surveytool.content c on c.idContent = q.idContent "
