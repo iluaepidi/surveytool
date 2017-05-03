@@ -105,7 +105,7 @@
 							  							}
 							  						}
 							  						
-							  						String hideOther = "";
+							  						/*String hideOther = "";
 							  						int optionId = 0;
 							  						if(optionOther == null)
 							  						{
@@ -115,12 +115,10 @@
 							  						{
 							  							optionId = optionOther.getId();
 							  						}
-							  						request.setAttribute(Attribute.s_OPTION, optionOther);
+							  						request.setAttribute(Attribute.s_OPTION, optionOther);*/
 							  						%>
 								  						
-								  						<li class="option-item <%= hideOther %>" id="option-item" oid="<%= optionId %>">
-						  									<jsp:include page="../eqResponses/eqOptionOther.jsp" />
-							  							</li>							  						
+								  												  						
 								  						
 							  					<%
 							  					}
@@ -187,11 +185,7 @@
 																		</div>
 															</div>	
 							  							</li>
-							  										  							
-							  							<li class="option-item hidden" id="option-item" oid="0">
-						  									<jsp:include page="../eqResponses/eqOptionOther.jsp" />
-							  							</li>
-							  							
+							  						
 							  					<%
 							  				}
 							  				
@@ -209,7 +203,7 @@
 						  								<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 						  								<label for="btn-add-option" class="visuallyhidden"><%= lang.getContent("accesibility.question.add.option") %></label>
 						  								<button class="btn btn-primary btn-sm active" id="btn-add-option" ><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option") %></span></button>
-					  									<button class="btn btn-primary btn-sm btnAddOptionOther active" id="btn-add-option-other" <%if(hasOther){ %> disabled="" <%} %> ><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option_other") %></span></button>
+					  									<!-- <button class="btn btn-primary btn-sm btnAddOptionOther active" id="btn-add-option-other" <%if(hasOther){ %> disabled="" <%} %> ><i class="fa fa-plus-square" aria-hidden="true"></i><span><%= lang.getContent("button.add_option_other") %></span></button> -->
 						  								<% } %>
 						  							</li>
 						  						</ul>

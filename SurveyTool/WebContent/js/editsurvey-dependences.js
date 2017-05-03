@@ -810,9 +810,11 @@ $(function() {
 		var question = $(this).closest("li.panel-question");
 		var page = $(this).closest("li.page");
 		var pageIndex = parseInt(page.attr("index"));
-		var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
-		var simpleQuestions = getSimpleQuestions(prevPage.attr("index"));
-		prevPage.find("li.panel-question").each(function(index, qElement){
+		//var prevPage = $("li.page[index=" + (pageIndex - 1) + "]");
+		var currentPage = $("li.page[index=" + (pageIndex) + "]");
+		console.log("createQuestionJson - page index: " + currentPage.attr("index"));
+		var simpleQuestions = getSimpleQuestions(currentPage.attr("index"));
+		currentPage.find("li.panel-question").each(function(index, qElement){
 			var qElementId = parseInt($(qElement).attr("qid")); 
 			if($.inArray(qElementId, simpleQuestions) != -1)
 			{
@@ -1251,6 +1253,7 @@ function setJson(optionId, pageId, questionId, optionGroupId, index, text)
 
 function getSimpleQuestions(numPage)
 {
+	console.log("get simple questions (numPage): " + numPage);
 	var questions = [];
 	var position = numPage - 1;
 	for(var j = 0; j < surveyTree[position].questions.length; j++)

@@ -389,8 +389,9 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	height:100%;
 	left:0px;
 	top:0px;
-	background:url(../img/radio-off.png) center center no-repeat;
 }
+#form-question table tr td.mradio label {background:url(../img/radio-off.png) center center no-repeat;}
+#form-question table tr td.mcheckbox label {background:url(../img/checkbox-off.png) center center no-repeat;}
 #form-question table tr td label:hover,
 #form-question table tr td input[type=radio]:focus + label{
 	background-color:#016FB8;
@@ -398,6 +399,11 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 
 #form-question table tr td input[type=radio]:checked + label{
 	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
+}
+
+
+#form-question table tr td input[type=checkbox]:checked + label{
+	background:#016FB8 url(../img/checkbox-on.png) center center no-repeat;
 }
 /* Scale */
 ul.likert-options-frame {list-style: none;
