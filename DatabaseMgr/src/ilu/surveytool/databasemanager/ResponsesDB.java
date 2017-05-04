@@ -70,6 +70,7 @@ public class ResponsesDB {
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID);			
 	   		pstm.setInt(1, surveyId);
 	   		pstm.setBoolean(2, false);
+	   		pstm.setBoolean(3, true);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
