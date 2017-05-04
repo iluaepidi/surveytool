@@ -8,8 +8,8 @@
 }
 
 .body-content{
-	background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;
-	padding-bottom:2em;
+	/*background:url(../img/content-bg-bottom.gif) left bottom  repeat-x;*/
+	padding-bottom:1em;
 	/*font-family: 'arthurbecker';*/
 	font-family: 'Open Sans', sans-serif;
 	/*font-family: "Ubuntu";*/
@@ -17,11 +17,15 @@
 .body-content .content{
 	display: inline-block;
 	width: 100%;
-	background:url(../img/content-bg-top.gif) left top  repeat-x;
+	/*background:url(../img/content-bg-top.gif) left top  repeat-x;*/
+	background: #FFFFFF;
+	background: -moz-linear-gradient(#EBF0F3, #fff 30%, #EBF0F3);
 	min-height:35em;/*TEST*/
 	clear:both;
 	border-top:3px solid #BBCAD3;
 	padding-top:1em;
+	border-bottom: 3px solid #BBCAD3;
+	padding-bottom: 2em;
 }
 .survey-form > ul{
 	list-style-type:none;
