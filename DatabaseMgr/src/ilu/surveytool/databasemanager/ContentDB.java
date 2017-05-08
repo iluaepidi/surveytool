@@ -186,7 +186,7 @@ public class ContentDB {
 	   		}
 	   		
 	   		
-	   		if((text==null || text.equals(""))&&langdefault!=null){
+	   		if(/*(text==null || text.equals(""))&&*/langdefault!=null){
 	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_CONTENT_BY_ID_LANGUAGE);			
 		   		pstm2.setInt(1, contentId);
 		   		pstm2.setString(2, langdefault);
@@ -194,12 +194,18 @@ public class ContentDB {
 		   		rs2 = pstm2.executeQuery();
 		   		while(rs2.next())
 		   		{
-		   			JSONObject content = new JSONObject();
-		   			content.put("contentId", contentId);
-		   			content.put("lang", lang);
-		   			content.put("contentType", rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME));
-		   			content.put("text", rs2.getString(DBFieldNames.s_CONTENT_TEXT));
-		   			contents.put(content);
+		   			String contentType = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+		   			int index = rs2.getInt(DBFieldNames.s_INDEX);
+		   			if(!this._existContentInJson(contents, contentType, index))
+		   			{
+			   			JSONObject content = new JSONObject();
+			   			content.put("contentId", contentId);
+			   			content.put("lang", lang);
+			   			content.put("contentType", contentType);
+			   			content.put("text", rs2.getString(DBFieldNames.s_CONTENT_TEXT));
+			   			content.put("index", rs2.getInt(DBFieldNames.s_INDEX));
+			   			contents.put(content);
+		   			}
 		   		}
 	   		}
 	   		
@@ -232,6 +238,7 @@ public class ContentDB {
 				contentJson.put("lang", content.getLanguage());
 				contentJson.put("contentType", content.getContentType());
 				contentJson.put("text", content.getText());
+				contentJson.put("index", content.getIndex());
 				contentsJson.put(contentJson);
 			}
 		} catch (JSONException e) {
@@ -322,8 +329,29 @@ public class ContentDB {
 	   				
 	   			}
 	   		}
+	   		
+	   		if(text!=null || !text.equals("")){
+	   			//System.out.println("In final else: contents.put(contentType-"+contentType+", new Content(contentId-"+contentId+", lang-"+lang+", typename-"+typename+",	contenttext-"+contenttext+")");
+	   			//System.out.println("contents length before:"+contents.size());
+	   			if(!contents.containsKey(contentType))
+				{
+	   				contents.put(contentType, new Content(contentId, lang, 
+	   					typename, 
+	   					contenttext));
+				}
+	   			
+	   			if(typename.equals(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL))
+   				{
+   					if(!contents.containsKey(typename + index))
+   					{
+   						contents.put(typename + index, new Content(contentId, lang, 
+			   					typename, 
+			   					contenttext, index));
+   					}
+   				}
+	   		}
 
-	   		if((text==null || text.equals(""))&&langdefault!=null){
+	   		if(/*(text==null || text.equals(""))&&*/langdefault!=null && !lang.equals(langdefault)){
 	   			//System.out.println("In language by default");
 	   			pstm2 = con.prepareStatement(DBSQLQueries.s_SELECT_LONG_CONTENT_BY_ID_LANGUAGE);			
 		   		pstm2.setInt(1, contentId);
@@ -345,18 +373,20 @@ public class ContentDB {
 		   					{
 		   						contents.put(contentType + index, new Content(contentId, lang, 
 		   								contentType, 
-					   					contenttext, index));
+		   								text, index));
 		   						//contents.remove(typename);
 		   					}	   					
 
-		   					contentType = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
-				   			contenttext = rs.getString(DBFieldNames.s_CONTENT_TEXT);
-				   			index = rs.getInt(DBFieldNames.s_INDEX);
+		   					contentType = rs2.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
+		   					text = rs2.getString(DBFieldNames.s_CONTENT_TEXT);
+				   			index = rs2.getInt(DBFieldNames.s_INDEX);
 
-				   			contents.put(contentType + index, new Content(contentId, lang, 
+				   			if(!contents.containsKey(contentType + index))
+		   					{
+				   				contents.put(contentType + index, new Content(contentId, lang, 
 				   					contentType, 
-				   					contenttext, index));
-		   					
+				   					text, index));
+		   					}
 		   				}
 		   				else
 		   				{
@@ -368,9 +398,12 @@ public class ContentDB {
 		   				//System.out.println("In else");
 		   				if(!contentType.equals("") && !contents.containsKey(contentType + index)){
 		   					//System.out.println("In if(!contentType.equals(empty))");
-			   				contents.put(contentType, new Content(contentId, lang, 
+		   					if(!contents.containsKey(contentType))
+		   					{
+		   						contents.put(contentType, new Content(contentId, lang, 
 			   						contentType, 
 				   					text));
+		   					}
 			   				contentType = "";
 		   				}
 		   					//System.out.println("In second else");
@@ -380,20 +413,23 @@ public class ContentDB {
 		   				
 		   			}
 		   		}
-		   		if(!contentType.equals("")){
+		   		if(!contentType.equals("") && !contents.containsKey(contentType)){
 		   			//System.out.println("In if(!contentType.equals(empty))");
 		   			contents.put(contentType, new Content(contentId, lang, 
 	   						contentType, 
 		   					text));
 		   		}
-	   		}else{
+	   		}/*else{
 	   			//System.out.println("In final else: contents.put(contentType-"+contentType+", new Content(contentId-"+contentId+", lang-"+lang+", typename-"+typename+",	contenttext-"+contenttext+")");
 	   			//System.out.println("contents length before:"+contents.size());
-	   			contents.put(contentType, new Content(contentId, lang, 
+	   			if(!contents.containsKey(contentType))
+				{
+	   				contents.put(contentType, new Content(contentId, lang, 
 	   					typename, 
 	   					contenttext));
+				}
 	   			//System.out.println("contents length after:"+contents.size());
-	   		}
+	   		}*/
 	   		
 	   		//System.out.println("Out of all at the end of the method");
 	   		/*for(int i=0;i<contents.size();i++)
@@ -821,6 +857,36 @@ public class ContentDB {
 		}
 
 	}
-	
+
+	private boolean _existContentInJson(JSONArray contents, String contentType, int index)
+	{
+		boolean exist = false;
+		
+		int i = 0;
+		while(!exist && i < contents.length())
+		{
+			try {
+				JSONObject content = contents.getJSONObject(i);
+				if(content.getString("contentType").equals(contentType))
+				{
+					if(contentType.equals(DBConstants.s_VALUE_CONTENTTYPE_NAME_LABEL))
+					{
+						if(content.getInt("index") != index) exist = true;
+					}
+					else
+					{
+						exist = true;
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			i++;
+		}
+		
+		return exist;
+	}
 
 }

@@ -375,8 +375,9 @@ public class DBSQLQueries {
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "inner join surveytool.language l on l.idLanguage = c.idLanguage "
 				+ "where q.idQuestionnaire = ? and  l.isoName = ?";
-		public final static String s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID = "SELECT q.*, p.projectName FROM surveytool.questionnaire q "
+		public final static String s_SELECT_QUESTIONNAIRE_BY_PUBLIC_ID = "SELECT q.*, p.projectName, l.isoName FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
+				+ "inner join surveytool.language l on l.idLanguage = q.defaultLanguage "
 				+ "where publicId = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_CONTENTID = "SELECT idContent FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PROJECTID = "SELECT idProject FROM surveytool.questionnaire WHERE idQuestionnaire = ?";

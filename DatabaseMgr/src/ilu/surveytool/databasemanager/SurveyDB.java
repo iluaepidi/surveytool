@@ -335,11 +335,12 @@ public class SurveyDB {
 	   			response.put("numPages", numPages);
 	   			response.put("isFinishPage", ((AnonimousUser) anonimousUser).getCurrentPage() > numPages);
 	   			
+	   			String langDefault = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
 	   			ContentDB contentDB = new ContentDB();
-		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langDefault));
 		   		
 		   		SectionDB sectionDB = new SectionDB();
-				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, anonimousUser, lang, null));
+				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, anonimousUser, lang, langDefault));
 	   		}
 	   		
 	   } catch (SQLException e) {

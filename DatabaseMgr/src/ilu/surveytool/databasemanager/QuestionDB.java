@@ -1182,11 +1182,12 @@ public class QuestionDB {
 		   			String questionType = rs.getString(DBFieldNames.s_QUESTIONTYPE_NAME);
 		   			if(questionType.equals("bcontent"))
 		   			{
-		   				question.put("contents", contentDB.getLongContentJsonByIdAndLanguage(contentId, lang, null));
+		   				question.put("contents", contentDB.getLongContentJsonByIdAndLanguage(contentId, lang, langdefault));
 		   			}
 		   			else
 		   			{
-		   				question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+		   				//question.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
+		   				question.put("contents", contentDB.getLongContentJsonByIdAndLanguage(contentId, lang, langdefault));
 
 			   			numQuestion++;
 			   			question.put("numQuestion", numQuestion);			   			

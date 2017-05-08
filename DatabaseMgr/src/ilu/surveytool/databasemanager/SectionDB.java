@@ -239,7 +239,7 @@ public class SectionDB {
 	   			
 	   			int contentId = rs.getInt(DBFieldNames.s_CONTENTID);
 	   			ContentDB contentDB = new ContentDB();
-		   		section.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, null));
+		   		section.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
 	   			
 	   			PageDB pageDB = new PageDB();
 	   			section.put("page", pageDB.getPageJsonBySectionId(sectionId, anonimousUser, lang, langdefault));
