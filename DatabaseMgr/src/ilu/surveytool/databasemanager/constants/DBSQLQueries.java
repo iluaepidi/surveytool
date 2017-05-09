@@ -21,6 +21,25 @@ public class DBSQLQueries {
 		        + "inner join surveytool.section as s on s.idSection = p.idSection "
 		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
 				+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+			+ "(CASE "
+				+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o " 
+					+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
+					+ "where obg.idOptionsGroup = r.idOptionsGroup and o.idOption = cast(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)) "
+				+ "ELSE r.value "
+			+ "END) as value, " 
+			+ "if(INSTR(r.value, '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+				+ "(substring_index(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
+			+ "FROM surveytool.anonimoususer as au "
+			+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+			+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+			+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+	        + "inner join surveytool.section as s on s.idSection = p.idSection "
+	        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
+			+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
 		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ? and testUser = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "

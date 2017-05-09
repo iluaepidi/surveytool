@@ -198,8 +198,9 @@ public class ExportData {
 							for(int og = 0; og < ogList.size(); og++)
 							{
 								OptionsGroup ogItem = ogList.get(og);
-								List<String> values = null;
-								if(optionGroups != null) values = optionGroups.get(ogItem.getId());
+								//List<String> values = null;
+								//if(optionGroups != null) values = optionGroups.get(ogItem.getId());
+								List<String> values = optionGroups.get(ogItem.getId()) != null ? optionGroups.get(ogItem.getId()) : new ArrayList<String>();
 								if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 								{
 									String val = "";
@@ -224,22 +225,25 @@ public class ExportData {
 									{
 										if(optionGroups != null)
 										{	
-											if((ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
-													|| (ogItem.getOptions().get(o).getResources() != null && !ogItem.getOptions().get(o).getResources().isEmpty() && ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText())))
+											int optionId = ogItem.getOptions().get(o).getId();
+											if(/*(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+													||*/ (ogItem.getOptions().get(o).getResources() != null && !ogItem.getOptions().get(o).getResources().isEmpty() && ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null && values.contains(ogItem.getOptions().get(o).getResources().get(0).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()))
+													|| (values != null && values.contains(Integer.toString(optionId)))
+													|| (values != null && values.contains(Integer.toString(ogItem.getOptions().get(o).getIndex()))))
 											{
 												cell = row.createCell(desp);
-												cell.setCellValue("yes");
+												cell.setCellValue("1");
 												desp++;
 											}
 											else
 											{
-												String val = "no";
+												String val = "0";
 												
 												for(String value : values)
 												{
 													if(value.contains(ogItem.getOptions().get(o).getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText()) && value.contains(DBConstants.s_VALUE_TOKEN))
 													{
-														val = "yes";
+														val = "1";
 														otherText = value.split(DBConstants.s_VALUE_TOKEN)[1];
 													}
 												}
@@ -252,7 +256,7 @@ public class ExportData {
 										else
 										{
 											cell = row.createCell(desp);
-											cell.setCellValue("no");
+											cell.setCellValue("0");
 											desp++;
 										}
 									}

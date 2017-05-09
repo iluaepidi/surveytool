@@ -67,7 +67,7 @@ public class ResponsesDB {
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID);			
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX);			
 	   		pstm.setInt(1, surveyId);
 	   		pstm.setBoolean(2, false);
 	   		pstm.setBoolean(3, true);
