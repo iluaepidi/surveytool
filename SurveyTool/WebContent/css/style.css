@@ -732,6 +732,9 @@ ul.pagination li.active a {color: #fff !important;}
 .survey-info-url {width: 70%;
     margin-top: 15px;
     display: none;}
+.survey-info-ipfilter {width: 70%;
+	margin-top: 15px;
+	display: none;}
 .survey-info-description label {margin-top: 15px;}
 .survey-info-url label {margin-top: 9px;}
 .btn-copy-clipboard {color:#337AB7;

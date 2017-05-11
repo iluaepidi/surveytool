@@ -65,6 +65,7 @@ public class surveyajs extends HttpServlet {
 		//System.out.println("preview param: " + preview);
 		
 		String state = surveyDB.getQuestionnaireStateByPublicId(sid);
+		boolean hasIpFilter = surveyDB.hasIpFilterByPublicId(sid);
 
 		//System.out.println("SID: " + sid + " - Language: " + language);
 		Language lang = new Language(getServletContext().getRealPath("/")); 
@@ -75,11 +76,17 @@ public class surveyajs extends HttpServlet {
 		
 		if(preview || state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE))
 		{
-			AnonimousUser anonimousUser = new AnonimousUser();
-			anonimousUser.setIpAddress(request.getRemoteAddr());
-			anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
-			anonimousUser.setCurrentPage(1);
-			/*if(!preview)*/ anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+			//AnonimousUser anonimousUser = new AnonimousUser();
+			AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
+			if(anonimousUser == null)
+			{
+				anonimousUser = new AnonimousUser();
+				anonimousUser.setIpAddress(request.getRemoteAddr());
+				anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+				anonimousUser.setCurrentPage(1);
+				if(hasIpFilter) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+			}
+			
 			if(preview) anonimousUser.setCurrentPage(1);
 			request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
 			

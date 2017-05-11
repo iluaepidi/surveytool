@@ -2071,6 +2071,16 @@ $(function() {
 		}
 		
 	});
+
+	$('#survey-info').on("change", "#ipFilter", function(e){
+		e.stopPropagation();		
+		var req = {};		
+		req.ipFilter = $(this).is(':checked');
+		req.sid = $(this).closest('#survey-info').attr('sid');		
+		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateIpFilter";
+		console.log("Entra en IP filger: " + $(this).is(':checked'));
+		updateContent(req, serviceUrl);		
+	});
 	
 	$('.survey-sections').on("focusout", "input.survey-section-title", function(e){
 		e.stopPropagation();	

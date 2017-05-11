@@ -123,6 +123,7 @@ public class SurveyDB {
 	   			response.setAuthor(rs.getInt(DBFieldNames.s_AUTHOR));
 	   			response.setDefaultLanguage(String.valueOf(rs.getInt(DBFieldNames.s_DEFAULT_LANGUAGE)));
 	   			response.setObjetive(rs.getInt(DBFieldNames.s_OBJETIVE));
+	   			response.setIpFilter(rs.getBoolean(DBFieldNames.s_IP_FILTER));
 	   			
 	   			String contenttypeName = rs.getString(DBFieldNames.s_CONTENT_TYPE_NAME);
 	   			String isoname = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
@@ -254,6 +255,34 @@ public class SurveyDB {
 	   		if(rs.next())
 	   		{
 	   			response = rs.getString(DBFieldNames.s_STATE);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
+	public Boolean hasIpFilterByPublicId(String publicId)
+	{
+		Boolean response = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_IPFILTER_BY_PUBLICID);			
+	   		pstm.setString(1, publicId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getBoolean(DBFieldNames.s_IP_FILTER);
 	   		}
 	   		
 	   } catch (SQLException e) {
@@ -849,7 +878,32 @@ public class SurveyDB {
 		   
 		return updated;
 	}
-	
+
+	public boolean updateIpFilter(int surveyId, boolean active) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_QUESTIONNAIRE_IPFILTER);
+			pstm.setBoolean(1, active);
+			pstm.setInt(2, surveyId);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0) updated = true;
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		 
+		return updated;
+	}
+
 	
 	private String _generatePublicId()
 	{

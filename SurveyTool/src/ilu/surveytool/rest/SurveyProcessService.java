@@ -66,15 +66,15 @@ public class SurveyProcessService {
 				anonimousUser = new AnonimousUser();
 				anonimousUser.setIpAddress(request.getRemoteAddr());
 				anonimousUser.setSurveyId(json.getInt("surveyId"));
-				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
+				//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
 			}
 			
 			boolean stored = surveyProcessHandler.anonimousResponseProcess(anonimousUser, json, isPreview);
 			
-			if(stored && anonimousUser.getId() == 0)
+			/*if(stored && anonimousUser.getId() == 0)
 			{
 				anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
-			}
+			}*/
 			
 			response.put("stored", stored);
 			

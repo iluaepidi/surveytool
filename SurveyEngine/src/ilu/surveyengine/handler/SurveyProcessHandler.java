@@ -175,7 +175,12 @@ public class SurveyProcessHandler {
 			int surveyId = responses.getInt("surveyId");
 			JSONObject page = responses.getJSONObject("page");
 			int anonymousUserId = anonimousUser.getId();
-			if(anonymousUserId == 0) anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"), isPreview);
+			if(anonymousUserId == 0)
+			{
+				anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"), isPreview);
+				anonimousUser.setId(anonymousUserId);
+			}
+			
 			if(anonymousUserId != 0)
 			{
 				JSONArray questions = page.getJSONArray("questions");

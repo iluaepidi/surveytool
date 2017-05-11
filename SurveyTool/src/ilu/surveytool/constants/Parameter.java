@@ -28,6 +28,7 @@ public class Parameter {
 	public final static String s_OPTIONS = "options";
 	public final static String s_PASSWORD = "password";
 	public final static String s_PROJECT = "project";
+	public final static String s_IP_FILTER = "ipFilter";
 	public final static String s_SURVEY_ID = "surveyid";
 	public final static String s_PAGE_ID = "pageid";
 	public final static String s_PID = "pid";

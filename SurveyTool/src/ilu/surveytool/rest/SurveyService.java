@@ -81,6 +81,29 @@ public class SurveyService {
 		}
     	return response;
     }
+
+	@PUT
+	@Path("/updateIpFilter")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateIpFilter(String req) {
+    	System.out.println("Opción: " + req);
+    	JSONObject json = null;
+    	String response = "";
+    	try {
+			json = new JSONObject(req);
+			int surveyId = Integer.parseInt(json.getString(Parameter.s_SID));
+			boolean activeIpFilter = json.getBoolean(Parameter.s_IP_FILTER);
+			
+			SurveysHandler surveysHandler = new SurveysHandler();
+			response = Boolean.toString(surveysHandler.updateIpFilter(surveyId, activeIpFilter));
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
+    }
 		
 	@GET
 	@Path("/export/{param}")

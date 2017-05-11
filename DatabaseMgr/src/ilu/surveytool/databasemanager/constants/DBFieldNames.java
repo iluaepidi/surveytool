@@ -90,6 +90,7 @@ public class DBFieldNames {
 		public final static String s_AUTHOR = "author";
 		public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
 		public final static String s_OBJETIVE = "objetive";
+		public final static String s_IP_FILTER = "ipFilter";
 		
 	//resources
 		public final static String s_RESOURCEID = "idResoruces";

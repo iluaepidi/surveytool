@@ -17,6 +17,7 @@ public class Survey {
 	String publicId = "";
 	String defaultLanguage;
 	int objetive;
+	boolean ipFilter = false;
 	
 
 	public Survey() {
@@ -142,6 +143,16 @@ public class Survey {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+
+	public boolean isIpFilter() {
+		return ipFilter;
+	}
+
+
+	public void setIpFilter(boolean ipFilter) {
+		this.ipFilter = ipFilter;
 	}
 
 

@@ -398,6 +398,7 @@ function displaySurveyInfo(node)
 	$('.survey-info-project').css("display", "inherit");
 	$('.survey-info-description').css("display", "inline-block");
 	$('.survey-info-url').css("display", "inline-block");
+	$('.survey-info-ipfilter').css("display", "inline-block");
 	$('.display-default-arrow i').prop("class", "fa fa-caret-down fa-2x");
 	$('.display-default-arrow').css("padding-top", "15px");
 	$('#display-survey-settings').attr('display', 'true');
@@ -414,6 +415,7 @@ function hideSurveyInfo(node)
 		$('.survey-info-project').css("display", "none");
 		$('.survey-info-description').css("display", "none");
 		$('.survey-info-url').css("display", "none");
+		$('.survey-info-ipfilter').css("display", "none");
 		$('.display-default-arrow i').prop("class", "fa fa-caret-right fa-2x");
 		$('.display-default-arrow').css("padding-top", "0px");
 		currentFrameActivate = "";

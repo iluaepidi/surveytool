@@ -164,6 +164,16 @@ public class SurveysHandler {
 		return updated;
 	}
 	
+	public boolean updateIpFilter(int surveyId, boolean active)
+	{
+		boolean updated = false;
+		
+		SurveyDB surveyDB = new SurveyDB();
+		updated = surveyDB.updateIpFilter(surveyId, active);
+		
+		return updated;
+	}
+	
 	public File exportResults(int surveyId, String userLang)
 	{
 		File file = null;

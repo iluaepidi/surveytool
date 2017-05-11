@@ -154,6 +154,14 @@
 							   		</div>
 							   		<!-- <button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x" aria-hidden="true"></i></button> -->
 								</div>
+								
+								<div class="survey-info-ipfilter">
+									<div class="checkbox">
+									    <label>
+									      <input type="checkbox" id="ipFilter" <%if(survey.isIpFilter()){%>checked<%}%>> <%= lang.getContent("survey.edit.info.label.ipfilter") %>
+									    </label>
+									</div>
+								</div>
 		  					</div>	
 		  					  					
 		  					
