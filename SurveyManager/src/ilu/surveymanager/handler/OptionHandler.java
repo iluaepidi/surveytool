@@ -52,6 +52,7 @@ public class OptionHandler {
 						if(!option.getText().equals("")) contentDB.insertContent(contentId, option.getLanguage(), DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE, option.getText());
 						if(option.getOid() != 0 && option.getOgid() != 0)
 						{
+							optionDB.updateOptionsByGroupIncrementIndex(option.getOgid(), option.getIndex());
 							optionDB.insertOptionsByGroup(option.getOgid(), option.getOid(), option.getIndex());
 						}
 					}
@@ -248,7 +249,10 @@ public class OptionHandler {
 						if(option.getOid() != 0 && !optionsGroupId.isEmpty())
 						{
 							for(int og: optionsGroupId)
+							{
+								optionDB.updateOptionsByGroupIncrementIndex(og, option.getIndex());
 								optionDB.insertOptionsByGroup(og, option.getOid(), option.getIndex());
+							}
 						}
 						else if(option.getOid() != 0 && optionsGroupId.isEmpty()){
 							int contentIdGroup = contentDB.insertContentIndex();

@@ -705,6 +705,35 @@ public class OptionDB {
 		return updated;
 		   
 	}
+
+	public boolean updateOptionsByGroupIncrementIndex(int optionsGroupId, int index) {
+		//System.out.println("updateState");
+		boolean updated = false;
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_UPDATE_OPTIONSBYGROUP_INCREMENT_INDEX);
+			pstm.setInt(1, optionsGroupId);
+			pstm.setInt(2, index);
+		   		
+			int numUpdated = pstm.executeUpdate();
+			
+			if(numUpdated > 0)
+			{
+				updated = true;
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, null);
+		}
+		
+		return updated;
+		   
+	}
 	
 	public boolean updateOptionsGroup(int optionsGroupId, int contentId, String type) {
 		boolean updated = false;

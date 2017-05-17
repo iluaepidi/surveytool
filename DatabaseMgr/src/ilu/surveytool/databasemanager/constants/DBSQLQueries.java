@@ -650,6 +650,7 @@ public class DBSQLQueries {
 						
 			//optionsByCroup
 			public final static String s_UPDATE_OPTIONSBYGROUP_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=? WHERE `idOptionsGroup`=? and`idOption`=?";
+			public final static String s_UPDATE_OPTIONSBYGROUP_INCREMENT_INDEX = "UPDATE `surveytool`.`optionsbygroup` SET `index`=`index`+1 WHERE `idOptionsGroup`=? and `index`>=? and `index`<999";
 
 		//page
 			public final static String s_UPDATE_PAGE_NUM_PAGE = "UPDATE `surveytool`.`page` SET `numPage`=? WHERE `idPage`=?";

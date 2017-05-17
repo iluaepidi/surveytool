@@ -54,10 +54,13 @@
 									  									<!-- <button class="btn btn-transparent fleft" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 									  									<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></button> -->
 		
-									  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
-									  										<% if(!editPoll && !question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)){ %>
+									  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ 
+									  											String importFileHiddenClass = "";
+									  											if(question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO)) importFileHiddenClass = "hidden"; 									  											
+									  									%>
+									  										<% if(!editPoll){ %>
 									  										<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden addFileOption"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
-																			<button class="btn btn-transparent fleft add-file-option addFileOption" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
+																			<button class="btn btn-transparent fleft add-file-option addFileOption <%= importFileHiddenClass %>" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
 																			<% } %>
 									  										<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
 									  										<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" aria-label="<%= lang.getContent("button.remove_option") %>: <%= text %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>

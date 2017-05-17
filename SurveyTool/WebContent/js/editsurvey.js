@@ -34,21 +34,7 @@ console.log("host: " + host);
 $(function() {
 	
 	host = "http://" + window.location.host;
-	//console.log("host: " + host);
 	
-	/*var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
-	    moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
-	    debug: false
-	} );
-	clientTarget.on( "load", function(clientTarget)
-	{
-	    $('#flash-loaded').fadeIn();
-	    clientTarget.on( "complete", function(clientTarget, args) {
-	        clientTarget.setText( args.text );
-	        $('#target-to-copy-text').fadeIn();
-	    });
-	});*/
-
 	$('body_').click(function() {
 				
     });
@@ -351,10 +337,11 @@ $(function() {
 		console.log("Asigned current text: " + currentText);
 	});
 	
+	
 	$('.survey-sections').on("focusout", "#option-list #option-item input.option-title", function(e){
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
-		if($(this).val() != "")
+		if($(this).val() != "" || ($(this).val() == "" && $(this).attr('oid')>0 && $(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1))
 		{
 			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).closest('ul').attr('ogid'));
 			var req = {};
@@ -404,16 +391,18 @@ $(function() {
 			   }
 			});
 		}
-		else if ($(this).attr('oid')>0){
-			if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
-				$(this).closest('li.option-item').find(".remove-option").trigger("click");
+		else if ($(this).attr('oid')>0 && $(this).closest('li[id=option-item]').find('#multimediaFilesList li').length >= 1)
+		{
+			/*if($(this).closest('li[id=option-item]').find('#multimediaFilesList li').length<1){
+				//$(this).closest('li.option-item').find(".remove-option").trigger("click");
+				$(this).trigger("empty");
 				console.log("currentText: " + currentText);
 				if(currentText != "")
 				{
 					$(this).val(currentText);
 					currentText = "";
 				}
-			}else{
+			}else{*/
 				var req = {};
 				var currentNode = $(this);
 				req.text = currentNode.val();
@@ -460,9 +449,46 @@ $(function() {
 					   console.log(xhr);
 				   }
 				});
-			}
+			//}
 		}
 	});
+	
+
+	$('.section-pages').on("empty", "#option-list #option-item input.option-title", function(e){
+		console.log("Empty option");
+		currentQuestion = $(this).closest('#panel-question1').attr('qid');		
+		var item = $(this).closest('li');
+		var ogid = item.closest('ul').attr('ogid');
+		var input = $(this);
+		var oid = input.attr('oid');
+		var elementIndex = input.attr('index');
+		var result = currentQuestion + "/" + ogid + "/" + oid;
+		console.log("result: " + result);
+
+		$.ajax({ 
+		   url: host + "/SurveyTool/api/OptionService/" + currentQuestion + "/" + ogid + "/" + oid,
+		   type: "DELETE",
+		   success: function (data) {
+			   console.log("data: "+data);
+			   if(data == 'true')
+			   { 					   
+				   var numItems = input.closest("ul").find("li.option-item").size();
+				   var list = input.closest("ul.option-list");
+				   
+				   input.trigger("rmvOptJson");
+					
+				   console.log("Items: " + numItems);
+				   
+				   input.val("");
+				   input.attr('oid', '0');
+					
+				   var logicOptionElement = $('#logic-option-' + oid);
+				   removeLogicElement(logicOptionElement);				   
+			   }
+		   }
+		});
+	});
+	
 	
 	insertValueQuota();
 	
@@ -545,11 +571,53 @@ $(function() {
 			});
 		//}
 	});
+
+	$('.section-pages').on("empty", ".remove-optionsgroupmatrix", function(e){			
+		console.log("Empty optionsgroupmatrix");
+		currentQuestion = $(this).closest('#panel-question1').attr('qid');
+		var item = $(this).closest('li');
+		var input = item.find('input');
+		var ogid = input.attr('ogid');
+
+		$.ajax({ 
+		   url: host + "/SurveyTool/api/OptionsGroupMatrixService/" + ogid,
+		   type: "DELETE",
+		   success: function (data) {
+			   console.log("data: "+data);
+			   if(data == 'true')
+			   { 	
+				   input.val("");
+				   input.attr('ogid', '0');
+			   }
+		   }
+		});
+	});
+
+	$('.section-pages').on("empty", ".remove-optionmatrix", function(e){
+		console.log("Empty optionsgroupmatrix");
+		currentQuestion = $(this).closest('#panel-question1').attr('qid');
+		var item = $(this).closest('li');
+		var input = item.find('input');
+		var oid = input.attr('oid');
+
+		$.ajax({ 
+		   url: host + "/SurveyTool/api/OptionMatrixService/" + oid,
+		   type: "DELETE",
+		   success: function (data) {
+			   console.log("data: "+data);
+			   if(data == 'true')
+			   { 	
+				   input.val("");
+				   input.attr('oid', '0');
+			   }
+		   }
+		});
+	});
 	
 	$('.survey-sections').on("focusout", "#optionmatrix-list #optionmatrix-item input", function(e){
 		e.stopPropagation();
 		console.log("option matrix language: " + $('#survey-language-version').val());
-		if($(this).val() != "")
+		if($(this).val() != "" || ($(this).val() === "" && $(this).attr('oid')>0))
 		{
 			console.log("Text: " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - oid: " + $(this).closest('ul').attr('oid'));
 			var req = {};
@@ -590,9 +658,10 @@ $(function() {
 			   }
 			});
 		}
-		else if($(this).attr('oid')>0){
-			$(this).closest('li[id=optionmatrix-item]').find(".remove-optionmatrix").trigger("click");
-		}
+		/*else if($(this).attr('oid')>0){
+			//$(this).closest('li[id=optionmatrix-item]').find(".remove-optionmatrix").trigger("click");
+			$(this).closest('li[id=optionmatrix-item]').find(".remove-optionmatrix").trigger("empty");
+		}*/
 		
 	});
 	
@@ -602,7 +671,7 @@ $(function() {
 		e.stopPropagation();
 		//console.log("language: " + $('#survey-language-version').val());
 		console.log("options group matrix lalala valor: " + $(this).val());
-		if($(this).val() != "")
+		if($(this).val() != "" || ($(this).val() === "" && $(this).attr('ogid')>0))
 		{
 			console.log("TExt (optionsGroupMatrix): " + $(this).val() + " - qid: " + $(this).attr('index') + " - qid: " + $(this).closest('li[id=panel-question1]').attr('qid') + " - ogid: " + $(this).attr('ogid'));
 			var req = {};
@@ -643,34 +712,38 @@ $(function() {
 			   }
 			});
 		}
-		else if($(this).attr('ogid')>0){
-			console.log("empty value, ogid:"+$(this).attr('ogid'));
-			console.log($(this).closest('li[id=optionsgroupmatrix-item]').attr("class"));
-			$(this).closest('li[id=optionsgroupmatrix-item]').find(".remove-optionsgroupmatrix").trigger("click");
-		}
+		/*else if($(this).attr('ogid')>0){
+			//console.log("empty value, ogid:"+$(this).attr('ogid'));
+			//console.log($(this).closest('li[id=optionsgroupmatrix-item]').attr("class"));
+			//$(this).closest('li[id=optionsgroupmatrix-item]').find(".remove-optionsgroupmatrix").trigger("click");
+			$(this).closest('li[id=optionsgroupmatrix-item]').find(".remove-optionsgroupmatrix").trigger("empty");
+		}*/
 	});
 	
 	
 	$('.survey-sections').on("click", "#option-list #btn-add-option", function(e){
 		//var index = $(this).parent().parent().children("li").size();
+		var otype = $(this).closest("ul").attr("otype");
 		var index = $(this).closest("ul").find("li.option-item").size();
+		if(otype === "checkbox") index = index + 1;
 		var ogid = $(this).closest("ul.option-list").attr("ogid");
 		var qid = $(this).closest("li.panel-question").attr("qid");
-		var optionHtml = '<li class="option-item" id="option-item">' +
-								//'<button class="btn btn-transparent fleft"><i class="fa fa-sort fa-2x"></i></button> ' +		
+		var importFileHiddenClass = "";
+		if(otype === "radio" && $(this).closest('li.panel-question').find('select.type-simple-answer').val() === "select") importFileHiddenClass = "hidden";
+		var optionHtml = '<li class="option-item" id="option-item">' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
 								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
 								'<input id="option' + qid + '-' + ogid + '-' + index + '" type="text" class="option-title form-control fleft option" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
-									//'<button class="btn btn-transparent fleft" id="add-file-option"  active="false" data-toggle="modal" data-target="#importFile"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
-									'<button class="btn btn-transparent fleft  add-file-option" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
-									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft  add-file-option addFileOption ' + importFileHiddenClass + '" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
 									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
-		$(this).closest("li").prev().before(optionHtml);
-		$(this).closest("li").prev().find("div.circle-info").html(index + 1);
+		if(otype === "checkbox") $(this).closest("li").before(optionHtml);
+		else $(this).closest("li").prev().before(optionHtml);
+		
+		if(otype != "checkbox") $(this).closest("li").prev().find("div.circle-info").html(index + 1);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
