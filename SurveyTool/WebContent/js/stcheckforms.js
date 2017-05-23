@@ -25,12 +25,16 @@ $(function() {
 	$('#registerForm').submit(function(e){
 		console.log("register");
 		var valid = true;
-		if($('#usernameregister').val() == ""){
-			valid = false;
-			showFieldError($('#usernameregister'));
-		}else if($('#usernameregister').val().length < 4 || $('#usernameregister').val().length > 16){
-			valid = false;
-			showFieldErrorRegisterUsername($('#usernameregister'));
+		
+		if ($("#usernameregister").length)
+		{
+			if($('#usernameregister').val() == ""){
+				valid = false;
+				showFieldError($('#usernameregister'));
+			}else if($('#usernameregister').val().length < 4 || $('#usernameregister').val().length > 16){
+				valid = false;
+				showFieldErrorRegisterUsername($('#usernameregister'));
+			}
 		}
 		
 		if($('#email').val() == "" || $('#email').val().length < 6){

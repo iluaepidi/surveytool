@@ -65,7 +65,7 @@ public class InitialServlet extends HttpServlet {
 			
 			if(userSessionInfo != null && userSessionInfo.isValid())
 			{
-				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEY_MANAGER_HOME));
 				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
 			}
 			else

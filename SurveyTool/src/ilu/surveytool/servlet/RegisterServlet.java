@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println("Parameters: " + credentials.getUsername() + " - " + credentials.getPassword());
 			LoginResponse loginResp = loginHandler.login(credentials);
 			
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEY_MANAGER_HOME));
 			HttpSession session = request.getSession();
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");

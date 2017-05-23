@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 			
 			if(loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_INTERVIEWER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE)
 			{
-				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEY_MANAGER_HOME));
 				HttpSession session = request.getSession();
 				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 				request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");

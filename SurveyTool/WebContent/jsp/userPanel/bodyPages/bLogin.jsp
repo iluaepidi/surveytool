@@ -22,41 +22,46 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  						<p>Future versions will include an accessible user panel to manage user databases and monitor panel performance. This will help to improve the efficiency of surveys and to foster user participation.</p>
 	  						
 	  					</div>
-  						<div class="col-xs-6 col-sm-5 col-md-4 login-frame" id="loginDivForm">
-	  						<form method="post" id="loginForm" action="<%= Address.s_SERVLET_LOGIN_USER_PANEL %>">
-	  							<fieldset>
-		  							<!-- <h3>Login</h3> -->
-		  							<legend><%= lang.getContent("home.login.title") %></legend>
-		  							<%
-		  							if(loginResponse != null && !loginResponse.isValid())
-		  							{
-		  								System.out.println("Login response: " + loginResponse.toString());
-		  							%>
-		  							<div class="error-msg"><p><%= lang.getContent(loginResponse.getErrorMsg()) %></p></div>
-		  							<%
-		  							}		  							
-		  							%>
-		  							<div class="form-group">
-		  								<label class="control-label" for="username"> <%= lang.getContent("home.login.label.username") %></label>
-			  							<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
-			  							<span  id='username-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
-			  							<span id='username-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.username") %></span>
-			  						</div>
-			  						<div class="form-group">
-			  							<label class="control-label" for="password"> <%= lang.getContent("home.login.label.password") %></label>
-			  							<input type="password" id="password" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>			  							
-			  							<span id='password-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
-			  							<span id='password-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.password") %></span>
-		  							</div>	
-		  							<div class="login-button">
-		  								<input type="submit" id="loginSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.login") %>" />
-		  							</div>  
-		  							
+  						<div class="col-xs-6 col-sm-5 col-md-4" id="loginDivForm">
+	  						<div class="login-register-up-forms">
+		  						<form method="post" class="register-up-form" id="loginForm" action="<%= Address.s_SERVLET_LOGIN_USER_PANEL %>">
+		  							<fieldset>
+			  							<!-- <h3>Login</h3> -->
+			  							<legend><%= lang.getContent("home.login.title") %></legend>
+			  							<%
+			  							if(loginResponse != null && !loginResponse.isValid())
+			  							{
+			  								System.out.println("Login response: " + loginResponse.toString());
+			  							%>
+			  							<div class="error-msg"><p><%= lang.getContent(loginResponse.getErrorMsg()) %></p></div>
+			  							<%
+			  							}		  							
+			  							%>
+			  							<div class="form-group">
+			  								<label class="control-label" for="username"> <%= lang.getContent("home.login.label.username") %></label>
+				  							<input type="text" id="username" name="<%= Parameter.s_USERNAME %>" class="form-control"/>
+				  							<span  id='username-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+				  							<span id='username-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.username") %></span>
+				  						</div>
+				  						<div class="form-group">
+				  							<label class="control-label" for="password"> <%= lang.getContent("home.login.label.password") %></label>
+				  							<input type="password" id="password" name="<%= Parameter.s_PASSWORD %>" class="form-control"/>			  							
+				  							<span id='password-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
+				  							<span id='password-error' class='error hidden'><%= lang.getContent("msg.error.login.empty.password") %></span>
+			  							</div>	
+			  							<div class="login-button">
+			  								<input type="submit" id="loginSubmit" class="btn btn-primary btn-block btn-survey" value="<%= lang.getContent("button.login") %>" />
+			  							</div>  
+			  								
+			  						</fieldset>						
+		  						</form>
+		  						
+		  						<form method="post" class="register-up-form" id="registerUPForm" action="<%= Address.s_SERVLET_REGISTER_USER_PANEL %>">
 		  							<div class="login-button">
 		  								<input type="submit" id="registerFormBtn" name="registrationUP0" class="btn btn-block btn-survey" value="<%= lang.getContent("button.register") %>"/>
-		  							</div>  	
-		  						</fieldset>						
-	  						</form>
+		  							</div>						
+		  						</form>
+		  					</div>
 	  					</div>
 	  					
 	  					<%

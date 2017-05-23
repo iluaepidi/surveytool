@@ -24,7 +24,7 @@ RegisterResponse registerResponse = (RegisterResponse) request.getAttribute(Attr
 	  						<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
 	  						
 	  						<div class="col-xs-12 col-sm-12" id="registerDivForm">
-		  						<form method="post" id="registerForm" action="LoginUPServlet">
+		  						<form method="post" id="registerForm" action="<%= Address.s_SERVLET_REGISTER_USER_PANEL %>">
 		  							<fieldset>
 			  							<legend class="visuallyhidden"><%= lang.getContent("home.register.title") %></legend>
 			  							<%

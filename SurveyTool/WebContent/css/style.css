@@ -1871,6 +1871,12 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 		$User Panel
 \*----------------------------------------------*/
  
+.login-register-up-forms {width: 85%;
+	margin-top: 30px;
+	border: 1px solid #e0e0e0;
+	background-color: #fbfbfb;
+	padding: 25px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
 .conditions-win {}
 .conditions-win-dialog {margin: 14% auto !important;
 	width: 30% !important;} 

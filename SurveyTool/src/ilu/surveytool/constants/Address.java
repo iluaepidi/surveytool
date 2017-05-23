@@ -17,7 +17,7 @@ public class Address {
 		public final static String s_BODY_POLL_EXAMPLE_CODE = "pollExampleCode";
 		public final static String s_BODY_POLL_QUESTION = "pollQuestion";
 		public final static String s_BODY_POLL_RESULT = "pollResult";
-		public final static String s_BODY_USER_PANEL_HOME = "userPanelHome";
+		public final static String s_BODY_SURVEY_MANAGER_HOME = "userPanelHome";
 		public final static String s_BODY_SURVEY_PAGE = "surveyPage";
 		public final static String s_BODY_SURVEY_PAGE_AJS = "surveyPageAJS";
 		public final static String s_BODY_SURVEY_FINISH_PAGE = "surveyFinishPage";
@@ -33,6 +33,7 @@ public class Address {
 		public final static String s_BODY_LOGIN_REGISTRATION_CONDITIONS = "registrationConditions";
 		public final static String s_BODY_LOGIN_ACCOUNT_CREATION = "accountCreation";
 		public final static String s_BODY_LOGIN_REGISTRATION_CONFIRMATION = "confirmRegistration";
+		public final static String s_BODY_USER_PANEL_HOME = "upHome";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
@@ -63,6 +64,7 @@ public class Address {
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
 		public final static String s_SERVLET_LOGIN_USER_PANEL = "LoginUPServlet";
+		public final static String s_SERVLET_REGISTER_USER_PANEL = "RegisterUPServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
 		public final static String s_SERVLET_POLLS_SERVLET = "PollsServlet";
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
