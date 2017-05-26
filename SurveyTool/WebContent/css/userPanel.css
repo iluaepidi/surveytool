@@ -1,0 +1,128 @@
+
+/*----------------------------------------------*\
+		$SURVEY_TOOL_&_USER_PANEL
+\*----------------------------------------------*/
+/**
+* GENERAL
+* ERROR
+* HEADER
+* LOGIN_REGISTER
+* HOME
+*/
+
+/*----------------------------------------------*\
+		$GENERAL
+\*----------------------------------------------*/
+
+
+/*----------------------------------------------*\
+		$ERROR
+\*----------------------------------------------*/
+
+/*----------------------------------------------*\
+		$HEADER
+\*----------------------------------------------*/
+
+.up-user-zone {padding: 27px 15px !important;
+	display: inline-block;
+	border: 2px solid #fff;}
+	
+/*----------------------------------------------*\
+		$LOGIN_REGISTER
+\*----------------------------------------------*/
+ 
+.login-register-up-forms {width: 85%;
+	margin-top: 30px;
+	border: 1px solid #e0e0e0;
+	background-color: #fbfbfb;
+	padding: 25px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
+.conditions-win {}
+.conditions-win-dialog {margin: 14% auto !important;
+	width: 30% !important;} 
+.conditions-win-dialog h2 {font-size: 1.2em;}
+.conditions-win-dialog button.close {color: #fff;
+	opacity: unset;}
+.conditions-win-dialog div.modal-footer {border: none !important;}
+.account-register-button-div {text-align: center;
+	margin: 20px 0;}
+.confirmation-back-login a {margin-top: 60px;}
+.confirmation-back-login a:hover,
+.confirmation-back-login a:focus {padding: 10px 16px;}
+	
+/*----------------------------------------------*\
+		$HOME
+\*----------------------------------------------*/
+ 
+.uphome-section-frame {border: 1px solid #555;
+	margin: 15px 0px !important;
+	padding: 15px 20px;
+	border-radius: 5px;
+	position: relative;
+	min-height: 190px;}
+.uphome-section-frame > h3 {font-size: 1em;
+	background-color: #fff;
+	padding: 0px 5px;
+	display: inline-block;
+	position: absolute;
+	top: -15px;
+	left: 12px;
+	font-weight: bold;}
+.new-survey-div {min-height: 21px;
+	padding: 0 25px;}
+.new-survey-span {padding: 3px 12px;
+	background-color: #00870D;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 12px;
+	margin-right: 5px;}
+.survey-resume {margin-top: 18px;
+	display: flex;}
+.survey-resume-counter {padding: 13px 0px;
+	font-size: 3em;
+	color: #fff;
+	background-color: #337AB7;
+	border-radius: 45px;
+	width: 86px;
+	display: inline-block;}
+.survey-resume-label {display: block;
+	margin-top: 10px;}
+.survey-resume-link {padding-top: 95px;
+	text-align: right;}
+.rewards-counter {display: block;
+	text-align: center;
+	font-size: 3em;
+	margin-top: 32px;}
+.rewards-link {padding-top: 12px;
+	text-align: right;}
+.basic-profile-resume {padding: 0 25px;}
+.advanced-profile-resume {padding: 0 25px;
+	display: flex;}
+.basic-profile-resume-label,
+.advanced-profile-resume-label {width: 130px;
+	display: inline-block;}
+.basic-profile-resume-completed {background-color: #00870D;
+	color: #fff;
+	padding: 2px 10px;
+	font-weight: bold;
+	margin-right: 50px;}
+.progress {width: 318px;
+	margin-right: 20px;
+	border: 1px solid #000;
+	margin-bottom: 0 !important;}
+.myprofile-options {margin: 8px auto 0px;
+	display: flex;
+	width: 520px;}
+.myprofile-option {float: left;
+	text-align: center;
+	padding: 8px;}
+.myprofile-option a {text-decoration: none !important;
+	padding: 5px;
+	display: block;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	min-width: 90px;}
+.myprofile-option a:hover {border: 2px solid #23527C;}
+.myprofile-option a i {display: block;}
+.myprofile-link {text-align: right;}
+	

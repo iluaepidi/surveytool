@@ -367,7 +367,8 @@ button span {margin-left: 5px;}
 
 .body-content {margin:10px 10px;}
 .title-content {border-bottom: 1px solid #eee;
-	padding-bottom: 20px;}
+	padding-bottom: 20px;
+	margin: auto 4%;}
 .title-content-no-underline {margin: 0 4%;}
 .title-content-no-underline h2 {float: left;}
 .content {margin: 10px 4% 0px;}
@@ -1866,26 +1867,3 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
     border-radius: 4px;}
-
-/*----------------------------------------------*\
-		$User Panel
-\*----------------------------------------------*/
- 
-.login-register-up-forms {width: 85%;
-	margin-top: 30px;
-	border: 1px solid #e0e0e0;
-	background-color: #fbfbfb;
-	padding: 25px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
-.conditions-win {}
-.conditions-win-dialog {margin: 14% auto !important;
-	width: 30% !important;} 
-.conditions-win-dialog h2 {font-size: 1.2em;}
-.conditions-win-dialog button.close {color: #fff;
-	opacity: unset;}
-.conditions-win-dialog div.modal-footer {border: none !important;}
-.account-register-button-div {text-align: center;
-	margin: 20px 0;}
-.confirmation-back-login a {margin-top: 60px;}
-.confirmation-back-login a:hover,
-.confirmation-back-login a:focus {padding: 10px 16px;}
