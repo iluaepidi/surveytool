@@ -48,12 +48,14 @@ public class InitialServlet extends HttpServlet {
 	{
 		
 		String logout = (String)request.getParameter(Parameter.s_LOGOUT);
+		String site = request.getParameter("site");
 		if(logout!=null){
 			//hacer logout
 			HttpSession session = request.getSession();
 			session.removeAttribute(Attribute.s_USER_SESSION_INFO);
 			try {
-				response.sendRedirect("manager");
+				//response.sendRedirect("manager");
+				response.sendRedirect(site);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

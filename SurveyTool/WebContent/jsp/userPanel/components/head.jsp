@@ -43,6 +43,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		<!-- Librería jQuery requerida por los plugins de JavaScript -->
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/jquery-ui.js"></script>
+		<script src="js/bootbox.js"></script>
 		
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrap-accessibility.min.js"></script>

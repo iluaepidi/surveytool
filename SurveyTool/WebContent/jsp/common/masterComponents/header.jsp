@@ -17,7 +17,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 						label: "<%= lang.getContent("header.log.out.yes") %>",
 						className: "btn-success",
 							callback: function() {
-							   window.location.href = "InitialServlet?logout=true";
+							   window.location.href = "InitialServlet?logout=true&site=manager";
 							
 							}
 						},

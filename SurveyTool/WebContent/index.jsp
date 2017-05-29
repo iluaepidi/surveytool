@@ -15,7 +15,9 @@ lang.loadLanguage(Language.getLanguageRequest(request));
   	<body>
   		<div class="main-container">
   			<div class="page-header">
-  				<jsp:include page="jsp/userPanel/components/header.jsp" />
+  				<jsp:include page="jsp/userPanel/components/header.jsp">
+  					<jsp:param value="false" name="logged"/>
+  				</jsp:include>
   			</div>
   			
   			<div class="body-content st-styles">
