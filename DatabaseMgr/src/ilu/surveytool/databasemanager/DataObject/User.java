@@ -14,6 +14,11 @@ public class User {
 	boolean anonimous = false;
 	List<Response> responses;
 	
+	String firstName = "";
+	String lastName = "";
+	Timestamp birthdDate = null;
+	String gender = "";
+	
 
 	public User() {
 		super();
@@ -99,10 +104,44 @@ public class User {
 		this.responses = responses;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", registerDate="
-				+ registerDate + ", anonimous=" + anonimous + "]";
+	public String getFirstName() {
+		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Timestamp getBirthdDate() {
+		return birthdDate;
+	}
+
+	public void setBirthdDate(Timestamp birthdDate) {
+		this.birthdDate = birthdDate;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", rol=" + rol
+				+ ", registerDate=" + registerDate + ", anonimous=" + anonimous + ", responses=" + responses
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", birthdDate=" + birthdDate + ", gender="
+				+ gender + "]";
+	}
+	
 }

@@ -1,6 +1,8 @@
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
@@ -34,13 +36,13 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	}
 	%>
 		
-		<!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+		<!-- librerÃ­as opcionales que activan el soporte de HTML5 para IE8 -->
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
-		<!-- Librería jQuery requerida por los plugins de JavaScript -->
+		<!-- LibrerÃ­a jQuery requerida por los plugins de JavaScript -->
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/bootbox.js"></script>

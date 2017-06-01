@@ -34,10 +34,12 @@ public class Address {
 		public final static String s_BODY_LOGIN_ACCOUNT_CREATION = "accountCreation";
 		public final static String s_BODY_LOGIN_REGISTRATION_CONFIRMATION = "confirmRegistration";
 		public final static String s_BODY_USER_PANEL_HOME = "upHome";
+		public final static String s_BODY_USER_PANEL_BASIC_PROFILE = "basicProfile";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
 		public final static String s_CSS_TOGGLE_BUTTON = "toggleButton";
+		public final static String s_CSS_DATETIMEPICKER = "datetimepicker";
 		
 	//jsFiles
 		public final static String s_JS_EDIT_SURVEY = "editSurvey";
@@ -54,9 +56,10 @@ public class Address {
 		public final static String s_JS_YOUTUBE_ANGULAR_EMBED = "youtubeAlgunar";
 		public final static String s_JS_TOGGLE_BUTTON = "toggleButton";
 		public final static String s_NG_SERVICE_SURVEY = "ngSurveyService";
-		public final static String s_NG_SERVICE_SURVEY_PREVIEW = "ngSurveyPreviewService";
-		
+		public final static String s_NG_SERVICE_SURVEY_PREVIEW = "ngSurveyPreviewService";		
 		public final static String s_NG_CONTROLLER_SURVEY = "ngSurveyController";
+		public final static String s_JS_DATETIMEPICKER = "datetimepicker";
+		public final static String s_JS_MOMENT = "moment";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
@@ -70,6 +73,7 @@ public class Address {
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
 		public final static String s_SERVLET_POLL_STATISTICS = "PollStatisticServlet";
+		public final static String s_SERVLET_USER_PANEL_BASIC_PROFILE = "BasicProfileServlet";
 		
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";

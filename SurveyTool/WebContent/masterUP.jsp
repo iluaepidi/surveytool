@@ -7,6 +7,7 @@ String footerPath = "jsp/common/masterComponents/footer.jsp";
 String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+String logged = (String) request.getAttribute(Attribute.s_LOGGED);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="<%= lang.getCurrentLanguage() %>">
@@ -17,7 +18,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
   		<div class="main-container">
   			<div class="page-header">
   				<jsp:include page="jsp/userPanel/components/header.jsp">
-  					<jsp:param value="true" name="logged"/>
+  					<jsp:param value="<%= logged %>" name="logged"/>
   				</jsp:include>
   			</div>
   			

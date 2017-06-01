@@ -70,8 +70,9 @@ public class DBConstants {
 			public final static String s_VALUE_STATE_FINISHED = "finished";
 		//UserState
 			public final static int i_VALUE_USER_STATE_ID_ACTIVE = 1;
-			public final static int i_VALUE_USER_STATE_ID_EMAIL = 2;
+			public final static int i_VALUE_USER_STATE_ID_EMAIL_CONFIRM = 2;
 			public final static int i_VALUE_USER_STATE_ID_ADMIN = 3;
+			public final static int i_VALUE_USER_STATE_ID_BASIC_PROFILE = 5;
 		//Resource
 			public final static String s_VALUE_RESOURCE_TYPE_IMAGE = "image";
 			public final static String s_VALUE_RESOURCE_TYPE_VIDEO = "video";
@@ -84,8 +85,9 @@ public class DBConstants {
 			public final static String s_VALUE_SURVEY_STATE_ACTIVE = "active";
 			public final static String s_VALUE_SURVEY_STATE_FINISHED = "finished";
 		//user state
-			public final static int i_VALUE_USER_STATE_ACTIVE = 1;
+			/*public final static int i_VALUE_USER_STATE_ACTIVE = 1;
 			public final static int i_VALUE_USER_STATE_EMAIL_CONFIRM = 2;
+			public final static int i_VALUE_USER_STATE_BASIC_PROFILE = 5;*/
 			
 		//Dependence
 			public final static String s_VALUE_DEPENDENCETYPE_AND = "And";

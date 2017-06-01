@@ -3,6 +3,7 @@ package ilu.userpanel.accesscontrol;
 import ilu.surveytool.databasemanager.RegisterDB;
 import ilu.surveytool.databasemanager.UserDB;
 import ilu.surveytool.databasemanager.DataObject.RegisterResponse;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 
 /**
  * 
@@ -36,7 +37,8 @@ public class Register {
 		int userId = userDB.getUserByTempIdAndEmailConfirmStatus(tempId);
 		if(userId != 0)
 		{
-			verified = userDB.updateActivateAccount(userId);
+			//verified = userDB.updateActivateAccount(userId);
+			verified = userDB.updateUserState(userId, DBConstants.i_VALUE_USER_STATE_ID_BASIC_PROFILE);
 		}
 		
 		return verified;

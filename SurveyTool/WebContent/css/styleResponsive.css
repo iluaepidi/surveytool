@@ -19,7 +19,6 @@
 @media (max-width: 1366px) {
 	
 	.content-wrapper {width: 100%;}
-	
 }
 
 /*----------------------------------------------*\
@@ -108,6 +107,7 @@
     .div-dependence-condition {width: 12%;}
 	.div-dependence-question {width: 35%;}
 	.div-dependence-option {width: 35%;}
+	.form-group-horizontal legend {text-align: left;}
 	
 }
 

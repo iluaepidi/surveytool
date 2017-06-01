@@ -7,6 +7,7 @@
 * ERROR
 * HEADER
 * LOGIN_REGISTER
+* BASIC_PROFILE
 * HOME
 */
 
@@ -18,6 +19,41 @@
 /*----------------------------------------------*\
 		$ERROR
 \*----------------------------------------------*/
+
+.horizontal-error, .horizontal-birthdate-error {padding-top: 12px;}
+.horizontal-error .error,
+.horizontal-birthdate-error .error {background-color: #A94442;
+	padding: 6px 12px;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	width: auto;
+	position: static;
+	/*left: 15px;
+	top: 26px;*/
+	z-index: 999;}
+.horizontal-error .error::before {content: '';
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid #A94442;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+	left: 20px;
+	position: absolute;
+	top: 26px;}
+.horizontal-birthdate-error .error::before {content: '';
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid #A94442;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+	left: 20px;
+	position: absolute;
+	top: -8px;}
+.div-error {width: 100%;
+	border: 1px solid #A94442;
+	display: inline-block;
+	border-radius: 5px;
+	padding-bottom: 5px;}
+	
 
 /*----------------------------------------------*\
 		$HEADER
@@ -49,6 +85,30 @@
 .confirmation-back-login a {margin-top: 60px;}
 .confirmation-back-login a:hover,
 .confirmation-back-login a:focus {padding: 10px 16px;}
+	
+/*----------------------------------------------*\
+		$BASIC_PROFILE
+\*----------------------------------------------*/
+ 
+.form-group-horizontal {margin: 10px 0;
+	display: inline-block;
+	width: 100%;}
+.form-group-horizontal .input-group {padding-right: 15px !important;
+	padding-left: 15px !important;}
+.form-group-horizontal legend {font-size: 1em;
+	font-weight: bold;
+	border: none;
+	text-align: right;
+	padding-top: 7px;}
+.birthdate-legend {padding-top: 34px !important;}	
+.skip-button a {text-decoration: underline;
+	padding: 5px;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	min-width: 90px;}
+.skip-button a:hover,
+.skip-button a:focus {border: 2px solid #23527C;
+	color: #23527C;}
 	
 /*----------------------------------------------*\
 		$HOME
@@ -125,4 +185,3 @@
 .myprofile-option a:hover {border: 2px solid #23527C;}
 .myprofile-option a i {display: block;}
 .myprofile-link {text-align: right;}
-	

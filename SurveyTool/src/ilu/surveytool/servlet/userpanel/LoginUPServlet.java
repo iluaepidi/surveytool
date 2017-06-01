@@ -58,7 +58,8 @@ public class LoginUPServlet extends HttpServlet {
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	{
-		SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		//SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
 		//System.out.println("Path: " + bodyPages.getBudyPagePath());
 		/**
@@ -85,14 +86,32 @@ public class LoginUPServlet extends HttpServlet {
 			
 		if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE)
 		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
 			
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		}
+		else if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_BASIC_PROFILE)
+		{
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_BASIC_PROFILE));
+			/*
+			List<String> jsFiles = new ArrayList<>();
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_MOMENT));
+			jsFiles.add(properties.getJsFilePath(Address.s_JS_DATETIMEPICKER));
+			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+			
+			List<String> cssFiles = new ArrayList<>();
+			cssFiles.add(properties.getCssFilePath(Address.s_CSS_DATETIMEPICKER));
+			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
+			*/
+			boolean logged = loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE;
+			request.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
+			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Basic profile");
+		}
 		else
 		{
-			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN_USER_PANEL));
+			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN_USER_PANEL));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		}

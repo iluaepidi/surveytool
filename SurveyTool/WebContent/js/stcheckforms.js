@@ -64,7 +64,38 @@ $(function() {
 			e.preventDefault();
 		}
 	});
+	
+	$('#basicProfile').submit(function(e){
+		var valid = true;
+		/*if($("#firstName").val() == "")
+		{
+			valid = false;
+			showFieldError($('#firstName'));
+		}
+		
+		if($("#lastName").val() == "")
+		{
+			valid = false;
+			showFieldError($('#lastName'));
+		}*/
 
+		if(($("#birthDay").val() == "none" || $("#birthMonth").val() == "none" || $("#birthYear").val() == "none")
+				&& ($("#birthDay").val() != "none" || $("#birthMonth").val() != "none" || $("#birthYear").val() != "none"))
+		{
+			valid = false;
+			$("#birthdate").addClass("div-error");
+			showFieldError($('#birthdate'));
+		}
+		
+		if(valid){
+			error = false;
+			//$('#registerForm').submit();
+		}else{
+			error = true;
+			e.preventDefault();
+		}
+	});
+	
 	$('#accountSubmit').click(function(e){
 		e.preventDefault();
 		var valid = true;
@@ -239,6 +270,59 @@ $(function() {
 			
 			if(value != ''){hideFieldError($(this));}
 			else{showFieldError($(this));}
+		}
+	});
+	
+	$('#birthDay').on('change', function(){
+		console.log("entra en birthday");
+		if(error)
+		{
+			console.log("entra en birthday error");
+			if(($("#birthDay").val() == "none" || $("#birthMonth").val() == "none" || $("#birthYear").val() == "none")
+					&& ($("#birthDay").val() != "none" || $("#birthMonth").val() != "none" || $("#birthYear").val() != "none"))
+			{
+				$("#birthdate").addClass("div-error");
+				showFieldError($('#birthdate'));
+			}
+			else
+			{
+				$("#birthdate").removeClass("div-error");
+				hideFieldError($('#birthdate'));
+			}
+		}
+	});
+
+	$('#birthMonth').on('change', function(){
+		if(error)
+		{
+			if(($("#birthDay").val() == "none" || $("#birthMonth").val() == "none" || $("#birthYear").val() == "none")
+					&& ($("#birthDay").val() != "none" || $("#birthMonth").val() != "none" || $("#birthYear").val() != "none"))
+			{
+				$("#birthdate").addClass("div-error");
+				showFieldError($('#birthdate'));
+			}
+			else
+			{
+				$("#birthdate").removeClass("div-error");
+				hideFieldError($('#birthdate'));
+			}
+		}
+	});
+
+	$('#birthYear').on('change', function(){
+		if(error)
+		{
+			if(($("#birthDay").val() == "none" || $("#birthMonth").val() == "none" || $("#birthYear").val() == "none")
+					&& ($("#birthDay").val() != "none" || $("#birthMonth").val() != "none" || $("#birthYear").val() != "none"))
+			{
+				$("#birthdate").addClass("div-error");
+				showFieldError($('#birthdate'));
+			}
+			else
+			{
+				$("#birthdate").removeClass("div-error");
+				hideFieldError($('#birthdate'));
+			}
 		}
 	});
 	

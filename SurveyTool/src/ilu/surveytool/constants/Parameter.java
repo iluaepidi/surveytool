@@ -75,4 +75,12 @@ public class Parameter {
 	public final static String s_RADIO = "radio";
 	public final static String s_COMBO = "combo";
 	public final static String s_SCALE_TYPE = "scaleType";
+	
+	public final static String s_FIRST_NAME = "firstName";
+	public final static String s_LAST_NAME = "lastName";
+	public final static String s_DAY = "day";
+	public final static String s_MONTH = "month";
+	public final static String s_YEAR = "year";
+	public final static String s_GENDER = "gender";
+	public final static String s_SKIP = "skip";
 }

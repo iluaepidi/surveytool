@@ -685,6 +685,7 @@ public class DBSQLQueries {
 		//user
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
 			public final static String s_UPDATE_USER_ACCOUNT = "UPDATE surveytool.user SET temporalId=?, idUserState=? WHERE idUser= ?";
+			public final static String s_UPDATE_USER_BASIC_PROFILE = "UPDATE surveytool.user SET firstName=?, lastName=?, birthDate=?, gender=? WHERE idUser= ?";
 
 		//QDependences
 			public final static String s_UPDATE_QDEPENDENCE_SHOW = "UPDATE `surveytool`.`qdependences` SET show=? WHERE idQDependences = ?";

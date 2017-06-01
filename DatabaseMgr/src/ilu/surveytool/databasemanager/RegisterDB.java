@@ -173,7 +173,7 @@ public class RegisterDB {
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS);		
 		   	pstm.setString(1, temporalId);
-	   		pstm.setInt(2, DBConstants.i_VALUE_USER_STATE_EMAIL_CONFIRM);
+	   		pstm.setInt(2, DBConstants.i_VALUE_USER_STATE_ID_EMAIL_CONFIRM);
 	   		
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
