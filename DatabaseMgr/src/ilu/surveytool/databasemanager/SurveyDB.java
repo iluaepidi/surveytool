@@ -210,6 +210,34 @@ public class SurveyDB {
 		return response;
 	}
 
+	public int getNumQuestionnairesByStatus(String status)
+	{
+		int response = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_COUNTER_BY_STATUS);			
+	   		pstm.setString(1, status);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			response = rs.getInt(DBFieldNames.s_NUM_ELEMENTS);
+	   		}
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
 
 	public String getQuestionnaireStateById(int surveyId)
 	{
@@ -639,6 +667,36 @@ public class SurveyDB {
 		}
 		
 		return surveyId;
+	}
+
+	public String getLastQuestionnaireTitleNotCompletedByUser(int userId)
+	{
+		String response = "";
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_LAST_QUESTIONNAIRE_TITLE_NOT_COMPLETED_BY_USER);			
+	   		pstm.setString(1, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		pstm.setString(2, DBConstants.s_VALUE_SURVEY_STATE_ACTIVE);
+	   		pstm.setInt(3, userId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			response = rs.getString(DBFieldNames.s_CONTENT_TEXT);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
 	}
 	
 	public Project getProjectByName(String name)

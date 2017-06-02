@@ -63,4 +63,5 @@ public class Attribute {
 	public final static String s_NEWOID = "newoid";
 	public final static String s_TAB = "tab";
 	public final static String s_SCALE_TYPE = "scaleType";
+	public final static String s_USER_SURVEY_RESUME = "userSurveyResume";
 }

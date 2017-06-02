@@ -60,6 +60,7 @@ public class LoginUPServlet extends HttpServlet {
 	{
 		//SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
+		boolean isRedirect = false;
 		
 		//System.out.println("Path: " + bodyPages.getBudyPagePath());
 		/**
@@ -86,24 +87,23 @@ public class LoginUPServlet extends HttpServlet {
 			
 		if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE)
 		{
-			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+			/*request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
 			
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");*/
+			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+			isRedirect = true;
+			try {
+				response.sendRedirect(Address.s_SERVLET_USER_PANEL_UPHOME);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER) && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_BASIC_PROFILE)
 		{
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_BASIC_PROFILE));
-			/*
-			List<String> jsFiles = new ArrayList<>();
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_MOMENT));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_DATETIMEPICKER));
-			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			
-			List<String> cssFiles = new ArrayList<>();
-			cssFiles.add(properties.getCssFilePath(Address.s_CSS_DATETIMEPICKER));
-			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
-			*/
 			boolean logged = loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE;
 			request.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
@@ -116,7 +116,7 @@ public class LoginUPServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
 		}
 			
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE_USER_PANEL);
+		if(!isRedirect) CommonCode.redirect(request, response, Address.s_MASTER_PAGE_USER_PANEL);
 	}
 
 }

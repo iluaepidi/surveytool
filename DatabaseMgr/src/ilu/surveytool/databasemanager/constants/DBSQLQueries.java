@@ -355,6 +355,7 @@ public class DBSQLQueries {
 		//Questionnaire
 		public final static String s_SELECT_QUESTIONNAIRE = "SELECT * FROM surveytool.questionnaire q INNER JOIN surveytool.project p ON q.idProject = p.idProject WHERE q.author = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_PUBLICID = "SELECT publicId FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
+		public final static String s_SELECT_QUESTIONNAIRE_COUNTER_BY_STATUS = "SELECT count(*) numElements FROM surveytool.questionnaire where state = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_STATE_BY_ID = "SELECT state FROM surveytool.questionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_STATE_BY_PUBLICID = "SELECT state FROM surveytool.questionnaire WHERE publicId = ?";
 		public final static String s_SELECT_QUESTIONNAIRE_IPFILTER_BY_PUBLICID = "SELECT ipFilter FROM surveytool.questionnaire WHERE publicId = ?";
@@ -408,10 +409,16 @@ public class DBSQLQueries {
 				+"inner join page p on p.idSection = s.idSection "
 				+"inner join questionbypage q on q.idPage = p.idPage "
 				+"where f.idQuestionnaire = ? group by q.mandatory";
+		public final static String s_SELECT_NUM_QUESTIONNAIRE_BY_USERID_FINISHED = "SELECT count(*) numElements from userquestionnaire where idUser = ? and finished = ?";
 		public final static String s_SELECT_QUESTIONNAIREID_PAGEID = "SELECT f.idQuestionnaire from forma f "
 				+"inner join section s on s.idForma = f.idForma "
 				+"inner join page p on p.idSection = s.idSection "
 				+"where p.idPage = ?";
+		public final static String s_SELECT_LAST_QUESTIONNAIRE_TITLE_NOT_COMPLETED_BY_USER = "SELECT distinct q.idQuestionnaire, c.text FROM surveytool.questionnaire as q "
+				+ "inner join surveytool.content as c on q.idContent = c.idContent "
+				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
+				+ "where ct.name = ? and q.state = ? and q.idQuestionnaire NOT IN (SELECT uq.idQuestionnaire FROM surveytool.userquestionnaire as uq WHERE uq.idUser = ? and uq.finished = true) "
+				+ "order by q.creationDate desc LIMIT 1";		
 		
 		//QuestionByPage
 		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";

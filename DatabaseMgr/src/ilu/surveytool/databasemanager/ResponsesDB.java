@@ -57,7 +57,37 @@ public class ResponsesDB {
 	/**
 	 * Selects
 	 */
-	      
+	
+
+	public int getNumQuestionnairesFinished(int userId, boolean finished){
+		int count = 0;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_NUM_QUESTIONNAIRE_BY_USERID_FINISHED);			
+	   		pstm.setInt(1, userId);
+	   		pstm.setBoolean(2, finished);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			count = rs.getInt(DBFieldNames.s_NUM_ELEMENTS);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return count;
+	}
+	
+	
 	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId, String language)
 	{
 		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>>();

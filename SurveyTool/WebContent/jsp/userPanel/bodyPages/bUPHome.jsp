@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.databasemanager.DataObject.UserSurveyResume"%>
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,6 +11,8 @@
 LoginResponse loginResponse = (LoginResponse) request.getAttribute(Attribute.s_LOGIN_RESPONSE);
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
+
+UserSurveyResume userSurveyResume = (UserSurveyResume) request.getAttribute(Attribute.s_USER_SURVEY_RESUME);
 %>
 				<div class="container-fluid">
 	  				<div class="title-content">
@@ -23,15 +26,15 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  							<div class="uphome-section-frame">
 	  								<h3>My Surveys</h3>
 	  								<div class="new-survey-div">
-	  									<p><span class="new-survey-span">New!</span> Survey on tourism and transportation habits</p>
+	  									<p><span class="new-survey-span">New!</span> <%= userSurveyResume.getLastSurveyTitel() %></p>
 	  								</div>
 	  								<div class="survey-resume">
 	  									<div class="col-sm-4 col-xs-4 center survey-resume-available">
-	  										<span class="survey-resume-counter">0</span>
+	  										<span class="survey-resume-counter"><%= userSurveyResume.getAvailableSurveys() %></span>
 	  										<span class="survey-resume-label">available surveys</span>
 	  									</div>
 	  									<div class="col-sm-4 col-xs-4 center survey-resume-completed">
-	  										<span class="survey-resume-counter">7</span>
+	  										<span class="survey-resume-counter"><%= userSurveyResume.getCompletedSurveys() %></span>
 	  										<span class="survey-resume-label">Surveys completed</span>
 	  									</div>
 	  									<div class="col-sm-4 col-xs-4 center survey-resume-link">

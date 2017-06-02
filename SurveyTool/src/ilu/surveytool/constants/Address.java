@@ -74,6 +74,7 @@ public class Address {
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";
 		public final static String s_SERVLET_POLL_STATISTICS = "PollStatisticServlet";
 		public final static String s_SERVLET_USER_PANEL_BASIC_PROFILE = "BasicProfileServlet";
+		public final static String s_SERVLET_USER_PANEL_UPHOME = "UPHomeServlet";
 		
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";
