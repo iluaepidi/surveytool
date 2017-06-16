@@ -1,8 +1,11 @@
 package ilu.userpanel.handler;
 
+import java.util.List;
+
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.DataObject.UserSurveyResume;
+import ilu.surveytool.databasemanager.DataObject.UserSurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 
 public class SurveyHandler {
@@ -24,6 +27,12 @@ public class SurveyHandler {
 		userSurveyResume.setLastSurveyTitel(surveyDB.getLastQuestionnaireTitleNotCompletedByUser(userId));
 		
 		return userSurveyResume;
+	}
+	
+	public List<UserSurveyTableInfo> getUserSurveyTableInfo(int userId, String language)
+	{
+		SurveyDB surveyDB = new SurveyDB();
+		return surveyDB.getUserSurveysTableInfoByUserId(userId, language);
 	}
 
 }

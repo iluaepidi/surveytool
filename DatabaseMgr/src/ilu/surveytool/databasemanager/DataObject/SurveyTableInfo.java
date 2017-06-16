@@ -6,6 +6,7 @@ public class SurveyTableInfo {
 	
 	int surveyId;
 	String title = "";
+	String description = "";
 	int numUsers;
 	int numUsersFinished;
 	Timestamp deadLineDate;
@@ -73,11 +74,19 @@ public class SurveyTableInfo {
 		this.state = state;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
-		return "SurveyTableInfo [surveyId=" + surveyId + ", title=" + title + ", numUsers=" + numUsers
-				+ ", numUsersFinished=" + numUsersFinished + ", deadLineDate=" + deadLineDate + ", state=" + state
-				+ "]";
+		return "SurveyTableInfo [surveyId=" + surveyId + ", title=" + title + ", description=" + description
+				+ ", numUsers=" + numUsers + ", numUsersFinished=" + numUsersFinished + ", deadLineDate=" + deadLineDate
+				+ ", state=" + state + "]";
 	}
 	
 }

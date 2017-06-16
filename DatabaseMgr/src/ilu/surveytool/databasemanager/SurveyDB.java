@@ -20,6 +20,8 @@ import ilu.surveytool.databasemanager.DataObject.Project;
 import ilu.surveytool.databasemanager.DataObject.Questionnaire;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
+import ilu.surveytool.databasemanager.DataObject.UserSurvey;
+import ilu.surveytool.databasemanager.DataObject.UserSurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
@@ -525,7 +527,79 @@ public class SurveyDB {
 		return response;
 	}
 
-	
+
+	public List<UserSurveyTableInfo> getUserSurveysTableInfoByUserId(int userId, String language)
+	{
+		List<UserSurveyTableInfo> response = new ArrayList<UserSurveyTableInfo>();
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLEINFO_BY_USER);
+		   	pstm.setString(1, language);
+		   	pstm.setString(2, language);
+		   	pstm.setString(3, language);
+	   		pstm.setInt(4, userId);
+	   		//pstm.setString(3, language);
+	   		//pstm.setString(3, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		
+	   		rs = pstm.executeQuery();
+	   		while(rs.next())
+	   		{
+	   			UserSurveyTableInfo survey = new UserSurveyTableInfo();	   			
+	   			
+	   			SurveyTableInfo surveyInfo = new SurveyTableInfo();
+	   			surveyInfo.setSurveyId(rs.getInt(DBFieldNames.s_QUESTIONNAIREID));
+	   			surveyInfo.setDeadLineDate(rs.getTimestamp(DBFieldNames.s_DEADLINE_DATE));
+	   			surveyInfo.setTitle(rs.getString(DBFieldNames.s_GENERICO_TITLE));
+	   			surveyInfo.setDescription(rs.getString(DBFieldNames.s_GENERICO_DESCRIPTION));
+	   			surveyInfo.setState(rs.getString(DBFieldNames.s_STATE));
+	   			survey.setSurveyTableInfo(surveyInfo);
+	   			
+	   			survey.setSurveyPublicId(rs.getString(DBFieldNames.s_PUBLIC_ID));
+	   			
+	   			int userSurveyId = rs.getInt(DBFieldNames.s_USER_QUESTIONNAIRE_ID);
+	   			if(!rs.wasNull())
+	   			{
+	   				boolean finished = rs.getBoolean(DBFieldNames.s_ANONYMOUS_USER_FINISHED);
+	   				int currentPage = rs.getInt(DBFieldNames.s_CURRENT_PAGE);
+	   				int numPages = rs.getInt(DBFieldNames.s_NUM_PAGES);
+	   				int progress = 0;
+	   				if(finished) 
+	   				{ 
+	   					progress = 100; 
+	   				}
+	   				else 
+	   				{ 
+	   					progress = Math.round(((currentPage - 1) * 100) / numPages); 
+	   					System.out.println("Progress: " + progress);
+	   				}
+	   				
+	   				UserSurvey userSurvey = new UserSurvey(userSurveyId, 
+	   						rs.getInt(DBFieldNames.s_USERID), 
+	   						rs.getInt(DBFieldNames.s_QUESTIONNAIREID), 
+	   						0, 
+	   						progress, 
+	   						currentPage, 
+	   						finished);	   	
+	   				survey.setUserSurvey(userSurvey);
+	   			}
+	   			
+	   			response.add(survey);
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
+
 
 	public int getQuestionnairesContentId(int surveyId)
 	{

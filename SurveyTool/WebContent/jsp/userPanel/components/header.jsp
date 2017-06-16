@@ -1,3 +1,4 @@
+<%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.constants.Attribute"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
@@ -45,7 +46,7 @@ boolean isLogged = Boolean.parseBoolean(isLoggedStr);
 	  				
 	  				<div class="col-sm-3 col-md-4 col-xs-12">
   						<div class="myprofile-option">
-							<a href="">
+							<a href="<%= Address.s_SERVLET_USER_PANEL_MYSURVEYS %>">
 								<i class="fa fa-wpforms fa-2x" aria-hidden="true"></i>	  										
 								My surveys
 							</a>

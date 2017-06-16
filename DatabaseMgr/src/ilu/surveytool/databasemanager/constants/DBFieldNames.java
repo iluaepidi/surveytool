@@ -14,6 +14,7 @@ public class DBFieldNames {
 	 
 	//generico
 		public final static String s_GENERICO_TITLE = "title";
+		public final static String s_GENERICO_DESCRIPTION = "description";
 		public final static String s_GENERICO_ALL_USERS = "allUsers";
 		public final static String s_GENERICO_USERS_FINISHED = "usersFinished";
 		public final static String s_CREATION_DATE = "creationDate";
@@ -91,6 +92,7 @@ public class DBFieldNames {
 		public final static String s_DEFAULT_LANGUAGE = "defaultLanguage";
 		public final static String s_OBJETIVE = "objetive";
 		public final static String s_IP_FILTER = "ipFilter";
+		public final static String s_NUM_PAGES = "numPages";
 		
 	//resources
 		public final static String s_RESOURCEID = "idResoruces";
@@ -113,6 +115,9 @@ public class DBFieldNames {
 		public final static String s_USER_EMAIL = "email";
 		public final static String s_USER_ISO_LANGUAGE = "isoName";
 		public final static String s_USER_STATE_ID = "idUserState";
+		
+	//UserQuestionnarie
+		public final static String s_USER_QUESTIONNAIRE_ID = "idUserQuestionnaire";
 		
 	//QDependences
 		public final static String s_IDQDEPENDENCE = "idQDependences";

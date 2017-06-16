@@ -91,6 +91,9 @@ public class LoginUPServlet extends HttpServlet {
 			
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");*/
+
+			boolean logged = loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE;
+			session.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 			isRedirect = true;
 			try {
@@ -105,7 +108,7 @@ public class LoginUPServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_BASIC_PROFILE));
 			
 			boolean logged = loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE;
-			request.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
+			session.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
 			request.setAttribute(Attribute.s_PAGE_TITLE, "Basic profile");
 		}

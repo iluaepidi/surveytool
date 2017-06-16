@@ -37,8 +37,8 @@ UserSurveyResume userSurveyResume = (UserSurveyResume) request.getAttribute(Attr
 	  										<span class="survey-resume-counter"><%= userSurveyResume.getCompletedSurveys() %></span>
 	  										<span class="survey-resume-label">Surveys completed</span>
 	  									</div>
-	  									<div class="col-sm-4 col-xs-4 center survey-resume-link">
-	  										<a href="">Wiew all surveys <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+	  									<div class="col-sm-4 col-xs-4 center survey-resume-link">	  										
+	  										<a href="<%= Address.s_SERVLET_USER_PANEL_MYSURVEYS %>">Wiew all surveys <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 	  									</div>
 	  								</div>
 	  							</div>

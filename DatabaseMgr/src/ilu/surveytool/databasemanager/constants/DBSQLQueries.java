@@ -418,7 +418,29 @@ public class DBSQLQueries {
 				+ "inner join surveytool.content as c on q.idContent = c.idContent "
 				+ "inner join surveytool.contenttype ct on c.idContentType = ct.idContentType "
 				+ "where ct.name = ? and q.state = ? and q.idQuestionnaire NOT IN (SELECT uq.idQuestionnaire FROM surveytool.userquestionnaire as uq WHERE uq.idUser = ? and uq.finished = true) "
-				+ "order by q.creationDate desc LIMIT 1";		
+				+ "order by q.creationDate desc LIMIT 1";				
+		public final static String s_SELECT_QUESTIONNAIRE_TABLEINFO_BY_USER = "SELECT distinct uq.idUser, uq.idUserQuestionnaire, uq.currentPage, uq.finished, q.idQuestionnaire, q.state, "
+				+ "(Select c.text FROM surveytool.content as c "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "inner join surveytool.language as l on l.idLanguage = c.idLanguage "
+					+ "where c.idContent = q.idContent and ct.name = '" + DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE + "' and l.isoName = ?) " + DBFieldNames.s_GENERICO_TITLE + ", "
+				+ "(Select c.text FROM surveytool.content as c "
+					+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
+					+ "inner join surveytool.language as l on l.idLanguage = c.idLanguage "
+					+ "where c.idContent = q.idContent and ct.name = '" + DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCRIPTION + "' and l.isoName = ?) " + DBFieldNames.s_GENERICO_DESCRIPTION + ",  "
+				+ "q.publicId, q.deadLineDate, "
+				+ "(SELECT DISTINCT COUNT(p.idPage) FROM surveytool.page AS p "
+					+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+					+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+					+ "INNER JOIN surveytool.questionnaire AS qq ON qq.idQuestionnaire = f.idQuestionnaire "
+					+ "WHERE qq.idQuestionnaire = q.idQuestionnaire order by p.numPage) numPages "
+				+ "FROM surveytool.questionnaire as q "
+				+ "inner join surveytool.content as cc on cc.idContent = q.idContent "
+				+ "inner join surveytool.language as ll on ll.idLanguage = cc.idLanguage "
+				+ "inner join surveytool.contenttype as cctt on cc.idContentType = cctt.idContentType "
+				+ "left join surveytool.userquestionnaire as uq on uq.idQuestionnaire = q.idQuestionnaire "
+				+ "where cctt.name = '" + DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE + "' and ll.isoName = ? and (q.state = 'active' or q.state = 'finished') and (uq.idUser IS NULL OR uq.idUser = ?) "
+				+ "order by q.state, uq.finished, q.creationDate desc";
 		
 		//QuestionByPage
 		public final static String s_SELECT_QUESTIONBYPAGE_BY_PAGEID_MAX_MIN = "SELECT * FROM surveytool.questionbypage where idPage = ? ## order by `index`";

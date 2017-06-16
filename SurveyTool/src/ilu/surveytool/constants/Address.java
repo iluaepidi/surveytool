@@ -35,6 +35,7 @@ public class Address {
 		public final static String s_BODY_LOGIN_REGISTRATION_CONFIRMATION = "confirmRegistration";
 		public final static String s_BODY_USER_PANEL_HOME = "upHome";
 		public final static String s_BODY_USER_PANEL_BASIC_PROFILE = "basicProfile";
+		public final static String s_BODY_USER_PANEL_MYSURVEYS = "mySurveys";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
@@ -60,6 +61,8 @@ public class Address {
 		public final static String s_NG_CONTROLLER_SURVEY = "ngSurveyController";
 		public final static String s_JS_DATETIMEPICKER = "datetimepicker";
 		public final static String s_JS_MOMENT = "moment";
+		public final static String s_JS_DATATABLE_JQUERY = "datatableJquery";
+		public final static String s_JS_DATATABLE_BOOTSTRAP = "datatableBootstrap";
 		
 	//Servielt
 		public final static String s_SERVLET_CREATE_QUESTION = "CreateQuestionServlet";
@@ -75,6 +78,7 @@ public class Address {
 		public final static String s_SERVLET_POLL_STATISTICS = "PollStatisticServlet";
 		public final static String s_SERVLET_USER_PANEL_BASIC_PROFILE = "BasicProfileServlet";
 		public final static String s_SERVLET_USER_PANEL_UPHOME = "UPHomeServlet";
+		public final static String s_SERVLET_USER_PANEL_MYSURVEYS = "MySurveysServlet";
 		
 	//JSP MasterPage
 		public final static String s_INIT_PAGE = "inicio.jsp";
