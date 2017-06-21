@@ -16,7 +16,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LogicGoTo;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
@@ -1139,13 +1139,13 @@ public class QuestionDB {
 			while(rs.next())
 	   		{
 				
-				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+((AnonimousUser) anonimousUser).getId()+", lang:"+lang+", langdefault:"+langdefault);
+				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+((SurveyUser) anonimousUser).getId()+", lang:"+lang+", langdefault:"+langdefault);
 				int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
 				boolean hidden = false;
 				
-				if(anonimousUser instanceof AnonimousUser)
+				if(anonimousUser instanceof SurveyUser)
    				{
-   					AnonimousUser anonymousUser2 = ((AnonimousUser) anonimousUser);
+   					SurveyUser anonymousUser2 = ((SurveyUser) anonimousUser);
 					QDependenceDB qDependeceDB = new QDependenceDB();
 					QDependence qdependence = qDependeceDB.getQDependenceByQuestionIdWithoutTexts(questionId);
 					
@@ -1218,9 +1218,9 @@ public class QuestionDB {
 		   			if(optionsGroups.length() == 0)
 		   			{
 		   				ResponsesDB responsesDB = new ResponsesDB();
-		   				if(anonimousUser instanceof AnonimousUser)
+		   				if(anonimousUser instanceof SurveyUser)
 		   				{
-		   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+		   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
 		   					String value = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, null);
 		   					if(!questionType.equals("scale") || (questionType.equals("scale") && !value.isEmpty()))
 		   					{
@@ -1251,7 +1251,7 @@ public class QuestionDB {
 	   		}
 			
 			System.out.println(questions);
-			int numQuestions = getNumQuestionByPage(((AnonimousUser) anonimousUser).getId());
+			int numQuestions = getNumQuestionByPage(((SurveyUser) anonimousUser).getId());
 			if((numBodyContents==questions.length()) && (questions.length()<numQuestions)){
 				System.out.println("All hidden minus bodyContent");
 				questions = new JSONArray();

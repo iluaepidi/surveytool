@@ -662,21 +662,26 @@ public class ResponsesDB {
 	 * Remove
 	 */
 	
-	public void removeAnonymousResponse(int anonymousUserId, int surveyId, int questionId, Integer optionsGroupId) {
+	public void removeResponse(int surveyUserId, int surveyId, int questionId, Integer optionsGroupId, boolean isAnonymous) {
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		
 		String query = "";
+		if(isAnonymous)
+			query = DBSQLQueries.s_DELETE_ANONYMOUS_RESPONSES;
+		else
+			query = DBSQLQueries.s_DELETE_USER_RESPONSES;
+			
 		if(optionsGroupId == null)
-	   		query = DBSQLQueries.s_DELETE_RESPONSES + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
+	   		query = query + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
 	   	else
-	   		query = DBSQLQueries.s_DELETE_RESPONSES + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
+	   		query = query + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
 		
 		   
 		try{
 		   	pstm = con.prepareStatement(query);
-		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(1, surveyUserId);
 		   	pstm.setInt(2, surveyId);
 		   	pstm.setInt(3, questionId);
 		   	if(optionsGroupId != null) pstm.setInt(4, optionsGroupId);

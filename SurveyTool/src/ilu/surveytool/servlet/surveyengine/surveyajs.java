@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.jettison.json.JSONObject;
 
@@ -19,7 +20,8 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.SurveyDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
+import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Survey;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.language.Language;
@@ -74,24 +76,34 @@ public class surveyajs extends HttpServlet {
 		
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		
+		HttpSession session = request.getSession();
+		LoginResponse loginResp = (LoginResponse) session.getAttribute(Attribute.s_USER_SESSION_INFO);
+		
 		if(preview || state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE))
 		{
 			//AnonimousUser anonimousUser = new AnonimousUser();
-			AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
-			if(anonimousUser == null)
+			SurveyUser surveyUser = (SurveyUser) session.getAttribute(Attribute.s_SURVEY_USER);
+			if(surveyUser == null)
 			{
-				anonimousUser = new AnonimousUser();
-				anonimousUser.setIpAddress(request.getRemoteAddr());
-				anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
-				anonimousUser.setCurrentPage(1);
-				if(hasIpFilter) anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+				surveyUser = new SurveyUser();
+				surveyUser.setIpAddress(request.getRemoteAddr());
+				surveyUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+				surveyUser.setCurrentPage(1);
+				if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER))
+				{
+					surveyUser = surveyProcessHandler.existSurveyUser(surveyUser, loginResp.getUserId());
+				}
+				else
+				{
+					if(hasIpFilter) surveyUser = surveyProcessHandler.existAnonimousUser(surveyUser, preview);
+				}
 			}
 			
-			if(preview) anonimousUser.setCurrentPage(1);
-			request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+			if(preview) surveyUser.setCurrentPage(1);
+			request.getSession().setAttribute(Attribute.s_SURVEY_USER, surveyUser);
 			
 			//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
-			JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
+			JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, surveyUser, language);
 			System.out.println("Json: " + survey.toString());
 	
 			request.setAttribute(Attribute.s_SURVEY_INFO, survey);

@@ -254,7 +254,10 @@ public class DBSQLQueries {
 		public final static String s_GET_IDLANGUEGE_FROM_ISONAME = "SELECT idLanguage FROM surveytool.language WHERE isoName LIKE ?";
 		public final static String s_GET_ISOLANGUEGE_FROM_IDLANGUAGE = "SELECT isoName FROM surveytool.language WHERE idLanguage = ?";
 		public final static String s_SELECT_LIST_LANGUAGES = "SELECT name,isoName FROM surveytool.language";
-				
+		
+		//UserQuestionnaire
+		public final static String s_SELECT_SURVEY_USER_BY_USERID_SURVEYID = "SELECT * FROM surveytool.userquestionnaire where idUser = ? and idQuestionnaire = ?";
+		
 		//Register
 		
 		//Question
@@ -638,7 +641,10 @@ public class DBSQLQueries {
 		//Responses
 			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
 			public final static String s_INSERT_RESPONSE_PAGES_ANONIMOUS = "INSERT INTO `surveytool`.`anonimouspages` (`idPage`, `idAnonimousUser`) VALUES (?, ?)";
-			
+		//userQuestionnaire
+			public final static String s_INSERT_USER_QUESTIONNAIRE = "INSERT INTO `surveytool`.`userquestionnaire` (`idUser`, `idQuestionnaire`, `currentPage`) VALUES (?, ?, ?)";
+		//userResponse
+			public final static String s_INSERT_USER_RESPONSE = "INSERT INTO `surveytool`.`userresponse` (`idUserQuestionnaire`, `idResponse`) VALUES (?, ?)";
 		//QDependences
 			public final static String s_INSERT_QDEPENDENCE = "INSERT INTO surveytool.qdependences (idQuestionnaire, idQuestion, idDependenceType) VALUES ((SELECT idQuestionnaire FROM surveytool.forma WHERE idForma = (SELECT idForma FROM surveytool.section where idSection= (SELECT idSection FROM surveytool.page where idPage= (SELECT idPage FROM surveytool.questionbypage where idquestion=?)))), ?, (SELECT idDependenceType FROM surveytool.dependencetype where name = ?))";
 			public final static String s_INSERT_QDEPENDENCEVALUE = "INSERT INTO `surveytool`.`qdependencesvalue` (`idQDependences`, `idQuestion`, `idOptionsGroup`, `optionValue`) VALUES (?, ?, ?, ?)";
@@ -774,13 +780,19 @@ public class DBSQLQueries {
 			public final static String s_DELETE_RESOURCE = "DELETE FROM `surveytool`.`resoruces` WHERE `idResoruces`=?";
 			
 		//responses
-			public final static String s_DELETE_RESPONSES = "DELETE r.* FROM surveytool.responses as r "
+			public final static String s_DELETE_ANONYMOUS_RESPONSES = "DELETE r.* FROM surveytool.responses as r "
 					+ "inner join surveytool.anonimousresponse as ar on ar.idResponse = r.idResponse "
 					+ "inner join surveytool.anonimoususer as au on ar.idAnonimousUser = au.idAnonimousUser "
 					+ "WHERE au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
+			public final static String s_DELETE_USER_RESPONSES = "DELETE r.* FROM surveytool.responses as r "
+					+ "inner join surveytool.userresponse as ur on ur.idResponse = r.idResponse "
+					+ "inner join surveytool.userquestionnaire as uq on ur.idUserQuestionnaire = uq.idUserQuestionnaire "
+					+ "WHERE uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ?";
 
 		//section
 			public final static String s_DELETE_SECTION = "DELETE FROM surveytool.section WHERE idSection = ?";
+		
+		
 
 		//QDependences
 			public final static String s_DELETE_QDEPENDENCE = "DELETE FROM `surveytool`.`qdependences` WHERE idQDependences = ?";

@@ -13,7 +13,7 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Project;
@@ -392,7 +392,7 @@ public class SurveyDB {
 	   			PageDB pageDB = new PageDB();
 	   			int numPages = pageDB.getNumPagesBySurveyId(surveyId);
 	   			response.put("numPages", numPages);
-	   			response.put("isFinishPage", ((AnonimousUser) anonimousUser).getCurrentPage() > numPages);
+	   			response.put("isFinishPage", ((SurveyUser) anonimousUser).getCurrentPage() > numPages);
 	   			
 	   			String langDefault = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
 	   			ContentDB contentDB = new ContentDB();

@@ -13,7 +13,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
@@ -183,9 +183,9 @@ public class OptionDB {
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO) || optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_SELECT)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
-	   				if(anonimousUser instanceof AnonimousUser)
+	   				if(anonimousUser instanceof SurveyUser)
 	   				{
-	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
 	   					String response = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId);
 	   					String responseOtherText = "";
 	   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
@@ -343,9 +343,9 @@ public class OptionDB {
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
-	   				if(anonimousUser instanceof AnonimousUser)
+	   				if(anonimousUser instanceof SurveyUser)
 	   				{
-	   					AnonimousUser anonumousUser2 = ((AnonimousUser) anonimousUser);
+	   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
 	   					if(isOtherOption)
 	   					{
 		   					String response = responsesDB.getAnonymousOtherResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId);

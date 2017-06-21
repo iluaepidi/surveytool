@@ -15,7 +15,8 @@ import ilu.surveytool.databasemanager.QuestionDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.SurveyUserDB;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Response;
 import ilu.surveytool.databasemanager.DataObject.Section;
@@ -37,17 +38,17 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 
-	public JSONObject getCurrentPageJson(String publicId, Object anonimousUser, String lang)
+	public JSONObject getCurrentPageJson(String publicId, Object surveyUser, String lang)
 	{
 		SurveyDB surveyDB = new SurveyDB();
 		if(lang == null || lang.isEmpty()) lang = "en";		
 		
 		SectionDB sectionDB = new SectionDB();
-		Section section = sectionDB.getSectionBySurveyIdNumPage(((AnonimousUser) anonimousUser).getSurveyId(), ((AnonimousUser) anonimousUser).getCurrentPage());
+		Section section = sectionDB.getSectionBySurveyIdNumPage(((SurveyUser) surveyUser).getSurveyId(), ((SurveyUser) surveyUser).getCurrentPage());
 		int numSection = 0;
 		if(section != null) numSection = section.getIndex();
 			
-		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, anonimousUser, lang);
+		JSONObject survey = surveyDB.getQuestionnaireJson(publicId, numSection, surveyUser, lang);
 		try {
 			survey.put("hasFinishPage", this.isFinishPage(survey.getInt("surveyId"), survey.getInt("numPages")));
 		} catch (JSONException e) {
@@ -121,18 +122,31 @@ public class SurveyProcessHandler {
 		
 		return page;
 	}
-	
-	
-	public AnonimousUser existAnonimousUser(AnonimousUser anonimousUser, boolean isPreview)
+		
+	public SurveyUser existAnonimousUser(SurveyUser surveyUser, boolean isPreview)
 	{		
 		AnonimousDB anonimousDB = new AnonimousDB();
-		AnonimousUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(anonimousUser.getSurveyId(), anonimousUser.getIpAddress(), isPreview);
+		SurveyUser anonimousUser2 = anonimousDB.getAnonimousUserByIpAddress(surveyUser.getSurveyId(), surveyUser.getIpAddress(), isPreview);
 		if(anonimousUser2 != null)
 		{
-			anonimousUser = anonimousUser2;
+			surveyUser = anonimousUser2;
 		}
+		else surveyUser.setAnonymousUser(true);
 		
-		return anonimousUser;
+		return surveyUser;
+	}
+	
+	public SurveyUser existSurveyUser(SurveyUser surveyUser, int userId)
+	{		
+		SurveyUserDB surveyUserDB = new SurveyUserDB();
+		SurveyUser surveyUser2 = surveyUserDB.getSurveyUserByUserId(surveyUser.getSurveyId(), userId);
+		if(surveyUser2 != null)
+		{
+			surveyUser = surveyUser2;
+		}
+		else surveyUser.setAnonymousUser(false);
+		
+		return surveyUser;
 	}
 	
 	public boolean storeAnonimousResponse(int surveyId, List<Response> responses)
@@ -161,7 +175,7 @@ public class SurveyProcessHandler {
 		return stored;
 	}
 
-	public boolean anonimousResponseProcess(AnonimousUser anonimousUser, JSONObject responses, boolean isPreview)
+	public boolean surveyResponseProcess(SurveyUser surveyUser, JSONObject responses, boolean isPreview)
 	{
 		boolean stored = true;
 		
@@ -169,19 +183,28 @@ public class SurveyProcessHandler {
 		
 		AnonimousDB anonimousDB = new AnonimousDB();
 		ResponsesDB responsesDB = new ResponsesDB();
+		SurveyUserDB surveyUserDB = new SurveyUserDB();
 		
 		try
 		{
 			int surveyId = responses.getInt("surveyId");
 			JSONObject page = responses.getJSONObject("page");
-			int anonymousUserId = anonimousUser.getId();
-			if(anonymousUserId == 0)
+			int userSurveyId = surveyUser.getId();
+			if(userSurveyId == 0)
 			{
-				anonymousUserId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), anonimousUser.getIpAddress(), page.getInt("numPage"), isPreview);
-				anonimousUser.setId(anonymousUserId);
+//IF IS ANONYMOUS (DONE)
+				if(surveyUser.isAnonymousUser())
+				{
+					userSurveyId = anonimousDB.insertAnonimousUser(responses.getInt("surveyId"), surveyUser.getIpAddress(), page.getInt("numPage"), isPreview);
+				}
+				else
+				{
+					userSurveyId = surveyUserDB.insertSurveyUser(surveyId, surveyUser.getUserId(), surveyUser.getCurrentPage());					
+				}
+				surveyUser.setId(userSurveyId);
 			}
 			
-			if(anonymousUserId != 0)
+			if(userSurveyId != 0)
 			{
 				JSONArray questions = page.getJSONArray("questions");
 				for(int q = 0; q < questions.length(); q++)
@@ -190,8 +213,10 @@ public class SurveyProcessHandler {
 					int questionId = question.getInt("questionId");
 					if(question.has("response"))
 					{
-						responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, null);
-						stored = stored && this._storeAnonymousResponse(new Response(questionId, 0, question.getString("response"), 0), anonymousUserId, surveyId);
+//IF IS ANONYMOUS (DONE)
+						responsesDB.removeResponse(userSurveyId, surveyId, questionId, null, surveyUser.isAnonymousUser());
+//IF IS ANONYMOUS (DONE)
+						stored = stored && this._storeUserResponse(new Response(questionId, 0, question.getString("response"), 0), userSurveyId, surveyId, surveyUser.isAnonymousUser());
 					}
 					else
 					{					
@@ -203,16 +228,19 @@ public class SurveyProcessHandler {
 								JSONObject optionsGroup = optionsGroups.getJSONObject(og);
 								int optionsGroupId = optionsGroup.getInt("optionGroupId");
 								if(optionsGroup.has("response"))
-								{									
-									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
+								{					
+//IF IS ANONYMOUS (DONE)				
+									responsesDB.removeResponse(userSurveyId, surveyId, questionId, optionsGroupId, surveyUser.isAnonymousUser());
 									String value = optionsGroup.getString("response");
 									boolean selectedOther = optionsGroup.getBoolean("selectedOther");
 									if(selectedOther && optionsGroup.has("responseOtherText")) value = value + DBConstants.s_VALUE_TOKEN + optionsGroup.getString("responseOtherText");
-									stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
+//IF IS ANONYMOUS (DONE)
+									stored = stored && this._storeUserResponse(new Response(questionId, optionsGroupId, value, 0), userSurveyId, surveyId, surveyUser.isAnonymousUser());
 								}
 								else
-								{									
-									responsesDB.removeAnonymousResponse(anonymousUserId, surveyId, questionId, optionsGroupId);
+								{	
+//IF IS ANONYMOUS (DONE)								
+									responsesDB.removeResponse(userSurveyId, surveyId, questionId, optionsGroupId, surveyUser.isAnonymousUser());
 									JSONArray options = optionsGroup.getJSONArray("options");
 									for(int o = 0; o < options.length(); o++)
 									{
@@ -225,7 +253,8 @@ public class SurveyProcessHandler {
 											{
 												value += DBConstants.s_VALUE_TOKEN + option.getString("responseOtherText");
 											}
-											stored = stored && this._storeAnonymousResponse(new Response(questionId, optionsGroupId, value, 0), anonymousUserId, surveyId);
+//IF IS ANONYMOUS
+											stored = stored && this._storeUserResponse(new Response(questionId, optionsGroupId, value, 0), userSurveyId, surveyId, surveyUser.isAnonymousUser());
 										}
 									}
 								
@@ -296,16 +325,24 @@ public class SurveyProcessHandler {
 		
 		return isOnlyTextPage;
 	}
-	
-	
-	private boolean _storeAnonymousResponse(Response response, int anonymousUserId, int surveyId)
+
+	private boolean _storeUserResponse(Response response, int surveyUserId, int surveyId, boolean isAnonymous)
 	{
 		boolean stored = false;
 		ResponsesDB responsesDB = new ResponsesDB();
-		AnonimousDB anonymousDB = new AnonimousDB();
 				
 		int responseId = responsesDB.insertResponse(response);
-		stored = anonymousDB.insertAnonimousResponse(anonymousUserId, responseId);
+		//IF IS ANONYMOUS
+		if(isAnonymous)
+		{
+			AnonimousDB anonymousDB = new AnonimousDB();
+			stored = anonymousDB.insertAnonimousResponse(surveyUserId, responseId);
+		}
+		else
+		{
+			SurveyUserDB surveyUserDB = new SurveyUserDB();
+			stored = surveyUserDB.insertUserResponse(surveyUserId, responseId);
+		}
 		
 		return stored;
 	}

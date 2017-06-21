@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import ilu.surveytool.databasemanager.DataObject.Response;
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.databasemanager.DataObject.Option;
@@ -60,9 +60,9 @@ public class AnonimousDB {
 	 */
 	
 
-	public AnonimousUser getAnonimousUserByIpAddress(int surveyId, String ipAddress, boolean isPreview)
+	public SurveyUser getAnonimousUserByIpAddress(int surveyId, String ipAddress, boolean isPreview)
 	{
-		AnonimousUser anonimousUser = null;
+		SurveyUser anonimousUser = null;
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -77,10 +77,11 @@ public class AnonimousDB {
 	   		rs = pstm.executeQuery();
 	   		if(rs.next())
 	   		{
-	   			anonimousUser = new AnonimousUser(rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID), 
+	   			anonimousUser = new SurveyUser(rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID), 
 	   					rs.getInt(DBFieldNames.s_QUESTIONNAIREID), 
 	   					ipAddress, 
-	   					rs.getInt(DBFieldNames.s_CURRENT_PAGE));
+	   					rs.getInt(DBFieldNames.s_CURRENT_PAGE),
+	   					true);
 	   		}
 	   		
 		} catch (SQLException e) {

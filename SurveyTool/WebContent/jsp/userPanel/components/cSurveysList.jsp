@@ -51,7 +51,7 @@ List<UserSurveyTableInfo> surveys = (List<UserSurveyTableInfo>) request.getAttri
 				  							</select>			  							
 				  						</div>				  						
 			  						</fieldset>		  					
-			  						<table class="table table-bordered table-surveys display" sumary="List of surveys where ..." id=""  data-page-length='25'>
+			  						<table class="table table-bordered table-surveys display" sumary="List of surveys" id=""  data-page-length='25'>
 			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
 			  							<thead>
 										<tr class="info" id="titles">
@@ -105,6 +105,7 @@ List<UserSurveyTableInfo> surveys = (List<UserSurveyTableInfo>) request.getAttri
 												else {state = lang.getContent("userpanel.mysurveys.tab.surveys.state.inprogress");}
 											}
 											
+											String surveyUrl = Address.s_SERVLET_SURVEY_AJS + "?" + Parameter.s_SID + "=" + survey.getSurveyPublicId() + "&" + Parameter.s_LANGUAGE_SURVEY + "=" + lang.getCurrentLanguage();
 											/*String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
 											
 											String state = "";
@@ -115,7 +116,7 @@ List<UserSurveyTableInfo> surveys = (List<UserSurveyTableInfo>) request.getAttri
 										<tr id="resultdevice" class="survey-list-row" sid="">
 											<td class="center hidden"><%= state %></td>
 											<td class="col-sm-7">
-												<a href=""><%= surveyTableInfo.getTitle() %></a>
+												<a href="<%= surveyUrl %>" target="_blank"><%= surveyTableInfo.getTitle() %></a>
 												<%if(surveyTableInfo.getDescription() != null && !surveyTableInfo.getDescription().isEmpty()) {%>
 												<p><%= surveyTableInfo.getDescription() %> <!-- ... +Details --></p>
 												<%} %>

@@ -12,7 +12,7 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import ilu.surveytool.databasemanager.DataObject.AnonimousUser;
+import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.DataObject.Page;
 import ilu.surveytool.databasemanager.DataObject.Section;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
@@ -169,7 +169,7 @@ public class PageDB {
 		if(lang==null)lang = langdefault;
 		
 		int numPage = 1;
-		if(anonimousUser instanceof AnonimousUser) numPage = ((AnonimousUser) anonimousUser).getCurrentPage();
+		if(anonimousUser instanceof SurveyUser) numPage = ((SurveyUser) anonimousUser).getCurrentPage();
 		
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGE_BY_NUMPAGE_SECTIONID);			
