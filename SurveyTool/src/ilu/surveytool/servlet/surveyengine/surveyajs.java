@@ -83,11 +83,13 @@ public class surveyajs extends HttpServlet {
 		{
 			//AnonimousUser anonimousUser = new AnonimousUser();
 			SurveyUser surveyUser = (SurveyUser) session.getAttribute(Attribute.s_SURVEY_USER);
-			if(surveyUser == null)
+			int surveyId = surveyDB.getQuestionnaireIdByPublicId(sid);
+			
+			if(surveyUser == null || surveyUser.getSurveyId() != surveyId)
 			{
 				surveyUser = new SurveyUser();
 				surveyUser.setIpAddress(request.getRemoteAddr());
-				surveyUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+				surveyUser.setSurveyId(surveyId);
 				surveyUser.setCurrentPage(1);
 				if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER))
 				{
@@ -96,6 +98,7 @@ public class surveyajs extends HttpServlet {
 				else
 				{
 					if(hasIpFilter) surveyUser = surveyProcessHandler.existAnonimousUser(surveyUser, preview);
+					else surveyUser.setAnonymousUser(true);
 				}
 			}
 			

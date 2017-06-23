@@ -424,7 +424,7 @@ public class ResponsesDB {
 		return contents;
 	}
 
-	public String getAnonymousResponseValue(int anonymousUserId, int surveyId, int questionId, Integer optionsGroupId)
+	public String getSurveyUserResponseValue(int surveyUserId, int surveyId, int questionId, Integer optionsGroupId, boolean isAnonymousUser)
 	{
 		String response = "";
 		Connection con = this._openConnection();
@@ -432,14 +432,19 @@ public class ResponsesDB {
 		ResultSet rs = null;
 		
 		String query = "";
+		if(isAnonymousUser)
+			query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE;
+		else
+			query = DBSQLQueries.s_SELECT_USER_RESPONSE_WHERE_ALL_WITHOUT_VALUE;
+		
 		if(optionsGroupId == null)
-	   		query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
+	   		query = query + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL;
 	   	else
-	   		query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
+	   		query = query + DBSQLQueries.s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL;
 		   
 		try{
 			pstm = con.prepareStatement(query);			
-		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(1, surveyUserId);
 		   	pstm.setInt(2, surveyId);
 		   	pstm.setInt(3, questionId);
 		   	if(optionsGroupId != null) pstm.setInt(4, optionsGroupId);
@@ -460,18 +465,22 @@ public class ResponsesDB {
 		return response;
 	}
 
-	public String getAnonymousOtherResponseValue(int anonymousUserId, int surveyId, int questionId)
+	public String getSurveyUserOtherResponseValue(int surveyUserId, int surveyId, int questionId, boolean isAnonymousUser)
 	{
 		String response = "";
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		
-		String query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE;
-	   	   
+		String query = "";
+		if(isAnonymousUser)
+			query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE;
+		else
+			query = DBSQLQueries.s_SELECT_USER_RESPONSE_WHERE_OTHER_VALUE;
+			   	   
 		try{
 			pstm = con.prepareStatement(query);			
-		   	pstm.setInt(1, anonymousUserId);
+		   	pstm.setInt(1, surveyUserId);
 		   	pstm.setInt(2, surveyId);
 		   	pstm.setInt(3, questionId);
 		   		
@@ -491,7 +500,7 @@ public class ResponsesDB {
 		return response;
 	}
 
-	public boolean existAnonymousResponseValue(int anonymousUserId, int suveyId, int questionId, int optionsGroupId, String value)
+	public boolean existSurveyUserResponseValue(int surveyUserId, int suveyId, int questionId, int optionsGroupId, String value, boolean isAnonymousUser)
 	{
 		boolean response = false;
 		Connection con = this._openConnection();
@@ -499,8 +508,15 @@ public class ResponsesDB {
 		ResultSet rs = null;
 		   
 		try{
-			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE);			
-		   	pstm.setInt(1, anonymousUserId);
+
+			String query = "";
+			if(isAnonymousUser)
+				query = DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE;
+			else
+				query = DBSQLQueries.s_SELECT_USER_RESPONSE_WHERE_ALL_WITH_VALUE;
+			
+			pstm = con.prepareStatement(query);			
+		   	pstm.setInt(1, surveyUserId);
 		   	pstm.setInt(2, suveyId);
 		   	pstm.setInt(3, questionId);
 		   	pstm.setInt(4, optionsGroupId);
@@ -522,7 +538,7 @@ public class ResponsesDB {
 		return response;
 	}
 	
-	public boolean haveExpectedAnswer(int userId, int questionId, int optionsGroupId, String value){
+	public boolean haveExpectedAnswer(int surveyUserId, int questionId, int optionsGroupId, String value, boolean isAnonimousUser){
 		boolean expectedAnswer = false;
 		
 		Connection con = this._openConnection();
@@ -530,8 +546,12 @@ public class ResponsesDB {
 		ResultSet rs = null;
 		   
 		try{
-			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_EXPECTED_ANSWER);			
-			pstm.setInt(1, userId);
+			String query = "";
+			if(isAnonimousUser) query = DBSQLQueries.s_SELECT_ANONYMOUS_EXPECTED_ANSWER;
+			else query = DBSQLQueries.s_SELECT_USER_EXPECTED_ANSWER;
+			
+			pstm = con.prepareStatement(query);			
+			pstm.setInt(1, surveyUserId);
 			pstm.setInt(2, questionId);
 		   	pstm.setInt(3, optionsGroupId);
 		   	pstm.setString(4, value);
@@ -581,7 +601,7 @@ public class ResponsesDB {
 		return numPages;
 	}
 	
-	public List<Integer> getVisitedPages(int anonimousUserId)
+	public List<Integer> getVisitedPages(int surveyUserId, boolean isAnonymous)
 	{
 		List<Integer> numPages = new ArrayList<Integer>();
 		Connection con = this._openConnection();
@@ -589,8 +609,12 @@ public class ResponsesDB {
 		ResultSet rs = null;
 		   
 		try{
-			pstm = con.prepareStatement(DBSQLQueries.s_SELECT_VISITED_PAGES);			
-		   	pstm.setInt(1, anonimousUserId);
+			String query = "";
+			if(isAnonymous) query = DBSQLQueries.s_SELECT_ANONYMOUS_VISITED_PAGES;
+			else query = DBSQLQueries.s_SELECT_USER_VISITED_PAGES;
+			
+			pstm = con.prepareStatement(query);			
+		   	pstm.setInt(1, surveyUserId);
 		   		
 		   	rs = pstm.executeQuery();
 		   	int previousNum = -1;
@@ -726,12 +750,16 @@ public class ResponsesDB {
 		return contentId;
 	}
 	
-	public void insertNewPage(int numPage, int idAnonimousUser, int sectionId){
+	public void insertNewPage(int numPage, int idAnonimousUser, int sectionId, boolean isAnonymous){
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 	    try {
-		   pstm = con.prepareStatement(DBSQLQueries.s_INSERT_RESPONSE_PAGES_ANONIMOUS);
+	       String query = "";
+	       if(isAnonymous) query = DBSQLQueries.s_INSERT_RESPONSE_PAGES_ANONIMOUS;
+	       else query = DBSQLQueries.s_INSERT_RESPONSE_PAGES_USER;
+	       
+		   pstm = con.prepareStatement(query);
 		   PageDB pageDB = new PageDB();
 		   int idPage = pageDB.getPageIdBySectionIdNumPage(sectionId, numPage);
 		   System.out.println("idPage: "+ idPage +", sectionId: "+ sectionId +", numPage: "+ numPage);

@@ -27,6 +27,7 @@ import ilu.surveytool.constants.Attribute;
 import ilu.surveytool.constants.Parameter;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.SurveyUser;
+import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.language.Language;
@@ -60,14 +61,28 @@ public class SurveyProcessService {
 	    		request.getSession().setAttribute(Attribute.s_SURVEY_LANGUAGE, lang);
 	    	}    	   	
 	    	
+	    	int currentSurveyId = json.getInt("surveyId");
 			SurveyUser surveyUser = (SurveyUser) request.getSession().getAttribute(Attribute.s_SURVEY_USER);
-			if(surveyUser == null)
+			if(surveyUser == null || surveyUser.getSurveyId() != currentSurveyId)
 			{
+				/*surveyUser = new SurveyUser();
+				surveyUser.setIpAddress(request.getRemoteAddr());
+				surveyUser.setSurveyId(currentSurveyId);
+				surveyUser.setAnonymousUser(true);*/
+				//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
 				surveyUser = new SurveyUser();
 				surveyUser.setIpAddress(request.getRemoteAddr());
-				surveyUser.setSurveyId(json.getInt("surveyId"));
-				surveyUser.setAnonymousUser(true);
-				//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
+				surveyUser.setSurveyId(currentSurveyId);
+				surveyUser.setCurrentPage(1);
+				LoginResponse loginResp = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
+				if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER))
+				{
+					surveyUser = surveyProcessHandler.existSurveyUser(surveyUser, loginResp.getUserId());
+				}
+				else
+				{
+					surveyUser.setAnonymousUser(true);
+				}
 			}
 			
 			boolean stored = false;
@@ -85,14 +100,14 @@ public class SurveyProcessService {
 			{
 				int numPage = json.getJSONObject("page").getInt("numPage");	
 				String action = json.getString("action");
-//IF ANONYMOUS
-				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json.getJSONObject("page").getJSONArray("questions"), surveyUser.getId(), lang.getCurrentLanguage(), false);
+//IF ANONYMOUS (DONE)
+				numPage = surveyProcessHandler.getPageNumber(json.getInt("surveyId"), numPage, action, json.getJSONObject("page").getJSONArray("questions"), surveyUser.getId(), lang.getCurrentLanguage(), false, surveyUser.isAnonymousUser());
 											
 				surveyUser.setCurrentPage(numPage);
-//IF ANONYMOUS
-				surveyProcessHandler.updateAnonimousUserCurrentPage(surveyUser.getId(), numPage);				
+//IF ANONYMOUS (DONE)
+				surveyProcessHandler.updateSurveyUserCurrentPage(surveyUser.getId(), numPage, surveyUser.isAnonymousUser());				
 
-//IN METHOD ANONYMOUS				
+//IN METHOD ANONYMOUS (DONE)				
 				JSONObject survey = surveyProcessHandler.getCurrentPageJson(json.getString("publicId"), surveyUser, lang.getCurrentLanguage());
 				System.out.println(survey);
 				
@@ -101,12 +116,12 @@ public class SurveyProcessService {
 					//The body content is a question, so this while considers that the final page contains one question (the body content with the thanks message)
 					while(survey.getJSONObject("section").has("page") && (survey.getJSONObject("section").getJSONObject("page").has("questions")) && (survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions").length()==0)){
 						numPage = survey.getJSONObject("section").getJSONObject("page").getInt("numPage");	
-						numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), surveyUser.getId(), lang.getCurrentLanguage(), false);
+						numPage = surveyProcessHandler.getPageNumber(survey.getInt("surveyId"), numPage, action, survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"), surveyUser.getId(), lang.getCurrentLanguage(), false, surveyUser.isAnonymousUser());
 													
 						surveyUser.setCurrentPage(numPage);
-//IN METHOD ANONYMOUS	
-						surveyProcessHandler.updateAnonimousUserCurrentPage(surveyUser.getId(), numPage);				
-//IN METHOD ANONYMOUS							
+//IN METHOD ANONYMOUS (DONE)
+						surveyProcessHandler.updateSurveyUserCurrentPage(surveyUser.getId(), numPage, surveyUser.isAnonymousUser());				
+//IN METHOD ANONYMOUS (DONE)							
 						survey = surveyProcessHandler.getCurrentPageJson(survey.getString("publicId"), surveyUser, lang.getCurrentLanguage());
 						System.out.println("In while: "+survey);
 					}
@@ -117,8 +132,8 @@ public class SurveyProcessService {
 				int numPages = json.getInt("numPages");
 				if(numPage > numPages || (numPage == numPages && surveyProcessHandler.isOnlyTextPage(survey.getJSONObject("section").getJSONObject("page").getJSONArray("questions"))))
 				{
-//IN METHOD ANONYMOUS	
-					surveyProcessHandler.updateAnonimousUserFinished(surveyUser.getId(), true);
+//IN METHOD ANONYMOUS (DONE)		
+					surveyProcessHandler.updateSurveyUserFinished(surveyUser.getId(), true, surveyUser.isAnonymousUser());
 				}
 			}
 						

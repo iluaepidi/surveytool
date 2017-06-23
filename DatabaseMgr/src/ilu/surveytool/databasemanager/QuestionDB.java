@@ -144,7 +144,7 @@ public class QuestionDB {
 		return questions;
 	}
 
-	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault, Object anonimousUser)
+	public JSONArray getQuestionsJsonByPageId(int pageId, String lang, String langdefault, Object surveyUser)
 	{
 		JSONArray questions = new JSONArray();
 		
@@ -157,7 +157,7 @@ public class QuestionDB {
 	   		pstm.setInt(1, pageId);
 	   		System.out.println("[QuestionDB-getQuestionsJsonByPageId] "+DBSQLQueries.s_SELECT_QUESTION_BY_PAGEID+", pageId:"+pageId);
 	   		rs = pstm.executeQuery();
-	   		questions = this._getQuestionJsonArray(rs, lang, langdefault, anonimousUser, pageId);
+	   		questions = this._getQuestionJsonArray(rs, lang, langdefault, surveyUser, pageId);
 	   		
 	   } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1127,7 +1127,7 @@ public class QuestionDB {
 	}
 	
 
-	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object anonimousUser, int pageId)
+	private JSONArray _getQuestionJsonArray(ResultSet rs, String lang, String langdefault, Object surveyUser, int pageId)
 	{
 		JSONArray questions = new JSONArray();		
 		
@@ -1139,13 +1139,13 @@ public class QuestionDB {
 			while(rs.next())
 	   		{
 				
-				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+((SurveyUser) anonimousUser).getId()+", lang:"+lang+", langdefault:"+langdefault);
+				System.out.println("[QuestionDB-_getQuestionJsonArray] userId:"+((SurveyUser) surveyUser).getId()+", lang:"+lang+", langdefault:"+langdefault);
 				int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
 				boolean hidden = false;
 				
-				if(anonimousUser instanceof SurveyUser)
+				if(surveyUser instanceof SurveyUser)
    				{
-   					SurveyUser anonymousUser2 = ((SurveyUser) anonimousUser);
+   					SurveyUser surveyUser2 = ((SurveyUser) surveyUser);
 					QDependenceDB qDependeceDB = new QDependenceDB();
 					QDependence qdependence = qDependeceDB.getQDependenceByQuestionIdWithoutTexts(questionId);
 					
@@ -1164,10 +1164,10 @@ public class QuestionDB {
 						for(QDependenceValue qdepval:qdependence.getqdepval()){
 							System.out.println("Check the answer:"+qdepval.getQid()+", "+qdepval.getOgid()+", "+Integer.toString(qdepval.getOid()));
 							if(qdependence.getDependenceType().equals(DBConstants.s_VALUE_DEPENDENCETYPE_AND)){
-								hidden = hidden && responsesDB.haveExpectedAnswer(anonymousUser2.getId(), qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()));
+								hidden = hidden && responsesDB.haveExpectedAnswer(surveyUser2.getId(), qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()), surveyUser2.isAnonymousUser());
 							}
 							else{
-								hidden = hidden || responsesDB.haveExpectedAnswer(anonymousUser2.getId(), qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()));
+								hidden = hidden || responsesDB.haveExpectedAnswer(surveyUser2.getId(), qdepval.getQid(), qdepval.getOgid(), Integer.toString(qdepval.getOid()), surveyUser2.isAnonymousUser());
 							}
 						}
 						System.out.println("Final value of hidden:"+hidden);
@@ -1212,16 +1212,16 @@ public class QuestionDB {
 		   			
 		   			OptionDB optionDB = new OptionDB();
 		   			
-		   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault, anonimousUser);
+		   			JSONArray optionsGroups = optionDB.getOptionsGroupJSONByQuestionId(questionId, lang, langdefault, surveyUser);
 		   			question.put("optionsGroups", optionsGroups);
 		   			
 		   			if(optionsGroups.length() == 0)
 		   			{
 		   				ResponsesDB responsesDB = new ResponsesDB();
-		   				if(anonimousUser instanceof SurveyUser)
+		   				if(surveyUser instanceof SurveyUser)
 		   				{
-		   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
-		   					String value = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, null);
+		   					SurveyUser surveyUser2 = ((SurveyUser) surveyUser);
+		   					String value = responsesDB.getSurveyUserResponseValue(surveyUser2.getId(), surveyUser2.getSurveyId(), questionId, null, surveyUser2.isAnonymousUser());
 		   					if(!questionType.equals("scale") || (questionType.equals("scale") && !value.isEmpty()))
 		   					{
 			   					try
@@ -1251,7 +1251,7 @@ public class QuestionDB {
 	   		}
 			
 			System.out.println(questions);
-			int numQuestions = getNumQuestionByPage(((SurveyUser) anonimousUser).getId());
+			int numQuestions = getNumQuestionByPage(((SurveyUser) surveyUser).getId());
 			if((numBodyContents==questions.length()) && (questions.length()<numQuestions)){
 				System.out.println("All hidden minus bodyContent");
 				questions = new JSONArray();

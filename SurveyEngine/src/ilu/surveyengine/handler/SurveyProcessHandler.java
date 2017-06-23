@@ -59,7 +59,7 @@ public class SurveyProcessHandler {
 		return survey;
 	}
 		
-	public int getPageNumber(int surveyId, int numPage, String action, JSONArray questions, int anonimousUser, String lang, boolean isPreview)
+	public int getPageNumber(int surveyId, int numPage, String action, JSONArray questions, int surveyUserId, String lang, boolean isPreview, boolean isAnonymous)
 	{
 		//System.out.println("In getPageNumber ("+numPage+"): "+json);
 		int page = -1;
@@ -72,7 +72,7 @@ public class SurveyProcessHandler {
 		Section section = sectionDB.getSectionBySurveyIdNumPage(surveyId, numPage);
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		if(!isPreview) responsesDB.insertNewPage(numPage, anonimousUser, section.getSectionId());
+		if(!isPreview) responsesDB.insertNewPage(numPage, surveyUserId, section.getSectionId(), isAnonymous);
 		
 		if (action.equals("next")){
 			//Select the goTos related to the questions/responses in the current page
@@ -113,7 +113,7 @@ public class SurveyProcessHandler {
 			}
 		}
 		else{
-			List<Integer> previousPages = responsesDB.getVisitedPages(anonimousUser);
+			List<Integer> previousPages = responsesDB.getVisitedPages(surveyUserId, isAnonymous);
 			int index = 1;
 			while((previousPages.get(previousPages.size()-index) >= numPage))
 				index++;
@@ -144,7 +144,11 @@ public class SurveyProcessHandler {
 		{
 			surveyUser = surveyUser2;
 		}
-		else surveyUser.setAnonymousUser(false);
+		else
+		{
+			surveyUser.setAnonymousUser(false);
+			surveyUser.setUserId(userId);
+		}
 		
 		return surveyUser;
 	}
@@ -253,7 +257,7 @@ public class SurveyProcessHandler {
 											{
 												value += DBConstants.s_VALUE_TOKEN + option.getString("responseOtherText");
 											}
-//IF IS ANONYMOUS
+//IF IS ANONYMOUS (DONE)
 											stored = stored && this._storeUserResponse(new Response(questionId, optionsGroupId, value, 0), userSurveyId, surveyId, surveyUser.isAnonymousUser());
 										}
 									}
@@ -279,16 +283,32 @@ public class SurveyProcessHandler {
 		return stored;
 	}
 	
-	public boolean updateAnonimousUserCurrentPage(int anonimousUserId, int currentPage)
+	public boolean updateSurveyUserCurrentPage(int surveyUserId, int currentPage, boolean isAnonymous)
 	{
-		AnonimousDB anonymousDB = new AnonimousDB();
-		return anonymousDB.updateAnonimousUserCurrentPage(anonimousUserId, currentPage);
+		if(isAnonymous)
+		{
+			AnonimousDB anonymousDB = new AnonimousDB();
+			return anonymousDB.updateAnonimousUserCurrentPage(surveyUserId, currentPage);
+		}
+		else
+		{
+			SurveyUserDB surveyUserDB = new SurveyUserDB();
+			return surveyUserDB.updateSurveyUserCurrentPage(surveyUserId, currentPage);
+		}
 	}
 
-	public boolean updateAnonimousUserFinished(int anonimousUserId, boolean finished)
+	public boolean updateSurveyUserFinished(int surveyUserId, boolean finished, boolean isAnonymousUser)
 	{
-		AnonimousDB anonymousDB = new AnonimousDB();
-		return anonymousDB.updateAnonimousUserFinished(anonimousUserId, finished);
+		if(isAnonymousUser)
+		{
+			AnonimousDB anonymousDB = new AnonimousDB();
+			return anonymousDB.updateAnonimousUserFinished(surveyUserId, finished);
+		}
+		else
+		{
+			SurveyUserDB surveyUserDB = new SurveyUserDB();
+			return surveyUserDB.updateUserSurveyFinished(surveyUserId, finished);
+		}
 	}
 	
 	public boolean isOnlyTextPage(JSONArray questions)

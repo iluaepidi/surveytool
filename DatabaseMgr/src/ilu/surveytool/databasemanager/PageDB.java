@@ -158,7 +158,7 @@ public class PageDB {
 		return pages;
 	}
 
-	public JSONObject getPageJsonBySectionId(int sectionId, Object anonimousUser, String lang, String langdefault)
+	public JSONObject getPageJsonBySectionId(int sectionId, Object surveyUser, String lang, String langdefault)
 	{
 		JSONObject page = new JSONObject();
 		
@@ -169,7 +169,7 @@ public class PageDB {
 		if(lang==null)lang = langdefault;
 		
 		int numPage = 1;
-		if(anonimousUser instanceof SurveyUser) numPage = ((SurveyUser) anonimousUser).getCurrentPage();
+		if(surveyUser instanceof SurveyUser) numPage = ((SurveyUser) surveyUser).getCurrentPage();
 		
 		try{
 		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_PAGE_BY_NUMPAGE_SECTIONID);			
@@ -184,7 +184,7 @@ public class PageDB {
 	   			page.put("numPage", rs.getInt(DBFieldNames.s_NUM_PAGE));
 	   			
 	   			QuestionDB questionDB = new QuestionDB();
-	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault, anonimousUser));
+	   			page.put("questions", questionDB.getQuestionsJsonByPageId(pageId, lang, langdefault, surveyUser));
 	   			
 	   		}
 	   		

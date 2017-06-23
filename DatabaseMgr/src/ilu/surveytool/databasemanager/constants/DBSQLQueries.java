@@ -86,9 +86,9 @@ public class DBSQLQueries {
 				+"inner join surveytool.questionbypage q on q.idQuestion = r.idQuestion "
 				+"inner join surveytool.page p on p.idPage = q.idPage where ar.idAnonimousUser = ? order by r.timestamp";
 	
-		public final static String s_SELECT_VISITED_PAGES = "SELECT p.numPage, ap.timestamp FROM surveytool.anonimouspages ap inner join surveytool.page p on p.idPage = ap.idPage where ap.idAnonimousUser = ? order by ap.timestamp";
+		public final static String s_SELECT_ANONYMOUS_VISITED_PAGES = "SELECT p.numPage, ap.timestamp FROM surveytool.anonimouspages ap inner join surveytool.page p on p.idPage = ap.idPage where ap.idAnonimousUser = ? order by ap.timestamp";
 		
-		public final static String s_SELECT_EXPECTED_ANSWER = "select r.idResponse from surveytool.anonimousresponse ar "
+		public final static String s_SELECT_ANONYMOUS_EXPECTED_ANSWER = "select r.idResponse from surveytool.anonimousresponse ar "
 				+"inner join surveytool.responses r on r.idResponse = ar.idResponse "
 				+"where ar.idAnonimousUser = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
 		
@@ -584,7 +584,27 @@ public class DBSQLQueries {
 		//User Questionnaire
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
 		public final static String s_SELECT_USERS_BY_QUESTIONNAIREID_FINISHED = "SELECT count(*) FROM surveytool.userquestionnaire WHERE idQuestionnaire = ? and state = ?";
+
+		public final static String s_SELECT_USER_VISITED_PAGES = "SELECT p.numPage, uqp.timestamp FROM surveytool.userquestionnairepages uqp "
+				+ "inner join surveytool.page p on p.idPage = uqp.idPage "
+				+ "where uqp.idUserQuestionnaire = ? order by uqp.timestamp";
 		
+		//User response
+		public final static String s_SELECT_USER_EXPECTED_ANSWER = "select r.idResponse from surveytool.userresponse ur "
+				+"inner join surveytool.responses r on r.idResponse = ur.idResponse "
+				+"where ur.idUserQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
+		public final static String s_SELECT_USER_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
+				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ?";
+		public final static String s_SELECT_USER_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
+				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
+		public final static String s_SELECT_USER_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
+				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
+				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
 		
 	//inserts
 		//User
@@ -641,6 +661,7 @@ public class DBSQLQueries {
 		//Responses
 			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
 			public final static String s_INSERT_RESPONSE_PAGES_ANONIMOUS = "INSERT INTO `surveytool`.`anonimouspages` (`idPage`, `idAnonimousUser`) VALUES (?, ?)";
+			public final static String s_INSERT_RESPONSE_PAGES_USER = "INSERT INTO `surveytool`.`userquestionnairepages` (`idPage`, `idUserQuestionnaire`) VALUES (?, ?)";
 		//userQuestionnaire
 			public final static String s_INSERT_USER_QUESTIONNAIRE = "INSERT INTO `surveytool`.`userquestionnaire` (`idUser`, `idQuestionnaire`, `currentPage`) VALUES (?, ?, ?)";
 		//userResponse
@@ -721,7 +742,8 @@ public class DBSQLQueries {
 			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
 			public final static String s_UPDATE_USER_ACCOUNT = "UPDATE surveytool.user SET temporalId=?, idUserState=? WHERE idUser= ?";
 			public final static String s_UPDATE_USER_BASIC_PROFILE = "UPDATE surveytool.user SET firstName=?, lastName=?, birthDate=?, gender=? WHERE idUser= ?";
-
+		//userQuestionnaire
+			public final static String s_UPDATE_USERQUESTIONNAIRE_CURRET_PAGE = "UPDATE `surveytool`.`userquestionnaire` SET `currentPage`=? WHERE `idUserQuestionnaire`=?";
 		//QDependences
 			public final static String s_UPDATE_QDEPENDENCE_SHOW = "UPDATE `surveytool`.`qdependences` SET show=? WHERE idQDependences = ?";
 			public final static String s_UPDATE_QDEPENDENCE_DEPENDENCETYPE = "UPDATE `surveytool`.`qdependences` SET idDependenceType=(SELECT idDependenceType FROM surveytool.dependencetype where name = ?) WHERE idQDependences = ?";
@@ -737,7 +759,8 @@ public class DBSQLQueries {
 		//quotas
 			public final static String s_UPDATE_QUOTAS = "UPDATE surveytool.quotas SET maxResponses=?,minResponses=? WHERE idQuestionnaire= ? AND idQuestion=? AND idOptionsGroup=? AND value=?";
 			public final static String s_UPDATE_OBJETIVE_SURVEY = "UPDATE surveytool.questionnaire SET objetive=? WHERE idQuestionnaire=?";
-
+		//userquestionnaire
+			public final static String s_UPDATE_USERQUESTIONNAIRE_FINISHED = "UPDATE `surveytool`.`userquestionnaire` SET `finished`=? WHERE `idUserQuestionnaire`=?";
 			
 	//delete
 		//contentIndex

@@ -364,7 +364,7 @@ public class SurveyDB {
 		return response;
 	}
 
-	public JSONObject getQuestionnaireJson(String publicId, int numSection, Object anonimousUser, String lang)
+	public JSONObject getQuestionnaireJson(String publicId, int numSection, Object surveyUser, String lang)
 	{
 		JSONObject response = new JSONObject();
 		
@@ -392,14 +392,14 @@ public class SurveyDB {
 	   			PageDB pageDB = new PageDB();
 	   			int numPages = pageDB.getNumPagesBySurveyId(surveyId);
 	   			response.put("numPages", numPages);
-	   			response.put("isFinishPage", ((SurveyUser) anonimousUser).getCurrentPage() > numPages);
+	   			response.put("isFinishPage", ((SurveyUser) surveyUser).getCurrentPage() > numPages);
 	   			
 	   			String langDefault = rs.getString(DBFieldNames.s_LANGUAGE_ISONAME);
 	   			ContentDB contentDB = new ContentDB();
 		   		response.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langDefault));
 		   		
 		   		SectionDB sectionDB = new SectionDB();
-				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, anonimousUser, lang, langDefault));
+				response.put("section", sectionDB.getSectionJsonBySurveyId(surveyId, numSection, surveyUser, lang, langDefault));
 	   		}
 	   		
 	   } catch (SQLException e) {

@@ -157,7 +157,7 @@ public class OptionDB {
 		return optionsGroups;
 	}
 
-	public JSONArray getOptionsGroupJSONByQuestionId(int questionId, String lang, String langdefault, Object anonimousUser)
+	public JSONArray getOptionsGroupJSONByQuestionId(int questionId, String lang, String langdefault, Object surveyUser)
 	{
 		JSONArray optionsGroups = new JSONArray();
 		
@@ -183,10 +183,10 @@ public class OptionDB {
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_RADIO) || optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_SELECT)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
-	   				if(anonimousUser instanceof SurveyUser)
+	   				if(surveyUser instanceof SurveyUser)
 	   				{
-	   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
-	   					String response = responsesDB.getAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId);
+	   					SurveyUser surveyUser2 = ((SurveyUser) surveyUser);
+	   					String response = responsesDB.getSurveyUserResponseValue(surveyUser2.getId(), surveyUser2.getSurveyId(), questionId, optionsGroupId, surveyUser2.isAnonymousUser());
 	   					String responseOtherText = "";
 	   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
 	   					{
@@ -230,7 +230,7 @@ public class OptionDB {
 	   			ContentDB contentDB = new ContentDB();
 	   			optionsGroup.put("contents", contentDB.getContentJsonByIdAndLanguage(contentId, lang, langdefault));
 	   			
-	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(questionId, optionsGroupId, lang, langdefault, optionType, anonimousUser));
+	   			optionsGroup.put("options", this.getOptionsJSONByOptionsGroupId(questionId, optionsGroupId, lang, langdefault, optionType, surveyUser));
 	   			
 	   			optionsGroups.put(optionsGroup);
 	   		}
@@ -319,7 +319,7 @@ public class OptionDB {
 	}
 
 	
-	public JSONArray getOptionsJSONByOptionsGroupId(int questionId, int optionsGroupId, String lang, String langdefault, String optionType, Object anonimousUser)
+	public JSONArray getOptionsJSONByOptionsGroupId(int questionId, int optionsGroupId, String lang, String langdefault, String optionType, Object surveyUser)
 	{
 		JSONArray options = new JSONArray();
 		
@@ -343,12 +343,12 @@ public class OptionDB {
 	   			if(optionType.equals(DBConstants.s_VALUE_OPTIONSGROUP_TYPE_CHECKBOX)) 
 	   			{
 	   				ResponsesDB responsesDB = new ResponsesDB();
-	   				if(anonimousUser instanceof SurveyUser)
+	   				if(surveyUser instanceof SurveyUser)
 	   				{
-	   					SurveyUser anonumousUser2 = ((SurveyUser) anonimousUser);
+	   					SurveyUser surveyUser2 = ((SurveyUser) surveyUser);
 	   					if(isOtherOption)
 	   					{
-		   					String response = responsesDB.getAnonymousOtherResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId);
+		   					String response = responsesDB.getSurveyUserOtherResponseValue(surveyUser2.getId(), surveyUser2.getSurveyId(), questionId, surveyUser2.isAnonymousUser());
 		   					String responseOtherText = "";
 		   					if(response.indexOf(DBConstants.s_VALUE_TOKEN) > -1)
 		   					{
@@ -361,7 +361,7 @@ public class OptionDB {
 	   					}
 	   					else
 	   					{
-	   						option.put("response", responsesDB.existAnonymousResponseValue(anonumousUser2.getId(), anonumousUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId)));
+	   						option.put("response", responsesDB.existSurveyUserResponseValue(surveyUser2.getId(), surveyUser2.getSurveyId(), questionId, optionsGroupId, Integer.toString(optionId), surveyUser2.isAnonymousUser()));
 	   					}
 	   				}
 	   				else
