@@ -75,6 +75,7 @@ public class Parameter {
 	public final static String s_RADIO = "radio";
 	public final static String s_COMBO = "combo";
 	public final static String s_SCALE_TYPE = "scaleType";
+	public final static String s_USER = "user";
 	
 	public final static String s_FIRST_NAME = "firstName";
 	public final static String s_LAST_NAME = "lastName";

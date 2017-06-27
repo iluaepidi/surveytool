@@ -63,9 +63,11 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 	
 	$scope.getJsonArrayElement = function(array, attribute, value) {
-		for(var i = 0; i < array.length; i++)
-		{
-			if( array[i][attribute] == value) return array[i];
+		if ("undefined" != typeof array) {
+			for(var i = 0; i < array.length; i++)
+			{
+				if( array[i][attribute] == value) return array[i];
+			}
 		}
 		return {};
 	};
@@ -147,7 +149,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	$scope.isOutOfRange = function(num, min, max) {
 		if(!angular.isUndefined(num) && min != max)
 		{
-			var numParts = num.split(",");
+			var numParts = num.toString().split(",");
 			var finalNum = num;
 			if(numParts.length > 1) finalNum = numParts[0] + "." + numParts[1]; 
 			console.log("isNumber: " + finalNum);
@@ -282,13 +284,19 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 			$scope.surveyError = false;
 			$scope.mandatoryError = false;
 			$scope.currentSurvey.saveResponseAndGetNextPage(action, function(err, res){
-				if(res)
+				if(res != false)
 				{
 					var element = $window.document.getElementById('main-title');
 			        if(element) $(element).focus();	        
 
 			        $scope.questionIndex = 1;
-				}				
+				}
+				else
+				{
+					console.log("Entra en no is user");
+					//$location.path("/SurveyTool");
+					$window.location.href = "/SurveyTool";
+				}
 			});	
 			
 		}
@@ -326,7 +334,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 	};
 	
 	$scope.showStartButton = function() {
-		if($scope.currentSurvey.info.section.page.numPage == 1)
+		if($scope.currentSurvey.info.section.page && $scope.currentSurvey.info.section.page.numPage && $scope.currentSurvey.info.section.page.numPage == 1)
 		{
 			var show = true;
 			$scope.currentSurvey.info.section.page.questions.forEach(function(q){

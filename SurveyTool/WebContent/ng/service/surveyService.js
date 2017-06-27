@@ -2,12 +2,12 @@ var sInfo = {};
 
 var app = angular.module('surveyService',[]);
 
-app.factory('survey', ['$http', '$window', function($http, $window) {
+app.factory('survey', ['$http', '$window', '$location', function($http, $window, $location) {
   var survey = {};
 
   survey.info = {};
   survey.questionNumber = 0;
-
+  
   survey.initialLoad = function(){
 	  
 	  survey.info = sInfo;
@@ -16,23 +16,31 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 
   survey.saveResponseAndGetNextPage = function(action, callback){
 	  //console.log("Next page: " + JSON.stringify(survey));
-	  var responses = getResponseJson(survey, action);
+	  var isUser = $location.absUrl().includes("user");
+	  var responses = getResponseJson(survey, action, isUser);
 	  //console.log("Json Response: " + JSON.stringify(responses));
 	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
 	  		//console.log("Rest response: " + JSON.stringify(response));
 	  		//var resJson = JSON.parse(response);
-			if(response.stored)
+	  		if(response.valid)
 			{
-				/*if(action != 'next') {
-					response.page.section.page.questions.forEach(function(q){
-						if(q.questionType != "bcontent") survey.questionNumber--;						
-					});
-					console.log("Num Questions sin bcontent: " + survey.questionNumber);
-				}*/
-				survey.info = response.page;
+				if(response.stored)
+				{
+					/*if(action != 'next') {
+						response.page.section.page.questions.forEach(function(q){
+							if(q.questionType != "bcontent") survey.questionNumber--;						
+						});
+						console.log("Num Questions sin bcontent: " + survey.questionNumber);
+					}*/
+					survey.info = response.page;
+				}
+		  		callback(false, response.stored);
 			}
-	  		callback(false, response.stored);	  			       
+	  		else
+	  		{
+	  			callback(false, false);
+	  		}
 		})
         .error(function(error) {
             console.log(error);
@@ -52,14 +60,19 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 }]);
 
 
-function getResponseJson(currentSurvey, action)
+function getResponseJson(currentSurvey, action, isUser)
 {
 	console.log("selected Other: " );
+
+	//console.log("URL paht: " + $location.absUrl().includes("user"));
+	console.log("is user: " + isUser);
+	
 	var response = {};
 	response.publicId = currentSurvey.info.publicId;
 	response.surveyId = currentSurvey.info.surveyId;
 	response.lang = currentSurvey.info.lang;
 	response.numPages = currentSurvey.info.numPages;
+	response.isUser = isUser;
 	response.action = action;
 	response.page = {};
 	response.page.numPage = currentSurvey.info.section.page.numPage;

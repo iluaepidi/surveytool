@@ -105,7 +105,7 @@ List<UserSurveyTableInfo> surveys = (List<UserSurveyTableInfo>) request.getAttri
 												else {state = lang.getContent("userpanel.mysurveys.tab.surveys.state.inprogress");}
 											}
 											
-											String surveyUrl = Address.s_SERVLET_SURVEY_AJS + "?" + Parameter.s_SID + "=" + survey.getSurveyPublicId() + "&" + Parameter.s_LANGUAGE_SURVEY + "=" + lang.getCurrentLanguage();
+											String surveyUrl = Address.s_SERVLET_SURVEY_AJS + "?" + Parameter.s_SID + "=" + survey.getSurveyPublicId() + "&" + Parameter.s_LANGUAGE_SURVEY + "=" + lang.getCurrentLanguage() + "&" + Parameter.s_USER;
 											/*String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
 											
 											String state = "";
