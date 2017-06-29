@@ -328,7 +328,7 @@ public class DBSQLQueries {
 				+ "inner join language l on l.idLanguage = cQ.idLanguage "
 				+ "where q.idQuestion = ? and l.isoName = ? and cQ.idContentType=1 and cO.idContentType=1 and cO.idLanguage=cQ.idLanguage order by og.idOptionsGroup, o.idOption";
 		
-		public final static String s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE = "SELECT q.idQuestion, q.idQuestionType, oG.idOptionsGroup, if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cO.idLanguage),\"\") as optionsGroup, o.idOption, cO.text options FROM " 
+		public final static String s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE = "SELECT q.idQuestion, q.idQuestionType, oG.idOptionsGroup, if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cO.idLanguage),\"\") as optionsGroup, o.idOption, o.otherOption, cO.text as options FROM " 
 				+ "(select ques.* from question ques "
 				+ "inner join surveytool.questionbypage AS qbp  on qbp.idQuestion = ques.idQuestion "
 				+ "inner join surveytool.page AS p  on p.idPage = qbp.idPage "
@@ -372,7 +372,7 @@ public class DBSQLQueries {
 					+ "where pp.idPage = ?) "
 				+ "and p.numPage < (SELECT numPage from surveytool.page where idPage = ?) and qt.name != 'bcontent'";
 
-		public final static String s_SELECT_NUMBER_ANONIMUSER_SURVEYID = "SELECT idAnonimousUser, createDate, finished FROM surveytool.anonimoususer WHERE idQuestionnaire=?";
+		public final static String s_SELECT_NUMBER_ANONIMUSER_SURVEYID = "SELECT idAnonimousUser, createDate, finished FROM surveytool.anonimoususer WHERE idQuestionnaire=? and testUser=0";
 		
 		
 		

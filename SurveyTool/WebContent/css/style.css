@@ -1549,6 +1549,10 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     border-radius: 3px;
     width: 100%;}
+.nav-tabs-custom-noshadow {margin-bottom: 20px;
+    background: #fff;
+    border-radius: 3px;
+    width: 100%;}
 .canvasPie {margin-bottom: 20px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
@@ -1573,6 +1577,19 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
     line-height: 35px;
     padding: 0 10px;
     font-size: 20px;
+    color: #444;
+    float: left;
+    border-top: 3px solid transparent;
+    margin-bottom: -2px;
+    margin-right: 5px;}
+.subgraph-title {margin-up: 0;
+    margin-down: 0;
+    border-bottom-color: #444;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
     color: #444;
     float: left;
     border-top: 3px solid transparent;

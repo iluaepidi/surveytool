@@ -861,15 +861,19 @@ public class Statistics {
 			    		type = statisticsByQuestion.get(pair3.getKey()).getQuestionType();
 			    		//////System.out.println("loadQuestions en statistics en if Type:"+type);
 			    		statisticsByQuestion.get(pair3.getKey()).setNumResponses(statisticsByQuestion.get(pair3.getKey()).getNumResponses()+1);
+			    		
+			    		
 			    	}
 			    	else{
+			    		System.out.println("Not contains the label");
 			    		//This is because the question has open answer (short or long)
 			    		QuestionDB questionDB = new QuestionDB();
 				    	type = questionDB.getQuestionTypeByQuestionID(((Integer)pair3.getKey()).intValue());
 				    	//////System.out.println("loadQuestions en statistics en else Type:"+type);
 				    	statisticsByQuestion.put((Integer)pair3.getKey(), new StatisticsQuestion());
 				    	statisticsByQuestion.get(pair3.getKey()).setQuestionType(type);
-				    	statisticsByQuestion.get(pair3.getKey()).setNumResponses(1);
+				    	statisticsByQuestion.get(pair3.getKey()).setNumResponses(1);				    	
+				    	
 			    	}
 			    	
 			    	statisticsByQuestion.get(pair3.getKey()).setResponses((HashMap<Integer, HashMap<String,Timestamp>>)pair3.getValue());
