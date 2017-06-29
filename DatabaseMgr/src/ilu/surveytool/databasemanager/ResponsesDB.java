@@ -88,19 +88,25 @@ public class ResponsesDB {
 	}
 	
 	
-	public HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId, String language)
+	public HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> getAnonimousResponseBySurveyId(int surveyId, String language)
 	{
-		HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>>();
+		HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses = new HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>>();
 		
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		   
+		
+		String query = "(" + DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX + ")" 
+				+ " union "
+				+ "(" + DBSQLQueries.s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX + ")";
+		
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX);			
+		   	pstm = con.prepareStatement(query);			
 	   		pstm.setInt(1, surveyId);
 	   		pstm.setBoolean(2, false);
 	   		pstm.setBoolean(3, true);
+	   		pstm.setInt(4, surveyId);
+	   		pstm.setBoolean(5, true);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())
@@ -108,23 +114,24 @@ public class ResponsesDB {
 	   			String value = rs.getString(DBFieldNames.s_VALUE);
 	   			if(value != null)
 	   			{
-		   			int anonymousUserId = rs.getInt(DBFieldNames.s_ANONYMOUS_USER_ID);
+		   			String userId = rs.getString(DBFieldNames.s_USERID);
+		   			//int userId = Integer.parseInt(stUserId.split("-")[1]);
 		   			int questionId = rs.getInt(DBFieldNames.s_QUESTION_ID);
 		   			int optionsGroupId = rs.getInt(DBFieldNames.s_OPTIONSGROUPID);
 		   			
-		   			if(!responses.containsKey(anonymousUserId))
+		   			if(!responses.containsKey(userId))
 		   			{
-		   				responses.put(anonymousUserId, new HashMap<Integer, HashMap<Integer, List<String>>>());
+		   				responses.put(userId, new HashMap<Integer, HashMap<Integer, List<String>>>());
 		   			}
 		   			
-		   			if(!responses.get(anonymousUserId).containsKey(questionId))
+		   			if(!responses.get(userId).containsKey(questionId))
 		   			{
-		   				responses.get(anonymousUserId).put(questionId, new HashMap<Integer, List<String>>());
+		   				responses.get(userId).put(questionId, new HashMap<Integer, List<String>>());
 		   			}
 		   			
-		   			if(!responses.get(anonymousUserId).get(questionId).containsKey(optionsGroupId))
+		   			if(!responses.get(userId).get(questionId).containsKey(optionsGroupId))
 		   			{
-		   				responses.get(anonymousUserId).get(questionId).put(optionsGroupId, new ArrayList<String>());
+		   				responses.get(userId).get(questionId).put(optionsGroupId, new ArrayList<String>());
 		   			}
 		   				
 		   			if(value != null && value.isEmpty()) {
@@ -144,7 +151,7 @@ public class ResponsesDB {
 			   			if(!otherText.isEmpty()) value += DBConstants.s_VALUE_TOKEN + otherText;		   			
 		   			}
 		   			
-		   			responses.get(anonymousUserId).get(questionId).get(optionsGroupId).add(value);
+		   			responses.get(userId).get(questionId).get(optionsGroupId).add(value);
 	   			}
 	   		}
 	   			   		

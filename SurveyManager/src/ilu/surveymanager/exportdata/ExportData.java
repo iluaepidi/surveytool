@@ -33,7 +33,7 @@ public class ExportData {
 		super();
 	}
 	
-	public File exportSurveyResponses(int surveyId, List<Question> questions, HashMap<Integer, HashMap<Integer, HashMap<Integer, List<String>>>> responses)
+	public File exportSurveyResponses(int surveyId, List<Question> questions, HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses)
 	{
 		String folderPath = "/surveyExport";
 		File folder = new File(folderPath);
@@ -167,12 +167,12 @@ public class ExportData {
 				}	
 			}
 			
-			List<Integer> userList = new ArrayList<Integer>();
+			List<String> userList = new ArrayList<String>();
 			userList.addAll(responses.keySet());
 			Collections.sort(userList);
 			
 			int rowIndex = 3;
-			for(Integer user : userList)
+			for(String user : userList)
 			{
 				//System.out.println("user " + user + ": " + responses.get(user).toString());
 				Row row = sheet.createRow(rowIndex);
@@ -200,7 +200,7 @@ public class ExportData {
 								OptionsGroup ogItem = ogList.get(og);
 								//List<String> values = null;
 								//if(optionGroups != null) values = optionGroups.get(ogItem.getId());
-								List<String> values = optionGroups.get(ogItem.getId()) != null ? optionGroups.get(ogItem.getId()) : new ArrayList<String>();
+								List<String> values = (optionGroups != null && optionGroups.get(ogItem.getId()) != null) ? optionGroups.get(ogItem.getId()) : new ArrayList<String>();
 								if(ogItem.getOptionType().equals(DBConstants.s_VALUE_OPTIONTYPE_RADIO))
 								{
 									String val = "";
