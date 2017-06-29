@@ -55,6 +55,8 @@ public class Attribute {
 	public final static String s_SURVEY_USER = "surveyUser";
 	public final static String s_LIST_QUOTAS_RESULTS = "listquotasresults";
 	public final static String s_TOTAL_SURVEY_COMPETE = "totalsurveycomplete";
+	public final static String s_PAGE_FINISH_TITLE = "titleFinishPage";
+	public final static String s_PAGE_FINISH_CONTENT = "contentFinishPage";
 
 	public final static String s_OGID = "ogid";
 	public final static String s_OID = "oid";

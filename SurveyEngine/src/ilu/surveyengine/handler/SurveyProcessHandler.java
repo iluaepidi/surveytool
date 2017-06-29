@@ -12,6 +12,7 @@ import ilu.surveytool.databasemanager.AnonimousDB;
 import ilu.surveytool.databasemanager.LogicGoToDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.QuestionDB;
+import ilu.surveytool.databasemanager.QuotasDB;
 import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.SectionDB;
 import ilu.surveytool.databasemanager.SurveyDB;
@@ -281,6 +282,12 @@ public class SurveyProcessHandler {
 		}
 		
 		return stored;
+	}
+	
+	public boolean isCompleteGeneralQuota(int surveyId)
+	{
+		QuotasDB quotasDB = new QuotasDB();
+		return quotasDB.isCompleteGeneralQuota(surveyId);		
 	}
 	
 	public boolean updateSurveyUserCurrentPage(int surveyUserId, int currentPage, boolean isAnonymous)

@@ -21,6 +21,7 @@ public class DBFieldNames {
 		public final static String s_RESPONSES_NUMBER = "numResp";
 		public final static String s_INDEX = "index";
 		public final static String s_NUM_ELEMENTS = "numElements";
+		public final static String s_IS_COMPLETE_GENERAL_QUOTA = "isCompleteGeneralQuota";
 		
 	//category
 		public final static String s_CATEGORY_NAME = "categoryName";

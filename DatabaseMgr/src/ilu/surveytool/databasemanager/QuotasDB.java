@@ -288,12 +288,36 @@ public class QuotasDB {
 		return 0;
 	}
 	
-	
-	
-	
-	
-	
-	
+	public boolean isCompleteGeneralQuota(int surveyId)
+	{
+		boolean response = false;
+		
+		Connection con = this._openConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		   
+		try{
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_IS_COMPLETE_GENERAL_QUOTA);		
+		   	pstm.setInt(1, surveyId);
+		   	pstm.setInt(2, surveyId);
+		   	pstm.setInt(3, surveyId);
+	   		
+	   		rs = pstm.executeQuery();
+	   		if(rs.next())
+	   		{
+	   			Object objResp = rs.getBoolean(DBFieldNames.s_IS_COMPLETE_GENERAL_QUOTA);
+	   			if(objResp != null) response =((Boolean) objResp).booleanValue();
+	   		}	   		
+	   		
+	   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this._closeConnections(con, pstm, rs);
+		}
+		
+		return response;
+	}
 	
 	/**
 	 * Inserts 

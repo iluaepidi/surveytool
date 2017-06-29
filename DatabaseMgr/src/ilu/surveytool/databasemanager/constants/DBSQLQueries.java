@@ -588,6 +588,13 @@ public class DBSQLQueries {
 		public final static String s_SELECT_USER_VISITED_PAGES = "SELECT p.numPage, uqp.timestamp FROM surveytool.userquestionnairepages uqp "
 				+ "inner join surveytool.page p on p.idPage = uqp.idPage "
 				+ "where uqp.idUserQuestionnaire = ? order by uqp.timestamp";
+		public final static String s_SELECT_IS_COMPLETE_GENERAL_QUOTA = "select "
+				+ "(select "
+					+ "(SELECT count(*) FROM surveytool.anonimoususer where idQuestionnaire = ? and finished = true and testUser = false) "
+					+ "+ "
+					+ "(SELECT count(*) FROM surveytool.userquestionnaire where idQuestionnaire = ? and finished = true) numElements) "
+				+ ">= "
+				+ "(SELECT objetive FROM surveytool.questionnaire where idQuestionnaire = ?) " + DBFieldNames.s_IS_COMPLETE_GENERAL_QUOTA;
 		
 		//User response
 		public final static String s_SELECT_USER_EXPECTED_ANSWER = "select r.idResponse from surveytool.userresponse ur "
