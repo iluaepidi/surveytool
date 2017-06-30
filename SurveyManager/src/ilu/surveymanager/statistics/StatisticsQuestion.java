@@ -195,7 +195,7 @@ public class StatisticsQuestion {
 					    				valueOthers.add(others[1]);
 				    			}
 				    		}
-				    		System.out.println("Length of valueOthers: "+valueOthers.size());
+				    		//System.out.println("Length of valueOthers: "+valueOthers.size());
 				    		
 				    		if((optionsByOptionsGroup.get(i).getOptionId()==Integer.parseInt(optionIdKey)) && ((((Integer)optionGroup.getKey()).intValue())==optionsByOptionsGroup.get(i).getOptionsGroupId())){
 				    			optionsByOptionsGroup.get(i).setNumResponses(optionsByOptionsGroup.get(i).getNumResponses()+1);

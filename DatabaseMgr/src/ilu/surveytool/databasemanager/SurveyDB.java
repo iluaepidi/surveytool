@@ -500,10 +500,10 @@ public class SurveyDB {
 		ResultSet rs = null;
 		   
 		try{
-		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS);	
-	   		pstm.setInt(1, author);
+		   	pstm = con.prepareStatement(DBSQLQueries.s_SELECT_QUESTIONNAIRE_TABLE_INFO_USERS);	
+	   		//pstm.setInt(1, author);
 	   		//pstm.setString(2, language);
-	   		pstm.setString(2, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
+	   		pstm.setString(1, DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE);
 	   		
 	   		rs = pstm.executeQuery();
 	   		while(rs.next())

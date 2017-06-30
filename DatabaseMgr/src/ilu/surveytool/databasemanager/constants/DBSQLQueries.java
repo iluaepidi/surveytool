@@ -41,26 +41,6 @@ public class DBSQLQueries {
 	        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
 			+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
 		
-		public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
-			+ "(CASE "
-				+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o "
-					+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
-					+ "where obg.idOptionsGroup = r.idOptionsGroup and o.idOption = cast(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)) "
-				+ "ELSE r.value "
-			+ "END) as value, "
-			+ "if(INSTR(r.value, '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
-				+ "(substring_index(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
-			+ "FROM surveytool.userquestionnaire as uq "
-			+ "inner join surveytool.userresponse as ur on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
-			+ "inner join surveytool.responses as r on ur.idResponse = r.idResponse "
-			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
-			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
-			+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
-			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
-			+ "inner join surveytool.section as s on s.idSection = p.idSection "
-			+ "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = uq.idQuestionnaire "
-			+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";
-		
 		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ? and testUser = ?";
 		
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
@@ -372,8 +352,9 @@ public class DBSQLQueries {
 					+ "where pp.idPage = ?) "
 				+ "and p.numPage < (SELECT numPage from surveytool.page where idPage = ?) and qt.name != 'bcontent'";
 
-		public final static String s_SELECT_NUMBER_ANONIMUSER_SURVEYID = "SELECT idAnonimousUser, createDate, finished FROM surveytool.anonimoususer WHERE idQuestionnaire=? and testUser=0";
+		public final static String s_SELECT_NUMBER_ANONIMUSER_SURVEYID = "SELECT idAnonimousUser idUser, createDate, finished FROM surveytool.anonimoususer WHERE idQuestionnaire=? and testUser=0";
 		
+		public final static String s_SELECT_NUMBER_USER_SURVEYID = "SELECT idUserQuestionnaire idUser, createDate, finished FROM surveytool.userquestionnaire WHERE idQuestionnaire = ?";
 		
 		
 		//Questionnaire
@@ -400,13 +381,16 @@ public class DBSQLQueries {
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
 						+ "WHERE q.author = ? and ct.name = ? and q.defaultLanguage = l.idLanguage";
 
-		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_ANONIMOUS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state, "
-				+ "(select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire and testUser = false and finished = true) allUsers "
+		public final static String s_SELECT_QUESTIONNAIRE_TABLE_INFO_USERS = "SELECT q.idQuestionnaire, q.deadLineDate, c.text title, q.state, "
+				+ "((select count(*) FROM surveytool.anonimoususer auq where auq.idQuestionnaire = q.idQuestionnaire and testUser = false and finished = true) "
+				+ "+ "
+				+ "(select count(*) FROM surveytool.userquestionnaire uuq where uuq.idQuestionnaire = q.idQuestionnaire and uuq.finished = true)) allUsers "
 						+ "FROM surveytool.questionnaire q "
 						+ "INNER JOIN surveytool.content c ON q.idContent = c.idContent "
 						//+ "INNER JOIN surveytool.language l ON c.idLanguage = l.idLanguage "
 						+ "INNER JOIN surveytool.contenttype ct ON c.idContentType = ct.idContentType "
-						+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? "
+						//+ "WHERE q.author = ? and c.idLanguage = q.defaultLanguage and ct.name = ? "
+						+ "WHERE c.idLanguage = q.defaultLanguage and ct.name = ? "
 						+ "ORDER BY creationDate DESC";
 		public final static String s_SELECT_QUESTIONNAIRE_BY_ID = "SELECT p.projectName, ct.name contentTypeName, c.text, l.isoName, q.publicId, q.author, q.defaultLanguage, q.objetive, q.ipFilter FROM surveytool.questionnaire q "
 				+ "inner join surveytool.project p on p.idProject = q.idProject "
@@ -633,6 +617,27 @@ public class DBSQLQueries {
 				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
 				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
 				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
+
+		public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+			+ "(CASE "
+				+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o "
+					+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
+					+ "where obg.idOptionsGroup = r.idOptionsGroup and o.idOption = cast(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)) "
+				+ "ELSE r.value "
+			+ "END) as value, "
+			+ "if(INSTR(r.value, '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+				+ "(substring_index(substring_index(r.value,'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
+			+ "FROM surveytool.userquestionnaire as uq "
+			+ "inner join surveytool.userresponse as ur on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+			+ "inner join surveytool.responses as r on ur.idResponse = r.idResponse "
+			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+			+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+			+ "inner join surveytool.section as s on s.idSection = p.idSection "
+			+ "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = uq.idQuestionnaire "
+			+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";
+		
 		
 	//inserts
 		//User

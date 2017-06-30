@@ -179,7 +179,7 @@ public class SurveysHandler {
 		File file = null;
 		
 		ResponsesDB responsesDB = new ResponsesDB();
-		HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getAnonimousResponseBySurveyId(surveyId, userLang);  
+		HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getuserResponseBySurveyId(surveyId, userLang);  
 		System.out.println("responses excel: " + responses.toString());
 		Survey survey = this.getSurveyDetail(surveyId, "");
 				
