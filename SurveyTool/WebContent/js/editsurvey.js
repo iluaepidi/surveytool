@@ -98,7 +98,7 @@ $(function() {
 			if(qTypeValue === 'scale') request.scaleType = $('#nqLikertType').val();
 			$.post('CreateQuestionServlet', request, function(responseText) {
 				var index = responseText.indexOf("<html");
-				if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+				if(index >= 0) {window.location.replace(host + urlBase + "/SurveysServlet");}
 				else {
 					var pageItems = currentElement.find('ul.page-items'); 
 					pageItems.append(responseText);
@@ -152,7 +152,7 @@ $(function() {
 		
 		$.post('CreatePageServlet', req, function(responseText) {
 			var index = responseText.indexOf("<html");
-			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			if(index >= 0) {window.location.replace(host + urlBase + "/SurveysServlet");}
 			else {
 				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
 				//var i = parseInt(node.closest('ul.section-pages').find('li.page').first().attr('index'));
@@ -192,7 +192,7 @@ $(function() {
 		$.post('CreateSectionServlet', req, function(responseText) {
 			console.log("create section response: " + responseText);
 			var index = responseText.indexOf("<html");
-			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			if(index >= 0) {window.location.replace(host + urlBase + "/SurveysServlet");}
 			else {
 				//console.log("Create page sectionId: " + node.closest('ul.section-pages').html());
 				node.closest('div.edit-content-center').find('ul.survey-sections').append(responseText);	
@@ -221,7 +221,7 @@ $(function() {
 			};
 		$.post('CreateQuestionServlet', request, function(responseText) {
 			var index = responseText.indexOf("<html");
-			if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+			if(index >= 0) {window.location.replace(host + urlBase + "/SurveysServlet");}
 			else {
 				var pageItems = node.closest('li.page').find('ul.page-items'); 
 				pageItems.append(responseText);
@@ -358,7 +358,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertOption",
+			   url: host + urlBase + "/api/QCService/insertOption",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -417,7 +417,7 @@ $(function() {
 				   type: "POST",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QCService/updateTextOption",
+				   url: host + urlBase + "/api/QCService/updateTextOption",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   console.log(data);
@@ -466,7 +466,7 @@ $(function() {
 		console.log("result: " + result);
 
 		$.ajax({ 
-		   url: host + "/SurveyTool/api/OptionService/" + currentQuestion + "/" + ogid + "/" + oid,
+		   url: host + urlBase + "/api/OptionService/" + currentQuestion + "/" + ogid + "/" + oid,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log("data: "+data);
@@ -507,7 +507,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuotaService/updateObjetive",
+			   url: host + urlBase + "/api/QuotaService/updateObjetive",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -551,7 +551,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/OptionService/updateTextOtehrOption",
+			   url: host + urlBase + "/api/OptionService/updateTextOtehrOption",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -580,7 +580,7 @@ $(function() {
 		var ogid = input.attr('ogid');
 
 		$.ajax({ 
-		   url: host + "/SurveyTool/api/OptionsGroupMatrixService/" + ogid,
+		   url: host + urlBase + "/api/OptionsGroupMatrixService/" + ogid,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log("data: "+data);
@@ -601,7 +601,7 @@ $(function() {
 		var oid = input.attr('oid');
 
 		$.ajax({ 
-		   url: host + "/SurveyTool/api/OptionMatrixService/" + oid,
+		   url: host + urlBase + "/api/OptionMatrixService/" + oid,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log("data: "+data);
@@ -634,7 +634,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertOptionMatrix",
+			   url: host + urlBase + "/api/QCService/insertOptionMatrix",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -688,7 +688,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertOptionsGroupMatrix",
+			   url: host + urlBase + "/api/QCService/insertOptionsGroupMatrix",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log("Dentro del function: "+data);
@@ -764,7 +764,7 @@ $(function() {
 		   type: "POST",
 		   dataType: "text",
 		   contentType: "text/plain",
-		   url: host + "/SurveyTool/api/OptionService/createOptionOther",
+		   url: host + urlBase + "/api/OptionService/createOptionOther",
 		   data: JSON.stringify(req),
 		   success: function (data) {
 			   if(data != "")
@@ -882,7 +882,7 @@ $(function() {
              processData: false
          }).done(function(res){
         	 var index = res.indexOf("<html");
-        	 if(index >= 0) {window.location.replace(host + "/SurveyTool/SurveysServlet");}
+        	 if(index >= 0) {window.location.replace(host + urlBase + "/SurveysServlet");}
         	 else {
 	             console.log("Respuesta: " + res);
 	             //$('#selectFile').addClass('hidden');
@@ -1207,7 +1207,7 @@ $(function() {
 				req.type = currentElement.rType;
 				req.rid = currentElement.rId;
 				
-				var serviceUrl = host + "/SurveyTool/api/ResourceService/updateContent";
+				var serviceUrl = host + urlBase + "/api/ResourceService/updateContent";
 				
 				console.log("Resource update content: " + JSON.stringify(req));
 				
@@ -1397,7 +1397,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateParameters",
+			   url: host + urlBase + "/api/QuestionService/updateParameters",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -1445,7 +1445,7 @@ $(function() {
 				   type: "PUT",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QuestionService/updateSimpleTypeAnswer",
+				   url: host + urlBase + "/api/QuestionService/updateSimpleTypeAnswer",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   console.log(data);
@@ -1661,7 +1661,7 @@ $(function() {
 		   type: "DELETE",
 		   dataType: "text",
 		   contentType: "text/plain",
-		   url: host + "/SurveyTool/api/OptionService/removeOptionOther",
+		   url: host + urlBase + "/api/OptionService/removeOptionOther",
 		   data: JSON.stringify(req),
 		   success: function (data) {
 			   if(data == "true")
@@ -1739,7 +1739,7 @@ $(function() {
 		var elementIndex = $('#removeElemIndex').val(); 
 		var service = $("#removeElemService").val();
 		console.log("Resource ID: " + elementId+", service: "+service);
-		console.log(host + "/SurveyTool/api/" + service + "/" + elementId);
+		console.log(host + urlBase + "/api/" + service + "/" + elementId);
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
 		var removeFileQuestion = false;
 		if (service == "ResourceServiceQuestion"){
@@ -1748,7 +1748,7 @@ $(function() {
 		}
 		console.log("Resource ID: " + elementId+", service: "+service);	
 		$.ajax({ 
-		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
+		   url: host + urlBase + "/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log("data: "+data+", service: "+service);
@@ -2100,7 +2100,7 @@ $(function() {
 		req.contentType = "title";
 		req.lan = $("#survey-language-version").val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
+		var serviceUrl = host + urlBase + "/api/SurveyService/updateContent";
 		
 		//check de title
 		var valid = true;
@@ -2121,7 +2121,7 @@ $(function() {
 		req.contentType = "description";
 		req.lan = $("#survey-language-version").val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateContent";
+		var serviceUrl = host + urlBase + "/api/SurveyService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});
@@ -2131,7 +2131,7 @@ $(function() {
 		var req = {};		
 		req.project = $(this).val();
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateProject";
+		var serviceUrl = host + urlBase + "/api/SurveyService/updateProject";
 		
 		var valid = true;
 		//check de name project
@@ -2150,7 +2150,7 @@ $(function() {
 		var req = {};		
 		req.ipFilter = $(this).is(':checked');
 		req.sid = $(this).closest('#survey-info').attr('sid');		
-		var serviceUrl = host + "/SurveyTool/api/SurveyService/updateIpFilter";
+		var serviceUrl = host + urlBase + "/api/SurveyService/updateIpFilter";
 		console.log("Entra en IP filger: " + $(this).is(':checked'));
 		updateContent(req, serviceUrl);		
 	});
@@ -2162,7 +2162,7 @@ $(function() {
 		req.contentType = "title";
 		req.lan = $("#survey-language-version").val();
 		req.scid = $(this).closest('#panel-section1').attr('scid');		
-		var serviceUrl = host + "/SurveyTool/api/SectionService/updateContent";
+		var serviceUrl = host + urlBase + "/api/SectionService/updateContent";
 		
 		//check de section title
 		var valid = true;
@@ -2192,7 +2192,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateContent",
+			   url: host + urlBase + "/api/QuestionService/updateContent",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   if(data == "true")
@@ -2244,7 +2244,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateMandatory",
+			   url: host + urlBase + "/api/QuestionService/updateMandatory",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2270,7 +2270,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateOptionalAnswer",
+			   url: host + urlBase + "/api/QuestionService/updateOptionalAnswer",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2296,7 +2296,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateTextLength",
+			   url: host + urlBase + "/api/QuestionService/updateTextLength",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2322,7 +2322,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateDecimals",
+			   url: host + urlBase + "/api/QuestionService/updateDecimals",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2358,7 +2358,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateTextLength",
+			   url: host + urlBase + "/api/QuestionService/updateTextLength",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2436,7 +2436,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateMinValue",
+			   url: host + urlBase + "/api/QuestionService/updateMinValue",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2454,7 +2454,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateMaxValue",
+			   url: host + urlBase + "/api/QuestionService/updateMaxValue",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2492,7 +2492,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateDecimals",
+			   url: host + urlBase + "/api/QuestionService/updateDecimals",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2543,7 +2543,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateInputTypeMode",
+			   url: host + urlBase + "/api/QuestionService/updateInputTypeMode",
 			   data: JSON.stringify(reqF),
 			   success: function (data) {
 				   console.log(data);
@@ -2570,7 +2570,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateTextLines",
+			   url: host + urlBase + "/api/QuestionService/updateTextLines",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log("data="+data);
@@ -2601,7 +2601,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateTextLines",
+			   url: host + urlBase + "/api/QuestionService/updateTextLines",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2632,7 +2632,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateTextLines",
+			   url: host + urlBase + "/api/QuestionService/updateTextLines",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2658,7 +2658,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateMinValue",
+			   url: host + urlBase + "/api/QuestionService/updateMinValue",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2684,7 +2684,7 @@ $(function() {
 			   type: "PUT",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuestionService/updateMaxValue",
+			   url: host + urlBase + "/api/QuestionService/updateMaxValue",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -2708,7 +2708,7 @@ $(function() {
 		req.contentType = "title";
 		req.lan = $("#survey-language-version").val();
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
-		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+		var serviceUrl = host + urlBase + "/api/QuestionService/updateContent";
 		
 		//alert("focusout");
 		//check de section title
@@ -2749,7 +2749,7 @@ $(function() {
 		req.lan = $("#survey-language-version").val();
 		req.qid = $(this).closest('#panel-question1').attr('qid');	
 		req.index = $(this).attr("index");
-		var serviceUrl = host + "/SurveyTool/api/QuestionService/updatePointLabel";
+		var serviceUrl = host + urlBase + "/api/QuestionService/updatePointLabel";
 		
 		updateContent(req, serviceUrl);		
 	});
@@ -2761,7 +2761,7 @@ $(function() {
 		req.contentType = "description";
 		req.lan = $("#survey-language-version").val();
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
-		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+		var serviceUrl = host + urlBase + "/api/QuestionService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});	
@@ -2778,7 +2778,7 @@ $(function() {
 			req.contentType = "description";
 			req.lan = $("#survey-language-version").val();
 			req.qid = $(this).closest('#panel-question1').attr('qid');		
-			var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+			var serviceUrl = host + urlBase + "/api/QuestionService/updateContent";
 			
 			updateContent(req, serviceUrl);
 		}
@@ -2799,7 +2799,7 @@ $(function() {
 		req.contentType = "other";
 		req.lan = "en";
 		req.qid = $(this).closest('#panel-question1').attr('qid');		
-		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+		var serviceUrl = host + urlBase + "/api/QuestionService/updateContent";
 		
 		updateContent(req, serviceUrl);
 	});	
@@ -2940,7 +2940,7 @@ $(function() {
 				   type: "PUT",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QuestionService/updateIndex",
+				   url: host + urlBase + "/api/QuestionService/updateIndex",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   if(data == "")
@@ -3225,7 +3225,7 @@ function setScaleType(node)
 		   type: "PUT",
 		   dataType: "text",
 		   contentType: "text/plain",
-		   url: host + "/SurveyTool/api/QuestionService/scaleType",
+		   url: host + urlBase + "/api/QuestionService/scaleType",
 		   data: JSON.stringify(req),
 		   success: function (data) {
 			   var numPoints = parseInt(node.val());
@@ -3418,7 +3418,7 @@ function updateQuestionIndex(qid, prevQid, pid, changePage, action, host)
 		   type: "PUT",
 		   dataType: "text",
 		   contentType: "text/plain",
-		   url: host + "/SurveyTool/api/QuestionService/updateIndex",
+		   url: host + urlBase + "/api/QuestionService/updateIndex",
 		   data: JSON.stringify(req),
 		   success: function (data) {
 			   if(data == "")
@@ -3578,7 +3578,7 @@ function insertValueQuota(){
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QuotaService/insertQuota",
+			   url: host + urlBase + "/api/QuotaService/insertQuota",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);

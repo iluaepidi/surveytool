@@ -1,3 +1,5 @@
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="javax.naming.Context"%>
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="ilu.surveytool.constants.Address"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Question"%>
@@ -81,7 +83,9 @@
 		  							</form>
 		  						</div>
 		  					</div>
-		  					
+		  					<%
+							String hostname = request.getServletContext().getInitParameter("baseUrl");
+							%>
 		  					<script type="text/javascript">
 		  						
 			  					if(window.location.href.indexOf("langsurvey") > -1) {
@@ -94,7 +98,7 @@
 			            		$('#survey-preview_btn').click(function(publicid){
 			            			
 			            			langselect = $('#survey-language-version').val();
-			            			window.open('http://<%=request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
+			            			window.open('<%= hostname %>/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
 			            			
 			            		});
 			            		
@@ -150,7 +154,7 @@
 								<div class="survey-info-url">
 									<label for="clipboard-text" class="col-sm-3 control-label left"><%= lang.getContent("survey.edit.info.label.url") %></label>
 							   		<div class="col-sm-9">
-							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="http://<%= request.getServerName() %>:<%= request.getServerPort() %>/SurveyTool/surveyajs?sid=<%= survey.getPublicId() %>&langsurvey=<%= lang.getCurrentLanguage() %>" readonly="readonly" />							     			
+							     			<input type="text" class="form-control" name="clipboard-text" id="clipboard-text" value="<%= hostname %>/surveyajs?sid=<%= survey.getPublicId() %>&langsurvey=<%= lang.getCurrentLanguage() %>" readonly="readonly" />							     			
 							   		</div>
 							   		<!-- <button class="col-sm-1 btn-transparent btn-copy-clipboard" id="target-to-copy" data-clipboard-target="clipboard-text" title="<%= lang.getContent("survey.edit.info.aria_label.copy") %>" aria-label="<%= lang.getContent("survey.edit.info.aria_label.copy") %>"><i class="fa fa-clipboard fa-2x" aria-hidden="true"></i></button> -->
 								</div>

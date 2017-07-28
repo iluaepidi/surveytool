@@ -62,7 +62,7 @@ public class BasicProfileServlet extends HttpServlet {
 	{
 		//SurveyToolProperties bodyPages = new SurveyToolProperties(getServletContext().getRealPath("/"));
 		SurveyToolProperties properties = new SurveyToolProperties(getServletContext().getRealPath("/"));
-		
+		boolean isRedirect = false;
 		System.out.println("Basic profile servlet.");
 		/**
 		 * cargar correspondiente body page
@@ -87,11 +87,23 @@ public class BasicProfileServlet extends HttpServlet {
 				UserDB userDB = new UserDB();
 				userDB.updateUserState(user.getUserId(), DBConstants.i_VALUE_USER_STATE_ID_ACTIVE);
 				loginResp.setUserState(DBConstants.i_VALUE_USER_STATE_ID_ACTIVE);
-				
-				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
-				
 				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Home");				
+				
+				boolean logged = loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ACTIVE;
+				session.setAttribute(Attribute.s_LOGGED, Boolean.toString(logged));
+				session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
+				isRedirect = true;
+				try {
+					response.sendRedirect(Address.s_SERVLET_USER_PANEL_UPHOME);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_USER_PANEL_HOME));
+				
+				
+				//request.setAttribute(Attribute.s_PAGE_TITLE, "Home");				
 			}
 			else
 			{
@@ -105,7 +117,7 @@ public class BasicProfileServlet extends HttpServlet {
 			sessionHandler.upSessionClosed(request, properties);
 		}		
 		
-		CommonCode.redirect(request, response, Address.s_MASTER_PAGE_USER_PANEL);
+		if(!isRedirect) CommonCode.redirect(request, response, Address.s_MASTER_PAGE_USER_PANEL);
 	}
 	
 	protected void getRequest(HttpServletRequest request, HttpServletResponse response)

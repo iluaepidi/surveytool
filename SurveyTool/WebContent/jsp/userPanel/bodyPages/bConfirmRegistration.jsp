@@ -42,9 +42,11 @@ if(verifiedObject != null) verified = (boolean) verifiedObject;
 		  						<p><%= lang.getContent("userpanel.registration.verification.false.content") %></p>
 		  						<%
 	  							}
+	  							
+	  							String hostname = request.getServletContext().getInitParameter("baseUrl");
 		  						%>
 								<div class="center">
-									<a href="/SurveyTool" class="btn btn-primary btn-lg"><%= lang.getContent("userpanel.registration.confirmation.button") %></a>
+									<a href="<%= hostname %>" class="btn btn-primary btn-lg"><%= lang.getContent("userpanel.registration.confirmation.button") %></a>
 								</div>			
 	  					</div>
   						

@@ -12,6 +12,10 @@ var pageText = "";
 var questionText = "";
 var surveyInfoText = "";
 
+var currentUrl = window.location.href;
+var urlBase = "";
+if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool";
+
 $(function() {
 	
 	$('table').removeAttr("role");
@@ -356,7 +360,7 @@ function setSurveyState(surveyId, state, element, elemToShow)
 	   type: "PUT",
 	   dataType: "text",
 	   contentType: "text/plain",
-	   url: "http://" + window.location.host + "/SurveyTool/api/SurveyService/updateState",
+	   url: "http://" + window.location.host + urlBase + "/api/SurveyService/updateState",
 	   data: JSON.stringify(req),
 	   success: function (data) {
 		   //console.log("set state response: " + data);

@@ -89,11 +89,12 @@ public class RegisterUPServlet extends HttpServlet {
 				/*
 				 * Testeo email 
 				 */
+				String hostname = request.getServletContext().getInitParameter("baseUrl");
 				System.out.println("Enviando email...");
 				String emailSubject = lang.getContent("email.verify.subject");
 				String emailContent = "<h1>" + lang.getContent("email.verify.title") + "</h1>" + 
 						"<p>" + lang.getContent("email.verify.text") + "</p>" + 
-						"<a href='http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/VerifyEmail?token=" + regResp.getTemporalId() + "'>" + lang.getContent("email.verify.link") + "</a>";
+						"<a href='" + hostname + "/VerifyEmail?token=" + regResp.getTemporalId() + "'>" + lang.getContent("email.verify.link") + "</a>";
 				EmailSender emailSender = new EmailSender();
 				emailSender.send(registerReponse.getEmail(), emailSubject, emailContent);
 				System.out.println("Email enviado.");

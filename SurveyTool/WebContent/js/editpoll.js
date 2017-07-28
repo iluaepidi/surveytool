@@ -54,7 +54,7 @@ $(function() {
 		//req.lan = $("#survey-language-version").val();
 		req.lan = "en";
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');		
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateContent";
+		var serviceUrl = host + urlBase + "/api/PollService/updateContent";
 		
 		//check de title
 		var valid = true;
@@ -73,7 +73,7 @@ $(function() {
 		var req = {};		
 		req.project = $(this).val();
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateProject";
+		var serviceUrl = host + urlBase + "/api/PollService/updateProject";
 		
 		var valid = true;
 		//check de name project
@@ -97,7 +97,7 @@ $(function() {
 		//req.lan = $("#survey-language-version").val();
 		req.lan = lang;
 		req.qid = $(this).attr('qid');		
-		var serviceUrl = host + "/SurveyTool/api/QuestionService/updateContent";
+		var serviceUrl = host + urlBase + "/api/QuestionService/updateContent";
 		
 		//alert("focusout");
 		//check de section title
@@ -138,7 +138,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/insertOption",
+			   url: host + urlBase + "/api/QCService/insertOption",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log(data);
@@ -217,7 +217,7 @@ $(function() {
 		var elementId = $('#removeElemId').val(); 
 		var service = $("#removeElemService").val();
 		console.log("Resource ID: " + elementId+", service: "+service);
-		console.log(host + "/SurveyTool/api/" + service + "/" + elementId);
+		console.log(host + urlBase + "/api/" + service + "/" + elementId);
 		//console.log("number items: " + $('li[rid=' + resourceId + ']').closest("ul").find("li").size());
 		var removeFileQuestion = false;
 		if (service == "ResourceServiceQuestion"){
@@ -226,7 +226,7 @@ $(function() {
 		}
 		console.log("Resource ID: " + elementId+", service: "+service);	
 		$.ajax({ 
-		   url: host + "/SurveyTool/api/" + service + "/" + elementId,
+		   url: host + urlBase + "/api/" + service + "/" + elementId,
 		   type: "DELETE",
 		   success: function (data) {
 			   console.log("data: "+data+", service: "+service);
@@ -288,7 +288,7 @@ $(function() {
 		//req.lan = $("#survey-language-version").val();
 		req.lan = "en";
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');		
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateContent";
+		var serviceUrl = host + urlBase + "/api/PollService/updateContent";
 		
 		//check de title
 		var valid = true;
@@ -312,7 +312,7 @@ $(function() {
 		//req.lan = $("#survey-language-version").val();
 		req.lan = "en";
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');		
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateContent";
+		var serviceUrl = host + urlBase + "/api/PollService/updateContent";
 		
 		//check de title
 		var valid = true;
@@ -336,7 +336,7 @@ $(function() {
 		//req.lan = $("#survey-language-version").val();
 		req.lan = "en";
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');		
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateContent";
+		var serviceUrl = host + urlBase + "/api/PollService/updateContent";
 		
 		//check de title
 		var valid = true;
@@ -355,7 +355,7 @@ $(function() {
 		var req = {};		
 		req.linkUrl = $(this).val();
 		req.poid = $(this).closest('div.edit-poll-content').attr('poid');
-		var serviceUrl = host + "/SurveyTool/api/PollService/updateCallUrl";
+		var serviceUrl = host + urlBase + "/api/PollService/updateCallUrl";
 		
 		var valid = true;
 		//check de name project

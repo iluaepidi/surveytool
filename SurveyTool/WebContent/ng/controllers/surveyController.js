@@ -295,7 +295,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 				{
 					console.log("Entra en no is user");
 					//$location.path("/SurveyTool");
-					$window.location.href = "/SurveyTool";
+					//$window.location.href = "/SurveyTool";
+					$window.location.href = "/";
 				}
 			});	
 			

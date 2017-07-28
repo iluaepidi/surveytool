@@ -18,18 +18,17 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  //console.log("Next page: " + JSON.stringify(survey));
 	  var responses = getResponseJson(survey, action, true);
 	  console.log("Json Response: " + JSON.stringify(responses));
-	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
+	  console.log("Current URL: " + $window.location.href);
+	  var currentUrl = $window.location.href;
+	  var urlBase = "";
+	  if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool"; 
+	  //$http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
+	  $http.post(urlBase + '/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
 	  		console.log("Rest response: " + JSON.stringify(response));
 	  		//var resJson = JSON.parse(response);
 			if(response.stored)
 			{
-				/*if(action != 'next') {
-					response.page.section.page.questions.forEach(function(q){
-						if(q.questionType != "bcontent") survey.questionNumber--;						
-					});
-					console.log("Num Questions sin bcontent: " + survey.questionNumber);
-				}*/
 				survey.info = response.page;
 			}
 	  		callback(false, response.stored);	  			       

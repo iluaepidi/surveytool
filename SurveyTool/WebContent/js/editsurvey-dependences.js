@@ -182,7 +182,7 @@ $(function() {
 					type: "POST",
 					dataType: "text",
 					contentType: "text/plain",
-					url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+					url: host + urlBase + "/api/QCService/removeDependenceValue",
 					data: JSON.stringify(req),
 					success: function (data) {
 						console.log("Dentro del function: "+data);
@@ -235,7 +235,7 @@ $(function() {
 				type: "POST",
 				dataType: "text",
 				contentType: "text/plain",
-				url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+				url: host + urlBase + "/api/QCService/removeDependenceValue",
 				data: JSON.stringify(req),
 				success: function (data) {
 					console.log("Dentro del function: "+data);
@@ -288,7 +288,7 @@ $(function() {
 					   type: "POST",
 					   dataType: "text",
 					   contentType: "text/plain",
-					   url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+					   url: host + urlBase + "/api/QCService/removeDependenceValue",
 					   data: JSON.stringify(req),
 					   success: function (data) {
 						   console.log("Dentro del function: "+data);
@@ -319,7 +319,7 @@ $(function() {
 				   type: "POST",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QCService/insertDependence",
+				   url: host + urlBase + "/api/QCService/insertDependence",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   console.log("Dentro del function: "+data);
@@ -365,7 +365,7 @@ $(function() {
 			   type: "POST",
 			   dataType: "text",
 			   contentType: "text/plain",
-			   url: host + "/SurveyTool/api/QCService/removeDependenceValue",
+			   url: host + urlBase + "/api/QCService/removeDependenceValue",
 			   data: JSON.stringify(req),
 			   success: function (data) {
 				   console.log("Dentro del function: "+data);
@@ -396,7 +396,7 @@ $(function() {
 				   type: "POST",
 				   dataType: "text",
 				   contentType: "text/plain",
-				   url: host + "/SurveyTool/api/QCService/updateDependenceType",
+				   url: host + urlBase + "/api/QCService/updateDependenceType",
 				   data: JSON.stringify(req),
 				   success: function (data) {
 					   //console.log("Dentro del function: "+data);
@@ -447,7 +447,7 @@ $(function() {
 			type: "POST",
 			dataType: "text",
 			contentType: "text/plain",
-			url: host + "/SurveyTool/api/QCService/insertLogic",
+			url: host + urlBase + "/api/QCService/insertLogic",
 			data: JSON.stringify(req),
 			success: function (data) {
 				console.log("Dentro del function: "+data);

@@ -19,7 +19,11 @@ app.factory('survey', ['$http', '$window', '$location', function($http, $window,
 	  var isUser = $location.absUrl().includes("user");
 	  var responses = getResponseJson(survey, action, isUser);
 	  //console.log("Json Response: " + JSON.stringify(responses));
-	  $http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
+	  var currentUrl = $window.location.href;
+	  var urlBase = "";
+	  if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool"; 
+	  //$http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
+	  $http.post(urlBase + '/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
 	  		//console.log("Rest response: " + JSON.stringify(response));
 	  		//var resJson = JSON.parse(response);
