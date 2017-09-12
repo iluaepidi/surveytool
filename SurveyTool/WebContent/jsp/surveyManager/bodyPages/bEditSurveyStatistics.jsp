@@ -384,10 +384,13 @@ Statistics surveyStatistic = surveysHandler.createStatistics(survey.getSurveyId(
 										for(Page pag : section.getPages()){
 											for(Question question : pag.getQuestions()){
 												if(!question.getQuestionType().equals(DBConstants.s_VALUE_QUESTIONTYPE_BCONTENT)){
+													//StatisticsQuestion stq = surveyStatistic.getStatisticsByQuestion(question.getQuestionId());
 													request.setAttribute(Attribute.s_QUESTION, question);
 													request.setAttribute(Attribute.s_SURVEY_STATISTIC, surveyStatistic.getStatisticsByQuestion(question.getQuestionId()));
 													//System.out.println(question.getQuestionId()+", "+question.getQuestionType()+", token + question.getStatisticsPage() -->"+token + question.getStatisticsPage());
+													
 						  							%>
+						  							
 													<div class="content-statistics hidden" id="single-question-<%= question.getQuestionId() %>">
 						  								<jsp:include page="<%= token + question.getStatisticsPage() %>">
 															<jsp:param name="index" value="<%= question.getQuestionId() %>" />
