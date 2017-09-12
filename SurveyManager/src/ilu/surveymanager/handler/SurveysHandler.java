@@ -174,7 +174,7 @@ public class SurveysHandler {
 		return updated;
 	}
 	
-	public File exportResults(int surveyId, String userLang)
+	public File exportResults(int surveyId, String userLang, String resourcesFolder)
 	{
 		File file = null;
 		
@@ -187,7 +187,7 @@ public class SurveysHandler {
 		List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, userLang, survey.getDefaultLanguage());
 		
 		ExportData exportData = new ExportData();
-		file = exportData.exportSurveyResponses(surveyId, questions, responses);
+		file = exportData.exportSurveyResponses(surveyId, questions, responses, resourcesFolder);
 		
 		return file;
 	}

@@ -114,9 +114,10 @@ public class SurveyService {
 	   	LoginResponse userSessionInfo = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
 	   	String userLang = userSessionInfo.getIsoLanguage();
 	   	System.out.println("Language: " + userLang);
-	   	
+
+		String folder = request.getServletContext().getInitParameter("resourcesPath");
 	   	SurveysHandler surveysHandler = new SurveysHandler();
-	   	File file = surveysHandler.exportResults(Integer.parseInt(surveyId), userLang);
+	   	File file = surveysHandler.exportResults(Integer.parseInt(surveyId), userLang, folder);
 		ResponseBuilder response = Response.ok((Object) file);
 		response.header("Content-Disposition", "attachment; filename=" + file.getName());
 		

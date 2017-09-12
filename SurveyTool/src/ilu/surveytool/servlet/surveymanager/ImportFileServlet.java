@@ -108,7 +108,7 @@ public class ImportFileServlet extends HttpServlet {
 					String fileName = filePart.getSubmittedFileName();
 					fileName = this._checkFilename(fileName);	
 					
-				    fileName = this._importFile(filePart, fileName, rootPath, 0);
+				    fileName = this._importFile(request, filePart, fileName, rootPath, 0);
 	
 				    Resource resource = new Resource();
 					resource.setPathFile(Address.s_FOLDER_RESOURCES + fileName);
@@ -317,10 +317,12 @@ public class ImportFileServlet extends HttpServlet {
 	
 	}
 	
-	private String _importFile(Part filePart, String fileName, String rootPath, int index)
+	private String _importFile(HttpServletRequest request, Part filePart, String fileName, String rootPath, int index)
 	{
 		String fileNameFinal = fileName;
-		String folder = "C:\\surveytool\\resources";
+		String folder = request.getServletContext().getInitParameter("resourcesPath") + "/images";
+		File f = new File("./");
+		System.out.println("Path import file: " + f.getAbsolutePath());
 		
 		try{
 			File ffolder = new File(folder);
@@ -381,7 +383,7 @@ public class ImportFileServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			index++;
-			fileNameFinal = this._importFile(filePart, fileName, rootPath, index);
+			fileNameFinal = this._importFile(request, filePart, fileName, rootPath, index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

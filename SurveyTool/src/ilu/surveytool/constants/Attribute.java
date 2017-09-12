@@ -19,6 +19,7 @@ public class Attribute {
 	public final static String s_USER_SESSION_INFO = "userSessionInfo";
 	public final static String s_SURVEYS = "surveys";
 	public final static String s_SURVEY_INFO = "surveyInfo";
+	public final static String s_SESSIONID = "sessionId";
 	public final static String s_SURVEY_STATISTIC = "surveyStatistic";
 	public final static String s_IS_PREVIEW = "isPreview";
 	

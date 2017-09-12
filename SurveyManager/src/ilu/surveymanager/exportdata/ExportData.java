@@ -33,9 +33,10 @@ public class ExportData {
 		super();
 	}
 	
-	public File exportSurveyResponses(int surveyId, List<Question> questions, HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses)
+	public File exportSurveyResponses(int surveyId, List<Question> questions, HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses, String resourceFolder)
 	{
-		String folderPath = "/surveyExport";
+		String folderPath = resourceFolder + "/surveyExport";
+		System.out.println("Resource folder: " + folderPath);
 		File folder = new File(folderPath);
 		if(!folder.exists()) folder.mkdirs();
 		

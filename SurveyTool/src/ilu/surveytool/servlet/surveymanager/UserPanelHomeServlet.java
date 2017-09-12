@@ -59,6 +59,8 @@ public class UserPanelHomeServlet extends HttpServlet {
 			//pre-select tab
 			String tab = request.getParameter(Parameter.s_TAB);
 			if(tab == null) tab = "survey";
+
+			request.setAttribute(Attribute.s_SESSIONID, request.getSession().getId());
 			
 			if(bodyPage != null && !bodyPage.isEmpty())
 			{

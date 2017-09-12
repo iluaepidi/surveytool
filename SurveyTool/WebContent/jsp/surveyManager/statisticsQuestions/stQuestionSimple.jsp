@@ -65,6 +65,7 @@ List<Option> o = sQ.getOptions();
 	      <div class="row single-questions-row">
 		      <div class="canvasPie text">
 		      <p class="graph-title no-block"> <%= lang.getContent("statistics.boxes.numAnswersByOption")%></p>
+		      		
 	            	<span class="visuallyhidden">
 					<% 
 					for(int i = 0; i<o.size();i++){
