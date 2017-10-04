@@ -20,10 +20,10 @@ public class ConnectionFactoryJDBC {
     public ConnectionFactoryJDBC()
     {
         // recuperamos el contexto inicial y la referencia a la fuente de datos           
-         if(this.dataSource == null)
- 		{
+         //if(this.dataSource == null)
+ 		//{
         	 this._initializeDataSource();
- 		}      
+ 		//}      
             
     }
     
@@ -32,10 +32,10 @@ public class ConnectionFactoryJDBC {
 		Connection con = null;
 		try {
 			con = this.dataSource.getConnection();
-			if(con.isClosed())
+			/*if(con.isClosed())
 			{
 				this._initializeDataSource();
-			}
+			}*/
 				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
