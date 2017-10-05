@@ -75,51 +75,70 @@ public class surveyajs extends HttpServlet {
 		
 		if(preview || state.equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE))
 		{
-			AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
-			if(anonimousUser == null)
+			//CHECK MESSAGE IP ADDRESS
+			Boolean acceptIpFilter = (Boolean) request.getSession().getAttribute(Attribute.s_IP_FILTER_RESPONSE);
+			boolean existResponse = acceptIpFilter != null 
+					|| request.getParameter("cancelIpFilter") != null
+					|| request.getParameter("acceptIpFilter") != null;
+			acceptIpFilter = acceptIpFilter != null ? acceptIpFilter : false;
+			
+			if((existResponse && (request.getParameter("acceptIpFilter") != null || acceptIpFilter)) || preview)
 			{
-				anonimousUser = new AnonimousUser();
-				anonimousUser.setIpAddress(request.getRemoteAddr());
-				anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
-				anonimousUser.setCurrentPage(1);
-				/*if(!preview)*/ //anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
-				//if(preview) anonimousUser.setCurrentPage(1);
-				request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+				AnonimousUser anonimousUser = (AnonimousUser) request.getSession().getAttribute(Attribute.s_ANONIMOUS_USER);
+				if(anonimousUser == null)
+				{
+					anonimousUser = new AnonimousUser();
+					anonimousUser.setIpAddress(request.getRemoteAddr());
+					anonimousUser.setSurveyId(surveyDB.getQuestionnaireIdByPublicId(sid));
+					anonimousUser.setCurrentPage(1);
+					/*if(!preview)*/ //anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, preview);
+					//if(preview) anonimousUser.setCurrentPage(1);
+					request.getSession().setAttribute(Attribute.s_ANONIMOUS_USER, anonimousUser);
+				}
+				else
+				{
+					if(anonimousUser.isSurveyFinished()) anonimousUser.setCurrentPage(1);
+				}
+				
+				//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
+				JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
+				System.out.println("Json: " + survey.toString());
+		
+				request.setAttribute(Attribute.s_SURVEY_INFO, survey);
+				String surveyTitle = "";
+				//if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
+				request.setAttribute(Attribute.s_PAGE_TITLE, surveyTitle);
+					
+				List<String> jsFiles = new ArrayList<>();
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
+				jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
+				
+				if(preview) jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY_PREVIEW));
+				else jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
+				
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_ANGULAR_API));
+				jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_ANGULAR_EMBED));
+				request.setAttribute(Attribute.s_JS_FILES, jsFiles);
+		
+				List<String> cssFiles = new ArrayList<>();
+				cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
+				request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
+				
+				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE_AJS));
+			}
+			else if(existResponse && (request.getParameter("cancelIpFilter") != null || !acceptIpFilter))
+			{
+				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_FINISH_PAGE));
 			}
 			else
 			{
-				if(anonimousUser.isSurveyFinished()) anonimousUser.setCurrentPage(1);
+				request.setAttribute(Attribute.s_SURVEY_ID, sid);
+				request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_IP_FILTER));
 			}
-			
-			//int currentPage = (anonimousUser.getId() != 0 ? anonimousUser.getCurrentPage() : 1);
-			JSONObject survey = surveyProcessHandler.getCurrentPageJson(sid, anonimousUser, language);
-			System.out.println("Json: " + survey.toString());
-	
-			request.setAttribute(Attribute.s_SURVEY_INFO, survey);
-			String surveyTitle = "";
-			//if(survey.getContents() != null && !survey.getContents().isEmpty() && survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE) != null) surveyTitle = survey.getContents().get(DBConstants.s_VALUE_CONTENTTYPE_NAME_TITLE).getText();
-			request.setAttribute(Attribute.s_PAGE_TITLE, surveyTitle);
-				
-			List<String> jsFiles = new ArrayList<>();
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_CONTROLLES_ACCESIBLES_YOUTUBE));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
-			jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
-			
-			if(preview) jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY_PREVIEW));
-			else jsFiles.add(properties.getJsFilePath(Address.s_NG_SERVICE_SURVEY));
-			
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_ANGULAR_API));
-			jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_ANGULAR_EMBED));
-			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
-	
-			List<String> cssFiles = new ArrayList<>();
-			cssFiles.add(properties.getCssFilePath(Address.s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE));
-			request.setAttribute(Attribute.s_CSS_FILES, cssFiles);
-			
-			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_SURVEY_PAGE_AJS));
 		}
 		else if(state.equals(DBConstants.s_VALUE_SURVEY_STATE_PAUSED))
 		{

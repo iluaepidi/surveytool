@@ -29,6 +29,7 @@ public class Address {
 		public final static String s_BODY_PROFILE = "profile";
 		public final static String s_BODY_SURVEY_PAUSED = "surveyPaused";
 		public final static String s_BODY_SURVEY_FINISHED = "surveyFinished";
+		public final static String s_BODY_SURVEY_IP_FILTER = "surveyIpFilter";
 	
 	//cssFiles
 		public final static String s_CSS_CONTROLLES_ACCESIBLES_YOUTUBE = "controlesReproYoutubeAcc";
@@ -58,6 +59,7 @@ public class Address {
 		public final static String s_SERVLET_CREATE_SURVEY_SERVLET = "CreateSurveyServlet";
 		public final static String s_SERVLET_LOGIN = "LoginServlet";
 		public final static String s_SERVLET_SURVEYS_SERVLET = "SurveysServlet";
+		public final static String s_SERVLET_SURVEYS_AJS = "surveyajs";
 		public final static String s_SERVLET_POLLS_SERVLET = "PollsServlet";
 		public final static String s_SERVLET_SURVEY_PROCESS = "SurveyProcessServlet";
 		public final static String s_SERVLET_USER_PANEL_HOME = "UserPanelHomeServlet";

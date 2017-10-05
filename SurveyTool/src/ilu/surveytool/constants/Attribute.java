@@ -21,9 +21,11 @@ public class Attribute {
 	public final static String s_SURVEY_INFO = "surveyInfo";
 	public final static String s_SURVEY_STATISTIC = "surveyStatistic";
 	public final static String s_IS_PREVIEW = "isPreview";
+	public final static String s_IP_FILTER_RESPONSE = "ipFilterResponse";
 	
 	public final static String s_SURVEY_INFO_DEFAULT_LANGUAGE = "surveyInfoDefaultLanguage";
 	public final static String s_SURVEY_LANGUAGE = "surveyLanguage";
+	public final static String s_SURVEY_ID = "surveyId";
 	
 	public final static String s_JS_FILES = "jsFiles";
 	public final static String s_CSS_FILES = "cssFiles";

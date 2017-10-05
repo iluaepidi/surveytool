@@ -586,4 +586,5 @@ border: 2px solid #016fb8;}
     margin-top: 130px;}
 .survey-state-content > h1 {font-size: 2.2em;}
 .survey-state-content > p {font-size: 1.2em;}	
-	
+.ip-filter-buttons {margin-top: 40px;}
+.ip-filter-form  {margin-top: 30px;}

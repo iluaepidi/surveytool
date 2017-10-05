@@ -4,7 +4,7 @@
 				Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 				%>
 				
-  						<div class="survey-finish-content" >
+  						<div class="survey-state-content content" >
   							<h2><%= lang.getContent("survey.process.finishPage.title") %></h2>
   							<p><%= lang.getContent("survey.process.finishPage.body") %></p>  							
   						</div>
