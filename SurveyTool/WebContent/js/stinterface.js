@@ -14,7 +14,8 @@ var surveyInfoText = "";
 
 var currentUrl = window.location.href;
 var urlBase = "";
-if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool";
+//if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool";
+if(currentUrl.indexOf("SurveyTool") != -1) urlBase = "/SurveyTool";
 
 $(function() {
 	
@@ -67,6 +68,7 @@ $(function() {
 	});
 	
 	$('.survey-sections').on("click", "#add-menu-frame div button", function(e){
+		console.log("add-menu-frame");
 		e.stopPropagation();
 		bodyClick();
 		currentFrameActivate = "add-menu-frame";
