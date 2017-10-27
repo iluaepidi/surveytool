@@ -146,7 +146,7 @@ h2 {width: auto;
 	vertical-align: middle !important;
 }
 
-.visuallyhidden{
+.visuallyhidden, .visuallyHidden {
 	clip: rect(1px, 1px, 1px, 1px);
 	height: 1px;
 	overflow: hidden;
