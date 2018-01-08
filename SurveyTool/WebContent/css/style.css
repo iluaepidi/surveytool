@@ -1749,3 +1749,10 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
     border-radius: 4px;}
+
+.survey-free-content {margin: 10px auto 0px !important;
+	width: 60%;}
+.survey-free-content h3 {font-size: 1.4em;}
+.accLogos {text-align: center;
+	margin: 30px 0;}
+.normal-list li {list-style: inherit !important;}
