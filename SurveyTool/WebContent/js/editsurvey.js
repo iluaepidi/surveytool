@@ -730,7 +730,6 @@ $(function() {
 		var ogid = $(this).closest("ul.option-list").attr("ogid");
 		var qid = $(this).closest("li.panel-question").attr("qid");
 		var importFileHiddenClass = "";
-		debugger;
 		if(otype === "radio" && $(this).closest('li.panel-question').find('select.type-simple-answer').val() === "select") importFileHiddenClass = "hidden";
 		var optionHtml = '<li class="option-item" id="option-item">' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
@@ -748,6 +747,8 @@ $(function() {
 		
 		if(otype != "checkbox") $(this).closest("li").prev().find("div.circle-info").html(index + 1);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+		
+		let inputElement = document.getElementById('option' + qid + '-' + ogid + '-' + index).focus();
 	});
 	
 	$('.survey-sections').on("click", "button.btnAddOptionOther", function(e){
