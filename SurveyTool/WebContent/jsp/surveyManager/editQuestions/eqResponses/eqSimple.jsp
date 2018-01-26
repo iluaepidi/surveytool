@@ -11,6 +11,7 @@
 											<script>
 											accesibilityTextOption = "<%= lang.getContent("accesibility.question.option") %>";
 											phOption = "<%= lang.getContent("question.edit.placeholder.option") %>";
+											accesibilityTextButton = "<%= lang.getContent("accesibility.question.addfile.option") %>"
 							  				</script>
 											<%
 											Question question = (Question) request.getAttribute(Attribute.s_QUESTION);
