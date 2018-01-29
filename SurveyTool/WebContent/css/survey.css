@@ -421,21 +421,73 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	left:0px;
 	top:0px;
 }
-#form-question table tr td.mradio label {background:url(../img/radio-off.png) center center no-repeat;}
-#form-question table tr td.mcheckbox label {background:url(../img/checkbox-off.png) center center no-repeat;}
+
+/** Fix Accessibility radio buttons and checkboxes on table  **/
+#form-question table tr td.mradio{
+	overflow: hidden;
+}
+#form-question table tr td input[type=radio]{
+	position: relative;
+	top: -20rem;
+}
+#form-question table tr td.mradio label{
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: 17pt;
+	color: #016FB8;
+}
+
+#form-question table tr td.mradio label:before {
+	content:'\f10c';
+	position: relative;
+	top: 1.6rem;
+}
+
 #form-question table tr td label:hover,
 #form-question table tr td input[type=radio]:focus + label{
 	background-color:#016FB8;
+	color:#FFF;
 }
 
-#form-question table tr td input[type=radio]:checked + label{
-	background:#016FB8 url(../img/radio-on.png) center center no-repeat;
+#form-question table tr td input[type=radio]:checked + label:before{
+	/*background:#016FB8 url(../img/radio-on.png) center center no-repeat;*/
+	content:'\f192';
+	position: relative;
+	top: 1.6rem;
 }
-
-
-#form-question table tr td input[type=checkbox]:checked + label{
-	background:#016FB8 url(../img/checkbox-on.png) center center no-repeat;
+#form-question table tr td.mcheckbox {
+	overflow:hidden;
 }
+#form-question table tr td.mcheckbox input[type="checkbox"]{
+	position: relative;
+	top: -20rem;
+}
+#form-question table tr td.mcheckbox label:hover,
+#form-question table tr td.mcheckbox input[type=checkbox]:focus + label{
+	background-color:#016FB8;
+	color:#FFF;
+}
+#form-question table tr td.mcheckbox label:hover,
+#form-question table tr td.mcheckbox input:focus + label:before{
+	content:'\f096';
+	color: #fff;
+}
+#form-question table tr td.mcheckbox label {
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: 17pt;
+	color: #016FB8;
+}
+#form-question table tr td.mcheckbox label:before {
+	content:'\f096';
+	position: relative;
+	top: 1.6rem;
+}
+#form-question table tr td input[type=checkbox]:checked + label:before{
+	content:'\f0c8';
+	position: relative;
+	top: 1.6rem;
+}
+/** Fix Accessibility radio buttons and checkboxes on table  **/
+
 /* Scale */
 ul.likert-options-frame {list-style: none;
 	padding: 0 !important;
@@ -453,8 +505,9 @@ ul.likert-options-frame > li {/*width: 80px;*/
 .option-list-select {width: auto;}
 div.likert-options {text-align: center;
 	display: grid;}
+	
 #form-question .likert-options label{
-	background:url(../img/radio-off.png) center bottom no-repeat;
+	/*background:url(../img/radio-off.png) center bottom no-repeat;*/
 	padding-bottom:30px;
 	display:inline-block;
 	min-width:20px;
@@ -462,15 +515,32 @@ div.likert-options {text-align: center;
 	/*margin:0px 11px 10px;*/
 	color:#016FB8;
 }
+#form-question .likert-options label:before{
+	font-family: "FontAwesome";
+	content: '\f10c';
+	position: relative;
+	top: 3.6rem;
+	left: 1.3rem;
+	font-size: 16pt;
+}
+
+#form-question .likert-options input[type=radio]:checked + label:before{
+	/*background:url(../img/radio-on.png) center bottom no-repeat;*/
+	font-family: "FontAwesome";
+	content: '\f192';
+	position: relative;
+	top: 3.6rem;
+	left: 1.8rem;
+	font-size: 16pt;
+}
+
 #form-question .likert-options .likert-options-frame span:first-child label{
 	margin-left:0px;
 }
 #form-question .likert-options .likert-options-frame span:last-child label{
 	margin-right:0px;
 }
-#form-question .likert-options input[type=radio]:checked + label{
-	background:url(../img/radio-on.png) center bottom no-repeat;
-}
+
 #form-question .likert-options input{
 	opacity:0;
 	margin:0px;
