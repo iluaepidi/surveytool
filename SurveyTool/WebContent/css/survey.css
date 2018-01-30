@@ -486,7 +486,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	position: relative;
 	top: 1.6rem;
 }
-/** Fix Accessibility radio buttons and checkboxes on table  **/
+/**EOF Fix Accessibility radio buttons and checkboxes on table  **/
 
 /* Scale */
 ul.likert-options-frame {list-style: none;

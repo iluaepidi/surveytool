@@ -22,6 +22,7 @@ var accesibilityTextItem = "";
 var accesibilityTextColumn = "";
 var accesibilityTextOption = "";
 var accesibilityTextButton = "";
+var accesibilityDeleteOptionMsg = "";
 var modalFocus = null;
 var keyBuffer = {};
 
@@ -733,12 +734,12 @@ $(function() {
 		if(otype === "radio" && $(this).closest('li.panel-question').find('select.type-simple-answer').val() === "select") importFileHiddenClass = "hidden";
 		var optionHtml = '<li class="option-item" id="option-item">' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
+								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption + ' ' + index +'</label>	'+													
 								'<input id="option' + qid + '-' + ogid + '-' + index + '" type="text" class="option-title form-control fleft option" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									'<label for="add-file-option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">' + accesibilityTextButton + ' '+ index +'</label>'+
 									'<button class="btn btn-transparent fleft  add-file-option addFileOption ' + importFileHiddenClass + '" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
-									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="'+ accesibilityDeleteOptionMsg + ": " +textOption+' ' + index +'"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
