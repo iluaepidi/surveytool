@@ -37,7 +37,8 @@ body {margin-bottom: 150px !important;}
 .nav-tabs-right li {float: right !important;
 	margin-bottom: -2px !important;}
 .nav-tabs-right li a {border-width: 2px !important;}
-.nav-tabs-right li a:hover {border: 2px solid !important;}
+.nav-tabs-right li a:hover {border: 2px solid !important;outline: dotted 2px #000 !important;}
+.nav-tabs-right li a:focus {border: 2px solid !important;outline: dotted 2px #000 !important;}
 .content-box-tabs {border: 2px solid #ddd;
 	min-height: 600px;}
 h2 {width: auto;
@@ -361,6 +362,9 @@ button span {margin-left: 5px;}
     background-color: #23527c !important;
     color: #fff;}
 .user-profile-list {margin-right: 25px !important;}
+.user-profile-list > .dropdown a:hover,.user-profile-list > .dropdown a:focus { text-decoration: underline;}
+
+
 /*----------------------------------------------*\
 		$BODY_CONTENT
 \*----------------------------------------------*/
