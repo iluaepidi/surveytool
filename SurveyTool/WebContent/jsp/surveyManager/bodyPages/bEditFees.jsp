@@ -48,7 +48,7 @@
   				int indexquestion = 0;
 				%>
 				
-				<script type="text/javascript">
+				<script>
 						loadquotas('<%=request.getAttribute(Attribute.s_JSON_QUOTAS)%>');
 				</script>
 					
@@ -145,7 +145,7 @@
 							 				listIdQuestion.put(quota.getIdQuestion(), quota.getIdQuestion());
 							 				listQuestionAvaiblesNoVisible.add(Integer.valueOf(quota.getIdQuestion()));%>
 							 				<jsp:include page="../components/cQuota.jsp" />
-								 			<script type="text/javascript">
+								 			<script>
 								 				loadvaluequestion(<%=quota.getIdQuestion()%>);
 								 			</script>
 							 	<%
@@ -172,7 +172,7 @@
 						
 	  				</div>
 	  				
-	  				<script type="text/javascript">
+	  				<script>
 					$(document).ready(function() {
 							<%for (Integer key : listIdQuestion.keySet()) {%>
 								$('#selquestionforfees<%=key%>').val(<%=listIdQuestion.get(key)%>);
