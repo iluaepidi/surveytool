@@ -7,7 +7,7 @@ String footerPath = "jsp/surveyEngine/components/footer.jsp";
 String bodyPage = (String) request.getAttribute(Attribute.s_BODY_PAGE);
 Language lang = (Language) request.getSession().getAttribute(Attribute.s_SURVEY_LANGUAGE);
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="<%= lang.getCurrentLanguage() %>" ng-app="survey" ng-controller="surveyController">
 	<head>
 		<jsp:include page="jsp/surveyEngine/components/head.jsp" />

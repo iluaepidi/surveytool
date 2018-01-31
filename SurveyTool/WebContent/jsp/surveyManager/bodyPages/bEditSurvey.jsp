@@ -8,7 +8,7 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
 				<%@page import="java.util.Map"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
-				<script type="text/javascript">
+				<script>
 					surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
 				</script>
 				<%

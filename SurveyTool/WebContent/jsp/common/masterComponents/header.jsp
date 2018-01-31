@@ -7,7 +7,7 @@ Language lang = new Language(getServletContext().getRealPath("/"));
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>
 				
-				<script type="text/javascript">
+				<script>
 				function alertLogOut(){
 				    bootbox.dialog({
 						message: "<%= lang.getContent("header.log.out.message") %>",
@@ -33,10 +33,10 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 </script>
 				<div class="container-fluid">
 	  				<h1 class="col-sm-9 col-xs-9">
-	  					<div class="logo"><a href="InitialServlet"><img src="img/p4aicon.jpeg" alt="logo de prosperity4all"/></a></div>
-	  					<div class="title-header"><%= lang.getContent("master.header.title") %>
-	  						<p><%= lang.getContent("master.header.subtitle") %></p>
-	  					</div>
+	  					<span class="logo inBlock"><a href="InitialServlet"><img src="img/p4aicon.jpeg" alt="logo de prosperity4all"/></a></span>
+	  					<span class="title-header inBlock"><%= lang.getContent("master.header.title") %>
+	  						<span><%= lang.getContent("master.header.subtitle") %></span>
+	  					</span>
 	  				</h1>
 	  				<!-- <div class="header-buttons">
 	  					<a href="#"><i class="fa fa-cog fa-5x"></i></a>

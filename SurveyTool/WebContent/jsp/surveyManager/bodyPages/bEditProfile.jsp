@@ -17,7 +17,7 @@
   				if(confMsg!=null){
 				%>		
 				
-				<script type="text/javascript">
+				<script>
 					function alertUpdateProfile(){
 					    bootbox.dialog({
 							message: "<%= lang.getContent("profile.confirm.update.msg") %>",
@@ -102,7 +102,7 @@
 			                    	</select>
 			                </div>
 			            </div>
-			            <script type="text/javascript">
+			            <script>
 			            	$("#language").val('<%=loginResp.getIsoLanguage() %>');
 			            </script>
 			                

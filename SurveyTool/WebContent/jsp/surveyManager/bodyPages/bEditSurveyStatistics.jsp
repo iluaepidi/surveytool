@@ -22,7 +22,7 @@
 <%@page import="ilu.surveymanager.handler.SurveysHandler"%>
 <%@page import="ilu.surveytool.databasemanager.DataObject.Quota"%>
 
-<script type="text/javascript">
+<script>
 	surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
 </script>
 <!--<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script> Esto es para obtener la IP y la localización -->

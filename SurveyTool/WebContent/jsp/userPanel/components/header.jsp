@@ -10,7 +10,7 @@ String isLoggedStr = request.getParameter("logged");
 boolean isLogged = Boolean.parseBoolean(isLoggedStr);
 %>
 				
-				<script type="text/javascript">
+				<script>
 				function alertLogOut(){
 				    bootbox.dialog({
 						message: "<%= lang.getContent("header.log.out.message") %>",
