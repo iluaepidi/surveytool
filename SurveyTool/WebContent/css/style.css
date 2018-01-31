@@ -263,7 +263,10 @@ h1.col-sm-9.col-xs-9 > span.inBlock > span{
 	display: block;
     font-size: 0.5em;
     margin: 0 0 10px;
+<<<<<<< HEAD
     position: static;
+=======
+>>>>>>> 75bc113b81a76559b9491506743941ded5fe9e39
     position: initial;
 }
 
