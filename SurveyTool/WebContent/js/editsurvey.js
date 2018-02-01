@@ -764,7 +764,6 @@ $(function() {
 		req.lang = $('#survey-language-version').val();
 		if($(this).hasClass("btnAddOptionOther")) req.isOther = "true";
 		else req.isOther = "false";
-		
 		$.ajax({ 
 		   type: "POST",
 		   dataType: "text",
@@ -791,6 +790,8 @@ $(function() {
 				   
 				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("gotoOther");
 				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("setJsonOther");
+
+				   document.getElementById('otherOptionLabel'+req.qid).focus();
 			   }
 			   /*else if(data == 'true' && req.value == 'false')
 			   {
