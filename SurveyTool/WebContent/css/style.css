@@ -266,7 +266,52 @@ h1.col-sm-9.col-xs-9 > span.inBlock > span{
     margin: 0 0 10px;
     position: initial;
 }
-
+.btn.btn-success{
+	background-color: #008000;
+    border-color: #008000;
+}
+.btn.btn-danger{
+	background-color: #A30000;
+    border-color: #A30000;
+}
+.bootbox-close-button.close{
+	color: #707070;
+	opacity: 1;
+}
+.bootbox-close-button.close:hover{
+	color: #000;
+	opacity: 1;
+}
+.modal .panel.panel-primary > .panel-heading > .close{
+	color: #FFF;
+	opacity: 1;
+}
+.modal .panel.panel-primary > .panel-heading > .close:hover{
+	color: #FAFFFA;
+	opacity: 1;
+}
+/*---- Placeholders -----*/
+.form-control::-webkit-input-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control:-moz-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control::-moz-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control:-ms-input-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; }
+.form-control::placeholder {
+	color:#333 !important;
+	opacity: .8 !important; }
+	
+	/*Correccion botones desactivados***/
+button.btn.btn-primary[disabled].active{
+	background-color: #008080 !important;
+	opacity:1 !important;
+}
 /*----------------------------------------------*\
 		$ERROR
 \*----------------------------------------------*/
