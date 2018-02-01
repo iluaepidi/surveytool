@@ -1940,7 +1940,7 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 	padding: 0px 5px;}
 .editorExitHelp {display: inline-block;
     width: 100%;
-    text-align: right;}
+    /*text-align: right*/;}
 .editor-buttons a:focus,
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
