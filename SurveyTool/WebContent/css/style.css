@@ -312,6 +312,11 @@ button.btn.btn-primary[disabled].active{
 	background-color: #008080 !important;
 	opacity:1 !important;
 }
+
+/*Correccion colores option*/
+select option{
+	color:#333 !important;
+}
 /*----------------------------------------------*\
 		$ERROR
 \*----------------------------------------------*/
