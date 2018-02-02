@@ -96,7 +96,6 @@
 			            		
 			            		
 			            		$('#survey-preview_btn').click(function(publicid){
-			            			
 			            			langselect = $('#survey-language-version').val();
 			            			window.open('<%= hostname %>/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
 			            			
@@ -171,6 +170,19 @@
 		  					
 			  				<jsp:include page="../components/cSections.jsp" />		
 								
+							<div class="edit-survey-head">
+								<div class="survey-preview">
+		  							<button class="btn btn-primary" id="survey-preview_btn_last"><%= lang.getContent("button.survey_preview") %></button>
+		  							<script>
+		  							$('#survey-preview_btn_last').click(function(publicid){
+				            			
+				            			langselect = $('#survey-language-version').val();
+				            			window.open('<%= hostname %>/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
+				            			
+				            		});
+		  							</script>
+		  						</div>
+	  						</div>
 						</div>
 	  				</div>
 <%
