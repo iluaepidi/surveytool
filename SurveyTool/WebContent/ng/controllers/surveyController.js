@@ -180,7 +180,8 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 		return true;
 	};
 	
-	$scope.getQuestionPath = function(question) {		
+	$scope.getQuestionPath = function(question) {	
+		console.log("Question: " + JSON.stringify(question));
 		var minMaxCad = "";
 		if(question.questionType == "shortText")
 		{
@@ -196,6 +197,7 @@ app.controller('surveyController', ['$scope', '$location', '$http', '$window', '
 				minMaxCad = minMaxCad + "max=0";
 			}
 		}
+		console.log("QuestionPath: " + question.questionJspPath + minMaxCad);
 		return question.questionJspPath + minMaxCad;
 	}
 	

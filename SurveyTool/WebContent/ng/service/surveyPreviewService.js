@@ -21,7 +21,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  console.log("Current URL: " + $window.location.href);
 	  var currentUrl = $window.location.href;
 	  var urlBase = "";
-	  if(currentUrl.includes("SurveyTool")) urlBase = "/SurveyTool"; 
+	  if(currentUrl.indexOf("SurveyTool") !== -1) urlBase = "/SurveyTool"; 
 	  //$http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  $http.post(urlBase + '/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
