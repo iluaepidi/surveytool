@@ -308,20 +308,22 @@ public class DBSQLQueries {
 				+ "inner join language l on l.idLanguage = cQ.idLanguage "
 				+ "where q.idQuestion = ? and l.isoName = ? and cQ.idContentType=1 and cO.idContentType=1 and cO.idLanguage=cQ.idLanguage order by og.idOptionsGroup, o.idOption";
 		
-		public final static String s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE = "SELECT q.idQuestion, q.idQuestionType, oG.idOptionsGroup, if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cO.idLanguage),\"\") as optionsGroup, o.idOption, o.otherOption, cO.text as options FROM " 
+		public final static String s_SELECT_SURVEY_QUESTION_CONTENTS_SURVEYID_LANGUAGE = "SELECT q.idQuestion, q.idQuestionType, oG.idOptionsGroup, "
+					+ "if(q.idQuestionType=4, (select cOG.text from content cOG where cOG.idContent = oG.idContent and cOG.idContentType=1 and cOG.idLanguage=cO.idLanguage),\"\") as optionsGroup, "
+					+ "o.idOption, o.otherOption, cO.text as options FROM " 
 				+ "(select ques.* from question ques "
-				+ "inner join surveytool.questionbypage AS qbp  on qbp.idQuestion = ques.idQuestion "
-				+ "inner join surveytool.page AS p  on p.idPage = qbp.idPage "
-				+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
-				+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
-				+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
-				+ "WHERE q.idQuestionnaire = ?) as q "
+					+ "inner join surveytool.questionbypage AS qbp  on qbp.idQuestion = ques.idQuestion "
+					+ "inner join surveytool.page AS p  on p.idPage = qbp.idPage "
+					+ "INNER JOIN surveytool.section AS sc ON p.idSection = sc.idSection "
+					+ "INNER JOIN surveytool.forma AS f ON sc.idForma = f.idForma "
+					+ "INNER JOIN surveytool.questionnaire AS q ON q.idQuestionnaire = f.idQuestionnaire "
+					+ "WHERE q.idQuestionnaire = ?) as q "
 				+ "inner join optionsgroup oG on oG.idQuestion = q.idQuestion "
 				+ "inner join optionsbygroup obg on obg.idOptionsGroup = oG.idOptionsGroup "
 				+ "inner join surveytool.option o on o.idOption = obg.idOption "
 				+ "inner join content cO on cO.idContent = o.idContent "
 				+ "inner join language l on l.idLanguage = cO.idLanguage "
-				+ "where l.isoName = ? and cO.idContentType=1 order by og.idOptionsGroup, o.idOption";
+				+ "where l.isoName = ? and cO.idContentType=1 order by oG.idOptionsGroup, o.idOption";
 		public final static String s_SELECT_QUESTIONS_TYPES_BY_SURVEY_PUBLICID_PAGEID = "SELECT qt.name questionTypeName FROM surveytool.questionnaire s "
 				+ "inner join surveytool.forma f on f.idQuestionnaire = s.idQuestionnaire "
 				+ "inner join surveytool.section sc on sc.idForma = f.idForma "
@@ -552,7 +554,7 @@ public class DBSQLQueries {
 				+"inner join surveytool.option opt on opt.idOption = CAST(goto.optionValue AS UNSIGNED) "
 				+"inner join surveytool.question question on question.idQuestion=goto.idQuestionDest "
 				+"inner join surveytool.content contentQuestion on question.idContent=contentQuestion.idContent "
-				+"inner join surveytool.content contentOption on opt.idContent=contentoption.idContent "
+				+"inner join surveytool.content contentOption on opt.idContent=contentOption.idContent "
 				+"where goto.idQuestion = ? and contentQuestion.idContentType = 1 and contentOption.idContentType = 1  and contentQuestion.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)  and contentOption.idLanguage = (select lang.idlanguage from surveytool.language lang where lang.isoName=?)";
 		public final static String s_SELECT_EXISTLOGICGOTTO_BY_IDQUESTION_OGID_OID = "SELECT idQuestionDest FROM surveytool.questionlogicgoto where idQuestion = ? AND idOptionsGroup = ? AND optionValue = ?";
 		public final static String s_SELECT_LOGICGOTTO_BY_IDQUESTION_OGID_OID = "SELECT p.numPage FROM surveytool.questionlogicgoto goTo inner join surveytool.questionbypage qbp on qbp.idQuestion=goTo.idQuestionDest inner join surveytool.page p on p.idPage=qbp.idPage where goTo.idQuestion = ? AND goTo.idOptionsGroup = ? AND goTo.optionValue = ?";

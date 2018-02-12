@@ -230,4 +230,12 @@ public class StatisticsQuestion {
 		    }
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "StatisticsQuestion [questionId=" + questionId + ", numResponses=" + numResponses + ", questionType="
+				+ questionType + ", optionsGroup=" + optionsGroup + ", options=" + options + ", optionsByOptionsGroup="
+				+ optionsByOptionsGroup + ", valueOthers=" + valueOthers + "]";
+	}
+	
 }
