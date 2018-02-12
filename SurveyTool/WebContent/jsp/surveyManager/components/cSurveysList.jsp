@@ -76,8 +76,10 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 											{
 												deadLine =  lang.getContent("survey_manager.table.content.none");
 											}
-											
-											String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
+											//String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
+											//String hostname = request.getServletContext().getInitParameter("hostname");
+											String hostname = request.getServletContext().getInitParameter("baseUrl");
+											String downloadServiceUrl = hostname + "/api/SurveyService/export/" + survey.getSurveyId();
 											
 											String state = "";
 											if(survey.getState().equals(DBConstants.s_VALUE_SURVEY_STATE_ACTIVE)) {state = lang.getContent("survey_manager.tab.surveys.state.active");}
