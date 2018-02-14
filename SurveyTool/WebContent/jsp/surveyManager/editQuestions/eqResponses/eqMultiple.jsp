@@ -52,7 +52,7 @@
 								  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 								  									<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
 																	<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"  active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-								  									<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>														
+								  									<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("button.remove_option") %>: <%= text %></label>														
 																	<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 																	<%} %>
 								  								</div>
@@ -84,7 +84,7 @@
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %> <%= index %></label>														
 																<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-							  									<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %> <%= index %></label>
+							  									<label for="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>" class="visuallyhidden"><%= lang.getContent("button.remove_option") %> <%= index %></label>
 							  									<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-<%= optionsGroup.getId() %>-<%= index %>"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  									<% } %>
 							  								</div>
@@ -140,7 +140,7 @@
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="add-file-option<%= question.getQuestionId() %>-0-1" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %>: 1</label>														
 																<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-0-1" active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-							  									<label for="remove-option<%= question.getQuestionId() %>-0-1" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>: 1</label>
+							  									<label for="remove-option<%= question.getQuestionId() %>-0-1" class="visuallyhidden"><%= lang.getContent("button.remove_option") %>: 1</label>
 							  									<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-0-1"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  									<% } %>
 							  								</div>
@@ -168,7 +168,7 @@
 							  									<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>
 							  									<label for="add-file-option<%= question.getQuestionId() %>-0-2" class="visuallyhidden"><%= lang.getContent("accesibility.question.addfile.option") %>: 2</label>														
 																<button class="btn btn-transparent fleft add-file-option" id="add-file-option<%= question.getQuestionId() %>-0-2" active="false" ><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button>
-							  									<label for="remove-option<%= question.getQuestionId() %>-0-2" class="visuallyhidden"><%= lang.getContent("accesibility.question.remove.option") %>: 2</label>
+							  									<label for="remove-option<%= question.getQuestionId() %>-0-2" class="visuallyhidden"><%= lang.getContent("button.remove_option") %>: 2</label>
 							  									<button class="btn btn-transparent fleft red remove-option" id="remove-option<%= question.getQuestionId() %>-0-2"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
 							  									
 							  									<% } %>

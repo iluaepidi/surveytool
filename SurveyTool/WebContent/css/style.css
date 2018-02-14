@@ -1950,3 +1950,8 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
     border-radius: 4px;}
+i.fa-angle-double-up:before,i.fa-angle-double-down:before {
+	position: relative;
+    top: 4px;
+}
+#searchSurvey::-ms-clear{display:none;}

@@ -183,11 +183,22 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	opacity:0;
 }
 #form-question .checkbox label{
-	background:url(../img/checkbox-off.png) left center no-repeat;
+	/*background:url(../img/checkbox-off.png) left center no-repeat;*/
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: 17pt;
+	color: #016FB8;
 	padding-left:30px;
 }
-#form-question .checkbox input[type=checkbox]:checked + label{
-	background: url(../img/checkbox-on.png) left center no-repeat;
+#form-question .checkbox label:before{
+	content:'\f096';
+	position: relative;
+	top: .2rem;
+}
+#form-question .checkbox input[type=checkbox]:checked + label:before{
+	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
+	content:'\f0c8';
+	position: inherit;
+	font-size: 16pt;
 }
 #form-question .checkbox input[type=checkbox]:checked + label span{
 	background-color:#016FB8;
