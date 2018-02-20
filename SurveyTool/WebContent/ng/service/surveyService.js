@@ -1,4 +1,5 @@
 var sInfo = {};
+var hostname = "";
 
 var app = angular.module('surveyService',[]);
 
@@ -16,12 +17,13 @@ app.factory('survey', ['$http', '$window', '$location', function($http, $window,
 
   survey.saveResponseAndGetNextPage = function(action, callback){
 	  //console.log("Next page: " + JSON.stringify(survey));
-	  var isUser = $location.absUrl().includes("user");
+	  var isUser = $location.absUrl().indexOf("user") > -1;
 	  var responses = getResponseJson(survey, action, isUser);
 	  //console.log("Json Response: " + JSON.stringify(responses));
 	  var currentUrl = $window.location.href;
 	  var urlBase = "";
 	  if(currentUrl.indexOf("SurveyTool") !== -1) urlBase = "/SurveyTool"; 
+	  console.log(urlBase + '/api/SurveyProcessService/responseProcess');
 	  //$http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  $http.post(urlBase + '/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
@@ -75,6 +77,7 @@ function getResponseJson(currentSurvey, action, isUser)
 	response.publicId = currentSurvey.info.publicId;
 	response.surveyId = currentSurvey.info.surveyId;
 	response.lang = currentSurvey.info.lang;
+	
 	response.numPages = currentSurvey.info.numPages;
 	response.isUser = isUser;
 	response.action = action;

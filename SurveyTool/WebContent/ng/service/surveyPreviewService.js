@@ -1,4 +1,5 @@
 var sInfo = {};
+var hostname = "";
 
 var app = angular.module('surveyService',[]);
 
@@ -22,6 +23,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  var currentUrl = $window.location.href;
 	  var urlBase = "";
 	  if(currentUrl.indexOf("SurveyTool") !== -1) urlBase = "/SurveyTool"; 
+	  //alert("URL next page: " + hostname + urlBase + '/api/SurveyProcessService/responseProcess');
 	  //$http.post('/SurveyTool/api/SurveyProcessService/responseProcess', responses)
 	  $http.post(urlBase + '/api/SurveyProcessService/responseProcess', responses)
 	  	.success( function(response) {
@@ -34,7 +36,7 @@ app.factory('survey', ['$http', '$window', function($http, $window) {
 	  		callback(false, response.stored);	  			       
 		})
         .error(function(error) {
-            console.log(error);
+            console.log("ERROR: " + error);
             callback(true, false);
         });
 	  
