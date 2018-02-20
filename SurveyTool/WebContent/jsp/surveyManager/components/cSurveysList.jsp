@@ -13,7 +13,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 String tab = (String) request.getAttribute(Attribute.s_TAB);
 %>    								
 
-
+						<script src="js/tableFilters.js"></script>
 						<div id="surveys-list" <%if(!tab.equals("survey")){%>class="hidden"<%}%> style="margin-bottom: 20px;">	    					
 							<h3><%= lang.getContent("survey_manager.surveys.title") %></h3>							
 							<%= lang.getContent("survey_manager.surveys.description") %>
@@ -50,9 +50,11 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 				  								<option value="<%= lang.getContent("survey_manager.tab.surveys.state.finished") %>"><%= lang.getContent("survey_manager.tab.surveys.state.finished") %></option>
 				  							</select>			  							
 				  						</div>				  						
-			  						</fieldset>		  					
+			  						</fieldset>
 			  						<table class="table table-bordered table-surveys display" sumary="List of surveys where ..." id=""  data-page-length='25'>
-			  							<caption><%= lang.getContent("survey_manager.surveys.table.caption") %></caption>
+			  							<caption>
+			  								<%= lang.getContent("survey_manager.surveys.table.caption") %>
+			  							</caption>
 			  							<thead>
 										<tr class="info" id="titles">
 											<th class="center middle"><%= lang.getContent("survey_manager.surveys.table.column.state") %></th>
@@ -134,6 +136,14 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 										</tr>
 										</tbody>
 			  						</table>
+			  						<script>
+			  							
+			  							accesibilityTableRecords = "<%= lang.getContent("general.survey.filters.numRecord") %>";
+			  							accesibilityTableFind = "<%= lang.getContent("general.survey.filters.find") %>" ;
+			  							accesibilityTableState = "<%= lang.getContent("general.survey.filters.states") %>" ;
+			  							prepareAccesibilityEvents();
+			  							
+			  						</script>
 			  					</div>
 			  					
 			  					<%

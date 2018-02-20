@@ -37,7 +37,8 @@ body {margin-bottom: 150px !important;}
 .nav-tabs-right li {float: right !important;
 	margin-bottom: -2px !important;}
 .nav-tabs-right li a {border-width: 2px !important;}
-.nav-tabs-right li a:hover {border: 2px solid !important;}
+.nav-tabs-right li a:hover {border: 2px solid !important;outline: dotted 2px #000 !important;}
+.nav-tabs-right li a:focus {border: 2px solid !important;outline: dotted 2px #000 !important;}
 .content-box-tabs {border: 2px solid #ddd;
 	min-height: 600px;}
 h2 {width: auto;
@@ -251,9 +252,71 @@ textarea {resize:none;
 	padding-top: 5px;
 	width: 33% !important;
 	text-align: right !important;
-	
 }
 
+h1.col-sm-9.col-xs-9 > span.inBlock{
+	display: block !important;
+	font-size: inherit;
+	position: static;
+	position: initial;
+}
+h1.col-sm-9.col-xs-9 > span.inBlock > span{    
+	display: block;
+    font-size: 0.5em;
+    margin: 0 0 10px;
+    position: initial;
+}
+.btn.btn-success{
+	background-color: #008000;
+    border-color: #008000;
+}
+.btn.btn-danger{
+	background-color: #A30000;
+    border-color: #A30000;
+}
+.bootbox-close-button.close{
+	color: #707070;
+	opacity: 1;
+}
+.bootbox-close-button.close:hover{
+	color: #000;
+	opacity: 1;
+}
+.modal .panel.panel-primary > .panel-heading > .close{
+	color: #FFF;
+	opacity: 1;
+}
+.modal .panel.panel-primary > .panel-heading > .close:hover{
+	color: #FAFFFA;
+	opacity: 1;
+}
+/*---- Placeholders -----*/
+.form-control::-webkit-input-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control:-moz-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control::-moz-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; } 
+.form-control:-ms-input-placeholder{
+	color:#333 !important;
+	opacity: .8 !important; }
+.form-control::placeholder {
+	color:#333 !important;
+	opacity: .8 !important; }
+	
+	/*Correccion botones desactivados***/
+button.btn.btn-primary[disabled].active{
+	background-color: #008080 !important;
+	opacity:1 !important;
+}
+
+/*Correccion colores option*/
+select option{
+	color:#333 !important;
+}
 /*----------------------------------------------*\
 		$ERROR
 \*----------------------------------------------*/
@@ -361,6 +424,9 @@ button span {margin-left: 5px;}
     background-color: #23527c !important;
     color: #fff;}
 .user-profile-list {margin-right: 25px !important;}
+.user-profile-list > .dropdown a:hover,.user-profile-list > .dropdown a:focus { text-decoration: underline;}
+
+
 /*----------------------------------------------*\
 		$BODY_CONTENT
 \*----------------------------------------------*/
@@ -1879,8 +1945,13 @@ div.rules-frame > div.nav-config > ul > li > button.active > span {background-co
 	padding: 0px 5px;}
 .editorExitHelp {display: inline-block;
     width: 100%;
-    text-align: right;}
+    /*text-align: right*/;}
 .editor-buttons a:focus,
 .editor-buttons a:hover {border: 1px solid #2E6DA4 !important;
 	padding: 6px 12px;
     border-radius: 4px;}
+i.fa-angle-double-up:before,i.fa-angle-double-down:before {
+	position: relative;
+    top: 4px;
+}
+#searchSurvey::-ms-clear{display:none;}

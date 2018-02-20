@@ -17,7 +17,7 @@
   				if(confMsg!=null){
 				%>		
 				
-				<script type="text/javascript">
+				<script>
 					function alertUpdateProfile(){
 					    bootbox.dialog({
 							message: "<%= lang.getContent("profile.confirm.update.msg") %>",
@@ -70,7 +70,7 @@
 			
 			            <!-- Textarea -->
 			            <div class="form-group editProfile">
-			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.password") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="password"><%= lang.getContent("profile.password") %></label>
 			                <div class="col-md-4">                      
 				                    <input id="password" name="<%= Parameter.s_PASSWORD %>" type="password" placeholder="" class="form-control input-md" value="<%=loginResp.getPassword() %>">
 				                    <span id='password-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
@@ -79,7 +79,7 @@
 			            </div>
 			            
 			           <div class="form-group editProfile">
-			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.repeat.password") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="repassword"><%= lang.getContent("profile.repeat.password") %></label>
 			                <div class="col-md-4">                        
 			                    	<input id="repassword" name="<%= Parameter.s_REPASSWORD %>" type="password" placeholder="" class="form-control input-md" value="<%=loginResp.getPassword() %>">
 			                    	<span id='repassword-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
@@ -102,7 +102,7 @@
 			                    	</select>
 			                </div>
 			            </div>
-			            <script type="text/javascript">
+			            <script>
 			            	$("#language").val('<%=loginResp.getIsoLanguage() %>');
 			            </script>
 			                

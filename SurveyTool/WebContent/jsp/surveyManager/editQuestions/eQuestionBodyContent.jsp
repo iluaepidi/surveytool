@@ -41,7 +41,7 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
 											  			<div class="rowPlus">
 											  			<%int questionId = question.getQuestionId(); %>
 											    		<label name="section<%= question.getQuestionId() %>"><%= lang.getContent("bcontent.statement") %></label>
-											    		
+											    		<div class="editorExitHelp"><p id="exit-help-<%=question.getQuestionId()%>"><%= lang.getContent("bcontent.exithelp") %></p></div>
 											    			<div class="btn-toolbar editor-buttons" data-role="editor-<%=question.getQuestionId()%>-toolbar" data-target="#editor-<%=question.getQuestionId()%>">
 											      				<div class="btn-group">
 											        				<a href="#section<%= questionId %>" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="<%= lang.getContent("bcontent.font")%>" data-original-title="<%= lang.getContent("bcontent.font")%>"><i class="fa fa-font" aria-hidden="true"></i><b class="caret"></b></a>
@@ -109,7 +109,7 @@ if(question.getContents().containsKey(DBConstants.s_VALUE_CONTENTTYPE_NAME_DESCR
 													    	<!-- <label for="editor-<%=question.getQuestionId()%>" class="visuallyhidden"><%= lang.getContent("accesibility.bcontent") %></label> -->														
 														
 															<div id="editor-<%=question.getQuestionId()%>" class="wellBContent col-md-9 editor" contenteditable="true" aria-labeledby="exit-help-<%=question.getQuestionId()%>"><%if(descriptionText.equals("")){%><%=lang.getContent("placeholder.type_here")%><%}else{%><%= descriptionText %><%}%></div>
-															<div class="editorExitHelp"><p id="exit-help-<%=question.getQuestionId()%>"><%= lang.getContent("bcontent.exithelp") %></p></div>
+															
 													    <script>
 													    $.getScript('http://mindmup.github.io/bootstrap-wysiwyg/external/jquery.hotkeys.js',function(){
 													    	$.getScript('http://mindmup.github.io/bootstrap-wysiwyg/bootstrap-wysiwyg.js',function(){

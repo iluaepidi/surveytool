@@ -85,7 +85,7 @@
 							  						
 							  						<fieldset class="dependences-frame hidden">
 							  							<legend><%= lang.getContent("question.edit.dependence.question.label_shown") %>:</legend>
-							  							<button class="btn-transparent btn-close-aspa btn-close-dependences"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
+							  							<button class="btn-transparent btn-close-aspa btn-close-dependences" title="<%= lang.getContent("button.close.window") %>"><span class="visuallyhidden"><%= lang.getContent("button.close.dependences") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  						<%
 															if(qdependence==null){
 															%>
@@ -261,7 +261,7 @@
 							  						%>
 							  						<fieldset class="logic-frame <%= extraClass %> hidden">
 							  							<legend><%= lang.getContent("question.edit.logic.option.label") %>:</legend>
-							  							<button class="btn-transparent btn-close-aspa btn-close-logic"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
+							  							<button class="btn-transparent btn-close-aspa btn-close-logic" title="<%= lang.getContent("button.close.window") %>"><span class="visuallyhidden"><%= lang.getContent("button.close.logic") %></span><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
 							  							
 							  							<%
 							  							if(!question.getOptionsGroups().isEmpty() && !question.getOptionsGroups().get(0).getOptions().isEmpty())

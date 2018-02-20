@@ -66,6 +66,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 																	<input class= "question-response-settings-options isLimitedChars" type="checkbox" autocomplete="off" name="isLimitedChars-<%= question.getIndex() %>" id="isLimitedChars<%= question.getQuestionId() %>" <%if(!textLength.equals("")){%> checked <%}%>>
 																	<label class= "question-response-settings-options" for="isLimitedChars<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.chars") %></label>
 																	<div id="charsId" <% if(textLength.equals("")){ %> class="question-response-settings-sub-none charsId" <%} else{%>class="question-response-settings-sub-inherit charsId"<%} %>>
+																		<label class="sr-only" for="survey-question-max-chars<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.chars") %></label>
 															  			<input type="number" min="0" max="9999" autocomplete="off" onkeydown="limit(this)" onkeyup="limit(this)" class="survey-question-max-chars" id="survey-question-max-chars<%= question.getQuestionId() %>" value="<%= textLength %>"></input>
 																		<label for="survey-question-max-chars<%= question.getQuestionId() %>"><%=lang.getContent("question.form.options.text.charshelp") %></label>
 																	</div>

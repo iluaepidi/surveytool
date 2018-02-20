@@ -9,7 +9,7 @@ String title = (String) request.getAttribute(Attribute.s_POLL_TITLE);
 Language lang = new Language(getServletContext().getRealPath("/")); 
 lang.loadLanguage(Language.getLanguageRequest(request));
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="<%= lang.getCurrentLanguage() %>">
 	<head>
 		<jsp:include page="jsp/common/masterComponents/headPoll.jsp" />

@@ -30,6 +30,8 @@
 							  				accesibilityTextColumn = "<%= lang.getContent("accesibility.question.matrix.input.column") %>";
 							  				phItem = "<%= lang.getContent("question.edit.matrix.placeholder.item") %>";
 							  				phColumn = "<%= lang.getContent("question.edit.matrix.placeholder.column") %>";
+							  				accesibilityRemoveElementMsg = "<%= lang.getContent("accesibility.question.matrix.remove.item") %>";
+								  			accesibilityRemoveColumnMsg = "<%= lang.getContent("accesibility.question.matrix.remove.column") %>";
 							  				</script>
 							  				
 							  				<% if((boolean)request.getAttribute(Attribute.s_ADD_QUESTIONS)){ %>

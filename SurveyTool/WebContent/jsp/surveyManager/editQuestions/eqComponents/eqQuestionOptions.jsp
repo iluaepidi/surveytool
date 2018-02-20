@@ -22,12 +22,12 @@
 							  							<p class="question-type-aux"><%=lang.getContent("question")%>: <%=lang.getContent(qtype)%></p>
 													</div>
 													<%
-													String offset = "col-sm-offset-2";
+													String offset = "col-sm-offset-1";
 													String optionType = question.getQuestionType();
 													if(optionType.equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_RADIO) || optionType.equals(DBConstants.s_VALUE_QUESTIONTYPE_SIMPLE_COMBO))
 													{
 													%>
-													<div class="col-sm-4 col-xs-4">
+													<div class="col-sm-5 col-xs-4">
 														<div class="col-sm-3 col-xs-4">
 								  							<label class="type-tittle" for="type-simple-response-<%= question.getIndex() %>"><%=lang.getContent("question.edit.type")%></label>								  							
 														</div>

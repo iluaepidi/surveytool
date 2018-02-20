@@ -10,7 +10,7 @@
 <%@page import="ilu.surveytool.databasemanager.DataObject.LoginResponse"%>
 				<%@page import="java.util.Map"%>
 				<%@page import="ilu.surveytool.databasemanager.DataObject.Survey"%>
-				<script type="text/javascript">
+				<script>
 					surveyTree = <%= request.getAttribute(Attribute.s_JSON_PAGES) %>;
 				</script>
 				<%
@@ -43,7 +43,7 @@
   				request.setAttribute(Attribute.s_NUM_QUESTION, numQuestion);
 				%>
 				
-				<script type="text/javascript">
+				<script>
 				hideText = "<%= lang.getContent("general.hide") %>";
 				displayText = "<%= lang.getContent("general.display") %>";
 				sectionText = "<%= lang.getContent("general.section") %>";
@@ -86,7 +86,7 @@
 		  					<%
 							String hostname = request.getServletContext().getInitParameter("baseUrl");
 							%>
-		  					<script type="text/javascript">
+		  					<script>
 		  						
 			  					if(window.location.href.indexOf("langsurvey") > -1) {
 			  						$("#survey-language-version").val(window.location.href.substring(window.location.href.indexOf("langsurvey=")+11));
@@ -96,7 +96,6 @@
 			            		
 			            		
 			            		$('#survey-preview_btn').click(function(publicid){
-			            			
 			            			langselect = $('#survey-language-version').val();
 			            			window.open('<%= hostname %>/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
 			            			
@@ -171,6 +170,19 @@
 		  					
 			  				<jsp:include page="../components/cSections.jsp" />		
 								
+							<div class="edit-survey-head">
+								<div class="survey-preview">
+		  							<button class="btn btn-primary" id="survey-preview_btn_last"><%= lang.getContent("button.survey_preview") %></button>
+		  							<script>
+		  							$('#survey-preview_btn_last').click(function(publicid){
+				            			
+				            			langselect = $('#survey-language-version').val();
+				            			window.open('<%= hostname %>/surveyajs?sid=<%=survey.getPublicId()%>&langsurvey=' + langselect + '&preview','_blank');
+				            			
+				            		});
+		  							</script>
+		  						</div>
+	  						</div>
 						</div>
 	  				</div>
 <%

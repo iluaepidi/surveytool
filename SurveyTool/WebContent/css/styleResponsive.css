@@ -121,3 +121,18 @@
 	    margin: 0 !important;}
 	.select-dependence-option {display: inline-block;}
 }
+
+/*----------------------------------------------*\
+		$WIDTH < 460
+\*----------------------------------------------*/
+@media (max-width: 460px){
+	.footer{position:relative;}
+	.footer-links > ul > li > a{font-size:11px;border: 2px solid transparent;}
+	.footer-links > ul > li {width: 20% !important;}
+}
+/*----------------------------------------------*\
+		$WIDTH < 300
+\*----------------------------------------------*/
+@media (max-width:300px){
+	.footer-links {width:130%;}
+}

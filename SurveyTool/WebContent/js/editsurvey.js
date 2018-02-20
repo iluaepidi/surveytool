@@ -21,6 +21,11 @@ var placeholderBContent = "";
 var accesibilityTextItem = "";
 var accesibilityTextColumn = "";
 var accesibilityTextOption = "";
+var accesibilityTextButton = "";
+var accesibilityDeleteOptionMsg = "";
+var accesibilityRemoveOptionMsg = "";
+var accesibilityRemoveElementMsg = "";
+var accesibilityRemoveColumnMsg = "";
 var modalFocus = null;
 var keyBuffer = {};
 
@@ -376,8 +381,9 @@ $(function() {
 						   console.log("hello ogid: " + json.ogid);
 						   currentNode.closest('ul').attr('ogid', json.ogid);
 					   }
-					   
-					   currentNode.closest('li').find('.remove-option').attr('aria-label', 'Remove option: ' + req.text);
+					   debugger;
+					   currentNode.closest('li').find('.remove-option').attr('aria-label', accesibilityDeleteOptionMsg + ': ' +req.text);
+
 					   
 					   currentNode.trigger("goto");
 					   currentNode.trigger("setJson");
@@ -436,7 +442,8 @@ $(function() {
 							   currentNode.closest('ul').attr('ogid', json.ogid);
 						   }
 						   
-						   currentNode.closest('li').find('.remove-option').attr('aria-label', 'Remove option: ' + req.text);
+						   currentNode.closest('li').find('.remove-option').attr('aria-label', accesibilityDeleteOptionMsg + ' ' +req.text);
+						   //currentNode.closest('li').find('.remove-option').attr('aria-label', 'Remove option: ' + req.text);
 						   
 						   currentNode.trigger("goto");
 						   currentNode.trigger("setJson");
@@ -647,7 +654,8 @@ $(function() {
 						   currentNode.attr('oid', json.oid);
 					   }
 					   
-					   currentNode.closest('li').find('.remove-optionmatrix').attr('aria-label', 'Remove option: ' + req.text);
+					   currentNode.closest('li').find('.remove-optionmatrix').attr('aria-label', accesibilityRemoveColumnMsg  + ' ' +req.index);
+					   //currentNode.closest('li').find('.remove-optionmatrix').attr('aria-label', 'Remove option: ' + req.text);
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -701,7 +709,8 @@ $(function() {
 						   currentNode.attr('ogid', json.ogid);						   
 					   }
 					   
-					   currentNode.closest('li').find('.remove-optionsgroupmatrix').attr('aria-label', 'Remove option: ' + req.text);
+					   currentNode.closest('li').find('.remove-optionsgroupmatrix').attr('aria-label', accesibilityRemoveElementMsg  + ' ' +req.index);
+					   //currentNode.closest('li').find('.remove-optionsgroupmatrix').attr('aria-label', 'Remove option: ' + req.text);
 				   }
 			   },
 			   error: function (xhr, ajaxOptions, thrownError) {
@@ -732,11 +741,11 @@ $(function() {
 		if(otype === "radio" && $(this).closest('li.panel-question').find('select.type-simple-answer').val() === "select") importFileHiddenClass = "hidden";
 		var optionHtml = '<li class="option-item" id="option-item">' +		
 								'<div class="circle-info circle-grey fleft">' + index + '</div> ' + 
-								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption+'</label>	'+													
+								'<label for="option' + qid + '-' + ogid + '-' + index + '" class="visuallyhidden">'+accesibilityTextOption + ' ' + index +'</label>	'+													
 								'<input id="option' + qid + '-' + ogid + '-' + index + '" type="text" class="option-title form-control fleft option" index="' + index + '" oid="0" placeholder="'+textOption+' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
-									'<button class="btn btn-transparent fleft  add-file-option addFileOption ' + importFileHiddenClass + '" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></button> ' +
-									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft  add-file-option addFileOption ' + importFileHiddenClass + '" id="add-file-option' + qid + '-' + ogid + '-' + index + '"  active="false"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i><span class="visuallyhidden"> '+ accesibilityTextButton + ' ' + index + '</span></button> ' +
+									'<button class="btn btn-transparent fleft red remove-option" id="remove-option' + qid + '-' + ogid + '-' + index + '" aria-label="'+ accesibilityDeleteOptionMsg + ": " +textOption+' ' + index +'"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 								'<div class="row margin-top-40 hidden" type="global" id="multimediaFrame"><div id="div_files"><div class="options-files-frame hidden"><label>'+textOptionFile+'</label><ul class="multimedia-list" id="multimediaFilesList"></ul></div></div></div>' +
 							'</li>';
@@ -745,6 +754,8 @@ $(function() {
 		
 		if(otype != "checkbox") $(this).closest("li").prev().find("div.circle-info").html(index + 1);
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
+		
+		var inputElement = document.getElementById('option' + qid + '-' + ogid + '-' + index).focus();
 	});
 	
 	$('.survey-sections').on("click", "button.btnAddOptionOther", function(e){
@@ -759,7 +770,6 @@ $(function() {
 		req.lang = $('#survey-language-version').val();
 		if($(this).hasClass("btnAddOptionOther")) req.isOther = "true";
 		else req.isOther = "false";
-		
 		$.ajax({ 
 		   type: "POST",
 		   dataType: "text",
@@ -786,6 +796,8 @@ $(function() {
 				   
 				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("gotoOther");
 				   currentNode.closest("li").prev().find("input.otherOptionTitle").trigger("setJsonOther");
+
+				   document.getElementById('otherOptionLabel'+req.qid).focus();
 			   }
 			   /*else if(data == 'true' && req.value == 'false')
 			   {
@@ -825,7 +837,8 @@ $(function() {
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red remove-optionmatrix" id="remove-optionmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									//'<button class="btn btn-transparent fleft red remove-optionmatrix" id="remove-optionmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									'<button class="btn btn-transparent fleft red remove-optionmatrix" id="remove-optionmatrix" aria-label="'+  accesibilityRemoveColumnMsg  + ' '+ index + '"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
@@ -842,8 +855,9 @@ $(function() {
 								'<input type="text" id="inputRow' + qid + '-' + index + '" class="option-title form-control fleft" index="' + index + '" ogid="0" placeholder="'+phItem + ' ' + index + '" autofocus/> ' +
 								'<div class="option-icons fleft"> ' +
 									//'<button class="btn btn-transparent fleft"><i class="fa fa-file-image-o fa-2x"></i></button> ' +
-									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +
-									'<button class="btn btn-transparent fleft red remove-optionsgroupmatrix" id="remove-optionsgroupmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+									//'<button class="btn btn-transparent fleft"><i class="fa fa-question-circle fa-2x"></i></button> ' +accesibilityDeleteOptionMsg
+									//'<button class="btn btn-transparent fleft red remove-optionsgroupmatrix" id="remove-optionsgroupmatrix" aria-label="remove option"><i class="fa fa-trash fa-2x"></i></button> ' +
+								'<button class="btn btn-transparent fleft red remove-optionsgroupmatrix" id="remove-optionsgroupmatrix" aria-label="'+ accesibilityRemoveElementMsg  +' '+index+'"><i class="fa fa-trash fa-2x"></i></button> ' +
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
