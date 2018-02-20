@@ -1,0 +1,161 @@
+/**Fix Accessibility issues on special zoom-in***/
+
+toggle-handle,toggle-handle:hover,toggle-handle:focus,.toggle:hover .toggle-handler,.toggle:hover .toggle-handle,.toggle:focus .toggle-handle {margin-bottom: 3px !important;}
+
+
+@media (max-width:75em){
+	input.form-control,select.form-control{
+		width:auto;
+	}
+}
+@media (max-width: 75em) and (min-width:1200px){
+	.container-fluid{
+		padding:0;
+	}
+	.footer{
+		position:relative;
+	}
+	.row-footer{
+		width: 40em;
+	}
+	.user-panel-surveys{
+		 width: 100%;
+	}
+	input.form-control,select.form-control{
+		min-height: 1.6em !important;
+	}
+	.toggle.btn{
+		height: 1.6em;
+		min-width: 2.4em !important;
+	}
+	.login-content{
+		width: 45em
+	}
+	#loginForm input.form-control {
+		width:100% !important;
+	}
+	.modal-dialog.survey-win-dialog{
+		width: auto !important;
+		max-width: 40em;
+	}
+	.logic-option-list{
+		width:100%;
+	}
+	.logic-frame{
+		padding-top: 2.5rem;
+	}
+	.up-down-buttons{
+		position: relative;
+		left: -1rem;
+	}
+	.panel-section,.survey-info,.edit-content-center,.edit-survey-head{
+		width: 100%;
+		min-height: 5rem;
+	}
+	.widthTitleSurveyExtended{
+		float:none;
+		display: inline-block;
+		width: 50%;
+	}
+	
+	.user-panel-menu{
+		width:100%;
+	}
+	/*#survey-info {
+		min-height: 2.8em;	
+	}
+	
+	#option-item,#optionsgroupmatrix-list,#optionmatrix-list{
+		display:flex;
+		justify-content: space-around;
+		align-items: center
+	}
+	#option-item{
+		flex-flow: row nowrap;
+	}
+	#optionsgroupmatrix-list,#optionmatrix-list{
+		flex-flow: column nowrap;
+	}
+	
+	.page-head > h4 {
+		font-size:9pt;
+	}
+	.add-menu{
+		margin-left: -4rem;
+	}
+	.add-menu>.add-menu-points{
+		padding: 0 4.8rem;
+	}*/
+	#divSearchSurvey{
+		width: auto;
+    	margin-left: -.6rem;
+	}
+	#option-item > .circle-info,#optionsgroupmatrix-item > .circle-info, #optionmatrix-item> .circle-info{
+		margin-top: 11px !important;
+		border-radius: 21px !important;
+		width: 41px !important;
+	}
+	#option-item > .option-title, #optionsgroupmatrix-item > .option-title, #optionmatrix-item > .option-title{
+		margin-top: 10px !important;
+	}
+	#stateFilter{
+		width:auto;
+	}
+	#surveyTitle,#surveyProject,#defaultLanguage{
+		width:100%;
+	}
+	#newSurveyModal input.btn {
+		min-height: 2em !important;
+	}
+	#newSurveyModal .error{
+		position: relative;
+		left: 0px;
+		top: .25rem !important;
+	}
+	#newSurveyModal .error:before{
+		content: unset;
+	}
+	#newSurveyModal .glyphicon-remove:before{
+		position:relative;
+		bottom: 0.5rem;
+	}
+	#surveys-list{
+		display:inline-block;
+	}
+	#option-list{
+		/*width:auto;*/
+		margin-top: .5em
+	}
+	.title-content-no-underline > h2{
+		font-size:24px;
+	}
+	#main-sidebar{
+		width: auto;
+	}
+	#newPollModal > .poll-win-dialog{
+		width: 80% !important;
+	}
+	#newPollForm .survey-frame .col-sm-7,
+	#newPollForm .survey-frame .col-sm-7 > label,
+	#newPollForm .survey-frame .col-sm-7 > .col-sm-10,
+	#newPollForm .survey-frame .col-sm-5,
+	#newPollForm .survey-frame .col-sm-5 > label,
+	#newPollForm .survey-frame .col-sm-5 > .col-sm-9{
+		width: 100% !important;
+	}
+	#newPollForm #option-item .form-control{
+		position: relative;
+		top: 0.5rem;
+	}
+}
+
+@media (max-width: 45em) and (min-width:1200px){
+	.actions > ul >li{
+		width: 50%
+	}
+	
+	#newPollModal > .poll-win-dialog{
+		width: 100% !important;
+	}
+	
+}

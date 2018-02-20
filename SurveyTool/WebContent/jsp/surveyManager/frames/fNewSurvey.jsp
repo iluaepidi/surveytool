@@ -30,14 +30,14 @@ HttpSession sessions = request.getSession(false);
 				    					<legend><%= lang.getContent("survey.new.legend") %></legend>
 				    					
 				    					
-										<span>Sí es aquí</span>
+										<!-- <span>Sí es aquí</span>  -->
 										
 										
 										<div class="row">
 											<div class="col-sm-12 margin-bottom-10">
-												<label for="surveyTitle" class="col-sm-3 control-label left"><%= lang.getContent("survey.new.label.survey_title") %></label>
-											   	<div class="form-group" style="margin:0px;">
-													 <div class="col-sm-9">
+												<label for="surveyTitle" class="col-sm-12 control-label left"><%= lang.getContent("survey.new.label.survey_title") %></label>
+											   	<div class="form-group">
+													 <div class="col-sm-12">
 											     		<input type="text" class="form-control" id="surveyTitle" name="title" placeholder="<%= lang.getContent("placeholder.type_here") %>">
 											     		<span  id='surveyTitle-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
 				  										<span id='surveyTitle-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.title") %></span>
@@ -48,10 +48,10 @@ HttpSession sessions = request.getSession(false);
 
 										<div class="row">
 											<div class="col-sm-7 margin-bottom-10">
-												<label for="surveyProject" class="col-sm-5 control-label left"> <%= lang.getContent("survey.new.label.project") %> </label>
+												<label for="surveyProject" class="col-sm-12 control-label left"> <%= lang.getContent("survey.new.label.project") %> </label>
 											   		
-												<div class="form-group" style="margin:0px;">
-													<div class="col-sm-6" style="margin-left:12px">
+												<div class="form-group">
+													<div class="col-sm-12">
 											   			<input type="text" class="form-control" id="surveyProject" name="project" placeholder="<%= lang.getContent("survey.new.placeholder.project") %>"/>	
 											   			<span  id='surveyProject-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true'></span>
 				  										<span id='surveyProject-error' class='error hidden' style='top: 0px;'><%= lang.getContent("msg.error.newsurvey.project") %></span>													
@@ -60,10 +60,10 @@ HttpSession sessions = request.getSession(false);
 											</div>
 											
 											<div class="col-sm-5 margin-bottom-10">
-												<label for="defaultLanguage" class="col-sm-5 control-label left"><%= lang.getContent("survey.new.default.language") %></label>
+												<label for="defaultLanguage" class="col-sm-12 control-label left"><%= lang.getContent("survey.new.default.language") %></label>
 											   		
-												<div class="form-group" style="margin:0px;">
-													<div class="col-sm-7">
+												<div class="form-group">
+													<div class="col-sm-12">
 											     		<select id="defaultLanguage" name="defaultLanguage" class="form-control">
 									                    	<%
 									                    	for (Map.Entry<String, String> entry : loginResp.getListLanguage().entrySet()) {%>
@@ -77,15 +77,20 @@ HttpSession sessions = request.getSession(false);
 										</div>
 										<div class="row">
 											<div class="col-sm-12 margin-bottom-10">
-											    <label for="surveyDescription" class="col-sm-3 control-label left"><%= lang.getContent("survey.new.label.short_description") %></label>
-											   		
-												<div class="col-sm-6 margin-bottom-10">
-													<textarea class="form-control" id="surveyDescription" name="description" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>
+												<label for="surveyDescription" class="col-sm-7 control-label left"><%= lang.getContent("survey.new.label.short_description") %></label>
+												
+												<div class="form-group">
+													<div class="col-sm-7">
+														<textarea class="form-control col-sm-7" id="surveyDescription" name="description" placeholder="<%= lang.getContent("placeholder.type_here") %>"></textarea>	
+													</div>
+													<div class="col-sm-5 center">
+														<input type="button" id="createnewsurvey" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />
+													</div>
+												
 												</div>
-												<div class="col-sm-3 center">
-													<input type="button" id="createnewsurvey" class="btn btn-primary btn-create-survey" value="<%= lang.getContent("button.create") %>" />
-												</div>
-											</div>
+												
+										    </div>
+											
 										</div>
 										
 										

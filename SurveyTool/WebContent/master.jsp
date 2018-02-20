@@ -23,7 +23,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 	  			<jsp:include page="<%= bodyPage %>" />
 	  		</div>
 	  		
-	  		<footer class="footer" style="position:relative">
+	  		<footer class="footer">
 	  			<jsp:include page="<%= footerPath %>" />
 	  		</footer>	
  		</div> 
