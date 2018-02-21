@@ -90,7 +90,7 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEY_MANAGER_HOME));
 			session = request.getSession();
 			session.setAttribute(Attribute.s_USER_SESSION_INFO, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "User Panel");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "user_panel.title");
 		}
 		else if(loginResp != null && loginResp.isValid() && loginResp.getUserState() == DBConstants.i_VALUE_USER_STATE_ID_ADMIN)
 		{
@@ -98,13 +98,13 @@ public class LoginServlet extends HttpServlet {
 			loginResp.setValid(false);
 			loginResp.setErrorMsg("login.invalid.state.admin");
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "home.title");
 		}
 		else
 		{
 			request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
 			request.setAttribute(Attribute.s_LOGIN_RESPONSE, loginResp);
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "home.title");
 		}
 		
 		CommonCode.redirect(request, response, Address.s_MASTER_PAGE);

@@ -59,7 +59,7 @@
 			            
 			              <!-- Textarea -->
 			            <div class="form-group editProfile">
-			                <label class="col-md-4 control-label profileLabel" for="descripcion"><%= lang.getContent("profile.email") %></label>
+			                <label class="col-md-4 control-label profileLabel" for="email"><%= lang.getContent("profile.email") %></label>
 			                <div class="col-md-4">                     
 			                    	<input id="email" name="<%= Parameter.s_EMAIL %>" type="text" placeholder="" class="form-control" value="<%=loginResp.getEmail() %>">
 			                		<span id='email-feedback' class='glyphicon glyphicon-remove form-control-feedback hidden' aria-hidden='true' style="margin-left: -30px;"></span>

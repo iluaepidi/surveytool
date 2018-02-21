@@ -47,7 +47,8 @@ h2 {width: auto;
 .close-table {text-align: right;
 	margin-bottom: 5px;
 	border-bottom: 1px solid #ccc;}
-.btn-close-aspa {color:#B60000}
+/*.btn-close-aspa {color:#B60000}*/
+.btn-close-aspa {color:#23527C !important;}
 .btn-icon-text i {margin-right: 5px;}
 .close-frame {text-align: right;
     margin-top: -18px;
@@ -242,7 +243,8 @@ input[type="color"]:focus,
 .st-styles .btn:focus {/*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .30) !important;*/}
 .st-styles .btn-primary {background-color: #337AB7}
 .st-styles .btn-primary:hover,
-.st-styles .btn-primary:focus {background-color: #286090 !important;}
+.st-styles .btn-primary:focus {background-color: #1E486C !important;
+	border: 3px solid #1E486C !important;}
 .st-styles .btn-default {border-color: #737373 !important;}
 
 textarea {resize:none;
@@ -514,6 +516,9 @@ footer {margin-top: 10px;
     padding: 25px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(69, 105, 136, 0.3) !important;}
 .register-frame form h3 {margin: 20px 0px;}
+.btn-register:hover, .btn-register:focus {background-color: #333 !important;
+	color: #F0F0F0 !important;
+	border: 3px solid #333 !important;}
 
 /*----------------------------------------------*\
 		$USER_PANEL_SURVEY
@@ -624,7 +629,9 @@ td.actions ul li a span {width: 100%;
 .survey-frame select {/*padding-left: 0px !important;
 	padding-right: 0px !important;*/}
 .survey-frame input[type="text"] {padding-left: 5px !important;
-	padding-right: 5px !important;}
+	padding-right: 5px !important;
+	width: 100% !important;}
+.survey-frame select {width: 100% !important;}
 .survey-frame a {
     margin-top: 2px;
     display: inline-block;
@@ -702,6 +709,7 @@ ul.pagination li.active a {color: #fff !important;}
 		$USER_PANEL_EDIT_SURVEY
 \*----------------------------------------------*/
 
+	#clipboard-text {width: 100%;}
 .edit-content {border-color: #337ab7;
     border-radius: 10px;
 	padding: 10px;}

@@ -72,7 +72,7 @@ public class UserPanelHomeServlet extends HttpServlet {
 					request.setAttribute(Attribute.s_POLLS, pollHandler.getPollsTableInfoByAuthor(userSessionInfo.getUserId(), this.language));
 				}
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(bodyPage));
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");
+				request.setAttribute(Attribute.s_PAGE_TITLE, "survey_manager.title");
 				request.setAttribute(Attribute.s_TAB, tab);
 			}			
 		}

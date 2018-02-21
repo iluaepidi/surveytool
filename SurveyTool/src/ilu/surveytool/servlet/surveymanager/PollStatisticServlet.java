@@ -84,7 +84,7 @@ public class PollStatisticServlet extends HttpServlet {
 			
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_STATISTICS));
 			
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Poll Statistics");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "survey.statistic.title");
 			
 		}
 		else

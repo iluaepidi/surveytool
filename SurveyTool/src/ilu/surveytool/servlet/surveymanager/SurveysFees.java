@@ -93,7 +93,7 @@ public class SurveysFees extends HttpServlet {
    			int pageId = surveysHandler.getPageIdBySurveyId(surveyId);
    			request.setAttribute(Attribute.s_PAGE_ID, pageId);
    			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_FEES));
-   			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+   			request.setAttribute(Attribute.s_PAGE_TITLE, "quota.edit.title");
    			
    			if(language==null || language.equals(survey.getDefaultLanguage())){
    				request.setAttribute(Attribute.s_ADD_QUESTIONS, true);

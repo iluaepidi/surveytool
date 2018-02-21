@@ -3,6 +3,8 @@
 \*----------------------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu');
 
+::placeholder {color: #484848 !important;}
+
 @font-face {
   font-family: 'FontAwesome';
   src: url('../font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
@@ -174,6 +176,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 #form-question input[type=number]{
 	border:1px solid #016FB8;
 	border-radius:0px;
+	height: 3rem;
 }
 .char-counter {text-align: right;
 	color:#484848;
@@ -196,7 +199,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 }
 #form-question .checkbox input[type=checkbox]:checked + label:before{
 	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
-	content:'\f0c8';
+	content:'\f14a';
 	position: inherit;
 	font-size: 16pt;
 }
@@ -213,7 +216,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	display:inline-block;
 	padding:4px;
 	color:#016FB8;
-	min-width:20em;
+	min-width:18em;
 	font-weight:bold;
 }
 #form-question .checkbox label:hover span,
@@ -493,7 +496,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	top: 1.6rem;
 }
 #form-question table tr td input[type=checkbox]:checked + label:before{
-	content:'\f0c8';
+	content:'\f14a';
 	position: relative;
 	top: 1.6rem;
 }
@@ -511,9 +514,10 @@ ul.likert-options-frame > li {/*width: 80px;*/
 	padding:0px;
 }
 .question-select {display: flex;}
-.question-select label {padding: 7px 15px 0px 40px;
+.question-select label {padding: 0.7rem 15px 0px 40px;
 	color: #016FB8;}
-.option-list-select {width: auto;}
+.option-list-select {width: auto;
+	height: 3.5rem;}
 div.likert-options {text-align: center;
 	display: grid;}
 	
@@ -621,7 +625,7 @@ div.likert-options {text-align: center;
 	padding-left:35px;
 	color:#4A555F;
 	font-size:1.428em;
-	border: 2px solid transparent;
+	border: 0px solid transparent;
 }
 .btn-submit-page-back:hover,
 .btn-submit-page-back:focus {border: 2px solid #4A555F;}
@@ -636,8 +640,8 @@ div.likert-options {text-align: center;
 	border: 2px solid transparent;
 }
 .btn-submit-page-continue:hover, 
-.btn-submit-page-continue:focus {background-color: #013F68;
-border: 2px solid #016fb8;}
+.btn-submit-page-continue:focus {background-color: #016FB8;
+border: 4px solid #013F68;}
 /* Messages */
 .msg-error{
 	font-size:1.072em;

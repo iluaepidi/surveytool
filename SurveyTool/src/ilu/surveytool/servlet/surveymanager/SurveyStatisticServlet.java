@@ -93,7 +93,7 @@ public class SurveyStatisticServlet extends HttpServlet {
 			
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_STATISTICS));
 			
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Statistics");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "survey.statistic.title");
 			
 			//QUotas Result
 			JSONArray pages = surveysHandler.getQuestionsFeesJson(survey);

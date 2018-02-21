@@ -68,7 +68,7 @@ public class InitialServlet extends HttpServlet {
 			if(userSessionInfo != null && userSessionInfo.isValid())
 			{
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_SURVEY_MANAGER_HOME));
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Survey Manager");			
+				request.setAttribute(Attribute.s_PAGE_TITLE, "user_panel.title");			
 			}
 			else
 			{
@@ -76,7 +76,7 @@ public class InitialServlet extends HttpServlet {
 				userSessionInfo.setErrorMsg("msg.error.session.expired");
 				request.setAttribute(Attribute.s_BODY_PAGE, bodyPages.getBudyPagePath(Address.s_BODY_LOGIN));
 				request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
-				request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+				request.setAttribute(Attribute.s_PAGE_TITLE, "home.title");
 			}
 			
 			CommonCode.redirect(request, response, Address.s_MASTER_PAGE);

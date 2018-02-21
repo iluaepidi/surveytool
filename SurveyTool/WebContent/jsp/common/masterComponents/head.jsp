@@ -2,9 +2,12 @@
 <%@page import="ilu.surveytool.language.Language"%>
 <%@page import="java.util.List"%>
 <%
+	Language lang = new Language(getServletContext().getRealPath("/")); 
+	lang.loadLanguage(Language.getLanguageRequest(request));
 	String title = "";
 	String pageTitle = (String) request.getAttribute(Attribute.s_PAGE_TITLE);
-	if(pageTitle != null && !pageTitle.isEmpty()) title = ": " + pageTitle; 
+	if(pageTitle != null && !pageTitle.isEmpty()) title = ": " + lang.getContent(pageTitle);
+	
 %>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,9 +53,7 @@
 		<!-- Todos los plugins JavaScript de Bootstrap (también puedes
 		     incluir archivos JavaScript individuales de los únicos
 		     plugins que utilices) -->
-		     <%Language lang = new Language(getServletContext().getRealPath("/")); 
-				lang.loadLanguage(Language.getLanguageRequest(request));
-				%>
+		     
 
 		<script>
 		 var textErrorPollOption = "<%= lang.getContent("msg.error.poll.option") %>";
@@ -86,3 +87,7 @@
 	<!-- <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet" media="screen"> -->
 	<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+	
+	<%
+lang.close();
+%>

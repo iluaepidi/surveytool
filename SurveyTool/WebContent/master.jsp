@@ -29,3 +29,6 @@ lang.loadLanguage(Language.getLanguageRequest(request));
  		</div> 
   	</body>
 </html>
+<%
+lang.close();
+%>

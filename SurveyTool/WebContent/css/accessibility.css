@@ -147,6 +147,11 @@ toggle-handle,toggle-handle:hover,toggle-handle:focus,.toggle:hover .toggle-hand
 		position: relative;
 		top: 0.5rem;
 	}
+	
+	/* guti */
+	.survey-info-project {float: none;
+		width: 70%;}
+	.survey-info-project {margin-top: 25px;}
 }
 
 @media (max-width: 45em) and (min-width:1200px){

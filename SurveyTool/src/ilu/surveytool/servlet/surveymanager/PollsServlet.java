@@ -79,6 +79,7 @@ public class PollsServlet extends HttpServlet {
 			request.setAttribute(Attribute.s_JS_FILES, jsFiles);
 			
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_POLL));
+			request.setAttribute(Attribute.s_PAGE_TITLE, "poll.edit.title");
 		}
 		else
 		{

@@ -401,7 +401,7 @@ function displaySurveyInfo(node)
 	$('.survey-info-title').focus();
 	$('.survey-info-title').css("border-bottom", "1px solid #555");
 	$('.survey-info-title').focus();
-	$('.survey-info-project').css("display", "inherit");
+	$('.survey-info-project').css("display", "inline-block");
 	$('.survey-info-description').css("display", "inline-block");
 	$('.survey-info-url').css("display", "inline-block");
 	$('.survey-info-ipfilter').css("display", "inline-block");

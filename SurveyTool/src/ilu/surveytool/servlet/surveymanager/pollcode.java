@@ -68,7 +68,7 @@ public class pollcode extends HttpServlet {
 			
 			request.setAttribute(Attribute.s_POLL_INFO, poll);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_POLL_EXAMPLE_CODE));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Poll example and code");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "poll.preview.title");
 		}
 		else
 		{

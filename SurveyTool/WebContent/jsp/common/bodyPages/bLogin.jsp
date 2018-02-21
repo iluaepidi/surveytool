@@ -49,7 +49,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 		  							</div>  
 		  							
 		  							<div class="login-button">
-		  								<input type="button" id="registerFormBtn" class="btn btn-block btn-survey" value="<%= lang.getContent("button.register") %>" onclick="showHideRegister(true)"/>
+		  								<input type="button" id="registerFormBtn" class="btn btn-block btn-survey btn-register" value="<%= lang.getContent("button.register") %>" onclick="showHideRegister(true)"/>
 		  							</div>  	
 		  						</fieldset>						
 	  						</form>

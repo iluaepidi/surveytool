@@ -30,7 +30,7 @@ public class SessionHandler {
 		LoginResponse userSessionInfo = new LoginResponse();
 		userSessionInfo.setErrorMsg("msg.error.session.expired");
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN));
-		request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+		request.setAttribute(Attribute.s_PAGE_TITLE, "home.title");
 		request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
 	}
 
@@ -39,7 +39,7 @@ public class SessionHandler {
 		LoginResponse userSessionInfo = new LoginResponse();
 		userSessionInfo.setErrorMsg("msg.error.session.expired");
 		request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_LOGIN_USER_PANEL));
-		request.setAttribute(Attribute.s_PAGE_TITLE, "Home");
+		request.setAttribute(Attribute.s_PAGE_TITLE, "home.title");
 		request.setAttribute(Attribute.s_LOGIN_RESPONSE, userSessionInfo);
 	}
 }

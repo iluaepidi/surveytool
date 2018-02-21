@@ -105,7 +105,7 @@ public class SurveysServlet extends HttpServlet {
 			int pageId = surveysHandler.getPageIdBySurveyId(surveyId);
 			request.setAttribute(Attribute.s_PAGE_ID, pageId);
 			request.setAttribute(Attribute.s_BODY_PAGE, properties.getBudyPagePath(Address.s_BODY_EDIT_SURVEY));
-			request.setAttribute(Attribute.s_PAGE_TITLE, "Edit survey");
+			request.setAttribute(Attribute.s_PAGE_TITLE, "survey.edit.title");
 			
 			JSONArray pages = new JSONArray();
 			if(language == null || language.isEmpty() || language.equals(survey.getDefaultLanguage())) pages = surveysHandler.getQuestionsJson(survey, lang.getContent("accesibility.question.option.legend.other"));
