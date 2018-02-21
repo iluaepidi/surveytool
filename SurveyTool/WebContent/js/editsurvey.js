@@ -842,6 +842,7 @@ $(function() {
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
+		document.getElementById('inputCol' + qid + '-' + index).focus();
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
@@ -861,6 +862,7 @@ $(function() {
 								'</div> ' +
 							'</li>';
 		$(this).parent().before(optionHtml);
+		document.getElementById('inputRow' + qid + '-' + index ).focus()
 		//$(this).closest('ul').find('input[index=' + index + ']').focus();
 	});
 	
