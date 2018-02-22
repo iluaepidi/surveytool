@@ -32,16 +32,16 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 			  					%>
 			  						
 			  					<div class="surveys-table">
-			  						<fieldset class="div-filters no-padding col-sm-6">
+			  						<fieldset class="div-filters no-padding col-sm-6" style="z-index: 10;">
 			  							<legend class="visuallyhidden"><%= lang.getContent("survey_manager.tab.surveys.filter.legend") %></legend>
-			  							<div id="divSearchSurvey" class="div-search-survey no-padding col-xs-8 col-md-offset-1">
+			  							<div id="divSearchSurvey" class="div-search-survey no-padding col-xs-8 col-md-offset-0">
 			  								<label for="searchSurvey" class="col-xs-3"><%= lang.getContent("survey_manager.tab.surveys.search.label") %>:</label>
 			  								<div class="col-xs-9">
 				  								<input type="search" id="searchSurvey" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0">
 				  								<i class="fa fa-search" aria-hidden="true"></i>
 				  							</div>
 			  							</div>	
-				  						<div id="divStateFilter" class="div-state-filter no-padding col-xs-4 col-md-3">
+				  						<div id="divStateFilter" class="div-state-filter no-padding col-xs-4 col-md-4">
 				  							<label for="stateFilter" class="visuallyhidden"><%= lang.getContent("survey_manager.tab.surveys.state.filter.label") %></label>
 				  							<select class="form-control input-sm state-filter" id="stateFilter">
 				  								<option value=""><%= lang.getContent("survey_manager.tab.surveys.state.filter.option") %></option>
@@ -135,7 +135,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 										</tbody>
 			  						</table>
 			  						<script>
-			  							
+			  							accesibilityGeneral = "<%= lang.getContent("general.survey.filters.updated") %>";
 			  							accesibilityTableRecords = "<%= lang.getContent("general.survey.filters.numRecord") %>";
 			  							accesibilityTableFind = "<%= lang.getContent("general.survey.filters.find") %>" ;
 			  							accesibilityTableState = "<%= lang.getContent("general.survey.filters.states") %>" ;

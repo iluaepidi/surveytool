@@ -1,14 +1,19 @@
 /**Fix Accessibility issues on special zoom-in***/
 
-toggle-handle,toggle-handle:hover,toggle-handle:focus,.toggle:hover .toggle-handler,.toggle:hover .toggle-handle,.toggle:focus .toggle-handle {margin-bottom: 3px !important;}
-
+#survey_records,#survey_find,#survey_status,#poll_records,#poll_find{
+	min-height: 1.8rem;
+	font-size: 9pt;
+}
 
 @media (max-width:75em){
+	
+	toggle-handle,toggle-handle:hover,toggle-handle:focus,.toggle:hover .toggle-handler,.toggle:hover .toggle-handle,.toggle:focus .toggle-handle {
+	margin-bottom: 3px !important;}
+}
+@media (max-width: 75em) and (min-width:1200px){
 	input.form-control,select.form-control{
 		width:auto;
 	}
-}
-@media (max-width: 75em) and (min-width:1200px){
 	.container-fluid{
 		padding:0;
 	}
