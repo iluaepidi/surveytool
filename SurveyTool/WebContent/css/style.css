@@ -713,6 +713,7 @@ ul.pagination li.active a {color: #fff !important;}
 .edit-content {border-color: #337ab7;
     border-radius: 10px;
 	padding: 10px;}
+li.panel-question .panel-body {display: none;}
 .edit-with-browser {display:flex;}
 .edit-with-browser .edit-content-center{float:left;
 	width: 83%;

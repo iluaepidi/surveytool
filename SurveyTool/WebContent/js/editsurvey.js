@@ -33,12 +33,14 @@ var phOption = "";
 var phItem = "";
 var phColumn = "";
 
-var host = "http://" + window.location.host;
+var host = window.location.protocol + "//" + window.location.host;
 console.log("host: " + host);
 
 $(function() {
 	
-	host = "http://" + window.location.host;
+	host = window.location.protocol + "//" + window.location.host;
+	
+	console.log("")
 	
 	$('body_').click(function() {
 				
@@ -3032,7 +3034,7 @@ $(function() {
 				}
 			});
 			
-			moveQuestionNextPage(previousPage, currentPage, question);
+			moveQuestionNextPage(nextPage, currentPage, question);
 			question.find("div.rules-frame").trigger("displayLogic");
 			question.find("fieldset.dependences-frame").trigger("displayDependences");
 			question.find("fieldset.logic-frame").trigger("setLogicMoved");
@@ -3121,6 +3123,7 @@ $(function() {
 	
 	$('.survey-sections').on("click", "button.movedown-question-arrow", function(){
 		var question = $(this).closest("li.panel-question");
+		currentElement = question;
 		var currentPage = question.closest("li.page");
 		var questionJson = surveyTree[parseInt(currentPage.attr("index")) - 1].questions[parseInt(question.attr("index")) - 1];
 		console.log("question to move: " + JSON.stringify(questionJson));
@@ -3130,6 +3133,7 @@ $(function() {
 		{
 			if(!currentPage.is(':last-child'))
 			{
+				console.log("currentPage no last-child");
 				console.log("no last question");
 				nextPage = currentPage.next();
 
@@ -3138,9 +3142,11 @@ $(function() {
 			else
 			{
 				var currentSection = currentPage.closest("li.panel-section");
+				console.log("currentPage last-child - out");
 				if(!currentSection.is(':last-child'))
 				{
 					nextPage = currentSection.next().find('li.page').first();
+					console.log("currentPage last-child: " + nextPage.attr("pid"));
 
 					isModal = executeBtnMovedown(nextPage, currentPage, question);
 				}
@@ -3312,6 +3318,7 @@ function executeBtnMovedown(nextPage, currentPage, question)
 	}
 	else
 	{
+		console.log("executeBtnMovedown: " + nextPage.attr("pid"));
 		moveQuestionNextPage(nextPage, currentPage, question)
 	}
 		
@@ -3430,6 +3437,7 @@ function updateQuestionIndex(qid, prevQid, pid, changePage, action, host)
 	req.changePage = changePage;
 	req.action = action;
 	console.log("Dragged: " + JSON.stringify(req));
+	console.log("Host in updateQuestionIndex: " + host);
 	$.ajax({ 
 		   type: "PUT",
 		   dataType: "text",

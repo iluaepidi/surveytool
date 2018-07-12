@@ -21,7 +21,7 @@
 					  										  					
 											<div class="panel-heading">	
 											
-												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-down fa-2x" aria-hidden="true"></i></button>				
+												<button id="display-question-<%= question.getQuestionId() %>" class="btn-transparent panel-heading-display-arrow display-question-arrow" aria-label="<%= lang.getContent("button.hide_question") %>: <%= title %>"><i class="fa fa-caret-right fa-2x" aria-hidden="true"></i></button>				
 												<h5 class="panel-title" tabindex="-1">
 													<span class="num-question col-sm-1 col-xs-2"><%= numQuestion %></span>
 													<div class="col-sm-11 col-xs-10">														

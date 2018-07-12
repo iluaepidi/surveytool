@@ -164,15 +164,19 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 .previewFileUpliaded {
 	text-align: center;
     margin-bottom: 20px;
+    padding: 0px !important;
 }
 
-.previewFileUpliaded img {width: 500px;
+.previewFileUpliaded img {width: 50%;
     border: 3px solid #C5D3DA;
     padding: 3px;
     margin-bottom: 10px;}
 
 /* InputText Textarea*/
-#form-question .form-control,
+#form-question .form-control{
+	border:1px solid #016FB8;
+	border-radius:0px;
+}
 #form-question input[type=number]{
 	border:1px solid #016FB8;
 	border-radius:0px;
@@ -203,6 +207,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	position: inherit;
 	font-size: 16pt;
 }
+
 #form-question .checkbox input[type=checkbox]:checked + label span{
 	background-color:#016FB8;
 	color:#fff;
@@ -234,7 +239,7 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 }
 #form-question .checkbox.img.fourImg{width: 50% !important;}
 #form-question .checkbox.img label{
-	background:url(../img/checkbox-off.png) center bottom no-repeat;
+	/*background:url(../img/checkbox-off.png) center bottom no-repeat;*/
 	padding-left:0px;
 	padding-bottom:30px;
 	width: 250px;
@@ -243,9 +248,31 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
     width: 185px;
     display: table;*/
 }
+#form-question .checkbox.img input[type=checkbox]:checked + label:before{
+	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
+	content: none;
+}
+#form-question .checkbox.img input[type=checkbox]:checked + label:after{
+	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
+	content:'\f14a';
+	position: inherit;
+	font-size: 16pt;
+	color:#016FB8;
+}
+#form-question .checkbox.img input[type=checkbox] + label:before{
+	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
+	content: none;
+}
+#form-question .checkbox.img input[type=checkbox] + label:after{
+	/*background: url(../img/checkbox-on.png) left center no-repeat;*/
+	content:'\f096';
+	position: inherit;
+	font-size: 16pt;
+	color:#016FB8;
+}
 #form-question .checkbox.img label div.option-image {display: table !important;}
 #form-question .checkbox.img input[type=checkbox]:checked + label{
-	background: url(../img/checkbox-on.png) center bottom no-repeat;
+	/*background: url(../img/checkbox-on.png) center bottom no-repeat;*/
 	color:#333;
 }
 #form-question .checkbox.img input[type=checkbox]:checked + label div.option-image {
@@ -505,7 +532,8 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 /* Scale */
 ul.likert-options-frame {list-style: none;
 	padding: 0 !important;
-	display: inline-block;}
+	display: inline-block;
+	margin-left: -9px;}
 ul.likert-options-frame > li {/*width: 80px;*/
 	text-align: center;}
 #form-question.scale .form-question-content{
@@ -616,6 +644,15 @@ div.likert-options {text-align: center;
 		float:none;
 		width:100%;
 	}
+	#form-question .checkbox label span,
+	#form-question .radio label span {
+		display: initial;
+	}
+	div.likert-options {
+		margin-left: 0px !important;
+	}
+	.survey-form {padding: 0px !important;}
+	#form-question fieldset > *:not(legend) {padding-left: 0px !important;}
 }
 
 /* Buttons */

@@ -6,7 +6,7 @@ var height = 232;
 
 $(function() {
 	
-	var host = "http://" + window.location.host;
+	var host = window.location.protocol + "//" + window.location.host;
 	console.log("host: " + host);
 	var lang = "en"
 	

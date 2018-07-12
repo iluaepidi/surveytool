@@ -80,6 +80,7 @@ String tab = (String) request.getAttribute(Attribute.s_TAB);
 											}
 											//String downloadServiceUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/SurveyTool/api/SurveyService/export/" + survey.getSurveyId();
 											//String hostname = request.getServletContext().getInitParameter("hostname");
+											System.out.println("Request URL: " + request.getRequestURL());
 											String hostname = request.getServletContext().getInitParameter("baseUrl");
 											String downloadServiceUrl = hostname + "/api/SurveyService/export/" + survey.getSurveyId();
 											

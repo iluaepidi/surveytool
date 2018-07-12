@@ -18,6 +18,7 @@ var urlBase = "";
 if(currentUrl.indexOf("SurveyTool") != -1) urlBase = "/SurveyTool";
 
 $(function() {
+	console.log("CurrentUrl Protoccol: " + window.location.protocol);
 	
 	$('table').removeAttr("role");
 
@@ -362,7 +363,7 @@ function setSurveyState(surveyId, state, element, elemToShow)
 	   type: "PUT",
 	   dataType: "text",
 	   contentType: "text/plain",
-	   url: "http://" + window.location.host + urlBase + "/api/SurveyService/updateState",
+	   url: window.location.protocol + "//" + window.location.host + urlBase + "/api/SurveyService/updateState",
 	   data: JSON.stringify(req),
 	   success: function (data) {
 		   //console.log("set state response: " + data);

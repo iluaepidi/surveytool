@@ -7,7 +7,7 @@ var req = {};
 
 $(function() {
 
-	var host = "http://" + window.location.host;
+	var host = window.location.protocol + "//" + window.location.host;
 	console.log("surveyTree: " + JSON.stringify(surveyTree));
 	
 	$(".survey-sections").on("click", "button.btn-dependences", function(){
