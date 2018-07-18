@@ -25,12 +25,19 @@ import ilu.surveytool.databasemanager.DataObject.SurveyTableInfo;
 import ilu.surveytool.databasemanager.constants.DBConstants;
 import ilu.surveytool.databasemanager.constants.DBFieldNames;
 import ilu.surveytool.databasemanager.constants.DBSQLQueries;
+import ilu.surveytool.databasemanager.encrypt.EncryptDB;
 import ilu.surveytool.databasemanager.factory.ConnectionFactoryJDBC;
 
+//import ilu.securitymodule.SecurityModule;
+//import ilu.securitymodule.exception.SecurityModuleException;
+
 public class ResponsesDB {
+	
+	//SecurityModule sm;
 
 	public ResponsesDB() {
 		// TODO Auto-generated constructor stub
+		//sm = new SecurityModule();
 	}
 	
 	private Connection _openConnection()
@@ -378,6 +385,7 @@ public class ResponsesDB {
 		return questions;
 	}	
 
+	/*encrypt*/
 	public HashMap<Integer, HashMap<Integer, String>> getAnonimousResponseByPollId(int pollId)
 	{
 		HashMap<Integer, HashMap<Integer, String>> responses = new HashMap<Integer, HashMap<Integer, String>>();
@@ -401,7 +409,7 @@ public class ResponsesDB {
 	   			}
 	   			
 	   			responses.get(anonymousUserId).put(rs.getInt(DBFieldNames.s_QUESTION_ID), 
-   						rs.getString(DBFieldNames.s_VALUE));
+	   					rs.getString(DBFieldNames.s_VALUE));
 	   			
 	   		}
 	   			   		
@@ -663,6 +671,25 @@ public class ResponsesDB {
 	public int insertResponse(Response response) 
 	{		
 		int responseId = 0;
+		
+		// ***** Tests ******		
+		/*String cad = "413-#-lalalalala";
+		try {
+			byte[] stringEncrypted = this.sm.encrypt(cad);
+			byte[] tokenEncrypted = this.sm.encrypt("-#-");
+			System.out.println("Cadena cifrada: " + new String(stringEncrypted));
+			System.out.println("Token cifrado: " + new String(tokenEncrypted));
+			String cad2 = this.sm.decrypt(stringEncrypted);
+			System.out.println("Cadena descifrada: " + cad2);
+		} catch (SecurityModuleException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} */
+		
+		//EncryptDB encryptDB = new EncryptDB();
+		//encryptDB.cypherDb();
+		//encryptDB.displayValue(3548);
+		// ******* End Tests ******
 
 		Connection con = this._openConnection();
 		PreparedStatement pstm = null;
@@ -677,6 +704,7 @@ public class ResponsesDB {
 			   pstm.setNull(2, Types.INTEGER);
 		   }
 		   pstm.setString(3, response.getValue());
+		   //pstm.setBytes(3, this.sm.encrypt(response.getValue()));
 		   int pollId = response.getPollId();
 		   if(pollId != 0)
 		   {
@@ -697,7 +725,7 @@ public class ResponsesDB {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}    finally {
+		} finally {
 			this._closeConnections(con, pstm, null);
 		}
 		
@@ -798,4 +826,30 @@ public class ResponsesDB {
 			this._closeConnections(con, pstm, null);
 		}
 	}
+	
+	/*private String _getFormatedValue(byte[] valueEncrypted, String questionType, int optionsGroupId)
+	{
+		OptionDB optionDB = new OptionDB();
+		String value = "";
+		
+		try {
+			if(valueEncrypted != null)
+			{
+				value = sm.decrypt(valueEncrypted);
+				if(questionType.equals("simpleRadio") || questionType.equals("simpleCombo") || questionType.equals("matrix"))
+				{
+					String[] cads = value.split(DBConstants.s_VALUE_TOKEN);
+					value = Integer.toString(optionDB.getIndexByOptionsByGroupIdOptionId(optionsGroupId, Integer.parseInt(cads[0])));
+					if(cads.length > 1) value += DBConstants.s_VALUE_TOKEN + cads[1];
+				}
+			}
+		} catch (SecurityModuleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return value;
+	}*/
 }
+
+

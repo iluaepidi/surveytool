@@ -1,9 +1,11 @@
 package ilu.surveytool.databasemanager.constants;
 
 public class DBSQLQueries {
+	private final static String s_ENCRYPT_KEY = "K8Qbah0t";
+	private final static String s_LENGTH_VARCHAR = "10000";
 	//Selects
 		//AnonymousResponse
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+		/*public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
 				+ "if(qt.name = 'simple' or qt.name = 'multiple' or qt.name = 'matrix', "
 					+ "(SELECT c.text FROM surveytool.`option` as o "
 					+ "inner join surveytool.content as c on o.idContent = c.idContent "
@@ -20,8 +22,20 @@ public class DBSQLQueries {
 				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
 		        + "inner join surveytool.section as s on s.idSection = p.idSection "
 		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
-				+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"a-\", au.idAnonimousUser) idUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+				+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";*/
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) idOption, "
+			+ "CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value, qt.name as questionType "
+			+ "FROM surveytool.anonimoususer as au "
+			+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+			+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+			+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+			+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+			+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+	        + "inner join surveytool.section as s on s.idSection = p.idSection "
+	        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
+			+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
+		/*public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"a-\", au.idAnonimousUser) idUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
 			+ "(CASE "
 				+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o " 
 					+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
@@ -39,11 +53,44 @@ public class DBSQLQueries {
 			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
 	        + "inner join surveytool.section as s on s.idSection = p.idSection "
 	        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
-			+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
+			+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";*/
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"a-\", au.idAnonimousUser) idUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, "
+				+ "CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) idOption, "
+				+ "(CASE "
+					+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o " 
+						+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
+						+ "where obg.idOptionsGroup = r.idOptionsGroup and o.idOption = cast(substring_index(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")),'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)) "
+					+ "ELSE CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) "
+				+ "END) as value, " 
+				+ "if(INSTR(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")), '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+					+ "(substring_index(substring_index(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")),'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+		        + "inner join surveytool.section as s on s.idSection = p.idSection "
+		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
+				+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";
+		/*public final static String s_SELECT_ANONYMOUS_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"a-\", au.idAnonimousUser) idUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+				+ "r.value as value, qt.name as questionType "
+				+ "FROM surveytool.anonimoususer as au "
+				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
+				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+		        + "inner join surveytool.section as s on s.idSection = p.idSection "
+		        + "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = au.idQuestionnaire "
+				+ "where au.idQuestionnaire = ? and au.testUser = ?  and au.finished = ? order by au.idAnonimousUser";*/
 		
 		public final static String s_SELECT_ANONYMOUS_USER_BY_IP_ADDRESS_SURVEYID = "SELECT * FROM surveytool.anonimoususer where ipAddres = ? and idQuestionnaire = ? and testUser = ?";
 		
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value value "
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WITH_OPTIONID_BY_SURVEY_ID = "SELECT au.idAnonimousUser, au.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, "
+				+ "CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) value "
 			+ "FROM surveytool.anonimoususer as au "
 			+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
 			+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
@@ -60,27 +107,28 @@ public class DBSQLQueries {
 				+ "(SELECT c.text FROM surveytool.`option` as o "
 				+ "inner join surveytool.content as c on o.idContent = c.idContent "
 				+ "inner join surveytool.contenttype as ct on c.idContentType = ct.idContentType "
-				+ "where ct.name = 'title' and o.idOption = cast(r.value as unsigned)), r.value) value "
+				+ "where ct.name = 'title' and o.idOption = cast(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as unsigned)), "
+						+ "CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + "))) value "
 				+ "FROM surveytool.anonimoususer as au "
 				+ "inner join surveytool.anonimousresponse as ar on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "inner join surveytool.responses as r on ar.idResponse = r.idResponse "
 				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
 				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
 				+ "where r.idPoll = ? order by au.idAnonimousUser";
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT * FROM surveytool.responses as r "
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value FROM surveytool.responses as r "
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
 				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ?";
-		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
+		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_OTHER_VALUE = "SELECT CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value FROM surveytool.responses as r "
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
-				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NO_NULL = " and r.idOptionsGroup = ?";
 		public final static String s_WHERE_ANONYMOUS_RESPONSE_OPTIONSGROUP_NULL = " and isnull(r.idOptionsGroup)";
 		public final static String s_SELECT_ANONYMOUS_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
 				+ "inner join surveytool.anonimousresponse as ar on r.idResponse = ar.idResponse "
 				+ "inner join surveytool.anonimoususer as au on au.idAnonimousUser = ar.idAnonimousUser "
-				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
+				+ "where au.idAnonimousUser = ? and au.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) = ?";
 		
 		public final static String s_SELECT_ANSWERED_PAGES = "SELECT p.numPage, r.timestamp FROM surveytool.anonimousresponse ar "
 				+"inner join surveytool.responses r on r.idResponse = ar.idResponse " 
@@ -91,7 +139,7 @@ public class DBSQLQueries {
 		
 		public final static String s_SELECT_ANONYMOUS_EXPECTED_ANSWER = "select r.idResponse from surveytool.anonimousresponse ar "
 				+"inner join surveytool.responses r on r.idResponse = ar.idResponse "
-				+"where ar.idAnonimousUser = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
+				+"where ar.idAnonimousUser = ? and r.idQuestion = ? and r.idOptionsGroup = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) = ?";
 		
 		//Content
 		public final static String s_SELECT_CONTENT_BY_ID_LANGUAGE = "SELECT c.idContent, c.index, ct.name contentTypeName, l.isoName, c.text FROM surveytool.content c "
@@ -147,6 +195,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_OPTIONSBYGROUP_BY_ID = "SELECT obg.* FROM surveytool.optionsbygroup obg where obg.idOptionsGroup = ? "
 				+ "order by obg.index";
 		public final static String s_SELECT_OPTIONSBYGROUP_ID_BY_OPTIONID = "SELECT idOptionsGroup FROM surveytool.optionsbygroup where idOption = ?";
+		public final static String s_SELECT_INDEX_BY_OPTIONSBYGROUPID_OPTIONID = "SELECT `index` FROM surveytool.optionsbygroup where idOptionsGroup = ? and idOption = ?";
 		
 		//page
 		public final static String s_SELECT_PAGE_ID_BY_QUESTIONNAIRE_ID = "SELECT p.idPage FROM surveytool.questionnaire q "
@@ -246,12 +295,20 @@ public class DBSQLQueries {
 		public final static String s_SELECT_CONTENTID_BY_RESOURCEID = "select idContent from surveytool.resoruces where idResoruces = ?";
 		
 		//User
-		public final static String s_SELECT_LOGIN = "SELECT * FROM surveytool.user u inner join surveytool.rol r on r.idRol = u.idRol inner join surveytool.language l on l.idLanguage = u.idLanguage WHERE (userName = ? or email = ?) and password = ?";
-		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT email FROM surveytool.user where idUser = ?";
+		public final static String s_SELECT_LOGIN = "SELECT u.idUser, u.userName, r.rolName, "
+					+ "CAST(aes_decrypt(u.password, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) as password, "
+					+ "CAST(aes_decrypt(u.email, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) as email, "
+					+ "l.isoName, u.idUserState "
+				+ "FROM surveytool.user u "
+				+ "inner join surveytool.rol r on r.idRol = u.idRol "
+				+ "inner join surveytool.language l on l.idLanguage = u.idLanguage "
+				+ "WHERE (userName = ? or CAST(aes_decrypt(email, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) = ?) "
+						+ "and CAST(aes_decrypt(password, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) = ?";
+		public final static String s_SELECT_USER_EMAIL_BY_USERID = "SELECT CAST(aes_decrypt(email, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) as email FROM surveytool.user where idUser = ?";
 		public final static String s_SELECT_CHECK_EXISTS_USER_BY_USERNAME = "SELECT idUser FROM surveytool.user WHERE userName LIKE ?";
 		public final static String s_SELECT_USER_BY_TEMPORALID_AND_USERSTATUS = "SELECT idUser FROM surveytool.user WHERE temporalId LIKE ? AND idUserState = ?";
-		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL = "SELECT idUser FROM surveytool.user WHERE email LIKE ?";
-		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE = "SELECT idUser FROM surveytool.user WHERE email LIKE ? AND userName != ?";
+		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL = "SELECT idUser FROM surveytool.user WHERE CAST(aes_decrypt(email, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) LIKE ?";
+		public final static String s_SELECT_CHECK_EXISTS_USER_BY_EMAIL_PROFILE = "SELECT idUser FROM surveytool.user WHERE CAST(aes_decrypt(email, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR) LIKE ? AND userName != ?";
 		public final static String s_GET_IDLANGUEGE_FROM_ISONAME = "SELECT idLanguage FROM surveytool.language WHERE isoName LIKE ?";
 		public final static String s_GET_ISOLANGUEGE_FROM_IDLANGUAGE = "SELECT isoName FROM surveytool.language WHERE idLanguage = ?";
 		public final static String s_SELECT_LIST_LANGUAGES = "SELECT name,isoName FROM surveytool.language";
@@ -337,7 +394,7 @@ public class DBSQLQueries {
 		public final static String s_SELECT_QUESTION_TYPE_QUESTIONID = "SELECT q.idQuestionType FROM question q "
 				+ "where q.idQuestion = ?";
 		
-		public final static String s_SELECT_QUESTION_OPTIONS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, r.value FROM question q "
+		public final static String s_SELECT_QUESTION_OPTIONS_QUESTIONID_LANGUAGE = "SELECT cQ.text question, CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value FROM question q "
 				+ "inner join content cQ on cQ.idContent = q.idContent "
 				+ "inner join responses r on r.idQuestion = q.idQuestion "
 				+ "inner join language l on l.idLanguage = cQ.idLanguage "
@@ -606,21 +663,21 @@ public class DBSQLQueries {
 		//User response
 		public final static String s_SELECT_USER_EXPECTED_ANSWER = "select r.idResponse from surveytool.userresponse ur "
 				+"inner join surveytool.responses r on r.idResponse = ur.idResponse "
-				+"where ur.idUserQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
-		public final static String s_SELECT_USER_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT * FROM surveytool.responses as r "
+				+"where ur.idUserQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) = ?";
+		public final static String s_SELECT_USER_RESPONSE_WHERE_ALL_WITHOUT_VALUE = "SELECT CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value FROM surveytool.responses as r "
 				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
 				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
 				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ?";
-		public final static String s_SELECT_USER_RESPONSE_WHERE_OTHER_VALUE = "SELECT * FROM surveytool.responses as r "
+		public final static String s_SELECT_USER_RESPONSE_WHERE_OTHER_VALUE = "SELECT CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) as value FROM surveytool.responses as r "
 				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
 				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
-				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.value LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
+				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) LIKE '%" + DBConstants.s_VALUE_TOKEN + "%'";
 		public final static String s_SELECT_USER_RESPONSE_WHERE_ALL_WITH_VALUE = "SELECT * FROM surveytool.responses as r "
 				+ "inner join surveytool.userresponse as ur on r.idResponse = ur.idResponse "
 				+ "inner join surveytool.userquestionnaire as uq on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
-				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and r.value = ?";
+				+ "where uq.idUserQuestionnaire = ? and uq.idQuestionnaire = ? and r.idQuestion = ? and r.idOptionsGroup = ? and CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) = ?";
 
-		public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+		/*public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
 			+ "(CASE "
 				+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o "
 					+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
@@ -638,12 +695,47 @@ public class DBSQLQueries {
 			+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
 			+ "inner join surveytool.section as s on s.idSection = p.idSection "
 			+ "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = uq.idQuestionnaire "
-			+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";
+			+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";*/
+		public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, "
+				+ "CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) idOption, "
+				+ "(CASE "
+					+ "WHEN qt.name LIKE 'simpleRadio' or qt.name LIKE 'simpleCombo' or qt.name LIKE 'matrix' THEN (SELECT obg.`index` FROM surveytool.`option` as o "
+						+ "inner join surveytool.optionsbygroup as obg on obg.idOption = o.idOption "
+						+ "where obg.idOptionsGroup = r.idOptionsGroup and o.idOption = cast(substring_index(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")),'" + DBConstants.s_VALUE_TOKEN + "',1) as unsigned)) "
+					+ "ELSE CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")) "
+				+ "END) as value, "
+				+ "if(INSTR(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")), '" + DBConstants.s_VALUE_TOKEN + "') > 0, "
+					+ "(substring_index(substring_index(CAST(aes_decrypt(r.value, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) AS CHAR(" + DBSQLQueries.s_LENGTH_VARCHAR + ")),'" + DBConstants.s_VALUE_TOKEN + "',2),'" + DBConstants.s_VALUE_TOKEN + "',-1)), '') otherText "
+				+ "FROM surveytool.userquestionnaire as uq "
+				+ "inner join surveytool.userresponse as ur on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+				+ "inner join surveytool.responses as r on ur.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+				+ "inner join surveytool.section as s on s.idSection = p.idSection "
+				+ "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = uq.idQuestionnaire "
+				+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";
+		
+		/*public final static String s_SELECT_USER_RESPONSE_BY_SURVEY_ID_WITH_OPTION_INDEX = "SELECT concat(\"u-\", uq.idUserQuestionnaire) idUser, uq.createDate, r.timestamp, r.idQuestion, r.idOptionsGroup, r.value idOption, "
+				+ "r.value as value, qt.name as questionType "
+				+ "FROM surveytool.userquestionnaire as uq "
+				+ "inner join surveytool.userresponse as ur on uq.idUserQuestionnaire = ur.idUserQuestionnaire "
+				+ "inner join surveytool.responses as r on ur.idResponse = r.idResponse "
+				+ "inner join surveytool.question as q on r.idQuestion = q.idQuestion "
+				+ "inner join surveytool.questiontype as qt on q.idQuestionType = qt.idQuestionType "
+				+ "inner join surveytool.questionbypage as qbp on qbp.idQuestion = r.idQuestion "
+				+ "inner join surveytool.page as p on p.idPage = qbp.idPage "
+				+ "inner join surveytool.section as s on s.idSection = p.idSection "
+				+ "inner join surveytool.forma as f on f.idForma = s.idForma and f.idQuestionnaire = uq.idQuestionnaire "
+				+ "where uq.idQuestionnaire = ? and uq.finished = ? order by uq.idUserQuestionnaire";*/
 		
 		
 	//inserts
 		//User
-			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`, `temporalId`) VALUES (?,?,?,?,?,?,?,?)";
+			public final static String s_INSERT_USER = "INSERT INTO `surveytool`.`user` (`userName`,`email`,`password`,`anonymous`,`idRol`,`idLanguage`, `idUserState`, `temporalId`) VALUES (?,"
+					+ "AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))),"
+					+ "AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))),?,?,?,?,?)";
 		//AnonimousUser
 			public final static String s_INSERT_ANONIMOUS_USER = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`) VALUES (?)";
 			public final static String s_INSERT_ANONIMOUS_USER_WITH_IP_NUMPAGE = "INSERT INTO `surveytool`.`anonimoususer` (`idQuestionnaire`, `ipAddres`, `currentPage`, `testUser`) VALUES (?, ?, ?, ?)";
@@ -694,7 +786,8 @@ public class DBSQLQueries {
 		//Resource
 			public final static String s_INSERT_RESOURCE = "INSERT INTO `surveytool`.`resoruces` (`idResourceType`, `urlPath`, `idContent`) VALUES ((SELECT idResourceType FROM surveytool.resourcetype where name = ?), ?, ?)";
 		//Responses
-			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
+			//public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, ?, ?)";
+			public final static String s_INSERT_RESPONSE = "INSERT INTO `surveytool`.`responses` (`idQuestion`, `idOptionsGroup`, `value`, `idPoll`) VALUES (?, ?, AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))), ?)";
 			public final static String s_INSERT_RESPONSE_PAGES_ANONIMOUS = "INSERT INTO `surveytool`.`anonimouspages` (`idPage`, `idAnonimousUser`) VALUES (?, ?)";
 			public final static String s_INSERT_RESPONSE_PAGES_USER = "INSERT INTO `surveytool`.`userquestionnairepages` (`idPage`, `idUserQuestionnaire`) VALUES (?, ?)";
 		//userQuestionnaire
@@ -774,9 +867,14 @@ public class DBSQLQueries {
 		//section
 			public final static String s_UPDATE_SECTION_INDEX = "UPDATE `surveytool`.`section` SET `index`=? WHERE `idSection`=?";
 		//user
-			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=?,email=?,idLanguage=? WHERE idUser= ?";
+			public final static String s_UPDATE_USER_PASSWORD_AND_EMAIL = "UPDATE surveytool.user SET password=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))),email=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))),idLanguage=? WHERE idUser= ?";
 			public final static String s_UPDATE_USER_ACCOUNT = "UPDATE surveytool.user SET temporalId=?, idUserState=? WHERE idUser= ?";
-			public final static String s_UPDATE_USER_BASIC_PROFILE = "UPDATE surveytool.user SET firstName=?, lastName=?, birthDate=?, gender=? WHERE idUser= ?";
+			public final static String s_UPDATE_USER_BASIC_PROFILE = "UPDATE surveytool.user SET "
+					+ "firstName=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))), "
+					+ "lastName=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))), "
+					+ "birthDate=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))), "
+					+ "gender=AES_ENCRYPT(?, UNHEX(SHA2('" + DBSQLQueries.s_ENCRYPT_KEY + "', 512))) "
+				+ "WHERE idUser= ?";
 		//userQuestionnaire
 			public final static String s_UPDATE_USERQUESTIONNAIRE_CURRET_PAGE = "UPDATE `surveytool`.`userquestionnaire` SET `currentPage`=? WHERE `idUserQuestionnaire`=?";
 		//QDependences
