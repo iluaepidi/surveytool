@@ -14,6 +14,7 @@ import org.codehaus.jettison.json.JSONObject;
 import ilu.surveymanager.exportdata.ExportData;
 import ilu.surveymanager.statistics.Statistics;
 import ilu.surveytool.databasemanager.ContentDB;
+import ilu.surveytool.databasemanager.ExportDataRegisterDB;
 import ilu.surveytool.databasemanager.PageDB;
 import ilu.surveytool.databasemanager.PollDB;
 import ilu.surveytool.databasemanager.QuestionDB;
@@ -174,20 +175,26 @@ public class SurveysHandler {
 		return updated;
 	}
 	
-	public File exportResults(int surveyId, String userLang, String resourcesFolder)
+	public File exportResults(int surveyId, String userLang, String resourcesFolder, int userId)
 	{
 		File file = null;
 		
-		ResponsesDB responsesDB = new ResponsesDB();
-		HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getuserResponseBySurveyId(surveyId, userLang);  
-		System.out.println("responses excel: " + responses.toString());
-		Survey survey = this.getSurveyDetail(surveyId, "");
-				
-		QuestionDB questionDB = new QuestionDB();
-		List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, userLang, survey.getDefaultLanguage());
+		ExportDataRegisterDB exportDataRegisterDB = new ExportDataRegisterDB();
+		boolean registered = exportDataRegisterDB.insertExportDataRegistration(userId, surveyId);
 		
-		ExportData exportData = new ExportData();
-		file = exportData.exportSurveyResponses(surveyId, questions, responses, resourcesFolder);
+		if(registered)
+		{
+			ResponsesDB responsesDB = new ResponsesDB();
+			HashMap<String, HashMap<Integer, HashMap<Integer, List<String>>>> responses = responsesDB.getuserResponseBySurveyId(surveyId, userLang);  
+			System.out.println("responses excel: " + responses.toString());
+			Survey survey = this.getSurveyDetail(surveyId, "");
+					
+			QuestionDB questionDB = new QuestionDB();
+			List<Question> questions = questionDB.getQuestionsBySurveyId(surveyId, userLang, survey.getDefaultLanguage());
+			
+			ExportData exportData = new ExportData();
+			file = exportData.exportSurveyResponses(surveyId, questions, responses, resourcesFolder);
+		}
 		
 		return file;
 	}

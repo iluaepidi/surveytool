@@ -117,7 +117,7 @@ public class SurveyService {
 
 		String folder = request.getServletContext().getInitParameter("resourcesPath");
 	   	SurveysHandler surveysHandler = new SurveysHandler();
-	   	File file = surveysHandler.exportResults(Integer.parseInt(surveyId), userLang, folder);
+	   	File file = surveysHandler.exportResults(Integer.parseInt(surveyId), userLang, folder, userSessionInfo.getUserId());
 		ResponseBuilder response = Response.ok((Object) file);
 		response.header("Content-Disposition", "attachment; filename=" + file.getName());
 		

@@ -747,6 +747,8 @@ public class DBSQLQueries {
 					+ "(SELECT idContentType FROM surveytool.contenttype WHERE name = ?), ?, ?)";
 		//contentIndex
 			public final static String s_INSERT_CONTENT_INDEX = "INSERT INTO `surveytool`.`contentindex` (`idContent`) VALUES (null);";
+		//exportDataRegister
+			public final static String s_INSERT_EXPORT_DATA_REGISTRATION = "INSERT INTO `surveytool`.`exportdataregister` (`idUser`, `idQuestionnaire`) VALUES (?, ?)";
 		//forma
 			public final static String s_INSERT_FORMA = "INSERT INTO `surveytool`.`forma` (`idQuestionnaire`) VALUES (?)";
 		//Option
