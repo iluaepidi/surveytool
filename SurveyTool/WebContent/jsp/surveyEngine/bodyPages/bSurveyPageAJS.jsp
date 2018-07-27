@@ -44,7 +44,14 @@
 				 sInfo = <%= sInfo.toString() %>;
 				</script>
 				<div class="container-fluid" prevent-scroll-body>
-	  				<div class="title-content col-xs-10 col-xs-push-1 col-md-8 col-md-push-2" ng-class="{inactive: questionIndex > 1}">	  					
+					
+					<div class="title-logo">
+						<h1>
+							<span class="logo inBlock"><img src="img/axsurveySquare.png" alt="axsurvey"/></span>
+						</h1>
+					</div>
+					
+	  				<div class="title-content col-xs-10 col-md-8" ng-class="{inactive: questionIndex > 1}">	  					
 	  					<h1 id="main-title" class="col-md-10 nopadding" tabIndex="-1">{{getJsonArrayElement(currentSurvey.info.contents, "contentType", "title").text}}</h1>
 	  					<span class="percetaje-text col-md-2 nopadding">{{getProgressPercent()}}% <%= lang.getContent("survey.process.percentage.complete") %></span>
 						<div class="progress col-md-12 nopadding">

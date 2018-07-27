@@ -56,6 +56,16 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 /*----------------------------------------------*\
 		$HEADER
 \*----------------------------------------------*/
+.title-logo {
+	width: 16%;
+	float: left;
+}
+.title-logo h1 {
+	text-align: center;
+}
+.title-logo img {
+	width: 2.7em;
+}
 .title-content{
 	bakcground-color:#fff;
 }
@@ -69,7 +79,9 @@ h1, h2, h3, h4, h5, button, legend {font-family: 'Ubuntu', sans-serif !important
 	color:#016FB8;
 	font-weight:bold;
 	text-transform:uppercase;
-	margin-top:2em;
+	/*margin-top:2em;*/
+	margin-top:0em;
+	float: left;
 	margin-bottom:1em;
 }
 .percetaje-text {text-align: right;
@@ -653,6 +665,11 @@ div.likert-options {text-align: center;
 	}
 	.survey-form {padding: 0px !important;}
 	#form-question fieldset > *:not(legend) {padding-left: 0px !important;}
+	
+	.title-logo {
+		width: 100%;
+		float: none;
+	}
 }
 
 /* Buttons */
