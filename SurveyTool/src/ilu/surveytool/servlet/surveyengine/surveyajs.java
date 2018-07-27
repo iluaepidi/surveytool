@@ -100,6 +100,7 @@ public class surveyajs extends HttpServlet {
 					
 					if(surveyUser == null || surveyUser.getSurveyId() != surveyId)
 					{
+						session.setMaxInactiveInterval(0);
 						surveyUser = new SurveyUser();
 						surveyUser.setIpAddress(request.getRemoteAddr());
 						surveyUser.setSurveyId(surveyId);
