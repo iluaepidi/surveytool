@@ -402,13 +402,15 @@ h1 {float: left;
     margin-bottom: 5px;
     text-align: center;}
 h1 img {width: 190px;
-	margin-right: 20px;}
+	margin-right: 20px;
+	padding: 15px 0;}
 h1 span{font-size: 0.6em;
     position: absolute;
     top: 73px;
     left: 169px;}
 .logo {float:left;}
-.title-header {margin-top: 14px;}
+.title-header {margin-top: 14px;
+	width: 100%;}
 .title-header p {font-size: 0.5em;}
 .header-buttons {float:right;
 	margin-top: 33px;

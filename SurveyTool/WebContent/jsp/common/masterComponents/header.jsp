@@ -33,7 +33,7 @@ lang.loadLanguage(Language.getLanguageRequest(request));
 </script>
 				<div class="container-fluid">
 	  				<h1 class="col-sm-9 col-xs-9">
-	  					<span class="logo inBlock"><a href="InitialServlet"><img src="img/ilunionTyALogo.jpg" alt="logo de prosperity4all"/></a></span>
+	  					<span class="logo inBlock"><a href="InitialServlet"><img src="img/axsurvey.png" alt="logo de prosperity4all"/></a></span>
 	  					<span class="title-header inBlock"><%= lang.getContent("master.header.title") %>
 	  						<span><%= lang.getContent("master.header.subtitle") %></span>
 	  					</span>
