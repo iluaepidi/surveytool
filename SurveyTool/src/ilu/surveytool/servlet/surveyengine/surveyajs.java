@@ -1,11 +1,14 @@
 package ilu.surveytool.servlet.surveyengine;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +64,26 @@ public class surveyajs extends HttpServlet {
 	{
 
 		HttpSession session = request.getSession();
+		
+		//coockies de control de usuario
+		Cookie cks[]=request.getCookies();
+		String ckvalue = "";
+		if(cks != null)
+		{
+			for(int i = 0; i < cks.length; i++)
+			{
+				if(cks[i].getName().equals("surveytool"))  ckvalue = cks[i].getValue();
+			}
+			/*Cookie ck=new Cookie("surveytool","111");//creating cookie object  	
+			//ck.setMaxAge(604800);
+			ck.setMaxAge(0);
+		    response.addCookie(ck);//adding cookie in the response*/
+		}
+		
+		
+		System.out.println("##### Cookie: " + ckvalue);
+	    //fin coockies de control de usuario
+	    
 		LoginResponse loginResp = (LoginResponse) session.getAttribute(Attribute.s_USER_SESSION_INFO);
 		boolean isUser = request.getParameter(Parameter.s_USER) != null;
 
@@ -109,7 +132,12 @@ public class surveyajs extends HttpServlet {
 						{
 							surveyUser = surveyProcessHandler.existSurveyUser(surveyUser, loginResp.getUserId());
 						}
-						else
+						else if(!ckvalue.isEmpty())
+						{
+							surveyUser = new SurveyUser(ckvalue);
+							surveyUser.setIpAddress(request.getRemoteAddr());
+						}
+						else							
 						{
 							if(hasIpFilter) surveyUser = surveyProcessHandler.existAnonimousUser(surveyUser, preview);
 							else surveyUser.setAnonymousUser(true);
@@ -133,6 +161,7 @@ public class surveyajs extends HttpServlet {
 					jsFiles.add(properties.getJsFilePath(Address.s_JS_YOUTUBE_IFRAME_API));
 					jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR));
 					jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_SANITIZE));
+					jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_COOKIES));
 					jsFiles.add(properties.getJsFilePath(Address.s_JS_ANGULAR_ROUTER));
 					jsFiles.add(properties.getJsFilePath(Address.s_NG_CONTROLLER_SURVEY));
 					

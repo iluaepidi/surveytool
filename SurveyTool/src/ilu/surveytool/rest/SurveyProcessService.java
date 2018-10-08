@@ -1,34 +1,35 @@
 package ilu.surveytool.rest;
 
-import java.io.File;
+//import java.io.File;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+//import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+//import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import ilu.surveyengine.handler.SurveyProcessHandler;
-import ilu.surveymanager.data.Option;
-import ilu.surveymanager.handler.OptionHandler;
-import ilu.surveymanager.handler.SurveysHandler;
+//import ilu.surveymanager.data.Option;
+//import ilu.surveymanager.handler.OptionHandler;
+//import ilu.surveymanager.handler.SurveysHandler;
 import ilu.surveytool.constants.Attribute;
-import ilu.surveytool.constants.Parameter;
-import ilu.surveytool.databasemanager.ResponsesDB;
+//import ilu.surveytool.constants.Parameter;
+//import ilu.surveytool.databasemanager.ResponsesDB;
 import ilu.surveytool.databasemanager.DataObject.SurveyUser;
 import ilu.surveytool.databasemanager.constants.DBConstants;
-import ilu.surveytool.databasemanager.DataObject.Content;
+//import ilu.surveytool.databasemanager.DataObject.Content;
 import ilu.surveytool.databasemanager.DataObject.LoginResponse;
 import ilu.surveytool.language.Language;
 
@@ -39,12 +40,14 @@ public class SurveyProcessService {
 	@Path("/responseProcess")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    public String responseProcess(String req, @Context HttpServletRequest request, @Context ServletContext context) {
+    public Response responseProcess(String req, @Context HttpServletRequest request, @Context ServletContext context, @CookieParam("surveytool") String ckvalue) {
     	System.out.println("SurveyProcess (responseProcess): " + req);
     	System.out.println("Request (responseProcess): " + request.getRequestURL());
     	JSONObject json = null;
     	JSONObject response = new JSONObject();
     	LoginResponse loginResp = (LoginResponse) request.getSession().getAttribute(Attribute.s_USER_SESSION_INFO);
+    	SurveyUser surveyUser = new SurveyUser();
+    	int cookieTimeout = 604800;
     	
     	try {
     		json = new JSONObject(req);
@@ -54,7 +57,8 @@ public class SurveyProcessService {
         	if(isUser && loginResp == null)
         	{
         		response.put("valid", false);
-        		return response.toString();
+        		//return response.toString();
+        		return Response.ok(response.toString(), MediaType.APPLICATION_JSON).build();
         	}
         	else
         	{
@@ -74,26 +78,28 @@ public class SurveyProcessService {
 		    	}    	   	
 		    	
 		    	int currentSurveyId = json.getInt("surveyId");
-				SurveyUser surveyUser = (SurveyUser) request.getSession().getAttribute(Attribute.s_SURVEY_USER);
+				surveyUser = (SurveyUser) request.getSession().getAttribute(Attribute.s_SURVEY_USER);
 				if(surveyUser == null || surveyUser.getSurveyId() != currentSurveyId)
 				{
-					/*surveyUser = new SurveyUser();
-					surveyUser.setIpAddress(request.getRemoteAddr());
-					surveyUser.setSurveyId(currentSurveyId);
-					surveyUser.setAnonymousUser(true);*/
-					//anonimousUser = surveyProcessHandler.existAnonimousUser(anonimousUser, isPreview);
-					surveyUser = new SurveyUser();
-					surveyUser.setIpAddress(request.getRemoteAddr());
-					surveyUser.setSurveyId(currentSurveyId);
-					surveyUser.setCurrentPage(1);
-					
-					if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER))
-					{
-						surveyUser = surveyProcessHandler.existSurveyUser(surveyUser, loginResp.getUserId());
+					if(ckvalue == null || ckvalue.isEmpty())
+					{						
+						surveyUser = new SurveyUser();
+						surveyUser.setIpAddress(request.getRemoteAddr());
+						surveyUser.setSurveyId(currentSurveyId);
+						surveyUser.setCurrentPage(1);
+						
+						if(loginResp != null && loginResp.isValid() && loginResp.getRol().equals(DBConstants.s_VALUE_ROLNAME_USER))
+						{
+							surveyUser = surveyProcessHandler.existSurveyUser(surveyUser, loginResp.getUserId());
+						}
+						else
+						{
+							surveyUser.setAnonymousUser(true);
+						}
 					}
 					else
 					{
-						surveyUser.setAnonymousUser(true);
+						surveyUser = new SurveyUser(ckvalue);
 					}
 				}
 				
@@ -147,14 +153,21 @@ public class SurveyProcessService {
 					{
 	//IN METHOD ANONYMOUS (DONE)		
 						surveyProcessHandler.updateSurveyUserFinished(surveyUser.getId(), true, surveyUser.isAnonymousUser());
+						cookieTimeout = 0;
 					}
 				}
+				
         	}			
+
+        	response.put("cookieContent", surveyUser.toCoockie());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	return response.toString();
+    	//httpResponse.addCookie(ck);
+    	Cookie ck = new Cookie("surveytool", surveyUser.toCoockie(), "/", null);
+    	
+    	return Response.ok(response.toString(), MediaType.APPLICATION_JSON).cookie(new NewCookie(ck, "", cookieTimeout, false)).build();
     }
 	
 }

@@ -9,6 +9,8 @@ public class SurveyUser {
 	int currentPage;
 	boolean isAnonymousUser = false;
 	
+	private String token = "#";
+	
 	public SurveyUser() {
 		super();
 		this.id = 0;
@@ -35,6 +37,17 @@ public class SurveyUser {
 		this.ipAddress = ipAddress;
 		this.currentPage = currentPage;
 		this.isAnonymousUser = isAnonymousUser;
+	}
+
+	public SurveyUser(String cookieValue) {
+		super();
+		String[] cads = cookieValue.split(token);
+		this.id = Integer.parseInt(cads[0]);
+		this.surveyId = Integer.parseInt(cads[1]);
+		this.userId = Integer.parseInt(cads[2]);
+		this.currentPage = Integer.parseInt(cads[3]);
+		this.isAnonymousUser = Boolean.parseBoolean(cads[4]);
+		this.ipAddress = cads[5];
 	}
 
 	public int getId() {
@@ -91,4 +104,7 @@ public class SurveyUser {
 				+ ", currentPage=" + currentPage + ", isAnonymousUser=" + isAnonymousUser + "]";
 	}
 
+	public String toCoockie() {
+		return id + this.token + surveyId + this.token + userId + this.token + currentPage + this.token + isAnonymousUser + this.token + ipAddress;
+	}
 }
